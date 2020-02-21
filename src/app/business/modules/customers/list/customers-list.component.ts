@@ -91,7 +91,7 @@ export class CustomersListComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getCustomersList(true);
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     }
     filterClicked(type) {
@@ -124,7 +124,7 @@ export class CustomersListComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.customers = data;
-console.log(this.customers);
+                                console.log(this.customers);
 
                                 this.loadComplete = true;
                             },
@@ -257,9 +257,9 @@ console.log(this.customers);
     }
     showFilterSidebar() {
         this.filter_sidebar = true;
-      }
-      hideFilterSidebar() {
+    }
+    hideFilterSidebar() {
         this.filter_sidebar = false;
-      }
+    }
 }
 

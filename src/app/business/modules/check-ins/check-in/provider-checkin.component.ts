@@ -167,6 +167,8 @@ export class ProviderCheckinComponent implements OnInit {
     selectedMode: any = 'phone';
     customer_label = '';
     qParams = {};
+    action: any = '';
+    showAction = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -332,7 +334,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 this.note_placeholder = 'Item No Item Name Item Quantity';
                             } else {
                                 this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                this.note_placeholder = '';
+                                this.note_placeholder = 'Add Note';
                             }
                             this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
                                 (services: any) => {
@@ -446,6 +448,7 @@ export class ProviderCheckinComponent implements OnInit {
             for (const mem of data) {
                 if (mem.userProfile.id !== self_obj.userProfile.id) {
                     this.familymembers.push(mem);
+                    console.log(this.familymembers);
                 }
             }
             this.api_loading1 = false;
@@ -614,6 +617,21 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
     }
+
+    handleQueueSelection(queue) {
+        this.sel_queue_id = queue.id;
+        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
+        this.sel_queue_servicetime = queue.serviceTime || '';
+        this.sel_queue_name = queue.name;
+        this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
+        this.sel_queue_personaahead = queue.queueSize;
+        // this.queueReloaded = true;
+        if (this.calc_mode === 'Fixed' && queue.timeInterval && queue.timeInterval !== 0) {
+            this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
+        }
+    }
+
+
     handleFuturetoggle() {
         this.showfuturediv = !this.showfuturediv;
     }
@@ -745,6 +763,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.resetApi();
         switch (cstep) {
             case 1:
+                this.hideFilterSidebar();
+                break;
             case 2:
                 if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
                     this.main_heading = this.get_token_cap;
@@ -1196,5 +1216,22 @@ export class ProviderCheckinComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
+    }
+    handleSideScreen(action) {
+        this.showAction = true;
+        this.action = action;
+        // switch (action) {
+        //     case 'note':
+        //         break;
+        //     case 'attachment':
+        //         break;
+        //     case 'coupon':
+        //         break;
+        //     case 'member':
+        //         break;
+        // }
+    }
+    hideFilterSidebar() {
+        this.showAction = false;
     }
 }
