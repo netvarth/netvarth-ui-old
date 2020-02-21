@@ -261,7 +261,7 @@ export class CheckInInnerComponent implements OnInit {
       if (this.data.queue) {
         // this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
         this.sel_queue_id = this.data.queue.id;
-        this.q_preselected = true;
+        // this.q_preselected = true;
       }
       // this.getDisplayboardCount();
       if (this.fromKiosk) {
@@ -646,7 +646,7 @@ export class CheckInInnerComponent implements OnInit {
           this.queueQryExecuted = true;
           if (this.queuejson.length > 0) {
             let selindx = -1;
-            if (this.q_preselected) {
+            if (this.q_preselected || this.data.queue) {
               for (let i = 0; i < this.queuejson.length; i++) {
                 if (this.queuejson[i].id === this.sel_queue_id) {
                   selindx = i;
@@ -776,14 +776,16 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
       // this.queueReloaded = true;
       this.availableSlots = [];
+      this.apptTime = '';
       // this.api_loading = true;
       // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
       //   this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
       // }
-      if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
-        if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
-          this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
-        } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+      if (this.page_source === 'provider_checkin' && this.calc_mode === 'Fixed') {
+        // if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
+        //   this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+        // } else
+        if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
           this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
         }
       }
@@ -1045,7 +1047,6 @@ export class CheckInInnerComponent implements OnInit {
           'origin': 'consumer'
         }
       });
-
     } else {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
       this.api_loading = false;
@@ -1055,7 +1056,6 @@ export class CheckInInnerComponent implements OnInit {
     } else {
       this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
     }
-
   }
   handleGoBack(cstep) {
     if (this.page_source !== 'provider_checkin') {

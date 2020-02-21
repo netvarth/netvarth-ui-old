@@ -508,7 +508,8 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
             for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
-              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+              // tslint:disable-next-line: max-line-length
+              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'subSector': ynw_conf.bdata[i].subDomains[subdom].displayName, 'type': 'special' });
             }
           }
         }
@@ -516,7 +517,8 @@ export class SharedFunctions {
           for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
             searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
             for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
-              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+              // tslint:disable-next-line: max-line-length
+              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'subSector': ynw_conf.bdata[i].subDomains[subdom].displayName, 'type': 'special' });
             }
           }
         }
@@ -916,7 +918,7 @@ export class SharedFunctions {
     // slotList.push(startTime);
     const startTimeStr = moment(startTime, ['HH:mm A']).format('HH:mm A').toString();
     let startingDTime = this.getDateFromTimeString(startTimeStr);
-    slotList.push( moment(startTime, ['HH:mm A']).format('hh:mm A').toString());
+    slotList.push(moment(startTime, ['HH:mm A']).format('hh:mm A').toString());
     const endTimeStr = moment(endTime, ['HH:mm A']).format('HH:mm A').toString();
     const endDTime = this.getDateFromTimeString(endTimeStr);
     // tslint:disable-next-line:radix

@@ -3188,11 +3188,11 @@ body {
   margin-left: 20px;
 }
 
-@media screen and (min-width: 70vw) {
+/* @media screen and (min-width: 70vw) {
   #current-image {
     height: -webkit-fill-available !important;
   }
-}
+} */
 
 figcaption {
   margin-bottom: -70px !important;
