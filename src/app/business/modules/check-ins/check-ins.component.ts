@@ -1992,10 +1992,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
+                const labels = [];
                 Object.keys(this.historyCheckins[i].label).forEach(key => {
-                  checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].label[key] + '</td>';
+                  labels.push(this.historyCheckins[i].label[key]);
                 });
-                checkin_html += '</tr>';
+                checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
