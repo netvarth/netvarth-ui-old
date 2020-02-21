@@ -38,8 +38,8 @@
     <div class="sa-src ml5">
       <mat-form-field floatLabel="never" class="search_keyword_class">
         <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
-        <input name="provider_box" id="suggestSearch" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname"
-          matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
+        <input name="provider_box" id="suggestSearch" #provbox aria-label="provs" aria-label="Search here"
+          [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
           (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>
           <div>
@@ -48,7 +48,7 @@
                 (click)="setKeyword(kw)">
                 <span
                   [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
-                  class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
+                  class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? kw.subdomain:''))}}</span>
               </mat-option>
             </mat-optgroup>
           </div>
