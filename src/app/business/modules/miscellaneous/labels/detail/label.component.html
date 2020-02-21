@@ -9,7 +9,7 @@
                     <div class="copy locd">
                         <div class="lbl col-md-12">
                             <div class="cl1" *ngIf="actionparam === 'view' && labelData">
-                                <span class="editbt" (click)="editLabel(labelData.id)"></span>
+                                <span class="editbt" (click)="editLabel()"></span>
                                 <div class="ot-it">
                                     <h3>{{ labelData.displayName | capitalizeFirst}} </h3>
                                     <div class="c-ot m0">
@@ -67,7 +67,7 @@
                                                     placeholder="Briefly describe label" [(ngModel)]="description"
                                                     [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
                                                     (focus)="setDescFocus()" (blur)="lostDescFocus()"
-                                                    maxlength="500"> </textarea>
+                                                    maxlength="250"> </textarea>
                                             </mat-form-field>
                                         </div>
                                         <div class="notifications mgn-bt-10">

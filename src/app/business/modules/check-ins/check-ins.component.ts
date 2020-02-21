@@ -2001,7 +2001,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
               checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
-              if (!this.labelFilterData.match('.and.')) {
+              if (!this.labelFilterData.match('.and.') && this.labelsCount.length > 1) {
                 for (const count of this.labelsCount) {
                   checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
                 }
