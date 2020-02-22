@@ -7384,3 +7384,59 @@ hr.wide-separator-line{
     border-top: 1px solid #c4b7b7;
   }
 }
+
+
+.checkin-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.owl-theme .owl-checkin {
+  margin-top:0px !important
+}
+.checkin-nav .owl-prev, .checkin-nav .owl-next {
+  position: absolute;
+  color: inherit;
+  background: none;
+  border: none;
+  z-index: 100;
+}
+.pcheckin-owl .owl-item {
+  text-align: center;
+}
+.checkin-nav .owl-prev i {
+  font-size: 2rem;
+  color: #000;
+}
+
+.checkin-nav .owl-next i {
+  font-size: 2rem;
+  color: #000;
+}
+
+.checkin-nav .owl-prev {
+  left: 0;
+}
+
+.checkin-nav .owl-next {
+  right: 0;
+}
+.owl-theme .checkin-nav {
+  margin-top: 0px !important;
+}
+.checkin-nav button {
+  margin: 0px !important;
+  padding: 0px 7px 0px 7px !important;
+  background: transparent !important;
+}
+.checkin-nav button.disabled {
+  opacity: 0.1 !important;
+}
+.btborder {
+  border-bottom: 1px dashed #dbdbdb;
+  padding-bottom: 15px;
+}
+.btborder1{
+  border-bottom: 1px solid #b6cdd8;
+}

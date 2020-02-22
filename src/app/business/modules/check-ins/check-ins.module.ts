@@ -20,6 +20,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
+import { OwlModule } from 'ngx-owl-carousel';
 @NgModule({
     imports: [
         CheckinsRoutingModule,
@@ -34,7 +35,8 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
         CustomerModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,
-        NgbModule
+        NgbModule,
+        OwlModule
     ],
     declarations: [
         CheckInsComponent,

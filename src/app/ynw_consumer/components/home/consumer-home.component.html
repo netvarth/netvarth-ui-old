@@ -10,8 +10,8 @@
                         <div class="item" *ngFor="let waitlist of waitlists; let i=index">
                             <div class="header">
                             <div class="lt">
-                                <div class="title" (click)="providerDetail(waitlist.provider)">
-                                    <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3>
+                                <div class="title" (click)="providerDetail(waitlist.providerAccount)">
+                                    <h3>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h3>
                                 </div>
                                 <div class="location consumr" *ngIf="waitlist.queue.location">
                                     {{waitlist.queue.location.place || '' | capitalizeFirst}}
@@ -31,13 +31,13 @@
                                 </div>
                             </div>
                             <div class="rt">
-                                <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">
-                                    <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.provider)"
+                                <div class="favourite" *ngIf="checkIfFav(waitlist.providerAccount.id)">
+                                    <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount)"
                                         matTooltip="{{remove_fav_cap}}"></span>
                                 </div>
-                                <div class="favourite" *ngIf="!checkIfFav(waitlist.provider.id)">
+                                <div class="favourite" *ngIf="!checkIfFav(waitlist.providerAccount.id)">
                                     <span class="icon-favourite" matTooltip="Add to Favourite"
-                                        (click)="addFavProvider(waitlist.provider.id)"></span>
+                                        (click)="addFavProvider(waitlist.providerAccount.id)"></span>
                                 </div>
                             </div>
                         </div>
@@ -205,15 +205,15 @@
                                                 <i class="fa fa-pencil link mgn-lt-10 " (click)="changemode[i] = !changemode[i]"></i> 
                                                 </span>
                                                 <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]">
-                                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i>
+                                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'DRIVING',i)"></i>
                                                         <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
                                                         <img src="./assets/images/walking.png" alt=""
-                                                                        class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"/>
+                                                                        class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'WALKING',i)"/>
                                                        </span>
                                                    
                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'" class="pull-right">
                                             <mat-slide-toggle [checked]="statusOfTrack[i]"
-                                                (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"
+                                                (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.providerAccount.id,i,$event)"
                                                 class="trackSlide "></mat-slide-toggle>
                                                 <label class="mgn-lt-10"><b>{{statusOfTrack[i] ? 'On' : 'Off'}}</b></label>
                                         </span>

@@ -20,7 +20,7 @@ export class WaitlistDetailResolver implements Resolve<{}> {
     const waitlist = this.consumer_datastorage.get();
     if (waitlist != null && waitlist.ynwUuid) {
       const params = {
-        account: waitlist.provider.id
+        account: waitlist.providerAccount.id
       };
       return this.consumer_services.getWaitlistDetail(waitlist.ynwUuid, params);
     } else {

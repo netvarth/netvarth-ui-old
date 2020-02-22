@@ -169,6 +169,7 @@ export class ProviderCheckinComponent implements OnInit {
     qParams = {};
     action: any = '';
     showAction = false;
+    carouselOne;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -181,6 +182,24 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     ngOnInit() {
+        this.carouselOne = {
+            dots: false,
+            nav: true,
+            navContainer: '.checkin-nav',
+            navText: [
+              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+              '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+            ],
+            autoplay: false,
+            // autoplayTimeout: 6000,
+            // autoplaySpeed: 1000,
+            // autoplayHoverPause: true,
+            mouseDrag: false,
+            touchDrag: true,
+            pullDrag: false,
+            loop: false,
+            responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
+          };
         this.createForm();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
@@ -522,6 +541,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -537,7 +557,7 @@ export class ProviderCheckinComponent implements OnInit {
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-                        this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+                        // this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
                         this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
                         this.setTerminologyLabels();
@@ -618,7 +638,9 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
 
-    handleQueueSelection(queue) {
+    handleQueueSelection(queue, index) {
+        console.log(index);
+        this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
@@ -786,7 +808,7 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
+            this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.firstName + ' ' + this.customer_data.lastName });
         }
     }
     showCheckinButtonCaption() {
@@ -897,7 +919,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             };
             if (this.addmemberobj.mobile !== '') {
-                post_data.userProfile['primaryMobileNo'] = this.addmemberobj.mobile;
+                post_data.userProfile['phoneNo'] = this.addmemberobj.mobile;
                 post_data.userProfile['countryCode'] = '+91';
             }
             if (this.addmemberobj.gender !== '') {

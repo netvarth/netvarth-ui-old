@@ -1406,7 +1406,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
     if (this.filter.phone_number !== '') {
-      api_filter['primaryMobileNo-eq'] = this.filter.phone_number;
+      api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;

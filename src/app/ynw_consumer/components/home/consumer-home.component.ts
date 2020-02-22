@@ -603,7 +603,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   doCancelWaitlist(waitlist) {
-    if (!waitlist.ynwUuid || !waitlist.provider.id) {
+    if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
       return false;
     }
     this.shared_functions.doCancelWaitlist(waitlist, this)
@@ -650,7 +650,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   goWaitlistDetail(waitlist) {
-    this.router.navigate(['consumer/waitlist', waitlist.provider.id, waitlist.ynwUuid]);
+    this.router.navigate(['consumer/waitlist', waitlist.providerAccount.id, waitlist.ynwUuid]);
   }
 
   openNotification(data) {
@@ -682,8 +682,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
-    pass_ob['user_id'] = waitlist.provider.id;
-    pass_ob['name'] = waitlist.provider.businessName;
+    pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
   }
 
@@ -965,7 +965,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'amount': prepayamt,
                 // 'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
-                'accountId': waitlist.provider.id,
+                'accountId': waitlist.providerAccount.id,
                 'purpose': 'prePayment'
               };
               const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
@@ -1018,7 +1018,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return this.shared_functions.providerConvertMinutesToHourMinute(time);
   }
   statusOfLiveTrack(waitlist, i) {
-    this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id)
+    this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.providerAccount.id)
       .subscribe(data => {
         this.statusOfTrack[i] = data;
         waitlist.trackStatus = data;
@@ -1075,11 +1075,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getTrackMessage(waitlist) {
     let message = '';
     if (waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance === 0) {
-      message += 'You are about to reach ' + waitlist.provider.businessName;
+      message += 'You are about to reach ' + waitlist.providerAccount.businessName;
     } else {
       message += 'You are ' + waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance + ' ' + projectConstants.LIVETRACK_CONST[waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit] + ' away and will take around';
       message += ' ' + this.getMintuesToHour(waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime);
-      message += ' to reach ' + waitlist.provider.businessName;
+      message += ' to reach ' + waitlist.providerAccount.businessName;
     }
     return message;
   }
@@ -1100,7 +1100,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
-                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
+                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1108,7 +1108,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 }
               } else {
                 if (waitlist.trackStatus) {
-                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
+                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -9,22 +9,6 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
-                                <!-- <div class="col-md-12 mgn-up-10">
-                                Search Customer By
-                            </div>
-                            <div class="btn-modes col-md-12 mgn-up-10">
-                                <span class="bt3 pointer-cursor mgn-rt-10" (click)="selectMode('phone')"
-                                    [ngClass]="{'active': (selectedMode == 'phone')}">Phone Number</span>
-                                <span class="bt3 pointer-cursor mgn-rt-10" (click)="selectMode('email')"
-                                    [ngClass]="{'active': (selectedMode == 'email')}">Email Id</span>
-                                <span class=" bt3 pointer-cursor mgn-rt-10" (click)="selectMode('custId')"
-                                    [ngClass]="{'active': (selectedMode == 'custId')}">Patient Id</span>
-                                <span class=" bt3 pointer-cursor" (click)="selectMode('name')"
-                                    [ngClass]="{'active': (selectedMode == 'name')}">Name</span>
-                            </div> -->
-                                <!-- <div class="col-md-12 no-padding">
-                                <hr class="wide-separator-line"/>
-                            </div>                   -->
                                 <div class="form-group col-md-12 mgn-up-10 sc-frm">
                                     <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
                                         <div class="col-md-10 col-sm-10 col-xs-10">
@@ -39,58 +23,12 @@
                                         searchCustomer(searchForm.value,selectedMode)"></i>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-9 col-xs-10 col-sm-10 no-padding"
-                                        *ngIf="selectedMode == 'email'">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
-                                            <mat-form-field>
-                                                <input matInput placeholder="Enter Email Id" type="text"
-                                                    class="form-control" formControlName="email">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-3 col-xs-2 col-sm-2">
-                                            <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value, selectedMode)"></i>
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-md-9 col-xs-10 col-sm-10 no-padding" *ngIf="selectedMode == 'name'">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Enter 3 Digit of First Name" type="text"
-                                                class="form-control" formControlName="first_name">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Enter 3 Digit of Last Name" type="text"
-                                                class="form-control" formControlName="last_name"
-                                                (keypress)="findCustomer(searchForm.value, $event)">
-                                        </mat-form-field>
-                                    </div>
-                                </div> -->
-                                    <!-- <div class="col-md-3 col-xs-2 col-sm-2"  *ngIf="selectedMode == 'name'">
-                                    <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                    searchCustomer(searchForm.value, selectedMode)"></i>
-                                </div>    -->
-                                    <!-- <div class="col-md-9 col-xs-10 col-sm-10 no-padding"
-                                        *ngIf="selectedMode == 'custId'">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
-                                            <mat-form-field>
-                                                <input matInput placeholder="Enter Customer Id" type="text"
-                                                    class="form-control" formControlName="customer_id">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-3 col-xs-2 col-sm-2">
-                                            <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value, selectedMode)"></i>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </form>
                             <div class="col-md-12 no-padding" *ngIf="create_new">
                                 <hr class="wide-separator-line" />
                             </div>
                             <div class="create_new mgn-bt-20" *ngIf="create_new">
-                                <!-- <span class="create_new_oops">{{oops_cap}}</span> -->
                                 <span>Sorry, We were not able to find the record in our {{customer_label}}s list.</span>
                                 <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
                                     {{customer_label}}</button>
@@ -104,8 +42,8 @@
             <div class="card p0" *ngIf="showCheckin">
                 <div class="copy locd">
                     <div class="lbl col-sm-12 col-md-7 col-lg-7">
-                        <div class="mainouter checkin-page">
-                            <ng-container>
+                        <div class="mainouter checkin-page ">
+                            <ng-container *ngIf="!api_loading1">
                                 <div class="servicefor-outer btborder">
                                     <ul class="availer-ul">
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
@@ -184,47 +122,70 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <mat-chip-list class="">
-                                        <mat-chip *ngFor="let queue of queuejson"
-                                             (click)="handleQueueSelection(queue);">
-                                            {{sel_queue_timecaption}}</mat-chip>
-                                    </mat-chip-list>
-                                </div>
-                                <div>
-
-
-                                    <ng-container *ngIf="queuejson.length > 0">
-                                        <div class='q-list-outer' *ngIf="queuejson.length > 0">
-                                            <div class="queue-head" *ngIf="queuejson.length > 0">
-                                                {{serv_time_window_cap}}
-                                                <div class="queue-body mgn-up-10">
-                                                    <span class="leftarrow" (click)="handleQueueSel('prev')"
-                                                        *ngIf="sel_queue_indx > 0"><i
-                                                            class="fa fa-angle-left"></i></span>
-                                                    <span class="leftarrow" (click)="handleQueueSel('prev')"
-                                                        *ngIf="sel_queue_indx <= 0"><i
-                                                            class="fa fa-angle-left disable"></i></span>
-                                                    <span class="sel-queue">
-                                                        {{sel_queue_timecaption}}</span>
-                                                    <span class="rightarrow" (click)="handleQueueSel('next')"
-                                                        *ngIf="(queuejson.length -1) > sel_queue_indx">
-                                                        <i class="fa fa-angle-right"></i> </span>
-                                                    <span class="rightarrow" (click)="handleQueueSel('next')"
-                                                        *ngIf="(queuejson.length -1) == sel_queue_indx">
-                                                        <i class="fa fa-angle-right disable"></i> </span>
+                                <div class="col-md-12 no-padding ">
+                                    <div class="col-md-12 mgn-bt-10 btborder">
+                                        <mat-chip-list class="pcheckin-owl">
+                                            <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
+                                                class="width-100" [items]="queuejson">
+                                                <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
+                                                    [selected]="queue.id === queuejson[this.sel_queue_indx].id"
+                                                    (click)="handleQueueSelection(queue, i);">
+                                                    <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                                                    </span></mat-chip>
+                                            </owl-carousel>
+                                            <div class="owl-theme">
+                                                <div class="owl-controls">
+                                                    <div class="checkin-nav owl-nav"></div>
+                                                </div>
+                                            </div>
+                                        </mat-chip-list>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+                                        <div class="waitlist-button-outer">
+                                            <div class="showDetOuter" *ngIf="queuejson.length > 0">
+                                                <div class="showDetService">
+                                                    <span *ngIf="calc_mode=='NoCalc'"><span
+                                                            *ngIf="!isFuturedate"><strong>Today
+                                                            </strong></span>
+                                                        <span *ngIf="isFuturedate"><strong>{{sel_day}}
+                                                                {{sel_checkindate | date: dateFormat}}</strong>
+                                                        </span></span>
+                                                </div>
+                                                <div class="queue-waitingdiv">
+                                                    <div class="queue-head"
+                                                        *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                                        <strong>{{today_cap}} {{estimateCaption}}: </strong>
+                                                        <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                                                    </div>
+                                                    <div class="queue-head"
+                                                        *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                                                        <strong>{{persons_ahead_cap}}</strong>&nbsp;<span
+                                                            class="queue-avail-date">{{sel_queue_personaahead}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="queue-waitingdiv"
+                                                    *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                                    <div class="queue-head">
+                                                        <ng-container *ngIf="isFuturedate"><span
+                                                                class="checkin-footer-date"><strong>{{nextavailableCaption}}
+                                                                    <span class="queue-avail-date">{{sel_day}}
+                                                                        {{sel_checkindate | date: dateFormat}},
+                                                                        {{sel_queue_servicetime}}</span></strong></span>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!isFuturedate">
+                                                            <strong>{{today_cap}} </strong>
+                                                            <strong>{{checkinsCaption}}:
+                                                            </strong> <span
+                                                                class="queue-avail-date">{{sel_queue_servicetime}}</span>
+                                                        </ng-container>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class='q-list-outer' *ngIf="queuejson.length == 1">
-                                            <div class="queue-head" *ngIf="queuejson.length == 1">
-                                                {{serv_time_window_cap}}
-                                                <div class="queue-body">
-                                                    <span class="sel-queue">
-                                                        {{sel_queue_timecaption}}</span>
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                    </div>
+                                </div>
+                                <div>
+                                    <ng-container *ngIf="queuejson.length > 0">
                                         <div class="col-md-12 form-group queue-outer mgn-up-20"
                                             *ngIf="board_count > 0 && availableSlots.length>0">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
@@ -235,52 +196,8 @@
                                             </mat-chip-list>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <div *ngIf="queuejson.length > 0 && servicesjson.length > 0">
-                                            <div class="waitlist-button-outer">
-                                                <div class="showDetOuter" *ngIf="queuejson.length > 0">                                                    
-                                                    <div class="showDetService">
-                                                        <span *ngIf="calc_mode=='NoCalc'"><span
-                                                                *ngIf="!isFuturedate"><strong>Today
-                                                                </strong></span>
-                                                            <span *ngIf="isFuturedate"><strong>{{sel_day}}
-                                                                    {{sel_checkindate | date: dateFormat}}</strong>
-                                                            </span></span>
-                                                    </div>
-                                                    <div class="queue-waitingdiv">
-                                                        <div class="queue-head"
-                                                            *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                            <strong>{{today_cap}} {{estimateCaption}}: </strong>
-                                                            <span
-                                                                class="queue-avail-date">{{sel_queue_waitingmins}}</span>
-                                                        </div>
-                                                        <div class="queue-head"
-                                                            *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
-                                                            <strong>{{persons_ahead_cap}}</strong> <span
-                                                                class="queue-avail-date">{{sel_queue_personaahead}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="queue-waitingdiv"
-                                                        *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                                        <div class="queue-head">
-                                                            <ng-container *ngIf="isFuturedate"><span
-                                                                    class="checkin-footer-date"><strong>{{nextavailableCaption}}
-                                                                        <span class="queue-avail-date">{{sel_day}}
-                                                                            {{sel_checkindate | date: dateFormat}},
-                                                                            {{sel_queue_servicetime}}</span></strong></span>
-                                                            </ng-container>
-                                                            <ng-container *ngIf="!isFuturedate">
-                                                                <strong>{{today_cap}} </strong>
-                                                                <strong>{{checkinsCaption}}:
-                                                                </strong> <span
-                                                                    class="queue-avail-date">{{sel_queue_servicetime}}</span>
-                                                            </ng-container>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
-                                        </app-common-innerloading-spinner>                                        
+                                        </app-common-innerloading-spinner>
                                     </ng-container>
                                     <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                                         <span class='no-queue-available'
@@ -292,6 +209,43 @@
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
+
+                        <a *ngIf="consumerNote" class="notes" (click)="showNote()">Notes</a>
+                        <ng-container *ngIf="consumerNote" class="notes">
+                            <div class="row col-md-12" style="display: flex;">
+                                <div class="col-md-7">
+                                    <span class="ln-hgt-40">{{consumerNote}}</span>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <a class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">Attachments</a>
+                        <ng-container class="attachment"
+                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+
+                            <div class="row col-md-12" style="display: flex;"
+                                *ngFor="let item of selectedMessage.files; let i = index">
+                                <div class="col-md-7">
+                                    <span class="ln-hgt-40">{{item.name}}</span>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="mbt comm-menu-imgs">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                                <i class="icon-delete"></i>
+                                                <span>delete</span>
+                                            </button>
+                                        </mat-menu>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </ng-container>
+                        <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
+
                         <ng-container *ngIf="this.checkinLabel">
                             <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
                                     [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
@@ -427,6 +381,19 @@
                                     </ng-container> -->
                                 </ng-container>
 
+                                <!-- <ng-container *ngIf="action=='attachment'">
+                                    <button type="button" class="cs-btn btn-attach bt_attach"
+                                        (click)="imagefile.click()" [matTooltip]="'Attach files'">
+                                        <input #imagefile type="file" accept="image/*,application/pdf"
+                                            style="display:none;" multiple (change)="filesSelected($event)">
+                                        <span><i class="fa fa-upload"></i></span>
+                                    </button>
+                                    <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="handleGoBack(1)">
+                                        Cancel
+                                    </button>
+                                    <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
+                                    </button>
+                                </ng-container> -->
 
                             </aside>
                         </div>
@@ -435,13 +402,16 @@
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
                                 Note</button>
-                            <!-- <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('coupon')">Apply
-                                Coupon</button> -->
-                            <button class="cs-btn bt3 width-100 mgn-up-20"
-                                (click)="handleSideScreen('attachment')">Attach
-                                File</button>
-                            <!-- <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('payment')">Make
-                                Payment</button> -->
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
+                                <!-- <button type="button" class="cs-btn btn-attach bt_attach"
+                                        (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->
+                                <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;"
+                                    multiple (change)="filesSelected($event)">
+                                <span> Attach
+                                    File</span>
+                                <!-- </button> -->
+
+                            </button>
                         </div>
                     </div>
 

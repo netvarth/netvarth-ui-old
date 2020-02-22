@@ -42,7 +42,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   getRateByUser() {
     const params = {
-      account: this.waitlist.provider.id,
+      account: this.waitlist.providerAccount.id,
       'uId-eq': this.waitlist.ynwUuid
     };
 
@@ -70,7 +70,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.resetApiErrors();
 
     const params = {
-      account: this.waitlist.provider.id
+      account: this.waitlist.providerAccount.id
     };
 
     const post_data = {

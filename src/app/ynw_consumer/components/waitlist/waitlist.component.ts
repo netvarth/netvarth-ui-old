@@ -105,8 +105,8 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
-    pass_ob['user_id'] = waitlist.provider.id;
-    pass_ob['name'] = waitlist.provider.businessName;
+    pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
 
   }
@@ -129,7 +129,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   }
 
   doCancelWaitlist(waitlist) {
-    if (!waitlist.ynwUuid || !waitlist.provider.id) {
+    if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
       return false;
     }
 
