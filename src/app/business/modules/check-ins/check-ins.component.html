@@ -273,7 +273,7 @@
                         name="phone_number" id="btn_phone_number_filter_id"><span>Mobile</span></a>
                       <input *ngIf="time_type == 3" type="text" #Fphnumber (blur)="doSearch()"
                         (keyup)="focusInput($event,Fphnumber)" class="genTextHeight" [(ngModel)]="filter.phone_number"
-                        [hidden]="!filters['phone_number']">
+                        [hidden]="!filters['phone_number']" maxlength="10">
                     </span>
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['queue']" *ngIf="time_type === 3"
