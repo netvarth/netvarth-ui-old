@@ -378,6 +378,7 @@ export class CheckInInnerComponent implements OnInit {
           error => {
             this.payModesQueried = true;
             this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -479,7 +480,9 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
-            this.getProviderDepart(this.businessjson.id);
+            if (this.settingsjson.filterByDept) {
+              this.getProviderDepart(this.businessjson.id);
+            }
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
               this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
@@ -561,7 +564,7 @@ export class CheckInInnerComponent implements OnInit {
               // resolve();
             },
             error => {
-              // this.api_error = error.error;
+              this.api_error = error.error;
               this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
       }
@@ -688,6 +691,7 @@ export class CheckInInnerComponent implements OnInit {
               }
             } else {
               this.api_error = ' The business hours for the day have ended.Please try again during working hours.';
+              this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
               this.disable_btn = true;
             }
           } else {
@@ -860,6 +864,7 @@ export class CheckInInnerComponent implements OnInit {
         this.saveCheckin();
       } else {
         this.api_error = error;
+        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     }
   }
@@ -920,6 +925,7 @@ export class CheckInInnerComponent implements OnInit {
     // }
     if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
+      this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     }
     if (this.partySizeRequired) {
       this.holdenterd_partySize = this.enterd_partySize;
@@ -992,6 +998,7 @@ export class CheckInInnerComponent implements OnInit {
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
         });
   }
@@ -1023,6 +1030,7 @@ export class CheckInInnerComponent implements OnInit {
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
         });
   }
@@ -1049,6 +1057,7 @@ export class CheckInInnerComponent implements OnInit {
       });
     } else {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+      this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
       this.api_loading = false;
     }
     if (this.shareLoc) {
@@ -1136,8 +1145,10 @@ export class CheckInInnerComponent implements OnInit {
           obj.source.checked = false; // preventing the current checkbox from being checked
           if (this.maxsize > 1) {
             this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
+            this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
           } else if (this.maxsize === 1) {
             this.api_error = 'Only ' + this.maxsize + ' member can be selected';
+            this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
           }
         }
       }
@@ -1234,9 +1245,11 @@ export class CheckInInnerComponent implements OnInit {
       },
         error => {
           this.api_error = error.error;
+          this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
         });
     } else {
       this.api_error = derror;
+      this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     }
   }
   handleNote() {
@@ -1467,6 +1480,7 @@ export class CheckInInnerComponent implements OnInit {
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     } else {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT');
+      this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     }
   }
   getServicebyLocationId(locid, pdate) {
@@ -1513,6 +1527,7 @@ export class CheckInInnerComponent implements OnInit {
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.api_loading = false;
       });
   }
@@ -1588,6 +1603,7 @@ export class CheckInInnerComponent implements OnInit {
           }
         }, (error) => {
           this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+          this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
           this.shareLoc = false;
           this.track_loading = false;
         }
@@ -1669,6 +1685,7 @@ export class CheckInInnerComponent implements OnInit {
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.api_loading = false;
       });
   }

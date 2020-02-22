@@ -1864,6 +1864,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               this.coupondialogRef.afterClosed().subscribe(result => {
                 this.btn_clicked = false;
               });
+            }, error => {
+              this.btn_clicked = false;
             });
         });
   }
