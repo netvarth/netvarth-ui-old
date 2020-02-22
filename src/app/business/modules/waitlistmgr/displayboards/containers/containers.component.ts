@@ -32,7 +32,7 @@ export class ContainersComponent implements OnInit {
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     statusboard_cap = Messages.DISPLAYBOARD_HEADING;
-     constructor(
+    constructor(
         private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
@@ -52,24 +52,24 @@ export class ContainersComponent implements OnInit {
         this.api_loading = true;
         this.layout_list = [];
         this.provider_services.getDisplayboards()
-        .subscribe(
-            (data: any) => {
-                const alldisplayBoards = data;
-                this.layout_list = [];
+            .subscribe(
+                (data: any) => {
+                    const alldisplayBoards = data;
+                    this.layout_list = [];
 
-                alldisplayBoards.forEach(element => {
-                    if(element.container) {
-                        this.layout_list.push(element);
-                    }
-                });
-                // this.layout_list = data;
-                this.api_loading = false;
-            },
-            error => {
-                this.api_loading = false;
-                this.shared_functions.apiErrorAutoHide(this, error);
-            }
-        );
+                    alldisplayBoards.forEach(element => {
+                        if (element.container) {
+                            this.layout_list.push(element);
+                        }
+                    });
+                    // this.layout_list = data;
+                    this.api_loading = false;
+                },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
 
 
         // this.provider_services.getDisplayboardContainers()
@@ -111,13 +111,13 @@ export class ContainersComponent implements OnInit {
                 'displayboards', 'containers', 'view'], navigationExtras);
         }
     }
-    // deleteDisplayboardLayout(layout) {
-    //     this.provider_services.deleteDisplayboard(layout.id).subscribe(
-    //         () => {
-    //             this.getDisplayboardLayouts();
-    //         }
-    //     );
-    // }
+    deleteDisplayboardContainer(layout) {
+        this.provider_services.deleteDisplayboard(layout.id).subscribe(
+            () => {
+                this.getDisplayboardContainers();
+            }
+        );
+    }
     // getLayout(layoutvalue) {
     //     let layoutActive;
     //     for (let i = 0; i < this.boardLayouts.length; i++) {
@@ -129,4 +129,3 @@ export class ContainersComponent implements OnInit {
     //     return layoutActive;
     // }
 }
-
