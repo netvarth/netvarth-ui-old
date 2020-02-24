@@ -36,7 +36,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
-    console.log(this.bProfile);
     this.grid_row_index = this.data['grid_row_index'];
     if (this.que_type === 'domain_questions') {
       this.domain_questions = this.data['questions'] || [];
@@ -131,7 +130,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    console.log(post_data);
     this.provider_services.updateDomainFields(this.data.userId,post_data)
       .subscribe(
         () => {
@@ -208,24 +206,24 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       }
     }
 
-    console.log(submit_data);
+    
     return submit_data;
   }
 
   changeGridValues(grid_value_list, key) {
-console.log(this.que_type)
-console.log(this.bProfile)
+
 
     // JSON.parse(JSON.stringify used to remove reference from parent page
     let pre_value = {};
-    if (this.que_type === 'domain_questions' &&
-      typeof this.bProfile['domainVirtualFields'] === 'object') {
-      pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-      console.log(pre_value);
-    } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
-
-      pre_value = this.bProfile.subDomain;
-    }
+//     if (this.que_type === 'domain_questions' &&
+//       typeof this.bProfile['domainVirtualFields'] === 'object') {
+//       pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
+//       console.log(pre_value);
+//     } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
+// console.log(this.bProfile);
+//       pre_value = this.bProfile.subDomain;
+//       console.log(pre_value);
+//     }
 
     if (pre_value[key]) {
       if (pre_value[key][this.grid_row_index]) {
@@ -246,34 +244,27 @@ console.log(this.bProfile)
     const keys = Object.keys(submit_data);
     let pre_value = {};
 
-    if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
-console.log(this.bProfile['domainVirtualFields']);
-console.log(JSON.stringify(this.bProfile['domainVirtualFields']));
-      pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-      console.log(pre_value);
-    } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
-    pre_value = this.bProfile.subDomain;
-      console.log(pre_value);
-    }
-    console.log(keys);
+    // if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
+    //   pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
+    //   console.log(pre_value);
+    // }  else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
+    //   pre_value = this.bProfile.subDomain;
+    //   console.log(pre_value);
+    // }
     for (const key of keys) {
 
       if (pre_value[key]) {
-          console.log(pre_value[key])
         if (typeof submit_data[key] === 'string' && submit_data[key] !== '' ||
           (typeof submit_data[key] === 'object' && submit_data[key].length !== 0)) {
           pre_value[key] = submit_data[key];
-          console.log(pre_value[key])
         } else {
           delete pre_value[key];
-          console.log(pre_value[key])
           // used to remove the field if the value is null.
           // Grid data will delete from view page
         }
 
       } else {
         pre_value[key] = submit_data[key];
-        console.log(pre_value[key])
       }
     }
 

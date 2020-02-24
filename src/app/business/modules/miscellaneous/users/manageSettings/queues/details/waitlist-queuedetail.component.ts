@@ -94,9 +94,11 @@ export class WaitlistQueueDetailComponent implements OnInit {
         public provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(params => {
             this.queue_id = params.id;
+           
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
+            console.log(this.params.userId);
             if (this.params.action === 'editFromList') {
                 this.action = 'edit';
             } else {
@@ -106,7 +108,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        this.getWaitlistMgr();
         this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -127,6 +128,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.breadcrumbs = breadcrumbs;
                 this.createForm();
             }
+            this.getWaitlistMgr();
         }, 100);
     }
     getWaitlistMgr() {
@@ -136,7 +138,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
           .subscribe(
             data => {
               this.waitlist_manager = data;
+             // if (this.waitlist_manager.calculationMode === 'Fixed') {
               this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+           // }
               if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
                 this.iftokn = true;
               } else {
@@ -383,9 +387,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     getProviderServices() {
         const params = { 'status': 'ACTIVE' };
-        this.provider_services.getServicesList(params)
+        this.provider_services.getUserServicesList(this.params.userId)
             .subscribe(data => {
                 this.services_list = data;
+                console.log(this.services_list);
                 this.getDepartments();
             });
     }
@@ -565,7 +570,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
 
     onSubmit(form_data) {
+        console.log(form_data);
         if (!form_data.qname.replace(/\s/g, '').length) {
+            console.log("in queue name if");
             const error = 'Please enter queue name';
             this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
@@ -585,54 +592,72 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             }
         }
+        console.log(this.services_list);
         for (const sel of this.services_list) {
             if (sel['checked']) {
                 selser.push({ 'id': sel.id });
                 found = true;
             }
         }
+        console.log(found);
         if (!found) {
+            console.log('services');
             const error = 'Please select services';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+            //this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
         }
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
+            console.log("day");
             const error = 'Please select the days';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+           // this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
         } else {
             // Numeric validation
             if (isNaN(form_data.qcapacity)) {
+                console.log("qcapacity");
                 const error = 'Please enter a numeric value for capacity';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+               // this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
+                console.log("qcapacity");
                 const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             } else {
                 if (form_data.qcapacity === 0) {
+                    console.log("qcapacity");
                     const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                    //this.shared_Functionsobj.apiErrorAutoHide(this, error);
                     return;
                 }
             }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
+                console.log("qcapacity");
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
+                console.log("qcapacity");
                 const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             } else {
                 if (form_data.qserveonce === 0) {
+                    console.log("qcapacity");
                     const error = this.customer_label + 's served at a time should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                    //this.shared_Functionsobj.apiErrorAutoHide(this, error);
                     return;
                 }
             }
@@ -650,6 +675,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             }
             // check whether the start and end times are selected
             if (!this.dstart_time || !this.dend_time) {
+                console.log("qcapacity");
                 this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
                 return;
             }
@@ -667,6 +693,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             enddate.setMinutes(this.dend_time.minute);
             const starttime_format = moment(curdate).format('hh:mm A') || null;
             const endtime_format = moment(enddate).format('hh:mm A') || null;
+             console.log("qcapacity");
             // building the schedule json section
             schedulejson = {
                 'recurringType': 'Weekly',
@@ -692,13 +719,15 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 },
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
-                'timeInterval': form_data.timeSlot
+                'timeInterval': form_data.timeSlot,
+                'provider': { 'id': this.params.userId }
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
             } else {
                 this.addProviderQueue(post_data);
             }
+            console.log(post_data);
         }
     }
     addProviderQueue(post_data) {

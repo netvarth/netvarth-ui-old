@@ -121,7 +121,10 @@
                     </div>
                 </nav>
                 <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
-                    <div class="copy ynw-common-form-nm pro-schedule">
+                        <div class="card que p0" *ngIf="services_list.length === 0">
+                                Atleast one service need to create queue
+                            </div>
+                    <div class="copy ynw-common-form-nm pro-schedule"*ngIf="services_list.length>0">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group queue-selection">

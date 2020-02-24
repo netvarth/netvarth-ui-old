@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../../../../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -102,6 +102,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     todayQLoading: any = [];
     scheduleLoading: any = [];
     domain: any;
+    user;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -111,7 +112,14 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         public provider_shared_functions: ProviderSharedFuctions,
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
-        private fb: FormBuilder) { }
+        private activatedRoot: ActivatedRoute,
+        private fb: FormBuilder) { 
+            this.activatedRoot.queryParams.subscribe(data => {
+                this.user = data;
+                console.log( this.user);
+    
+            });
+        }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -279,7 +287,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getProviderQueues()
+            this.provider_services.getUserProviderQueues(this.user.id)
                 .subscribe(
                     (data) => {
                         let allQs: any = [];
@@ -288,6 +296,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
+                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -639,9 +648,11 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
         } else {
             const navigationExtras: NavigationExtras = {
-                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
+                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues(),
+                    userId: this.user.id }
+               
             };
-            this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
+            this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id, 'settings', 'queues', 'add'], navigationExtras);
         }
     }
     /**
