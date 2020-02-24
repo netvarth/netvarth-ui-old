@@ -1073,37 +1073,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getFutureCheckinCount(Mfilter);
     promise.then(
       result => {
-        if (this.selected_queue.appointment === 'Disable') {
+        // if (this.selected_queue.appointment === 'Disable') {
           this.pagination.totalCnt = result;
           Mfilter = this.setPaginationFilter(Mfilter);
-        }
+        // }
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
             data => {
               this.new_checkins_list = [];
               this.check_in_list = this.check_in_filtered_list = data;
-              // this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
-              // if (this.grouped_list && this.grouped_list['checkedIn']) {
-              //   this.new_checkins_list = this.grouped_list['checkedIn'].slice();
-              // }
-              // if (this.grouped_list && this.grouped_list['arrived']) {
-              //   Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
-              // }
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
                 this.noFilter = true;
               }
-              if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
-                this.getAvaiableSlots();
-                if (this.futureUnAvailableSlots.length > 0) {
-                  setTimeout(() => {
-                    this.scrollToSection();
-                  }, 500);
-                }
-              } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
-                this.shared_functions.removeitemFromGroupStorage('interval');
-              }
+              console.log(this.check_in_list);
               this.loading = false;
             },
             () => {
@@ -1394,7 +1378,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     console.log(this.selected_queue);
     const api_filter = {};
-    if (this.time_type === 1 || this.time_type === 2) {
+    if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
@@ -1418,18 +1402,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
     }
     if (this.time_type !== 1) {
-      // if (this.filter.waitlist_status !== 'all') {
-      //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
-      // }
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
       }
-      if (this.filter.futurecheckin_date != null && this.time_type === 2) {
-        api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
-      }
+      // if (this.filter.futurecheckin_date != null && this.time_type === 2) {
+      //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+      // }
     }
     if (this.time_type !== 2) {
       if (this.labelFilterData !== '') {
@@ -1455,12 +1436,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.gender !== '') {
         api_filter['gender-eq'] = this.filter.gender;
       }
-      // if (this.filter.dob_start_date != null) {
-      //   api_filter['dob-ge'] = this.dateformat.transformTofilterDate(this.filter.dob_start_date);
-      // }
-      // if (this.filter.dob_end_date != null) {
-      //   api_filter['dob-le'] = this.dateformat.transformTofilterDate(this.filter.dob_end_date);
-      // }
     }
     api_filter['location-eq'] = this.selected_location.id;
     return api_filter;

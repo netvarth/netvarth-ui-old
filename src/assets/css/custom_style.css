@@ -7440,3 +7440,10 @@ hr.wide-separator-line{
 .btborder1{
   border-bottom: 1px solid #b6cdd8;
 }
+.content.loc-list.users .card .copy .mbt {
+  top: 0 !important
+}
+.content.loc-list.users .dboard {
+  padding-top:5px;
+  padding-bottom: 5px;
+}

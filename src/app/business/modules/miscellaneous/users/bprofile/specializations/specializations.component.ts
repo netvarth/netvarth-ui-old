@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { AddProviderBprofileSpecializationsComponent } from '../../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import {  userspecializationComponent } from './userspecialization/userspecialization.component';
+import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
     selector: 'app-specializatons',
     templateUrl: './specializations.component.html'
@@ -14,7 +14,7 @@ import {  userspecializationComponent } from './userspecialization/userspecializ
 export class SpecializationsComponent implements OnInit, OnDestroy {
     specialization_arr: any = [];
     special_cap = Messages.BPROFILE_SPECIAL_CAP;
-    
+
     bProfile = null;
     frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
@@ -23,28 +23,28 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     domain;
     normal_specilization_show = 1;
     breadcrumb_moreoptions: any = [];
-    userdata;
     specn;
     username;
     domainList: any = [];
     subDomain;
     breadcrumbs_init = [
         {
-          title: 'Settings',
-          url: '/provider/settings'
+            title: 'Settings',
+            url: '/provider/settings'
         },
         {
-          url: '/provider/settings/miscellaneous',
-          title: 'Miscellaneous'
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
         },
         {
-          url: '/provider/settings/miscellaneous/users',
-          title: 'Users'
-    
+            url: '/provider/settings/miscellaneous/users',
+            title: 'Users'
+
         },
-        
-      ];
-      breadcrumbs = this.breadcrumbs_init;
+
+    ];
+    breadcrumbs = this.breadcrumbs_init;
+    userId: any;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -53,12 +53,11 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {
-        this.activated_route.queryParams.subscribe(data => {
-            console.log(data);
-            this.userdata = data;
-             }
+        this.activated_route.params.subscribe(params => {
+            this.userId = params.id;
+        }
         );
-     }
+    }
     ngOnDestroy() {
         if (this.specialdialogRef) {
             this.specialdialogRef.close();
@@ -68,35 +67,40 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.getUser(); 
-        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Online Profile',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+        });
+        breadcrumbs.push({
+            title: 'Specialization'
+        });
+        this.breadcrumbs = breadcrumbs;
+        this.getUser();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     // learnmore_clicked(parent, child) {}
     performActions() {
-        
+
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->specializations']);
-        
-      }
+
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
-      }
+    }
 
-    getUser()
-    {
-        this.provider_services.getUser(this.userdata.id)
+    getUser() {
+        this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
-                    this.username = data.firstName;
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.username
-                    
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                    
+                this.username = data.firstName;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
@@ -109,12 +113,11 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     }
                 }
             });
-           
-            
+
+
     }
 
-    initSpecializations() 
-    {
+    initSpecializations() {
         this.bProfile = [];
         this.getBussinessProfileApi()
             .then(
@@ -122,8 +125,8 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     this.bProfile = data;
                     console.log(this.domain);
                     console.log(this.subDomain);
-                    this.getSpecializations(this.domain,this.subDomain);
-                if (this.bProfile.specialization) {
+                    this.getSpecializations(this.domain, this.subDomain);
+                    if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
                             this.normal_specilization_show = 3;
                         } else {
@@ -132,15 +135,14 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     } else {
                         this.normal_specilization_show = 2;
                     }
-                  
+
                 },
                 () => {
                     this.normal_specilization_show = 2;
-                  }
-                );
+                }
+            );
     }
-    getSpecializations(domain, subdomain) 
-    {
+    getSpecializations(domain, subdomain) {
         this.provider_services.getSpecializations(domain, subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
@@ -157,10 +159,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-         _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+            _this.provider_services.getUserBussinessProfile(_this.userId)
                 .subscribe(
                     data => {
-                        console.log(data)
                         resolve(data);
                     },
                     () => {
@@ -180,7 +181,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
 
         const bprof = holdselspec;
         const special = this.specialization_arr;
-        this.specialdialogRef = this.dialog.open(userspecializationComponent, {
+        this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
             disableClose: true,
@@ -188,8 +189,8 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
             data: {
                 selspecializations: bprof,
                 specializations: special,
-                userId:this.userdata.id,
-                
+                userId: this.userId,
+
             }
         });
         this.specialdialogRef.afterClosed().subscribe(result => {

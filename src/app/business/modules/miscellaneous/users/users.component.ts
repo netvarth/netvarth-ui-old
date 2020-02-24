@@ -25,6 +25,7 @@ export class BranchUsersComponent implements OnInit {
         }
     ];
     api_loading: boolean;
+    departments: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -58,23 +59,11 @@ export class BranchUsersComponent implements OnInit {
         console.log(navigationExtras);
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
     }
-    manageOnlineProfile(name, userId) {
-        console.log(userId);
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                type: name,
-                id: userId
-            }
-        };
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId, 'bprofile' ], navigationExtras);
+    manageOnlineProfile(userId) {
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId, 'bprofile']);
     }
     manageSettings(userId) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                 id: userId
-            }
-        };
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId ,'settings'],navigationExtras);
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId, 'settings']);
     }
     changeUserStatus(user) {
         let passingStatus;
@@ -94,21 +83,33 @@ export class BranchUsersComponent implements OnInit {
                 });
     }
     getUsers() {
-        const users = [];
-        this.shared_services.getUsers().subscribe(
-            (data: any) => {
-                this.users_list = data;
-                this.api_loading = false;
-                console.log(this.users_list);
+        this.shared_services.getDepartments().subscribe(
+            (data1: any) => {
+                this.departments = data1.departments;
+                this.shared_services.getUsers().subscribe(
+                    (data: any) => {
+                        this.users_list = data;
+                        this.api_loading = false;
+                        console.log(this.users_list);
+                    }
+                );
             }
         );
     }
-    manageProvider(accountId) {
-        window.open('#/manage/' + accountId, '_blank');
+    getDepartmentNamebyId(id) {
+        let departmentName;
+        for (let i = 0; i < this.departments.length; i++) {
+            if (this.departments[i].departmentId === id) {
+                departmentName = this.departments[i].departmentName;
+                break;
+            }
+        }
+        return departmentName;
     }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
         }
     }
+
 }

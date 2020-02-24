@@ -8,18 +8,16 @@ import { SharedModule } from '../../../../../shared/modules/common/shared.module
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-//import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { MediaComponent } from './media/media.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
-//import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { DynamicFormModule } from '../../../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
-import { userspecializationComponent } from './specializations/userspecialization/userspecialization.component';
+import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 import { providerUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @NgModule({
@@ -44,7 +42,7 @@ import { providerUserBprofileSearchSocialMediaComponent } from './media/provider
         LanguagesComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
-        userspecializationComponent,
+        UserSpecializationComponent,
         UserBprofileSearchPrimaryComponent,
         providerUserBprofileSearchSocialMediaComponent,
         AddProviderUserBprofileSpokenLanguagesComponent
@@ -53,7 +51,7 @@ import { providerUserBprofileSearchSocialMediaComponent } from './media/provider
        // AddProviderBprofileSpokenLanguagesComponent,
        ProviderUserBprofileSearchDynamicComponent,
         UserBprofileSearchPrimaryComponent,
-        userspecializationComponent,
+        UserSpecializationComponent,
         providerUserBprofileSearchSocialMediaComponent,
         AddProviderUserBprofileSpokenLanguagesComponent
     ],

@@ -23,32 +23,32 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
-  
+
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   click_here_cap = Messages.CLICK_HERE_CAP;
   sorry_cap = Messages.SORRY_CAP;
-  
+
   your_proflie_cap = Messages.BPROFILE_PROFILE_CAP;
   disabled_Cap = Messages.BPROFILE_DISABLED_CAP;
   not_visible_cap = Messages.BPROFILE_ONLINE_VISIBLE_CAP;
   set_up_cap = Messages.BPROFILE_SET_UP_CAP;
   profile_summary_cap = Messages.BPROFILE_SUMMARY_CAP;
-  
+
   current_status_cap = Messages.BPROFILE_CURRENT_STATUS;
   on_cap = Messages.BPROFILE_ON_CAP;
   off_cap = Messages.BPROFILE_OFF_CAP;
   profile_visible_cap = Messages.BPROFILE_VISIBILITY_CAP;
   online_jaldee_cap = Messages.BPROFILE_ONLINE_JALDEE_CAP;
   offline_cap = Messages.BPROFILE_OFFLINE_CAP;
-  
+
   have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
   basic_info_cap = Messages.BPROFILE_BASIC_INFORMATION_CAP;
   such_as_cap = Messages.BPROFILE_SUCH_AS_CAP;
   name_summary_cap = Messages.BPROFILE_BUSINESS_NAME_CAP;
   profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
   add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
-  
+
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
   delete_pic = Messages.BPROFILE_DELETE_PICTURE_CAP;
@@ -65,7 +65,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   name_cap = Messages.PRO_NAME_CAP;
   description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
-  
+
 
   checked = false;
   bProfile = null;
@@ -73,7 +73,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   public_search = false;
   error_msg = '';
 
-  
+
   reqFields: any = {
     name: false,
     location: false,
@@ -92,7 +92,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   badgeIcons: any = [];
   badgeArray: any = [];
 
-  
+
   tooltipcls = projectConstants.TOOLTIP_CLS;
   breadcrumb_moreoptions: any = [];
 
@@ -120,7 +120,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       }
     ]
   };
-   breadcrumbs_init = [
+  breadcrumbs_init = [
     {
       title: 'Settings',
       url: '/provider/settings'
@@ -132,7 +132,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     {
       url: '/provider/settings/miscellaneous/users',
       title: 'Users'
-
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -152,10 +151,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   active_user;
   frm_lang_cap = '';
   domain;
-  userdata;
+  userId: any;
 
   constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private sanitizer: DomSanitizer, private fb: FormBuilder,
@@ -166,17 +164,13 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
-    this.activated_route.queryParams.subscribe(data => {
-      // console.log(data);
-      this.userdata = data;
-      console.log(this.userdata.id);
-  }
-  );
-
+    this.activated_route.params.subscribe(params => {
+      this.userId = params.id;
+    }
+    );
   }
 
   ngOnInit() {
-    
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -185,13 +179,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     this.getBusinessConfiguration();
     const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: this.userdata.type
-            });
-            this.breadcrumbs = breadcrumbs;
+    this.breadcrumbs_init.map((e) => {
+      breadcrumbs.push(e);
+    });
+    breadcrumbs.push({
+      title: this.userId,
+      url: '/provider/settings/miscellaneous/users/' + this.userId,
+    });
+    breadcrumbs.push({
+      title: 'Online Profile'
+    });
+    this.breadcrumbs = breadcrumbs;
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
 
@@ -222,51 +220,19 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         data => {
           this.bProfile = data;
           console.log(this.bProfile);
-          // this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
-          //   domainfields => {
-          //     this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
-          //       subdomainfields => {
-          //         this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
-          //       });
-          //   });
-         // this.provider_datastorage.set('bProfile', data);
-
-          //const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
-          // setting the status of the customer from the profile details obtained from the API call
-          //loginuserdata.accStatus = this.bProfile.status;
-          // Updating the status (ACTIVE / INACTIVE) in the local storage
-          //this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-         // this.serviceSector = data['serviceSector']['displayName'] || null;
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
           } else {
             this.normal_profile_active = 2;
           }
-
-          // if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-          //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          //   // calling function which saves the business related details to show in the header
-          //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-          //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
-          //   const pdata = { 'ttype': 'updateuserdetails' };
-          //   this.sharedfunctionobj.sendMessage(pdata);
-          //   this.getProviderLogo();
-          // }
-
-
           // check whether normal business profile section can be displayed
           if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
             || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
-              this.getProviderLogo();
+            this.getProviderLogo();
             this.normal_basicinfo_show = 3;
           } else {
             this.normal_basicinfo_show = 2;
           }
-
-          // check whether domain fields exists
-         // const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
-          //this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
-
         },
         () => {
           this.normal_basicinfo_show = 2;
@@ -276,7 +242,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+      _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
             console.log(data);
@@ -299,7 +265,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       data: {
         type: 'edit',
         bprofile: this.bProfile,
-        userId: this.userdata.id
+        userId: this.userId
       }
     });
     this.primarydialogRef.afterClosed().subscribe(result => {
@@ -366,7 +332,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           } else {
             logo = '';
           }
-        //  const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          //  const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp('', '', '', logo);
           const pdata = { 'ttype': 'updateuserdetails' };
@@ -423,54 +389,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
         });
   }
-  
-
-  
-
-
-
-
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
   }
-
-
-
-
-specializations() {
-  console.log(this.userdata);
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-        id: this.userdata.id
-        }
-
-};
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations'], navigationExtras);
-}
-additionalInfo() {
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-        id: this.userdata.id
-    }
-};
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo'], navigationExtras);
-}
-languagesKnown() {
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-        id: this.userdata.id
-    }
-};
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','languages'], navigationExtras);
-}
-galerySocialmedia() {
-const navigationExtras: NavigationExtras = {
-  queryParams: {
-      id: this.userdata.id
+  specializations() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'specializations']);
   }
-}; 
-   this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','media'],navigationExtras);
-}
-  
+  additionalInfo() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'additionalinfo']);
+  }
+  languagesKnown() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'languages']);
+  }
+  galerySocialmedia() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+  }
+
 }

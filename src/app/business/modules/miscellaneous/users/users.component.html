@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section>
-    <div class="content displayboard loc-list">
+    <div class="content displayboard loc-list users">
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="col-md-12 no-padding">
@@ -45,15 +45,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
-                                <div class="col-md-12 pt10 mt5 dboard" *ngFor="let user of users_list">
+                                <div class="col-md-12 dboard" *ngFor="let user of users_list">
                                     <div class="copy">
                                         <span class="mbt">
                                             <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span>
-                                        <h3 class="pointer-cursor" (click)="manageProvider(user.id)">
-                                            {{user.firstName}} {{lastName}}</h3>
+                                        <h3 class="">
+                                            {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}}  <span *ngIf="user.userType === 'PROVIDER'">({{getDepartmentNamebyId(user.deptId)}})</span></h3>
                                             <div class="c-ot m0">
                                                 <div class="item">
                                                     <span class="ttle">{{user.userType}}</span>
@@ -62,19 +62,19 @@
                                             </div>
                                         <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item (click)="personalProfile(user.id)" >
-                                                Personal profile
+                                                Profile
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER'"  mat-menu-item (click)="manageOnlineProfile(user.firstName,user.id)" >
-                                                Manage online profile
+                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated"  mat-menu-item (click)="manageOnlineProfile(user.id)" >
+                                                Manage Online Profile
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER'" mat-menu-item (click)="manageSettings(user.id)" >
-                                                Manage settings
+                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated" mat-menu-item (click)="manageSettings(user.id)" >
+                                                Manage Settings
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER'" mat-menu-item (click)="createOnlineProfile()" >
-                                                Create online profile
+                                            <button *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated" mat-menu-item (click)="manageOnlineProfile(user.id, 'create')" >
+                                                Create Online Profile
                                             </button>
-                                            <button mat-menu-item (click)="linkProfile()">
-                                                Link profile
+                                            <button mat-menu-item (click)="linkProfile()" *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated">
+                                                Link Profile
                                             </button>
                                             <button mat-menu-item (click)="changeUserStatus(user)">
                                                 <i *ngIf="user.status=='INACTIVE' || !user.status" class="icon-enable"></i>
