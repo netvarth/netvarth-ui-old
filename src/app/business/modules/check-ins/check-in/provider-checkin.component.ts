@@ -170,6 +170,8 @@ export class ProviderCheckinComponent implements OnInit {
     action: any = '';
     showAction = false;
     carouselOne;
+    notes = false;
+    attachments = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -306,7 +308,7 @@ export class ProviderCheckinComponent implements OnInit {
     initCheckIn() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.firstName + ' ' + this.customer_data.lastName });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -718,10 +720,10 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     saveCheckin() {
-        const waitlistarr = [];
-        for (let i = 0; i < this.waitlist_for.length; i++) {
-            waitlistarr.push({ id: this.waitlist_for[i].id });
-        }
+        // const waitlistarr = [];
+        // for (let i = 0; i < this.waitlist_for.length; i++) {
+        //     waitlistarr.push({ id: this.waitlist_for[i].id });
+        // }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -731,7 +733,8 @@ export class ProviderCheckinComponent implements OnInit {
                 'id': this.sel_ser
             },
             'consumerNote': this.consumerNote,
-            'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
+            // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
         };
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -808,7 +811,7 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.firstName + ' ' + this.customer_data.lastName });
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
     }
     showCheckinButtonCaption() {
@@ -816,15 +819,15 @@ export class ProviderCheckinComponent implements OnInit {
         caption = 'Confirm';
         return caption;
     }
-    handleOneMemberSelect(id, name) {
+    handleOneMemberSelect(id, firstName, lastName) {
         this.resetApi();
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, name: name });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
     }
-    handleMemberSelect(id, name, obj) {
+    handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, name: name });
+            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName });
         } else {
             let exists = false;
             let existindx = -1;
@@ -838,7 +841,7 @@ export class ProviderCheckinComponent implements OnInit {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, name: name });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -1156,7 +1159,6 @@ export class ProviderCheckinComponent implements OnInit {
     deleteTempImage(index) {
         this.selectedMessage.files.splice(index, 1);
     }
-
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
@@ -1236,22 +1238,18 @@ export class ProviderCheckinComponent implements OnInit {
             );
         }
     }
+    toggleAttachment() {
+        this.attachments = !this.attachments;
+    }
+    toggleNotes() {
+        this.notes = !this.notes;
+    }
     timeSelected(slot) {
         this.apptTime = slot;
     }
     handleSideScreen(action) {
         this.showAction = true;
         this.action = action;
-        // switch (action) {
-        //     case 'note':
-        //         break;
-        //     case 'attachment':
-        //         break;
-        //     case 'coupon':
-        //         break;
-        //     case 'member':
-        //         break;
-        // }
     }
     hideFilterSidebar() {
         this.showAction = false;

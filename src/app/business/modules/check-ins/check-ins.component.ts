@@ -1020,7 +1020,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.new_checkins_list = this.grouped_list['checkedIn'].slice();
           }
           if (this.grouped_list && this.grouped_list['arrived']) {
+            console.log(this.new_checkins_list);
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
+            console.log(this.new_checkins_list);
           }
           this.sortCheckins(this.new_checkins_list);
           if (this.filterapplied === true) {
@@ -1390,6 +1392,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
+    console.log(this.selected_queue);
     const api_filter = {};
     if (this.time_type === 1 || this.time_type === 2) {
       api_filter['queue-eq'] = this.selected_queue.id;

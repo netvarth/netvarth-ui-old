@@ -1061,9 +1061,9 @@ export class CheckInInnerComponent implements OnInit {
       this.api_loading = false;
     }
     if (this.shareLoc) {
-      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
     } else {
-      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
     }
   }
   handleGoBack(cstep) {
@@ -1523,7 +1523,7 @@ export class CheckInInnerComponent implements OnInit {
     this.saveLiveTrackTravelModeInfo().then(
       data => {
         this.api_loading = true;
-        this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+        this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.providerAccount.businessName, this.travelMode);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1589,7 +1589,7 @@ export class CheckInInnerComponent implements OnInit {
             this.updateLiveTrackInfo().then(
               (liveTInfo) => {
                 this.track_loading = false;
-                this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
+                this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
               }
             );
           } else {
@@ -1597,7 +1597,7 @@ export class CheckInInnerComponent implements OnInit {
               (liveTInfo) => {
                 this.track_loading = false;
                 this.firstTimeClick = false;
-                this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
+                this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
               }
             );
           }
@@ -1667,9 +1667,9 @@ export class CheckInInnerComponent implements OnInit {
   trackClose(status) {
     if (status === 'livetrack') {
       if (this.shareLoc) {
-        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
       } else {
-        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
       }
       this.dialogRef.close();
       this.router.navigate(['/']);

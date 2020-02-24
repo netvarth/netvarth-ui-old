@@ -143,7 +143,7 @@ export class ExistingCheckinComponent implements OnInit {
   }
 
   doCangelCheckin(obj) {
-    this.sharedfunctionObj.cancelWaitlist(obj.ynwUuid, obj.provider.id)
+    this.sharedfunctionObj.cancelWaitlist(obj.ynwUuid, obj.providerAccount.id)
       .then(
         data => {
           if (data === 'reloadlist') {

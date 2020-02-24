@@ -182,7 +182,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
 
 
   getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.waitlist_detail.provider.id)
+    this.consumer_services.getConsumerCommunications(this.waitlist_detail.providerAccount.id)
       .subscribe(
         data => {
           const history: any = data;

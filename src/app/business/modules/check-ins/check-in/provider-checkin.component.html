@@ -48,7 +48,7 @@
                                     <ul class="availer-ul">
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                             <li>
-                                                {{waitfor.name | capitalizeFirst}}
+                                                {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
                                                 <!-- <span class="cs-btn bt8 changemember"
                                                     (click)="handleServiceForWhom()"
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
@@ -123,7 +123,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 no-padding ">
-                                    <div class="col-md-12 mgn-bt-10 btborder">
+                                    <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                                         <mat-chip-list class="pcheckin-owl">
                                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
                                                 class="width-100" [items]="queuejson">
@@ -209,19 +209,21 @@
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
-
-                        <a *ngIf="consumerNote" class="notes" (click)="showNote()">Notes</a>
-                        <ng-container *ngIf="consumerNote" class="notes">
+                        <div class="col-md-12 mgn-up-20" *ngIf="consumerNote" >
+                            <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
+                        </div>                        
+                        <ng-container *ngIf="consumerNote && notes" class="notes">
                             <div class="row col-md-12" style="display: flex;">
                                 <div class="col-md-7">
                                     <span class="ln-hgt-40">{{consumerNote}}</span>
                                 </div>
                             </div>
                         </ng-container>
-
-                        <a class="attachment" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">Attachments</a>
+                        <div class="col-md-12 mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                        <a class="attachment pointer-cursor" (click)="toggleAttachment()" >Attachments</a>
+                        </div>
                         <ng-container class="attachment"
-                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
 
                             <div class="row col-md-12" style="display: flex;"
                                 *ngFor="let item of selectedMessage.files; let i = index">
@@ -246,7 +248,7 @@
                         </ng-container>
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
-                        <ng-container *ngIf="this.checkinLabel">
+                        <ng-container *ngIf="this.checkinLabel && queuejson.length > 0">
                             <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
                                     [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
                                     [disabled]="api_loading">{{showCheckinButtonCaption()}}</button>
@@ -284,7 +286,7 @@
                                                     <ng-container *ngIf="multipleMembers_allowed">
                                                         <li *ngFor="let memb of familymembers">
                                                             <mat-checkbox
-                                                                (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
+                                                                (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
                                                                 [value]="memb.userProfile.id"
                                                                 [checked]="isChecked(memb.userProfile.id)">
                                                                 {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
@@ -295,7 +297,7 @@
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
                                                                 <mat-radio-button
-                                                                    (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
+                                                                    (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
                                                                     [value]="memb.userProfile.id"
                                                                     [checked]="isChecked(memb.userProfile.id)">
                                                                     {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
