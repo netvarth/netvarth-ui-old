@@ -197,7 +197,7 @@ class="morevalspan">
 <h3 *ngIf="!isPlaceisSame">{{loc.place | capitalizeFirst}} <sup
 class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
 </sup></h3>
-<div *ngIf="!isPlaceisSame"> {{provider_data.address1  | capitalizeFirst}}</div>
+<div *ngIf="!isPlaceisSame && provider_data"> {{provider_data.address1  | capitalizeFirst}}</div>
 <h3 *ngIf="isPlaceisSame && provider_data">{{provider_data.address1 | capitalizeFirst}}<sup
 class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
 </sup></h3>
