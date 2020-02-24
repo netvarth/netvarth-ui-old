@@ -197,6 +197,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   maximumDiscount: any;
   jdnlength;
   jdnTooltip = '';
+  result_data: any;
+  provider_data: any;
+  gender_length: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -224,6 +227,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.provider_id = params.get('id');
         this.gets3curl();
       });
+    this.fetchClouddata();
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -276,6 +280,62 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         }
       );
+  }
+  fetchClouddata() {
+    const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
+    this.latitude = loc_det.lat;
+    this.longitude = loc_det.lon;
+    this.loctype = loc_det.typ;
+    let q_str = '';
+    let locstr = '';
+    if (this.latitude) { // case of location is selected
+      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
+      const coordinates = retcoordinates['locationRange'];
+      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
+      locstr = 'location1:' + coordinates;
+      q_str = q_str + locstr;
+    }
+    let testUser = false;
+    if (userobj !== null) {
+      const phno = (userobj.primaryPhoneNumber.toString());
+      if (phno.startsWith('55')) {
+        testUser = true;
+      }
+    }
+    if (!testUser) {
+      this.testuserQry = ' (not test_account:1) ';
+    } else {
+      this.testuserQry = ' test_account:1 ';
+    }
+    this.q_str = q_str;
+    const searchpass_criterias = {
+      'start': 0,
+      'return': 'title,sector,logo,place1,business_phone_no,unique_id',
+      'fq': '',
+      'q': '',
+      'size': 10,
+      'parser': 'structured', // 'q.parser'
+      'options': '', // 'q.options'
+      'sort': '',
+      'distance': ''
+    };
+    this.sharedFunctionobj.getCloudUrl()
+      .then(url => {
+        searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        searchpass_criterias.q = q_str;
+        searchpass_criterias.size = 5000;
+        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
+          .subscribe(res => {
+            this.result_data = res;
+            this.search_data = this.result_data.hits.hit;
+            for(let i in this.search_data){
+              if(this.search_data[i].fields.unique_id === this.provider_id){
+                this.provider_data = this.search_data[i].fields;
+              }
+            }
+          });
+      });
   }
   // gets the various json files based on the value of "section" parameter
   // Some of functions copied to Consumer Home also.
