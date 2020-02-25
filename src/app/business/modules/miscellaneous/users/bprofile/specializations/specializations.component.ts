@@ -8,7 +8,7 @@ import { AddProviderBprofileSpecializationsComponent } from '../../../../../../y
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
-    selector: 'app-specializatons',
+    selector: 'app-userspecializatons',
     templateUrl: './specializations.component.html'
 })
 export class SpecializationsComponent implements OnInit, OnDestroy {

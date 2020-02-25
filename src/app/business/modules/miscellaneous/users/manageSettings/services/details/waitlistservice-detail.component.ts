@@ -27,12 +27,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
         },
         {
-            title: 'Services',
-            url: '/provider/settings/q-manager/services'
+            url: '/provider/settings/miscellaneous/users',
+            title: 'Users'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -42,6 +42,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
+    userId: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -51,7 +52,10 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(
             (params) => {
-                this.service_id = params.id;
+                this.service_id = params.sid;
+                this.userId = params.id;
+                console.log(params.id);
+                console.log(this.service_id);
                 this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
                 if (this.service_id === 'add') {
                     const breadcrumbs = [];
@@ -167,9 +171,9 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     });
         });
     }
-    getServiceDetail() {
+    getUserServiceDetail() {
         this.api_loading = true;
-        this.provider_services.getServiceDetail(this.service_id)
+        this.provider_services.getUserServiceDetail(this.service_id)
             .subscribe(
                 data => {
                     this.serviceParams['service'] = data;
@@ -180,6 +184,18 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
                         breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: this.userId,
+                        url: '/provider/settings/miscellaneous/users/' + this.userId,
+                    });
+                    breadcrumbs.push({
+                        title: 'Settings',
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                    });
+                    breadcrumbs.push({
+                       title: 'Services',
+                       url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
                     });
                     breadcrumbs.push({
                         title: this.serviceParams['service'].name
@@ -209,7 +225,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                                     this.api_loading = false;
                                 }
                                 if (this.service_id) {
-                                    this.getServiceDetail();
+                                    this.getUserServiceDetail();
                                 } else {
                                     this.serviceParams['action'] = 'add';
                                     this.servicesService.initServiceParams(this.serviceParams);
@@ -224,11 +240,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         );
     }
     createService(post_data) {
+        post_data['provider'] = {'id': this.userId };
         this.provider_services.createService(post_data)
             .subscribe(
                 (id) => {
                     this.service_id = id;
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -236,11 +253,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             );
     }
     updateService(post_data) {
+        post_data['provider'] = {'id': this.userId };
         this.provider_services.updateService(post_data)
             .subscribe(
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -251,27 +269,28 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.provider_services.enableService(service.id)
             .subscribe(
                 () => {
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 },
                 (error) => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = false;
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 });
     }
     disableService(service) {
         this.provider_services.disableService(service.id)
             .subscribe(
                 () => {
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 },
                 (error) => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = true;
-                    this.getServiceDetail();
+                    this.getUserServiceDetail();
                 });
     }
     changeServiceStatus(service) {
+        service['provider'] = {'id': this.userId };
         this.provider_shared_functions.changeServiceStatus(this, service);
     }
     /*Gallery Section*/

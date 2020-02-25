@@ -11,7 +11,7 @@ import { FormMessageDisplayService } from '../../../../../../../shared/modules/f
 import * as moment from 'moment';
 
 @Component({
-    selector: 'app-waitlist-queues',
+    selector: 'app-userwaitlist-queues',
     templateUrl: './waitlist-queues.component.html',
     styleUrls: ['./waitlist-queues.component.css']
 })
@@ -31,15 +31,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     services_list: any = [];
     servicelist = [];
     instantQForm: FormGroup;
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
         },
-        // {
-        //     title: Messages.WAITLIST_MANAGE_CAP,
-        //     url: '/provider/settings/q-manager'
-        // },
+        
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
@@ -49,13 +46,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
       
-          },
-          
-        {
-            title: this.work_hours
-        }
+          }
 
     ];
+    breadcrumbs = this.breadcrumbs_init;
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -103,6 +97,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     scheduleLoading: any = [];
     domain: any;
     user;
+    userId: any;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -114,17 +109,32 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         public fed_service: FormMessageDisplayService,
         private activatedRoot: ActivatedRoute,
         private fb: FormBuilder) { 
-            this.activatedRoot.queryParams.subscribe(data => {
-                this.user = data;
-                console.log( this.user);
-    
-            });
+            this.activatedRoot.params.subscribe(params => {
+                this.userId = params.id;
+            }
+            );
         }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Settings',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+        });
+        breadcrumbs.push({
+            title: 'Queues'
+        });
+        this.breadcrumbs = breadcrumbs;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
@@ -647,12 +657,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
         } else {
-            const navigationExtras: NavigationExtras = {
-                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues(),
-                    userId: this.user.id }
-               
-            };
-            this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id, 'settings', 'queues', 'add'], navigationExtras);
+            this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues', 'add']);
         }
     }
     /**

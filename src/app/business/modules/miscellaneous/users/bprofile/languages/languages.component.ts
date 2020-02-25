@@ -7,7 +7,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 @Component({
-    selector: 'app-languages',
+    selector: 'app-userlanguages',
     templateUrl: './languages.component.html'
 })
 export class LanguagesComponent implements OnInit, OnDestroy {

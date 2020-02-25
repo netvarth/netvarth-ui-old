@@ -11,7 +11,7 @@ import { GalleryService } from '../../../../../../shared/modules/gallery/galery-
 import { Subscription } from 'rxjs';
 import { providerUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @Component({
-    selector: 'app-media',
+    selector: 'app-usermedia',
     templateUrl: './media.component.html'
 })
 export class MediaComponent implements OnInit, OnDestroy {

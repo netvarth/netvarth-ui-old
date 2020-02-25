@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
 import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 @Component({
-    selector: 'app-additionalinfo',
+    selector: 'app-useradditionalinfo',
     templateUrl: './additionalinfo.component.html',
     styleUrls: ['./additionalinfo.component.scss']
 })

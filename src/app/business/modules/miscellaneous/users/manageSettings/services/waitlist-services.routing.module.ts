@@ -5,7 +5,7 @@ import { WaitlistServiceDetailComponent } from './details/waitlistservice-detail
 
 const routes: Routes = [
     { path: '', component: WaitlistServicesComponent },
-    { path: ':id', component: WaitlistServiceDetailComponent }
+    { path: ':sid', component: WaitlistServiceDetailComponent }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

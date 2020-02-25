@@ -5,7 +5,7 @@ import { WaitlistQueueDetailComponent } from './details/waitlist-queuedetail.com
 
 const routes: Routes = [
     { path: '', component: WaitlistQueuesComponent },
-    { path: ':id', component: WaitlistQueueDetailComponent }
+    { path: ':sid', component: WaitlistQueueDetailComponent }
 ];
 
 @NgModule({

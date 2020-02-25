@@ -11,7 +11,7 @@ import { FormMessageDisplayService } from '../../../../../../../shared/modules/f
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-waitlist-queuedetail',
+    selector: 'app-userwaitlist-queuedetail',
     templateUrl: './waitlist-queuedetail.component.html'
 })
 
@@ -83,6 +83,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     iftokn = false;
     selected_location;
     selected_locationId;
+    userId: any;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -93,12 +94,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         public provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(params => {
-            this.queue_id = params.id;
+            this.queue_id = params.sid;
+            this.userId = params.id;
            
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
-            console.log(this.params.userId);
             if (this.params.action === 'editFromList') {
                 this.action = 'edit';
             } else {
@@ -387,7 +388,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     getProviderServices() {
         const params = { 'status': 'ACTIVE' };
-        this.provider_services.getUserServicesList(this.params.userId)
+        this.provider_services.getUserServicesList(this.userId)
             .subscribe(data => {
                 this.services_list = data;
                 console.log(this.services_list);
@@ -409,7 +410,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     getProviderQueues() {
         const activeQueues: any = [];
         // let queue_list: any = [];
-        this.provider_services.getProviderQueues()
+        this.provider_services.getUserProviderQueues(this.userId)
             .subscribe(data => {
                 this.queue_list = data;
                 for (let ii = 0; ii < this.queue_list.length; ii++) {
@@ -719,8 +720,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 },
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
+                'appointment': 'Disable',
                 'timeInterval': form_data.timeSlot,
-                'provider': { 'id': this.params.userId }
+                'provider': { 'id': this.userId }
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
