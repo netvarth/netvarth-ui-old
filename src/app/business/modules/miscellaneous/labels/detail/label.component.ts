@@ -167,7 +167,9 @@ export class LabelComponent implements OnInit {
     }
     editLabel() {
         this.actionparam = 'edit';
-        this.editLabelbyId(this.label_id);
+        if (this.label_id) {
+            this.editLabelbyId(this.label_id);
+        }
     }
     deleteLabel(label_id) {
         this.provider_services.deleteLabel(label_id)
@@ -213,7 +215,9 @@ export class LabelComponent implements OnInit {
         this.api_success = [];
     }
     onCancel() {
-        this.editLabelbyId(this.label_id);
+        if (this.label_id) {
+            this.editLabelbyId(this.label_id);
+        }
         setTimeout(() => {
             if (this.actionparam === 'edit') {
                 this.actionparam = 'view';

@@ -5,6 +5,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { projectConstants } from '../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-container-details',
@@ -123,54 +124,62 @@ export class ContainerDetailComponent implements OnInit {
             name = this.displayName.trim().replace(/ /g, '_');
         }
         const sbIds = this.sbIds.split(',');
-        if (this.actionparam === 'add') {
-            const post_data = {
-                'name': name,
-                'layout': '1_1',
-                'displayName': this.displayName,
-                'interval': this.refreshInterval,
-                'sbIds': sbIds,
-            };
-            this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-                // this.editLayoutbyId(data);
-                // this.actionparam = 'view';
-                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-            // } else {
-            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-            // }
-        }
-        if (this.actionparam === 'edit') {
-            const sbids = this.sbIds.split(',');
-            const post_data = {
-                'id': this.layoutData.id,
-                'name': name,
-                'layout': '1_1',
-                'interval': this.refreshInterval,
-                'displayName': this.displayName,
-                'sbIds': sbids
-            };
-            this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-               // this.editLayoutbyId(this.layoutData.id);
-               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+        const pattern = projectConstants.VALIDATOR_NUMBER_COMMA;
+        const mval = pattern.test(this.sbIds);
+        if (mval) {
+
+            if (this.actionparam === 'add') {
+                const post_data = {
+                    'name': name,
+                    'layout': '1_1',
+                    'displayName': this.displayName,
+                    'interval': this.refreshInterval,
+                    'sbIds': sbIds,
+                };
+                this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                    // this.editLayoutbyId(data);
+                    // this.actionparam = 'view';
+                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+                // } else {
+                //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+                // }
+            }
+            if (this.actionparam === 'edit') {
+                const sbids = this.sbIds.split(',');
+                const post_data = {
+                    'id': this.layoutData.id,
+                    'name': name,
+                    'layout': '1_1',
+                    'interval': this.refreshInterval,
+                    'displayName': this.displayName,
+                    'sbIds': sbids
+                };
+                this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                    // this.editLayoutbyId(this.layoutData.id);
+                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+            }
+
+        } else {
+            this.shared_functions.openSnackBar('Invalid QBoard Id', { 'panelClass': 'snackbarerror' });
         }
     }
     onCancel() {
         // if (this.actionparam === 'edit') {
         //     this.actionparam = 'view';
         // } else {
-            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
         // }
     }
     editlayout(id) {
@@ -178,5 +187,8 @@ export class ContainerDetailComponent implements OnInit {
         this.editLayoutbyId(id);
     }
     resetApiErrors() {
+    }
+    isNumeric(evt) {
+        return this.shared_functions.isNumeric(evt);
     }
 }

@@ -259,9 +259,7 @@ export class CheckInInnerComponent implements OnInit {
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
       if (this.data.queue) {
-        // this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
         this.sel_queue_id = this.data.queue.id;
-        // this.q_preselected = true;
       }
       // this.getDisplayboardCount();
       if (this.fromKiosk) {
@@ -480,9 +478,11 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
-            if (this.settingsjson.filterByDept) {
-              this.getProviderDepart(this.businessjson.id);
-            }
+            setTimeout(() => {
+              if (this.settingsjson.filterByDept) {
+                this.getProviderDepart(this.businessjson.id);
+              }
+            }, 100);
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
               this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
@@ -649,12 +649,18 @@ export class CheckInInnerComponent implements OnInit {
           this.queueQryExecuted = true;
           if (this.queuejson.length > 0) {
             let selindx = -1;
+            let count = 0;
             if (this.q_preselected || this.data.queue) {
               for (let i = 0; i < this.queuejson.length; i++) {
                 if (this.queuejson[i].id === this.sel_queue_id) {
                   selindx = i;
+                  count++;
                   break;
                 }
+              }
+              if (count === 0) {
+                this.sel_queue_id = this.queuejson[0].id;
+                selindx = 0;
               }
             } else {
               selindx = 0;
@@ -672,22 +678,20 @@ export class CheckInInnerComponent implements OnInit {
               this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
               this.sel_queue_name = this.queuejson[selindx].name;
               // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-              if (!this.data.queue) {
-                this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
-                this.sel_queue_id = this.queuejson[selindx].id;
-              } else {
-                this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
-                this.sel_queue_id = this.data.queue.id;
-              }
+              this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+              this.sel_queue_id = this.queuejson[selindx].id;
               this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
               this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
               this.setTerminologyLabels();
-              if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
-                if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
-                  this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
-                } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-                  this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
-                }
+              // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
+              //   if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
+              //     this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+              //   } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+              //     this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+              //   }
+              // }
+              if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
+                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
               }
             } else {
               this.api_error = ' The business hours for the day have ended.Please try again during working hours.';
@@ -695,7 +699,7 @@ export class CheckInInnerComponent implements OnInit {
               this.disable_btn = true;
             }
           } else {
-            if (this.q_preselected) {
+            if (this.q_preselected || this.sel_queue_id !== 0) {
             } else {
               this.sel_queue_indx = -1;
               this.sel_queue_id = 0;
@@ -714,7 +718,7 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_ser = obj;
     this.setServiceDetails(obj);
     this.queuejson = [];
-    // this.sel_queue_id = 0;
+    this.sel_queue_id = 0;
     this.sel_queue_waitingmins = 0;
     this.sel_queue_servicetime = '';
     this.sel_queue_personaahead = 0;
@@ -1452,6 +1456,7 @@ export class CheckInInnerComponent implements OnInit {
       });
   }
   handleDeptSelction(obj) {
+    // this.sel_queue_id = 0;
     this.api_error = '';
     this.selected_dept = obj;
     if (obj === 'None') {
