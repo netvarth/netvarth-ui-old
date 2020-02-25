@@ -22,6 +22,16 @@ class="strong">{{go_back_cap}}</span></span>
 </ng-container>
 </ng-container>
 </div>
+<!-- <ul class="gal" *ngIf="galleryjson.length > 1">
+    <li>
+        <div class="galbx">
+            <div class="overlay"
+                (click)="openImageModalRow(image_list_popup[1])">+
+                {{galleryjson.length - 1 }}</div>
+            <img [src]="galleryjson[1].thumbUrl" alt="">
+        </div>
+    </li>
+</ul> -->
 <ul class="gal" *ngIf="provider_data && provider_data.gallery_thumb_nails">
     <li>
         <div class="galbx">
