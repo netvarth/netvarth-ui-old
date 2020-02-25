@@ -6,7 +6,7 @@ import { ProviderServices } from '../../../../../../../ynw_provider/services/pro
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-waitlist-services',
+    selector: 'app-user-services',
     templateUrl: './waitlist-services.component.html'
 })
 export class WaitlistServicesComponent implements OnInit, OnDestroy {
@@ -20,7 +20,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -28,42 +28,49 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
-          },
-        
+        },
         {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-      
-          },
-         
-        {
-            title: 'Services'
         }
     ];
+    breadcrumbs = this.breadcrumbs_init;
     domain: any;
     domainList: any = [];
     subDomain;
-    userdata: any;
-
+    userId: any;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
-        private activated_route:ActivatedRoute,
+        private activated_route: ActivatedRoute,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
-        public router: Router){
-            this.activated_route.queryParams.subscribe(data => {
-                console.log(data);
-                this.userdata = data;
-                 }
-            );
-         }
+        public router: Router) {
+        this.activated_route.params.subscribe(params => {
+            this.userId = params.id;
+        }
+        );
+    }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        this.getUser();
-       // this.getDomainSubdomainSettings();
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Settings',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+        });
+        breadcrumbs.push({
+            title: 'Services'
+        });
+        this.breadcrumbs = breadcrumbs;
         this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
@@ -76,21 +83,20 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
     performActions(action) {
         if (action === 'addservice') {
-            this.router.navigate(['provider', 'settings', 'q-manager',
-                'services', 'add']);
+            this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', 'add']);
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
     }
     getServices() {
         this.api_loading = true;
-        this.provider_services.getUserServicesList(this.userdata.id)
+        this.provider_services.getUserServicesList(this.userId)
             .subscribe(
                 data => {
                     console.log(data);
-                   this.service_list = data;
-                  
-                  
+                    this.service_list = data;
+
+
                     this.api_loading = false;
                 },
                 error => {
@@ -131,29 +137,12 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'services', service.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', service.id], navigationExtras);
     }
-
     goServiceDetail(service) {
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'services', service.id]);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', service.id]);
     }
-    getUser()
-    {
-        
-        this.provider_services.getUser(this.userdata.id)
-            .subscribe((data) => {
-                
-                console.log(data);
-                });
-    }
-
-   
     getDomainSubdomainSettings() {
-        //const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
-       //const domain = user_data.sector || null;
-        //const sub_domain = user_data.subSector || null;
         this.provider_services.domainSubdomainSettings(this.domain, this.subDomain)
             .subscribe(
                 (data: any) => {

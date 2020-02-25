@@ -9,7 +9,7 @@ import { ServicesService } from '../../../../../../../shared/modules/service/ser
 import { GalleryService } from '../../../../../../../shared/modules/gallery/galery-service';
 
 @Component({
-    selector: 'app-waitlistservice-detail',
+    selector: 'app-userservice-detail',
     templateUrl: './waitlistservice-detail.component.html'
 })
 export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
