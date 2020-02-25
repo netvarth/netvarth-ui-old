@@ -4,7 +4,6 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 @Component({
@@ -23,7 +22,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     breadcrumb_moreoptions: any = [];
     domain;
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -31,24 +30,14 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
-          },
-          {
+        },
+        {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-      
-          },
-          {
-            url: '/provider/settings/miscellaneous/users/manageonlineprofile',
-            title: 'Manageonlineprofile'
-      
-          },
-       
-        {
-            title: 'Languages Known'
         }
     ];
-   
-    userdata: any;
+    breadcrumbs = this.breadcrumbs_init;
+    userId: any;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -58,17 +47,32 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {
-        this.activated_route.queryParams.subscribe(data => {
-            this.userdata = data;
-            console.log(this.userdata.id);
+        this.activated_route.params.subscribe(params => {
+            this.userId = params.id;
         }
         );
-         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Online Profile',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+        });
+        breadcrumbs.push({
+            title: 'Languages Known'
+        });
+        this.breadcrumbs = breadcrumbs;
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
         this.getSpokenLanguages();
         this.setLanguages();
@@ -76,10 +80,10 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
-      }
-      performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->languages-known']);   
-      }
+    }
+    performActions() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->languages-known']);
+    }
     setLanguages() {
         this.bProfile = [];
         this.getBussinessProfileApi()
@@ -98,8 +102,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
                 },
                 () => {
                     this.normal_language_show = 2;
-                  }
-                );
+                }
+            );
     }
 
     ngOnDestroy() {
@@ -110,7 +114,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+            _this.provider_services.getUserBussinessProfile(_this.userId)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -152,13 +156,12 @@ export class LanguagesComponent implements OnInit, OnDestroy {
             data: {
                 sellanguages: bprof,
                 languagesSpoken: lang,
-                userId : this.userdata.id
+                userId: this.userId 
             }
         });
         this.langdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result['mod'] === 'reloadlist') {
-                    // this.getBusinessProfile();
                     this.bProfile = result['data'];
                     this.setLanguages();
                     if (this.bProfile.sellanguages) {

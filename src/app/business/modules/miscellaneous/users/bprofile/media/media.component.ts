@@ -5,14 +5,11 @@ import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, Button
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
-import { ProviderBprofileSearchSocialMediaComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { MatDialog } from '@angular/material';
-import { ProviderBprofileSearchGalleryComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 import { providerUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
-// import { ProviderUserBprofileSearchSocialMediacomponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -60,8 +57,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
-    userdata;
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -69,23 +65,16 @@ export class MediaComponent implements OnInit, OnDestroy {
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
-          },
-          {
+        },
+        {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-      
-          },
-          {
-            url: '/provider/settings/miscellaneous/users/manageonlineprofile',
-            title: 'Manageonlineprofile'
-      
-          },
-       
-        {
-            title: 'Gallery & Social Media'
+
         }
     ];
+    breadcrumbs = this.breadcrumbs_init;
     subscription: Subscription;
+    userId: any;
 
     constructor(
         private provider_services: ProviderServices,
@@ -97,22 +86,37 @@ export class MediaComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {
-        this.activated_route.queryParams.subscribe(data => {
-            this.userdata = data;
-            console.log(this.userdata.id);
+        this.activated_route.params.subscribe(params => {
+            this.userId = params.id;
         }
         );
-     }
+    }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Online Profile',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+        });
+        breadcrumbs.push({
+            title: 'Social Media'
+        });
+        this.breadcrumbs = breadcrumbs;
         // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
         // this.getGalleryImages();
-        this.getBusinessProfile();       
-        
+        this.getBusinessProfile();
+
     }
 
     learnmore_clicked(mod, e) {
@@ -126,9 +130,9 @@ export class MediaComponent implements OnInit, OnDestroy {
         if (this.delgaldialogRef) {
             this.delgaldialogRef.close();
         }
-    }  
+    }
 
-    getBusinessProfile() {        
+    getBusinessProfile() {
         this.showaddsocialmedia = false;
         this.bProfile = [];
         this.getBussinessProfileApi()
@@ -150,25 +154,25 @@ export class MediaComponent implements OnInit, OnDestroy {
                     }
                     if (this.social_arr.length < this.orgsocial_list.length) {
                         this.showaddsocialmedia = true;
-                    } 
+                    }
 
                 },
 
                 () => {
-                    this.normal_socialmedia_show = 2; 
-                  }
-               );
+                    this.normal_socialmedia_show = 2;
+                }
+            );
     }
 
 
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+            _this.provider_services.getUserBussinessProfile(_this.userId)
                 .subscribe(
                     data => {
                         resolve(data);
-                    },                    
+                    },
                     () => {
                         reject();
                     }
@@ -181,7 +185,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         file.keyName = skey;
         this.sharedfunctionobj.confirmGalleryImageDelete(this, file);
     }
-     
+
     getSocialdet(key, field) {
         const retdet = this.orgsocial_list.filter(
             soc => soc.key === key);
@@ -206,8 +210,8 @@ export class MediaComponent implements OnInit, OnDestroy {
             autoFocus: true,
             data: {
                 bprofile: this.bProfile,
-                editkey: key || '' ,
-                userId: this.userdata.id
+                editkey: key || '',
+                userId: this.userId
             }
         });
         this.socialdialogRef.afterClosed().subscribe(result => {

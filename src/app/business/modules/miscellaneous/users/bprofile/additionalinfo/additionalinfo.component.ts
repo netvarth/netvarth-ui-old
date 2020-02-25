@@ -38,9 +38,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     delete_btn = Messages.DELETE_BTN;
     domain;
     subDomain;
-    bProfile:any = [];
+    bProfile: any = [];
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -52,21 +52,12 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-
-        },
-        {
-            url: '/provider/settings/miscellaneous/users/manageonlineprofile',
-            title: 'Manageonlineprofile'
-
-        },
-
-        {
-            title: 'Additional Info'
         }
     ];
-    userdata: any;
+    breadcrumbs = this.breadcrumbs_init;
     domainList: any = [];
     subDomainId;
+    userId: any;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -79,9 +70,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     ) {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
         this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
-        this.activated_route.queryParams.subscribe(data => {
+        this.activated_route.params.subscribe(params => {
             // console.log(data);
-            this.userdata = data;
+            this.userId = params.id;
         }
         );
     }
@@ -93,6 +84,22 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         this.domain = user.sector;
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userId,
+            url: '/provider/settings/miscellaneous/users/' + this.userId,
+        });
+        breadcrumbs.push({
+            title: 'Online Profile',
+            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+        });
+        breadcrumbs.push({
+            title: 'Additional Info'
+        });
+        this.breadcrumbs = breadcrumbs;
         this.bProfile['domain'] = this.domain;
         this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -104,7 +111,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
     }
     getUser() {
-        this.provider_services.getUser(this.userdata.id)
+        this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
                 this.subDomainId = data.subdomain;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
@@ -121,7 +128,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             });
     }
     getBusinessProfile() {
-       
+
         this.getBussinessProfileApi()
             .then(
                 data => {
@@ -238,8 +245,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 questions: field,
                 bProfile: this.bProfile,
                 grid_row_index: grid_row_index,
-                userId: this.userdata.id,
-                subDomainId:this.subDomainId
+                userId: this.userId,
+                subDomainId: this.subDomainId
             }
         });
         this.dynamicdialogRef.afterClosed().subscribe(result => {
@@ -267,7 +274,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
 
-            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+            _this.provider_services.getUserBussinessProfile(_this.userId)
                 .subscribe(
                     data => {
                         resolve(data);
