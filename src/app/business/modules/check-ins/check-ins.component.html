@@ -145,7 +145,7 @@
               {{future_cap}} ({{future_waitlist_count}})
             </span>
             <span class="btn-primary-n" (click)="setTimeType(3)" [ngClass]="{'active': time_type==3}">
-              {{history_cap}}</span>
+              {{history_cap}} ({{history_waitlist_count}})</span>
             <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"

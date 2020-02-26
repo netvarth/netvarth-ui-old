@@ -86,7 +86,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_queue = null;
   future_waitlist_count: any = 0;
   today_waitlist_count: any = 0;
-  histroy_waitlist_count: any = 0;
+  history_waitlist_count: any = 0;
   time_type = 1;
   check_in_list: any = [];
   check_in_filtered_list: any = [];
@@ -857,6 +857,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('changeLocation');
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
+    this.history_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
     // this.getQueueList();
     this.getFutureCheckinCount()
@@ -865,6 +866,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.future_waitlist_count = result;
         }
       );
+    this.getHistoryCheckinCount()
+    .then(
+      (result) => {
+        this.history_waitlist_count = result;
+      }
+    );
   }
   selectedQueue(selected_queue) {
     // this.selected_queue = '';
@@ -932,7 +939,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(
           data => {
             resolve(data);
-            if (no_filter) { this.histroy_waitlist_count = data; }
+            // if (no_filter) { this.history_waitlist_count = data; }
+            this.history_waitlist_count = data;
           },
           () => {
           });
@@ -1099,6 +1107,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getHistoryCheckIn() {
+    this.loading = true;
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
     const promise = this.getHistoryCheckinCount(Mfilter);
@@ -1130,6 +1139,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             () => {
               this.load_waitlist = 1;
             });
+            this.loading = false;
       }
     );
   }
@@ -1889,7 +1899,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.labeldialogRef.afterClosed().subscribe(data => {
       if (data) {
-        this.getLabel();
         setTimeout(() => {
           this.labels(this.selectedCheckin[status]);
           this.labelMap = new Object();
@@ -1899,6 +1908,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.getTodayCheckIn();
         }, 500);
       }
+      this.getLabel();
     });
   }
 
