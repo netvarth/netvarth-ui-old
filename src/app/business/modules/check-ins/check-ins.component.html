@@ -295,7 +295,8 @@
                         </mat-select>
                       </mat-form-field>
                     </span>
-                    <span class="inl-blk filtr">
+                    
+                    <!-- <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['waitlist_status']" *ngIf="time_type !== 1"
                         (click)="filterClicked('waitlist_status')" class="anchorbutton remMarginRight genMarginLeft"
                         name="check_in_status" id="btn_check_in_status_filter_id"><span>{{check_in_status}}</span></a>
@@ -310,18 +311,39 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
+                    </span> -->
+                    <span class="inl-blk filtr">
+                      <a [class.button_filter]="filters['waitlist_status']" *ngIf="time_type !== 1"
+                        (click)="filterClicked('waitlist_status')" class="anchorbutton remMarginRight genMarginLeft"
+                        name="check_in_status" id="btn_check_in_status_filter_id"><span>{{check_in_status}}</span></a>
+                      <mat-form-field *ngIf="time_type === 3 && filters['waitlist_status']">
+                        <mat-select [(ngModel)]="statusMultiCtrl" [multiple]="true">
+                          <mat-option *ngFor="let status of check_in_statuses_filter"
+                            (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
+                            {{status.displayName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field *ngIf="time_type === 2 && filters['waitlist_status']">
+                        <mat-select [(ngModel)]="statusMultiCtrl" [multiple]="true">
+                          <mat-option *ngFor="let status of future_check_in_statuses_filter"
+                            (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
+                            {{status.displayName}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </span>
+
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['payment_status']" *ngIf="time_type == 3"
                         (click)="filterClicked('payment_status')" class="anchorbutton remMarginRight genMarginLeft"
                         name="payment_status" id="btn_payment_status_filter_id"><span>{{payment_status}}</span></a>
                       <mat-form-field *ngIf="time_type == 3 && filters['payment_status']">
                         <mat-select [(value)]="filter.payment_status">
-                          <mat-option (click)="setFilterData('payment_status', 'all')" [value]="'all'">
+                          <mat-option [value]="'all'">
                             {{all_cap}}
                           </mat-option>
-                          <mat-option *ngFor="let pstat of payStatusList"
-                            (click)="setFilterData('payment_status', pstat.pk)" [value]="pstat.pk">
+                          <mat-option *ngFor="let pstat of payStatusList" [value]="pstat.pk">
                             {{pstat.value}}
                           </mat-option>
                         </mat-select>

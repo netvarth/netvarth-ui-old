@@ -60,6 +60,7 @@ export class LabelComponent implements OnInit {
     defaultShortValue = true;
     customer_label = '';
     waitlist_label = '';
+    exceedLimit = false;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -232,5 +233,13 @@ export class LabelComponent implements OnInit {
     settingDeafultValue(event) {
         (event.checked) ? this.defaultShortValue = true : this.defaultShortValue = false;
         this.shortValue = this.value;
+    }
+    valueKeyup(e) {
+        if (e.target.value.length > 15) {
+            this.defaultShortValue = false;
+            this.exceedLimit = true;
+        } else {
+            this.exceedLimit = false;
+        }
     }
 }

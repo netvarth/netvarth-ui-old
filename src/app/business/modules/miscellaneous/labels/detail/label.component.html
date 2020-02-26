@@ -84,7 +84,7 @@
                                             <div class="col-md-4 no-padding">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="value"
-                                                        maxlength="10" [(ngModel)]="value"
+                                                        maxlength="50" [(ngModel)]="value" (keyup)="valueKeyup($event)"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  Value*" autocomplete="off">
                                                     <app-field-error-display [displayError]="true"
@@ -93,7 +93,7 @@
                                                 </mat-form-field>
                                                 <div class="form-group col-md-12 no-padding">
                                                     <mat-checkbox [(ngModel)]="defaultShortValue"
-                                                        [ngModelOptions]="{standalone: true}"
+                                                        [ngModelOptions]="{standalone: true}" [disabled]="exceedLimit"
                                                         (change)="settingDeafultValue($event)">Set
                                                         same as short value
                                                     </mat-checkbox>
@@ -102,7 +102,7 @@
                                             <div class="col-md-4 no-padding-small" *ngIf="!defaultShortValue">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="shortcut"
-                                                        maxlength="10" [(ngModel)]="shortValue"
+                                                        maxlength="15" [(ngModel)]="shortValue"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  short value*" autocomplete="off">
                                                     <app-field-error-display [displayError]="true"

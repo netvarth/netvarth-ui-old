@@ -77,6 +77,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
   check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
+  future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
   all_queues: any = [];
@@ -286,6 +287,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilter: any = [];
   labelFilterData = '';
   labelsCount: any = [];
+  statusMultiCtrl: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -867,11 +869,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
     this.getHistoryCheckinCount()
-    .then(
-      (result) => {
-        this.history_waitlist_count = result;
-      }
-    );
+      .then(
+        (result) => {
+          this.history_waitlist_count = result;
+        }
+      );
   }
   selectedQueue(selected_queue) {
     // this.selected_queue = '';
@@ -1139,11 +1141,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             () => {
               this.load_waitlist = 1;
             });
-            this.loading = false;
+        this.loading = false;
       }
     );
   }
   setTimeType(time_type) {
+    this.statusMultiCtrl = [];
     if (time_type === 3) {
       this.getTomorrowDate();
     }
@@ -1407,8 +1410,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
-    if (this.filter.waitlist_status !== 'all') {
-      api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+    // if (this.filter.waitlist_status !== 'all') {
+    //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+    // }
+    if (this.statusMultiCtrl.length > 0) {
+      api_filter['waitlistStatus-eq'] = this.statusMultiCtrl.join(',');
     }
     if (this.time_type !== 1) {
       // if (this.filter.waitlist_status !== 'all') {
@@ -1434,7 +1440,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
       if (this.filter.age !== '') {
-        const kids = moment(new Date()).add(-15, 'year').format('YYYY-MM-DD');
+        const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
         const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
         if (this.filter.age === 'kids') {
           api_filter['dob-ge'] = kids;
@@ -1464,11 +1470,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    // this.filter.waitlist_status !== 'all'
     this.labelSelection();
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
-      this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl) {
+      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
+      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl !== 'all') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
