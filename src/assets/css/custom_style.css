@@ -7447,3 +7447,18 @@ hr.wide-separator-line{
   padding-top:5px;
   padding-bottom: 5px;
 }
+.spclnheader {
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.25rem;
+}
+.usr_special {
+margin-right: 10px;
+border-radius: 30px;
+background-clip: padding-box;
+border: 1px solid #999999;
+padding: 3px 10px;
+font-weight: 500;
+margin-bottom: 10px;
+width: fit-content;
+}

@@ -3,47 +3,47 @@
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
-    <div class="content w-manager settings comn-cls lic-page">
-        <div class="col-md-12 no-padding-small">
-            <div class="w-dta">
+    <div class="content loc-list">
+        <div class="w-dta">
+            <div class="col-md-12 no-padding-small">
                 <div class="row">
-                    <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                        <div class="card p0 w-dta active">
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="true">
-                                    <mat-expansion-panel-header class="min90">
-                                        <mat-panel-title class="block-level">
-                                            {{special_cap}}
-                                            <p class="form-level-settings">{{frm_specialization_cap}}
-                                                <!-- <a
-                                                    class="learnmore-pointer" id="customer-help"
-                                                    (click)="learnmore_clicked('specializations', $event)">Learn
-                                                    More</a> -->
-                                            </p>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="no-dta" *ngIf="normal_specilization_show==1">
-                                        <app-innerloading-spinner spinnerParams="loadingParams">
-                                        </app-innerloading-spinner>
-                                    </div>
-                                    <div class="no-dta" *ngIf="normal_specilization_show==2">
-                                        <p>{{have_not_add_cap}} {{special_cap}} here.</p>
-                                        <span (click)="handleSpecialization()"
-                                            class="cs-btn bt3">{{add_it_cap}}</span>
-                                    </div>
-                                    <div class="special-dta"
-                                        *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
-                                        <span class="editbt" (click)="handleSpecialization()"></span>
-                                        <div *ngFor="let spec of bProfile.specialization">
-                                            {{getSpecializationName(spec)}}
+                    <div class="card p0 ng-star-inserted">
+                         <div class="copy locd">
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                                <div class="cl1 ng-star-inserted">
+                                     <div class="ot-it">
+                                        <span class="spclnheader">{{special_cap}}</span>
+                                            <p class="form-level-settings">{{frm_specialization_cap}} </p>
+
+         &nbsp;&nbsp;
+                        <div class="no-dta" *ngIf="normal_specilization_show==1">
+                             <app-innerloading-spinner spinnerParams="loadingParams">
+                                    </app-innerloading-spinner>
+                        </div>
+                        <div class="no-dta" *ngIf="normal_specilization_show==2">
+                            <p>{{have_not_add_cap}} {{special_cap}} here.</p>
+                                <span (click)="handleSpecialization()"class="cs-btn bt3">{{add_it_cap}}</span>
+                        </div>
+                        <div class="special-dta" style="display: flex;flex-wrap: wrap;"
+                        *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                             <span class="editbt" (click)="handleSpecialization()"></span>
+                             <div class="usr_special" *ngFor="let spec of bProfile.specialization">
+                                 <span>{{getSpecializationName(spec)}}</span>
+                                &nbsp;&nbsp;
+                            </div> 
+                        </div>
                                         </div>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
+                                     </div> 
+                                </div>
+        <div class="lbr col-sm-12 col-md-8 col-lg-8"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> 
+
+
+        
+       
