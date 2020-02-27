@@ -17,7 +17,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'adwordname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'adwordname',
                                         {
-                                        'required' : 'Please enter Jaldee-Keyword',
+                                        'required' : 'Please enter Jaldee Search Keyword',
                                         'pattern' : 'Only alphabets are allowed'
                                         })">
       </app-field-error-display>

@@ -12,7 +12,7 @@ export class KeywordsComponent {
             url: '/provider/license'
         },
         {
-            title: 'Jaldee-Keywords'
+            title: 'Jaldee Search Keywords'
         }
     ];
 }

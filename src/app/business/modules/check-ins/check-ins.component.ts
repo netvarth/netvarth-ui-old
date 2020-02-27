@@ -523,8 +523,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'waitlist_status' || type === 'service' || type === 'queue') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
         this.filter[type] = 'all';
+      } else if (type === 'waitlist_status') {
+        this.statusMultiCtrl = [];
       } else {
         this.filter[type] = '';
       }
@@ -1475,7 +1477,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl !== 'all') {
+      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1514,6 +1516,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       age: '',
       gender: ''
     };
+    this.statusMultiCtrl = [];
   }
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
@@ -2001,7 +2004,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Date & Time</td>';
               checkin_html += '<td style="padding:10px;">Name</td>';
               checkin_html += '<td style="padding:10px;">Service</td>';
+              // if (this.providerLabels.length > 0) {
               checkin_html += '<td style="padding:10px;">Label</td>';
+              // }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
