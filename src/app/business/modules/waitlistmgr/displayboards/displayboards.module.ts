@@ -13,8 +13,9 @@ import { GlobalSettingsComponent } from './global-settings/global-settings.compo
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
 import { ContainersComponent } from './containers/containers.component';
 import { ContainerDetailComponent } from './containers/detail/container-detail.component';
-import {MatSelectSearchModule} from '../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
-//import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+// import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+// import {MatSelectSearchModule} from '../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
     declarations: [
         DisplayboardsComponent,
@@ -33,7 +34,8 @@ import {MatSelectSearchModule} from '../../../../shared/components/mat-select-se
         CapitalizeFirstPipeModule,
         CommonModule,
         DisplayboardQSetModule,
-        MatSelectSearchModule
+        // MatSelectSearchModule
+        // NgxMatSelectSearchModule
     ],
     exports: [
         DisplayboardsComponent,

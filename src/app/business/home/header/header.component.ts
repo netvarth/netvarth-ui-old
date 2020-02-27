@@ -8,6 +8,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
+import { HttpHandler, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +37,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   iswiz = false; // is true when active page is wizard
   qAvailability;
   waitlist_label: any;
+  myData: any;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
@@ -65,6 +67,15 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
       }
       this.getBusinessdetFromLocalstorage();
+      // this.connect();
+    });
+  }
+  connect() {
+    // /communications/unreadCount
+    const source = new EventSource('http://localhost:8080/v1/rest/provider/events', {withCredentials: true});
+    source.addEventListener('message', message => {
+      // this.myData = JSON.parse(message.data);
+      console.log(message.data);
     });
   }
   closeMenu() {
