@@ -720,9 +720,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 },
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
-                'appointment': 'Disable',
+                'appointment': (form_data.appointment) ? 'Enable' : 'Disable',
                 'timeInterval': form_data.timeSlot,
-                'provider': { 'id': this.userId }
+                'provider':  this.userId
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);

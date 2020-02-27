@@ -296,10 +296,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.location = q.location;
     }
     getQs() {
+        console.log("q");
         return new Promise((resolve, reject) => {
-            this.provider_services.getUserProviderQueues(this.user.id)
+            this.provider_services.getUserProviderQueues(this.userId)
                 .subscribe(
                     (data) => {
+                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
@@ -360,6 +362,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
+                        console.log(error);
                         reject(error);
                     });
         });
@@ -597,6 +600,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         instantQInput['capacity'] = instantQ.qcapacity;
         instantQInput['queueState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;
+        instantQInput['provider'] = this.userId;
         if (isNaN(instantQ.qcapacity)) {
             const error = 'Please enter a numeric value for capacity';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -754,6 +758,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
+                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {
@@ -768,7 +773,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             this.api_loading = false;
                         }
                     );
-                });
+                 });
     }
     /**
      * Method to set values for instant Queue creation

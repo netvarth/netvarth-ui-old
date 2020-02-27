@@ -992,6 +992,7 @@ export class ProviderServices {
  return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id, postdata);
  }
  getUserProviderQueues(id) {
+     console.log(id);
  return this.servicemeta.httpGet('provider/waitlist/queues?provider-eq=' + id);
  }
  getUserServicesList(id) {
