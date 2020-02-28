@@ -392,7 +392,8 @@ export const projectConstants = {
     { displayName: 'NotPaid', value: 'NotPaid' },
     { displayName: 'Cancel', value: 'Cancel' },
     { displayName: 'Waived', value: 'Waived' },
-    { displayName: 'Obsolete', value: 'Obsolete' },
+    { displayName: 'RolledBack', value: 'RolledBack'},
+    // { displayName: 'Obsolete', value: 'Obsolete' },
   ],
 
 

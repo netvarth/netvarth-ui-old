@@ -41,7 +41,8 @@ export class InvoiceStatusComponent {
     Notpaid: '',
     Cancel: '',
     Waived: '',
-    Obsolete: '',
+    RolledBack:'',
+  //  Obsolete: '',
     invoiceStatus: 'all',
   };
   filters = {
@@ -49,7 +50,8 @@ export class InvoiceStatusComponent {
     Notpaid: false,
     Cancel: false,
     Waived: false,
-    Obsolete: false,
+    RolledBack: false,
+    //Obsolete: false,
     invoiceStatus: false,
   };
   invoice_status_cap = Messages.INVOICE_STATUS_CAP;
@@ -92,6 +94,9 @@ export class InvoiceStatusComponent {
 
   setFilterData(type, status) {
     let passingStatus;
+    console.log(this.selected);
+    console.log(type);
+    console.log(status);
     if (status && this.selected === 0) {
       this.selected = 1;
       this.invoiceStatus.push(status);
@@ -101,21 +106,31 @@ export class InvoiceStatusComponent {
     } else if (status && this.selected === 1) {
       if (this.invoiceStatus.indexOf(status) !== -1) {
         const indexofStatus = this.invoiceStatus.indexOf(status);
+        console.log(indexofStatus);
         if (indexofStatus >= 0) {
-          this.invoiceStatus.splice(indexofStatus, 1);
+         console.log( this.invoiceStatus.splice(indexofStatus, 1));
         }
         passingStatus = this.invoiceStatus.toString();
         this.filter[type] = passingStatus;
+        if(this.filter[type] === ''){
+        this.resetFilter();
+        }
         this.doSearch();
-      } else {
+       
+      }
+       else {
         this.invoiceStatus.push(status);
         passingStatus = this.invoiceStatus.toString();
         this.filter[type] = passingStatus;
+        console.log(this.filter[type]);
         this.doSearch();
       }
 
     }
-    this.check_status = '';
+    
+     this.check_status = '';
+     
+     
   }
   setFilterForApi() {
     const api_filter = {};
@@ -151,7 +166,8 @@ export class InvoiceStatusComponent {
       Notpaid: false,
       Cancel: false,
       Waived: false,
-      Obsolete: false,
+      RolledBack: false,
+      //Obsolete: false,
       invoiceStatus: false,
     };
 
@@ -160,7 +176,8 @@ export class InvoiceStatusComponent {
       Notpaid: '',
       Cancel: '',
       Waived: '',
-      Obsolete: '',
+      RolledBack: '',
+     // Obsolete: '',
       invoiceStatus: 'all',
     };
   }

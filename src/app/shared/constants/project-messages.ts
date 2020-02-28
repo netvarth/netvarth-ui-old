@@ -949,7 +949,8 @@ export const Messages = {
   'UNPAID': 'Notpaid',
   'CANCEL': 'Cancel',
   'WAIVED': 'Waived',
-  'OBSOLETE': 'Obsolete',
+  'ROLLEDBACK':'RolledBack',
+  // 'OBSOLETE': 'Obsolete',
 
 
 
