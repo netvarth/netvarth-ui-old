@@ -83,14 +83,17 @@ export class BranchUsersComponent implements OnInit {
                 });
     }
     getUsers() {
-        this.shared_services.getDepartments().subscribe(
-            (data1: any) => {
-                this.departments = data1.departments;
-                this.shared_services.getUsers().subscribe(
-                    (data: any) => {
+        this.shared_services.getUsers().subscribe(
+            (data: any) => {
+                this.shared_services.getDepartments().subscribe(
+                    (data1: any) => {
+                        this.departments = data1.departments;
                         this.users_list = data;
                         this.api_loading = false;
-                        console.log(this.users_list);
+                    },
+                    (error: any) => {
+                        this.users_list = data;
+                        this.api_loading = false;
                     }
                 );
             }
