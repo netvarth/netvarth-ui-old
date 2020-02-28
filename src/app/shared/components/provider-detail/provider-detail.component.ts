@@ -308,7 +308,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     } else {
       this.testuserQry = ' test_account:1 ';
     }
-    this.q_str = q_str;
+    // this.q_str = q_str;
+    console.log(this.provider_id);
+    this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
     const searchpass_criterias = {
       'start': 0,
       'return': 'title,sector,logo,place1,business_phone_no,unique_id',
@@ -322,17 +324,47 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
+          searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
         searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
-        searchpass_criterias.q = q_str;
-        searchpass_criterias.size = 5000;
+        searchpass_criterias.q = this.q_str;
+        searchpass_criterias.size = 10000;
         this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
           .subscribe(res => {
             this.result_data = res;
-            this.search_data = this.result_data.hits.hit;
-            for(let i in this.search_data){
-              if(this.search_data[i].fields.unique_id === this.provider_id){
-                this.provider_data = this.search_data[i].fields;
+            let schedule_arr: any = [];
+            this.locationjson = this.result_data.hits.hit;
+            // this.search_data = this.result_data.hits.hit;
+            const locarr = [];
+            for (let i = 0; i < this.locationjson.length; i++) {
+              this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+              const addres = this.locationjson[i].address1;
+              const place = this.locationjson[i].place1;
+              if (addres && addres.includes(place)) {
+                this.isPlaceisSame = true;
+              } else {
+                this.isPlaceisSame = false;
               }
+              if (this.locationjson[i].fields.business_hours1) {
+                schedule_arr = [];
+                const business_hours = JSON.parse(this.locationjson[i].fields.business_hours1[0]);
+                for (let j = 0; j < business_hours.length; j++) {
+                  const obt_sch = business_hours[j];
+                  if (obt_sch && obt_sch.repeatIntervals) {
+                    for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+                      schedule_arr.push({
+                        day: obt_sch.repeatIntervals[k],
+                        sTime: obt_sch.timeSlots[0].sTime,
+                        eTime: obt_sch.timeSlots[0].eTime,
+                        recurrtype: obt_sch.recurringType
+                      });
+                    }
+                  }
+                  this.locationjson[i].fields['display_schedule'] = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
+                }
+              }
+              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
+            this.getWaitingTime(locarr);
+            console.log(this.locationjson);
             }
           });
       });
@@ -355,6 +387,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
+            if (this.businessjson.claimStatus === 'Claimed') {
+              this.getProviderDepart(this.provider_bussiness_id);
+            }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
@@ -402,7 +437,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            this.getbusinessprofiledetails_json('location', true);
+            // this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'services': {
@@ -720,15 +755,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getServicesByDepartment(location, dept) {
-    const servicesByDept: any = [];
-    for (let i = 0; i < location['services'].length; i++) {
-      if (location['services'][i].department === dept.departmentId) {
-        servicesByDept.push(location['services'][i]);
-      }
-    }
-    this.services = servicesByDept;
-    this.deptlist = this.groubedByTeam[dept.departmentName];
-    this.selectedDepartment = dept;
+    // const servicesByDept: any = [];
+    // for (let i = 0; i < location['services'].length; i++) {
+    //   if (location['services'][i].department === dept.departmentId) {
+    //     servicesByDept.push(location['services'][i]);
+    //   }
+    // }
+    // this.services = servicesByDept;
+    // this.deptlist = this.groubedByTeam[dept.departmentName];
+    console.log(this.groubedByTeam);
+    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
+    this.services = service[0].services;
+    this.deptlist = this.groubedByTeam[dept];
+    console.log(this.deptlist);
+    this.selectedDepartment = service[0];
     // if (this.deptlist) {
     this.showServices = true;
     // } else {
@@ -742,6 +782,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {
+    console.log(locid);
+    console.log(passedIndx);
     this.shared_services.getExistingCheckinsByLocation(locid)
       .subscribe(data => {
         this.locationjson[passedIndx]['checkins'] = data;
@@ -933,7 +975,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
-      this.getbusinessprofiledetails_json('location', true);
+
+      // this.getbusinessprofiledetails_json('location', true);
+
       // this.routerobj.navigate(['/']);
       // }
     });
@@ -1062,7 +1106,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     this.extChecindialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.getbusinessprofiledetails_json('location', true);
+        // this.getbusinessprofiledetails_json('location', true);
       }
     });
   }

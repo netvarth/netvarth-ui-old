@@ -690,8 +690,12 @@ export class CheckInInnerComponent implements OnInit {
               //     this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
               //   }
               // }
-              if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
+              // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
+                if (this.page_source === 'provider_checkin' && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
                 this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+              } else {
+                this.apptTime = '';
+                this.showEditView = false;
               }
             } else {
               this.api_error = ' The business hours for the day have ended.Please try again during working hours.';
@@ -793,7 +797,7 @@ export class CheckInInnerComponent implements OnInit {
         // if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
         //   this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
         // } else
-        if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+        if (this.queuejson[this.sel_queue_indx].appointment === 'Enable' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
           this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
         }
       }
@@ -1083,6 +1087,7 @@ export class CheckInInnerComponent implements OnInit {
     this.resetApi();
     switch (cstep) {
       case 1:
+        break;
       case 2:
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
           this.main_heading = this.get_token_cap;
@@ -1773,7 +1778,11 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           if (!edit) {
+            // if (!this.availableSlots.includes(this.data.apptTime)) {
             this.apptTime = this.availableSlots[0];
+            // } else {
+            //   this.apptTime = this.data.apptTime;
+            // }
           }
         }
       );
@@ -1788,8 +1797,14 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
+          console.log(this.data.apptTime);
+          console.log(this.availableSlots);
           if (!edit) {
+            // if (!this.availableSlots.includes(this.data.apptTime)) {
             this.apptTime = this.availableSlots[0];
+            // } else {
+            //   this.apptTime = this.data.apptTime;
+            // }
           }
         }
       );
@@ -1800,7 +1815,8 @@ export class CheckInInnerComponent implements OnInit {
     this.showEditView = false;
   }
   editClicked() {
-    this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval, 'edit');
+    const selectedQ = this.queuejson.filter(x => (x.id === this.sel_queue_id));
+    this.getAvailableTimeSlots(selectedQ[0].queueSchedule.timeSlots[0]['sTime'], selectedQ[0].queueSchedule.timeSlots[0]['eTime'], selectedQ[0].timeInterval, 'edit');
     this.showEditView = true;
   }
 }
