@@ -79,7 +79,7 @@
                 </div>
             </div>
             
-            <div class="row">
+            <div class="row"  *ngIf="bProfile && bProfile.businessName">
                 <div class="card p0">
                     <span class="b-link" (click)="specializations()">
                         <h2>Specializations</h2>
@@ -87,7 +87,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="bProfile && bProfile.businessName">
                 <div class="card p0">
                     <span class="b-link" (click)="additionalInfo()">
                         <h2>Additional Info</h2>
@@ -95,7 +95,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="bProfile && bProfile.businessName">
                 <div class="card p0">
                     <span class="b-link" (click)="languagesKnown()">
                         <h2>Languages Known</h2>
@@ -103,7 +103,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="bProfile && bProfile.businessName">
                 <div class="card p0">
                     <span class="b-link" (click)="galerySocialmedia()">
                         <h2>Social Media</h2>

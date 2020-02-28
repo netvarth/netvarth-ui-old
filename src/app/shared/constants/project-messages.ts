@@ -1442,6 +1442,8 @@ export const Messages = {
   'SUBSCRIBE': 'Subscribe',
   'UNSUBSCRIBE': 'Unsubscribe',
   'BRANCHUSER_ADDED': 'Branch user created successfully',
+  'USER_ADDED': 'User created successfully',
+  'USERUPDATED_ADDED': 'User updated successfully',
   'JOINCORP_SUCCESS': 'You joined as a corporate',
   'CREATECORP_SUCCESS': 'Corporate created successfully',
   // live track
