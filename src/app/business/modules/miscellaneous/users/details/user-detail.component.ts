@@ -72,7 +72,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = ['CONSUMER', 'ASSISTANT', 'ADMIN', 'PROVIDER'];
+    userTypesFormfill: any = ['ASSISTANT', 'ADMIN', 'PROVIDER'];
     dept: any;
     subDom;
     // selected_dept;

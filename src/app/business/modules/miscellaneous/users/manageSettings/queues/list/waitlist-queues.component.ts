@@ -370,7 +370,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     getServices() {
         const params = { 'status': 'ACTIVE' };
         return new Promise((resolve, reject) => {
-            this.provider_services.getServicesList(params)
+            this.provider_services.getUserServicesList(this.userId)
                 .subscribe(data => {
                     this.services_list = data;
                     resolve();
@@ -620,7 +620,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param post_data input to create Instant Queue
      */
     createInstantQ(post_data) {
-        this.provider_services.addInstantQ(post_data)
+        this.provider_services.addProviderQueue(post_data)
             .subscribe(
                 () => {
                     this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
@@ -641,7 +641,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             const error = 'Please select services';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else {
-            this.provider_services.editInstantQ(post_data)
+            this.provider_services.editProviderQueue(post_data)
                 .subscribe(
                     () => {
                         this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });

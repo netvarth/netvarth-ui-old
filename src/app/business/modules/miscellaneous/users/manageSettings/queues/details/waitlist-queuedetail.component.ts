@@ -38,12 +38,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
         },
         {
-            title: this.work_hours,
-            url: '/provider/settings/q-manager/queues'
+            url: '/provider/settings/miscellaneous/users',
+            title: 'Users'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -359,6 +359,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    console.log(this.queue_data);
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
@@ -372,9 +373,28 @@ export class WaitlistQueueDetailComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
+                        title: this.userId,
+                        url: '/provider/settings/miscellaneous/users/' + this.userId,
+                    });
+                    breadcrumbs.push({
+                        title: 'Settings',
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                    });
+                    breadcrumbs.push({
+                       title: 'Queues',
+                       url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues'
+                    });
+                    breadcrumbs.push({
                         title: this.queue_data.name
                     });
-                    this.breadcrumbs = breadcrumbs;
+                    // const breadcrumbs = [];
+                    // this.breadcrumbs_init.map((e) => {
+                    //     breadcrumbs.push(e);
+                    // });
+                    // breadcrumbs.push({
+                    //     title: this.queue_data.name
+                    // });
+                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.action === 'edit') {
                         this.createForm();
@@ -434,8 +454,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.deptObj = data;
+                    console.log(this.deptObj);
                     this.filterbyDept = this.deptObj.filterByDept;
                     // this.departments = this.deptObj.departments;
+                   console.log(this.services_list);
                     for (let i = 0; i < this.deptObj.departments.length; i++) {
                         if (this.deptObj.departments[i].serviceIds.length > 0) {
                             this.departments.push(this.deptObj.departments[i]);
