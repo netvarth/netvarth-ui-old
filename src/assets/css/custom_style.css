@@ -7462,3 +7462,20 @@ font-weight: 500;
 margin-bottom: 10px;
 width: fit-content;
 }
+
+.usermedia {
+  padding: 10px 30px 0 20px !important;
+  font-weight: 500;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: inherit;
+}
+.langlist {
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+.usermediastyle{
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0.05) !important;
+}
