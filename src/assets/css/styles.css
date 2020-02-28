@@ -10225,3 +10225,17 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
     margin: 10px !important
 }
 .mr10 {margin-right: 10px !important}
+
+.cardmedia {
+    padding: 20px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) !important;
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0.05) !important;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #fff;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    border: none !important;
+    width: 100%;
+}
