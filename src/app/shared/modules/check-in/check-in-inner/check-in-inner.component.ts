@@ -1797,8 +1797,6 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
-          console.log(this.data.apptTime);
-          console.log(this.availableSlots);
           if (!edit) {
             // if (!this.availableSlots.includes(this.data.apptTime)) {
             this.apptTime = this.availableSlots[0];

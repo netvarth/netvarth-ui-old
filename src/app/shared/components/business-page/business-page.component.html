@@ -531,7 +531,7 @@
                                 {{getTerminologyTerm('provider')}}s
                                 ({{deptlist.length}})</h6>
                             <div class="location" *ngIf="businessjson.accountType === 'BRANCH'">
-                                <app-search-provider [searchResult]="deptlist"
+                                <app-search-provider [searchResult]="deptlist" [source]="'business'"
                                     (actionPerformed)="checkinClicked($event)">
                                 </app-search-provider>
                             </div>

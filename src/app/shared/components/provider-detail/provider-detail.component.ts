@@ -233,7 +233,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       });
       this.activaterouterobj.queryParams.subscribe(qparams => {
         this.source = qparams.source;
-      })
+      });
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
