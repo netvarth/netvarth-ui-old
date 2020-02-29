@@ -201,6 +201,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   provider_data: any;
   gender_length: any;
   api_loading = false;
+  source;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -230,6 +231,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.gets3curl();
         this.fetchClouddata();
       });
+      this.activaterouterobj.queryParams.subscribe(qparams => {
+        this.source = qparams.source;
+      })
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -365,8 +369,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
-              this.getWaitingTime(locarr);
             }
+            this.getWaitingTime(locarr);
             this.api_loading = false;
           });
       });

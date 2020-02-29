@@ -1,4 +1,4 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet">
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet" [source]="source">
 </app-header>
 <section class="content pro_details">
     <div class="container">
@@ -15,14 +15,14 @@
                                 <div class="tp-l">
                                     <div class="tp1">
                                         <div class="pro-img">
-                                            <ng-container *ngIf="galleryjson.length > 0">
+                                            <ng-container *ngIf="galleryjson.length > 0 && image_list_popup.length > 0">
                                                 <ng-container>
                                                     <img [src]="galleryjson[0].thumbUrl" alt=""
                                                         (click)="openImageModalRow(image_list_popup[0])" alt="">
                                                 </ng-container>
                                             </ng-container>
                                         </div>
-                                        <ul class="gal" *ngIf="galleryjson.length > 1">
+                                        <ul class="gal" *ngIf="galleryjson.length > 1 && image_list_popup.length > 0">
                                             <li>
                                                 <div class="galbx">
                                                     <div class="overlay"
@@ -67,7 +67,7 @@
                                                 <span class="more" *ngIf="showmoreDesc"
                                                     (click)="showDesc()">{{less_cap}}</span>
                                             </div>
-                                            <div class="services" *ngIf="specializationslist.length > 0">
+                                            <div class="services" *ngIf="specializationslist && specializationslist.length > 0">
                                                 <div class="otr-elements">
                                                     <span *ngIf="specializationslist.length > 0">
                                                         <span class="categoryspec"
@@ -358,7 +358,7 @@
                                             <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
                                                 target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
                                             <div class="clr">
-                                                <div class="schedule" *ngIf="loc.fields.display_schedule.length > 0">
+                                                <div class="schedule" *ngIf="loc.fields.display_schedule && loc.fields.display_schedule.length > 0">
                                                     <span class="sub-title">Business Working Hours</span>
                                                     <ul>
                                                         <li *ngFor="let schedule of loc.fields.display_schedule">
@@ -521,7 +521,7 @@
                                 <span> {{selectedDepartment.departmentDescription}}</span>
                             </div>
                         </div>
-                        <div class="dept-services" *ngIf="!deptlist && services.length > 0">
+                        <div class="dept-services" *ngIf="!deptlist && services && services.length > 0">
                             <h6 class="mgn-bt-10">{{services_offered}}</h6>
                             <ul>
                                 <li *ngFor="let service of services"
