@@ -200,6 +200,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   result_data: any;
   provider_data: any;
   gender_length: any;
+  api_loading = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -225,9 +226,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.provider_id = params.get('id');
+        this.api_loading = true;
         this.gets3curl();
+        this.fetchClouddata();
       });
-    this.fetchClouddata();
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -282,6 +284,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       );
   }
   fetchClouddata() {
+    this.locationjson = [];
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.latitude = loc_det.lat;
@@ -309,7 +312,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.testuserQry = ' test_account:1 ';
     }
     // this.q_str = q_str;
-    console.log(this.provider_id);
     this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
     const searchpass_criterias = {
       'start': 0,
@@ -324,7 +326,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
-          searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
+        searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
         searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
         searchpass_criterias.q = this.q_str;
         searchpass_criterias.size = 10000;
@@ -363,9 +365,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
-            this.getWaitingTime(locarr);
-            console.log(this.locationjson);
+              this.getWaitingTime(locarr);
             }
+            this.api_loading = false;
           });
       });
   }
@@ -394,6 +396,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
               }
+            } else {
+              this.bLogo = '';
             }
             if (this.businessjson.specialization) {
               this.specializationslist = this.businessjson.specialization;
@@ -572,15 +576,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       },
         () => {
-          if (this.bLogo !== '') {
-            this.image_list_popup = [];
-            this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-            const imgobj = new Image(0,
-              { // modal
-                img: this.galleryjson[0].url,
-                description: this.galleryjson[0].caption || ''
-              });
-            this.image_list_popup.push(imgobj);
+          if (section === 'gallery') {
+            this.galleryjson = [];
+            if (this.bLogo !== '') {
+              this.image_list_popup = [];
+              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              const imgobj = new Image(0,
+                { // modal
+                  img: this.galleryjson[0].url,
+                  description: this.galleryjson[0].caption || ''
+                });
+              this.image_list_popup.push(imgobj);
+            }
           }
         }
       );
@@ -763,11 +770,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // }
     // this.services = servicesByDept;
     // this.deptlist = this.groubedByTeam[dept.departmentName];
-    console.log(this.groubedByTeam);
     const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
     this.services = service[0].services;
     this.deptlist = this.groubedByTeam[dept];
-    console.log(this.deptlist);
     this.selectedDepartment = service[0];
     // if (this.deptlist) {
     this.showServices = true;
@@ -782,8 +787,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {
-    console.log(locid);
-    console.log(passedIndx);
     this.shared_services.getExistingCheckinsByLocation(locid)
       .subscribe(data => {
         this.locationjson[passedIndx]['checkins'] = data;
@@ -1112,13 +1115,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   showServiceDetail(serv, busname) {
+    const service = this.servicesjson.filter(dpt => dpt.name === serv);
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         bname: busname,
-        serdet: serv
+        serdet: service[0]
       }
     });
     this.servicedialogRef.afterClosed().subscribe(() => {

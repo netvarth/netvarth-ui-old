@@ -9,7 +9,7 @@
                         <span class="backtoresults" (click)="backtoSearchResult()"><span
                                 class="strong">{{go_back_cap}}</span></span>
                     </div>
-                    <div class="srlst details pro-details" style="width: 100%;">
+                    <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading">
                         <div class="top-sect">
                             <div class="new_style">
                                 <div class="tp-l">
@@ -337,8 +337,8 @@
                             </div>
                         </div>
                     </ng-container> -->
-
-                    <ng-container *ngIf="locationjson.length > 0">
+                    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+                    <ng-container *ngIf="locationjson.length > 0 && !api_loading">
                         <div *ngFor="let loc of locationjson">
                             <div class="location">
                                 <div class="top-sect">
@@ -383,8 +383,8 @@
                                                     <span class="sub-title">{{services_offered}}</span>
                                                     <ul>
                                                         <li *ngFor="let serv of loc.fields.services"
-                                                            (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
-                                                            | capitalizeFirst}}</li>
+                                                            (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                            {{serv}}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -465,10 +465,10 @@
                                             </ng-container>
                                         </ng-container>
                                         <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
                                             *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
                                         <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
                                             *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
@@ -476,7 +476,7 @@
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                         <span class="checkin-future pdetailbt10"
                                             *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                            (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                             <span
                                                 *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
                                             <span
