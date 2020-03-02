@@ -296,7 +296,6 @@ export class ProviderCheckinComponent implements OnInit {
                     } else {
                         this.customer_data = data[0];
                         this.getFamilyMembers();
-                        console.log(this.customer_data);
                         this.initCheckIn();
                     }
                 },

@@ -9,10 +9,16 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { OwlModule } from 'ngx-owl-carousel';
+import { ConsumerPaymentComponent } from './payment/payment.component';
+import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
+import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 
 @NgModule({
     declarations: [
-        ConsumerCheckinComponent
+        ConsumerCheckinComponent,
+        ConsumerPaymentComponent,
+        ConsumerLiveTrackComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -24,7 +30,9 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
         ConsumerCheckinRoutingModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        OwlModule,
+        BreadCrumbModule
     ],
     exports: [ConsumerCheckinComponent]
 })

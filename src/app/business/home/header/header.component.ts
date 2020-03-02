@@ -116,9 +116,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.reloadHandler();
     this.getBusinessdetFromLocalstorage();
     this.enable_disable = Messages.ENBLE_DISABLE_TOOLTIP.replace('[waitlist]', this.waitlist_label);
-    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-      this.reloadHandler();
-    });
+    // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+    //   this.reloadHandler();
+    // });
   }
   ngOnDestroy() {
     if (this.cronHandle) {

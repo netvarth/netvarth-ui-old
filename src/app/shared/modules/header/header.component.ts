@@ -208,13 +208,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.inboxCntFetched = false;
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {
-      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-        this.reloadHandler();
-      });
+      // this.connect();
+      // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+      //   this.reloadHandler();
+      // });
     } else {
-      if (this.cronHandle) {
-        this.cronHandle.unsubscribe();
-      }
+      // if (this.cronHandle) {
+      //   this.cronHandle.unsubscribe();
+      // }
     }
     if (this.ctype === 'provider') {
       this.isAvailableNow();
@@ -224,7 +225,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.popular_search(this.jsonlist);
     }
   }
-
+  connect() {
+    // /communications/unreadCount
+    const source = new EventSource('http://localhost:8080/v1/rest/consumer/events', {withCredentials: true});
+    source.addEventListener('message', message => {
+      // this.myData = JSON.parse(message.data);
+      console.log(message.data);
+    });
+  }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
     this.shared_service.getLicenseDetails()
