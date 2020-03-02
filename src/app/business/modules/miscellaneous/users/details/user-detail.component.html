@@ -172,6 +172,10 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
+                                            <app-field-error-display [displayError]="true"
+                                                    *ngIf="subdomainerror != null && !fed_service.isFieldValid(userForm,'selectedSubDomain')"
+                                                    [errorMsg]="subdomainerror">
+                                                </app-field-error-display>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12"

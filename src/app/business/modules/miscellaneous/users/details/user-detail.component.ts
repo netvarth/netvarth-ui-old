@@ -43,6 +43,7 @@ export class BranchUserDetailComponent implements OnInit {
     lnameerror = null;
     emailerror = null;
     email1error = null;
+    subdomainerror = null;
     subDomains: any = [];
     id;
     tday = new Date();
@@ -87,7 +88,6 @@ export class BranchUserDetailComponent implements OnInit {
         private fb: FormBuilder
     ) {
         this.activated_route.queryParams.subscribe(data => {
-            // console.log(data);
             this.actionparam = data;
 
         }
@@ -137,7 +137,7 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-            selectedSubDomain: ['', Validators.compose([Validators.required])],
+            selectedSubDomain: [],
             selectedDepartment: [],
             selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
             address: [],
@@ -156,7 +156,6 @@ export class BranchUserDetailComponent implements OnInit {
                 .subscribe(
                     res => {
                         this.user_data = res;
-                        console.log(this.user_data);
                         if (this.actionparam.type === 'edit') {
                             // this.createForm();
                             this.updateForm();
@@ -177,31 +176,10 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     updateForm() {
-        console.log(this.user_data.firstName);
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
-            // for (let subDomain of this.subDomains) {
-            //     console.log(subDomain.id);
-            //     console.log(this.user_data.subdomain);
-            //     if (subDomain.id === this.user_data.subdomain){
-            //         console.log('domain');
-            //         this.subDom = subDomain.id;
-            //         console.log(this.subDom);
-            //     }
-            // }
-            console.log(this.user_data.deptId);
-            // for (let dept of this.departments) {
-            //     console.log(dept.id);
-            //     console.log(this.user_data.deptId);
-            //     if (dept.id === this.user_data.deptId){
-            //         console.log('dept');
-            //         this.dept = dept.displayName;
-            //         console.log(this.dept);
-            //     }
-            // }
 
         }
-        // console.log("up form");
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null,
@@ -228,7 +206,7 @@ export class BranchUserDetailComponent implements OnInit {
         } else {
             this.showPrvdrFields = false;
         }
-        console.log(event.value);
+       
     }
     onSubmit(input) {
         let date_format = null;
@@ -248,61 +226,16 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.last_name.trim() === '') {
             this.lnameerror = 'Last name is required';
         }
+        if (input.selectedUserType === 'PROVIDER') {
+            if (input.selectedSubDomain === null) {
+                this.subdomainerror = 'Service specialization or Occupation is required';
+                return;
+            }
+        }
         if (this.fnameerror !== null || this.lnameerror !== null) {
             return;
         }
 
-        // console.log(this.actionparam);
-        // if (this.actionparam === 'add') {
-
-
-        // const data = {
-        //     'firstName': 'string',
-        //     'lastName': 'string',
-        //     'address': 'string',
-        //     'mobileNo': 0,
-        //     'dob': '2020-01-21T09:12:18.734Z',
-        //     'gender': 'string',
-        //     'userType': 'CONSUMER',
-        //     'email': 'string',
-        //     'city': 'string',
-        //     'state': 'string'
-        // };
-
-        // const post_data = {
-        //     'userProfile': {
-        //         'firstName': input.first_name.trim() || null,
-        //         'lastName': input.last_name.trim() || null,
-        //         'address': 'ff',
-        //         'mobileNo': input.phonenumber,
-        //         'dob': date_format || null,
-        //         'gender': input.gender || null,
-        //         'userType': 'CONSUMER',
-        //         'email': input.email || '',
-        //         'city': 'string',
-        //         'state': 'string'
-        //     },
-        //     'subSector': input.selectedSubDomain.subDomain,
-        //     'commonPassword': input.password,
-        //     'isAdmin': true,
-        //     'departmentCode': input.selectedDepartment
-        // };
-
-        // const post_data = {
-        //     'userProfile': {
-        //         'firstName': input.first_name.trim() || null,
-        //         'lastName': input.last_name.trim() || null,
-        //         'dob': date_format || null,
-        //         'gender': input.gender || null,
-        //         'email': input.email || '',
-        //         'countryCode': '+91',
-        //         'primaryMobileNo': input.phonenumber
-        //     },
-        //     'subSector': input.selectedSubDomain.subDomain,
-        //     'commonPassword': input.password,
-        //     'isAdmin': true,
-        //     'departmentCode': input.selectedDepartment
-        // };
         const post_data1 = {
             'firstName': input.first_name.trim() || null,
             'lastName': input.last_name.trim() || null,
@@ -316,7 +249,6 @@ export class BranchUserDetailComponent implements OnInit {
             // 'deptId': input.selectedDepartment,
             'userType': input.selectedUserType
         };
-        // console.log(input.selectedDepartment);
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['subdomain'] = input.selectedSubDomain;
@@ -340,7 +272,6 @@ export class BranchUserDetailComponent implements OnInit {
                 });
         }
     }
-    //  }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
     }
@@ -365,7 +296,6 @@ export class BranchUserDetailComponent implements OnInit {
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {
-                    console.log('department');
                     this.filterBydept = data['filterByDept'];
                     if (this.filterBydept) {
                         setTimeout(() => {
