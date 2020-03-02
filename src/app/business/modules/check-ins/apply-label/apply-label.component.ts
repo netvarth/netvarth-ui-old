@@ -34,7 +34,7 @@ export class ApplyLabelComponent implements OnInit {
     value;
     source;
     caption;
-    api_error = null;
+    api_error: any = [];
     api_success = null;
     defaultShortValue = true;
     short_value;
@@ -119,63 +119,77 @@ export class ApplyLabelComponent implements OnInit {
     //     }
     // }
     createLabel() {
-        if (this.source === 'newlabel') {
-            const valueSet = [];
-            const valset = {};
-            valset['value'] = this.value;
-            // valset['shortValue'] = this.value.replace(' ', '_');
-            if (this.short_value) {
-                valset['shortValue'] = this.short_value;
-            } else {
-                valset['shortValue'] = this.value;
-            }
-            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
-                valueSet.push(valset);
-            }
-            const post_data = {
-                'label': this.labelname.replace(' ', '_'),
-                'displayName': this.labelname,
-                'valueSet': valueSet,
-            };
-            this.provider_services.createLabel(post_data).subscribe(
-                () => {
-                    setTimeout(() => {
-                        this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
-                    }, 1000);
-                },
-                error => {
-                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-                });
+        this.api_error = [];
+        if (this.source === 'newlabel' && !this.labelname) {
+            this.api_error['label'] = 'Please enter the label';
+        } else if (!this.value) {
+            this.api_error['value'] = 'Please enter the value';
+        } else if (!this.defaultShortValue && !this.short_value) {
+            this.api_error['short'] = 'Please enter the short value';
         } else {
-            // this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
-            let valueSet = [];
-            const valset = {};
-            valset['value'] = this.value;
-            if (this.short_value) {
-                valset['shortValue'] = this.short_value;
+            if (this.source === 'newlabel') {
+                const valueSet = [];
+                const valset = {};
+                valset['value'] = this.value;
+                // valset['shortValue'] = this.value.replace(' ', '_');
+                if (this.short_value) {
+                    valset['shortValue'] = this.short_value;
+                } else {
+                    valset['shortValue'] = this.value;
+                }
+                if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                    valueSet.push(valset);
+                }
+                const post_data = {
+                    'label': this.labelname.replace(' ', '_'),
+                    'displayName': this.labelname,
+                    'valueSet': valueSet,
+                };
+                this.provider_services.createLabel(post_data).subscribe(
+                    () => {
+                        setTimeout(() => {
+                            this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
+                        }, 1000);
+                    },
+                    error => {
+                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                    });
             } else {
-                valset['shortValue'] = this.value;
+                // this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
+                let valueSet = [];
+                const valset = {};
+                valset['value'] = this.value;
+                if (this.short_value) {
+                    valset['shortValue'] = this.short_value;
+                } else {
+                    valset['shortValue'] = this.value;
+                }
+                valueSet = this.label.valueSet;
+                if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                    valueSet.push(valset);
+                }
+                const post_data = {
+                    'id': this.label.id,
+                    'label': this.label.label,
+                    'displayName': this.label.displayName,
+                    'valueSet': valueSet,
+                };
+                this.provider_services.updateLabel(post_data).subscribe(
+                    () => {
+                        // this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+                        setTimeout(() => {
+                            this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
+                        }, projectConstants.TIMEOUT_DELAY);
+                    },
+                    error => {
+                        // this.shared_functions.apiErrorAutoHide(this, error);
+                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                    });
             }
-            valueSet = this.label.valueSet;
-            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
-                valueSet.push(valset);
-            }
-            const post_data = {
-                'id': this.label.id,
-                'label': this.label.label,
-                'displayName': this.label.displayName,
-                'valueSet': valueSet,
-            };
-            this.provider_services.updateLabel(post_data).subscribe(
-                () => {
-                    // this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
-                    setTimeout(() => {
-                        this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
-                    }, projectConstants.TIMEOUT_DELAY);
-                },
-                error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                });
         }
+    }
+    resetApiErrors() {
+        this.api_error = [];
+        this.api_success = [];
     }
 }

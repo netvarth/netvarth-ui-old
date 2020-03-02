@@ -762,6 +762,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
             () => {
                 this.appointment = (status === 'Enable') ? true : false;
                 this.getQueueDetail();
+            },
+            error => {
+                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
 }

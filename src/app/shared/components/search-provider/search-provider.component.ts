@@ -24,6 +24,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     private dialog: MatDialog) { }
   @Input() dept_id;
   @Input() searchResult;
+  @Input() source;
   @Output() actionPerformed = new EventEmitter<any>();
   @Output() search_result_countevent = new EventEmitter<any>();
   search_data;
@@ -131,7 +132,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
 
   providerDetClicked(obj) {
     const provid = obj.unique_id;
-    this.routerobj.navigate(['searchdetail', provid]);
+    this.routerobj.navigate(['searchdetail', provid], {queryParams: {source: this.source}});
   }
   private getWaitingTime(provids) {
     if (provids.length > 0) {

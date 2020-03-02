@@ -53,7 +53,7 @@ export class ExistingCheckinComponent implements OnInit {
 
   ngOnInit() {
     // this.loc = this.data.locdet;
-    this.getExistingCheckinsByLocation(this.data.locdet.id);
+    this.getExistingCheckinsByLocation(this.data.locdet);
     this.terminologiesjson = this.data.terminologies;
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
     this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['waitlist']);
@@ -156,7 +156,7 @@ export class ExistingCheckinComponent implements OnInit {
               this.api_error = null;
             }, projectConstants.TIMEOUT_DELAY);
             // this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', obj.place);;
-            this.getExistingCheckinsByLocation(this.data.locdet.id);
+            this.getExistingCheckinsByLocation(this.data.locdet);
           }
         },
         error => {

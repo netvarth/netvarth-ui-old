@@ -101,10 +101,10 @@ export const Messages = {
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 2000 characters',
 
   // Adwords
-  'ADWORD_LISTEMPTY': 'No Jaldee-Keywords exist',
-  'ADWORD_CREATED': 'Jaldee-Keyword added successfully',
-  'ADWORD_DELETE': 'Do you really want to remove the Jaldee-Keyword [adword]?',
-  'ADWORD_DELETE_SUCCESS': 'Jaldee-Keyword deleted successfully',
+  'ADWORD_LISTEMPTY': 'No Jaldee Search Keywords exist',
+  'ADWORD_CREATED': 'Jaldee Search Keyword added successfully',
+  'ADWORD_DELETE': 'Do you really want to remove the Jaldee Search Keyword [adword]?',
+  'ADWORD_DELETE_SUCCESS': 'Jaldee Search Keyword deleted successfully',
   'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/Add-on for more benefits',
 
   // WaitlistManager
@@ -222,7 +222,7 @@ export const Messages = {
   'PAYMENT_TOOLTIP': 'View and edit online payment settings and tax settings',
   'BILLPOS_TOOLTIP': 'Add items, discounts, coupons',
   'ADDON_TOOLTIP': 'Buy available Add-ons',
-  'ADDWORD_TOOLTIP': 'Buy Jaldee-Keywords here',
+  'ADDWORD_TOOLTIP': 'Buy Jaldee Search Keywords here',
   'MOREOPTIONS_TOOLTIP': 'More Search Options',
   'CURRENTCHECKINS_TOOLTIP': 'Your check-ins',
   'FAVORITE_TOOLTIP': 'Your favourite providers',
@@ -652,8 +652,8 @@ export const Messages = {
   'ADD_ON_HISTORY': 'Add-on History',
 
   // App-ynw_provider-components-add-provider-bprofile-search-adwords
-  'ADD_ADWORD_CAP': 'Add Jaldee-Keyword',
-  'ADWORD_CAP': 'Jaldee-Keyword',
+  'ADD_ADWORD_CAP': 'Add Jaldee Search Keyword',
+  'ADWORD_CAP': 'Jaldee Search Keyword',
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
@@ -819,11 +819,11 @@ export const Messages = {
   'BPROFILE_OFFLINE_CAP': 'You are offline. Turn ON public search to make your profile visible to',
   'BPROFILE_TURN_OFF': 'Turn Off',
   'BPROFILE_TURN_ON': 'Turn On',
-  'BPROFILE_ADWORDS_CAP': 'Jaldee-Keywords',
-  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any Jaldee-Keywords. Would you like to buy Jaldee-Keywords?',
-  'BPROFILE_BUY_ADWORD_BTN': 'Buy Jaldee-Keywords',
-  'BPROFILE_CREATE_ADWORD_CAP': 'Jaldee-Keyword(s), you can create',
-  'BPROFILE_MOR_ADOWRDS_CAP': 'Jaldee-Keyword(s). To add more Jaldee-Keywords, go to',
+  'BPROFILE_ADWORDS_CAP': 'Jaldee Search Keywords',
+  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any Jaldee Search Keywords. Would you like to buy Jaldee Search Keywords?',
+  'BPROFILE_BUY_ADWORD_BTN': 'Buy Jaldee Search Keywords',
+  'BPROFILE_CREATE_ADWORD_CAP': 'Jaldee Search Keyword(s), you can create',
+  'BPROFILE_MOR_ADOWRDS_CAP': 'Jaldee Search Keyword(s). To add more Jaldee Search Keywords, go to',
   'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
   'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added ',
   'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information',
@@ -1097,9 +1097,9 @@ export const Messages = {
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP': 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
-  'SEARCH_ADWORDS_CAP': 'Jaldee-Keywords',
+  'SEARCH_ADWORDS_CAP': 'Jaldee Search Keywords',
   'SEARCH_SORRY_CAP': 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee-Keywords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee Search Keywords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP': 'Gallery',
@@ -1298,8 +1298,8 @@ export const Messages = {
   // App-shared-components-set-password-form
   'SET_PASSWORD_MSG': 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG': 'You haven\'t set your password. Next time you have to go through forgot password',
-  'ADWORD_ERRMSG': 'Please enter Jaldee-Keyword',
-  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee-Keywords. You can also purchase Jaldee-Keywords as Add ons',
+  'ADWORD_ERRMSG': 'Please enter Jaldee Search Keyword',
+  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee Search Keywords. You can also purchase Jaldee Search Keywords as Add ons',
 
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',

@@ -33,7 +33,7 @@
                                                     <input matInput type="text" class="form-control" id="refreshInterval"
                                                         placeholder="Enter refresh interval in seconds *"
                                                         [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
-                                                        autocomplete="off">
+                                                        autocomplete="off" (keypress)="isNumeric($event)">
                                                 </mat-form-field>
                                             </div>
                                             <div class="clearfix"></div>

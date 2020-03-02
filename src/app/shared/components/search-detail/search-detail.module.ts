@@ -15,9 +15,9 @@ import { ConsumerWaitlistHistoryComponent } from '../consumer-waitlist-history/c
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
-import { SearchProviderComponent } from '../search-provider/search-provider.component';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +33,8 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
         ConsumerCheckinHistoryListModule,
         SearchDetailRoutingModule,
         SearchProviderModule,
-        RouterModule
+        RouterModule,
+        LoadingSpinnerModule
     ],
     declarations: [
         SearchDetailComponent,
@@ -42,8 +43,8 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
         ConsumerWaitlistHistoryComponent
     ],
     entryComponents: [
-        JdnComponent 
+        JdnComponent
     ]
 })
 
-export class SearchDetailModule {}
+export class SearchDetailModule { }

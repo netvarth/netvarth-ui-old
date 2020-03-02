@@ -198,6 +198,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   maximumDiscount: any;
   jdnlength;
   jdnTooltip = '';
+  result_data: any;
+  provider_data: any;
+  gender_length: any;
+  api_loading = false;
+  source;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -223,7 +228,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.provider_id = params.get('id');
+        this.api_loading = true;
         this.gets3curl();
+        this.fetchClouddata();
+      });
+      this.activaterouterobj.queryParams.subscribe(qparams => {
+        this.source = qparams.source;
       });
   }
   ngOnDestroy() {
@@ -296,10 +306,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
+            if (this.businessjson.claimStatus === 'Claimed') {
+              this.getProviderDepart(this.provider_bussiness_id);
+            }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
               }
+            } else {
+              this.bLogo = '';
             }
             if (this.businessjson.specialization) {
               this.specializationslist = this.businessjson.specialization;
@@ -343,7 +358,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            this.getbusinessprofiledetails_json('location', true);
+            // this.getbusinessprofiledetails_json('location', true);
             break;
           }
           case 'services': {
@@ -478,15 +493,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       },
         () => {
-          if (this.bLogo !== '') {
-            this.image_list_popup = [];
-            this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-            const imgobj = new Image(0,
-              { // modal
-                img: this.galleryjson[0].url,
-                description: this.galleryjson[0].caption || ''
-              });
-            this.image_list_popup.push(imgobj);
+          if (section === 'gallery') {
+            this.galleryjson = [];
+            if (this.bLogo !== '') {
+              this.image_list_popup = [];
+              this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              const imgobj = new Image(0,
+                { // modal
+                  img: this.galleryjson[0].url,
+                  description: this.galleryjson[0].caption || ''
+                });
+              this.image_list_popup.push(imgobj);
+            }
           }
         }
       );
@@ -661,15 +679,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getServicesByDepartment(location, dept) {
-    const servicesByDept: any = [];
-    for (let i = 0; i < location['services'].length; i++) {
-      if (location['services'][i].department === dept.departmentId) {
-        servicesByDept.push(location['services'][i]);
-      }
-    }
-    this.services = servicesByDept;
-    this.deptlist = this.groubedByTeam[dept.departmentName];
-    this.selectedDepartment = dept;
+    // const servicesByDept: any = [];
+    // for (let i = 0; i < location['services'].length; i++) {
+    //   if (location['services'][i].department === dept.departmentId) {
+    //     servicesByDept.push(location['services'][i]);
+    //   }
+    // }
+    // this.services = servicesByDept;
+    // this.deptlist = this.groubedByTeam[dept.departmentName];
+    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
+    this.services = service[0].services;
+    this.deptlist = this.groubedByTeam[dept];
+    this.selectedDepartment = service[0];
     // if (this.deptlist) {
     this.showServices = true;
     // } else {
@@ -1019,19 +1040,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     this.extChecindialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.getbusinessprofiledetails_json('location', true);
+        // this.getbusinessprofiledetails_json('location', true);
       }
     });
   }
 
   showServiceDetail(serv, busname) {
+    const service = this.servicesjson.filter(dpt => dpt.name === serv);
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         bname: busname,
-        serdet: serv
+        serdet: service[0]
       }
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
