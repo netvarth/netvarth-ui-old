@@ -165,7 +165,7 @@ export class BranchUserDetailComponent implements OnInit {
                             breadcrumbs.push(e);
                         });
                         breadcrumbs.push({
-                            title: this.user_data.firstName
+                            title: this.user_data.id
                         });
                         this.breadcrumbs = breadcrumbs;
                     }
