@@ -395,20 +395,20 @@
                                             <li *ngIf="loc.fields.parking_type_location1 && loc.fields.parking_type_location1!=='' && loc.fields.parking_type_location1 != undefined && loc.fields.parking_type_location1 != 'none'"
                                                 [matTooltip]="'Parking Type: ' + loc.fields.parking_type_location1">
                                                 <span class="icon-parking"></span></li>
-                                            <li *ngIf="loc.always_open_location1 && loc.always_open_location1==true">
+                                            <li *ngIf="loc.always_open_location1 && loc.always_open_location1==1">
                                                 <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
-                                            <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1=='true'"
+                                            <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1==1"
                                                 [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
-                                            <li *ngIf="loc.fields.docambulance_location1 && loc.fields.docambulance_location1=='true'"
+                                            <li *ngIf="loc.fields.docambulance_location1 && loc.fields.docambulance_location1==1"
                                                 [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span>
                                             </li>
                                             <li [matTooltip]="'Emergency Services'"
-                                                *ngIf="(loc.fields.physiciansemergencyservices_location1 && loc.fields.physiciansemergencyservices_location1=='true') || 
-                                            (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1=='true') || 
-                                                (loc.fields.altemergencyservices_location1 && loc.fields.altemergencyservices_location1=='true') || 
-                                                (loc.fields.hosemergencyservices_location1 && loc.fields.hosemergencyservices_location1=='true')">
+                                                *ngIf="(loc.fields.physiciansemergencyservices_location1 && loc.fields.physiciansemergencyservices_location1==1) || 
+                                            (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1==1) || 
+                                                (loc.fields.altemergencyservices_location1 && loc.fields.altemergencyservices_location1==1) || 
+                                                (loc.fields.hosemergencyservices_location1 && loc.fields.hosemergencyservices_location1==1)">
                                                 <span class="icon-emergency"></span></li>
-                                            <li *ngIf="loc.fields.firstaid_location1 && loc.fields.firstaid_location1=='true'"
+                                            <li *ngIf="loc.fields.firstaid_location1 && loc.fields.firstaid_location1==1"
                                                 [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
                                         </ul>
                                     </div>
