@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
                                 <div class="col-md-12 dboard" *ngFor="let user of users_list">
-                                    <div class="copy">
+                                    <div class="copy" [class.disabled]="user.status=='INACTIVE'">
                                         <span class="mbt">
                                             <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                 <mat-icon>more_vert</mat-icon>
