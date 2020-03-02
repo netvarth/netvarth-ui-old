@@ -36,6 +36,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   iswiz = false; // is true when active page is wizard
   qAvailability;
   waitlist_label: any;
+  sessionStorage = false;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
@@ -98,6 +99,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    if (this.shared_functions.getitemfromSessionStorage('tabId')) {
+      this.sessionStorage = true;
+    }
     this.isAvailableNow();
     this.showCheckinED();
     this.getLicenseDetails();

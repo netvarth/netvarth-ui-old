@@ -339,8 +339,8 @@
                     </ng-container> -->
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <ng-container *ngIf="locationjson.length > 0 && !api_loading">
-                        <div *ngFor="let loc of locationjson">
-                            <div class="location">
+                        <div *ngFor="let loc of locationjson" [class.selected-loc]="locationId === loc.fields.location_id1">
+                            <div #location class="location" [class.selected-loc]="locationId === loc.fields.location_id1">
                                 <div class="top-sect">
                                     <div class="tp-l">
                                         <div class="tp2">

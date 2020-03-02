@@ -6767,3 +6767,7 @@ label.notifi-togl {
 .gallery-li .galbx{
   height: 200px !important;
 }
+.selected-loc {
+  background: honeydew !important;
+  box-shadow: 0 5px 5px 1px rgba(0,0,0,0.14) !important
+}
