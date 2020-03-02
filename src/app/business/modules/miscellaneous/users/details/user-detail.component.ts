@@ -137,7 +137,7 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-            selectedSubDomain: [0, Validators.compose([Validators.required])],
+            selectedSubDomain: ['', Validators.compose([Validators.required])],
             selectedDepartment: [],
             selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
             address: [],
