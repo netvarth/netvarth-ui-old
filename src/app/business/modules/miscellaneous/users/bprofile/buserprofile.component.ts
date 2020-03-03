@@ -1,18 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
-import { FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-buserprofile',
@@ -152,6 +153,25 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   frm_lang_cap = '';
   domain;
   userId: any;
+  showProfile = false;
+
+  select_subdomain_cap;
+    profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
+    business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
+    cancel_btn_cap = Messages.CANCEL_BTN;
+    save_btn_cap = Messages.SAVE_BTN;
+    amForm: FormGroup;
+    api_error = null;
+    api_success = null;
+    show_schedule_selection = false;
+   // bProfile: any = [];
+    formfields;
+    disabled_field = false;
+    prov_curstatus = '';
+    disableButton = false;
+    subDomains: any = [];
+    user_arr;
+
 
   constructor(private provider_services: ProviderServices,
     private sharedfunctionobj: SharedFunctions,
@@ -162,6 +182,8 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     private routerobj: Router,
     private activated_route: ActivatedRoute,
     public fed_service: FormMessageDisplayService,
+    @Inject(DOCUMENT) public document,
+    public dialogRef: MatDialogRef<UserBprofileSearchPrimaryComponent>,
     private shared_services: SharedServices) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.activated_route.params.subscribe(params => {
@@ -190,6 +212,13 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       title: 'Online Profile'
     });
     this.breadcrumbs = breadcrumbs;
+    this.getUser();
+    // calling method to create the form
+    // setTimeout(() => {
+    //   this.createForm();
+    // }, 500);
+    
+   
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
 
@@ -238,6 +267,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           this.normal_basicinfo_show = 2;
         }
       );
+      
   }
   getBussinessProfileApi() {
     const _this = this;
@@ -255,26 +285,147 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  createForm() {
+    console.log("create form");
+    this.formfields = {
+        bname: [{ value: '' }, Validators.compose([Validators.required])],
+        bdesc: [{ value: '' }]
+    };
+    this.amForm = this.fb.group(this.formfields);
+    console.log(this.bProfile);
+    // this.prov_curstatus = this.bProfile.status;
+if (this.bProfile) {
+  console.log(this.bProfile);
+this.updateForm();
+}
+    
+}
+onItemSelect(a) {
+
+}
+updateForm() {
+this.amForm.setValue({
+    'bname': this.bProfile.businessName || '',
+     'bdesc': this.bProfile.businessDesc || ''
+})
+}
+// resets the error messages holders
+resetApiErrors() {
+    this.api_error = null;
+    this.api_success = null;
+}
+getUser(){
+    this.provider_services.getUser(this.userId)
+    .subscribe(data => {
+        this.user_arr = data;
+        console.log(this.user_arr.subdomain);
+    });
+}
+
+// Method to handle the add / edit for bprofile
+onSubmit(form_data) {
+    const blankpatterm = projectConstants.VALIDATOR_BLANK;
+    form_data.bname = form_data.bname.trim();
+    if (blankpatterm.test(form_data.bname)) {
+        this.api_error = 'Please enter the business name';
+        this.document.getElementById('bname').focus();
+        return;
+    }
+    if (form_data.bdesc) {
+        form_data.bdesc = form_data.bdesc.trim();
+    }
+    if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
+        this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+    } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
+        this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+    } else {
+        const post_itemdata = {
+            'businessName': form_data.bname,
+             'businessDesc': form_data.bdesc
+        };
+        if (this.user_arr.userType === 'PROVIDER') {
+            post_itemdata['userSubdomain'] = this.user_arr.subdomain;
+        }
+        // calling the method to update the primarty fields in bProfile edit page
+        if (this.bProfile.length === 0) {
+            this.createPrimaryFields(post_itemdata);
+            
+        } else {
+            console.log("create");
+            this.updatePrimaryFields(post_itemdata);
+        }
+    }
+}
+
+
+
+// updating the primary field from the bprofile edit page
+createPrimaryFields(pdata) {
+    this.disableButton = true;
+    this.provider_services.patchUserbProfile(pdata, this.userId)
+        .subscribe(
+            () => {
+                this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
+                // setTimeout(() => {
+                //     this.dialogRef.close('reloadlist');
+                // }, projectConstants.TIMEOUT_DELAY);
+                this.showProfile = false;
+            },
+            error => {
+                this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+                this.disableButton = false;
+            }
+        );
+}
+
+
+updatePrimaryFields(pdata) {
+    this.disableButton = true;
+    this.provider_services.createUserbProfile(pdata, this.userId)
+        .subscribe(
+            () => {
+                this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
+                // setTimeout(() => {
+                //     this.dialogRef.close('reloadlist');
+                // }, projectConstants.TIMEOUT_DELAY);
+                this.showProfile = false;
+            },
+            error => {
+                this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+                this.disableButton = false;
+            }
+        );
+}
+
+
+
+
 
   showBPrimary() {
-    this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        type: 'edit',
-        bprofile: this.bProfile,
-        userId: this.userId
-      }
-    });
-    this.primarydialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-        }
-      }
-    });
+  this.showProfile = true;
+  this.createForm();
+
+    // this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   autoFocus: true,
+    //   data: {
+    //     type: 'edit',
+    //     bprofile: this.bProfile,
+    //     userId: this.userId
+    //   }
+    // });
+    // this.primarydialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     if (result === 'reloadlist') {
+    //       this.getBusinessProfile();
+    //     }
+    //   }
+    // });
+  }
+  cancel(){
+    this.showProfile = false;
   }
 
   // handles the image display on load and on change

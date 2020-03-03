@@ -22,7 +22,7 @@
                                                         More</a></p>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="cd-t">
+                                        <div class="cd-t" *ngIf="!showProfile">
                                             <div class="warning" *ngIf="normal_basicinfo_show==1">
                                                 <app-innerloading-spinner spinnerParams="loadingParams">
                                                 </app-innerloading-spinner>
@@ -41,25 +41,7 @@
                                             <div *ngIf="normal_basicinfo_show==3">
                                                 <div class="basic-i">
                                                     <span class="editbt" (click)="showBPrimary()"></span>
-                                                    <!-- <div class="bi-l" *ngIf="blogo">
-                                                        <div class="pro-pic" [class.yes]="profimg_exists">
-                                                            <div class="pro-pic-img"><img [src]="showimg()" alt=""
-                                                                    *ngIf="blogo[0] && blogo[0].url"></div>
-                                                            <input #logofile type="file" accept="image/*"
-                                                                style="display:none;"
-                                                                (change)="imageSelect(logofile,$event)">
-                                                            <div class="add"><span
-                                                                    (click)="logofile.click()">{{add_cap}} <br />
-                                                                    {{profile_pic_cap}}</span></div>
-                                                            <div class="change">
-                                                                <span class="change-pic"
-                                                                    (click)="logofile.click()">{{change_cap}}
-                                                                    <br /> {{pic_cap}}</span>
-                                                                <span class="del-pic"
-                                                                    (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
+                                                   
                                                     <div class="bi-r">
                                                         <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
                                                         <p class="profile-des-p"
@@ -71,13 +53,55 @@
                                             </div>
                                         </div>
                                        
+
+                                        <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
+                                            <h1 class="mat-dialog-title"> {{profile_name_summary_cap}} </h1>
+                                            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
+                                            
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <input  matInput class="form-control" formControlName="bname" autocomplete="off"
+                                                        placeholder="{{business_name_cap}}">
+                                                </mat-form-field>
+                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')" errorMsg="Please enter the business name">
+                                                </app-field-error-display>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <textarea  maxlength="2000" matInput class="form-control"  formControlName="bdesc" row="4" placeholder="A short description about your service (Max 2000 characters)"></textarea>
+                                                    
+                                                </mat-form-field>
+                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
+                                                </app-field-error-display>
+                                            </div>
+                                           
+                                            
+                                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                            <button type="button"  class="cs-btn bt2"(click)="cancel()"[disabled]="disableButton">{{cancel_btn_cap}}</button>
+                                            <button type="submit" style="margin-left: 15px;" [disabled]="!amForm.valid || disableButton" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+                                            </div>
+                                           
+                                            </form>
+                                            <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+                                            <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+                            
+                                            
+                                        </div>
+
                                     </mat-expansion-panel>
                                 </mat-accordion>
                             </div>
                         </div>
                     </div>
+
+                   
+
+
+
                 </div>
-            </div>
+            </div> 
+            
             
             <div class="row"  *ngIf="bProfile && bProfile.businessName">
                 <div class="card p0">
