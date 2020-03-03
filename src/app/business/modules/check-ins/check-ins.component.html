@@ -295,7 +295,7 @@
                         </mat-select>
                       </mat-form-field>
                     </span>
-                    
+
                     <!-- <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['waitlist_status']" *ngIf="time_type !== 1"
                         (click)="filterClicked('waitlist_status')" class="anchorbutton remMarginRight genMarginLeft"
@@ -448,6 +448,8 @@
                                     class="text">{{partially_paid_cap}}</span></span>
                                 <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                     class="text">{{paid_cap}}</span></span>
+                                <span class="paid-f icon-btn" style="color: red;"
+                                  *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                               </ng-container>
                             </span>
                           </div>
@@ -555,6 +557,9 @@
                               <span class="paid-f icon-btn"
                                 *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-f icon-btn" style="color: red;"
+                                *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                  class="text">Refund</span></span>
                             </ng-container>
                           </span>
                         </div>
@@ -645,6 +650,8 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" style="color: red;"
+                              *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </span>
                         </div>
                         <div class="col-md-4 col-xs-4 p0 info-box-icon-right">
@@ -810,6 +817,8 @@
                                       class="text">{{partially_paid_cap}}</span></span>
                                   <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                       class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                                 </ng-container>
                               </span>
                             </div>
@@ -1006,6 +1015,8 @@
                                       class="text">{{partially_paid_cap}}</span></span>
                                   <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                       class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                                 </ng-container>
                               </span>
                             </div>
@@ -1147,6 +1158,9 @@
                                   <span class="paid-f icon-btn"
                                     *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
                                       class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                      class="text">Refund</span></span>
                                 </ng-container>
                               </span>
                             </div>
@@ -1171,6 +1185,9 @@
                                 <span class="paid-f icon-btn"
                                   *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
                                     class="text">{{paid_cap}}</span></span>
+                                <span class="paid-f icon-btn" style="color: red;"
+                                  *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                    class="text">Refund</span></span>
                               </ng-container>
                             </span>
                           </div>
@@ -1320,6 +1337,8 @@
                                       class="text">{{partially_paid_cap}}</span></span>
                                   <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                       class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                                 </ng-container>
                               </span>
                             </div>
@@ -1407,6 +1426,8 @@
                                       class="text">{{partially_paid_cap}}</span></span>
                                   <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                                       class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                                 </ng-container>
                               </span>
                             </div>

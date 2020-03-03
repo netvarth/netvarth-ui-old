@@ -327,7 +327,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
-    { pk: 'FullyPaid', value: 'Fully Paid' }
+    { pk: 'FullyPaid', value: 'Fully Paid' },
+    { pk: 'Refund', value: 'Refund' }
   ];
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -2023,7 +2024,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
               checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
-              if (!this.labelFilterData.match('.and.') && this.labelsCount.length > 1) {
+              if (!this.labelFilterData.match('$') && this.labelsCount.length > 1) {
                 for (const count of this.labelsCount) {
                   checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
                 }
@@ -2408,7 +2409,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
           } else {
-            this.labelFilterData = this.labelFilterData + '.and.' + key + '::' + this.labelMultiCtrl[key].join(',');
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.labelMultiCtrl[key].join(',');
           }
         }
       } else {
