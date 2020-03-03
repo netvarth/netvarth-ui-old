@@ -288,6 +288,94 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
+  fetchClouddata() {
+    this.locationjson = [];
+    const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
+    this.latitude = loc_det.lat;
+    this.longitude = loc_det.lon;
+    this.loctype = loc_det.typ;
+    let q_str = '';
+    let locstr = '';
+    if (this.latitude) { // case of location is selected
+      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
+      const coordinates = retcoordinates['locationRange'];
+      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
+      locstr = 'location1:' + coordinates;
+      q_str = q_str + locstr;
+    }
+    let testUser = false;
+    if (userobj !== null) {
+      const phno = (userobj.primaryPhoneNumber.toString());
+      if (phno.startsWith('55')) {
+        testUser = true;
+      }
+    }
+    if (!testUser) {
+      this.testuserQry = ' (not test_account:1) ';
+    } else {
+      this.testuserQry = ' test_account:1 ';
+    }
+    // this.q_str = q_str;
+    this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
+    const searchpass_criterias = {
+      'start': 0,
+      'return': 'title,sector,logo,place1,business_phone_no,unique_id',
+      'fq': '',
+      'q': '',
+      'size': 10,
+      'parser': 'structured', // 'q.parser'
+      'options': '', // 'q.options'
+      'sort': '',
+      'distance': ''
+    };
+    this.sharedFunctionobj.getCloudUrl()
+      .then(url => {
+        searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
+        searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        searchpass_criterias.q = this.q_str;
+        searchpass_criterias.size = 10000;
+        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
+          .subscribe(res => {
+            this.result_data = res;
+            let schedule_arr: any = [];
+            this.locationjson = this.result_data.hits.hit;
+            // this.search_data = this.result_data.hits.hit;
+            const locarr = [];
+            for (let i = 0; i < this.locationjson.length; i++) {
+              this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+              const addres = this.locationjson[i].address1;
+              const place = this.locationjson[i].place1;
+              if (addres && addres.includes(place)) {
+                this.isPlaceisSame = true;
+              } else {
+                this.isPlaceisSame = false;
+              }
+              if (this.locationjson[i].fields.business_hours1) {
+                schedule_arr = [];
+                const business_hours = JSON.parse(this.locationjson[i].fields.business_hours1[0]);
+                for (let j = 0; j < business_hours.length; j++) {
+                  const obt_sch = business_hours[j];
+                  if (obt_sch && obt_sch.repeatIntervals) {
+                    for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+                      schedule_arr.push({
+                        day: obt_sch.repeatIntervals[k],
+                        sTime: obt_sch.timeSlots[0].sTime,
+                        eTime: obt_sch.timeSlots[0].eTime,
+                        recurrtype: obt_sch.recurringType
+                      });
+                    }
+                  }
+                  this.locationjson[i].fields['display_schedule'] = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
+                }
+              }
+              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
+            }
+            this.getWaitingTime(locarr);
+            this.api_loading = false;
+          });
+      });
+  }
   // gets the various json files based on the value of "section" parameter
   // Some of functions copied to Consumer Home also.
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
