@@ -89,7 +89,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
-        );
+        );  
+        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
