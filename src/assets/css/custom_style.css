@@ -7479,3 +7479,10 @@ width: fit-content;
 .usermediastyle{
   box-shadow: 0 0 0px rgba(0, 0, 0, 0.05) !important;
 }
+.userprofileheader{
+  padding: 10px 0px 10px 20px !important;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.25rem;
+
+}

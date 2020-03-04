@@ -366,13 +366,16 @@ createPrimaryFields(pdata) {
         .subscribe(
             () => {
                 this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
+                this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
                 // setTimeout(() => {
                 //     this.dialogRef.close('reloadlist');
                 // }, projectConstants.TIMEOUT_DELAY);
                 this.showProfile = false;
+                this.getBusinessProfile();
             },
             error => {
                 this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+                this.sharedfunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                 this.disableButton = false;
             }
         );
@@ -385,13 +388,16 @@ updatePrimaryFields(pdata) {
         .subscribe(
             () => {
                 this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
+                this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
                 // setTimeout(() => {
                 //     this.dialogRef.close('reloadlist');
                 // }, projectConstants.TIMEOUT_DELAY);
                 this.showProfile = false;
+                this.getBusinessProfile();
             },
             error => {
                 this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+                this.sharedfunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                 this.disableButton = false;
             }
         );

@@ -10,9 +10,9 @@
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 no-padding">
                             <div class="card p0 w-dta active">
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header class="min100">
-                                            <mat-panel-title class="block-level">
+                                    <!-- <mat-expansion-panel [expanded]="true">
+                                        <mat-expansion-panel-header class="min100"> -->
+                                            <div class="block-level userprofileheader">
                                                 {{profile_summary_cap}} <i
                                                     *ngIf="reqFields.name "
                                                     class="req-flds-cap">*required fields missing</i>
@@ -20,8 +20,8 @@
                                                         class="learnmore-pointer" id="customer-help"
                                                         (click)="learnmore_clicked('basic-information', $event)">Learn
                                                         More</a></p>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
+                                            </div>
+                                        <!-- </mat-expansion-panel-header> -->
                                         <div class="cd-t" *ngIf="!showProfile">
                                             <div class="warning" *ngIf="normal_basicinfo_show==1">
                                                 <app-innerloading-spinner spinnerParams="loadingParams">
@@ -89,7 +89,7 @@
                                             
                                         </div>
 
-                                    </mat-expansion-panel>
+                                    <!-- </mat-expansion-panel> -->
                                 </mat-accordion>
                             </div>
                         </div>
