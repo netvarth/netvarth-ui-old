@@ -124,13 +124,14 @@ export class LocationsListComponent implements OnInit {
     }
     // get the list of locations added for the current provider
     getProviderLocations() {
+        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
         this.api_loading = true;
         this.show_addlocationButton = false;
         this.provider_services.getProviderLocations()
             .subscribe(data => {
                 this.loc_list = data;
                 this.api_loading = false;
-                if (this.multipeLocationAllowed) {
+                if (this.multipeLocationAllowed && user.accountType === 'INDEPENDENT_SP') {
                     this.show_addlocationButton = true;
                 } else {
                     if (this.loc_list.length === 0) {
