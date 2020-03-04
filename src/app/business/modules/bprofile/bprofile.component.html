@@ -220,7 +220,7 @@
                                                             </button>
                                                             <mat-menu #menu="matMenu">
                                                                 <button type="button"
-                                                                    (click)="copyInputMessage(bProfile.id)"
+                                                                    (click)="copyInputMessage(bProfile.uniqueId)"
                                                                     mat-menu-item>
                                                                     <i class="fa fa-copy"></i>
                                                                     <span>copy link</span>
@@ -228,7 +228,7 @@
                                                             </mat-menu>
                                                         </span>
                                                         <span class="custid" rel="noopener"
-                                                            target="_blank">{{bProfile.id}} </span>
+                                                            target="_blank">{{bProfile.uniqueId}} </span>
                                                     </li>
                                                 </ul>
                                             </div>
