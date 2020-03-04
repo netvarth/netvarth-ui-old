@@ -1,0 +1,78 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0" *ngIf="api_loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card p0" *ngIf="!api_loading">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8" *ngIf = "amForm">
+                            <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                              (keyup)="resetApiErrors()" class="ynw-common-form-nm" >
+                              
+                              <div class="form-group no-padding nonworking">
+                                  <mat-form-field class="selctDte">
+                                    <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'add'" formControlName="selectdate"
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
+                                    <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                                  </mat-form-field>
+                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')"
+                                    errorMsg="Please enter valid date">
+                                  </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                  <mat-form-field>
+                                    <input type="text" matInput id="reason" formControlName="reason" class="form-control" autocomplete="off"
+                                      placeholder="Mention the reason *">
+                                  </mat-form-field>
+                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')" [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
+                                {
+                                  'required' : 'Please enter reason',
+                                  'maxlength' : 'Maximum limit is ' + maxcharDesc + ' characters'
+                                })">
+                                  </app-field-error-display>
+                                </div>
+                                <div class="form-group ">
+                            
+                                  <div class="col-md-12 nonworkingg">
+                                    <div class="col-md-6 starttimediv">
+                                      <label for="changeHourStep">{{start_time_cap}}</label>
+                                      <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
+                                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
+                                        errorMsg="Please enter the start time">
+                                      </app-field-error-display>
+                                    </div>
+                                    <div class="col-md-6 endtimediv">
+                                      <label for="changeHourStep">{{end_time_cap}}</label>
+                                      <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
+                                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
+                                        errorMsg="Please enter the Closing time">
+                                      </app-field-error-display>
+                                    </div>
+                                  </div>
+                                
+                              </div> 
+
+                              <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
+                                <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                                   &nbsp;
+                                 <button  type="submit"  mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn_cap}} </button>
+                              </div>
+                            </form>
+                            
+                        </div>
+                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -5,12 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 //import { DepartmentsComponent } from '../../../ynw_provider/components/departments/departments.component';
 //import { DepartmentDetailComponent } from '../../../ynw_provider/components/departments/details/department.details.component';
 import { ManageSettingsComponent } from './manageSettings.component';
+import { usernonWorkingDayroutingmodule } from './usernonworkingday/usernonWorkingDay.routing.module';
 
 const routes: Routes = [
       {path: '', component: ManageSettingsComponent},
       {path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
       {path: 'queues', loadChildren: () => import('./queues/waitlist-queues.module').then(m => m.WaitlistQueuesModule)},
-      {path: 'holidays',loadChildren:() => import('./nonWorkingDay/nonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
+      {path: 'holidays' ,loadChildren: () => import('./usernonworkingday/usernonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
+    //{path: 'holidays',loadChildren:() => import('./nonWorkingDay/nonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
       // { path: '',
       // children: [
       //   {path: 'services', loadChildren: './manageSettings/services/waitlist-services.module#WaitlistServicesModule'},

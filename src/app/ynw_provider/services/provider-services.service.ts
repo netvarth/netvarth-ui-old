@@ -1003,4 +1003,30 @@ export class ProviderServices {
     const url = 'provider/services/' + service_id;
     return this.servicemeta.httpGet(url);
     }
+
+ getUserProviderNonworkingdays(id?) {
+ return this.servicemeta.httpGet('provider/vacation/?provider-eq=' + id);  
+ }       
+ 
+ addUserHoliday(data) {
+ return this.servicemeta.httpPost('provider/vacation', data);
+ }
+
+ deleteUserHoliday(id) {
+ const path = 'provider/vacation/' + id;
+ return this.servicemeta.httpDelete(path);
+ }
+
+ getUserdetailNonworkingday(id) {
+   console.log(id);
+ return this.servicemeta.httpGet('provider/vacation/'+ id);
+  }  
+
+ editUserHoliday(data){
+    return this.servicemeta.httpPut('provider/vacation', data);
+  }  
+
+ uploaduserLogo(id) {
+  return this.servicemeta.httpPut('provider/user/logo/' + id);
+  }
 }
