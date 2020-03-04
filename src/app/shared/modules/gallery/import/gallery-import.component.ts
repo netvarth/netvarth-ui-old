@@ -78,6 +78,8 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.sharedfunctionObj.confirmGalleryImageDelete(this, file);
     }
     imageSelect(input) {
+        this.error_msg = '';
+        this.error_list = [];
         if (input.files) {
             for (const file of input.files) {
                 this.success_error = this.sharedfunctionObj.imageValidation(file);
@@ -92,10 +94,9 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
                     this.error_list.push(this.success_error);
                     if (this.error_list[0].type) {
                         this.error_msg = 'Selected image type not supported';
+                    } else if (this.error_list[0].size) {
+                        this.error_msg = 'Please upload images with size < 15mb';
                     }
-                    //  else if (this.error_list[0].size) {
-                    //     this.error_msg = 'Please upload images with size < 5mb';
-                    // }
                 }
             }
         }

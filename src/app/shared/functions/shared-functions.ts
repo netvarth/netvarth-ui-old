@@ -546,7 +546,8 @@ export class SharedFunctions {
 
   imageValidation(file) {
     const file_types = projectConstants.IMAGE_FORMATS;
-    const image_max_size = projectConstants.IMAGE_MAX_SIZE;
+    // const image_max_size = projectConstants.IMAGE_MAX_SIZE;
+    const image_max_size = 15000000;
     const error = [];
     let is_error = false;
     if (file.type && file_types.indexOf(file.type) === -1) {
