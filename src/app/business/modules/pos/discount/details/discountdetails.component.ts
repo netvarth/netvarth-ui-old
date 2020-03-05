@@ -32,7 +32,7 @@ export class discountdetailscomponent implements OnInit
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   curtype = 'Fixed';
   api_loading = true;
-  api_loading1 = true;
+  api_loading1 = true; 
   disableButton = false;
   breadcrumbs_init =[
    
@@ -167,21 +167,24 @@ export class discountdetailscomponent implements OnInit
           this.api_error = 'Please enter the discount value';
         }
         return;
-      }
+      } 
       if (!form_data.name.replace(/\s/g, '').length) {
         this.api_error = 'Please enter discount name';
         return;
       }
       if (form_data.calculationType === 'Percentage') {
         if (form_data.discValue < 0 || form_data.discValue > 100) {
-          this.api_error = 'Discount percentage should be between 0 and 100';
+         // this.api_error = 'Discount percentage should be between 0 and 100';
+         this.api_error =  this.sharedfunctionObj.openSnackBar('Discount percentage should be between 0 and 100',{ 'panelClass': 'snackbarerror' });
+          console.log(this.api_error);
           return;
         }
-      }
+      } 
     }
     if (!isNaN(form_data.description.trim(' '))) {
-      this.api_error = 'Please enter a description';
-      return;
+     // this.api_error = 'Please enter a description';
+     this.api_error =  this.sharedfunctionObj.openSnackBar('Please enter a valid description',{ 'panelClass': 'snackbarerror' });
+     return;
     }
     const post_data = {
       'name': form_data.name,
@@ -190,7 +193,7 @@ export class discountdetailscomponent implements OnInit
       'calculationType': form_data.calculationType
     };
 
-    if (this.action === 'edit') {
+    if (this.action === 'edit') { 
       this.editDiscount(post_data);
     } else if (this.action === 'add') {
       post_data['discType'] = 'Predefine';
@@ -203,15 +206,18 @@ export class discountdetailscomponent implements OnInit
     this.provider_services.addDiscount(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
+         // this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
+         this.api_success =  this.sharedfunctionObj.openSnackBar(Messages.DISCOUNT_CREATED);
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'discount']);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          //this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }
+       
       );
   }
   isvalid(evt) {
@@ -227,12 +233,14 @@ export class discountdetailscomponent implements OnInit
     this.provider_services.editDiscount(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
+          //this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
+          this.api_success =  this.sharedfunctionObj.openSnackBar(Messages.DISCOUNT_UPDATED);
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'discount']);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          //this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }
