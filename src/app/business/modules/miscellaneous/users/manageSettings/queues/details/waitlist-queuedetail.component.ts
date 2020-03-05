@@ -83,6 +83,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     iftokn = false;
     selected_location;
     selected_locationId;
+    api_loading1 = true;
     userId: any;
     constructor(
         private provider_services: ProviderServices,
@@ -96,7 +97,20 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.activated_route.params.subscribe(params => {
             this.queue_id = params.sid;
             this.userId = params.id;
-           
+            this.breadcrumbs.push(
+                {
+                    url: '/provider/settings/miscellaneous/users/' + this.userId,
+                    title: this.userId
+                },
+                {
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
+                    title: 'Settings'
+                },
+                {
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues',
+                    title: 'Queues'
+                }
+            );
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
@@ -109,6 +123,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.getWaitlistMgr();
         this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -129,27 +144,24 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.breadcrumbs = breadcrumbs;
                 this.createForm();
             }
-            this.getWaitlistMgr();
         }, 100);
     }
     getWaitlistMgr() {
         this.api_loading = true;
         this.waitlist_manager = null;
         this.provider_services.getWaitlistMgr()
-          .subscribe(
-            data => {
-              this.waitlist_manager = data;
-             // if (this.waitlist_manager.calculationMode === 'Fixed') {
-              this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
-           // }
-              if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
-                this.iftokn = true;
-              } else {
-                this.iftokn = false;
-              }
-              this.api_loading = false;
-            });
-      }
+            .subscribe(
+                data => {
+                    this.waitlist_manager = data;
+                    // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+                    if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
+                        this.iftokn = true;
+                    } else {
+                        this.iftokn = false;
+                    }
+                    this.api_loading = false;
+                });
+    }
     getProviderLocations() {
         this.provider_services.getProviderLocations()
             .subscribe(data => {
@@ -179,91 +191,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             });
 
     }
-    selectdeprtservice(index, event, deptName) {
-        this.serviceSelection[deptName] = [];
-        for (let i = 0; i < this.departments.length; i++) {
-            if (event.checked) {
-                this.departments[index].checked = true;
-                this.SelService[index] = true;
-                if (this.departments[i].departmentName === deptName) {
-                    for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-                        this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
-                    }
-                }
-            } else {
-                this.departments[index].checked = false;
-                this.SelService[index] = false;
-                this.SelServcall = false;
-            }
-        }
-        let count = 0;
-        for (let i = 0; i < this.departments.length; i++) {
-            if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
-                for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
-                    if (this.serviceSelection[this.departments[i].departmentName][j]) {
-                        count++;
-                    }
-                }
-            }
-        }
-        if (count === this.departments.length) {
-            this.SelServcall = true;
-        }
-    }
-
-    serviceunderdept(index, deptName, deptIndex, serviceid) {
-        if (this.serviceSelection[deptName][index]) {
-            delete this.serviceSelection[deptName][index];
-        } else {
-            this.serviceSelection[deptName][index] = serviceid;
-        }
-        let count = 0;
-        for (let i = 0; i < this.serviceSelection[deptName].length; i++) {
-            if (!this.serviceSelection[deptName][i]) {
-                this.SelServcall = false;
-                count++;
-            }
-        }
-        if (count === this.serviceSelection[deptName].length) {
-            this.departments[deptIndex].checked = false;
-            this.SelService[deptIndex] = false;
-        }
-        if (count === 0) {
-            this.SelServcall = true;
-        }
-    }
-    handleServicechecbox(index) {
-        this.SelServcall = true;
-        if (this.services_list[index].checked) {
-            delete this.services_list[index].checked;
-        } else {
-            this.services_list[index].checked = true;
-        }
-        for (let i = 0; i < this.services_list.length; i++) {
-            if (!this.services_list[i].checked) {
-                this.SelServcall = false;
-                break;
-            }
-        }
-    }
-    selectdept() {
-        for (let i = 0; i < this.departments.length; i++) {
-            this.serviceSelection[this.departments[i].departmentName] = [];
-            this.departments[i].checked = true;
-            this.SelService[i] = true;
-            for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-                this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
-            }
-        }
-        this.SelServcall = true;
-    }
-    deselectdept() {
-        for (let i = 0; i < this.departments.length; i++) {
-            this.SelService[i] = false;
-            delete this.departments[i].checked;
-        }
-        this.SelServcall = false;
-    }
     existingScheduletoggle() {
         (this.show_dialog) ? this.show_dialog = false : this.show_dialog = true;
         this.activeQueues = [];
@@ -281,13 +208,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             }
         }
-    }
-    handleselectnone() {
-        this.Selall = false;
-        this.selday_arr = [];
-        const wkdaystemp = this.weekdays;
-        this.weekdays = [];
-        this.weekdays = wkdaystemp;
     }
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
@@ -308,15 +228,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 break;
         }
     }
-    check_existsinArray(arr, val) {
-        let ret = -1;
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === val) {
-                ret = i;
-            }
-        }
-        return ret;
-    }
     handleDaychecbox(dayindx) {
         const selindx = this.selday_arr.indexOf(dayindx);
         if (selindx === -1) {
@@ -330,28 +241,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.Selall = false;
         }
     }
-    handleselectall() {
-        this.Selall = true;
-        this.selday_arr = [];
-        const wkdaystemp = this.weekdays;
-        this.weekdays = [];
-        for (let ii = 1; ii <= 7; ii++) {
-            this.handleDaychecbox(ii);
-        }
-        this.weekdays = wkdaystemp;
-    }
-    selectAllService() {
-        for (let i = 0; i < this.services_list.length; i++) {
-            this.services_list[i].checked = true;
-        }
-        this.SelServcall = true;
-    }
-    deselectAllService() {
-        for (let i = 0; i < this.services_list.length; i++) {
-            delete this.services_list[i].checked;
-        }
-        this.SelServcall = false;
-    }
     getQueueDetail() {
         this.api_loading = true;
         this.getProviderQueues();
@@ -359,7 +248,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.queue_data = data;
-                    console.log(this.queue_data);
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
@@ -373,28 +261,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: this.userId,
-                        url: '/provider/settings/miscellaneous/users/' + this.userId,
+                        title: this.queue_data.id
                     });
-                    breadcrumbs.push({
-                        title: 'Settings',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-                    });
-                    breadcrumbs.push({
-                       title: 'Queues',
-                       url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues'
-                    });
-                    breadcrumbs.push({
-                        title: this.queue_data.name
-                    });
-                    // const breadcrumbs = [];
-                    // this.breadcrumbs_init.map((e) => {
-                    //     breadcrumbs.push(e);
-                    // });
-                    // breadcrumbs.push({
-                    //     title: this.queue_data.name
-                    // });
-                     this.breadcrumbs = breadcrumbs;
+                    this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.action === 'edit') {
                         this.createForm();
@@ -406,18 +275,20 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             );
     }
-    getProviderServices() {
-        const params = { 'status': 'ACTIVE' };
-        this.provider_services.getUserServicesList(this.userId)
-            .subscribe(data => {
-                this.services_list = data;
-                console.log(this.services_list);
-                this.getDepartments();
-            });
-    }
+    // get the list of services
+  getProviderServices() {
+    this.api_loading1 = true;
+    const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
+    this.provider_services.getProviderServices(filter)
+      .subscribe(data => {
+        this.services_list = data;
+      });
+    this.api_loading1 = false;
+  }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'queues']);
+        // this.router.navigate(['provider', 'settings', 'miscellaneous',
+        //     'queues']);
+        this._location.back();
         this.api_loading = false;
     }
     addEditProviderQueue() {
@@ -429,8 +300,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     getProviderQueues() {
         const activeQueues: any = [];
-        // let queue_list: any = [];
-        this.provider_services.getUserProviderQueues(this.userId)
+        const filter = { 'provider-eq': this.userId };
+        this.provider_services.getProviderQueues(filter)
             .subscribe(data => {
                 this.queue_list = data;
                 for (let ii = 0; ii < this.queue_list.length; ii++) {
@@ -448,37 +319,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.provider_shared_functions.setActiveQueues(activeQueues);
             });
     }
-
-    getDepartments() {
-        this.provider_services.getDepartments()
-            .subscribe(
-                data => {
-                    this.deptObj = data;
-                    console.log(this.deptObj);
-                    this.filterbyDept = this.deptObj.filterByDept;
-                    // this.departments = this.deptObj.departments;
-                   console.log(this.services_list);
-                    for (let i = 0; i < this.deptObj.departments.length; i++) {
-                        if (this.deptObj.departments[i].serviceIds.length > 0) {
-                            this.departments.push(this.deptObj.departments[i]);
-                        }
-                    }
-                    for (let i = 0; i < this.services_list.length; i++) {
-                        for (let j = 0; j < this.departments.length; j++) {
-                            for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                                if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
-                                    this.departments[j].serviceIds[k] = this.services_list[i].name;
-                                }
-                            }
-                        }
-                    }
-                },
-                error => {
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                }
-            );
-    }
-
     createForm() {
         if (this.action === 'edit') {
             this.amForm = this.fb.group({
@@ -488,7 +328,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                timeSlot: ['', Validators.compose([Validators.required])],
+                // timeSlot: ['', Validators.compose([Validators.required])],
             });
             this.updateForm();
         } else {
@@ -500,7 +340,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
-                timeSlot: ['', Validators.compose([Validators.required])]
+                // timeSlot: ['', Validators.compose([Validators.required])]
             });
             this.provider_services.getQStartToken()
                 .subscribe(
@@ -514,6 +354,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
 
     updateForm() {
+        console.log(this.queue_data);
         const sttime = {
             hour: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
@@ -535,7 +376,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qendtime: edtime || null,
             qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
-            timeSlot: this.queue_data.timeInterval || 0
+            // timeSlot: this.queue_data.timeInterval || 0
         });
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
@@ -549,53 +390,27 @@ export class WaitlistQueueDetailComponent implements OnInit {
         } else {
             this.Selall = false;
         }
-        if (this.filterbyDept) {
-            for (let j = 0; j < this.departments.length; j++) {
-                this.serviceSelection[this.departments[j].departmentName] = [];
-                for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                    for (let i = 0; i < this.services_list.length; i++) {
-                        if (this.services_list[i].name === this.departments[j].serviceIds[k]) {
-                            this.departments[j].checked = true;
-                            this.SelService[j] = true;
-                            this.serviceSelection[this.departments[j].departmentName][k] = this.departments[j].serviceIds[k];
-                        }
-                    }
-                }
+        for (let j = 0; j < this.queue_data.services.length; j++) {
+            for (let k = 0; k < this.services_list.length; k++) {
+            if (this.queue_data.services[j].id === this.services_list[k].id) {
+                this.services_list[k].checked = true;
+                this.services_selected.push(this.queue_data.services[j].id);
             }
-            let count = 0;
-            for (let j = 0; j < this.departments.length; j++) {
-                for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                    for (let i = 0; i < this.serviceSelection[this.departments[j].departmentName].length; i++) {
-                        if (this.departments[j].serviceIds[k] === this.serviceSelection[this.departments[j].departmentName][i]) {
-                            count++;
-                        }
-                    }
-                }
-            }
-            if (count === this.services_list.length) {
-                this.SelServcall = true;
-            }
-        } else {
-            for (let j = 0; j < this.services_list.length; j++) {
-                for (let k = 0; k < this.services_list.length; k++) {
-                    if (this.services_list[j].id === this.services_list[k].id) {
-                        this.services_list[k].checked = true;
-                        this.services_selected.push(this.services_list[j].id);
-                    }
-                }
-            }
-            if (this.services_selected.length === this.services_list.length) {
-                this.SelServcall = true;
             }
         }
+        if (this.services_selected.length === this.services_list.length) {
+            this.SelServcall = true;
+        }
+        console.log(this.queue_data);
+        console.log(this.departments);
+        console.log(this.serviceSelection);
+        console.log(this.SelService);
         this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
         this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     }
 
     onSubmit(form_data) {
-        console.log(form_data);
         if (!form_data.qname.replace(/\s/g, '').length) {
-            console.log("in queue name if");
             const error = 'Please enter queue name';
             this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
@@ -615,72 +430,54 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             }
         }
-        console.log(this.services_list);
         for (const sel of this.services_list) {
             if (sel['checked']) {
                 selser.push({ 'id': sel.id });
                 found = true;
             }
         }
-        console.log(found);
         if (!found) {
-            console.log('services');
             const error = 'Please select services';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-            //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
         }
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
-            console.log("day");
             const error = 'Please select the days';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-           // this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.apiErrorAutoHide(this, error);
             return;
         } else {
             // Numeric validation
             if (isNaN(form_data.qcapacity)) {
-                console.log("qcapacity");
                 const error = 'Please enter a numeric value for capacity';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-               // this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
-                console.log("qcapacity");
                 const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             } else {
                 if (form_data.qcapacity === 0) {
-                    console.log("qcapacity");
                     const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                    //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
                     return;
                 }
             }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
-                console.log("qcapacity");
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
-                console.log("qcapacity");
                 const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             } else {
                 if (form_data.qserveonce === 0) {
-                    console.log("qcapacity");
                     const error = this.customer_label + 's served at a time should be greater than 0';
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                    //this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
                     return;
                 }
             }
@@ -698,7 +495,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             }
             // check whether the start and end times are selected
             if (!this.dstart_time || !this.dend_time) {
-                console.log("qcapacity");
                 this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
                 return;
             }
@@ -716,7 +512,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             enddate.setMinutes(this.dend_time.minute);
             const starttime_format = moment(curdate).format('hh:mm A') || null;
             const endtime_format = moment(enddate).format('hh:mm A') || null;
-             console.log("qcapacity");
             // building the schedule json section
             schedulejson = {
                 'recurringType': 'Weekly',
@@ -742,16 +537,14 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 },
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
-                'appointment': (form_data.appointment) ? 'Enable' : 'Disable',
                 'timeInterval': form_data.timeSlot,
-                'provider':  this.userId
+                'provider': this.userId
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
             } else {
                 this.addProviderQueue(post_data);
             }
-            console.log(post_data);
         }
     }
     addProviderQueue(post_data) {
@@ -784,7 +577,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.getQueueDetail();
                     if (this.params.action === 'editFromList') {
-                        this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
                     } else if (this.params.source === 'location_detail') {
                         this._location.back();
                     } else {
@@ -808,13 +601,140 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.selected_location = this.loc_list[ev];
         this.selected_locationId = this.loc_list[ev].id;
     }
-    
+
+    handleselectall() {
+        this.Selall = true;
+        this.selday_arr = [];
+        const wkdaystemp = this.weekdays;
+        this.weekdays = [];
+        for (let ii = 1; ii <= 7; ii++) {
+          this.handleDaychecbox(ii);
+        }
+        this.weekdays = wkdaystemp;
+      }
+      handleselectnone() {
+        this.Selall = false;
+        this.selday_arr = [];
+        const wkdaystemp = this.weekdays;
+        this.weekdays = [];
+        this.weekdays = wkdaystemp;
+      }
+      selectAllService() {
+        for (let i = 0; i < this.services_list.length; i++) {
+          this.services_list[i].checked = true;
+        }
+        this.SelServcall = true;
+      }
+      deselectAllService() {
+        for (let i = 0; i < this.services_list.length; i++) {
+          delete this.services_list[i].checked;
+        }
+        this.SelServcall = false;
+      }
+      // checks whether a given value is there in the given array
+      check_existsinArray(arr, val) {
+        let ret = -1;
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === val) {
+            ret = i;
+          }
+        }
+        return ret;
+      }
+      serviceunderdept(index, deptName, deptIndex, serviceid) {
+        if (this.serviceSelection[deptName][index]) {
+          delete this.serviceSelection[deptName][index];
+        } else {
+          this.serviceSelection[deptName][index] = serviceid;
+        }
+        let count = 0;
+        for (let i = 0; i < this.serviceSelection[deptName].length; i++) {
+          if (!this.serviceSelection[deptName][i]) {
+            this.SelServcall = false;
+            count++;
+          }
+        }
+        if (count === this.serviceSelection[deptName].length) {
+          this.departments[deptIndex].checked = false;
+          this.SelService[deptIndex] = false;
+        }
+        if (count === 0) {
+          this.SelServcall = true;
+        }
+      }
+      selectdept() {
+        for (let i = 0; i < this.departments.length; i++) {
+          this.serviceSelection[this.departments[i].departmentName] = [];
+          this.departments[i].checked = true;
+          this.SelService[i] = true;
+          for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+            this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
+          }
+        }
+        this.SelServcall = true;
+      }
+      deselectdept() {
+        for (let i = 0; i < this.departments.length; i++) {
+          this.SelService[i] = false;
+          delete this.departments[i].checked;
+        }
+        this.SelServcall = false;
+      }
+      selectdeprtservice(index, event, deptName) {
+        this.serviceSelection[deptName] = [];
+        for (let i = 0; i < this.departments.length; i++) {
+          if (event.checked) {
+            this.departments[index].checked = true;
+            this.SelService[index] = true;
+            if (this.departments[i].departmentName === deptName) {
+              for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+                this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
+              }
+            }
+          } else {
+            this.departments[index].checked = false;
+            this.SelService[index] = false;
+            this.SelServcall = false;
+          }
+        }
+        let count = 0;
+        for (let i = 0; i < this.departments.length; i++) {
+          if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
+            for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
+              if (this.serviceSelection[this.departments[i].departmentName][j]) {
+                count = i;
+              }
+            }
+          }
+        }
+        if (count === this.departments.length) {
+          this.SelServcall = false;
+        }
+      }
+      handleServicechecbox(index) {
+        this.SelServcall = true;
+        if (this.services_list[index].checked) {
+          delete this.services_list[index].checked;
+        } else {
+          this.services_list[index].checked = true;
+        }
+        for (let i = 0; i < this.services_list.length; i++) {
+          if (!this.services_list[i].checked) {
+            this.SelServcall = false;
+            break;
+          }
+        }
+      }
+
     changeTimeslotStatus(ev) {
         const status = (ev.checked) ? 'Enable' : 'Disable';
         this.provider_services.changeApptStatus(status, this.queue_id).subscribe(
             () => {
                 this.appointment = (status === 'Enable') ? true : false;
                 this.getQueueDetail();
+            },
+            error => {
+                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
 }

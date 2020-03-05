@@ -156,6 +156,8 @@ export class ManageSettingsComponent implements OnInit {
   active_user;
   frm_lang_cap = '';
   userId: any;
+  service_count: any;
+  queues_count: any;
   // domain;
 
 
@@ -165,6 +167,7 @@ export class ManageSettingsComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions,
     private activatedRoot: ActivatedRoute,
+    private provider_services: ProviderServices
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
@@ -173,6 +176,8 @@ export class ManageSettingsComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.getServiceCount();
+    this.getQueuesCount();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -193,7 +198,26 @@ export class ManageSettingsComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
   }
-
+  getServiceCount() {
+    // this.loading = true;
+    const filter = { 'provider-eq': this.userId };
+    this.provider_services.getServiceCount(filter)
+        .subscribe(
+            data => {
+                this.service_count = data;
+            });
+    // this.loading = false;
+}
+getQueuesCount() {
+    // this.loading = true;
+    const filter = {'provider-eq': this.userId };
+    this.provider_services.getQueuesCount(filter)
+        .subscribe(
+            data => {
+                this.queues_count = data;
+            });
+    // this.loading = false;
+}
   services() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services']);
   }

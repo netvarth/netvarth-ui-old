@@ -296,7 +296,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.location = q.location;
     }
     getQs() {
-        console.log("q");
         return new Promise((resolve, reject) => {
             this.provider_services.getUserProviderQueues(this.userId)
                 .subscribe(
@@ -534,7 +533,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues', queue.id], navigationExtras);
     }
     /**
      * For clearing api errors
@@ -715,9 +714,9 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      */
     addEditProviderQueue(type, queue = null) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { action: type, activeQueues: this.provider_shared_functions.getActiveQueues() }
+            queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
