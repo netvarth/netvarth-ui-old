@@ -556,6 +556,7 @@ export class ConsumerCheckinComponent implements OnInit {
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
+                break;
             }
         }
         this.sel_ser_det = [];
@@ -569,6 +570,8 @@ export class ConsumerCheckinComponent implements OnInit {
             status: serv.status,
             taxable: serv.taxable
         };
+        console.log(this.sel_ser_det);
+        this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
         this.queueQryExecuted = false;
@@ -780,13 +783,12 @@ export class ConsumerCheckinComponent implements OnInit {
         post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
-            post_Data['ignorePrePayment'] = true;
+            // post_Data['ignorePrePayment'] = true;
             this.addCheckInConsumer(post_Data);
         }
     }
     addCheckInConsumer(post_Data) {
         this.api_loading = true;
-        
         this.shared_services.addCheckin(this.account_id, post_Data)
           .subscribe(data => {
             const retData = data;

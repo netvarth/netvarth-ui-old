@@ -512,14 +512,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getServiceCount() {
-    this.provider_services.getServiceCount()
+    const filter = { 'scope-eq': 'account' };
+    this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
           this.service_count = data;
         });
   }
   getQueuesCount() {
-    this.provider_services.getQueuesCount()
+    const filter = { 'scope-eq': 'account' };
+    this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
           this.queues_count = data;

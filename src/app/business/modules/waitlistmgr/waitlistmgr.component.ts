@@ -197,7 +197,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
     getServiceCount() {
         this.loading = true;
-        this.provider_services.getServiceCount()
+        const filter = { 'scope-eq': 'account' };
+        this.provider_services.getServiceCount(filter)
             .subscribe(
                 data => {
                     this.service_count = data;
@@ -206,7 +207,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
     getQueuesCount() {
         this.loading = true;
-        this.provider_services.getQueuesCount()
+        const filter = { 'scope-eq': 'account' };
+        this.provider_services.getQueuesCount(filter)
             .subscribe(
                 data => {
                     this.queues_count = data;

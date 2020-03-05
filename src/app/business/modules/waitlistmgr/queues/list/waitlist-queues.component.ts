@@ -267,7 +267,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getProviderQueues()
+            const filter = {
+                'scope-eq': 'account'
+            };
+            this.provider_services.getProviderQueues(filter)
                 .subscribe(
                     (data) => {
                         let allQs: any = [];

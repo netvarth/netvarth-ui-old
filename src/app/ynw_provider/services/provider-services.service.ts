@@ -283,6 +283,11 @@ export class ProviderServices {
  const url = 'provider/services/' + stat;
  return this.servicemeta.httpGet(url);
  }
+
+ getProviderServices(filter?) {
+    const url = 'provider/services';
+    return this.servicemeta.httpGet(url, null, filter);
+ }
  createService(data) {
  const url = 'provider/services/';
  return this.servicemeta.httpPost(url, data);
@@ -338,8 +343,8 @@ export class ProviderServices {
  const url = 'provider/license/usageInfo';
  return this.servicemeta.httpGet(url);
  }
- getProviderQueues() {
- return this.servicemeta.httpGet('provider/waitlist/queues');
+ getProviderQueues(filter?) {
+ return this.servicemeta.httpGet('provider/waitlist/queues', null, filter);
  }
  getProviderLocationQueues(location_id) {
  const url = 'provider/waitlist/queues/' + location_id + '/location';
@@ -358,7 +363,7 @@ export class ProviderServices {
  editInstantQ(data) {
  return this.servicemeta.httpPut('provider/waitlist/queues/instant', data);
  }
- getProviderQueuesbyfilter(filter) {
+ getProviderQueuesbyfilter(filter?) {
  return this.servicemeta.httpGet('provider/waitlist/queues/filter', null, filter);
  }
  getProviderQueuesCountbyfilter(filter) {
@@ -463,13 +468,13 @@ export class ProviderServices {
  const url = 'provider/locations/count';
  return this.servicemeta.httpGet(url);
  }
- getServiceCount() {
+ getServiceCount(filter?) {
  const url = 'provider/services/count';
- return this.servicemeta.httpGet(url);
+ return this.servicemeta.httpGet(url, null, filter);
  }
- getQueuesCount() {
+ getQueuesCount(filter?) {
  const url = 'provider/waitlist/queues/count';
- return this.servicemeta.httpGet(url);
+ return this.servicemeta.httpGet(url, null, filter);
  }
  getSpokenLanguages() {
  const url = 'ynwConf/spokenLangs';
