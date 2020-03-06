@@ -7486,3 +7486,13 @@ width: fit-content;
   font-size: 1.25rem;
 
 }
+.onlineProfile{
+  padding: 10px;
+    border: 1px solid #00aef2;
+    border-radius: 5px;
+    background-clip: padding-box;
+    cursor: pointer;
+    font-weight: 500;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 1.25rem;
+}

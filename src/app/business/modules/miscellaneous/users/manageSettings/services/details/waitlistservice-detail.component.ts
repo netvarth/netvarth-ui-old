@@ -63,6 +63,18 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
+                        title: this.userId,
+                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                      });
+                      breadcrumbs.push({
+                        title: 'Settings',
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                    });
+                    breadcrumbs.push({
+                        title: 'Services',
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
+                    });
+                    breadcrumbs.push({
                         title: 'Add'
                     });
                     this.breadcrumbs = breadcrumbs;
