@@ -115,6 +115,16 @@ export class ItemDetailsComponent implements OnInit {
                                             this.breadcrumbs = breadcrumbs;
                                             this.createForm();
                                         }
+                                        else if (this.action === 'view') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.itemname
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
+                                        }
                                     }
                                 );
                             }
