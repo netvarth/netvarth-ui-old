@@ -10,9 +10,10 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">{{action}}
-                            <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-                                (keyup)="resetApiErrors()" class="ynw-common-form-nm" >
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
+                                (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+                                class="ynw-common-form-nm">
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="displayName"
@@ -91,8 +92,8 @@
                                     <button (click)="onCancel()" type="button"
                                         class="cs-btn bt2">{{cancel_btn_cap}}</button>
                                     &nbsp;
-                                    <button  type="submit"
-                                        class="cs-btn bt1" [disabled]="!amForm.valid || disableButton" >{{save_btn_cap}}</button>
+                                    <button type="submit" class="cs-btn bt1" mat-button
+                                        [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
                                     <!-- <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
                                         *ngIf="api_loading"> -->
                                     <!-- </app-common-innerloading-spinner> -->
@@ -100,48 +101,65 @@
                             </form>
                             <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
                             </app-field-error-display>
-
                             <app-form-success-display [displayMsg]="true" *ngIf="api_success"
                                 successMsg="{{api_success}}">
                             </app-form-success-display>
-                            <div class="itm-r item-detail" *ngIf="item && action==='view'" >
-                                <span class="editbt" (click)="editItem()" *ngIf="item.status=='ACTIVE'"></span>
-                                <h3>{{item_detail_cap}}</h3>
-                                <div class="dtls">
-                                    <span class="label">{{item_name_cap}}</span>
-                                    <span class="ttle">
-                                        {{item.displayName}}
-                                    </span>
-                                </div>
-                                <div class="dtls" *ngIf="item.shortDesc">
-                                    <span class="label">{{short_desc_cap}}</span>
-                                    <span class="ttle">
-                                        {{item.shortDesc}}
-                                    </span>
-                                </div>
-                                <div class="dtls" *ngIf="item.displayDesc">
-                                    <span class="label">{{detail_desc_cap}}</span>
-                                    <span class="ttle">
-                                        {{item.displayDesc}}
-                                    </span>
-                                </div>
-                                <div class="dtls">
-                                    <span class="label">{{price_cap}}</span>
-                                    <span class="ttle">
-                                        {{item.price | currency:'&#8377; '}}
-                                    </span>
-                                </div>
-                                <div class="dtls">
-                                    <span class="label">{{taxable_cap}}</span>
-                                    <span class="ttle">
-                                        {{(item.taxable===true)?'Yes':'No'}}
-                                    </span>
-                                </div>
-                                <div class="dtls">
-                                    <span class="label">{{status_cap}}</span>
-                                    <span class="ttle"
-                                        [ngClass]="{'green-text' : item.status=='ACTIVE'}">{{item_status[item.status]}}
-                                    </span>
+                            <div class="content comn-cls">
+                                <div class="col-md-12 no-padding-small">
+                                    <div class="w-dta">
+                                        <div class="row">
+                                            <div class="card"
+                                                style="margin-bottom: unset !important; box-shadow: none !important;">
+                                                <div class="copy">
+                                                    <div class="itm-d">
+                                                        <div class="itm-r item-detail" *ngIf="item && action==='view'">
+                                                            <span class="editbt" (click)="editViewedItem(item)"
+                                                                *ngIf="item.status=='ACTIVE'">
+
+                                                            </span>
+                                                            <h3>{{item_detail_cap}}</h3>
+                                                            <div class="dtls">
+                                                                <span class="label">{{item_name_cap}}</span>
+                                                                <span class="ttle">
+                                                                    {{item.displayName}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="dtls" *ngIf="item.shortDesc">
+                                                                <span class="label">{{short_desc_cap}}</span>
+                                                                <span class="ttle">
+                                                                    {{item.shortDesc}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="dtls" *ngIf="item.displayDesc">
+                                                                <span class="label">{{detail_desc_cap}}</span>
+                                                                <span class="ttle">
+                                                                    {{item.displayDesc}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="dtls">
+                                                                <span class="label">{{price_cap}}</span>
+                                                                <span class="ttle">
+                                                                    {{item.price | currency:'&#8377; '}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="dtls">
+                                                                <span class="label">{{taxable_cap}}</span>
+                                                                <span class="ttle">
+                                                                    {{(item.taxable===true)?'Yes':'No'}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="dtls">
+                                                                <span class="label">{{status_cap}}</span>
+                                                                <span class="ttle"
+                                                                    [ngClass]="{'green-text' : item.status=='ACTIVE'}">{{item.status}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

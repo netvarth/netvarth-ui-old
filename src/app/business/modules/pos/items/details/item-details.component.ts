@@ -244,7 +244,7 @@ export class ItemDetailsComponent implements OnInit {
                 'price': form_data.price
             };
             this.addItem(post_itemdata);
-        } else {
+        } else if(this.action === 'edit') {
             const post_itemdata = {
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDesc,
@@ -314,5 +314,11 @@ export class ItemDetailsComponent implements OnInit {
                 () => {
                 });
         this.api_loading = false;
+    }
+    editViewedItem(item) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
 }
