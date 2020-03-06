@@ -308,11 +308,11 @@ export class ItemDetailsComponent implements OnInit {
     getTaxpercentage() {
         this.provider_services.getTaxpercentage()
             .subscribe(data => {
-                this.taxDetails = data;
-                this.taxpercentage = this.taxDetails.taxPercentage;
-            },
-                () => {
-                });
+                if(data){
+                    this.taxDetails = data;
+                    this.taxpercentage = this.taxDetails.taxPercentage;
+                }
+            });
         this.api_loading = false;
     }
     editViewedItem(item) {
