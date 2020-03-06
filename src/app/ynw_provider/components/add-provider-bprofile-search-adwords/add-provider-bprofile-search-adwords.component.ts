@@ -51,14 +51,15 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else {
       this.resetApiErrors();
-      form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
+      // form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
       this.addAdword(form_data.adwordname);
     }
   }
 
   addAdword(post_data) {
     this.disableButton = true;
-    this.provider_services.addAdwords(post_data)
+    const adword = post_data.split(' ').join(projectConstants.ADWORDSPLIT);
+    this.provider_services.addAdwords(adword)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('ADWORD_CREATED');

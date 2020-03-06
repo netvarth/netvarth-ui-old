@@ -53,7 +53,8 @@
                                         </div>
                                     </div>
                                     <p class="form-level-settings" *ngIf="!normal_search_active">
-                                        {{frm_public_search_cap}}{{frm_public_searchh_cap}}<a class="learnmore-pointer" id="customer-help"
+                                        {{frm_public_search_cap}}{{frm_public_searchh_cap}}<a class="learnmore-pointer"
+                                            id="customer-help"
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                     <p class="form-level-settings" *ngIf="normal_search_active">
@@ -70,11 +71,14 @@
                                             More</a></p>
                                     <div class="ad-tble" *ngIf="adwordsmaxcount > 0">
                                         <div class="ad-l">
-                                            You can have upto<b> {{adwordsmaxcount}} Jaldee Search Keywords</b>
+                                            You can have upto<b> {{adwordsmaxcount}} </b> <a class="learnmore-pointer"
+                                                matTooltip="Go to Jaldee Search Keywords"
+                                                routerLink="/provider/license/keywords">Jaldee Search Keywords </a>
                                         </div>
                                         <div class="ad-r">
-                                            <span *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span> <span
-                                                class="mre" *ngIf="adwords_remaining>0"><a
+                                            <span
+                                                *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span>
+                                            <span class="mre" *ngIf="adwords_remaining>0"><a
                                                     routerLink="/provider/license/keywords">+{{adwords_remaining}}
                                                     {{more_cap}}</a></span>
                                             <span (click)="addAdwords()" class="addbt cs-btn bt8"
@@ -118,12 +122,10 @@
                                     <p class="form-level-settings">{{custm_id}}<a class="learnmore-pointer"
                                             id="customer-help" (click)="learnmore_clicked('custom-id', $event)">Learn
                                             More</a></p>
-                                    <div class="no-dta"
-                                        *ngIf="normal_customid_show==2 && showCustomId">
+                                    <div class="no-dta" *ngIf="normal_customid_show==2 && showCustomId">
                                         <span class="cs-btn bt3" (click)="editCustomId()">{{add_it_cap}}</span>
                                     </div>
-                                    <div style="display: contents;"
-                                        *ngIf="normal_customid_show==2 && !showCustomId">
+                                    <div style="display: contents;" *ngIf="normal_customid_show==2 && !showCustomId">
                                         <!-- Upgrade your license package to Gold or higher to avail this feature. -->
                                         You are not allowed to do this operation. Please upgrade license package
                                     </div>
@@ -152,14 +154,15 @@
                                                                     <span>{{delete_btn}}</span>
                                                                 </button>
                                                                 <button type="button"
-                                                                    (click)="copyInputMessage(bProfile.customId)" mat-menu-item>
+                                                                    (click)="copyInputMessage(bProfile.customId)"
+                                                                    mat-menu-item>
                                                                     <i class="fa fa-copy"></i>
                                                                     <span>copy link</span>
                                                                 </button>
                                                             </mat-menu>
                                                         </span>
                                                         <span class="custid" rel="noopener"
-                                                                target="_blank">{{bProfile.customId}} </span>
+                                                            target="_blank">{{bProfile.customId}} </span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -199,8 +202,10 @@
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100">
-                                            <mat-panel-title class="block-level">                                                
-                                                {{profile_summary_cap}} <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                            <mat-panel-title class="block-level">
+                                                {{profile_summary_cap}} <i
+                                                    *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                                    class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}<a
                                                         class="learnmore-pointer" id="customer-help"
                                                         (click)="learnmore_clicked('basic-information', $event)">Learn
@@ -293,7 +298,7 @@
                                                                 More</a>
                                                         </span>
                                                     </div> -->
-                                                    
+
                                                 </div>
 
                                                 <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
@@ -316,22 +321,22 @@
                                                             <span>{{base_loc.address | capitalizeFirst}}</span>
                                                             <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
                                                                 {{pin_cap}} : {{base_loc.pinCode}}
-                                                            </span>                                                          
-                                                        </div>                                                       
+                                                            </span>
+                                                        </div>
                                                         <div class="cop-r" *ngIf="loc_list.length>0">
                                                             <ul class="info-lst" *ngIf="multipeLocationAllowed">
                                                                 <li>You can add more locations under <a
                                                                         routerLink="/provider/settings/q-manager/locations">settings</a>
                                                                 </li>
-                                                            </ul>                                                          
-                                                        </div>                               
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                     <div class="locSchedule time_align">
                                                         <span class="sub-title">General location hours</span>
                                                         <ul *ngIf="display_schedule.length > 0">
                                                             <li *ngFor="let schedule of display_schedule">
                                                                 <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
-                                                                class="time">{{schedule.time}}</span>
+                                                                    class="time">{{schedule.time}}</span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -356,7 +361,7 @@
                                                             <span class="cs-btn bt3"
                                                                 (click)="change_schedulepopup()">{{add_it_cap}}</span>
                                                         </div>
-                                                    </ng-container>           
+                                                    </ng-container>
                                                     <div class="copy block-level">
                                                         <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')"
                                                                 class="editbt"
@@ -404,7 +409,7 @@
 
 
 
-                                                
+
 
 
                                             </div>
@@ -415,14 +420,14 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
-                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing</i></h2>
-                        <span class="form-level-settings">{{frm_specialization_cap}}<a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('specializations', $event)">Learn
+                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields
+                                missing</i></h2>
+                        <span class="form-level-settings">{{frm_specialization_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -431,9 +436,8 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
                         <h2>Languages Known</h2>
-                        <span class="form-level-settings">{{frm_lang_cap}}<a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('languages-known', $event)">Learn
+                        <span class="form-level-settings">{{frm_lang_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('languages-known', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -442,9 +446,8 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPrivacy()">
                         <h2>Privacy</h2>
-                        <span class="form-level-settings">{{frm_privacy_cap}} <a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('privacy-settings', $event)">Learn
+                        <span class="form-level-settings">{{frm_privacy_cap}} <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -453,11 +456,11 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAdditionalInfo()">
                         <h2>
-                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>
+                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                class="req-flds-cap">*required fields missing</i>
                         </h2>
-                        <span class="form-level-settings">{{frm_additional_cap}} <a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('additional-info', $event)">Learn
+                        <span class="form-level-settings">{{frm_additional_cap}} <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

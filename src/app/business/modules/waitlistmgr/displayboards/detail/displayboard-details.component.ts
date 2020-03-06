@@ -262,7 +262,4 @@ export class DisplayboardDetailComponent implements OnInit {
     // gotoAddQset() {
     //     this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
     // }
-    gotoLicense() {
-        this.router.navigate(['provider', 'license', 'addons']);
-    }
 }
