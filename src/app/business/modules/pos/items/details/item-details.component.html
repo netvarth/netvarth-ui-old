@@ -92,7 +92,7 @@
                                         class="cs-btn bt2">{{cancel_btn_cap}}</button>
                                     &nbsp;
                                     <button  type="submit"
-                                        class="cs-btn bt1">{{save_btn_cap}}</button>
+                                        class="cs-btn bt1" [disabled]="!amForm.valid || disableButton" >{{save_btn_cap}}</button>
                                     <!-- <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
                                         *ngIf="api_loading"> -->
                                     <!-- </app-common-innerloading-spinner> -->
