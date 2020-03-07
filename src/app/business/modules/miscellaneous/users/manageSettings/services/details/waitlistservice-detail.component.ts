@@ -132,7 +132,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                             this.serviceParams['action'] = 'show';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
-                            this.router.navigate(['provider/settings/q-manager/services']);
+                            this.router.navigate(['/provider/settings/miscellaneous/users/' + this.userId + '/settings/services']);
                         }
                     }
                 }
@@ -330,7 +330,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     // Gallery Section ends
     goBack() {
-        this.router.navigate(['provider', 'settings', 'q-manager',
+        this.router.navigate(['provider', 'settings', 'miscellaneous','users', this.userId ,'settings',
             'services']);
         this.api_loading = false;
     }

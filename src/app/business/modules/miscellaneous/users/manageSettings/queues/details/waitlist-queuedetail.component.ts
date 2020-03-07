@@ -401,10 +401,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
         if (this.services_selected.length === this.services_list.length) {
             this.SelServcall = true;
         }
-        console.log(this.queue_data);
-        console.log(this.departments);
-        console.log(this.serviceSelection);
-        console.log(this.SelService);
         this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
         this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     }
