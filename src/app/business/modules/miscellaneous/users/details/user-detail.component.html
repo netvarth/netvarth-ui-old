@@ -136,7 +136,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
             'required' : 'Mobile number is required',
             'minlength' : 'Enter a 10 digit mobile number',
             'maxlength' : 'Enter a 10 digit mobile number',
-            'pattern' : 'Only numbers are allowed'
+            'pattern' : 'Enter a 10 digit mobile number'
             })">
                                             </app-field-error-display>
                                         </div>
@@ -164,7 +164,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select placeholder="{{select_subdomain_cap}}" subdom
-                                                    formControlName="selectedSubDomain" #subdom>
+                                                    formControlName="selectedSubDomain"  (selectionChange)="resetApiErrors()"#subdom>
                                                     <mat-option *ngFor="let subdomain of subDomains; let i = index"
                                                         [value]="subdomain.id">
                                                         {{subdomain.displayName}}
@@ -175,7 +175,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             <app-field-error-display [displayError]="true"
                                                     *ngIf="subdomainerror != null && !fed_service.isFieldValid(userForm,'selectedSubDomain')"
                                                     [errorMsg]="subdomainerror">
-                                                </app-field-error-display>
+                                                </app-field-error-display>{{subdomainerror}}
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12"
@@ -262,7 +262,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 </div>
             </div>
 
-            <div class="row"  *ngIf="userId" >
+            <div class="row"  *ngIf="userId && showPrvdrFields " >
                 <div class="card p0">
                     <span class="b-link onlineProfile" (click)="onlineProfile()">
                         <h5>Online profile</h5>

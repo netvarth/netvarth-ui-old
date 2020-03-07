@@ -139,16 +139,13 @@ export class BranchUserDetailComponent implements OnInit {
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [],
             selectedDepartment: [],
-            selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
+            selectedUserType: [],
             address: [],
             state: [],
             city: []
         });
-
-        // if (this.actionparam.type === 'edit') {
-        //     this.updateForm();
-        // }
-        this.getWaitlistMgr();
+            this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
+            this.getWaitlistMgr();
     }
     getUserData() {
         if (this.userId) {
@@ -232,7 +229,7 @@ export class BranchUserDetailComponent implements OnInit {
                 return;
             }
         }
-        if (this.fnameerror !== null || this.lnameerror !== null) {
+        if (this.fnameerror !== null || this.lnameerror !== null  || this.emailerror !== null) {
             return;
         }
 
@@ -279,6 +276,10 @@ export class BranchUserDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile']);
     }
     resetApiErrors() {
+        this.emailerror = null;
+        this.fnameerror = null;
+        this.lnameerror = null;
+        this.subdomainerror = null;
     }
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
