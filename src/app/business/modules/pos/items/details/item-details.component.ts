@@ -114,8 +114,7 @@ export class ItemDetailsComponent implements OnInit {
                                             });
                                             this.breadcrumbs = breadcrumbs;
                                             this.createForm();
-                                        }
-                                        else if (this.action === 'view') {
+                                        } else if (this.action === 'view') {
                                             const breadcrumbs = [];
                                             this.breadcrumbs_init.map((e) => {
                                                 breadcrumbs.push(e);
@@ -158,31 +157,23 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = false;
     }
     createForm() {
-        // if (this.action === 'add') {
-        //     this.amForm = this.fb.group({
-        //         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        //         shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        //         displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-        //         taxable: [false, Validators.compose([Validators.required])],
-        //         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
-        //     });
-        // } else if (this.action === 'edit') {
-        //     this.amForm = this.fb.group({
-        //         displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        //         shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        //         displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-        //         taxable: [false, Validators.compose([Validators.required])],
-        //         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
-        //     });
-        //     this.updateForm();
-        // }
-        this.amForm = this.fb.group({
-            displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-            shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-            taxable: [false, Validators.compose([Validators.required])],
-            price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
-        });
+        if (this.action === 'add') {
+            this.amForm = this.fb.group({
+                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                taxable: [false, Validators.compose([Validators.required])],
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+            });
+        } else {
+            this.amForm = this.fb.group({
+                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                taxable: [false, Validators.compose([Validators.required])],
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+            });
+        }
         if (this.action === 'edit') {
             this.updateForm();
         }
@@ -213,7 +204,6 @@ export class ItemDetailsComponent implements OnInit {
     handleTaxablechange() {
         this.resetApiErrors();
         if (this.taxpercentage <= 0) {
-            //  this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
             setTimeout(() => {
                 this.api_error = null;
@@ -254,7 +244,7 @@ export class ItemDetailsComponent implements OnInit {
                 'price': form_data.price
             };
             this.addItem(post_itemdata);
-        } else if(this.action === 'edit') {
+        } else if (this.action === 'edit') {
             const post_itemdata = {
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDesc,
@@ -272,14 +262,12 @@ export class ItemDetailsComponent implements OnInit {
         this.provider_services.addItem(post_data)
             .subscribe(
                 () => {
-                    // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    // this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -289,16 +277,15 @@ export class ItemDetailsComponent implements OnInit {
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
-        // post_itemdata.itemId = this.data.item.itemId;
+        post_itemdata.itemId = this.item.itemId;
         this.provider_services.editItem(post_itemdata)
             .subscribe(
-                () => {
+                (data) => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
-                    // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
+                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 },
                 error => {
-                    // this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
@@ -318,7 +305,7 @@ export class ItemDetailsComponent implements OnInit {
     getTaxpercentage() {
         this.provider_services.getTaxpercentage()
             .subscribe(data => {
-                if(data){
+                if (data) {
                     this.taxDetails = data;
                     this.taxpercentage = this.taxDetails.taxPercentage;
                 }

@@ -111,40 +111,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
         };
         this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
-    //   addItem() {
-    //     this.additemdialogRef = this.dialog.open(AddProviderItemComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         type: 'add'
-    //       }
-    //     });
-
-    //     this.additemdialogRef.afterClosed().subscribe(result => {
-    //       if (result === 'reloadlist') {
-    //         this.getitems();
-    //       }
-    //     });
-    //   }
-    //   editItem(obj) {
-    //     this.edititemdialogRef = this.dialog.open(AddProviderItemComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         item: obj,
-    //         type: 'edit'
-    //       }
-    //     });
-
-    //     this.edititemdialogRef.afterClosed().subscribe(result => {
-    //       if (result === 'reloadlist') {
-    //         this.getitems();
-    //       }
-    //     });
-    //   }
-
     dochangeStatus(item) {
         if (item.status === 'ACTIVE') {
             this.provider_servicesobj.disableItem(item.itemId).subscribe(
@@ -223,10 +189,4 @@ export class ItemsComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
-    // getMode(mod) {
-    //   let moreOptions = {};
-    //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-    //   return moreOptions;
-    // }
-
 }
