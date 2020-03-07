@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
     'selector': 'app-item-details',
     'templateUrl': './item-details.component.html'
 })
-export class ItemDetailsComponent {
+export class ItemDetailsComponent implements OnInit {
     item_id;
     rupee_symbol = '₹';
     item_hi_cap = Messages.ITEM_HI_CAP;
@@ -51,7 +51,7 @@ export class ItemDetailsComponent {
     api_loading = true;
     disableButton = false;
 
-    @ViewChild('caption', {static: false}) private captionRef: ElementRef;
+    @ViewChild('caption', { static: false }) private captionRef: ElementRef;
     customer_label;
     action;
     breadcrumbs_init = [
@@ -71,6 +71,8 @@ export class ItemDetailsComponent {
     breadcrumbs = this.breadcrumbs_init;
     image_list: any = [];
     item;
+    taxDetails: any = [];
+    itemname: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -101,9 +103,26 @@ export class ItemDetailsComponent {
                                 this.getItem(this.item_id).then(
                                     (item) => {
                                         this.item = item;
+                                        this.itemname = this.item.displayName;
                                         if (this.action === 'edit') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.itemname
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
                                             this.createForm();
-                                            alert(this.action);
+                                        } else if (this.action === 'view') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.itemname
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
                                         }
                                     }
                                 );
@@ -114,6 +133,9 @@ export class ItemDetailsComponent {
                 }
             }
         );
+    }
+    ngOnInit() {
+        this.getTaxpercentage();
     }
     getItem(itemId) {
         const _this = this;
@@ -143,7 +165,7 @@ export class ItemDetailsComponent {
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
             });
-        } else if (this.action === 'edit') {
+        } else {
             this.amForm = this.fb.group({
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
@@ -151,6 +173,8 @@ export class ItemDetailsComponent {
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
             });
+        }
+        if (this.action === 'edit') {
             this.updateForm();
         }
     }
@@ -176,6 +200,18 @@ export class ItemDetailsComponent {
             'price': this.item.price || null,
             'taxable': this.holdtaxable
         });
+    }
+    handleTaxablechange() {
+        this.resetApiErrors();
+        if (this.taxpercentage <= 0) {
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            setTimeout(() => {
+                this.api_error = null;
+            }, projectConstants.TIMEOUT_DELAY_LARGE);
+            this.amForm.get('taxable').setValue(false);
+        } else {
+            this.api_error = null;
+        }
     }
     showimg() {
         if (this.item_pic.base64) {
@@ -208,7 +244,7 @@ export class ItemDetailsComponent {
                 'price': form_data.price
             };
             this.addItem(post_itemdata);
-        } else {
+        } else if (this.action === 'edit') {
             const post_itemdata = {
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDesc,
@@ -226,13 +262,12 @@ export class ItemDetailsComponent {
         this.provider_services.addItem(post_data)
             .subscribe(
                 () => {
-                    // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
+                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    // this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -242,16 +277,15 @@ export class ItemDetailsComponent {
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
-        // post_itemdata.itemId = this.data.item.itemId;
+        post_itemdata.itemId = this.item.itemId;
         this.provider_services.editItem(post_itemdata)
             .subscribe(
-                () => {
+                (data) => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
-                    // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
+                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 },
                 error => {
-                    // this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
@@ -267,5 +301,21 @@ export class ItemDetailsComponent {
     }
     isvalid(evt) {
         return this.sharedfunctionObj.isValid(evt);
+    }
+    getTaxpercentage() {
+        this.provider_services.getTaxpercentage()
+            .subscribe(data => {
+                if (data) {
+                    this.taxDetails = data;
+                    this.taxpercentage = this.taxDetails.taxPercentage;
+                }
+            });
+        this.api_loading = false;
+    }
+    editViewedItem(item) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
 }

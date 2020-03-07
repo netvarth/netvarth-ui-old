@@ -261,6 +261,15 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                     <div class="clearfix"></div>
                 </div>
             </div>
+
+            <div class="row"  *ngIf="userId" >
+                <div class="card p0">
+                    <span class="b-link onlineProfile" (click)="onlineProfile()">
+                        <h5>Online profile</h5>
+                        <span class="form-level-settings">Manage profile name and basic information of you or your business here.</span>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </section>

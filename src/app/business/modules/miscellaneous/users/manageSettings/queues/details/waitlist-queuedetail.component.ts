@@ -99,7 +99,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.userId = params.id;
             this.breadcrumbs.push(
                 {
-                    url: '/provider/settings/miscellaneous/users/' + this.userId,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
                     title: this.userId
                 },
                 {

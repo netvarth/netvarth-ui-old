@@ -73,7 +73,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
     userId;
     user_data: any = [];
-    userTypesFormfill: any = ['ASSISTANT', 'ADMIN', 'PROVIDER'];
+    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER'];
     dept: any;
     subDom;
     // selected_dept;
@@ -274,6 +274,9 @@ export class BranchUserDetailComponent implements OnInit {
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+    }
+    onlineProfile() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile']);
     }
     resetApiErrors() {
     }
