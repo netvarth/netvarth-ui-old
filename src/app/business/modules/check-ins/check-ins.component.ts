@@ -2331,10 +2331,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getDisplayboardCount() {
     let layout_list: any = [];
+    let displayboards: any = [];
     this.provider_services.getDisplayboards()
       .subscribe(
         data => {
-          layout_list = data;
+          displayboards = data;
+          layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
           this.board_count = layout_list.length;
         });
   }

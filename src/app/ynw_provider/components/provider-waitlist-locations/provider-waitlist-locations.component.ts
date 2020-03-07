@@ -150,11 +150,12 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         this.api_loading = false;
         if (this.multipeLocationAllowed) {
           this.show_addlocationButton = true;
-        } else {
-          if (this.loc_list.length === 0) {
-            this.show_addlocationButton = true;
-          }
         }
+        // else {
+        //   if (this.loc_list.length === 0) {
+        //     this.show_addlocationButton = true;
+        //   }
+        // }
         if (this.init_location) {
           const actions = [];
           if (this.show_addlocationButton) {

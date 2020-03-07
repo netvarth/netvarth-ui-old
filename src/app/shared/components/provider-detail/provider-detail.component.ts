@@ -231,7 +231,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.provider_id = params.get('id');
         this.api_loading = true;
         this.gets3curl();
-        this.fetchClouddata();
       });
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.source) {
@@ -453,6 +452,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.ratingdisabledArr.push(i);
             }
             // this.getbusinessprofiledetails_json('location', true);
+            this.fetchClouddata();
             break;
           }
           case 'services': {

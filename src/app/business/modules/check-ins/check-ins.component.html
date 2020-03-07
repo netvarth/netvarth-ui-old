@@ -88,7 +88,7 @@
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                  <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
+                  <input readonly matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
                     [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="ft-dt">
                 </li>
                 <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
@@ -961,7 +961,7 @@
                             </div>
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
-                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)"
+                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)" *ngIf="board_count > 0"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                               <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
                                 *ngIf="!small_device_display && checkin.callingStatus">Stop Calling</span>

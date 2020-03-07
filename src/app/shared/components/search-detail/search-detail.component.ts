@@ -763,7 +763,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // }
       phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
         ' specialization_displayname:\'' + this.kw + '\''
-        + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.replace(' ', projectConstants.ADWORDSPLIT) + '\')';
+        + ' (or (prefix field=title \'' + this.kw + '\') (phrase field=title \'' + this.kw + '\'))' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.split(' ').join(projectConstants.ADWORDSPLIT) + '\')';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';

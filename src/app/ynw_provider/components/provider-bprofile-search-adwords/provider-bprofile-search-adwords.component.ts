@@ -96,7 +96,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       });
   }
   getAdwordDisplayName(name) {
-    return name.replace(projectConstants.ADWORDSPLIT, ' ');
+    return name.split(projectConstants.ADWORDSPLIT).join(' ');
   }
   getAdwords() {
     this.provider_servicesobj.getAdwords()
@@ -139,7 +139,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name + '"')
+        'message': this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
       }
     });
     this.remadwdialogRef.afterClosed().subscribe(result => {
