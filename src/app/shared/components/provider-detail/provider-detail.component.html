@@ -1,4 +1,5 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet" [source]="source">
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
+    [source]="source">
 </app-header>
 <section class="content pro_details">
     <div class="container">
@@ -67,7 +68,8 @@
                                                 <span class="more" *ngIf="showmoreDesc"
                                                     (click)="showDesc()">{{less_cap}}</span>
                                             </div>
-                                            <div class="services" *ngIf="specializationslist && specializationslist.length > 0">
+                                            <div class="services"
+                                                *ngIf="specializationslist && specializationslist.length > 0">
                                                 <div class="otr-elements">
                                                     <span *ngIf="specializationslist.length > 0">
                                                         <span class="categoryspec"
@@ -340,7 +342,8 @@
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <ng-container *ngIf="locationjson.length > 0 && !api_loading">
                         <div *ngFor="let loc of locationjson">
-                            <div #location class="location" [class.selected-loc]="locationId !== loc.fields.location_id1">
+                            <div #location class="location"
+                                [class.selected-loc]="locationId !== loc.fields.location_id1">
                                 <div class="top-sect">
                                     <div class="tp-l">
                                         <div class="tp2">
@@ -355,10 +358,12 @@
                                             <h3 *ngIf="isPlaceisSame">{{loc.fields.address1 | capitalizeFirst}}<sup
                                                     class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                 </sup></h3>
-                                            <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
-                                                target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
+                                            <a rel="noopener" class="directions"
+                                                [href]="'https://www.google.com/maps/place/'+loc.fields.location1+'/@'+loc.fields.location1+',15z'"
+                                                target="_blank" *ngIf="loc.fields.location1">{{get_directions_cap}}</a>
                                             <div class="clr">
-                                                <div class="schedule" *ngIf="loc.fields.display_schedule && loc.fields.display_schedule.length > 0">
+                                                <div class="schedule"
+                                                    *ngIf="loc.fields.display_schedule && loc.fields.display_schedule.length > 0">
                                                     <span class="sub-title">Business Working Hours</span>
                                                     <ul>
                                                         <li *ngFor="let schedule of loc.fields.display_schedule">
@@ -475,7 +480,7 @@
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                         <span class="checkin-future pdetailbt10"
-                                            *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
+                                            *ngIf="loc['estimatedtime_det']['cdate'] && loc.hasOwnProperty('future_checkins') && loc.future_checkins==1"
                                             (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                             <span
                                                 *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
