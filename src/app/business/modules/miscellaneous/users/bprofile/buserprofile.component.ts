@@ -433,7 +433,6 @@ updatePrimaryFields(pdata) {
   cancel(){
     this.showProfile = false;
   }
-
   // handles the image display on load and on change
   imageSelect(input) {
     this.success_error = null;
@@ -449,8 +448,9 @@ updatePrimaryFields(pdata) {
           reader.onload = (e) => {
             this.item_pic.base64 = e.target['result'];
           };
+          console.log(this.user_arr);          
           reader.readAsDataURL(fileobj);
-          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+          if (this.user_arr.status === 'ACTIVE' || this.user_arr.status === 'INACTIVE') { // case now in bprofile edit page
             // generating the data to be submitted to change the logo
             const submit_data: FormData = new FormData();
             submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
@@ -458,7 +458,8 @@ updatePrimaryFields(pdata) {
               'caption': 'Logo'
             };
             const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-            submit_data.append('properties', blobPropdata);
+            submit_data.append('properties', blobPropdata );
+            console.log(submit_data);
             this.uploadLogo(submit_data);
           }
         } else {
@@ -476,7 +477,8 @@ updatePrimaryFields(pdata) {
   }
   // get the logo url for the provider
   getProviderLogo() {
-    this.provider_services.getProviderLogo()
+    // this.provider_services.getProviderLogo()
+    this.provider_services.getUserBussinessProfile(this.userId)
       .subscribe(
         data => {
           this.blogo = data;
@@ -502,9 +504,13 @@ updatePrimaryFields(pdata) {
   }
   // Upload logo
   uploadLogo(passdata) {
-    this.provider_services.uploadLogo(passdata)
-      .subscribe(
+    // this.provider_services.uploadLogo(passdata)
+    console.log(passdata);
+    console.log(this.userId);
+    this.provider_services.uploaduserLogo(passdata , this.userId)      
+    .subscribe(
         data => {
+          console.log(passdata);
           // this.getProviderLogo();
           this.blogo = [];
           this.blogo[0] = data;

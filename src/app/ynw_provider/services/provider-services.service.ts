@@ -1031,7 +1031,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut('provider/vacation', data);
   }  
 
- uploaduserLogo(id) {
-  return this.servicemeta.httpPut('provider/user/logo/' + id);
+ uploaduserLogo(passdata , id) {
+  return this.servicemeta.httpPut('provider/user/logo/'+ id , passdata);
   }
 }
