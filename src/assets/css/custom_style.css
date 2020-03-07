@@ -7493,6 +7493,7 @@ width: fit-content;
 .onlineProfile{
   padding: 10px;
     border: 1px solid #00aef2;
+    color: #00aef2;
     border-radius: 5px;
     background-clip: padding-box;
     cursor: pointer;
