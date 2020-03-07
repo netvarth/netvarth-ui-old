@@ -280,7 +280,7 @@ export class ItemDetailsComponent implements OnInit {
         post_itemdata.itemId = this.item.itemId;
         this.provider_services.editItem(post_itemdata)
             .subscribe(
-                (data) => {
+                () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
