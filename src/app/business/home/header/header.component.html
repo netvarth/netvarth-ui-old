@@ -16,7 +16,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP'">
+        <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP' && sessionStorage">
           <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-arrow-left"></i>
           </a>

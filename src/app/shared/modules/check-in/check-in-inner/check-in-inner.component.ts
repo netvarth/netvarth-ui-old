@@ -691,7 +691,7 @@ export class CheckInInnerComponent implements OnInit {
               //   }
               // }
               // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
-                if (this.page_source === 'provider_checkin' && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
+              if (this.page_source === 'provider_checkin' && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].appointment === 'Enable') {
                 this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
               } else {
                 this.apptTime = '';
@@ -1778,11 +1778,11 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           if (!edit) {
-            // if (!this.availableSlots.includes(this.data.apptTime)) {
-            this.apptTime = this.availableSlots[0];
-            // } else {
-            //   this.apptTime = this.data.apptTime;
-            // }
+            if (this.data.apptTime && this.data.queue.id === this.sel_queue_id) {
+              this.apptTime = this.data.apptTime;
+            } else {
+              this.apptTime = this.availableSlots[0];
+            }
           }
         }
       );
@@ -1797,12 +1797,10 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
-          if (!edit) {
-            // if (!this.availableSlots.includes(this.data.apptTime)) {
+          if (this.data.apptTime && this.data.queue.id === this.sel_queue_id) {
+            this.apptTime = this.data.apptTime;
+          } else {
             this.apptTime = this.availableSlots[0];
-            // } else {
-            //   this.apptTime = this.data.apptTime;
-            // }
           }
         }
       );

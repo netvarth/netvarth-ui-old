@@ -7486,3 +7486,7 @@ width: fit-content;
   font-size: 1.25rem;
 
 }
+.selected-loc {
+  background: #fafafa !important;
+  /* box-shadow: 0 5px 5px 1px rgba(0,0,0,0.14) !important; */
+}

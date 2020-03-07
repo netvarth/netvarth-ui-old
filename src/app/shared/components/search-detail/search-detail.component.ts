@@ -1548,7 +1548,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
-          this.showProviderDetails(passParam['providerId']);
+          this.showProviderDetails(passParam['providerId'], passParam['locId']);
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
@@ -1588,7 +1588,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
-          this.showProviderDetails(passParam['providerId']);
+          this.showProviderDetails(passParam['providerId'], passParam['locId']);
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
@@ -1624,21 +1624,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (obj && obj.fields.unique_id !== undefined) {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
+      const locId = obj.fields.location_id1;
       // check whether logged in as consumer
       this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          this.showProviderDetails(providforDetails);
+          this.showProviderDetails(providforDetails, locId);
         }
       } else { // show consumer login
-        const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj };
+        const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
         this.doLogin('consumer', passParam);
       }
     }
   }
-  showProviderDetails(provid) {
-    this.routerobj.navigate(['searchdetail', provid]);
+  showProviderDetails(provid, locId) {
+    this.routerobj.navigate(['searchdetail', provid], {queryParams: {locId : locId}});
   }
 
   handlerefineddomainchange(val) {

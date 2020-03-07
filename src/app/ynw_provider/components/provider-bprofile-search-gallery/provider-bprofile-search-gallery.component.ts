@@ -95,10 +95,9 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
           this.error_list.push(this.success_error);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 15mb';
           }
-          // else if (this.error_list[0].size) {
-          //   this.error_msg = 'Please upload images with size less than 5mb';
-          // }
         }
       }
     }

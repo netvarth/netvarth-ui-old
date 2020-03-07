@@ -260,35 +260,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        // if (this.page_source === 'searchlist_checkin') { // case check-in from search result pages
-        // this.search_obj = this.data.srchprovider;
-        // if (this.data.dept) {
-        //     this.provider_id = this.search_obj.unique_id;
-        //     this.sel_queue_id = this.search_obj.waitingtime_res.nextAvailableQueue.id;
-        //     this.sel_loc = this.search_obj.location_id1;
-        //     this.sel_checkindate = this.search_obj.waitingtime_res.nextAvailableQueue.availableDate;
-        // } else {
-        //     this.provider_id = this.search_obj.fields.unique_id;
-        //     this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
-        //     this.sel_loc = this.search_obj.fields.location_id1;
-        //     this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
-        // }
-        // const providarr = this.search_obj.id.split('-');
-        // this.account_id = providarr[0];
         this.minDate = this.sel_checkindate;
-        // } else if (this.page_source === 'provdet_checkin') { // case check-in from provider details page or provider dashboard
-        // this.search_obj = this.data.srchprovider;
-        // this.provider_id = this.data.moreparams.provider.unique_id;
-        // this.account_id = this.data.moreparams.provider.account_id;
-        // const srch_fields = {
-        //     fields: {
-        //         title: this.data.moreparams.provider.name,
-        //         place1: this.data.moreparams.location.name,
-        //     }
-        // };
-        // this.search_obj = srch_fields;
-        // this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
-        // }
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
         if (this.change_date) {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -401,6 +373,7 @@ export class ConsumerCheckinComponent implements OnInit {
                                         //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
                                         this.initDepartments(this.account_id).then(
                                             () => {
+                                                console.log(this.departments);
                                                 this.handleDeptSelction(this.selected_dept);
                                             },
                                             () => {
@@ -432,6 +405,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         }
                     }
                 }
+                
                 _this.deptLength = _this.departments.length;
                 // this.selected_dept = 'None';
                 if (_this.deptLength !== 0) {
@@ -753,11 +727,6 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     saveCheckin() {
-        // const waitlistarr = [];
-        // for (let i = 0; i < this.waitlist_for.length; i++) {
-        //     waitlistarr.push({ id: this.waitlist_for[i].id });
-        // }
-        // { id: id, lastName: lastName, firstName: firstName }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -809,36 +778,6 @@ export class ConsumerCheckinComponent implements OnInit {
               this.api_loading = false;
             });
       }
-    // addCheckInProvider(post_Data) {
-    //     this.api_loading = true;
-    //     this.shared_services.addProviderCheckin(post_Data)
-    //         .subscribe((data) => {
-    //             console.log(data);
-    //             this.api_loading = false;
-    //             const retData = data;
-    //             let retUuid;
-    //             Object.keys(retData).forEach(key => {
-    //                 retUuid = retData[key];
-    //                 this.trackUuid = retData[key];
-    //                 console.log(this.trackUuid);
-    //             });
-    //             if (this.selectedMessage.files.length > 0) {
-    //                 this.consumerNoteAndFileSave(retUuid);
-    //             }
-    //             if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-    //                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
-    //             } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-    //                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION'));
-    //             }
-    //             this.showCheckin = false;
-    //             this.searchForm.reset();
-    //         },
-    //             error => {
-    //                 // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-    //                 this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    //                 this.api_loading = false;
-    //             });
-    // }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1120,6 +1059,7 @@ export class ConsumerCheckinComponent implements OnInit {
     getProviderDepart(id) {
         this.shared_services.getProviderDept(id).
             subscribe(data => {
+                console.log(this.departmentlist);
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
                 for (let i = 0; i < this.departmentlist['departments'].length; i++) {
@@ -1166,6 +1106,9 @@ export class ConsumerCheckinComponent implements OnInit {
             this.setServiceDetails(this.sel_ser);
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         } else {
+            this.sel_queue_indx = -1;
+            this.sel_queue_id = null;
+            this.queuejson = [];
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
         }
     }

@@ -624,6 +624,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   imageSelect(input) {
     this.success_error = null;
     this.error_list = [];
+    this.error_msg = '';
     if (input.files && input.files[0]) {
       for (const file of input.files) {
         this.success_error = this.sharedfunctionobj.imageValidation(file);
@@ -652,7 +653,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
           } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 5mb';
+            this.error_msg = 'Please upload images with size less than 15mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
           this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });

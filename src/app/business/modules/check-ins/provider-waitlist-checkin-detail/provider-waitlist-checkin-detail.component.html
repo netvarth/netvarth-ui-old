@@ -122,7 +122,7 @@
                   *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime">
                   {{waitlist_data.appointmentTime}} </span>
                 <span
-                  *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime && availableSlots && availableSlots.length>1"
+                  *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime && availableSlots && availableSlots.length>1 && (waitlist_data.waitlistStatus === 'arrived' || waitlist_data.waitlistStatus === 'checkedIn')"
                   style="margin-left: 30px" class="editbt" (click)="editApptTime()"></span>
                 <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-bt-20 no-padding ynw-common-form-nm"
                   *ngIf="editAppntTime || (waitlist_data && !waitlist_data.appointmentTime)">

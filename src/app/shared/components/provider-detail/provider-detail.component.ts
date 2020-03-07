@@ -203,6 +203,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   gender_length: any;
   api_loading = false;
   source;
+  locationId;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -232,9 +233,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.gets3curl();
         this.fetchClouddata();
       });
-      this.activaterouterobj.queryParams.subscribe(qparams => {
+    this.activaterouterobj.queryParams.subscribe(qparams => {
+      if (qparams.source) {
         this.source = qparams.source;
-      });
+      }
+      if (qparams.locId) {
+        this.locationId = qparams.locId;
+      }
+    });
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -1134,14 +1140,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   showServiceDetail(serv, busname) {
-    const service = this.servicesjson.filter(dpt => dpt.name === serv);
+    let service;
+    if (!this.showDepartments) {
+      const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
+      service = serviceDetails[0];
+    } else {
+      service = serv;
+    }
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         bname: busname,
-        serdet: service[0]
+        serdet: service
       }
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
