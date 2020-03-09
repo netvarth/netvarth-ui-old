@@ -13,6 +13,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ManageOnlineProfileComponent } from './manageOnlineProfile/manageonlineprofile.component';
 import { ManageSettingsComponent } from './manageSettings/manageSettings.component';
 import { linkProfileComponent } from './linkProfile/linkProfile.component';
+import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { linkProfileComponent } from './linkProfile/linkProfile.component';
         ReactiveFormsModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
+        PagerModule
 
     ],
     entryComponents: [linkProfileComponent],

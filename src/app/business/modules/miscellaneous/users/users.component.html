@@ -1,7 +1,9 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section>
+
     <div class="content displayboard loc-list users">
         <div class="col-md-12 no-padding-small">
             <div class="row">
@@ -24,17 +26,71 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <!-- <li class="dropdown notifications-menu pull-right" >
-                                        <a 
-                                            (click)="deleteUser()"
-                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                            <span>
-                                                <i class="fa fa-trash"></i>Delete
-                                            </span>
+
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                                            data-toggle="control-sidebar">
+                                            <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                                [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip">
+                                            </i>
                                         </a>
-                                    </li> -->
+                                    </li>
                                 </ul>
+
                             </div>
+                            <aside class="filterSidebar" *ngIf="filter_sidebar">
+                                <section class="sidebar">
+                                    <div class="filterClosebtn">
+                                        <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                                            (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'Close filter window'"></i>
+                                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
+                                            All</span>
+                                    </div>
+
+                                    <ul class="sidebar-menu">
+                                        <div class="filterTextinput">
+                                            <li class="filterli">
+                                                <input type="text" #id (blur)="doSearch()"
+                                                    (keyup)="focusInput($event,firstName)" class="filterTextbox"
+                                                    [(ngModel)]="filter.id" placeholder="User Id">
+                                            </li>
+                                        </div>
+
+                                        <div class="filterTextinput">
+                                            <li class="filterli">
+                                                <input type="text" id="firstName" [(ngModel)]="filter.firstName"
+                                                    #firstName (blur)="doSearch()"
+                                                    (keyup)="focusInput($event, mobileNo)" maxlength="10"
+                                                    class="filterTextbox" placeholder="First Name">
+                                            </li>
+                                        </div>
+                                        <div class="filterTextinput">
+                                            <li class="filterli">
+                                                <input type="text" id="txt_mobile" [(ngModel)]="filter.mobileNo"
+                                                    #mobileNo (blur)="doSearch()" (keyup)="focusInput($event, userType)"
+                                                    maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                            </li>
+
+                                        </div>
+                                        <div class="filterTextinput">
+                                            <li class="filterli filterDatepicker">
+                                                <mat-form-field>
+                                                    <mat-select [(ngModel)]="filter.userType" placeholder="User type"
+                                                        (blur)="doSearch()">
+                                                        <mat-option *ngFor="let user of userTypesFormfill"
+                                                            [value]="user">
+                                                            {{user}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </section>
+                            </aside>
+
                             <div class="col-md-12" *ngIf="users_list.length==0">
                                 <div class="row">
                                     <div class="no-dta">
@@ -53,37 +109,53 @@
                                             </button>
                                         </span>
                                         <h3 class="">
-                                            {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}}  <span *ngIf="user.userType === 'PROVIDER'">({{getDepartmentNamebyId(user.deptId)}})</span></h3>
-                                            <div class="c-ot m0">
-                                                <div class="item">
-                                                    <span class="ttle">{{user.userType}}</span>
-                                                </div>
-                                               
+                                            {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}} <span
+                                                *ngIf="user.userType === 'PROVIDER'">({{getDepartmentNamebyId(user.deptId)}})</span>
+                                        </h3>
+
+                                        <div class="c-ot m0">
+                                            <div class="item">
+                                                <span class="ttle">{{user.userType}}</span>
                                             </div>
+                                        </div>
+
                                         <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="personalProfile(user.id)" >
+                                            <button mat-menu-item (click)="personalProfile(user.id)">
                                                 Profile
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated"  mat-menu-item (click)="manageOnlineProfile(user.id)" >
+                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated"
+                                                mat-menu-item (click)="manageOnlineProfile(user.id)">
                                                 Manage Online Profile
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated" mat-menu-item (click)="manageSettings(user.id)" >
+
+                                            <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated"
+                                                mat-menu-item (click)="manageSettings(user.id)">
                                                 Manage Settings
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated" mat-menu-item (click)="manageOnlineProfile(user.id, 'create')" >
+
+                                            <button *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated"
+                                                mat-menu-item (click)="manageOnlineProfile(user.id, 'create')">
                                                 Create Online Profile
                                             </button>
-                                            <button mat-menu-item (click)="linkProfile(user.id)" *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated ">
+                                            <button mat-menu-item (click)="linkProfile(user.id)"
+                                                *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated ">
                                                 Link Profile
                                             </button>
+
                                             <button mat-menu-item (click)="changeUserStatus(user)">
-                                                <i *ngIf="user.status=='INACTIVE' || !user.status" class="icon-enable"></i>
+                                                <i *ngIf="user.status=='INACTIVE' || !user.status"
+                                                    class="icon-enable"></i>
                                                 <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>
                                                 {{(user.status=='ACTIVE') ? 'Disable' :'Enable'}}
                                             </button>
                                         </mat-menu>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="search_paging" *ngIf="loadComplete">
+                                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                                    (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                                </app-pager>
                             </div>
                         </div>
                     </div>
