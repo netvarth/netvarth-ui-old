@@ -199,7 +199,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     });
                     breadcrumbs.push({
                         title: this.userId,
-                        url: '/provider/settings/miscellaneous/users/' + this.userId,
+                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
                     });
                     breadcrumbs.push({
                         title: 'Settings',
@@ -215,7 +215,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
-                        this.serviceParams['action'] = 'edit';
+                        this.serviceParams['action'] = 'show';
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
                 },
@@ -330,7 +330,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     // Gallery Section ends
     goBack() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous','users', this.userId ,'settings',
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId , 'settings',
             'services']);
         this.api_loading = false;
     }
