@@ -227,6 +227,9 @@ getQueuesCount() {
   NonWorkingDay() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'holidays']);
   }
+  Notifications() {
+    this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'notifications']);
+  }
 
   learnmore_clicked(mod, e) {
     e.stopPropagation();

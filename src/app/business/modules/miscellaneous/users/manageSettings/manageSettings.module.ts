@@ -19,6 +19,7 @@ import { ProviderWaitlistOnlineCheckinModule } from '../../../../../ynw_provider
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentModule } from '../../../../../ynw_provider/shared/modules/department/department.module';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
+import { NotificationUserModule } from './notifications/notifications.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -37,7 +38,8 @@ import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
         //ProviderWaitlistOnlineCheckinModule,
         NgbTimepickerModule,
         //DepartmentModule,
-        WaitlistQueuesModule
+        WaitlistQueuesModule,
+        NotificationUserModule
     ],
     declarations: [
         ManageSettingsComponent,

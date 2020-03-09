@@ -11,7 +11,8 @@ const routes: Routes = [
       {path: '', component: ManageSettingsComponent},
       {path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
       {path: 'queues', loadChildren: () => import('./queues/waitlist-queues.module').then(m => m.WaitlistQueuesModule)},
-      {path: 'holidays' ,loadChildren: () => import('./usernonworkingday/usernonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
+      {path: 'holidays' ,loadChildren: () => import('./usernonworkingday/usernonWorkingDay.module').then(m => m.nonWorkingDaymodule)},
+      {path: 'notifications' ,loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationUserModule)}
     //{path: 'holidays',loadChildren:() => import('./nonWorkingDay/nonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
       // { path: '',
       // children: [
