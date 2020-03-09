@@ -83,6 +83,7 @@ export const Messages = {
   'BPROFILE_LOGODELETE_CONF': 'Remove Profile image?',
   'BPROFILE_LOGODELETED': 'Profile image deleted successfully',
   'BPROFILE_PRIVACY_SAVED': 'Privacy details saved successfully',
+  'BPROFILE_PRIVACY_UPDATED': 'Privacy details updated successfully',
   'BPROFILE_PRIVACY_PHONELABEL_REQ': 'Phone label should not be blank',
   'BPROFILE_PRIVACY_PHONE_INVALID': 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS': 'Mobile number should have 10 digits',

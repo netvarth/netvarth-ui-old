@@ -295,7 +295,11 @@ export class PrivacyDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.loadData = data;
-          this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_SAVED'));
+          if (this.curmod === 'add') {
+            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_SAVED'));
+          } else {
+            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_UPDATED'));
+          }
           this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
         },
         error => {
