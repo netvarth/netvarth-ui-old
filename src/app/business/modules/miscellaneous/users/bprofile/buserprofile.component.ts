@@ -154,6 +154,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   domain;
   userId: any;
   showProfile = false;
+  profileview = true;
 
   select_subdomain_cap;
     profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
@@ -241,6 +242,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
         });
   }
+  
 
   getBusinessProfile() {
     this.bProfile = [];
@@ -255,6 +257,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
             this.normal_profile_active = 2;
           }
           // check whether normal business profile section can be displayed
+  
           if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
             || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
             this.getProviderLogo();
@@ -393,6 +396,7 @@ updatePrimaryFields(pdata) {
                 //     this.dialogRef.close('reloadlist');
                 // }, projectConstants.TIMEOUT_DELAY);
                 this.showProfile = false;
+                this.profileview = true;
                 this.getBusinessProfile();
             },
             error => {
@@ -403,8 +407,9 @@ updatePrimaryFields(pdata) {
         );
 }
 
-showBPrimary() {
+  showBPrimary() {
   this.showProfile = true;
+  this.profileview = false;
   this.createForm();
 
     // this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
@@ -428,6 +433,7 @@ showBPrimary() {
   }
   cancel(){
     this.showProfile = false;
+    this.profileview = true;
   }
   // handles the image display on load and on change
   imageSelect(input) {
@@ -478,6 +484,7 @@ showBPrimary() {
     this.provider_services.getUserBussinessProfile(this.userId)
       .subscribe(
         data => {
+          console.log(this.userId);
           this.blogo = data;
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
@@ -505,10 +512,11 @@ showBPrimary() {
     console.log(passdata);
     console.log(this.userId);
     this.provider_services.uploaduserLogo(passdata , this.userId)      
-    .subscribe(
+     .subscribe(
         data => {
           console.log(passdata);
-          // this.getProviderLogo();
+          console.log(this.userId);
+           // this.getProviderLogo();
           this.blogo = [];
           this.blogo[0] = data;
           // calling function which saves the business related details to show in the header
