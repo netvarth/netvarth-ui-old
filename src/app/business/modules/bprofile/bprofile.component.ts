@@ -310,7 +310,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     });
   }
   getAdwordDisplayName(name) {
-    return name.replace(projectConstants.ADWORDSPLIT, ' ');
+    return name.split(projectConstants.ADWORDSPLIT).join(' ');
   }
   getPublicSearch() {
     this.provider_services.getPublicSearch()
