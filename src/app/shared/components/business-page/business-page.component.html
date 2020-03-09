@@ -1,4 +1,5 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet" [source]="'business'">
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
+    [source]="'business'">
 </app-header>
 <section class="content pro_details">
     <div class="container">
@@ -121,7 +122,7 @@
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
 
                                     <li><span class="icon-history"
-                                            (click)="redirectMe('history')">{{history_cap}}</span></li>
+                                            (click)="redirectToHistory()">{{history_cap}}</span></li>
                                     <li *ngIf="!isInFav"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav"><span class="icon-favourite-filled"
@@ -459,18 +460,18 @@
                                             </ng-container>
                                         </ng-container>
                                         <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                            (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
                                             *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
                                         <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                            (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
                                             *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                         <span class="checkin-future pdetailbt10"
-                                            *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                            *ngIf="loc['estimatedtime_det']['cdate'] && loc.fields.hasOwnProperty('future_checkins') && loc.fields.future_checkins==1"
+                                            (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                             <span
                                                 *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
                                             <span
@@ -543,4 +544,12 @@
         </div>
     </div>
 </section>
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->
+
+<footer class="main-footer" style="margin-left: 0px">
+    <div class="pull-right hidden-xs footer_info">
+        <!-- <b>Version</b> 1.1.5 -->
+    </div>
+    <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
+        reserved.</span>
+</footer>

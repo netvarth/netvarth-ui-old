@@ -132,7 +132,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
 
   providerDetClicked(obj) {
     const provid = obj.unique_id;
-    this.routerobj.navigate(['searchdetail', provid], {queryParams: {source: this.source}});
+    const locId = obj.location_id1;
+    this.routerobj.navigate(['searchdetail', provid], { queryParams: { source: this.source, locId: locId } });
   }
   private getWaitingTime(provids) {
     if (provids.length > 0) {

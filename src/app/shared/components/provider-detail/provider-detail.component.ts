@@ -237,6 +237,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.locId) {
         this.locationId = qparams.locId;
+      } else {
+        this.locationId = '';
       }
     });
   }
