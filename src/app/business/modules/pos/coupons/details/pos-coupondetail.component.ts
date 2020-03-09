@@ -188,7 +188,7 @@ export class PosCouponDetailComponent implements OnInit {
       }
       if (form_data.calculationType === 'Percentage') {
         if (form_data.coupValue < 0 || form_data.coupValue > 100) {
-          this.api_error = 'Coupon percentage should be between 0 and 100';
+          this.api_error =  this.sharedfunctionObj.openSnackBar('Discount percentage should be between 0 and 100',{ 'panelClass': 'snackbarerror' });
           return;
         }
       }
