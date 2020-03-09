@@ -62,7 +62,9 @@ export const Messages = {
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
   'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
-
+  //profie
+  'Profile_Created' : 'Profile created successfully',
+   'UserProfileID'  : 'Enter Provider linkProfileId',
   // Business Profile
   'BPROFILE_CREATED': 'Business Profile created successfully',
   'BPROFILE_EMAILDET': 'Please enter the email id and email label',

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { linkProfileComponent } from './linkProfile/linkProfile.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     'selector': 'app-branchusers',
@@ -26,19 +28,29 @@ export class BranchUsersComponent implements OnInit {
     ];
     api_loading: boolean;
     departments: any;
+    linkprofiledialogRef;
+    provId;
+    
+    businessConfig: any;
+    
     constructor(
         private router: Router,
         private routerobj: Router,
         private shared_services: ProviderServices,
+        private dialog:MatDialog,
+        private activated_route: ActivatedRoute,
         private shared_functions: SharedFunctions) {
-
+            
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        console.log(user);
         this.domain = user.sector;
         this.api_loading = true;
         this.getUsers();
+       
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        
     }
     addBranchSP() {
 
@@ -65,6 +77,35 @@ export class BranchUsersComponent implements OnInit {
     manageSettings(userId) {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId, 'settings']);
     }
+
+    
+
+     
+
+  linkProfile(userid){
+     console.log(userid);
+     
+   this.linkprofiledialogRef=this.dialog.open(linkProfileComponent,{
+       width:'50%',
+       data:{
+        provId:userid
+       },
+       panelClass:['popup-class', 'commonpopupmainclass'],
+       autoFocus:true,
+       disableClose:true
+   });
+   this.linkprofiledialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+            if (result === 'reloadlist') {
+                this.getUsers();
+     
+            }
+            }
+});
+   
+     
+  }
+
     changeUserStatus(user) {
         let passingStatus;
         if (user.status === 'ACTIVE') {

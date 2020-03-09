@@ -12,12 +12,14 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ManageOnlineProfileComponent } from './manageOnlineProfile/manageonlineprofile.component';
 import { ManageSettingsComponent } from './manageSettings/manageSettings.component';
+import { linkProfileComponent } from './linkProfile/linkProfile.component';
 
 @NgModule({
     declarations: [
         BranchUsersComponent,
         BranchUserDetailComponent,
         ManageOnlineProfileComponent,
+        linkProfileComponent
        // ManageSettingsComponent
     ],
     imports: [
@@ -33,7 +35,7 @@ import { ManageSettingsComponent } from './manageSettings/manageSettings.compone
         Nl2BrPipeModule,
 
     ],
-    entryComponents: [],
+    entryComponents: [linkProfileComponent],
     exports: [BranchUsersComponent]
 })
 export class UsersModule {}

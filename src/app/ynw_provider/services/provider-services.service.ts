@@ -1034,4 +1034,8 @@ export class ProviderServices {
  uploaduserLogo(passdata , id) {
   return this.servicemeta.httpPost('provider/user/logo/'+ id , passdata);
   }
+  updateuserlinkProfile(id, profid)
+{
+return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
+}
 }

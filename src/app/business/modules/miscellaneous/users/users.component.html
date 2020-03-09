@@ -73,7 +73,7 @@
                                             <button *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated" mat-menu-item (click)="manageOnlineProfile(user.id, 'create')" >
                                                 Create Online Profile
                                             </button>
-                                            <button mat-menu-item (click)="linkProfile()" *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated">
+                                            <button mat-menu-item (click)="linkProfile(user.id)" *ngIf="user.userType === 'PROVIDER' && !user.bProfileCreated ">
                                                 Link Profile
                                             </button>
                                             <button mat-menu-item (click)="changeUserStatus(user)">
