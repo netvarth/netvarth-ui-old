@@ -120,7 +120,7 @@ export class discountdetailscomponent implements OnInit
   createForm() {
     this.amForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+      description: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants. VALIDATOR_ALPHANUMERIC),Validators.maxLength(this.maxChars)])],
       discValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
       calculationType: ['Fixed', Validators.compose([Validators.required])]
     });

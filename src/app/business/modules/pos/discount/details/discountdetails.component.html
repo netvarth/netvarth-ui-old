@@ -61,6 +61,7 @@
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsgs]="fed_service.getErrorMessage(amForm,'description',
                                   {
                                     'required' : 'Please enter the description.',
+                                    'pattern' : 'Please enter valid description',
                                     'maxlength' : 'Description can contain only ' + maxChars + ' characters'
                                   })">
                                     </app-field-error-display>
