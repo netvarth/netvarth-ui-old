@@ -80,6 +80,7 @@ export const Messages = {
   'BPROFILE_IMAGE_DELETE': 'Deleted successfully',
   'BPROFILE_IMAGE_UPLOAD': 'Uploaded successfully',
   'BPROFILE_SOCIALMEDIA_SAVED': 'Social media link added successfully',
+  'BPROFILE_SOCIALMEDIA_UPDATE': 'Social media link updated successfully',
   'BPROFILE_UPDATED': 'Business Profile updated successfully',
   'BPROFILE_LOGOUPLOADED': 'Profile image uploaded successfully',
   'BPROFILE_LOGODELETE_CONF': 'Remove Profile image?',

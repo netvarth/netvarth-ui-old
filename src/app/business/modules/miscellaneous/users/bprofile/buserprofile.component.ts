@@ -230,8 +230,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
       .subscribe(data => {
@@ -242,7 +240,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
         });
   }
-  
 
   getBusinessProfile() {
     this.bProfile = [];
@@ -370,9 +367,9 @@ createPrimaryFields(pdata) {
             () => {
                 this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
                 this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-                // setTimeout(() => {
-                //     this.dialogRef.close('reloadlist');
-                // }, projectConstants.TIMEOUT_DELAY);
+                setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
                 this.showProfile = false;
                 this.getBusinessProfile();
             },
@@ -406,7 +403,6 @@ updatePrimaryFields(pdata) {
             }
         );
 }
-
   showBPrimary() {
   this.showProfile = true;
   this.profileview = false;
@@ -509,13 +505,9 @@ updatePrimaryFields(pdata) {
   // Upload logo
   uploadLogo(passdata) {
     // this.provider_services.uploadLogo(passdata)
-    console.log(passdata);
-    console.log(this.userId);
     this.provider_services.uploaduserLogo(passdata , this.userId)      
      .subscribe(
         data => {
-          console.log(passdata);
-          console.log(this.userId);
            // this.getProviderLogo();
           this.blogo = [];
           this.blogo[0] = data;

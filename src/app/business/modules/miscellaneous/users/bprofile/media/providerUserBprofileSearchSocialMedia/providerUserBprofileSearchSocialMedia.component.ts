@@ -36,10 +36,8 @@ export class providerUserBprofileSearchSocialMediaComponent implements OnInit {
       public shared_functions: SharedFunctions,
       public dialogRef: MatDialogRef<providerUserBprofileSearchSocialMediaComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any) {
-        console.log(data);
-      this.bProfile = data.bprofile;
-      console.log(this.bProfile);
-      if (this.bProfile.socialMedia) {
+       this.bProfile = data.bprofile;
+       if (this.bProfile.socialMedia) {
         for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
           if (this.bProfile.socialMedia[i].resource !== '') {
             this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
@@ -79,12 +77,17 @@ export class providerUserBprofileSearchSocialMediaComponent implements OnInit {
       };
       this.posted = true;
       this.provider_services.updateUserSocialMediaLinks(submit_data,this.data.userId)
-        .subscribe(
-          () => {
-            this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
+        .subscribe(          
+           () => {           
+                if (this.curmod === 'add') {
+                  this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
+                } 
+                else if (this.curmod === 'edit'){
+                  this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_UPDATE');
+                 }                                 
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
+            }, projectConstants.TIMEOUT_DELAY); 
           },
           () => {
             this.posted = false;

@@ -75,7 +75,7 @@
                                        
 
                                         <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
-                                            <h1 class="mat-dialog-title"> {{profile_name_summary_cap}} </h1>
+                                            <h1 class="mat-dialog-title"></h1>
                                             <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             
                                             <div class="form-group">
@@ -113,13 +113,8 @@
                                 </mat-accordion>
                             </div>
                         </div>
-                    </div>
-
-                   
-
-
-
-                </div>
+                    </div>              
+               </div>
             </div> 
             
             
