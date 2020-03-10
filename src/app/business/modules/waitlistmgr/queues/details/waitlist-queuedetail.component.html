@@ -287,7 +287,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </app-field-error-display>
                             </div>
                             <div class="form-group"
-                                *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
+                                *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'NoCalc' && waitlist_manager.showTokenId">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
