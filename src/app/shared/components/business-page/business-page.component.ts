@@ -217,8 +217,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     // this.getInboxUnreadCnt();
-console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
-      this.activaterouterobj.paramMap
+    this.activaterouterobj.paramMap
       .subscribe(params => {
         this.provider_id = params.get('id');
         this.shared_services.getBusinessUniqueId(params.get('id')).subscribe(
@@ -300,7 +299,6 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
       q_str = q_str + locstr;
     }
     let testUser = false;
-    console.log(userobj);
     if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
@@ -328,7 +326,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
         if (this.testuserQry) {
-        searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
+          searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
         }
         searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
         searchpass_criterias.q = this.q_str;
@@ -342,7 +340,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               if (this.sharedFunctionobj.isBusinessOwner('returntyp') === 'consumer') {
-              this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+                this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
               }
               const addres = this.locationjson[i].address1;
               const place = this.locationjson[i].place1;
@@ -395,7 +393,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             // if (this.businessjson.claimStatus === 'Claimed') {
-              // this.getProviderDepart(this.provider_bussiness_id);
+            // this.getProviderDepart(this.provider_bussiness_id);
             // }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
@@ -418,7 +416,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
             }
             this.getbusinessprofiledetails_json('gallery', true);
             if (this.sharedFunctionobj.isBusinessOwner('returntyp') === 'consumer') {
-            this.getFavProviders();
+              this.getFavProviders();
             }
             const holdbName = this.businessjson.businessDesc || '';
             const maxCnt = 120;
@@ -454,15 +452,15 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
           }
           case 'services': {
             this.servicesjson = res;
-            for (let i = 0; i < this.servicesjson.length; i++) {
-              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
-                this.showDepartments = true;
-                if (this.branch_id && this.account_Type === 'BRANCH') {
-                  this.getDoctors();
-                }
-                break;
+            // for (let i = 0; i < this.servicesjson.length; i++) {
+            if (this.servicesjson[0].hasOwnProperty('departmentName')) {
+              this.showDepartments = true;
+              if (this.branch_id && this.account_Type === 'BRANCH') {
+                this.getDoctors();
               }
+              break;
             }
+            // }
             break;
           }
           case 'gallery': {
@@ -540,7 +538,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
               // if (this.businessjson.claimStatus === 'Claimed') {
-                // this.getProviderDepart(this.provider_bussiness_id);
+              // this.getProviderDepart(this.provider_bussiness_id);
               // }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -852,7 +850,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
     if (this.sharedFunctionobj.checkLogin()) {
       this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
     } else { // show consumer login
-      const passParam = { callback: 'history'};
+      const passParam = { callback: 'history' };
       this.doLogin('consumer', passParam);
     }
   }
@@ -871,11 +869,11 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
   communicateHandler() {
     const providforCommunicate = this.provider_bussiness_id;
     // check whether logged in as consumer
-    
+
     if (this.sharedFunctionobj.checkLogin()) {
       this.showCommunicate(providforCommunicate);
     } else { // show consumer login
-      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name};
+      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
       this.doLogin('consumer', passParam);
     }
   }
@@ -902,48 +900,48 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
     if (mod) {
       this.handle_Fav(mod);
     } else {
-    this.shared_services.getFavProvider()
-      .subscribe(data => {
-        this.favprovs = data;
-        this.isInFav = false;
-        if (this.favprovs.length > 0) {
-          for (let i = 0; i < this.favprovs.length; i++) {
-            if (this.favprovs[i].id === this.provider_bussiness_id) {
-              this.isInFav = true;
-            }
-          }
-        } else {
+      this.shared_services.getFavProvider()
+        .subscribe(data => {
+          this.favprovs = data;
           this.isInFav = false;
-        }
-      }, error => {
-        this.sharedFunctionobj.apiErrorAutoHide(this, error);
-      });
+          if (this.favprovs.length > 0) {
+            for (let i = 0; i < this.favprovs.length; i++) {
+              if (this.favprovs[i].id === this.provider_bussiness_id) {
+                this.isInFav = true;
+              }
+            }
+          } else {
+            this.isInFav = false;
+          }
+        }, error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        });
     }
   }
   handle_Fav(mod) {
     if (this.sharedFunctionobj.checkLogin()) {
-    const accountid = this.provider_bussiness_id;
-    if (mod === 'add') {
-      this.shared_services.addProvidertoFavourite(accountid)
-        .subscribe(() => {
-          this.isInFav = true;
-        },
-          error => {
-            this.sharedFunctionobj.apiErrorAutoHide(this, error);
-          });
-    } else if (mod === 'remove') {
-      this.shared_services.removeProviderfromFavourite(accountid)
-        .subscribe(() => {
-          this.isInFav = false;
-        },
-          error => {
-            this.sharedFunctionobj.apiErrorAutoHide(this, error);
-          });
-    }
-  } else {
-    const passParam = { callback: 'fav'};
+      const accountid = this.provider_bussiness_id;
+      if (mod === 'add') {
+        this.shared_services.addProvidertoFavourite(accountid)
+          .subscribe(() => {
+            this.isInFav = true;
+          },
+            error => {
+              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+            });
+      } else if (mod === 'remove') {
+        this.shared_services.removeProviderfromFavourite(accountid)
+          .subscribe(() => {
+            this.isInFav = false;
+          },
+            error => {
+              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+            });
+      }
+    } else {
+      const passParam = { callback: 'fav' };
       this.doLogin('consumer', passParam);
-  }
+    }
   }
   doRemoveFav() {
 
@@ -983,7 +981,6 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
 
 
   doLogin(origin?, passParam?) {
-    console.log(passParam);
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     let is_test_account = null;
@@ -1013,7 +1010,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history')  {
+        } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
@@ -1279,7 +1276,6 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
 
   getCount(e) {
     this.searchCount = e.leng;
-    console.log(this.servicesjson);
     // for (let i = 0; i < this.departmentlist.departments.length; i++) {
     //   if (e.depart === this.departmentlist.departments[i].departmentCode) {
     //     this.departmentlist.departments[i].count = e.leng;
@@ -1308,7 +1304,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
       q_str = q_str + locstr;
     }
     let testUser = false;
-    if (userobj !== null) {
+    if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
@@ -1333,7 +1329,7 @@ console.log(this.sharedFunctionobj.isBusinessOwner('returntyp'));
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
-        searchpass_criteria.fq = '(and ' + this.testuserQry + ')';
+        searchpass_criteria.fq = '(and' + this.testuserQry + ')';
         searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
         searchpass_criteria.q = this.q_str;
         searchpass_criteria.start = 0;
