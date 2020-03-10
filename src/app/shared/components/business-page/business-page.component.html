@@ -113,7 +113,6 @@
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
-                                    <!-- && location_exists -->
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -515,7 +514,6 @@
                             </mat-accordion>
                         </div>
                     </ng-container>
-
                 </div>
                 <!-- Department wise doctors listing -->
                 <div class="c-body prov-detail-outer" *ngIf="showServices">
@@ -571,16 +569,13 @@
                         </ng-container>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
 <!-- <app-footer></app-footer> -->
-
 <footer class="main-footer" style="margin-left: 0px">
     <div class="pull-right hidden-xs footer_info">
-        <!-- <b>Version</b> 1.1.5 -->
     </div>
     <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
         reserved.</span>

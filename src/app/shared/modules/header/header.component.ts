@@ -148,10 +148,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.getUserdetails();
           this.handleHeaderclassbasedonURL();
           break;
-        case 'upgradelicence':
-          this.setLicense();
-          this.getUpgradablePackages();
-          break;
+        // case 'upgradelicence':
+        //   this.setLicense();
+        //   this.getUpgradablePackages();
+        //   break;
         case 'main_loading':
           this.main_loading = message.action || false;
           break;
@@ -175,9 +175,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
           break;
-        case 'instant_q':
-          this.qAvailability = message.qAvailability;
-          break;
+        // case 'instant_q':
+        //   this.qAvailability = message.qAvailability;
+        //   break;
         case 'popularList':
           this.jsonlist = message.target;
           if (this.jsonlist) {
@@ -201,7 +201,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
-    this.setLicense();
+    // this.setLicense();
     this.getBusinessdetFromLocalstorage();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -216,10 +216,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.cronHandle.unsubscribe();
       }
     }
-    if (this.ctype === 'provider') {
-      this.isAvailableNow();
-      this.getLicenseDetails();
-    }
+    // if (this.ctype === 'provider') {
+    //   this.isAvailableNow();
+    //   this.getLicenseDetails();
+    // }
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }

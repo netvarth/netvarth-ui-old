@@ -786,7 +786,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
     this.services = service[0].services;
     this.deptlist = this.groubedByTeam[dept];
-    console.log(this.deptlist);
     this.selectedDepartment = service[0];
     // if (this.deptlist) {
     this.showServices = true;
@@ -985,7 +984,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
-    console.log(current_provider);
     let is_test_account = null;
     if (current_provider) {
       if (current_provider.fields.test_account === '1') {
@@ -1028,7 +1026,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   doSignup(passParam?) {
     // this.api_loading = false;
     const current_provider = passParam['current_provider'];
-    console.log(current_provider);
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
       panelClass: ['signupmainclass', 'popup-class'],
