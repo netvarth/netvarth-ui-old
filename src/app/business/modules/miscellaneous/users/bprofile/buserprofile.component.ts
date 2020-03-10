@@ -383,7 +383,7 @@ createPrimaryFields(pdata) {
 
 
 updatePrimaryFields(pdata) {
-    this.disableButton = true;
+    this.disableButton = false;
     this.provider_services.createUserbProfile(pdata, this.userId)
         .subscribe(
             () => {
