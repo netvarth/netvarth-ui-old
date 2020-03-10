@@ -674,7 +674,7 @@ export const Messages = {
   'FIXED_CAP': 'Fixed',
   'PERCENTAGE_CAP': 'Percentage',
   'DESCRIPTION_MAND_CAP': 'Description *',
-  'DISCOUNT_NAME_CAP': 'Enter the name of discount',
+  'DISCOUNT_NAME_CAP': 'Enter the name of discount *',
 
   // App-ynw_provider-components-add-provider-customers
   'CREATE_CAP': 'Create',

@@ -121,7 +121,7 @@ export class discountdetailscomponent implements OnInit
     this.amForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      discValue: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxNumbers)])],
+      discValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
       calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 
@@ -180,6 +180,7 @@ export class discountdetailscomponent implements OnInit
           return;
         }
       } 
+      
     }
     if (!isNaN(form_data.description.trim(' '))) {
      // this.api_error = 'Please enter a description';

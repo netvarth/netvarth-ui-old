@@ -47,6 +47,7 @@
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')" [errorMsgs]="fed_service.getErrorMessage(amForm,'discValue',
                                  {
                                    'required' : valueCaption,
+                                   'pattern' : 'Please enter valid digits',
                                    'maxlength' : 'Only ' + maxNumbers + ' digits are allowed'
                                  })">
                                     </app-field-error-display>
