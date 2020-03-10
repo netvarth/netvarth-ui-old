@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../../../../shared/constants/project-constants';
@@ -21,14 +21,12 @@ export class ProviderNotificationUserComponent implements OnInit {
     {
       url: '/provider/settings/miscellaneous',
       title: 'Miscellaneous'
-    },
-    {
-      title: 'Notifications',
-      url: '/provider/settings/miscellaneous/notifications',
-    },
-    {
-      title: 'Provider'
-    }
+  },
+  {
+    url: '/provider/settings/miscellaneous/users',
+    title: 'Users'
+
+  }, 
   ];
   breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
@@ -57,9 +55,11 @@ export class ProviderNotificationUserComponent implements OnInit {
   notificationList: any = [];
   okCheckinStatus = false;
   okCancelStatus = false;
+  userId: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
+    private activatedRoot: ActivatedRoute,
     public provider_services: ProviderServices) {
       this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
      }
@@ -71,6 +71,29 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
+    this.activatedRoot.params.subscribe(params => {
+      this.userId = params.id;
+  });
+  const breadcrumbs = [];
+      this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+      });
+      breadcrumbs.push({
+          title: this.userId,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+      });
+      breadcrumbs.push({
+          title: 'Settings',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+      });
+      breadcrumbs.push({
+          title: 'Notifications',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/notifications'
+      });
+      breadcrumbs.push({
+        title: 'Provider'
+    });
+      this.breadcrumbs = breadcrumbs;
   }
   getNotificationList() {
     this.provider_services.getNotificationList()
@@ -303,6 +326,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMessage = this.cheknpush;
+    this.savecancelNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -327,6 +351,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMessage = this.cancelpush;
+    this.savecancelNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   saveNotifctnJson(saveNotification_json, mode, source) {

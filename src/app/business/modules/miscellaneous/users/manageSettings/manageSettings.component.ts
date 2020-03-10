@@ -228,7 +228,7 @@ getQueuesCount() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'holidays']);
   }
   Notifications() {
-    this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'notifications']);
+    this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'notifications'],this.userId);
   }
 
   learnmore_clicked(mod, e) {
