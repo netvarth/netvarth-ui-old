@@ -196,6 +196,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   provider_data: any;
   gender_length: any;
   api_loading = false;
+  userType = '';
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -207,6 +208,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -219,8 +221,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     // this.getInboxUnreadCnt();
     this.activaterouterobj.paramMap
       .subscribe(params => {
-        this.provider_id = params.get('id');
-        this.shared_services.getBusinessUniqueId(params.get('id')).subscribe(
+        // this.provider_id = params.get('id');
+        const customId = params.get('id').replace(/\s/g, '');
+        this.shared_services.getBusinessUniqueId(customId).subscribe(
           id => {
             this.provider_id = id;
             this.gets3curl();
@@ -339,7 +342,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             // this.search_data = this.result_data.hits.hit;
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
-              if (this.sharedFunctionobj.isBusinessOwner('returntyp') === 'consumer') {
+              if (this.userType === 'consumer') {
                 this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
               }
               const addres = this.locationjson[i].address1;
@@ -415,7 +418,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.phonelist = this.businessjson.phoneNumbers;
             }
             this.getbusinessprofiledetails_json('gallery', true);
-            if (this.sharedFunctionobj.isBusinessOwner('returntyp') === 'consumer') {
+            if (this.userType === 'consumer') {
               this.getFavProviders();
             }
             const holdbName = this.businessjson.businessDesc || '';
@@ -783,6 +786,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
     this.services = service[0].services;
     this.deptlist = this.groubedByTeam[dept];
+    console.log(this.deptlist);
     this.selectedDepartment = service[0];
     // if (this.deptlist) {
     this.showServices = true;
@@ -856,7 +860,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
   getInboxUnreadCnt() {
     const usertype = 'consumer';
-    alert(usertype);
     this.shared_services.getInboxUnreadCount(usertype)
       .subscribe(data => {
         this.inboxCntFetched = true;
@@ -970,10 +973,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     // this.current_provider = obj;
 
     this.changedate_req = chdatereq;
-    const usertype = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (usertype === 'consumer') {
+    if (this.userType === 'consumer') {
       this.showCheckin(locid, locname, cdate, 'consumer');
-    } else if (usertype === '') {
+    } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: obj };
       this.doLogin('consumer', passParam);
     }
@@ -983,6 +985,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
+    console.log(current_provider);
     let is_test_account = null;
     if (current_provider) {
       if (current_provider.fields.test_account === '1') {
@@ -1018,12 +1021,40 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
-        // this.doSignup(passParam);
+        this.doSignup(passParam);
       }
     });
   }
-
-
+  doSignup(passParam?) {
+    // this.api_loading = false;
+    const current_provider = passParam['current_provider'];
+    console.log(current_provider);
+    const dialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        is_provider: 'false',
+        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'communicate') {
+          this.showCommunicate(passParam['providerId']);
+        } else if (passParam['callback'] === 'history') {
+          this.redirectToHistory();
+        } else if (passParam['callback'] === 'fav') {
+          this.getFavProviders(passParam['mod']);
+        } else {
+          this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+        }
+      }
+    });
+  }
 
   showCheckin(locid, locname, curdate, origin?) {
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
