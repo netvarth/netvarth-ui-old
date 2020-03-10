@@ -650,6 +650,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {
             this.shared_Functionsobj.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+        } else if (this.boardDisplayname === '') {
+            this.shared_Functionsobj.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
         } else {
             this.step = step;
         }

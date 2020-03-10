@@ -518,7 +518,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        timeSlot: [0],
+        // timeSlot: [0],
       });
       // this.updateForm();
       setTimeout(() => {
@@ -533,7 +533,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        timeSlot: [0]
+        // timeSlot: [0]
       });
       this.provider_services.getQStartToken()
         .subscribe(
@@ -568,7 +568,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.queue_data.capacity || null,
       qserveonce: this.queue_data.parallelServing || null,
-      timeSlot: this.queue_data.timeInterval || 0,
+      // timeSlot: this.queue_data.timeInterval || 0,
       tokennum: this.queue_data.tokenStarts || null
     });
     // this.amForm.get('qlocation').disable();
@@ -754,7 +754,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         },
         'services': selser,
         'tokenStarts': form_data.tokennum,
-        'timeInterval': form_data.timeSlot
+        // 'timeInterval': form_data.timeSlot
       };
       if (this.action === 'edit') {
         this.editProviderQueue(post_data);
