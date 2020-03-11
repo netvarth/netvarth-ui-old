@@ -7501,3 +7501,7 @@ width: fit-content;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 1.25rem;
 }
+.user .disabled{
+  border: 3px dashed #ccc !important;
+  border-radius: 5px !important;
+}
