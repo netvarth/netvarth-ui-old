@@ -491,6 +491,10 @@ export class SharedServices {
     const path = 'consumer/waitlist/department/services?account=' + id;
     return this.servicemeta.httpGet(path);
   }
+  getUsersByDept(id, departmentId) {
+    const path = 'consumer/waitlist/providerByDepartmentId/' + departmentId + '?account=' + id;
+    return this.servicemeta.httpGet(path);
+  }
   getBussinessProfile() {
     return this.servicemeta.httpGet('provider/bProfile');
   }

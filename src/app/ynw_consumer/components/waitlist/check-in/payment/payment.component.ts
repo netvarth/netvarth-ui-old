@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-consumer-payment',
@@ -12,16 +13,21 @@ export class ConsumerPaymentComponent implements OnInit {
 
     breadcrumbs;
     breadcrumb_moreoptions: any = [];
+    activeWt: any;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
-        ) {
-            this.route.params.subscribe(
-                params => {
-                    this.uuid = params.id;
-                    this.accountId = params.account_id;
-                });
+        private shared_services: SharedServices
+    ) {
+        this.route.params.subscribe(
+            params => {
+                this.uuid = params.id;
+            });
+        this.route.queryParams.subscribe(
+            params => {
+                this.accountId = params.account_id;
+            });
     }
 
     ngOnInit() {
@@ -34,15 +40,23 @@ export class ConsumerPaymentComponent implements OnInit {
                 title: 'Payment'
             }
         ];
-        // this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
-        //     (wailist: any) => {
-        //       this.activeWt = wailist;
-        //       this.liveTrack = true;
-        //       this.resetApi();
-        //     },
-        //     () => {
-        //     }
-        //   );
+        this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
+            (wailist: any) => {
+                this.activeWt = wailist;
+                console.log(this.activeWt);
+
+                //   if (this.sel_ser_det.isPrePayment) {
+                //     let len = this.waitlist_for.length;
+                //     if (this.waitlist_for.length === 0) {
+                //       len = 1;
+                //     }
+
+                //   this.liveTrack = true;
+                //   this.resetApi();
+            },
+            () => {
+            }
+        );
     }
     prePaymentcheckin(retUUID) {
 
@@ -77,6 +91,6 @@ export class ConsumerPaymentComponent implements OnInit {
         // } else {
         //   this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
         // }
-      }
+    }
 
 }

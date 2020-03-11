@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
@@ -107,6 +107,7 @@ export class ConsumerCheckinComponent implements OnInit {
     maxsize;
     isFuturedate = false;
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     fromKiosk = false;
@@ -131,12 +132,16 @@ export class ConsumerCheckinComponent implements OnInit {
     departmentlist: any = [];
     departments: any = [];
     selected_dept;
+    selected_user;
     deptLength;
     filterDepart = false;
     confrmshow = false;
+
     userData: any = [];
     userEmail;
     userPhone;
+
+    users = [];
     emailExist = false;
     payEmail;
     payEmail1;
@@ -259,7 +264,7 @@ export class ConsumerCheckinComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         this.minDate = this.sel_checkindate;
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
         if (this.change_date) {
@@ -311,114 +316,16 @@ export class ConsumerCheckinComponent implements OnInit {
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
         });
     }
-    initCheckIn() {
-        this.showCheckin = true;
-        this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        this.minDate = new Date(this.minDate);
-        const dd = this.today.getDate();
-        const mm = this.today.getMonth() + 1; // January is 0!
-        const yyyy = this.today.getFullYear();
-        let cday = '';
-        if (dd < 10) { cday = '0' + dd; } else { cday = '' + dd; }
-        let cmon;
-        if (mm < 10) { cmon = '0' + mm; } else { cmon = '' + mm; }
-        const dtoday = yyyy + '-' + cmon + '-' + cday;
-        this.todaydate = dtoday;
-        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-
-        const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
-        this.sel_loc = loc.id;
-
-        this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-        this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
-        this.hold_sel_checkindate = this.sel_checkindate;
-        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date1 = new Date(dt1);
-        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
+    isDepartmentHaveServices(serviceIds: any, servicesjson: any) {
+        console.log(serviceIds);
+        let found = false;
+        for (let j = 0; j < servicesjson.length; j++) {
+            if (serviceIds.indexOf(servicesjson[j].id) !== -1) {
+                found = true;
+                break;
+            }
         }
-        this.getWaitlistMgr().then(
-            () => {
-                this.setTerminologyLabels();
-                this.getBussinessProfileApi()
-                    .then(
-                        (data: any) => {
-                            this.account_id = data.id;
-                            this.domain = data.serviceSector.domain;
-                            this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
-                            if (this.domain === 'foodJoints') {
-                                this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                                this.note_placeholder = 'Item No Item Name Item Quantity';
-                            } else {
-                                this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                this.note_placeholder = '';
-                            }
-                            this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
-                                (services: any) => {
-                                    this.servicesjson = services;
-                                    this.serviceslist = services;
-                                    // this.sel_ser_det = [];
-                                    if (this.servicesjson.length > 0) {
-                                        //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                                        //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                                        //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        this.initDepartments(this.account_id).then(
-                                            () => {
-                                                console.log(this.departments);
-                                                this.handleDeptSelction(this.selected_dept);
-                                            },
-                                            () => {
-                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                            }
-                                        );
-                                    }
-                                    //     this.api_loading1 = false;
-                                    // },
-                                    //     () => {
-                                    //         this.api_loading1 = false;
-                                    //         this.sel_ser = '';
-                                    //     });
-                                });
-                        }
-                    );
-            });
-    }
-    initDepartments(accountId) {
-        const _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.shared_services.getProviderDept(accountId).subscribe(data => {
-                _this.departmentlist = data;
-                _this.filterDepart = _this.departmentlist.filterByDept;
-                for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
-                    if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
-                        if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            _this.departments.push(_this.departmentlist['departments'][i]);
-                        }
-                    }
-                }
-                
-                _this.deptLength = _this.departments.length;
-                // this.selected_dept = 'None';
-                if (_this.deptLength !== 0) {
-                    _this.selected_dept = _this.departments[0].departmentId;
-                    resolve();
-                } else {
-                    reject();
-                }
-            },
-                () => {
-                    reject();
-                });
-        });
+        return found;
     }
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
@@ -586,6 +493,27 @@ export class ConsumerCheckinComponent implements OnInit {
                     }
                 });
         }
+    }
+    handleUserSelection(user) {
+        console.log(user);
+        this.servicesjson = this.serviceslist;
+        const newserviceArray = [];
+        if (user.id && user.id !== 0) {
+            for (let i = 0; i < this.servicesjson.length; i++) {
+                if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
+                    newserviceArray.push(this.serviceslist[i]);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.servicesjson.length; i++) {
+                if (!this.servicesjson[i].provider && this.servicesjson[i].department === this.selected_dept) {
+                    newserviceArray.push(this.serviceslist[i]);
+                }
+            }
+        }
+
+        console.log(newserviceArray);
+        this.servicesjson = newserviceArray;
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -759,24 +687,74 @@ export class ConsumerCheckinComponent implements OnInit {
     addCheckInConsumer(post_Data) {
         this.api_loading = true;
         this.shared_services.addCheckin(this.account_id, post_Data)
-          .subscribe(data => {
-            const retData = data;
-            let retUUID;
-            Object.keys(retData).forEach(key => {
-              retUUID = retData[key];
-              this.trackUuid = retData[key];
-            });
-            if (this.selectedMessage.files.length > 0) {
-              this.consumerNoteAndFileSave(retUUID);
-            }
-            // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
-            this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid]);
-          },
-            error => {
-              this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-              this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              this.api_loading = false;
-            });
+            .subscribe(data => {
+                const retData = data;
+                let retUUID;
+                Object.keys(retData).forEach(key => {
+                    retUUID = retData[key];
+                    this.trackUuid = retData[key];
+                });
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(retUUID);
+                }
+                // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { account_id: this.account_id }
+                  };
+                this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+            },
+                error => {
+                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                });
+    }
+    addEmail() {
+        this.resetApiErrors();
+        this.resetApi();
+        let post_data;
+        let passtyp;
+        if (this.payEmail) {
+          const stat = this.validateEmail(this.payEmail);
+          if (!stat) {
+            this.emailerror = 'Please enter a valid email.';
+            this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
+          }
+        }
+        if (this.payEmail1) {
+          const stat1 = this.validateEmail(this.payEmail1);
+          if (!stat1) {
+            this.email1error = 'Please enter a valid email.';
+            this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
+          }
+        }
+        // return new Promise((resolve) => {
+        if (this.payEmail === this.payEmail1) {
+          post_data = {
+            'id': this.userData.userProfile.id || null,
+            'firstName': this.userData.userProfile.firstName || null,
+            'lastName': this.userData.userProfile.lastName || null,
+            'dob': this.userData.userProfile.dob || null,
+            'gender': this.userData.userProfile.gender || null,
+            'email': this.payEmail || ''
+          };
+          passtyp = 'consumer';
+          if (this.payEmail) {
+            this.shared_services.updateProfile(post_data, passtyp)
+              .subscribe(
+                () => {
+                  this.getProfile();
+                  this.hideFilterSidebar();
+                },
+                error => {
+                  this.api_error = error.error;
+                  this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+          }
+        } else {
+          this.email1error = 'Email and Re-entered Email do not match';
+          this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
+        }
       }
     handleGoBack(cstep) {
         this.resetApi();
@@ -803,7 +781,7 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
     }
     showCheckinButtonCaption() {
@@ -1065,11 +1043,18 @@ export class ConsumerCheckinComponent implements OnInit {
                 for (let i = 0; i < this.departmentlist['departments'].length; i++) {
                     if (this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
                         if (this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            this.departments.push(this.departmentlist['departments'][i]);
+                            console.log(this.servicesjson);
+                            console.log(this.departmentlist['departments'][i].serviceIds);
+                            console.log(this.isDepartmentHaveServices(this.departmentlist['departments'][i].serviceIds, this.servicesjson));
+                            if (this.isDepartmentHaveServices(this.departmentlist['departments'][i].serviceIds, this.servicesjson)) {
+                                this.departments.push(this.departmentlist['departments'][i]);
+                            }
+                            // this.departments.push(this.departmentlist['departments'][i]);
                         }
                     }
                 }
                 this.deptLength = this.departments.length;
+                console.log(this.deptLength);
                 // this.selected_dept = 'None';
                 if (this.deptLength !== 0) {
                     this.selected_dept = this.departments[0].departmentId;
@@ -1078,39 +1063,67 @@ export class ConsumerCheckinComponent implements OnInit {
             });
     }
     handleDeptSelction(obj) {
+        console.log(obj);
         this.api_error = '';
         this.selected_dept = obj;
-        if (obj === 'None') {
-            this.servicesjson = this.serviceslist;
-        } else {
-            for (let i = 0; i < this.departmentlist['departments'].length; i++) {
-                if (obj === this.departmentlist['departments'][i].departmentId) {
-                    this.services = this.departmentlist['departments'][i].serviceIds;
-                }
-            }
-            const newserviceArray = [];
-            if (this.services) {
-                for (let i = 0; i < this.serviceslist.length; i++) {
-                    for (let j = 0; j < this.services.length; j++) {
-                        if (this.services[j] === this.serviceslist[i].id) {
-                            newserviceArray.push(this.serviceslist[i]);
+        this.servicesjson = this.serviceslist;
+        // if (obj === 'None') {
+        //     this.servicesjson = this.serviceslist;
+        // } else {
+        if (this.filterDepart) {
+            this.shared_services.getUsersByDept(this.account_id, obj).subscribe(
+                (users: any) => {
+                    this.users = [];
+                    let found = false;
+                    for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
+                        for (let userIndex = 0; userIndex < users.length; userIndex++) {
+                            if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
+                                this.users.push(users[userIndex]);
+                                break;
+                            }
+                            if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {
+                                found = true;
+                            }
                         }
                     }
-                }
-                this.servicesjson = newserviceArray;
-            }
+                    if (found) {
+                        // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+                        this.users.push(this.userN);
+                    }
+                    if (this.users.length !== 0) {
+                        this.selected_user = this.users[0];
+                        this.handleUserSelection(this.selected_user);
+                    } else {
+                        for (let i = 0; i < this.departmentlist['departments'].length; i++) {
+                            if (obj === this.departmentlist['departments'][i].departmentId) {
+                                this.services = this.departmentlist['departments'][i].serviceIds;
+                            }
+                        }
+                        const newserviceArray = [];
+                        if (this.services) {
+                            for (let i = 0; i < this.serviceslist.length; i++) {
+                                for (let j = 0; j < this.services.length; j++) {
+                                    if (this.services[j] === this.serviceslist[i].id) {
+                                        newserviceArray.push(this.serviceslist[i]);
+                                    }
+                                }
+                            }
+                            this.servicesjson = newserviceArray;
+                        }
+                    }
+                });
+            // }
         }
-        console.log(this.servicesjson);
-        if (this.servicesjson.length > 0) {
-            this.sel_ser = this.servicesjson[0].id;
-            this.setServiceDetails(this.sel_ser);
-            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        } else {
-            this.sel_queue_indx = -1;
-            this.sel_queue_id = null;
-            this.queuejson = [];
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-        }
+        // if (this.servicesjson.length > 0) {
+        //     this.sel_ser = this.servicesjson[0].id;
+        //     this.setServiceDetails(this.sel_ser);
+        //     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+        // } else {
+        //     this.sel_queue_indx = -1;
+        //     this.sel_queue_id = null;
+        //     this.queuejson = [];
+        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+        // }
     }
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
