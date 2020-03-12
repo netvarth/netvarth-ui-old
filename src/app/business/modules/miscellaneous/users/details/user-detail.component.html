@@ -22,7 +22,7 @@
                                 </div>
                                 <form [formGroup]="userForm" (ngSubmit)="userForm.valid &&
 onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 " *ngIf="type !== 'ADMIN'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select formControlName="selectedUserType"

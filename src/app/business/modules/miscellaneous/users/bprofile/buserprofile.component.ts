@@ -154,7 +154,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   domain;
   userId: any;
   showProfile = false;
-  profileview = true;
+
 
   select_subdomain_cap;
     profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
@@ -367,10 +367,11 @@ createPrimaryFields(pdata) {
             () => {
                 this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
                 this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-                setTimeout(() => {
-                    this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
+                // setTimeout(() => {
+                //     this.dialogRef.close('reloadlist');
+                // }, projectConstants.TIMEOUT_DELAY); 
                 this.showProfile = false;
+                // this.profileview = true;
                 this.getBusinessProfile();
             },
             error => {
@@ -383,7 +384,7 @@ createPrimaryFields(pdata) {
 
 
 updatePrimaryFields(pdata) {
-    this.disableButton = false;
+    this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
         .subscribe(
             () => {
@@ -393,7 +394,7 @@ updatePrimaryFields(pdata) {
                 //     this.dialogRef.close('reloadlist');
                 // }, projectConstants.TIMEOUT_DELAY);
                 this.showProfile = false;
-                this.profileview = true;
+                // this.profileview = true;
                 this.getBusinessProfile();
             },
             error => {
@@ -405,7 +406,8 @@ updatePrimaryFields(pdata) {
 }
   showBPrimary() {
   this.showProfile = true;
-  this.profileview = false;
+  this.disableButton = false;
+  // this.profileview = false;
   this.createForm();
 
     // this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
@@ -429,7 +431,7 @@ updatePrimaryFields(pdata) {
   }
   cancel(){
     this.showProfile = false;
-    this.profileview = true;
+    // this.profileview = true;
   }
   // handles the image display on load and on change
   imageSelect(input) {

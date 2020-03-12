@@ -21,9 +21,9 @@ export class BranchUsersComponent implements OnInit {
     filterapplied = false;
     open_filter = false;
     filter = {
-        id: '',
         firstName: '',
-        mobileNo: '',
+        lastName: '',
+        primaryMobileNo: '',
         userType: '',
         page_count: projectConstants.PERPAGING_LIMIT,
         page: 1
@@ -31,9 +31,9 @@ export class BranchUsersComponent implements OnInit {
     }; 
 
     filters: any = {
-        'id': false,
         'firstName': false,
-        'mobileNo': false,
+        'lastName': '',
+        'primaryMobileNo': false,
         'userType': false    
 
     };
@@ -206,6 +206,7 @@ export class BranchUsersComponent implements OnInit {
 
     hideFilterSidebar() {
         this.filter_sidebar = false;
+        this.clearFilter();
     }
 
     clearFilter() {
@@ -217,14 +218,14 @@ export class BranchUsersComponent implements OnInit {
     resetFilter() {
         this.filters = {
             'firstName': false,
-            'id': false,
-            'mobileNo': false,
+            'lastName': false,
+            'primaryMobileNo': false,
             'userType': false
         };
         this.filter = {
-            id: null,
             firstName: '',
-            mobileNo: '',
+            lastName: '',
+            primaryMobileNo: '',
             userType: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
@@ -235,7 +236,7 @@ export class BranchUsersComponent implements OnInit {
 
     doSearch() {
         this.getUsers();
-        if (this.filter.firstName || this.filter.id || this.filter.mobileNo || this.filter.userType) {
+        if (this.filter.firstName || this.filter.lastName || this.filter.primaryMobileNo || this.filter.userType) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -263,17 +264,20 @@ export class BranchUsersComponent implements OnInit {
         const api_filter = {};
         if (this.filter.firstName !== '') {
             api_filter['firstName-eq'] = this.filter.firstName;
+        } 
+        if (this.filter.lastName !== '') {
+            api_filter['lastName-eq'] = this.filter.lastName;
         }
         if (this.filter.userType !== '') {
             api_filter['userType-eq'] = this.filter.userType;
         }
-        if (this.filter.mobileNo !== '') {
+        if (this.filter.primaryMobileNo !== '') {
             const pattern = projectConstants.VALIDATOR_NUMBERONLY;
-            const mval = pattern.test(this.filter.mobileNo);
+            const mval = pattern.test(this.filter.primaryMobileNo);
             if (mval) {
-                api_filter['mobileNo-eq'] = this.filter.mobileNo;
+                api_filter['primaryMobileNo-eq'] = this.filter.primaryMobileNo;
             } else {
-                this.filter.mobileNo = '';
+                this.filter.primaryMobileNo = '';
             }
         }
         return api_filter;

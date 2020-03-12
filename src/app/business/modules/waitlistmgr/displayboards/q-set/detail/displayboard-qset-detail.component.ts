@@ -61,10 +61,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     step = 1;
     selectedWtlstList: any = [];
     waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
+    providerLabelsCount;
     qMultiCtrl: any = [];
     deptMultiCtrl: any = [];
     servMultiCtrl: any = [];
-    labelMultiCtrl: FormControl = new FormControl();
+    labelMultiCtrl: any = [];
     deptMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
     qMultiFilterCtrl: FormControl = new FormControl();
@@ -426,6 +427,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
             this.providerLabelsList = this.providerLabels;
+            this.providerLabelsCount = this.providerLabels.length;
             for (let i = 0; i < this.providerLabels.length; i++) {
                 this.defaultLabels.push({
                     'name': this.providerLabels[i].label,
@@ -669,5 +671,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             }
         });
         this.labelsList.splice(index, 1);
+    }
+    providerLabelSelection() {
+
     }
 }

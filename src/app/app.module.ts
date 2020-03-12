@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -63,6 +63,8 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -131,7 +133,7 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     ScrollToModule.forRoot(),
     DateFormatPipeModule,
     DisplayboardLayoutContentModule,
-    SalesChannelModule
+    SalesChannelModule,
   ],
   providers: [
     AuthGuardConsumer,
