@@ -49,6 +49,7 @@ export class BranchUserDetailComponent implements OnInit {
     tday = new Date();
     minday = new Date(1900, 0, 1);
     showPrvdrFields = false;
+    type ;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -154,6 +155,7 @@ export class BranchUserDetailComponent implements OnInit {
                     res => {
                         this.user_data = res;
                         if (this.actionparam.type === 'edit') {
+                            this.type = this.user_data.userType;
                             // this.createForm();
                             this.updateForm();
                         }

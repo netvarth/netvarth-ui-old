@@ -99,7 +99,8 @@
                                             
                                             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                                             <button type="button"  class="cs-btn bt2"(click)="cancel()"[disabled]="disableButton">{{cancel_btn_cap}}</button>
-                                            <button type="submit" style="margin-left: 15px;" [disabled]="!amForm.valid || disableButton" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+                                            <button type="submit" style="margin-left: 15px;" [disabled]="!amForm.valid && disableButton" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+                                                            
                                             </div>
                                            
                                             </form>
@@ -118,7 +119,7 @@
             </div> 
             
             
-            <div class="row"  *ngIf="bProfile && bProfile.businessName && profileview">
+            <div class="row"  *ngIf="bProfile && bProfile.businessName && !showProfile">
                 <div class="card p0">
                     <span class="b-link" (click)="specializations()">
                         <h2>Specializations</h2>
@@ -126,7 +127,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName && profileview">
+            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
                 <div class="card p0">
                     <span class="b-link" (click)="additionalInfo()">
                         <h2>Additional Info</h2>
@@ -134,7 +135,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName  && profileview">
+            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
                 <div class="card p0">
                     <span class="b-link" (click)="languagesKnown()">
                         <h2>Languages Known</h2>
@@ -142,7 +143,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName  && profileview">
+            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile ">
                 <div class="card p0">
                     <span class="b-link" (click)="galerySocialmedia()">
                         <h2>Social Media</h2>
