@@ -7505,4 +7505,11 @@ width: fit-content;
 .user .disabled{
   border: 3px dashed #ccc !important;
   border-radius: 5px !important;
+}
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header-container {
+  border-bottom: 1px solid #f2f2f2 !important;
+  background: #d8e2f1 !important;  
+}
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+  padding: 15px !important;
 } 

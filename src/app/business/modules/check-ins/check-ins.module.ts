@@ -21,6 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
+import { CustomViewComponent } from './custom-view/custom-view.component';
+
 @NgModule({
     imports: [
         CheckinsRoutingModule,
@@ -46,7 +48,8 @@ import { OwlModule } from 'ngx-owl-carousel';
         AdjustQueueDelayComponent,
         LocateCustomerComponent,
         ProviderWaitlistCheckInDetailComponent,
-        ApplyLabelComponent
+        ApplyLabelComponent,
+        CustomViewComponent
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,
