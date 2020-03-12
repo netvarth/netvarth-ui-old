@@ -303,6 +303,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMessage = this.cheknpush;
+    this.savechekinNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -327,6 +328,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMessage = this.cancelpush;
+    this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   saveNotifctnJson(saveNotification_json, mode, source) {
