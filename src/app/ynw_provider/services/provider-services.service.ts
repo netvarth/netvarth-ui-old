@@ -949,17 +949,10 @@ export class ProviderServices {
    // return this.servicemeta.httpPut (url);
    // }
    getUsers(filter = {}) {
-<<<<<<< HEAD
       const url = 'provider/user';
       return this.servicemeta.httpGet(url, null, filter);
    }
-   getUsersCount(filter = {}) {
-=======
-    const url = 'provider/user';
-    return this.servicemeta.httpGet(url, null, filter);
-    }
     getUsersCount(filter = {}) {
->>>>>>> branch '1.3.0' of https://github.com/netvarth/calpine-ui
       const url = 'provider/user/count';
       return this.servicemeta.httpGet(url, null, filter);
       }
