@@ -948,10 +948,14 @@ export class ProviderServices {
    // const url = 'provider/assistant/ + ' + status + ' + /' + assistantId;
    // return this.servicemeta.httpPut (url);
    // }
-   getUsers() {
+   getUsers(filter = {}) {
       const url = 'provider/user';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
    }
+   getUsersCount(filter = {}) {
+      const url = 'provider/user/count';
+      return this.servicemeta.httpGet(url, null, filter);
+      }
    createUser(post_data) {
       const url = 'provider/user';
       return this.servicemeta.httpPost(url, post_data);

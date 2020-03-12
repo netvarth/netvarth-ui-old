@@ -8,43 +8,33 @@
                 <div class="copy locd">
                     <div class="lbl col-sm-12 col-md-7 col-lg-7">
                         <ng-container>
-                            <div class="prepay-outer">
-                                <div class="prepay-dur-pr">
+                            <div class="mainouter checkin-page ">
+                                    <div class="servicefor-outer btborder">
                                     <!-- <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div> -->
-                                    <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377;
+                                    <!-- <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377;
                                             </span>{{prepaymentAmount}}</span></div>
-                                    <div class="prepayEmail" *ngIf="!emailExist">
-                                        <label for="reason" style="margin-bottom: 15px;" class="col-form-label"> Please enter your
-                                            email for payment</label>
-                                        <ng-container>
-                                            <div class="form-group">
-                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email"
-                                                    placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail" autocomplete="off"
-                                                    (keyup)="showConfrmEmail($event)" onpaste="return false;" oncopy="return false"
-                                                    oncut="return false" ondrag="return false" ondrop="return false">
-                                                <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
-                                                    errorMsg={{emailerror}}>
-                                                </app-field-error-display>
-                                            </div>
-                                            <div class="form-group" *ngIf="confrmshow">
-                                                <!-- <mat-form-field> -->
-                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email1"
-                                                    placeholder="Re-enter Email(user@xyz.com)" [(ngModel)]="payEmail1"
-                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
-                                                    oncut="return false" ondrag="return false" ondrop="return false">
-                                                <!-- </mat-form-field> -->
-                                                <app-field-error-display [displayError]="true" *ngIf="email1error != null"
-                                                    errorMsg={{email1error}}>
-                                                </app-field-error-display>
-                                            </div>
-                                            <span class="input-group-btn" *ngIf="confrmshow">
-                                                <button class="btn bt3 btn-default" (click)="addEmail()" type="button">Add</button>
-                                            </span>
-                                        </ng-container>
-                                    </div>
                                     <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                                         <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
-                                    </div>
+                                    </div> -->
+                                    <div *ngIf="this.activeWt">                                    
+                                        <ng-container *ngFor="let waitfor of this.activeWt.waitlistingFor; let i = index">                                        
+                                                {{waitfor.firstName | capitalizeFirst}}
+                                                {{waitfor.lastName | capitalizeFirst}}
+                                                <!-- <span class="cs-btn bt8 changemember"
+                                                    (click)="handleServiceForWhom()"
+                                                    *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->                                        
+                                        </ng-container>                                 
+                                    <div>{{this.activeWt.service.name}}</div>
+                                        <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377; {{prepaymentAmount}}</b></div> 
+                                         <div style="padding-bottom: 10px">Payment Options
+                                        <div><p class="settings_info" style="display: inline;">Choose your payment options from here</p></div>
+                                         </div>
+                                      
+                                       <div class="col-md-12 cc-dc-nb" style="display: flex">
+                                         <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
+                                         <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+                                       </div>
+                                     </div>
                                     <!--<div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
                                 <div class='prepay-head-sorry'> Sorry not payment modes available </div>
                                 </div>
@@ -71,5 +61,6 @@
             </div>
         </div>
         <div class="clearfix"></div>
+        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
     </div>
 </section>
