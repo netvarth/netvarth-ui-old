@@ -7303,6 +7303,7 @@ hr.wide-separator-line{
   padding: 20px 10px;
   background: white;
   font-size: 14px;
+  display: flex !important;
 }
 .cdk-drag-preview {
   box-sizing: border-box;
