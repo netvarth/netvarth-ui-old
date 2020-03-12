@@ -6802,3 +6802,8 @@ label.notifi-togl {
     margin-top: 5px;
   }
 }
+@media (max-width: 575px) {
+  .change-mob-style .mat-form-field-label {
+      margin-top: 0px!important;
+  }
+}
