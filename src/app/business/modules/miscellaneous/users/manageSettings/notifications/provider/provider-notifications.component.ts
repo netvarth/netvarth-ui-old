@@ -69,10 +69,9 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
-    this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     this.activatedRoot.params.subscribe(params => {
-      this.userId = params.id;
+      this.userId = + params.id;
   });
   const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
@@ -94,9 +93,10 @@ export class ProviderNotificationUserComponent implements OnInit {
         title: 'Provider'
     });
       this.breadcrumbs = breadcrumbs;
+      this.getNotificationList();
   }
   getNotificationList() {
-    this.provider_services.getNotificationList()
+    this.provider_services.getUserNotificationList(this.userId)
       .subscribe(
         data => {
           this.notificationList = data;
@@ -326,7 +326,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMessage = this.cheknpush;
-    this.savecancelNotification_json.providerId = this.userId;
+    this.savechekinNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 

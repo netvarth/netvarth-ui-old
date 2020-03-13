@@ -1042,4 +1042,9 @@ export class ProviderServices {
 {
 return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
 }
+getUserNotificationList(id) {
+   const url = 'provider/settings/notification/' + id;
+   return this.servicemeta.httpGet(url);
 }
+}
+

@@ -73,7 +73,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
   }
   getNotificationList() {
-    this.provider_services.getNotificationList()
+    this.provider_services.getUserNotificationList(0)
       .subscribe(
         data => {
           this.notificationList = data;
