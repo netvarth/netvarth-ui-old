@@ -14,11 +14,22 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
   service_list: any = [];
   selectedDepts: any = [];
   selectedDocts: any = [];
+  selectedServices: any = [];
   users_list: any = [];
   qstoDisplay: any = [];
+  selectedQueues: any = [];
   deptObj;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  breadcrumbs = [
+    {
+        title: 'Dashboard',
+        url: '/provider'
+    },
+    {
+        title: 'Custom View'
+    }
+];
 
   constructor(private _formBuilder: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -77,18 +88,38 @@ getQs() {
                     console.log(error);
                 });
 }
-depSelected(depIds) {
+depSelected(depIds, i) {
+    
     if (this.selectedDepts.indexOf(depIds) === -1) {
         this.selectedDepts.push(depIds);
+        this.departments[i].selected = true;
     } else {
     this.selectedDepts.splice(this.selectedDepts.indexOf(depIds), 1);
+    this.departments[i].selected = false;
     }
 }
-doctorSelected(userIds) {
+doctorSelected(userIds, i) {
+    this.users_list[i].selected = !this.users_list[i].selected;
     if (this.selectedDocts.indexOf(userIds) === -1) {
         this.selectedDocts.push(userIds);
+        // this.users_list[index].selected = true;
     } else {
         this.selectedDocts.splice(this.selectedDocts.indexOf(userIds), 1);
+        // this.users_list[index].selected = false;
+    }
+}
+servSelected(servIds) {
+    if (this.selectedServices.indexOf(servIds) === -1) {
+        this.selectedServices.push(servIds);
+    } else {
+        this.selectedServices.splice(this.selectedServices.indexOf(servIds), 1);
+    }
+}
+selectedQs(QIds) {
+    if (this.selectedQueues.indexOf(QIds) === -1) {
+        this.selectedQueues.push(QIds);
+    } else {
+        this.selectedQueues.splice(this.selectedQueues.indexOf(QIds), 1);
     }
 }
 userFilters() {
@@ -104,6 +135,26 @@ getUsers() {
             this.users_list = data;
         }
     );
+}
+createCustomView() {
+    let customviewFilter = {};
+    customviewFilter['userId-eq'] = this.selectedDocts.toString();
+    customviewFilter['departmentId-eq'] = this.selectedDepts.toString();
+    customviewFilter['serviceId-eq'] = this.selectedServices.toString();
+    customviewFilter['queueId-eq'] = this.selectedQueues.toString();
+    
+    console.log(this.selectedDocts);
+    console.log(this.selectedServices);
+    console.log(this.selectedDepts);
+    console.log(this.selectedQueues);
+    const customViewInput = {
+        'department' : this.selectedDepts,
+        'users' : this.selectedDocts,
+        'services' : this.selectedServices,
+        'queues' : this.selectedQueues,
+        'queryString' : customviewFilter
+    };
+    console.log(customViewInput);
 }
 depNextClicked() {
     this.getUsers();

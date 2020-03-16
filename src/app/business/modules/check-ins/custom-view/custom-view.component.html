@@ -1,11 +1,16 @@
+
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+  <div class="col-md-12 no-padding-small">
+      
 <div class = "ynw-common-form-nm">
 <mat-horizontal-stepper labelPosition="bottom" #stepper>
       <mat-step>
-        <div class="form-group col-md-3">
+        <div class="form-group">
             <form>
                 <ng-template matStepLabel>Department(s)</ng-template>
-                    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-                        <mat-chip  *ngFor=" let depName of departments" (click) = "depSelected(depName.departmentId)" [selected]="selectedDepts.indexOf(depName.departmentId) !== -1">
+                    <mat-chip-list class="primary" aria-label="Color selection">
+                        <mat-chip  *ngFor=" let depName of departments; let i = index" [selected]="depName.selected" (click) = "depSelected(depName.departmentId, i)">
                           {{depName.departmentName}}
                         </mat-chip>
                       </mat-chip-list>
@@ -14,73 +19,53 @@
                 </div>
               </form>
         </div>
-        <div class="form-group col-md-6">
-            <form>
-                  <mat-label>Search Departments</mat-label>
-              </form>
-        </div>
         </mat-step>
         <mat-step>
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-12">
               <form>
                   <ng-template matStepLabel>Doctor(s)</ng-template>
-                  <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-                    <mat-chip  *ngFor=" let doctors of users_list" (click) = "doctorSelected(doctors.id)"  [selected]="selectedDocts.indexOf(doctors.id) !== -1">
+                  <mat-chip-list class="primary" aria-label="Color selection">
+                    <mat-chip  *ngFor=" let doctors of users_list; let i = index" [selected]="doctors.selected" (click) = "doctorSelected(doctors.id, i)">
                       {{doctors.firstName | capitalizeFirst}} {{doctors.lastName | capitalizeFirst}}
                     </mat-chip>
                   </mat-chip-list>
                   <div>
-                      <button mat-button class="cs-btn bt1" matStepperPrevious>Back</button>
+                      <button mat-button class="cs-btn bt1 stepper-back-btn" matStepperPrevious>Back</button>
                     <button mat-button class="cs-btn bt1" matStepperNext (click) = "docNextClicked()">Next</button>
                   </div>
                 </form>
           </div>
-          <div class="form-group col-md-6">
-              <form>
-                    <mat-label>Search Doctors</mat-label>
-                </form>
-          </div>
         </mat-step>
         <mat-step>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
                 <form>
                     <ng-template matStepLabel>Services(s)</ng-template>
-                    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-                        <mat-chip *ngFor=" let serNames of service_list">
+                    <mat-chip-list class="primary" aria-label="Color selection">
+                        <mat-chip *ngFor=" let serNames of service_list" (click) = "servSelected(serNames.id)"  [selected]="selectedServices.indexOf(serNames.id) !== -1">
                           {{serNames.name}}
                         </mat-chip>
                       </mat-chip-list>
                     <div>
-                        <button mat-button class="cs-btn bt1" matStepperPrevious>Back</button>
+                        <button mat-button class="cs-btn bt1 stepper-back-btn" matStepperPrevious>Back</button>
                       <button mat-button class="cs-btn bt1" matStepperNext (click) = "serNextClicked()">Next</button>
                     </div>
                   </form>
             </div>
-            <div class="form-group col-md-6">
-                <form>
-                      <mat-label>Search Services</mat-label>
-                  </form>
-            </div>
         </mat-step>
         <mat-step>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
                 <form>
                     <ng-template matStepLabel>Queues(s)</ng-template>
-                    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-                      <mat-chip *ngFor=" let queues of qstoDisplay">
+                    <mat-chip-list class="primary" aria-label="Color selection">
+                      <mat-chip *ngFor=" let queues of qstoDisplay" (click) = "selectedQs(queues.id)" [selected]="selectedQueues.indexOf(queues.id) !== -1">
                         {{queues.name}}<br>
                         {{queues.displayschedule[0].dstr}}[{{queues.displayschedule[0].time}}]
                       </mat-chip>
                     </mat-chip-list>
                     <div>
-                        <button mat-button class="cs-btn bt1" matStepperPrevious>Back</button>
+                        <button mat-button class="cs-btn bt1 stepper-back-btn" matStepperPrevious>Back</button>
                       <button mat-button class="cs-btn bt1" matStepperNext>Next</button>
                     </div>
-                  </form>
-            </div>
-            <div class="form-group col-md-6">
-                <form>
-                      <mat-label>Search Queues</mat-label>
                   </form>
             </div>
               </mat-step>
@@ -88,11 +73,12 @@
           <ng-template matStepLabel>Confirm</ng-template>
           <p>You are now done.</p>
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button matStepperPrevious class="stepper-back-btn">Back</button>
+            <button mat-button (click)="createCustomView()">Reset</button>
           </div>
         </mat-step>
 </mat-horizontal-stepper>
+</div>
 </div>
 
       
