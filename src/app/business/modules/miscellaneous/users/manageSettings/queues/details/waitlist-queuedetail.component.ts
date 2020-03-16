@@ -446,35 +446,35 @@ export class WaitlistQueueDetailComponent implements OnInit {
             // Numeric validation
             if (isNaN(form_data.qcapacity)) {
                 const error = 'Please enter a numeric value for capacity';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                return;
+                this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
                 const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                return;
+                this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        return;
             } else {
                 if (form_data.qcapacity === 0) {
                     const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
                     return;
                 }
             }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                return;
+                this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
                 const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
                 return;
             } else {
                 if (form_data.qserveonce === 0) {
                     const error = this.customer_label + 's served at a time should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                    return;
+                    this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          return;
                 }
             }
             // start and end date validations
