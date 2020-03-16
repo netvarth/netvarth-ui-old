@@ -434,8 +434,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
         }
         if (!found) {
             const error = 'Please select services';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
-            return;
+            this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      return;
         }
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
