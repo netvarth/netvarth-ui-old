@@ -195,7 +195,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             </div>
                             <div class="form-group" *ngIf="!filterbyDept">
                                 <label class="labelstyle">{{service_cap}}</label>
-                                <div class="schselectall ">
+                                <div class="schselectall" *ngIf="services_list.length > 0">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">
                                         {{select_All}}</i>
                                     <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
