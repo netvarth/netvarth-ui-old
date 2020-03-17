@@ -266,8 +266,8 @@ export class ConsumerCheckinComponent implements OnInit {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         this.minDate = this.sel_checkindate;
-        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
-        if (this.change_date) {
+        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
+        if (this.change_date === 'true') {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
             const seldate_checker = new Date(seldateChecker);
             const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -279,8 +279,8 @@ export class ConsumerCheckinComponent implements OnInit {
                 const servdate = new Date(serverdate);
                 const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
                 this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
-                this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
-                this.minDate = new Date(this.minDate.replace(/-/g, '/'));
+                // this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
+                // this.minDate = new Date(this.minDate.replace(/-/g, '/'));
             }
         }
         // }
@@ -700,8 +700,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
                 const navigationExtras: NavigationExtras = {
                     queryParams: { account_id: this.account_id }
-                  };
-                this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+                };
+                if (this.sel_ser.isPrePayment) {
+                    this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+                } else {
+                    this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
+                }
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

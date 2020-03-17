@@ -6,7 +6,7 @@ import { ConsumerPaymentComponent } from './payment/payment.component';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'payment/:id', component: ConsumerPaymentComponent},
-    { path: 'track', component: ConsumerLiveTrackComponent}
+    { path: 'track/:id', component: ConsumerLiveTrackComponent}
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

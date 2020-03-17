@@ -20,6 +20,8 @@ export class ConsumerPaymentComponent implements OnInit {
     prepaymentAmount: number;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
     payment_popup: any;
+    pid: any;
+    status: any;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
@@ -35,6 +37,7 @@ export class ConsumerPaymentComponent implements OnInit {
         this.route.queryParams.subscribe(
             params => {
                 this.accountId = params.account_id;
+                this.pid = params.pid;
             });
     }
 
@@ -60,11 +63,38 @@ export class ConsumerPaymentComponent implements OnInit {
                     'accountId': this.accountId,
                     'purpose': 'prePayment'
                 };
+                if (this.pid) {
+                    this.getPaymentStatus(this.pid);
+                }
             },
             () => {
             }
         );
     }
+    getPaymentStatus(pid) {
+        this.shared_functions.removeitemfromLocalStorage('acid');
+        this.shared_functions.removeitemfromLocalStorage('uuid');
+        this.shared_services.getPaymentStatus('consumer', pid)
+          .subscribe(
+            data => {
+              this.status = data;
+              this.status = this.status.toLowerCase();
+              if (this.status === 'success') {
+                this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
+                this.router.navigate(['consumer', 'checkin', 'track']);
+              } else {
+                this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+              }
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+        /*this.user_type = 'consumer';
+        this.loading = 0;
+        this.status = 'Success'; // Success // 'Failed' // 'NoResult'
+        this.status = this.status.toLowerCase();*/
+      }
     payuPayment() {
         console.log('payupayment');
         let paymentWay;
@@ -77,9 +107,11 @@ export class ConsumerPaymentComponent implements OnInit {
         paymentWay = 'PPI';
         this.makeFailedPayment(paymentWay);
     }
-
     makeFailedPayment(paymentMode) {
         this.waitlistDetails.paymentMode = paymentMode;
+        this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
+        this.shared_functions.setitemonLocalStorage('acid', this.accountId);
+        this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
         console.log(this.waitlistDetails);
         this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe(pData => {

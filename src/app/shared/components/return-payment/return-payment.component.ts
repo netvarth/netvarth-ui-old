@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
@@ -22,19 +22,33 @@ export class ReturnPaymentComponent implements OnInit {
 
   constructor(public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    private router: ActivatedRoute,
-    private route: Router) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
 
-    this.router.params
+    this.route.params
       .subscribe(params => {
         this.unq_id = params.id;
-        this.getPaymentStatus();
-
+        // this.getPaymentStatus();
         if (!this.unq_id) {
           this.shared_functions.openSnackBar(Messages.API_ERROR, { 'panelClass': 'snackbarerror' });
-          this.route.navigate(['/']);
+          this.router.navigate(['/']);
+        } else {
+           const src = this.shared_functions.getitemfromLocalStorage('p_src');
+           if (src === 'c_c') {
+             const uuid = this.shared_functions.getitemfromLocalStorage('uuid');
+             const accountId = this.shared_functions.getitemfromLocalStorage('acid');
+             const navigationExtras: NavigationExtras = {
+              queryParams: {
+                account_id: accountId,
+                pid: this.unq_id
+               }
+            };
+            this.router.navigate(['consumer', 'checkin', 'payment', uuid], navigationExtras);
+           } else {
+            this.getPaymentStatus();
+           }
         }
 
       });
@@ -62,9 +76,9 @@ export class ReturnPaymentComponent implements OnInit {
 
   }
 
-  goBacktoHome(source) {
-    setTimeout(() => {
-      this.route.navigate(['/', source]);
-    }, 2000);
-  }
+  // goBacktoHome(source) {
+  //   setTimeout(() => {
+  //     this.route.navigate(['/', source]);
+  //   }, 2000);
+  // }
 }
