@@ -1046,5 +1046,9 @@ getUserNotificationList(id) {
    const url = 'provider/settings/notification/' + id;
    return this.servicemeta.httpGet(url);
 }
+getProviderWaitlistNotesnew(uuid) {
+   const url = 'provider/waitlist/' + uuid + '/notes';
+   return this.servicemeta.httpGet(url);
+}
 }
 

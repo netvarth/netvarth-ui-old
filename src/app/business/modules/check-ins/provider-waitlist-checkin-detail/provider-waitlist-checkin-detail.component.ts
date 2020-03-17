@@ -158,7 +158,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          this.getWaitlistNotes();
+          // this.getWaitlistNotes();
+          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
         },
@@ -169,8 +170,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       );
   }
 
-  getWaitlistNotes() {
-    this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
+  // getWaitlistNotes() {
+  //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
+    getWaitlistNotes(uuid) {
+      this.provider_services.getProviderWaitlistNotesnew(uuid)
+    
       .subscribe(
         data => {
           this.waitlist_notes = data;
@@ -241,7 +245,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-        this.getWaitlistNotes();
+        // this.getWaitlistNotes();
+        this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+        
       }
     });
   }
