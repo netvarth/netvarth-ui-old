@@ -1050,5 +1050,14 @@ getProviderWaitlistNotesnew(uuid) {
    const url = 'provider/waitlist/' + uuid + '/notes';
    return this.servicemeta.httpGet(url);
 }
+addProviderSchedule(data) {
+   return this.servicemeta.httpPost('provider/appointment/schedule', data);
+ }
+ editProviderSchedule(data) {
+   return this.servicemeta.httpPut('provider/appointment/schedule', data);
+ }
+ getProviderSchedules() {
+   return this.servicemeta.httpGet('provider/appointment/schedule');
+ }
 }
 
