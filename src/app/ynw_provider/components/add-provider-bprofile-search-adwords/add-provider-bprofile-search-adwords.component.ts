@@ -52,11 +52,12 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     } else {
       this.resetApiErrors();
       // form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
-      this.addAdword(form_data.adwordname);
+      this.addAdword(form_data.adwordname.trim());
     }
   }
 
   addAdword(post_data) {
+    console.log(post_data);
     this.disableButton = true;
     const adword = post_data.split(' ').join(projectConstants.ADWORDSPLIT);
     this.provider_services.addAdwords(adword)
