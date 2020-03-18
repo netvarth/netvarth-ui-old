@@ -7428,7 +7428,7 @@ hr.wide-separator-line{
 }
 .checkin-nav button {
   margin: 0px !important;
-  padding: 0px 7px 0px 7px !important;
+  padding: 17px 7px 0px 7px !important;
   background: transparent !important;
 }
 .checkin-nav button.disabled {

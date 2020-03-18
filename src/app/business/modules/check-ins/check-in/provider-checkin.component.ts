@@ -307,7 +307,7 @@ export class ProviderCheckinComponent implements OnInit {
     initCheckIn() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -810,7 +810,7 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
     }
     showCheckinButtonCaption() {

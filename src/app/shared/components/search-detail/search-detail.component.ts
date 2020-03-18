@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
@@ -1520,6 +1520,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
+    console.log(obj);
     this.changedate_req = chdatereq;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
@@ -1601,7 +1602,30 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(origin?) {
-    this.router.navigate(['consumer', 'checkin']);
+    const acc_loc_id = this.current_provider.id.split('-');
+    const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
+    const unique_id = this.current_provider.fields['unique_id'];
+    const navigationExtras: NavigationExtras = {
+          queryParams: {
+            loc_id: acc_loc_id[1],
+            sel_date: seldate,
+            cur: this.changedate_req,
+            unique_id: unique_id,
+            account_id: acc_loc_id[0]
+          }
+        };
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
+
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     loc_id: locid,
+    //     sel_date: curdate,
+    //     cur: this.changedate_req,
+    //     unique_id: this.provider_id,
+    //     account_id: this.provider_bussiness_id
+    //    }
+
+
     // this.checkindialogRef = this.dialog.open(CheckInComponent, {
     //   width: '50%',
     //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],

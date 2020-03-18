@@ -13,7 +13,6 @@ export class ConsumerLiveTrackComponent implements OnInit {
     accountId: any;
     trackTimeChange = false;
     trackMode = false;
-    trackUuid;
     liveTrack = false;
     source: any = [];
     travelMode = 'DRIVING';
@@ -31,6 +30,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
     track_loading: boolean;
     api_error: any;
     api_loading: boolean;
+    firstTimeClick = true;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -56,7 +56,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 url: ''
             },
             {
-                title: 'Payment'
+                title: 'Live Tracking'
             }
         ];
         this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
@@ -105,7 +105,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
             const passdata = {
                 'travelMode': _this.travelMode
             };
-            _this.shared_services.updateTravelMode(_this.trackUuid, _this.accountId, passdata)
+            _this.shared_services.updateTravelMode(_this.uuid, _this.accountId, passdata)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -130,7 +130,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.addLiveTrackDetails(_this.trackUuid, _this.accountId, post_Data)
+            _this.shared_services.addLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -177,7 +177,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.updateLiveTrackDetails(_this.trackUuid, _this.accountId, post_Data)
+            _this.shared_services.updateLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -187,5 +187,60 @@ export class ConsumerLiveTrackComponent implements OnInit {
                     }
                 );
         });
+    }
+    getCurrentLocation() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            if (navigator) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    _this.lat_lng.longitude = +pos.coords.longitude;
+                    _this.lat_lng.latitude = +pos.coords.latitude;
+                    resolve(_this.lat_lng);
+                },
+                    error => {
+                        reject();
+                    });
+            }
+        });
+    }
+    locationEnableDisable(event) {
+        if (event.checked) {
+            this.getCurrentLocation().then(
+                (lat_long: any) => {
+                    this.lat_lng = lat_long;
+                    if (!this.firstTimeClick) {
+                        this.updateLiveTrackInfo().then(
+                            (liveTInfo) => {
+                                this.track_loading = false;
+                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                            }
+                        );
+                    } else {
+                        this.saveLiveTrackInfo().then(
+                            (liveTInfo) => {
+                                this.track_loading = false;
+                                this.firstTimeClick = false;
+                                this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(liveTInfo, this.activeWt.providerAccount.businessName, this.travelMode);
+                            }
+                        );
+                    }
+                }, (error) => {
+                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                    this.shareLoc = false;
+                    this.track_loading = false;
+                }
+            );
+        } else {
+            this.shareLoc = false;
+            this.updateLiveTrackInfo();
+        }
+    }
+    notifyEvent(event) {
+        if (event.checked) {
+            this.notifyTime = 'ONEHOUR';
+        } else {
+            this.notifyTime = 'AFTERSTART';
+        }
     }
 }
