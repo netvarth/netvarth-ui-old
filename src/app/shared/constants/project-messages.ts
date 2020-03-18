@@ -793,6 +793,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
   'NON_WORK_DAY_OR_HR_CAP': 'Non Working Day/Hour',
+  'SCHEDULES_CAP': 'Schedules',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1021,6 +1022,7 @@ export const Messages = {
   'NOTIFICATION_CAP': 'Notifications',
   'SALESCHANNEL_CAP': 'Sales Channel',
   'DEPARTMENT_CAP': 'Department',
+  'APPOINTMENTMANAGER_CAP': 'Appointment Manager',
   'ADD NOTIFICATIONS': 'Notifications added successfully',
   'UPDATED NOTIFICATIONS': 'Notifications updated successfully',
 
@@ -1318,6 +1320,7 @@ export const Messages = {
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
+  'FRM_LEVEL_APPOINTMENT_MSG': 'Appointment related features are here',
 
   // form-level-provider-bprofile-search
   'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. ',

@@ -290,17 +290,6 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-ul">
                                 <li class="form-level-settings"><a>{{frm_mis_cap}}</a></li>
-                                <!-- <li><a>Jaldee.com Online Presence<span class="pull-right">
-                                    <mat-slide-toggle [(ngModel)]="onlinepresence_status"
-                                        (change)="handle_jaldeeOnlinePresence($event)">
-                                    </mat-slide-toggle>
-                                    </span>
-                                    <p class="sts" [class.active]="onlinepresence_status">{{onlinepresence_statusstr}}</p>
-                                    <p class="settings_info" *ngIf="onlinepresence_status">Jaldee Online Presence hints.</p>
-                                    <p class="settings_info" *ngIf="!onlinepresence_status">Jaldee Online Presence hints
-                                    </p>
-                                </a>
-                            </li> -->
                                 <li (click)="redirecTo('nonworking')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{non_wrk_day_hr_cap}}</span> 
                                         <p class="settings_info">Manage your non working days here</p>
@@ -345,6 +334,28 @@
                                         <p class="settings_info">Create or manage users</p>
                                     </a>
                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header bg-blue">
+                            <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">{{appointmentmanager_cap}} <i
+                                    class="fa fa-gears fl-right lnk"></i></h4>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked set-block-ul">
+                                <li class="form-level-settings"><a>{{frm_appointment_cap}}</a></li>
+                                <li (click)="redirecTo('schedule')"><a class="pointer-cursor"><span
+                                            class="lnk setings">{{schedules_cap}}</span> 
+                                        <p class="settings_info">Manage your schedules here</p>
+                                    </a>
+                                </li>
+                               
                             </ul>
                         </div>
                     </div>

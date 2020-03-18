@@ -38,8 +38,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   discount_cap = Messages.DISCOUNTS_CAP;
   coupons_cap = Messages.COUPONS_CAP;
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
+  appointmentmanager_cap = Messages.APPOINTMENTMANAGER_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
   non_wrk_day_hr_cap = Messages.NON_WORK_DAY_OR_HR_CAP;
+  schedules_cap = Messages.SCHEDULES_CAP;
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
@@ -49,6 +51,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
   frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
   frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+  frm_appointment_cap = Messages.FRM_LEVEL_APPOINTMENT_MSG;
   frm_jdn_short_cap = Messages.JDN_CAP;
   displayboard_heading = Messages.DISPLAYBOARD_HEADING;
   frm_displayboard_inhelp = Messages.DISPLAYBOARD__INHELP;
@@ -487,6 +490,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras3);
        // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);
         break;
+        case 'appointmentmanager':
+          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
+          break;
     }
   }
   getLocationCount() {
