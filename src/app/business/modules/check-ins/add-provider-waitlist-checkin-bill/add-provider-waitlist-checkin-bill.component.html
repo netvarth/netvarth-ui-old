@@ -417,10 +417,17 @@
 																		[matTooltip]="'Taxable'"
 																		*ngIf="service.GSTpercentage > 0">Tax</sup>
 																</div>
-																<div class="quantity">{{qnty_cap}}
+																<div class="quantity"
+																	*ngIf="bill_data.checkinStatus !== 'cancelled'">
+																	{{qnty_cap}}
 																	{{service.quantity}}</div>
-																<div class="price">{{(service.quantity * service.price) |
+																<div class="price"
+																	*ngIf="bill_data.checkinStatus !== 'cancelled'">{{(service.quantity * service.price) |
 												currency:'&#8377; '}}</div>
+																<div class="price"
+																	style="color: red;flex-basis: 50%;font-size: smaller;"
+																	*ngIf="bill_data.checkinStatus === 'cancelled'">
+																	Cancelled</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -499,7 +506,8 @@
 												currency:'&#8377; '}}</div>
 															</div>
 														</div>
-														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
+														<div class="more"
+															*ngIf="bill_data.billStatus!='Settled' && bill_data.checkinStatus !== 'cancelled'">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -519,6 +527,7 @@
 																</button>
 															</mat-menu>
 														</div>
+
 													</div>
 													<div class="list"
 														*ngFor="let item of bill_data.items; let i = index">
@@ -531,10 +540,17 @@
 																		[matTooltip]="'Taxable'"
 																		*ngIf="item.GSTpercentage > 0">Tax</sup>
 																</div>
-																<div class="quantity">{{qnty_cap}}
+																<div class="quantity"
+																	*ngIf="bill_data.checkinStatus !== 'cancelled'">
+																	{{qnty_cap}}
 																	{{item.quantity}}</div>
-																<div class="price">{{(item.quantity * item.price) |
+																<div class="price"
+																	*ngIf="bill_data.checkinStatus !== 'cancelled'">{{(item.quantity * item.price) |
 													currency:'&#8377; '}}</div>
+																<div class="price"
+																	style="color: red;flex-basis: 50%;font-size: smaller;"
+																	*ngIf="bill_data.checkinStatus === 'cancelled'">
+																	Cancelled</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -600,7 +616,8 @@
 												currency:'&#8377; '}}</div>
 															</div>
 														</div>
-														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
+														<div class="more"
+															*ngIf="bill_data.billStatus!='Settled' && bill_data.checkinStatus !== 'cancelled'">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -624,8 +641,7 @@
 												</div>
 												<div class="amount-table">
 													<div class="amt-content">
-														<table class="amt-content"
-															*ngIf="bill_data.checkinStatus !== 'cancelled' || (bill_data.checkinStatus === 'cancelled' && bill_data.amountDue !== 0)">
+														<table class="amt-content">
 															<tbody>
 																<tr class="amt gross">
 																	<td class="name">{{gross_amnt_cap}}</td>
@@ -700,14 +716,13 @@
 																	<td class="price">{{refund_value |
 													currency:'&#8377; '}}</td>
 																</tr>
+
+
 															</tbody>
 														</table>
-														<div class="amount-table" style="color: red;"
-															*ngIf="bill_data.checkinStatus === 'cancelled' && bill_data.amountDue === 0">
-															Cancelled bill
-														</div>
 													</div>
 												</div>
+
 												<!-- <div class="section-three"
 								*ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
 								<div class *ngFor="let discount of bill_data.discount">
