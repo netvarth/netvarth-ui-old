@@ -44,7 +44,7 @@
         </div>
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
-            <section class="sidebar">
+            <section class="sidebar sidebar-bottom">
                 <div class="filterClosebtn">
                     <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
                     <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>

@@ -6922,10 +6922,12 @@ input.jdn_ip { width: 50px !important}
   margin-top: 50px;
   top: 0;
   width: 250px;
-  transition: right .3s ease-in-out;
-  background-color: #222d32;
+  transition: right .3s ease-in-out !important;
+  background-color: #ffffff;
   border-left: 1px solid #c4b7b7;  
   border-bottom: 1px solid #c4b7b7;
+  border-right: 1px solid #c4b7b7;
+  border-top: 1px solid #c4b7b7;
   min-height : 100%;
 }
 .filterTextinput{
@@ -6951,14 +6953,14 @@ input.jdn_ip { width: 50px !important}
 }
 .filterSidebar label{
  font-weight: normal !important;
- color: #b8c7ce;
+ color: #323638;
 }
 label.filterHeaders{
  font-weight: 600 !important;
  text-transform: uppercase;
  font-size: 13px;
  clear: both;
- color: #ffffff;
+ color: #000000;
  display: block;
  margin-left: 20px;
  margin-top: 7px;
@@ -6968,7 +6970,7 @@ label.filterHeaders{
 }
 .clearFilter{
    font-weight: 500;
-   color: #ffffff;
+   color: #323638;
    font-size: 13px;
    cursor: pointer;
    margin-left: 5px;
@@ -7519,4 +7521,7 @@ width: fit-content;
 }
 .stepper-back-btn {
   margin-right: 10px !important;
+}
+.sidebar-bottom {
+  padding-bottom: 0px !important;
 }
