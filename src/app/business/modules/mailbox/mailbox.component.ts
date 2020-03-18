@@ -203,7 +203,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         let messageStatus;
         let accountId;
         for (const message of messages) {
-            senderName = message.owner.userName;
+            senderName = message.owner.name;
             senderId = message.owner.id;
             messageStatus = 'in';
             if (senderId === message.accountId) {
