@@ -206,15 +206,15 @@ export class MailboxComponent implements OnInit, OnDestroy {
             senderName = message.owner.name;
             senderId = message.owner.id;
             messageStatus = 'in';
-            if (senderId === message.accountId) {
+            if (senderId === message.receiver.id) {
                 senderId = message.receiver.id;
-                senderName = message.receiver.userName;
+                senderName = message.receiver.name;
                 messageStatus = 'out';
             }
-            if (message.accountId === message.owner.id) {
-                accountId = message.receiver.id;
+            if (message.receiver.id === message.owner.id) {
+                accountId = message.accountId;
             }
-            if (message.accountId === message.receiver.id) {
+            if (message.receiver.id === message.receiver.id) {
                 accountId = message.owner.id;
             }
             const inboxData = {
