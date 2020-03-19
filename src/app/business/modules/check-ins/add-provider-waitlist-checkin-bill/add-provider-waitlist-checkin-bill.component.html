@@ -418,15 +418,18 @@
 																		*ngIf="service.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled'">
+																	*ngIf="bill_data.checkinStatus !== 'cancelled' || 
+																	(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
 																	{{qnty_cap}}
 																	{{service.quantity}}</div>
 																<div class="price"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled'">{{(service.quantity * service.price) |
+																	*ngIf="bill_data.checkinStatus !== 'cancelled' || 
+																(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">{{(service.quantity * service.price) |
 												currency:'&#8377; '}}</div>
 																<div class="price"
-																	style="color: red;flex-basis: 50%;font-size: smaller;"
-																	*ngIf="bill_data.checkinStatus === 'cancelled'">
+																	style="color: red;font-size: smaller;"
+																	*ngIf="bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId
+																	&& service.quantity === 0">
 																	Cancelled</div>
 															</div>
 															<div class="c-row two section-two">
@@ -507,7 +510,8 @@
 															</div>
 														</div>
 														<div class="more"
-															*ngIf="bill_data.billStatus!='Settled' && bill_data.checkinStatus !== 'cancelled'">
+															*ngIf="bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
+														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -540,17 +544,11 @@
 																		[matTooltip]="'Taxable'"
 																		*ngIf="item.GSTpercentage > 0">Tax</sup>
 																</div>
-																<div class="quantity"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled'">
+																<div class="quantity">
 																	{{qnty_cap}}
 																	{{item.quantity}}</div>
-																<div class="price"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled'">{{(item.quantity * item.price) |
+																<div class="price">{{(item.quantity * item.price) |
 													currency:'&#8377; '}}</div>
-																<div class="price"
-																	style="color: red;flex-basis: 50%;font-size: smaller;"
-																	*ngIf="bill_data.checkinStatus === 'cancelled'">
-																	Cancelled</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -616,8 +614,7 @@
 												currency:'&#8377; '}}</div>
 															</div>
 														</div>
-														<div class="more"
-															*ngIf="bill_data.billStatus!='Settled' && bill_data.checkinStatus !== 'cancelled'">
+														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
