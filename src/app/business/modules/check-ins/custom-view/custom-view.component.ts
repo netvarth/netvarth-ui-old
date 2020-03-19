@@ -36,8 +36,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     private provider_services: ProviderServices) {
   }
   ngOnInit() {
-    this.getDepartments();
-    this.getServices();
   }
   getDepartments() {
     this.provider_services.getDepartments()
@@ -56,6 +54,7 @@ getServices() {
       .subscribe(
           data => {
               this.service_list = data;
+              console.log(this.service_list);
           },
           error => {
               this.shared_functions.apiErrorAutoHide(this, error);
@@ -164,5 +163,15 @@ docNextClicked() {
 }
 serNextClicked() {
     this.getQs();
+}
+depAddClicked() {
+    this.getDepartments();
+}
+doctorsAddClicked() {
+    this.getUsers();
+}
+servicesAddClicked() {
+    this.getServices();
+    console.log("services add button clicked")
 }
 }

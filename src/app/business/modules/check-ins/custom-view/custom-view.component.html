@@ -1,8 +1,102 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+  <div class="content w-manager settings comn-cls lic-page">
+      <div class="col-md-12 no-padding-small">
+          <div class="w-dta">
+              <div class="row">
+                  <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
+                      <div class=" row no-padding">
 
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+                          <div class="col-md-6 no-padding"> 
+                              <div class="pay-section card left">
+                                <div class="lc22">
+                                  <div class="lc2-1 lcd custom-help">
+                                    <div class="ttle block-level">
+                                      <span>Select Departments<span class="addbt" (click) = "depAddClicked()"></span></span>
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div> 
 
-  <div class="col-md-12 no-padding-small">
-      
+                              <div class="pay-section card left">
+                                <div class="lc22">
+                                  <div class="lc2-1 lcd custom-help">
+                                   <div class="ttle block-level">
+                                       <span>Select Doctors<span class="addbt" (click) = "doctorsAddClicked()"></span></span>
+                                   </div>
+                                  </div>
+                                </div>  
+                              </div>   
+
+                              <div class="pay-section card left">
+                                <div class="lc22">
+                                  <div class="lc2-1 lcd custom-help">
+                                    <div class="ttle block-level">
+                                     <span>Select Services<span class="addbt" (click) = "servicesAddClicked()"></span></span>
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>   
+
+                              <div class="pay-section card left">
+                                <div class="lc22">
+                                  <div class="lc2-1 lcd custom-help">
+                                    <div class="ttle block-level">
+                                      <span>Select Queues<span class="addbt"></span></span>
+                                    </div>
+                                  </div>
+                                </div>  
+                              </div>                    
+                         </div>
+                             
+                         <div class="col-md-6 no-padding">
+                              <div class="pay-section left">
+                                  <div class="lc22">
+                                    <div class="lc2-1 lcd custom-help">
+                                        <mat-chip-list class="primary" aria-label="Color selection">
+                                            <mat-chip  *ngFor=" let depName of departments; let i = index" [selected]="depName.selected" (click) = "depSelected(depName.departmentId, i)">
+                                              {{depName.departmentName}}
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                   </div>                          
+                              </div>
+                              <div class="pay-section left">
+                                  <div class="lc22">
+                                    <div class="lc2-1 lcd custom-help">
+                                        <mat-chip-list class="primary" aria-label="Color selection">
+                                            <mat-chip  *ngFor=" let doctors of users_list; let i = index" [selected]="doctors.selected" (click) = "doctorSelected(doctors.id, i)">
+                                              {{doctors.firstName | capitalizeFirst}} {{doctors.lastName | capitalizeFirst}}
+                                            </mat-chip>
+                                          </mat-chip-list>
+                                    </div>
+                                   </div>                          
+                              </div>
+                              <div class="pay-section left">
+                                <div class="lc22">
+                                  <div class="lc2-1 lcd custom-help">
+                                    <mat-chip-list class="primary" aria-label="Color selection">
+                                      <mat-chip *ngFor=" let serNames of service_list" (click) = "servSelected(serNames.id)"  [selected]="selectedServices.indexOf(serNames.id) !== -1">
+                                        {{serNames.name}}
+                                      </mat-chip>
+                                    </mat-chip-list>
+                                  </div>
+                                 </div>                          
+                            </div>                                
+                         </div>                             
+                   </div>                  
+               </div>  
+            </div>
+         </div>
+     </div>
+ </div>
+</section>
+  
+  
+  
+<!-- <div class="col-md-12 no-padding-small">
 <div class = "ynw-common-form-nm">
 <mat-horizontal-stepper labelPosition="bottom" #stepper>
       <mat-step>
@@ -79,6 +173,6 @@
         </mat-step>
 </mat-horizontal-stepper>
 </div>
-</div>
+</div> -->
 
       
