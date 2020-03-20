@@ -7525,3 +7525,11 @@ width: fit-content;
 .sidebar-bottom {
   padding-bottom: 0px !important;
 }
+.consumer-dash .card.c-checkins .owl-carousel .owl-item img {
+  display: inherit !important;
+}
+@media only screen and (min-width: 575px) {
+.checkin-aside {
+  position: relative !important;
+}
+}

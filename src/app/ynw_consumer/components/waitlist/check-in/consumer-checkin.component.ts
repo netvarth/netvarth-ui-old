@@ -265,7 +265,8 @@ export class ConsumerCheckinComponent implements OnInit {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
-        this.minDate = this.sel_checkindate;
+        // this.minDate = this.sel_checkindate;
+        this.minDate = this.todaydate;
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
         if (this.change_date === 'true') {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -701,7 +702,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 const navigationExtras: NavigationExtras = {
                     queryParams: { account_id: this.account_id }
                 };
-                if (this.sel_ser.isPrePayment) {
+                if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
                 } else {
                     this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
@@ -955,7 +956,8 @@ export class ConsumerCheckinComponent implements OnInit {
         const y = newdate.getFullYear();
         const ndate1 = y + '-' + mm + '-' + dd;
         const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-        const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+        // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+        const strtDt1 = this.todaydate + ' 00:00:00';
         const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
         const nDt = new Date(ndate);
         if (nDt.getTime() >= strtDt.getTime()) {

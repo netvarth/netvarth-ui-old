@@ -1,7 +1,7 @@
 
-import {interval as observableInterval,  Observable ,  Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
@@ -21,7 +21,6 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
-
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -149,7 +148,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
-    public sharedfunctionObj: SharedFunctions,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer) {
   }
@@ -721,32 +719,32 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
 
-  showCheckin(data, origin = 'consumer') {
-    const provider_data = data.provider_data;
-    const location_data = data.location_data;
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: {
-          source: 'provdet_checkin',
-          bypassDefaultredirection: 1,
-          provider: provider_data,
-          location: location_data,
-          sel_date: data.sel_date
-        },
-        datechangereq: data.chdatereq
-      }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-      // if (result === 'reloadlist') {
-      this.getWaitlist();
-      // }
-    });
-  }
+  // showCheckin(data, origin = 'consumer') {
+  //   const provider_data = data.provider_data;
+  //   const location_data = data.location_data;
+  //   this.checkindialogRef = this.dialog.open(CheckInComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: false,
+  //       moreparams: {
+  //         source: 'provdet_checkin',
+  //         bypassDefaultredirection: 1,
+  //         provider: provider_data,
+  //         location: location_data,
+  //         sel_date: data.sel_date
+  //       },
+  //       datechangereq: data.chdatereq
+  //     }
+  //   });
+  //   this.checkindialogRef.afterClosed().subscribe(result => {
+  //     // if (result === 'reloadlist') {
+  //     this.getWaitlist();
+  //     // }
+  //   });
+  // }
 
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
@@ -761,24 +759,45 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     this.setCheckinData(provider_data, location, currdata, chdatereq);
   }
-
+  // showCheckin(locid, locname, curdate, origin?) {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       loc_id: locid,
+  //       sel_date: curdate,
+  //       cur: this.changedate_req,
+  //       unique_id: this.provider_id,
+  //       account_id: this.provider_bussiness_id
+  //      }
+  //   };
+  //   this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
+  // }
   setCheckinData(provider, location, currdate, chdatereq = false) {
-    const post_data = {
-      'provider_data': null,
-      'location_data': null,
-      'sel_date': currdate,
-      'chdatereq': chdatereq
+      const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: location.id,
+        sel_date: currdate,
+        cur: chdatereq,
+        unique_id: provider.uniqueId,
+        account_id: provider.id
+       }
     };
-    post_data.provider_data = {
-      'unique_id': provider.uniqueId,
-      'account_id': provider.id,
-      'name': provider.businessName
-    };
-    post_data.location_data = {
-      'id': location.id,
-      'name': location.place
-    };
-    this.showCheckin(post_data);
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
+    // const post_data = {
+    //   'provider_data': null,
+    //   'location_data': null,
+    //   'sel_date': currdate,
+    //   'chdatereq': chdatereq
+    // };
+    // post_data.provider_data = {
+    //   'unique_id': provider.uniqueId,
+    //   'account_id': provider.id,
+    //   'name': provider.businessName
+    // };
+    // post_data.location_data = {
+    //   'id': location.id,
+    //   'name': location.place
+    // };
+    // this.showCheckin(post_data);
   }
   gets3curl() {
     this.shared_functions.getS3Url('provider')
@@ -953,38 +972,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   makeFailedPayment(waitlist) {
-    let prepayamt = 0;
-    this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
-      .subscribe(data => {
-        this.servicesjson = data;
-        for (let i = 0; i < this.servicesjson.length; i++) {
-          if (this.servicesjson[i].id === waitlist.service.id) {
-            prepayamt = waitlist.waitlistingFor.length * this.servicesjson[i].minPrePaymentAmount || 0;
-            if (prepayamt > 0) {
-              const payData = {
-                'amount': prepayamt,
-                // 'paymentMode': 'DC',
-                'uuid': waitlist.ynwUuid,
-                'accountId': waitlist.providerAccount.id,
-                'purpose': 'prePayment'
-              };
-              const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                  'details': payData,
-                  'origin': 'consumer'
-                }
-              });
-            } else {
-              this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
-            }
-          }
-        }
-      },
-        error => {
-        });
+    const navigationExtras: NavigationExtras = {
+        queryParams: { account_id: waitlist.providerAccount.id }
+    };
+    this.router.navigate(['consumer', 'checkin', 'payment', waitlist.ynwUuid], navigationExtras);
   }
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {
@@ -1096,8 +1087,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-               // console.log('pollingDateTime' + pollingDateTime);
-               // console.log('serverDateTime' + serverDateTime);
+                // console.log('pollingDateTime' + pollingDateTime);
+                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)

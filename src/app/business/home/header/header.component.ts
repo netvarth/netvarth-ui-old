@@ -71,14 +71,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       // this.connect();
     });
   }
-  connect() {
-    // /communications/unreadCount
-    const source = new EventSource('http://localhost:8080/v1/rest/provider/events', {withCredentials: true});
-    source.addEventListener('message', message => {
-      // this.myData = JSON.parse(message.data);
-      console.log(message.data);
-    });
-  }
   closeMenu() {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 767) {

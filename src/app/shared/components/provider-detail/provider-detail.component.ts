@@ -971,43 +971,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         account_id: this.provider_bussiness_id
        }
     };
-
-
-
-    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
-    //   width: '50%',
-    //   panelClass: ['consumerpopupmainclass', 'checkin-consumer'],
-    //   disableClose: true,
-      // const data = {
-      // page_source: 'provdet_checkin',
-      // customer_data:
-      // {
-      //   type: origin,
-      //   is_provider: false,
-      //   moreparams: {
-      //     source: 'provdet_checkin',
-      //     bypassDefaultredirection: 1,
-      //     provider: {
-      //       unique_id: this.provider_id,
-      //       account_id: this.provider_bussiness_id,
-      //       name: this.businessjson.businessName
-      //     },
-      //     location: {
-      //       id: locid,
-      //       name: locname
-      //     },
-      //     sel_date: curdate,
-      //     terminologies: this.terminologiesjson
-      //   },
-      //   datechangereq: this.changedate_req
-      // }};
-    // });
-    // this.checkindialogRef.afterClosed().subscribe(result => {
-    //   // if (result === 'reloadlist') {
-    //   this.getbusinessprofiledetails_json('location', true);
-    //   // this.routerobj.navigate(['/']);
-    //   // }
-    // });
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showcheckInButton(servcount?) {

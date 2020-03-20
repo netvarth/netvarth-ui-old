@@ -208,7 +208,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.inboxCntFetched = false;
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {
-      // this.connect();
       // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       //   this.reloadHandler();
       // });
@@ -224,14 +223,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
-  }
-  connect() {
-    // /communications/unreadCount
-    const source = new EventSource('http://localhost:8080/v1/rest/consumer/events', {withCredentials: true});
-    source.addEventListener('message', message => {
-      // this.myData = JSON.parse(message.data);
-      console.log(message.data);
-    });
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
