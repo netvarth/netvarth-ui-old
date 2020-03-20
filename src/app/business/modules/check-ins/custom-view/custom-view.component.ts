@@ -88,7 +88,6 @@ getQs() {
                 });
 }
 depSelected(depIds, i) {
-    
     if (this.selectedDepts.indexOf(depIds) === -1) {
         this.selectedDepts.push(depIds);
         this.departments[i].selected = true;
@@ -172,6 +171,8 @@ doctorsAddClicked() {
 }
 servicesAddClicked() {
     this.getServices();
-    console.log("services add button clicked")
+}
+qAddClicked() {
+    this.getQs();
 }
 }
