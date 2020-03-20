@@ -1107,13 +1107,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   onButtonAfterHook() { }
   // Edited//
-  showExistingCheckin(obj) {
+  showExistingCheckin(locId, locName) {
     this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        locdet: obj,
+        locId: locId,
+        locName: locName,
         terminologies: this.terminologiesjson,
         settings: this.settingsjson
       }

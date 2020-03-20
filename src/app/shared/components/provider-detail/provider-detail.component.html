@@ -222,7 +222,7 @@
                                             <div class="tp-l">
                                                 <div class="tp2">
                                                     <span class="ch-title" *ngIf="loc.checkins && loc.checkins.length>0"
-                                                        (click)="showExistingCheckin(loc.fields.location_id1)">{{you_have_cap}}
+                                                        (click)="showExistingCheckin(loc.fields.location_id1, loc.fields.place1)">{{you_have_cap}}
                                                         <span class="count">{{loc.checkins.length}}
                                                             {{getTerminologyTerm('waitlist')}}</span>
                                                         {{at_this_loc_cap}}</span>

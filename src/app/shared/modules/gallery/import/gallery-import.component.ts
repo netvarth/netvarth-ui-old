@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, EventEmitter, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Input, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { GalleryService } from '../galery-service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
@@ -35,6 +35,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     canceldisabled = false;
     source_id;
     subscription: Subscription;
+    @ViewChild('filed') fileInput: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,
@@ -105,6 +106,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.item_pic.files.splice(i, 1);
         this.item_pic.base64.splice(i, 1);
         this.item_pic.caption.splice(i, 1);
+        this.fileInput.nativeElement.value = '';
     }
     saveImages() {
         this.error_msg = '';
