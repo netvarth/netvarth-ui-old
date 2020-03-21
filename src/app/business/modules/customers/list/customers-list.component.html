@@ -35,6 +35,14 @@
               </a>
             </li> -->
             <li class="dropdown notifications-menu">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+              <div class="statuslink " *ngIf="customerselection>0" [matTooltip]="'Send Message'">
+              <i class="fa fa-comments-o" (click)="CustomersInboxMessage(customer)"></i> </div>
+              </a>
+              </li>
+
+
+            <li class="dropdown notifications-menu">
               <a (click)="searchCustomer('createCustomer')"
                 class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
@@ -113,7 +121,11 @@
                 class="genMarginLeft genTextHeight btn_black qo_bt">
             </div>
           </div> -->
-          <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">
+          <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers let i=index "
+          (click)="selectcustomers(i)" >
+          <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
+          [class.selected-customer]="customerSelected[i]"> 
+          
             <div class="col-md-4 col-sm-7 mt5">
               {{customer.firstName}} {{customer.lastName}}
             </div>
@@ -125,6 +137,7 @@
                 {{customer.lastVisitedDate | date: dateFormat }}</span></div>
             <div class="clearfix"></div>
           </div>
+        </div>
         </div>
         <div class="search_paging" *ngIf="loadComplete">
           <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"

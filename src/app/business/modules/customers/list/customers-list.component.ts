@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddProviderCustomerComponent } from '../../check-ins/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { MatDialog } from '@angular/material';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router } from '@angular/router';
 @Component({
@@ -68,10 +69,17 @@ export class CustomersListComponent implements OnInit {
         'mobile': false,
         'email': false
     };
-
+    customerselection = 0;
+    customerSelected: any = [];
+    selectedcustomersformsg: any[];
+    showcustomer: any = [];
+    customer: any = [];
+    providerLabels: any;
+    selectedIndex: any = [];
 
     constructor(private provider_services: ProviderServices,
         public dialog: MatDialog,
+        private provider_shared_functions: ProviderSharedFuctions,
         public dateformat: DateFormatPipe,
         private routerobj: Router,
         private shared_functions: SharedFunctions) {
@@ -261,5 +269,43 @@ export class CustomersListComponent implements OnInit {
     hideFilterSidebar() {
         this.filter_sidebar = false;
     }
+
+    selectcustomers(index){
+        console.log("abcd")
+        this.selectedcustomersformsg = [];
+        if (this.customerSelected[index]) {
+        delete this.customerSelected[index];
+        this.customerselection--;
+        } else {
+        this.customerSelected[index] = true;
+        this.customerselection++;
+        }
+        if (this.customerselection === 1){
+        this.customers[this.customerSelected.indexOf(true)];
+        }
+        for (let i = 0; i < this.customerSelected.length; i++) {
+        if (this.customerSelected[i]) {
+        if (this.selectedcustomersformsg.indexOf(this.customer[i]) === -1) {
+        this.selectedcustomersformsg.push(this.customer[i]);
+        }
+        }
+        }
+        }
+        CustomersInboxMessage(customer){
+         
+        let customerlist =[];
+        customerlist = this.selectedcustomersformsg;
+        console.log(customerlist);
+        customerlist.push(customer);
+       
+        this.provider_shared_functions.ConsumerInboxMessage(customerlist, this)
+       .then(
+        () => { },
+        () => { }
+        );
+        }
+        
+        
+        
 }
 

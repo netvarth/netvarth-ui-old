@@ -5,6 +5,7 @@ import { AddProviderWaitlistQueuesComponent } from '../../components/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
+import { customersInboxMessageComponent } from '../../../shared/components/customersInboxMessage/customersInboxMessage.component';
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
@@ -309,6 +310,55 @@ export class ProviderSharedFuctions {
       });
     });
   }
+  ConsumerInboxMessage(customerlist, Cthis?) {
+    const custids = [];
+    let type;
+    let ynwcustid;
+    let custid;
+    let name;
+    if (customerlist.length > 1) {
+      type = 'multiple';
+      for (const custlst of customerlist) {
+        custids.push(custlst.ynwcustid);
+      }
+    } else {
+      type = 'single';
+      custid = customerlist[0].ynwcustid || null;
+      name = customerlist[0].consumer.userProfile.firstName + ' ' + customerlist[0].consumer.userProfile.lastName;
+    }
+    if (type === 'single') {
+      ynwcustid = custid;
+    } else {
+      ynwcustid = custids;
+    }
+    const terminologies = this.common_datastorage.get('terminologies');
+    return new Promise((resolve, reject) => {
+      Cthis.sendmsgdialogRef = this.dialog.open(customersInboxMessageComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          typeOfMsg: type,
+          custid: ynwcustid,
+          source: 'provider-customerlist',
+          type: 'send',
+          terminologies: terminologies,
+          name: name
+        }
+      });
+
+      Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    });
+  }
+
+
+
 
   getTerminologies() {
 

@@ -6323,6 +6323,9 @@ border-color: #3c8dbc !important;
 .selected-waitlist {
   background: #d8e2f1 !important;
 }
+.selected-customer{
+  background: #d8e2f1 !important;
+}
 .statuslink {
   padding: 07px 10px 07px 10px !important
 }
