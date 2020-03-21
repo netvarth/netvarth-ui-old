@@ -11,7 +11,7 @@
         </li>
         <li class="ttd" [class.active]="selectedMsg==i" [class.outer-received]="user_id != message.owner.id"
             [class.outer-sent]="user_id == message.owner.id" *ngFor="let message of messages; let i = index">
-            <div class="outer" (click)="showMsg(i)">
+            <div class="outer" (click)="showMsg(i, message)">
                 <div class="td td0">
                     <span class="icon-inbox-in" *ngIf="user_id != message.owner.id"></span>
                     <span class="icon-inbox-out" *ngIf="user_id == message.owner.id"></span>

@@ -10,11 +10,10 @@
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
                     <div *ngIf="!api_loading">
-
                         <div class="card no-padding" *ngFor="let users of inboxUsersList, let parentIndex = index">
-
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="false"
+                                    (opened)="readConsumerMessages(users.inboxList, parentIndex)">
                                     <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
                                         <mat-panel-title>
                                             <!-- <span class="refine-head">
@@ -29,7 +28,8 @@
                                                 <div class="col-md-12 col-xs-12 no-padding">
                                                     <span
                                                         class="">{{ (users.latestMessage.length>30)? (shared_functions.firstToUpper(users.latestMessage) | slice:0:30)+'.....':shared_functions.firstToUpper(users.latestMessage) }}</span>
-
+                                                    <span class="pull-right badge bg-green"
+                                                        *ngIf="users.unreadCount > 0"> {{users.unreadCount}} </span>
                                                 </div>
                                             </div>
                                         </mat-panel-title>
@@ -61,11 +61,12 @@
                                                             {{inbox.message}}
                                                             <div class="attach" *ngIf="inbox.attachments"
                                                                 (click)="showImagesection(childIndex)">
-                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <p
-                                                                    class="attach-link"> {{inbox.attachments.length}}
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                                <p class="attach-link"> {{inbox.attachments.length}}
                                                                     Attachment(s) </p>
                                                             </div>
-                                                            <div class="thumbnails mt10 mb10" *ngIf="showImages[childIndex]">
+                                                            <div class="thumbnails mt10 mb10"
+                                                                *ngIf="showImages[childIndex]">
                                                                 <a class="mg-10" target="_blank"
                                                                     [href]="attachment.s3path"
                                                                     *ngFor="let attachment of inbox.attachments"><img

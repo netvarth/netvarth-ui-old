@@ -1059,5 +1059,9 @@ addProviderSchedule(data) {
  getProviderSchedules() {
    return this.servicemeta.httpGet('provider/appointment/schedule');
  }
+ readConsumerMessages(consumerId, messageIds) {
+   const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
+   return this.servicemeta.httpPut(url);
+}
 }
 

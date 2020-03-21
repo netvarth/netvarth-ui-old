@@ -6,8 +6,6 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { Router } from '@angular/router';
-import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 
 @Component({
@@ -34,7 +32,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
     cronHandle: Subscription;
     refreshTime = projectConstants.INBOX_REFRESH_TIME;
     inboxUsersList: any = [];
-    // msgdialogRef;
     selectedMessage: any = {};
     messageToSend;
     messages: any = [];
@@ -60,9 +57,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
-        private provider_services: ProviderServices,
-        private _scrollToService: ScrollToService,
-        private router: Router) { }
+        private provider_services: ProviderServices) { }
 
     ngOnInit() {
         this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -121,6 +116,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     this.groupMessages = this.shared_functions.groupBy(this.inboxList, 'accountId');
                     this.inboxUsersList = [];
                     Object.keys(this.groupMessages).forEach(key => {
+                        const unreadMessages = this.groupMessages[key].filter(
+                            mail => !mail.read && mail.messagestatus === 'in');
                         const inboxList = this.groupMessages[key];
                         const timestamp = this.groupMessages[key][0]['timestamp'];
                         const lastmessage = this.groupMessages[key][0]['message'];
@@ -128,10 +125,12 @@ export class MailboxComponent implements OnInit, OnDestroy {
                             userKey: this.groupMessages[key][0]['username'],
                             inboxList: inboxList.reverse(),
                             latestTime: timestamp,
-                            latestMessage: lastmessage
+                            latestMessage: lastmessage,
+                            unreadCount: unreadMessages.length
                         };
                         this.inboxUsersList.push(inboxUserList);
                     });
+                    console.log(this.inboxUsersList);
                     this.obtainedMsgs = true;
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
                     this.api_loading = false;
@@ -227,7 +226,9 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 waitlistid: message.waitlistId,
                 messagestatus: messageStatus,
                 receiverId: message.receiver.id,
-                attachments: message.attachements
+                attachments: message.attachements,
+                messageId: message.messageId,
+                read: message.read
             };
             this.inboxList.push(inboxData);
         }
@@ -352,5 +353,21 @@ export class MailboxComponent implements OnInit, OnDestroy {
     }
     showImagesection(index) {
         (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+    }
+    readConsumerMessages(messages, index) {
+        const messageIds = [];
+        for (const message of messages) {
+            if (!message.read && message.messagestatus === 'in') {
+                messageIds.push(message.messageId);
+            }
+        }
+        const messageids = messageIds.toString();
+        console.log(messageids);
+        if (messageids) {
+            this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
+                this.getInboxMessages();
+                this.inboxUsersList[index].expanded = true;
+            });
+        }
     }
 }

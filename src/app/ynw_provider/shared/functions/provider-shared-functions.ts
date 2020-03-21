@@ -277,7 +277,7 @@ export class ProviderSharedFuctions {
     } else {
       type = 'single';
       uuid = waitlist[0].ynwUuid || null;
-      name = waitlist[0].consumer.userProfile.firstName + ' ' + waitlist[0].consumer.userProfile.lastName;
+      name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
     }
     if (type === 'single') {
       ynwUuid = uuid;
@@ -316,7 +316,6 @@ export class ProviderSharedFuctions {
   setActiveQueues(active_queues) {
     this.activeQueues = active_queues;
   }
-
   getActiveQueues() {
     return this.activeQueues;
   }
