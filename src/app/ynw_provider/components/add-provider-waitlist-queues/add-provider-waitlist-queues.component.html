@@ -185,7 +185,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         </div>
         <div class="form-group" *ngIf="showAdvancedSettings">
             <mat-form-field class="example-full-width">
-                <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
+                <input matInput min="0" max="{{parallellimit}}" type="text" maxlength="3" class="number-ip-sm"
                     placeholder="{{customer_label | capitalizeFirst}}s served at a time *" formControlName="qserveonce"
                     autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
