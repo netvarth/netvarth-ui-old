@@ -130,7 +130,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         };
                         this.inboxUsersList.push(inboxUserList);
                     });
-                    console.log(this.inboxUsersList);
                     this.obtainedMsgs = true;
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
                     this.api_loading = false;
@@ -174,10 +173,10 @@ export class MailboxComponent implements OnInit, OnDestroy {
     getReceiverId(inboxList) {
         let receiverid;
         inboxList.forEach(element => {
-            if (element.ownerId === this.user_id) {
+            if (element.ownerId === element.receiverId) {
                 receiverid = element.receiverId;
                 return false;
-            } else if (element.receiverId === this.user_id) {
+            } else {
                 receiverid = element.ownerId;
                 return false;
             }
@@ -212,8 +211,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
             }
             if (message.receiver.id === message.owner.id) {
                 accountId = message.accountId;
-            }
-            if (message.receiver.id === message.receiver.id) {
+            } else {
                 accountId = message.owner.id;
             }
             const inboxData = {
@@ -362,7 +360,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
             }
         }
         const messageids = messageIds.toString();
-        console.log(messageids);
         if (messageids) {
             this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
                 this.getInboxMessages();
