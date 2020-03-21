@@ -118,6 +118,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       case 'consumer-waitlist': this.message_label = 'Message to ' + provider_label; break;
       case 'consumer-common': this.message_label = 'Message to ' + provider_label; break;
       case 'provider-common': this.message_label = 'Message to ' + consumer_label; break;
+      case 'customer-list': this.message_label = 'Message to ' + consumer_label; break;
     }
   }
   createForm() {
@@ -132,27 +133,51 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
     } else {
       if (this.typeOfMsg === 'multiple') {
-        const post_data = {
-          medium: {
-            email: this.email,
-            sms: this.sms,
-            pushNotification: this.pushnotify
-          },
-          communicationMessage: form_data.message,
-          uuid: this.uuid
-        };
-        this.shared_services.consumerMassCommunication(post_data).
-          subscribe(() => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
+        if (this.data.source === 'customer-list') {
+          const post_data = {
+            medium: {
+              email: this.email,
+              sms: this.sms,
+              pushNotification: this.pushnotify
+            },
+            communicationMessage: form_data.message,
+            consumerId: this.uuid
+          };
+          this.shared_services.consumerMassCommunicationWithId(post_data).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        } else {
+          const post_data = {
+            medium: {
+              email: this.email,
+              sms: this.sms,
+              pushNotification: this.pushnotify
+            },
+            communicationMessage: form_data.message,
+            uuid: this.uuid
+          };
+          this.shared_services.consumerMassCommunication(post_data).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        }
       } else {
         const post_data = {
           communicationMessage: form_data.message
@@ -162,6 +187,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
           case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
           case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
+          case 'customer-list': this.providerToConsumerWaitlistNote(post_data); break;
         }
       }
     }

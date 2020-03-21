@@ -132,8 +132,6 @@ export class CustomersListComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.customers = data;
-                                console.log(this.customers);
-
                                 this.loadComplete = true;
                             },
                             error => {
@@ -270,42 +268,34 @@ export class CustomersListComponent implements OnInit {
         this.filter_sidebar = false;
     }
 
-    selectcustomers(index){
-        console.log("abcd")
+    selectcustomers(index) {
         this.selectedcustomersformsg = [];
         if (this.customerSelected[index]) {
-        delete this.customerSelected[index];
-        this.customerselection--;
+            delete this.customerSelected[index];
+            this.customerselection--;
         } else {
-        this.customerSelected[index] = true;
-        this.customerselection++;
+            this.customerSelected[index] = true;
+            this.customerselection++;
         }
-        if (this.customerselection === 1){
-        this.customers[this.customerSelected.indexOf(true)];
+        if (this.customerselection === 1) {
+            this.customers[this.customerSelected.indexOf(true)];
         }
         for (let i = 0; i < this.customerSelected.length; i++) {
-        if (this.customerSelected[i]) {
-        if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
-        this.selectedcustomersformsg.push(this.customers[i]);
+            if (this.customerSelected[i]) {
+                if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
+                    this.selectedcustomersformsg.push(this.customers[i]);
+                }
+            }
         }
-        }
-        }
-        }
-        CustomersInboxMessage(customer){
-         
-        let customerlist =[];
+    }
+    CustomersInboxMessage(customer) {
+        let customerlist = [];
         customerlist = this.selectedcustomersformsg;
-        console.log(customerlist);
-        customerlist.push(customer);
-       
-        this.provider_shared_functions.ConsumerInboxMessage(customerlist, this)
-       .then(
-        () => { },
-        () => { }
-        );
-        }
-        
-        
-        
+        this.provider_shared_functions.ConsumerInboxMessage(customerlist)
+            .then(
+                () => { },
+                () => { }
+            );
+    }
 }
 

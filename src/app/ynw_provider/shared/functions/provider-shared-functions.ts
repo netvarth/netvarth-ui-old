@@ -9,6 +9,7 @@ import { customersInboxMessageComponent } from '../../../shared/components/custo
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
+  sendglobalmsgdialogRef;
   jaldeecoupon_list: any = [];
   constructor(public dialog: MatDialog, public shared_functions: SharedFunctions,
     public common_datastorage: CommonDataStorageService) {
@@ -299,8 +300,8 @@ export class ProviderSharedFuctions {
           terminologies: terminologies,
           name: name
         }
+        
       });
-
       Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           resolve();
@@ -310,44 +311,44 @@ export class ProviderSharedFuctions {
       });
     });
   }
-  ConsumerInboxMessage(customerlist, Cthis?) {
-    const custids = [];
+  ConsumerInboxMessage(customerlist) {
+    const uuids = [];
     let type;
-    let ynwcustid;
-    let custid;
+    let ynwUuid;
+    let uuid;
     let name;
     if (customerlist.length > 1) {
       type = 'multiple';
-      for (const custlst of customerlist) {
-        custids.push(custlst.ynwcustid);
+      for (const watlst of customerlist) {
+        uuids.push(watlst.id);
       }
     } else {
       type = 'single';
-      custid = customerlist[0].ynwcustid || null;
-      name = customerlist[0].consumer.userProfile.firstName + ' ' + customerlist[0].consumer.userProfile.lastName;
+      uuid = customerlist[0].id || null;
+      name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
     }
     if (type === 'single') {
-      ynwcustid = custid;
+      ynwUuid = uuid;
     } else {
-      ynwcustid = custids;
+      ynwUuid = uuids;
     }
     const terminologies = this.common_datastorage.get('terminologies');
     return new Promise((resolve, reject) => {
-      Cthis.sendmsgdialogRef = this.dialog.open(customersInboxMessageComponent, {
+      this.sendglobalmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
           typeOfMsg: type,
-          custid: ynwcustid,
-          source: 'provider-customerlist',
+          uuid: ynwUuid,
+          source: 'customer-list',
           type: 'send',
           terminologies: terminologies,
           name: name
         }
       });
 
-      Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
+      this.sendglobalmsgdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           resolve();
         } else {

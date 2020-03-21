@@ -566,4 +566,9 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  consumerMassCommunicationWithId(data) {
+    const url = 'provider/waitlist/consumerMassCommunicationWithId';
+    return this.servicemeta.httpPost(url, data);
+  }
+
 }
