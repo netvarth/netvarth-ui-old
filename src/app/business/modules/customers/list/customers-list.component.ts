@@ -285,8 +285,8 @@ export class CustomersListComponent implements OnInit {
         }
         for (let i = 0; i < this.customerSelected.length; i++) {
         if (this.customerSelected[i]) {
-        if (this.selectedcustomersformsg.indexOf(this.customer[i]) === -1) {
-        this.selectedcustomersformsg.push(this.customer[i]);
+        if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
+        this.selectedcustomersformsg.push(this.customers[i]);
         }
         }
         }
