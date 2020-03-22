@@ -21,7 +21,7 @@
                       <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                       [matTooltip]="filtericonTooltip">
                       </i>
-                    </a>
+                  </a>
               </li>
             <!-- <li class="dropdown notifications-menu cl-fltr fltr-tbl">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
@@ -39,9 +39,7 @@
               <div class="statuslink " *ngIf="customerselection>0" [matTooltip]="'Send Message'">
               <i class="fa fa-comments-o" (click)="CustomersInboxMessage(customer)"></i> </div>
               </a>
-              </li>
-
-
+            </li>
             <li class="dropdown notifications-menu">
               <a (click)="searchCustomer('createCustomer')"
                 class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
@@ -86,7 +84,7 @@
                             </li>
                         </div>
                 </ul>
-            </section>
+            </section> 
         </aside>
 
         <div class="col-md-12 cust-sect no-padding">
@@ -125,8 +123,7 @@
           (click)="selectcustomers(i)" >
           <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
           [class.selected-customer]="customerSelected[i]"> 
-          
-            <div class="col-md-4 col-sm-7 mt5">
+          <div class="col-md-4 col-sm-7 mt5">
               {{customer.firstName}} {{customer.lastName}}
             </div>
             <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.phoneNo.length === 10">

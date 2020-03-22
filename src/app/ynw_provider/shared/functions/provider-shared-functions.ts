@@ -312,25 +312,25 @@ export class ProviderSharedFuctions {
     });
   }
   ConsumerInboxMessage(customerlist) {
-    const uuids = [];
+    
+    const custids = [];
     let type;
-    let ynwUuid;
-    let uuid;
+    let ynwcustid;
+    let  custid =[] ;
     let name;
     if (customerlist.length > 1) {
       type = 'multiple';
-      for (const watlst of customerlist) {
-        uuids.push(watlst.id);
+      for (const custlst of customerlist) {
+        custids.push(custlst.id);
       }
-    } else {
+    } else if(customerlist.length ===1) {
       type = 'single';
-      uuid = customerlist[0].id || null;
-      name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
-    }
+      custid.push(customerlist.id) ;
+    } 
     if (type === 'single') {
-      ynwUuid = uuid;
-    } else {
-      ynwUuid = uuids;
+      ynwcustid = custid;
+      } else { 
+      ynwcustid = custids;
     }
     const terminologies = this.common_datastorage.get('terminologies');
     return new Promise((resolve, reject) => {
@@ -340,12 +340,12 @@ export class ProviderSharedFuctions {
         disableClose: true,
         data: {
           typeOfMsg: type,
-          uuid: ynwUuid,
+          uuid: ynwcustid,
           source: 'customer-list',
           type: 'send',
           terminologies: terminologies,
           name: name
-        }
+        } 
       });
 
       this.sendglobalmsgdialogRef.afterClosed().subscribe(result => {

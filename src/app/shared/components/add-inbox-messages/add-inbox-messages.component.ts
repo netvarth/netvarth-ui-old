@@ -163,9 +163,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               pushNotification: this.pushnotify
             },
             communicationMessage: form_data.message,
-            uuid: this.uuid
+            uuid: this.uuid 
           };
-          this.shared_services.consumerMassCommunication(post_data).
+          this.shared_services.consumerMassCommunicationWithId(post_data).
             subscribe(() => {
               this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
               setTimeout(() => {
@@ -205,7 +205,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           captions[i] = 'caption';
           i++;
         }
-      }
+      }     
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
