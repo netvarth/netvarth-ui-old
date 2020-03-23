@@ -140,7 +140,6 @@ createCustomView() {
     customviewFilter['departmentId-eq'] = this.selectedDepts.toString();
     customviewFilter['serviceId-eq'] = this.selectedServices.toString();
     customviewFilter['queueId-eq'] = this.selectedQueues.toString();
-    
     console.log(this.selectedDocts);
     console.log(this.selectedServices);
     console.log(this.selectedDepts);
@@ -153,15 +152,6 @@ createCustomView() {
         'queryString' : customviewFilter
     };
     console.log(customViewInput);
-}
-depNextClicked() {
-    this.getUsers();
-}
-docNextClicked() {
-    this.getServices();
-}
-serNextClicked() {
-    this.getQs();
 }
 depAddClicked() {
     this.getDepartments();

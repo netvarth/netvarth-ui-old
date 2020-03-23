@@ -1063,5 +1063,24 @@ addProviderSchedule(data) {
    const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
    return this.servicemeta.httpPut(url);
 }
+//CustomViewUrls
+createCustomView(post_data) {
+   const url = 'provider/customView';
+   return this.servicemeta.httpPost(url, post_data);
+ }
+ getCustomViewDetail(id) {
+   return this.servicemeta.httpGet('provider/customView/' + id);
+ }
+ getCustomViewList() {
+   return this.servicemeta.httpGet('provider/customView');
+ }
+ deleteCustomView(id) {
+   const path = 'provider/customView/' + id;
+   return this.servicemeta.httpDelete(path);
+ }
+ updateCustomView(id, post_data) {
+   const url = 'provider/customView/' + id;
+   return this.servicemeta.httpPut(url, post_data);
+ }
 }
 
