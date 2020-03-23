@@ -7,12 +7,15 @@ import { CheckInsComponent } from './check-ins.component';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { CustomViewComponent } from './custom-view/custom-view.component';
+import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
+import { from } from 'rxjs';
 // { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
 const routes: Routes = [
     { path: '', component: CheckInsComponent },
     {
         path: '',
         children: [
+            {path : 'create' ,component :ProviderCreateCheckinComponent },
             {path : 'add', component : ProviderCheckinComponent},
             {path: 'custom-view', component: CustomViewComponent},
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },

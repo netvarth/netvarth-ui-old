@@ -1725,41 +1725,42 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   searchCustomer(source, appttime) {
-    this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-      disableClose: true,
-      data: {
-        source: source,
-        calc_mode: this.calculationmode,
-        showToken: this.showToken
-      }
-    });
-    this.srchcustdialogRef.afterClosed().subscribe(result => {
-      if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
-        this.createCheckin(result.data, appttime);
-      } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
-        this.createCustomer(result.data, source, appttime);
-      } else if (result && result.message && (result.message === 'noCustomer' || result.message === 'newCustomer') && source === 'providerCheckin') {
-        this.createCustomer(result.data, source, appttime, result.message);
-      }
-    });
+    this.router.navigate(['provider', 'check-ins', 'create']);
+    // this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+    //   disableClose: true,
+    //   data: {
+    //     source: source,
+    //     calc_mode: this.calculationmode,
+    //     showToken: this.showToken
+    //   }
+    // });
+    // this.srchcustdialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
+    //     this.createCheckin(result.data, appttime);
+    //   } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
+    //     this.createCustomer(result.data, source, appttime);
+    //   } else if (result && result.message && (result.message === 'noCustomer' || result.message === 'newCustomer') && source === 'providerCheckin') {
+    //     this.createCustomer(result.data, source, appttime, result.message);
+    //   }
+    // });
   }
   createCustomer(search_data, next_page = null, appttime, message?) {
-    this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-      disableClose: true,
-      data: {
-        search_data: search_data,
-        message: message
-      }
-    });
-    this.crtCustdialogRef.afterClosed().subscribe(result => {
-      if (next_page !== 'createCustomer' && result.message === 'reloadlist') {
-        this.createCheckin(result.data, appttime);
-      }
-    });
+    // this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+    //   disableClose: true,
+    //   data: {
+    //     search_data: search_data,
+    //     message: message
+    //   }
+    // });
+    // this.crtCustdialogRef.afterClosed().subscribe(result => {
+    //   if (next_page !== 'createCustomer' && result.message === 'reloadlist') {
+    //     this.createCheckin(result.data, appttime);
+    //   }
+    // });
   }
 
   createCheckin(user_data, appttime) {

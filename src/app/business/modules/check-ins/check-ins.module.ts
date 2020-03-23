@@ -22,6 +22,7 @@ import { ProviderCheckinComponent } from './check-in/provider-checkin.component'
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { CustomViewComponent } from './custom-view/custom-view.component';
+import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { CustomViewComponent } from './custom-view/custom-view.component';
     declarations: [
         CheckInsComponent,
         ProviderCheckinComponent,
+        ProviderCreateCheckinComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
