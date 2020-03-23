@@ -271,7 +271,7 @@ export class CustomersListComponent implements OnInit {
     selectcustomers(index) {
         this.selectedcustomersformsg = [];
         if (this.customerSelected[index]) {
-           delete this.customerSelected[index];
+            delete this.customerSelected[index];
             this.customerselection--;
         } else {
             this.customerSelected[index] = true;
@@ -284,21 +284,13 @@ export class CustomersListComponent implements OnInit {
             if (this.customerSelected[i]) {
                 if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
                     this.selectedcustomersformsg.push(this.customers[i]);
-                    console.log(this.selectedcustomersformsg.push(this.customers[i]))
-                 }
+                }
             }
         }
     }
-    CustomersInboxMessage(source,customer?) {
+    CustomersInboxMessage() {
         let customerlist = [];
-        if(source === 'single')
-        {
-        customerlist.push(customer);
-        customerlist = this.selectedcustomersformsg;}
-        else
-        { 
         customerlist = this.selectedcustomersformsg;
-        }
         this.provider_shared_functions.ConsumerInboxMessage(customerlist)
             .then(
                 () => { },

@@ -5,7 +5,7 @@ import { AddProviderWaitlistQueuesComponent } from '../../components/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-import { customersInboxMessageComponent } from '../../../shared/components/customersInboxMessage/customersInboxMessage.component';
+//import { customersInboxMessageComponent } from '../../../shared/components/customersInboxMessage/customersInboxMessage.component';
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
@@ -312,18 +312,17 @@ export class ProviderSharedFuctions {
     });
   }
   ConsumerInboxMessage(customerlist) {
-    
     const custids = [];
     let type;
     let ynwcustid;
-    let  custid =[] ;
+    let custid = [] ;
     let name;
     if (customerlist.length > 1) {
       type = 'multiple';
       for (const custlst of customerlist) {
         custids.push(custlst.id);
       }
-    } else if(customerlist.length ===1) {
+    } else if ( customerlist.length === 1 ) {
       type = 'single';
       custid.push(customerlist.id) ;
     } 
