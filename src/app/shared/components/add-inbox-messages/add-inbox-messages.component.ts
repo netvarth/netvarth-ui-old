@@ -155,7 +155,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
-        } else {
+        } }
+        else {
+          if (this.data.source === 'customer-list'){
           const post_data = {
             medium: {
               email: this.email,
@@ -163,7 +165,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               pushNotification: this.pushnotify
             },
             communicationMessage: form_data.message,
-            uuid: this.uuid 
+            consumerId: [this.uuid]
           };
           this.shared_services.consumerMassCommunicationWithId(post_data).
             subscribe(() => {
@@ -178,7 +180,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
         }
-      } else {
+        
+      else {
         const post_data = {
           communicationMessage: form_data.message
         };
@@ -191,6 +194,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
   }
   providerToConsumerWaitlistNote(post_data) {
     this.disableButton = true;

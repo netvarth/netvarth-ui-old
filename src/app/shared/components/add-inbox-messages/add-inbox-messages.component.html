@@ -8,15 +8,15 @@
     <mat-dialog-content>
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
-                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} *"
+                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} * "
                     formControlName="message" maxlength="1000">
             </textarea>
-            </mat-form-field>
+           </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple'">
+        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple'|| !api_loading && data.source === 'customer-list'">
             Send message via
             <div class="coupon-outer">
                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">

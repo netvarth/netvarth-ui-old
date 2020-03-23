@@ -284,6 +284,8 @@ export class CustomersListComponent implements OnInit {
             if (this.customerSelected[i]) {
                 if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
                     this.selectedcustomersformsg.push(this.customers[i]);
+                    
+                    
                 }
             }
         }
@@ -291,11 +293,11 @@ export class CustomersListComponent implements OnInit {
     CustomersInboxMessage() {
         let customerlist = [];
         customerlist = this.selectedcustomersformsg;
-        this.provider_shared_functions.ConsumerInboxMessage(customerlist)
+         this.provider_shared_functions.ConsumerInboxMessage(customerlist)
             .then(
                 () => { },
                 () => { }
-            );
+             );
     }
 }
 

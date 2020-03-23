@@ -324,7 +324,8 @@ export class ProviderSharedFuctions {
       }
     } else if ( customerlist.length === 1 ) {
       type = 'single';
-      custid.push(customerlist.id) ;
+      custid = customerlist[0].id || null;
+      name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
     } 
     if (type === 'single') {
       ynwcustid = custid;
