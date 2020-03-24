@@ -155,9 +155,32 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
-        } }
-        else {
-          if (this.data.source === 'customer-list'){
+        } else {
+          const post_data = {
+            medium: {
+              email: this.email,
+              sms: this.sms,
+              pushNotification: this.pushnotify
+            },
+            communicationMessage: form_data.message,
+            uuid: this.uuid
+          };
+          this.shared_services.consumerMassCommunication(post_data).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        }
+
+      } else {
+        if (this.data.source === 'customer-list') {
           const post_data = {
             medium: {
               email: this.email,
@@ -179,22 +202,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
-        }
-        
-      else {
-        const post_data = {
-          communicationMessage: form_data.message
-        };
-        switch (this.source) {
-          case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
-          case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
-          case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
-          case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
-          case 'customer-list': this.providerToConsumerWaitlistNote(post_data); break;
+        } else {
+          const post_data = {
+            communicationMessage: form_data.message
+          };
+          switch (this.source) {
+            case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
+            case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
+            case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
+            case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
+            case 'customer-list': this.providerToConsumerWaitlistNote(post_data); break;
+          }
         }
       }
     }
-  }
   }
   providerToConsumerWaitlistNote(post_data) {
     this.disableButton = true;
@@ -209,7 +230,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           captions[i] = 'caption';
           i++;
         }
-      }     
+      }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
