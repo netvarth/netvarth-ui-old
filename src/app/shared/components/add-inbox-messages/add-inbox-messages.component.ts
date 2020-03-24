@@ -211,7 +211,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
             case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
             case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
-            case 'customer-list': this.providerToConsumerWaitlistNote(post_data); break;
           }
         }
       }
