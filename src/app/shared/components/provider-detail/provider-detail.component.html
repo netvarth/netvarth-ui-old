@@ -269,7 +269,7 @@
                                                         [matTooltip]="'Parking Type: ' + loc.fields.parking_type_location1">
                                                         <span class="icon-parking"></span></li>
                                                     <li
-                                                        *ngIf="loc.always_open_location1 && loc.always_open_location1==1">
+                                                        *ngIf="loc.fields.always_open_location1 && loc.fields.always_open_location1==1">
                                                         <span class="icon-open-time"
                                                             [matTooltip]="'24 Hours Open'"></span></li>
                                                     <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1==1"
@@ -281,7 +281,7 @@
                                                     </li>
                                                     <li [matTooltip]="'Emergency Services'"
                                                         *ngIf="(loc.fields.physiciansemergencyservices_location1 && loc.fields.physiciansemergencyservices_location1==1) || 
-                                                (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1==1) || 
+                                                    (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1==1) || 
                                                     (loc.fields.altemergencyservices_location1 && loc.fields.altemergencyservices_location1==1) || 
                                                     (loc.fields.hosemergencyservices_location1 && loc.fields.hosemergencyservices_location1==1)">
                                                         <span class="icon-emergency"></span></li>

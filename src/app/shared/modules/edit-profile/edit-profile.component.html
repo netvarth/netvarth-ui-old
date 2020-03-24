@@ -1,7 +1,7 @@
 <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<section  [ngClass]="{'container': curtype=='consumer'}">
+<section [ngClass]="{'container': curtype=='consumer'}">
     <div class="content see-pages">
         <div class="related-links">
             <div class="outer-card">
@@ -85,6 +85,7 @@
                                     <mat-radio-group formControlName="gender">
                                         <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
                                         <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                        <mat-radio-button value="others">Others</mat-radio-button>
                                     </mat-radio-group>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"

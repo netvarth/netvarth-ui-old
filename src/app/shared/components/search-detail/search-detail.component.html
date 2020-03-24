@@ -357,12 +357,14 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <h3  [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="bNameTooltip">
-                                        <span (click)="providerDetClicked(search_result)">{{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
-                                            *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
-                                        </sup></span><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
-                                        [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
+                                    <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
+                                        <span
+                                            (click)="providerDetClicked(search_result)">{{search_result.fields.title | capitalizeFirst}}<sup
+                                                class="font-open-now"
+                                                *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
+                                            </sup></span><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1"
+                                            (click)="openJdn(search_result)" [matTooltip]="jdnTooltip"><img height="35"
+                                                width="35" src="./assets/images/JDN.png"></span>
                                     </h3>
                                     <div
                                         *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
@@ -439,7 +441,11 @@
                             </div>
                             <div class="tp-r">
                                 <ul class="badges"
-                                    *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1 || search_result.fields.ynw_verified_level">
+                                    *ngIf="search_result.fields.parking_type_location1!='none' || search_result.fields.always_open_location1==1 || 
+                                    search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || 
+                                    search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1==1 || 
+                                    search_result.fields.hosemergencyservices_location1 ==1 ||
+                                    search_result.fields.firstaid_location1==1 || search_result.fields.ynw_verified_level">
                                     <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'"
                                         [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1">
                                         <span class="icon-parking"></span></li>
@@ -447,13 +453,14 @@
                                         [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
                                     <li *ngIf="search_result.fields.traumacentre_location1==1"
                                         [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
-                                    <li [matTooltip]="'Emergency Services'"
-                                        *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1">
+                                    <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || 
+                                        search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1==1 || 
+                                        search_result.fields.hosemergencyservices_location1==1">
                                         <span class="icon-emergency"></span></li>
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'">
                                         <span class="icon-first-aid"></span></li>
                                     <li *ngIf="search_result.fields.docambulance_location1==1"
-                                        [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>                                    
+                                        [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
                                             src="./assets/images/basic.png" alt="Basic"></li>
@@ -476,10 +483,12 @@
                                 <span class="communicate" (click)="communicateHandler(search_result)"
                                     *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="commTooltip">{{send_messages}}</span>
-                             <!-- <span style="cursor: pointer" (click)="openJdn(search_result)" *ngIf="search_result.fields.jdn == 1"><span class="jdn jdn_tooltip" [matTooltipClass]="tooltipcls"
+                                <!-- <span style="cursor: pointer" (click)="openJdn(search_result)" *ngIf="search_result.fields.jdn == 1"><span class="jdn jdn_tooltip" [matTooltipClass]="tooltipcls"
                                [matTooltip]="jdnTooltip"><img height="30" width="30" src="./assets/images/Jaldeeassure'-01.png"></span></span> -->
                                 <span class="claim-business" (click)="claimBusiness(search_result)"
-                                    *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}} <i style="font-size: 1.1rem;" class="fa fa-hand-o-up" aria-hidden="true"></i></span>
+                                    *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}} <i
+                                        style="font-size: 1.1rem;" class="fa fa-hand-o-up"
+                                        aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="bottom-sect">
