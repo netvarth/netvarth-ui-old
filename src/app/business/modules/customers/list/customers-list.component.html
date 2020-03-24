@@ -36,11 +36,11 @@
             </li> -->
             <li class="dropdown notifications-menu">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-              <div class="statuslink " *ngIf="customerselection>0" [matTooltip]="'Send Message'">
-              <i class="fa fa-comments-o" (click)="CustomersInboxMessage()"></i> </div>
+              <span class="statuslink "  *ngIf="customerselection>0" [matTooltip]="'Send Message'">
+              <i class="fa fa-comments-o"(click)="CustomersInboxMessage()"></i> </span>
               </a>
             </li>
-            <li class="dropdown notifications-menu">
+            <li class="dropdown notifications-menu">  
               <a (click)="searchCustomer('createCustomer')"
                 class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
@@ -121,7 +121,7 @@
           </div> -->
           <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers let i=index "
           (click)="selectcustomers(i)" >
-          <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
+          <div class="col-md-12 col-sm-12 col-xs-12 no-padding-small"
           [class.selected-customer]="customerSelected[i]"> 
           <div class="col-md-4 col-sm-7 mt5">
               {{customer.firstName}} {{customer.lastName}}
