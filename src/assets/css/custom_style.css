@@ -6807,3 +6807,10 @@ label.notifi-togl {
       margin-top: 0px!important;
   }
 }
+.statusbtn {
+  display: flex !important;
+  margin-top: 5px !important;
+}
+.statusbtn i{
+  margin-right: 10px !important;
+}

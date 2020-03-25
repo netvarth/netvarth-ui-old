@@ -67,7 +67,7 @@
                                                                 <i class="icon-edit"></i>
                                                                 {{edit_btn}}
                                                             </button>
-                                                            <button type="button" (click)="dochangeStatus(item)"
+                                                            <button type="buttonz" (click)="dochangeStatus(item)"
                                                                 mat-menu-item>
                                                                 <i *ngIf="item.status=='INACTIVE' || !item.status"
                                                                     class="icon-enable"></i>
@@ -85,7 +85,7 @@
                                                     <span class="mbt-mobile-show">
                                                         <button class="editcls" type="button"
                                                             (click)="editItem(item)">{{edit_btn}}</button>
-                                                        <button class="status" type="button"
+                                                        <button class="status statusbtn" type="button"
                                                             (click)="dochangeStatus(item)">
                                                             <i *ngIf="item.status=='INACTIVE' || !item.status"
                                                                 class="icon-enable"></i>
