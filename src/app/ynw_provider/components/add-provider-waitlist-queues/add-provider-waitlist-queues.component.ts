@@ -147,7 +147,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     }
   }
   isvalid(evt) {
-    this.amForm.get('qserveonce').setValue(evt.target.value);
     return this.sharedfunctionObj.isValid(evt);
   }
   isNumeric(evt) {
