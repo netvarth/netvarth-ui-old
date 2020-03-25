@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     templateUrl: './custom-view.component.html'
 })
 export class CustomViewComponent implements OnInit {
+    customViewName;
     departments: any = [];
     service_list: any = [];
     selectedDepts: any = [];
@@ -54,7 +55,6 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 data => {
                     this.service_list = data;
-                    console.log(this.service_list);
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -95,7 +95,6 @@ export class CustomViewComponent implements OnInit {
             this.selectedDepts.splice(this.selectedDepts.indexOf(depIds), 1);
             this.departments[i].selected = false;
         }
-        this.createCustomView();
     }
     doctorSelected(userIds, i) {
         this.users_list[i].selected = !this.users_list[i].selected;
@@ -141,57 +140,37 @@ export class CustomViewComponent implements OnInit {
         customviewFilter['departmentId-eq'] = this.selectedDepts.toString();
         customviewFilter['serviceId-eq'] = this.selectedServices.toString();
         customviewFilter['queueId-eq'] = this.selectedQueues.toString();
-        console.log(this.selectedDocts);
-        console.log(this.selectedServices);
-        console.log(this.selectedDepts);
-        console.log(this.selectedQueues);
-
-
-        //     "id": 0,
-        //   "name": "string",
-        //   "merged": true,
-        //   "customViewConditions": {
-        //     "departments": [
-        //       {
-        //         "departmentId": 0
-        //        }
-        //     ],
-        //     "services": [
-        //       {
-        //         "id": 0
-        //       }
-        //     ],
-        //     "queues": [
-        //       {
-        //         "id": 0
-        //       }
-        //     ],
-        //     "users": [
-        //       {
-        //         "id": 0
-        //       }
-        //     ]
-        // }
+        const depids = [];
+        for (const id of this.selectedDepts) {
+            depids.push({'departmentId': id});
+        }
+        const userids = [];
+        for (const id of this.selectedDocts) {
+            userids.push({'id': id});
+        }
+        const servicesids = [];
+        for (const id of this.selectedServices) {
+            servicesids.push({'id': id});
+        }
+        const qids = [];
+        for (const id of this.selectedQueues) {
+            qids.push({'id': id});
+        }
         const customViewInput = {
-            'name': 'name',
+            'name': this.customViewName,
             'merged': true,
             'customViewConditions': {
-                'departments': {
-                    'departmentId': this.selectedDepts.toString()
-                },
-                'users': {
-                    'id': this.selectedDocts
-                },
-                'services': this.selectedServices,
-                'queues': this.selectedQueues
+                'departments': depids,
+                'users': userids,
+                'services': servicesids,
+                'queues': qids
             }
 
         };
-
-        // 'departments': [{
-        //     'departmentId': this.selectedDepts.toString()
-        // }]
-        console.log(customViewInput);
+        this.provider_services.createCustomView(customViewInput).subscribe(
+            (data: any) => {
+            }
+        );
     }
     depAddClicked() {
         this.getDepartments();

@@ -1,0 +1,61 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+        <div class="content displayboard loc-list users">
+                <div class="col-md-12 no-padding-small">
+                    <div class="row">
+                        <div class="col-md-12 no-padding">
+                            <div class="card no-padding">
+                                <div class="copy">
+                                    <div class="col-md-12 no-padding">
+                                        <ul class="nav jd-custom-nav chkn-dash">
+                                            <li class="dropdown notifications-menu pull-right">
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                    class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                    <span>
+                                                        <i class="fa fa-plus"></i> Create view
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+        
+                                    </div>
+                                    <div class="col-md-12" *ngIf="customViewList.length==0">
+                                        <div class="row">
+                                            <div class="no-dta">
+                                                <p>No views Found</p>
+                                                <span class="cs-btn bt3">
+                                                    View</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 no-padding user" *ngIf="customViewList.length!==0">
+                                        <div class="col-md-12 dboard" *ngFor="let views of customViewList">
+                                            <div class="copy">
+                                                <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                </span>
+                                                <h3 class="">
+                                                    {{views.name}}
+                                                </h3>
+                                                <mat-menu #appMenu="matMenu">
+                                                    <button mat-menu-item>
+                                                        Update View
+                                                    </button>
+                                                    <button mat-menu-item (click)="doRemoveView(views)">
+                                                        Delete View
+                                                    </button>
+                                                </mat-menu>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>

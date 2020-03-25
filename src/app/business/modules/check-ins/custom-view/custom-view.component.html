@@ -13,7 +13,7 @@
                           
                                 <div class="form-group ynw-common-form-nm">
                                     <mat-form-field>
-                                      <input matInput type="text" class="form-control"  placeholder="Custom view name" autocomplete="off">
+                                      <input [(ngModel)]= "customViewName" matInput type="text" class="form-control"  placeholder="Custom view name" autocomplete="off">
                                     </mat-form-field>
                                   </div>
                        
@@ -58,7 +58,7 @@
                               </div>  
                               <div>
                                 <button type="button" class="cs-btn bt2">Cancel</button> &nbsp;
-                                <button type="submit" mat-button class="cs-btn bt1">Save</button>
+                                <button type="submit" mat-button class="cs-btn bt1" (click) = "createCustomView()">Save</button>
                                 </div>                  
                          </div>
                          
