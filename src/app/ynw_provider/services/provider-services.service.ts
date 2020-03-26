@@ -1005,7 +1005,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/waitlist/queues?provider-eq=' + id);
    }
    getUserServicesList(id) {
-      const url = 'provider/services?provider-eq=' + id;
+      const url = 'provider/services/?provider-eq=' + id;
       return this.servicemeta.httpGet(url);
    }
    getUserServiceDetail(service_id) {
@@ -1082,5 +1082,13 @@ createCustomView(post_data) {
    const url = 'provider/customView/' + id;
    return this.servicemeta.httpPut(url, post_data);
  }
+ changeProviderScheduleStatus(id, chstatus) {
+   const url = 'provider/appointment/schedule/' + id + '/' + chstatus;
+   return this.servicemeta.httpPut(url);
+}
+getScheduleDetail(queue_id) {
+   const url = 'provider/appointment/schedule/' + queue_id;
+   return this.servicemeta.httpGet(url);
+}
 }
 

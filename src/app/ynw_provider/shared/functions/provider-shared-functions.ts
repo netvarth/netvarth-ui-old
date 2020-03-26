@@ -40,6 +40,30 @@ export class ProviderSharedFuctions {
           this.queueReloadApi(ob, source);
         });
   }
+  changeProviderScheduleStatus(ob, obj, source = 'queue_list') {
+    let chgstatus = '';
+    let chstatusmsg = '';
+
+    if (obj.apptState === 'ENABLED') {
+      chgstatus = 'DISABLED';
+      chstatusmsg = 'disabled';
+    } else {
+      chgstatus = 'ENABLED';
+      chstatusmsg = 'enabled';
+    }
+    let msg = this.shared_functions.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
+    msg = msg.replace('[status]', chstatusmsg);
+
+    ob.provider_services.changeProviderScheduleStatus(obj.id, chgstatus)
+      .subscribe(() => {
+        this.shared_functions.openSnackBar(msg);
+        this.scheduleReloadApi(ob, source);
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.scheduleReloadApi(ob, source);
+        });
+  }
 
   getProfileStatusCode(bprofile) {
     let statusCode = 0;
@@ -180,6 +204,18 @@ export class ProviderSharedFuctions {
     }
   }
 
+  scheduleReloadApi(ob, source = 'queue_list') {
+    if (source === 'queue_list') {
+      ob.getProviderSchedules();
+      // ob.isAvailableNow();
+    } else if (source === 'queue_detail') {
+      ob.getScheduleDetail();
+    } else if (source === 'location_detail') {
+      ob.getScheduleList();
+    }
+  }
+
+
   changeServiceStatus(ob, service) {
     let chstatusmsg = '';
     if (service.status === 'ACTIVE') {
@@ -300,8 +336,8 @@ export class ProviderSharedFuctions {
           terminologies: terminologies,
           name: name
         }
-        
       });
+
       Cthis.sendmsgdialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
           resolve();
@@ -358,15 +394,13 @@ export class ProviderSharedFuctions {
     });
   }
 
-
-
-
   getTerminologies() {
 
   }
   setActiveQueues(active_queues) {
     this.activeQueues = active_queues;
   }
+
   getActiveQueues() {
     return this.activeQueues;
   }
