@@ -367,9 +367,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     getServices() {
-        const params = { 'status': 'ACTIVE' };
+       // const params = { 'status': 'ACTIVE' };
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
         return new Promise((resolve, reject) => {
-            this.provider_services.getUserServicesList(this.userId)
+            this.provider_services.getProviderServices(filter)
                 .subscribe(data => {
                     this.services_list = data;
                     resolve();

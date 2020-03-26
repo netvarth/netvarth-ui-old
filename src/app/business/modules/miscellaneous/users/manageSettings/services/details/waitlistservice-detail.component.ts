@@ -15,6 +15,7 @@ import { GalleryService } from '../../../../../../../shared/modules/gallery/gale
 export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     actionparam = 'show'; // To know whether clicked edit/view from the services list page
     serviceParams = { 'action': 'show' };
+    servicelevel = 'userlevel';
     service_id = null;
     api_loading = false;
     customer_label: any;
@@ -215,7 +216,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
                     if (this.actionparam === 'edit') {
-                        this.serviceParams['action'] = 'show';
+                        this.serviceParams['action'] = 'edit'; 
                     }
                     this.servicesService.initServiceParams(this.serviceParams);
                 },

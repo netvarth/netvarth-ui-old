@@ -493,6 +493,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         case 'appointmentmanager':
           this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
           break;
+        case 'schedules':
+          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager' ,'schedules']);
+          break;
     }
   }
   getLocationCount() {
