@@ -14,20 +14,20 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
                                         <span class="tspace">
-                                            <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
-                                                (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
+                                                (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>
                                         </span>
                                     </div>
                                     <div class="row col-sm-12 padleft">
                                         <span class='greenc'
-                                            *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
+                                            *ngIf="queue_data.apptState=='ENABLED'">{{enabled_cap}}</span>
                                         <span class='disabled'
-                                            *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
+                                            *ngIf="queue_data.apptState=='DISABLED'">{{disabled_cap}}</span>
                                     </div>
                                     <div class="row col-sm-12 workpading">
                                         <div class="c-ot row col-sm-12">
@@ -53,10 +53,10 @@
                                             </div>
                                         </div>
                                         <div class="c-ot row col-sm-12">
-                                            <div class="item">
+                                            <!-- <div class="item">
                                                 <span class="ttle">Maximum {{customer_label}}s served</span> <span
                                                     class="icon-customer-line">{{queue_data.capacity}}</span>
-                                            </div>
+                                            </div> -->
                                             <div class="item">
                                                 <span class="ttle">{{customer_label | capitalizeFirst}}s served at a
                                                     time</span> <span
@@ -78,14 +78,14 @@
                                                     *ngIf="!queue_data.futureWaitlist">Off</span>
                                             </div>
                                         </div>
-                                        <div class="c-ot row col-sm-12">
+                                        <!-- <div class="c-ot row col-sm-12">
                                             <div class="item" style="display: flex;">
                                                 <span class="ttle mgn-rt-20">Enable time slot</span>
                                                 <mat-slide-toggle class="example-margin" [checked]="appointment"
                                                     (change)="changeTimeslotStatus($event)">
                                                 </mat-slide-toggle>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings">
+                            <!-- <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
                                         class="form-control number-ip-sm"
@@ -273,7 +273,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
           'maxlength' : 'Only 4 digits are allowed'
         })">
                                 </app-field-error-display>
-                            </div>
+                            </div> -->
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"

@@ -13,7 +13,7 @@
                         <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy">
-                                        <div class="col-md-12 no-padding" style="display: flex">
+                                        <!-- <div class="col-md-12 no-padding" style="display: flex">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
                                                 <mat-panel-description class="acc-plus-btn pointer-cursor"
@@ -25,8 +25,8 @@
                                                                 </mat-icon>
                                                         </button>
                                                 </mat-panel-description>
-                                        </div>
-                                        <div class="row m0" *ngIf="showInstantQFlag">
+                                        </div> -->
+                                        <!-- <div class="row m0" *ngIf="showInstantQFlag">
                                                 <div class="col-md-12 p0">
                                                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
                                                                         onSubmit(instantQForm.value)">
@@ -206,7 +206,7 @@
                                                                 </div>
                                                         </form>
                                                 </div>
-                                        </div>
+                                        </div> -->
                                         <div class="row col-md-12 col-xs-12 no-padding m0 mt10"
                                                 *ngFor="let queue of todaysQs; index as i">
                                                 <div class="col-md-12 no-padding">
@@ -293,7 +293,7 @@
                                                                 <mat-menu #appMenu="matMenu">
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
-                                                                                *ngIf="queue.queueState=='ENABLED' && todayQcountCaption[i]">
+                                                                                *ngIf="queue.apptState=='ENABLED' && todayQcountCaption[i]">
                                                                                 <i *ngIf="sqShowTodayCount[i] || sqShowActiveQTodayCount[i]"
                                                                                         class="fa fa-minus"></i>
                                                                                 <i *ngIf=" !sqShowTodayCount[i] && !sqShowActiveQTodayCount[i]"
@@ -302,7 +302,7 @@
                                                                         </button>
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
-                                                                                *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i]">
+                                                                                *ngIf="queue.apptState=='ENABLED' && !todayQcountCaption[i]">
                                                                                 <i class="fa fa-plus"></i>Checkins Count
                                                                         </button>
                                                                         <button mat-menu-item
@@ -435,7 +435,7 @@
                                                                         <mat-menu #appMenu="matMenu">
                                                                                 <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
-                                                                                        *ngIf="queue.queueState=='ENABLED' && futureQcountCaption[i]">
+                                                                                        *ngIf="queue.apptState=='ENABLED' && futureQcountCaption[i]">
                                                                                         <i *ngIf="sqShowFutureCount[i] || sqShowActiveQFutureCount[i]"
                                                                                                 class="fa fa-minus"></i>
                                                                                         <i *ngIf=" !sqShowFutureCount[i] && !sqShowActiveQFutureCount[i]"
@@ -444,18 +444,18 @@
                                                                                 </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
-                                                                                        *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i]">
+                                                                                        *ngIf="queue.apptState=='ENABLED' && !futureQcountCaption[i]">
                                                                                         <i
                                                                                                 class="fa fa-plus"></i>Checkins
                                                                                         Count
                                                                                 </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="addEditProviderQueue('editFromList', queue)"
-                                                                                        *ngIf="queue.queueState=='ENABLED'">
+                                                                                        *ngIf="queue.apptState=='ENABLED'">
                                                                                         <i class="icon-edit"></i>Edit
                                                                                 </button>
                                                                                 <button mat-menu-item
-                                                                                        (click)="changeProviderQueueStatus(queue)">
+                                                                                        (click)="changeProviderScheduleStatus(queue)">
                                                                                         <i
                                                                                                 class="icon-disable"></i>Disable
                                                                                 </button>
@@ -516,7 +516,7 @@
                                                                                 <mat-menu #appMenu="matMenu">
                                                                                         <button mat-menu-item
                                                                                                 *ngIf="queue.showDisableBtn"
-                                                                                                (click)="changeProviderQueueStatus(queue)">
+                                                                                                (click)="changeProviderScheduleStatus(queue)">
                                                                                                 <i
                                                                                                         class="icon-enable"></i>Enable
                                                                                         </button>

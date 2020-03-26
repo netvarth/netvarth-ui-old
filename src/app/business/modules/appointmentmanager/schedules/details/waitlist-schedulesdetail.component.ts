@@ -38,12 +38,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            url: '/provider/settings/miscellaneous',
-            title: 'Miscellaneous'
+            url: '/provider/settings/appointmentmanager',
+            title: 'Appointmentmanager'
         },
         {
-            url: '/provider/settings/miscellaneous/users',
-            title: 'Users'
+            url: '/provider/settings/appointmentmanager/schedules',
+            title: 'Schedules'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -97,20 +97,20 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.activated_route.params.subscribe(params => {
             this.queue_id = params.sid;
             this.userId = params.id;
-            this.breadcrumbs.push(
-                {
-                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                    title: this.userId
-                },
-                {
-                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
-                    title: 'Settings'
-                },
-                {
-                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues',
-                    title: 'Queues'
-                }
-            );
+            // this.breadcrumbs.push(
+            //     {
+            //         url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+            //         title: this.userId
+            //     },
+            //     {
+            //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
+            //         title: 'Settings'
+            //     },
+            //     {
+            //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/queues',
+            //         title: 'Queues'
+            //     }
+            // );
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
@@ -131,7 +131,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.getProviderSchedules();
         setTimeout(() => {
             if (this.queue_id !== 'add') {
-                this.getQueueDetail();
+                this.getScheduleDetail();
             } else {
                 this.action = this.queue_id;
                 const breadcrumbs = [];
@@ -198,12 +198,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             for (let ii = 0; ii < this.queue_list.length; ii++) {
                 let schedule_arr = [];
                 // extracting the schedule intervals
-                if (this.queue_list[ii].queueSchedule) {
-                    schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
+                if (this.queue_list[ii].apptSchedule) {
+                    schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].apptSchedule);
                 }
                 let display_schedule = [];
                 display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                if (this.queue_list[ii].queueState === 'ENABLED') {
+                if (this.queue_list[ii].apptState === 'ENABLED') {
                     this.activeQueues.push(display_schedule[0]);
                 }
             }
@@ -241,17 +241,17 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             this.Selall = false;
         }
     }
-    getQueueDetail() {
+    getScheduleDetail() {
         this.api_loading = true;
         this.getProviderSchedules();
-        this.provider_services.getQueueDetail(this.queue_id)
+        this.provider_services.getScheduleDetail(this.queue_id)
             .subscribe(
                 data => {
                     this.queue_data = data;
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
-                    if (this.queue_data.queueSchedule) {
-                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
+                    if (this.queue_data.apptSchedule) {
+                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.apptSchedule);
                     }
                     this.display_schedule = [];
                     this.display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
@@ -278,7 +278,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     // get the list of services
   getProviderServices() {
     this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
+    const filter = { 'status-eq': 'ACTIVE' };
     this.provider_services.getProviderServices(filter)
       .subscribe(data => {
         this.services_list = data;
@@ -295,8 +295,8 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.action = 'edit';
         this.createForm();
     }
-    changeProviderQueueStatus(obj) {
-        this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
+    changeProviderScheduleStatus(obj) {
+        this.provider_shared_functions.changeProviderScheduleStatus(this, obj, 'queue_detail');
     }
     getProviderSchedules() {
         const activeQueues: any = [];
@@ -306,12 +306,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 for (let ii = 0; ii < this.queue_list.length; ii++) {
                     let schedule_arr = [];
                     // extracting the schedule intervals
-                    if (this.queue_list[ii].queueSchedule) {
-                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
+                    if (this.queue_list[ii].apptSchedule) {
+                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].apptSchedule);
                     }
                     let display_schedule = [];
                     display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                    if (this.queue_list[ii].queueState === 'ENABLED') {
+                    if (this.queue_list[ii].apptState === 'ENABLED') {
                         activeQueues.push(display_schedule[0]);
                     }
                 }
@@ -327,7 +327,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                // timeSlot: ['', Validators.compose([Validators.required])],
+                 timeSlot: ['', Validators.compose([Validators.required])],
             });
             this.updateForm();
         } else {
@@ -339,7 +339,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
-                // timeSlot: ['', Validators.compose([Validators.required])]
+                 timeSlot: ['', Validators.compose([Validators.required])]
             });
             this.provider_services.getQStartToken()
                 .subscribe(
@@ -355,15 +355,15 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     updateForm() {
         console.log(this.queue_data);
         const sttime = {
-            hour: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].sTime,
+            hour: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].sTime,
+            minute: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('mm'), 10)
         };
         const edtime = {
-            hour: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].eTime,
+            hour: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].eTime,
                 ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].eTime,
+            minute: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].eTime,
                 ['h:mm A']).format('mm'), 10)
         };
         this.selected_location = this.queue_data.location;
@@ -373,16 +373,16 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             // qlocation: this.queue_data.location.id || null,
             qstarttime: sttime || null,
             qendtime: edtime || null,
-            qcapacity: this.queue_data.capacity || null,
+           // qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
-            // timeSlot: this.queue_data.timeInterval || 0
+             timeSlot: this.queue_data.timeDuration || 0
         });
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
         // extracting the selected days
-        for (let j = 0; j < this.queue_data.queueSchedule.repeatIntervals.length; j++) {
+        for (let j = 0; j < this.queue_data.apptSchedule.repeatIntervals.length; j++) {
             // pushing the day details to the respective array to show it in the page
-            this.selday_arr.push(Number(this.queue_data.queueSchedule.repeatIntervals[j]));
+            this.selday_arr.push(Number(this.queue_data.apptSchedule.repeatIntervals[j]));
         }
         if (this.selday_arr.length === 7) {
             this.Selall = true;
@@ -443,22 +443,22 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             return;
         } else {
             // Numeric validation
-            if (isNaN(form_data.qcapacity)) {
-                const error = 'Please enter a numeric value for capacity';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                return;
-            }
-            if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
-                const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                return;
-            } else {
-                if (form_data.qcapacity === 0) {
-                    const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                    return;
-                }
-            }
+            // if (isNaN(form_data.qcapacity)) {
+            //     const error = 'Please enter a numeric value for capacity';
+            //     this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            //     return;
+            // }
+            // if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
+            //     const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
+            //     this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            //     return;
+            // } else {
+            //     if (form_data.qcapacity === 0) {
+            //         const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
+            //         this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            //         return;
+            //     }
+            // }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
@@ -527,14 +527,39 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 'apptSchedule': schedulejson,
                 'apptState': 'ENABLED',
                 'parallelServing': form_data.qserveonce,
-                'capacity': form_data.qcapacity,
-                'location': {
-                    'id': this.selected_locationId
-                },
+               // 'capacity': form_data.qcapacity,
+                'location': this.selected_locationId,
                 'services': selser,
-                'tokenStarts': form_data.tokennum,
+               // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
-            };
+                'batch':false
+            }; 
+            // schedulejson = {
+            //     'recurringType': 'Weekly',
+            //     'repeatIntervals': daystr,
+            //     'startDate': today,
+            //     'terminator': {
+            //         'endDate': '',
+            //         'noOfOccurance': 0
+            //     },
+            //     'timeSlots': [{
+            //         'getsTime': starttime_format,
+            //         'geteTime': endtime_format
+            //     }]
+            // };
+            // // generating the data to be posted
+            // const post_data = {
+            //     'name': form_data.qname,
+            //     'apptSchedule': schedulejson,
+            //     'apptState': 'ENABLED',
+            //   //  'parallelServing': form_data.qserveonce,
+            //     //'capacity': form_data.qcapacity,
+            //     'location': this.selected_locationId,
+            //     'services': selser,
+            //    // 'tokenStarts': form_data.tokennum,
+            //     'timeDuration': form_data.timeSlot,
+            //     'batch':false
+            // };
             if (this.action === 'edit') {
                 this.editProviderSchedule(post_data);
             } else {
@@ -551,7 +576,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                     this.disableButton = false;
                     this.api_loading = false;
                     this.queue_id = data;
-                    this.getQueueDetail();
+                    this.getScheduleDetail();
                     this.action = 'view';
                 },
                 error => {
@@ -570,9 +595,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                     this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
                     this.api_loading = false;
-                    this.getQueueDetail();
+                    this.getScheduleDetail();
                     if (this.params.action === 'editFromList') {
-                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
+                        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
                     } else if (this.params.source === 'location_detail') {
                         this._location.back();
                     } else {
@@ -726,7 +751,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.provider_services.changeApptStatus(status, this.queue_id).subscribe(
             () => {
                 this.appointment = (status === 'Enable') ? true : false;
-                this.getQueueDetail();
+                this.getScheduleDetail();
             },
             error => {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
