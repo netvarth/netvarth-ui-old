@@ -23,7 +23,6 @@ export class CustomViewListComponent implements OnInit {
         }
     ];
 
-
     constructor(private _formBuilder: FormBuilder,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog,

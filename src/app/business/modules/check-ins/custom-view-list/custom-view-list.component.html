@@ -26,7 +26,7 @@
                                             <div class="no-dta">
                                                 <p>No views Found</p>
                                                 <span class="cs-btn bt3">
-                                                    View</span>
+                                                    Add View</span>
                                             </div>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
                                                     {{views.name}}
                                                 </h3>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item>
+                                                    <button mat-menu-item routerLink="../custom-view" [queryParams]="{id:views.id}">
                                                         Update View
                                                     </button>
                                                     <button mat-menu-item (click)="doRemoveView(views)">

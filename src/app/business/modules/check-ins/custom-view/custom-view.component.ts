@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -20,8 +21,10 @@ export class CustomViewComponent implements OnInit {
     qstoDisplay: any = [];
     selectedQueues: any = [];
     deptObj;
+    viewDetailsList: any = [];
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
+    viewId;
     breadcrumbs = [
         {
             title: 'Dashboard',
@@ -34,9 +37,44 @@ export class CustomViewComponent implements OnInit {
 
     constructor(private _formBuilder: FormBuilder,
         public shared_functions: SharedFunctions,
+        private activated_route: ActivatedRoute,
         private provider_services: ProviderServices) {
+            this.activated_route.queryParams.subscribe((qparams) => {
+                this.viewId = qparams.id;
+                this.getView(this.viewId);
+            });
     }
     ngOnInit() {
+    }
+    getView(viewId) {
+            this.provider_services.getCustomViewDetail(viewId)
+                .subscribe(
+                    data => {
+
+                        this.viewDetailsList = data;
+                        this.customViewName = this.viewDetailsList.name;
+                        this.getDepartments();
+                        for (const id of this.viewDetailsList.customViewConditions.departments) {
+                            this.selectedDepts.push(id.departmentId);
+                        }
+                        this.getUsers();
+                        for (const id of this.viewDetailsList.customViewConditions.users) {
+                            this.selectedDocts.push(id.id);
+                        }
+                        this.getServices();
+                        console.log(this.selectedDocts);
+                        this.getQs();
+                        for (const id of this.viewDetailsList.customViewConditions.services) {
+                            this.selectedServices.push(id.id);
+                        }
+                        for (const id of this.viewDetailsList.customViewConditions.queues) {
+                            this.selectedQueues.push(id.id);
+                        }
+                                    },
+                                    error => {
+                                        this.shared_functions.apiErrorAutoHide(this, error);
+                                    }
+                                );
     }
     getDepartments() {
         this.provider_services.getDepartments()
@@ -87,17 +125,17 @@ export class CustomViewComponent implements OnInit {
                     console.log(error);
                 });
     }
-    depSelected(depIds, i) {
+    depSelected(depIds) {
         if (this.selectedDepts.indexOf(depIds) === -1) {
             this.selectedDepts.push(depIds);
-            this.departments[i].selected = true;
+            // this.departments[i].selected = true;
         } else {
             this.selectedDepts.splice(this.selectedDepts.indexOf(depIds), 1);
-            this.departments[i].selected = false;
+            // this.departments[i].selected = false;
         }
     }
-    doctorSelected(userIds, i) {
-        this.users_list[i].selected = !this.users_list[i].selected;
+    doctorSelected(userIds) {
+        // this.users_list[i].selected = !this.users_list[i].selected;
         if (this.selectedDocts.indexOf(userIds) === -1) {
             this.selectedDocts.push(userIds);
             // this.users_list[index].selected = true;
@@ -167,10 +205,17 @@ export class CustomViewComponent implements OnInit {
             }
 
         };
-        this.provider_services.createCustomView(customViewInput).subscribe(
-            (data: any) => {
-            }
-        );
+        if (this.viewId) {
+            this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
+                (data: any) => {
+                }
+            );
+        } else {
+            this.provider_services.createCustomView(customViewInput).subscribe(
+                (data: any) => {
+                }
+            );
+        }
     }
     depAddClicked() {
         this.getDepartments();

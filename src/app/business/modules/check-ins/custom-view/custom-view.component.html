@@ -67,8 +67,8 @@
                               <div class="pay-section left">
                                   <div class="lc22">
                                     <div class="lc2-1 lcd custom-help">
-                                        <mat-chip-list class="primary" aria-label="Color selection" *ngFor=" let depName of departments; let i = index">
-                                            <mat-chip  [selected]="depName.selected" (click) = "depSelected(depName.departmentId, i)">
+                                        <mat-chip-list class="primary" aria-label="Color selection" *ngFor=" let depName of departments">
+                                            <mat-chip  [selected]="selectedDepts.indexOf(depName.departmentId) !== -1" (click) = "depSelected(depName.departmentId)">
                                               {{depName.departmentName}}
                                             </mat-chip>
                                         </mat-chip-list>
@@ -78,8 +78,8 @@
                               <div class="pay-section left">
                                   <div class="lc22">
                                     <div class="lc2-1 lcd custom-help">
-                                        <mat-chip-list  aria-label="Color selection" *ngFor=" let doctors of users_list; let i = index">
-                                            <mat-chip  class="primary" [selected]="doctors.selected" (click) = "doctorSelected(doctors.id, i)">
+                                        <mat-chip-list  aria-label="Color selection" *ngFor=" let doctors of users_list">
+                                            <mat-chip  class="primary" [selected]="selectedDocts.indexOf(doctors.id) !==-1"  (click) = "doctorSelected(doctors.id)">
                                               {{doctors.firstName | capitalizeFirst}} {{doctors.lastName | capitalizeFirst}}
                                             </mat-chip>
                                           </mat-chip-list>
