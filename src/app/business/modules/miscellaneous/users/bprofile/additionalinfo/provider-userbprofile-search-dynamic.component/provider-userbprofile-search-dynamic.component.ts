@@ -36,6 +36,8 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
+    console.log(this.data);
+    this.subdomain = this.data.subdomain;
     this.grid_row_index = this.data['grid_row_index'];
     if (this.que_type === 'domain_questions') {
       this.domain_questions = this.data['questions'] || [];
@@ -44,7 +46,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     } else if (this.que_type === 'subdomain_questions') {
       this.subdomain_questions = this.data['questions'] || [];
       this.title = this.subdomain_questions[0]['label'] || '';
-      this.subdomain = this.bProfile['subDomain'];
+      // this.subdomain = this.bProfile['subDomain'];
     }
     if (this.domain_questions.length === 0 &&
       this.subdomain_questions === 0) {
@@ -58,6 +60,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       .then(
         data => {
           this.domain_questions = data;
+          // console.log(this.domain_questions);
         }
       );
 
@@ -69,6 +72,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       this.bProfile['subDomain']).then(
         data => {
           this.subdomain_questions = data;
+          // console.log(this.subdomain_questions);
         }
       );
 
@@ -180,7 +184,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       }
     }
 
-    console.log(submit_data);
     return submit_data;
   }
 
@@ -243,14 +246,15 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   setPostData(submit_data) {
     const keys = Object.keys(submit_data);
     let pre_value = {};
+    if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
 
-    // if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
-    //   pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-    //   console.log(pre_value);
-    // }  else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
-    //   pre_value = this.bProfile.subDomain;
-    //   console.log(pre_value);
-    // }
+      pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
+      // console.log(pre_value);
+    } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
+     pre_value = JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+      // console.log(pre_value);
+    }
+
     for (const key of keys) {
 
       if (pre_value[key]) {

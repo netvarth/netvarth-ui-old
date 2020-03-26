@@ -992,13 +992,13 @@ export class ProviderServices {
    updateUserSocialMediaLinks(data, id) {
       return this.servicemeta.httpPut('provider/user/providerBprofile/socialMedia/' + id, data);
    }
-   updateDomainFields(id, postdata) {
+   updateDomainFields(providerId, postdata) {
       console.log(postdata);
-      const url = 'provider/user/providerBprofile/domain' + '/' + id;
+      const url = 'provider/user/providerBprofile/domain' + '/' + providerId;
       return this.servicemeta.httpPut(url, postdata);
    }
-   updatesubDomainFields(id, postdata, subdomainId) {
-      return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id, postdata);
+   updatesubDomainFields(providerId, postdata, subdomainId) {
+      return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + providerId, postdata);
    }
    getUserProviderQueues(id) {
       console.log(id);

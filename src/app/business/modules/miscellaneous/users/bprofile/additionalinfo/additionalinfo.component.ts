@@ -133,7 +133,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             .then(
                 data => {
                     this.bProfile = data;
-                    console.log(this.bProfile);
+                    // console.log(this.bProfile);
                     //  this.provider_datastorage.set('bProfile', data);
                     //  const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
                     //  console.log(loginuserdata);
@@ -148,8 +148,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     //     Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
                     //     this.normal_domainfield_show = 2;
                     // }
-                    console.log(this.domain);
-                    console.log(this.subDomain);
+                    // console.log(this.domain);
+                    // console.log(this.subDomain);
                     this.getDomainVirtualFields();
                     // if (this.bProfile['subDomainVirtualFields'] &&
                     //     Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
@@ -161,8 +161,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     //}
                 },
                 () => {
-                    console.log(this.domain);
-                    console.log(this.subDomain);
+                    // console.log(this.domain);
+                    // console.log(this.subDomain);
                     this.getDomainVirtualFields();
                     if (this.subDomain) {
                         this.getSubDomainVirtualFields();
@@ -178,7 +178,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.getVirtualFields(this.domain)
             .then(
                 data => {
-                    this.bProfile['domainVirtualFields'] = data;
+                    // this.bProfile['domainVirtualFields'] = data;
                     // this.domain_questions = data;
                     this.domain_fields = data['fields'];
                     this.domain_questions = data['questions'] || [];
@@ -215,7 +215,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
     deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
         const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
-            JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+            JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subDomain]));
         // JSON.parse(JSON.stringify used to remove reference
         const grid_list = pre_value[field_name] || [];
         if (grid_list.length === 1 && index === 0) {
@@ -246,7 +246,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 bProfile: this.bProfile,
                 grid_row_index: grid_row_index,
                 userId: this.userId,
-                subDomainId: this.subDomainId
+                subDomainId: this.subDomainId,
+                subdomain: this.subDomain
             }
         });
         this.dynamicdialogRef.afterClosed().subscribe(result => {
@@ -289,7 +290,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.getVirtualFields(this.domain,
             this.subDomain).then(
                 data => {
-                    this.bProfile['subDomainVirtualFields'] = data;
+                    // this.bProfile['subDomainVirtualFields'] = data;
                     this.subdomain_fields = data['fields'];
                     this.subdomain_questions = data['questions'] || [];
                     this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
@@ -421,8 +422,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
     }
     onDomainFormSubmit(post_data) {
-        this.provider_services.updateDomainSubDomainFields(post_data,
-            this.bProfile['serviceSector']['domain'])
+        this.provider_services.updateDomainFields(this.userId, post_data)
             .subscribe(
                 () => {
                     this.getBusinessProfile();
@@ -434,8 +434,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             );
     }
     onSubDomainFormSubmit(post_data) {
-        this.provider_services.updateDomainSubDomainFields(post_data, null,
-            this.bProfile['serviceSubSector']['subDomain'])
+        this.provider_services.updatesubDomainFields(this.userId, post_data, this.subDomainId)
             .subscribe(
                 () => {
                     this.getBusinessProfile();
