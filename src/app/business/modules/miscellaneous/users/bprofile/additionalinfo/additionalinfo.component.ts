@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { ProviderBprofileSearchDynamicComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
@@ -61,7 +59,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
         private dialog: MatDialog,
         private routerobj: Router,
         private activated_route: ActivatedRoute,
@@ -71,15 +68,16 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
         this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
         this.activated_route.params.subscribe(params => {
-            // console.log(data);
             this.userId = params.id;
         }
         );
     }
+
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
     }
+
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
@@ -105,11 +103,13 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     }
+
     ngOnDestroy() {
         if (this.dynamicdialogRef) {
             this.dynamicdialogRef.close();
         }
     }
+
     getUser() {
         this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
@@ -127,66 +127,37 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 }
             });
     }
-    getBusinessProfile() {
 
+    getBusinessProfile() {
         this.getBussinessProfileApi()
             .then(
                 data => {
                     this.bProfile = data;
-                    // console.log(this.bProfile);
-                    //  this.provider_datastorage.set('bProfile', data);
-                    //  const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
-                    //  console.log(loginuserdata);
-                    // setting the status of the customer from the profile details obtained from the API call
-                    //  loginuserdata.accStatus = this.bProfile.status;
-                    // Updating the status (ACTIVE / INACTIVE) in the local storage
-                    //   this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-                    //  this.serviceSector = data['serviceSector']['displayName'] || null;
-                    //  this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
-                    // if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-                    //     if (this.bProfile['domainVirtualFields'] &&
-                    //     Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
-                    //     this.normal_domainfield_show = 2;
-                    // }
-                    // console.log(this.domain);
-                    // console.log(this.subDomain);
                     this.getDomainVirtualFields();
-                    // if (this.bProfile['subDomainVirtualFields'] &&
-                    //     Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
-                    //     this.normal_subdomainfield_show = 2;
-                    // }
                     if (this.subDomain) {
                         this.getSubDomainVirtualFields();
                     }
-                    //}
                 },
                 () => {
-                    // console.log(this.domain);
-                    // console.log(this.subDomain);
                     this.getDomainVirtualFields();
                     if (this.subDomain) {
                         this.getSubDomainVirtualFields();
                     }
-                    // this.normal_domainfield_show = 3;
                 }
             );
     }
-    // objectKeys(obj) {
-    //     return Object.keys(obj);
-    //   }
+
     getDomainVirtualFields() {
         this.getVirtualFields(this.domain)
             .then(
                 data => {
-                    // this.bProfile['domainVirtualFields'] = data;
-                    // this.domain_questions = data;
                     this.domain_fields = data['fields'];
                     this.domain_questions = data['questions'] || [];
                     this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-                    // normal_domainfield_show = 4 // no data
                 }
             );
     }
+
     addDynamicField(field, type) {
         if (field.dataType === 'DataGrid') {
             this.editGridDynamicField(field.name, type, null);
@@ -194,10 +165,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             this.editDynamicField(field.name, type);
         }
     }
+
     editGridDynamicField(field_name, type, index = 0) {
         const field = JSON.parse(JSON.stringify(this.getFieldQuestion(field_name, type)));
-        // We need to pass only selected row to edit page
-        // Create the data for passing to dynamicform
         if (index !== null) {
             const column = field[0]['columns'][index] || [];
             field[0]['columns'] = [];
@@ -213,10 +183,10 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
         this.showDynamicFieldPopup(field, type, index);
     }
+
     deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
         const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
             JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subDomain]));
-        // JSON.parse(JSON.stringify used to remove reference
         const grid_list = pre_value[field_name] || [];
         if (grid_list.length === 1 && index === 0) {
             delete pre_value[field_name];
@@ -230,10 +200,12 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             this.onSubDomainFormSubmit(pre_value);
         }
     }
+
     editDynamicField(field_name, type) {
         const field = this.getFieldQuestion(field_name, type);
         this.showDynamicFieldPopup(field, type);
     }
+
     showDynamicFieldPopup(field, type, grid_row_index = null) {
         this.dynamicdialogRef = this.dialog.open(ProviderUserBprofileSearchDynamicComponent, {
             width: '50%',
@@ -271,10 +243,10 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
             _this.provider_services.getUserBussinessProfile(_this.userId)
                 .subscribe(
                     data => {
@@ -286,11 +258,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 );
         });
     }
+
     getSubDomainVirtualFields() {
         this.getVirtualFields(this.domain,
             this.subDomain).then(
                 data => {
-                    // this.bProfile['subDomainVirtualFields'] = data;
                     this.subdomain_fields = data['fields'];
                     this.subdomain_questions = data['questions'] || [];
                     this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
@@ -309,6 +281,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 }
             );
     }
+
     getdispVal(typ, field) {
         let retfield = '';
         let passArray = [];
@@ -326,7 +299,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     if (str !== '') {
                         str += ', ';
                     }
-                    // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
                     str += this.getFieldDetails(passArray, field.value[i], field.name);
                 }
                 retfield = str;
@@ -336,9 +308,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
         return retfield;
     }
+
     performActions() {
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->additional-info']);
     }
+
     getFieldDetails(passedArray, fieldvalue, fieldname) {
         let retfield;
         if (fieldvalue !== undefined) {
@@ -354,6 +328,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
         return retfield;
     }
+
     showValueswithComma(fld) {
         let str = '';
         if (fld.value !== undefined) {
@@ -366,6 +341,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             return str;
         }
     }
+
     getVirtualFields(domain, subdomin = null) {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -383,6 +359,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 );
         });
     }
+
     setFieldValue(data, subdomin) {
         let fields = [];
         if (subdomin) {
@@ -409,6 +386,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             return data;
         }
     }
+
     getFieldQuestion(field_key = null, type = 'domain_questions') {
         const questions = (type === 'subdomain_questions') ? this.subdomain_questions : this.domain_questions;
         if (field_key != null) {
@@ -421,6 +399,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             return field;
         }
     }
+
     onDomainFormSubmit(post_data) {
         this.provider_services.updateDomainFields(this.userId, post_data)
             .subscribe(
@@ -433,6 +412,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 }
             );
     }
+
     onSubDomainFormSubmit(post_data) {
         this.provider_services.updatesubDomainFields(this.userId, post_data, this.subDomainId)
             .subscribe(
@@ -445,5 +425,4 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 }
             );
     }
-
 }

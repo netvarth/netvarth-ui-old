@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 
@@ -12,8 +11,6 @@ import { SharedFunctions } from '../../../../../../../shared/functions/shared-fu
 })
 
 export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
-
-
   bProfile = null;
   domain_questions: any = [];
   subdomain_questions: any = [];
@@ -25,7 +22,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   active_user;
 
   constructor(private provider_services: ProviderServices,
-    private provider_datastorage: ProviderDataStorageService,
     private service: QuestionService,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
@@ -36,17 +32,14 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
-    console.log(this.data);
     this.subdomain = this.data.subdomain;
     this.grid_row_index = this.data['grid_row_index'];
     if (this.que_type === 'domain_questions') {
       this.domain_questions = this.data['questions'] || [];
       this.title = this.domain_questions[0]['label'];
-
     } else if (this.que_type === 'subdomain_questions') {
       this.subdomain_questions = this.data['questions'] || [];
       this.title = this.subdomain_questions[0]['label'] || '';
-      // this.subdomain = this.bProfile['subDomain'];
     }
     if (this.domain_questions.length === 0 &&
       this.subdomain_questions === 0) {
@@ -55,33 +48,26 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   }
 
   getDomainVirtualFields() {
-
     this.getVirtualFields(this.bProfile['domain'])
       .then(
         data => {
           this.domain_questions = data;
-          // console.log(this.domain_questions);
         }
       );
-
   }
 
   getSubDomainVirtualFields() {
-
     this.getVirtualFields(this.bProfile['domain'],
       this.bProfile['subDomain']).then(
         data => {
           this.subdomain_questions = data;
-          // console.log(this.subdomain_questions);
         }
       );
-
   }
 
   getVirtualFields(domain, subdomin = null) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-
       _this.provider_services.getVirtualFields(domain, subdomin)
         .subscribe(
           data => {
@@ -92,16 +78,11 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
             reject();
           }
         );
-
     });
-
-
   }
 
   setFieldValue(data, subdomin) {
-
     let fields = [];
-
     if (subdomin) {
       fields = (this.bProfile['subDomainVirtualFields'] &&
         this.bProfile['subDomainVirtualFields'][0]) ?
@@ -110,7 +91,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       fields = (this.bProfile['domainVirtualFields']) ?
         this.bProfile['domainVirtualFields'] : [];
     }
-
     if (fields) {
       for (const i in data) {
         if (data[i]) {
@@ -127,14 +107,11 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   }
 
   onDomainFormSubmit(submit_data) {
-
-    console.log(submit_data);
     this.resetApiError();
-
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
-    this.provider_services.updateDomainFields(this.data.userId,post_data)
+    this.provider_services.updateDomainFields(this.data.userId, post_data)
       .subscribe(
         () => {
           this.dialogRef.close('reloadlist');
@@ -146,10 +123,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   }
 
   onSubDomainFormSubmit(submit_data) {
-
-    console.log(submit_data);
     this.resetApiError();
-
     submit_data = this.checkEnumList(this.subdomain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.subdomain_questions, submit_data);
     const post_data = this.setPostData(submit_data);
@@ -166,7 +140,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
       }
     });
     this.provider_services.updatesubDomainFields(this.data.userId, post_data,
-        this.data.subDomainId)
+      this.data.subDomainId)
       .subscribe(
         () => {
           this.dialogRef.close('reloadlist');
@@ -183,7 +157,6 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
         submit_data[row.key] = this.changeEnumValues(submit_data[row.key]);
       }
     }
-
     return submit_data;
   }
 
@@ -208,38 +181,26 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
         submit_data[row.key] = this.changeGridValues(submit_data[row.key], row.key);
       }
     }
-
-    
     return submit_data;
   }
 
   changeGridValues(grid_value_list, key) {
-
-
-    // JSON.parse(JSON.stringify used to remove reference from parent page
     let pre_value = {};
-//     if (this.que_type === 'domain_questions' &&
-//       typeof this.bProfile['domainVirtualFields'] === 'object') {
-//       pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-//       console.log(pre_value);
-//     } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
-// console.log(this.bProfile);
-//       pre_value = this.bProfile.subDomain;
-//       console.log(pre_value);
-//     }
-
+    if (this.que_type === 'domain_questions' &&
+      typeof this.bProfile['domainVirtualFields'] === 'object') {
+      pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
+    } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
+      pre_value = JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+    }
     if (pre_value[key]) {
       if (pre_value[key][this.grid_row_index]) {
         pre_value[key][this.grid_row_index] = grid_value_list[0];
       } else {
-        // pre_value[key].push(grid_value_list[0]);
         pre_value[key].push(grid_value_list[(grid_value_list.length - 1)]);
       }
       return pre_value[key];
-
     } else {
       return grid_value_list;
-
     }
   }
 
@@ -247,48 +208,24 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     const keys = Object.keys(submit_data);
     let pre_value = {};
     if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
-
       pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-      // console.log(pre_value);
     } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
-     pre_value = JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
-      // console.log(pre_value);
+      pre_value = JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
     }
-
     for (const key of keys) {
-
       if (pre_value[key]) {
         if (typeof submit_data[key] === 'string' && submit_data[key] !== '' ||
           (typeof submit_data[key] === 'object' && submit_data[key].length !== 0)) {
           pre_value[key] = submit_data[key];
         } else {
           delete pre_value[key];
-          // used to remove the field if the value is null.
-          // Grid data will delete from view page
         }
-
       } else {
         pre_value[key] = submit_data[key];
       }
     }
-
     return pre_value;
   }
-
-//   getBusinessProfile() {
-
-//     this.provider_services.getBussinessProfile()
-//       .subscribe(
-//         data => {
-//           this.provider_datastorage.set('bProfile', data);
-//           this.bProfile = data;
-//         },
-//         () => {
-
-//         }
-//       );
-
-//   }
 
   resetApiError() {
     this.api_error = null;
@@ -296,8 +233,5 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/learnmore/profile-search->additional-info']);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionobj.sendMessage(pdata);
   }
-
 }
