@@ -8,6 +8,10 @@ import { HeaderModule } from '../../modules/header/header.module';
 import { FooterModule } from '../../modules/footer/footer.module';
 import { MaterialModule } from '../../modules/common/material.module';
 import { LazyModule } from '../../modules/lazy-load/lazy.module';
+import { JaldeepricingComponent } from './pricing/jaldeepricing.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormMessageDisplayModule } from '../../modules/form-message-display/form-message-display.module';
+import { jaldeepricingModule } from './pricing/jaldeepricing.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -17,9 +21,18 @@ import { LazyModule } from '../../modules/lazy-load/lazy.module';
         PhomeRoutingModule,
         RouterModule,
         MaterialModule,
-        LazyModule
+        LazyModule,
+        FormsModule,
+        FormMessageDisplayModule,
+        ReactiveFormsModule,
+        jaldeepricingModule
     ],
-    declarations: [PhomeComponent]
+    declarations: [
+        PhomeComponent],
+         entryComponents: [
+       
+        ],
+        exports: [PhomeComponent]
 })
 
 export class PhomeModule { }

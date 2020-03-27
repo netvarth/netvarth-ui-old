@@ -1,7 +1,7 @@
 
 import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
 import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
 import { MatDialog } from '@angular/material';
@@ -609,4 +609,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.showmoreSearch = false;
     }
   }
+
+gotoPricing() {
+  this.router.navigate(['provider-home','jaldeepricing']);
+ 
+}
+gotoproducts(){
+  const navigationExtras: NavigationExtras = {
+    queryParams: { type: 'products' }
+};
+  this.router.navigate(['provider-home'], navigationExtras);
+}
+gotosales () {
+  const navigationExtras: NavigationExtras = {
+    queryParams: { type: 'sales' }
+};
+  this.router.navigate(['provider-home'], navigationExtras);
+}
 }

@@ -11,7 +11,40 @@
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
             <div class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-            </div>
+            
+            
+                <!-- <div class="container-fluid"> -->
+            <!-- <div class="navbar-header">
+                <button type="button" class="navbar1-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                </div> -->
+          
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <!-- <div  class="" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Jaldee Products</a></li>
+                  <li (click)="gotoPricing()">Jaldee Pricing</li>
+                  <li><a href="#">Jaldee sales</a></li>
+                  <li><a href="#">Contact us</a></li>
+                </ul> -->
+              
+            <!-- </div> -->
+          
+        </div>
+        <div *ngIf=" includedfrom =='phome'">
+            <ul class="navul ">
+            
+                <li class="navli"  (click)="gotoproducts()"> Jaldee Products</li>
+                <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
+              <li class="navli"  (click)="gotosales()">Jaldee Sales</li>
+              <li class="navli" [routerLink]="['/home/contact']" target="_blank">Contact us</li>
+
+            </ul>
+        </div>
             <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
                         class="sgn" (click)="doLogin('consumer')"
