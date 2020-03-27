@@ -49,6 +49,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
     note_placeholder;
     s3url;
     showCheckin = false;
+    checkin = false;
     api_success = null;
     api_error = null;
     api_cp_error = null;
@@ -236,6 +237,11 @@ export class ProviderCreateCheckinComponent implements OnInit {
 
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
+    }
+
+    CHECKIN() {
+        this.checkin = true; 
+        // this.showCheckin = false;     
     }
     selectMode(type) {
         this.selectedMode = type;
