@@ -1,13 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
-//import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
     selector: 'app-global-settings',
     templateUrl: './global-settings.component.html'
 })
 export class GlobalSettingsComponent implements OnInit {
-   // public Editor = ClassicEditor;
     selectedFile = null;
+    footerContent;
+    headerContent;
     richdata;
     fileToUpload;
     imageUrl;

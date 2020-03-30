@@ -9,23 +9,19 @@ import { CommonModule } from '@angular/common';
 import { DisplayboardsComponent } from './displayboards.component';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
 import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
-import { GlobalSettingsComponent } from './global-settings/global-settings.component';
+import { GlobalSettingsModule } from './global-settings/global-settings.module';
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
 import { ContainersComponent } from './containers/containers.component';
 import { ContainerDetailComponent } from './containers/detail/container-detail.component';
-// import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-// import {MatSelectSearchModule} from '../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
-// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 @NgModule({
     declarations: [
         DisplayboardsComponent,
-        DisplayboardDetailComponent,
-        GlobalSettingsComponent
+        DisplayboardDetailComponent
     ],
     imports: [
         DisplayboardsRoutingModule,
         BreadCrumbModule,
-       // CKEditorModule,
         MaterialModule,
         FormMessageDisplayModule,
         FormsModule,
@@ -34,8 +30,7 @@ import { ContainerDetailComponent } from './containers/detail/container-detail.c
         CapitalizeFirstPipeModule,
         CommonModule,
         DisplayboardQSetModule,
-        // MatSelectSearchModule
-        // NgxMatSelectSearchModule
+        GlobalSettingsModule
     ],
     exports: [
         DisplayboardsComponent,

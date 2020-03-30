@@ -4,53 +4,80 @@
 <section>
     <div *ngIf="!is_preview" class="col-md-12 col-xs-12 col-sm-12">
         <div class="table-outer">
-                <div class="pubs card adwds w-dta">
-                        <h6>Header Settings</h6>
-                        <div class="add" style="padding-top: 10px;padding-left: 40px;display: flex;">
-                            <div>
-                                <span>
-                                    <span *ngIf="!is_image"><img style="width: 90px;" src="assets/images/img_uplod.png"
-                                            alt="Jaldee"></span>
-                                    <span *ngIf="is_image"><img style="width: 150px;height:150px;object-fit: scale-down;"
-                                            *ngIf="imageUrl" [src]="imageUrl" class="image"></span>
-                                    <br>
-                                </span>
-                                <input type="file" style="padding-top: 10px;" (change)="onFileSelected($event.target.files)">
-                            </div>
-                            <div>
-                                width<input type="text" [(ngModel)]="width"><br><br>
-                                height<input type="text" [(ngModel)]="height"><br><br>
-                                <mat-form-field>
-                                    <select matNativeControl required>
-                                        <option value="left">Right</option>
-                                        <option value="right">Left</option>
-                                    </select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <!-- <div [innerHTML]="model.editorData"></div>
-                        <div style="padding-left: 200px;padding-top: 30px;">
-                            <ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor>
-                        </div> -->
+            <div class="pubs card adwds w-dta">
+                <h6>Header Settings</h6>
+                <div class="add" style="padding-top: 10px;padding-left: 40px;display: flex;">
+                    <div style="width: 400px;">
+                        <span>
+                            <span *ngIf="!is_image" (click)="fileInput.click()"><img style="width: 90px;"
+                                    src="assets/images/img_uplod.png" alt="Jaldee"></span>
+                            <span *ngIf="is_image" (click)="fileInput.click()"><img
+                                    style="width: 150px;height:150px;object-fit: scale-down;" *ngIf="imageUrl"
+                                    [src]="imageUrl" class="image"></span>
+                            <br>
+
+                            <p *ngIf="!is_image" style="font-weight: 600;">Choose Image</p>
+                            <!-- <p *ngIf="is_image" style="font-weight: 600;">Change Image</p> -->
+                        </span>
+                        <input type="file" style="padding-top: 10px;visibility: hidden;"
+                            (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg" #fileInput>
+
                     </div>
+                    <div class="ynw-common-form-nm">
+                        <table style="width:400px;border: hidden;">
+                            <tr>
+                                <td>Width</td>
+                                <td style="padding-bottom: 10px;"><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px;">Height</td>
+                                <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
+                            </tr>
+                            <tr>
+                                <td>Position</td>
+                                <td>
+                                    <mat-form-field style="width: 150px;">
+                                        <select matNativeControl id="mySelectId">
+                                          <option value="none" sselected>None</option>
+                                          <option value="right">Right</option>
+                                          <option value="left">Left</option>
+                                        </select>
+                                        </mat-form-field>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div style="display: inline-flex;">
+                    <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="headerContent"></div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style=" width: 700px;">
+                        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="headerContent">
+                        </angular-editor>
+                    </div>
+                </div>
+            </div>
         </div>
-        
+
         <div class="table-outer">
             <div class="pubs card adwds w-dta">
                 <h6>Footer Settings</h6>
-                <!-- <div style="padding-left: 200px;">
-                    <ckeditor [editor]="Editor"></ckeditor>
-                </div> -->
+                <div style="display: inline-flex;">
+                    <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="footerContent"></div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style=" width: 700px;">
+                        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="footerContent">
+                        </angular-editor>
+                    </div>
+                </div>
             </div>
             <div class="pubs card adwds w-dta" style="margin-bottom:10px;display: inline-flex;padding-top: 30px;">
-                <button type="button" class="cs-btn bt2">Cancel</button> &nbsp;
-                <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;
+                <button type="button" class="cs-btn bt2">Cancel</button> &nbsp;&nbsp;
+                <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
                 <button type="submit" class="cs-btn bt1">Save</button>
             </div>
-    
         </div>
-        
-        
     </div>
     <div *ngIf="is_preview" class="col-md-12 col-xs-12 col-sm-12">
         <div class="pubs card adwds w-dta">

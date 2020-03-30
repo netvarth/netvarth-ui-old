@@ -9,7 +9,8 @@ const routes: Routes = [
     { path: 'q-set', loadChildren: () => import('./q-set/displayboard-qset.module').then(m => m.DisplayboardQSetModule) },
     { path: 'containers', loadChildren: () => import('./containers/container.module').then(m => m.ContainerModule) },
     { path: ':id', component: DisplayboardDetailComponent },
-  //  { path: 'global', component: GlobalSettingsComponent },
+   // { path: 'global', component: GlobalSettingsComponent },
+    { path: 'global', loadChildren: () => import('./global-settings/global-settings.module').then(m => m.GlobalSettingsModule) },
 ];
 
 @NgModule({
