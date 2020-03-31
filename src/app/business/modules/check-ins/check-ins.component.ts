@@ -524,6 +524,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date') {
         this.filter[type] = null;
+        this.setFilterDateMaxMin();
       } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
@@ -1192,6 +1193,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type === 3) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
+      this.filter_date_start_max = new Date(this.filter_date_start_max);
+      this.filter_date_end_max = new Date(this.filter_date_end_max);
     } else if (this.time_type === 2) {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
@@ -1379,6 +1382,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetLabelFilter();
     this.filterapplied = false;
     this.loadApiSwitch('doSearch');
+    this.setFilterDateMaxMin();
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;

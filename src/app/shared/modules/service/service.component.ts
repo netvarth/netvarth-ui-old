@@ -156,8 +156,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
     isNumeric(evt) {
         return this.sharedFunctons.isNumeric(evt);
     }
-    isvalid(evt) {
-        return this.sharedFunctons.isValid(evt);
+    isvalid(evt, name) {
+        // tslint:disable-next-line:radix
+        const value = parseInt(evt.target.value);
+        // tslint:disable-next-line:radix
+        const max = parseInt(evt.target.max);
+        if (value > max) {
+            let numString = evt.target.value;
+            evt.preventDefault();
+            numString = numString.substr(0, numString.length - 1);
+            // tslint:disable-next-line:radix
+            this.serviceForm.get(name).setValue(parseInt(numString));
+            return false;
+        }
+        return true;
     }
     onAdvanced() {
         if (this.advanced === false) {
@@ -335,5 +347,4 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.sharedFunctons.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
-
 }

@@ -174,7 +174,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     class="form-control number-ip-sm"
                     placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
                     formControlName="qcapacity" autocomplete="off" (keypress)="isNumeric($event)"
-                    (keyup)="isvalid($event)">
+                    (keyup)="isvalid($event, 'qcapacity')">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
         {
@@ -187,7 +187,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             <mat-form-field class="example-full-width">
                 <input matInput min="0" max="{{parallellimit}}" type="text" maxlength="3" class="number-ip-sm"
                     placeholder="{{customer_label | capitalizeFirst}}s served at a time *" formControlName="qserveonce"
-                    autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                    autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'qserveonce')">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
         {
@@ -200,7 +200,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             <mat-form-field class="example-full-width">
                 <input matInput min="0" max="100000" type="text" class="number-ip-sm" placeholder="Token starts from"
                     formControlName="tokennum" autocomplete="off" (keypress)="isNumeric($event)"
-                    (keyup)="isvalid($event)">
+                    (keyup)="isvalid($event, 'tokennum')">
             </mat-form-field>
         </div>
         <div class="form-group" *ngIf="showAdvancedSettings">
@@ -213,7 +213,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 *ngIf="timeSlotStatus || (data.queue && data.queue.appointment === 'Enable')">
                 <input class="number-ip-sm" matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
                     formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
-                    (keyup)="isvalid($event)">
+                    (keyup)="isvalid($event, 'timeSlot')">
             </mat-form-field>
         </div>
         <!-- <div class="form-group inline">

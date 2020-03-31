@@ -61,8 +61,8 @@ export class ProviderNotificationsComponent implements OnInit {
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices) {
-      this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
-     }
+    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+  }
 
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -70,7 +70,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationList();
-    this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
+    this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
   }
   getNotificationList() {
     this.provider_services.getNotificationList()
@@ -422,5 +422,8 @@ export class ProviderNotificationsComponent implements OnInit {
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+  }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
   }
 }

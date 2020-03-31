@@ -1022,8 +1022,8 @@
                             </div>
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
-                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)" *ngIf="board_count > 0"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)"
+                              *ngIf="board_count > 0" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                               <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
                                 *ngIf="!small_device_display && checkin.callingStatus">Stop Calling</span>
                               <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
@@ -1193,7 +1193,7 @@
                           </div>
                         </div>
                         <div class="col-md-5 col-xs-5 p0 info-box-icon-right ">
-                          <a class="statusText btn-play pointer-cursor"
+                          <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0"
                             (click)="callingWaitlist(timeSlotCheckins[slot][0])" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Call'">
                             <i class="fa fa-phone" *ngIf="timeSlotCheckins[slot][0].callingStatus"

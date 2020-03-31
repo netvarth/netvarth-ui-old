@@ -146,8 +146,20 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       });
     }
   }
-  isvalid(evt) {
-    return this.sharedfunctionObj.isValid(evt);
+  isvalid(evt, name) {
+    // tslint:disable-next-line:radix
+    const value = parseInt(evt.target.value);
+    // tslint:disable-next-line:radix
+    const max = parseInt(evt.target.max);
+    if (value > max) {
+      let numString = evt.target.value;
+      evt.preventDefault();
+      numString = numString.substr(0, numString.length - 1);
+      // tslint:disable-next-line:radix
+      this.amForm.get(name).setValue(parseInt(numString));
+      return false;
+    }
+    return true;
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);

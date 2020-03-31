@@ -34,8 +34,10 @@
                 </div>
                 <div class="item" *ngIf="service_data.notificationType">
                     <span>{{end_service_notify_cap}}:
-                        <span class="noti-it" *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
-                        <span class="noti-it" *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                        <span class="noti-it"
+                            *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                        <span class="noti-it"
+                            *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                 </div>
             </div>
             <div class="btm-ctrl">
@@ -54,7 +56,8 @@
     </div>
     <div class="cop-r" *ngIf="action=='show'" style="margin-bottom: 10px;margin-top: 10px;">
         <ul class="info-lst serviceadd-info">
-            <li>Please add this service to the relevant <a class="pointlist" (click)="gotoManageQueue()">Queues </a>by editing it
+            <li>Please add this service to the relevant <a class="pointlist" (click)="gotoManageQueue()">Queues </a>by
+                editing it
             </li>
         </ul>
     </div>
@@ -106,7 +109,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
                         placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
-                    <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
+                    <ngb-timepicker [(ngModel)]="duration" formControlName="serviceDuration">
                     </ngb-timepicker>
                     <!-- </mat-form-field> -->
                     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
@@ -120,7 +123,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
                 <mat-form-field>
                     <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
-                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'totalAmount')"
                         placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
                         autocomplete="off">
                 </mat-form-field>
@@ -149,9 +152,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <ng-container *ngIf="subdomainsettings.serviceBillable">
                     <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
                         <mat-form-field>
-                            <input matInput min="0" max={{maxlimit}} type="text" (keyup)="isvalid($event)"
-                                (keypress)="isNumeric($event)" maxlength="10" class="form-control number-ip-sm"
-                                id="prepayment_amount" placeholder="{{prepayment_cap}} ({{rupee_symbol}}) *"
+                            <input matInput min="0" max={{maxlimit}} type="text"
+                                (keyup)="isvalid($event, 'minPrePaymentAmount')" (keypress)="isNumeric($event)"
+                                maxlength="10" class="form-control number-ip-sm" id="prepayment_amount"
+                                placeholder="{{prepayment_cap}} ({{rupee_symbol}}) *"
                                 formControlName="minPrePaymentAmount" autocomplete="off">
                         </mat-form-field>
                         <app-field-error-display

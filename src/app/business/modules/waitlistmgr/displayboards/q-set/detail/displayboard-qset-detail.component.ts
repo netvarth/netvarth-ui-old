@@ -50,6 +50,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     board_count = 0;
     categoryIds: any = [];
     api_loading = false;
+    multipeLocationAllowed = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -60,6 +61,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
     }
     ngOnInit() {
+        this.getBussinessProfile();
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         if (loc_details) {
@@ -481,5 +483,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     layout_list = data;
                     this.board_count = layout_list.length;
                 });
+    }
+    getBussinessProfile() {
+        const bconf = this.shared_Functionsobj.getitemfromLocalStorage('ynw-bconf');
+        this.provider_services.getBussinessProfile()
+            .subscribe((data: any) => {
+                for (const domains of bconf.bdata) {
+                    if (domains.id === data.serviceSector.id) {
+                        this.multipeLocationAllowed = domains.multipleLocation;
+                    }
+                }
+            });
     }
 }
