@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GlobalSettingsComponent } from './global-settings.component';
 
 const routes: Routes = [
-    { path: '', component: GlobalSettingsComponent},
-  //  { path: ':id', component: GlobalSettingsComponent }
+    { path: '', component: GlobalSettingsComponent}
 ];
 
 @NgModule({
@@ -12,3 +11,4 @@ const routes: Routes = [
     exports: [RouterModule]
 })
 export class GlobalSettingsRoutingModule {}
+

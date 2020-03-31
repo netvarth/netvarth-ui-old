@@ -38,17 +38,17 @@ export class GlobalSettingsComponent implements OnInit {
     }
     onFileSelected(file: FileList) {
       this.fileToUpload = file.item(0);
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (event: any) => {
         this.imageUrl = event.target.result;
         this.is_image = true;
-      }
+      };
       reader.readAsDataURL(this.fileToUpload);
     }
-    showPreview(){
+    showPreview() {
         this.is_preview = true;
     }
-    closePrevw(){
+    closePrevw() {
         this.is_preview = false;
     }
     onUpload() {
