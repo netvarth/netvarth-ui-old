@@ -1260,29 +1260,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelFilterData = '';
   }
   showAdjustDelay() {
-    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
-      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
-      return false;
-    }
-    this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'adjust-delay'],
-      disableClose: true,
-      data: {
-        queues: this.queues,
-        queue_id: this.selected_queue.id,
-        queue_name: this.selected_queue.name,
-        instant_queue: this.selected_queue.instantQueue,
-        queue_schedule: this.selected_queue.queueSchedule.timeSlots[0].sTime + '-' + this.selected_queue.queueSchedule.timeSlots[0].eTime,
-        checkedin_count: this.today_checkedin_count,
-        arrived_count: this.today_arrived_count
-      }
-    });
-    this.adjustdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getTodayCheckIn();
-      }
-    });
+    this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
+    // if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
+    //   this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
+    //   return false;
+    // }
+    // this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'adjust-delay'],
+    //   disableClose: true,
+    //   data: {
+    //     queues: this.queues,
+    //     queue_id: this.selected_queue.id,
+    //     queue_name: this.selected_queue.name,
+    //     instant_queue: this.selected_queue.instantQueue,
+    //     queue_schedule: this.selected_queue.queueSchedule.timeSlots[0].sTime + '-' + this.selected_queue.queueSchedule.timeSlots[0].eTime,
+    //     checkedin_count: this.today_checkedin_count,
+    //     arrived_count: this.today_arrived_count
+    //   }
+    // });
+    // this.adjustdialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //     this.getTodayCheckIn();
+    //   }
+    // });
   }
   editLocation() {
     this.locations.forEach((loc, index) => {

@@ -52,7 +52,7 @@
                                     <mat-form-field>
                                         <mat-select placeholder="Services" [(ngModel)]="selectedServiceIds" [multiple]="true">
                                             <ngx-mat-select-search placeholderLabel="Search services"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let serNames of service_list" [value] = "services" (click) = "servSelected(serNames.id)">
+                                            <mat-option *ngFor=" let serNames of service_list" [value] = "serNames" (click) = "servSelected(serNames.id)">
                                                 {{serNames.name | capitalizeFirst}}
                                             </mat-option>
                                         </mat-select>
@@ -66,7 +66,7 @@
                                     <mat-form-field>
                                         <mat-select placeholder="Queues" [(ngModel)]="selectedQIds" [multiple]="true">
                                             <ngx-mat-select-search placeholderLabel="Search queues"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let queues of qstoDisplay" [value] = "queues" (click) = "selectedQs(queues.id)">
+                                            <mat-option *ngFor=" let queues of queuestoDisplay" [value] = "queues" (click) = "selectedQs(queues.id)">
                                                 {{queues.name}}
                                                 {{queues.displayschedule[0].dstr}}[{{queues.displayschedule[0].time}}]
                                             </mat-option>

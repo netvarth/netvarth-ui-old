@@ -10,6 +10,7 @@ import { CustomViewComponent } from './custom-view/custom-view.component';
 import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 import { from } from 'rxjs';
 import { CustomViewListComponent } from './custom-view-list/custom-view-list.component';
+import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay.component';
 // { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
 const routes: Routes = [
     { path: '', component: CheckInsComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
         children: [
             {path : 'create' ,component :ProviderCreateCheckinComponent },
             {path : 'add', component : ProviderCheckinComponent},
+            {path : 'adjustdelay', component : AdjustqueueDelayComponent},
             {path: 'custom-view', component: CustomViewComponent},
             {path: 'custom-view-list' , component: CustomViewListComponent},
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },

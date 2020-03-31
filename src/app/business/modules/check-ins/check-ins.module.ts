@@ -3,6 +3,7 @@ import { CheckInsComponent } from './check-ins.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
+import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { CheckinsRoutingModule } from './check-ins.routing.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -24,7 +25,6 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CustomViewComponent } from './custom-view/custom-view.component';
 import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 import { CustomViewListComponent } from './custom-view-list/custom-view-list.component';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -42,8 +42,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         FormMessageDisplayModule,
         CheckinAddMemberModule,
         NgbModule,
-        OwlModule,
-        NgxMatSelectSearchModule
+        OwlModule
     ],
     declarations: [
         CheckInsComponent,
@@ -52,11 +51,12 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
+        AdjustqueueDelayComponent,
         LocateCustomerComponent,
         ProviderWaitlistCheckInDetailComponent,
         ApplyLabelComponent,
         CustomViewComponent,
-        CustomViewListComponent,
+        CustomViewListComponent
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,
