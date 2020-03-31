@@ -15,11 +15,15 @@ export class CustomViewComponent implements OnInit {
     departments: any = [];
     service_list: any = [];
     selectedDepts: any = [];
+    selectedDeptIds: any = [];
     selectedDocts: any = [];
+    selectedUserIds: any = [];
     selectedServices: any = [];
+    selectedServiceIds: any = [];
     users_list: any = [];
     qstoDisplay: any = [];
     selectedQueues: any = [];
+    selectedQIds: any = [];
     deptObj;
     viewDetailsList: any = [];
     firstFormGroup: FormGroup;
@@ -41,10 +45,13 @@ export class CustomViewComponent implements OnInit {
         private provider_services: ProviderServices) {
             this.activated_route.queryParams.subscribe((qparams) => {
                 this.viewId = qparams.id;
-                this.getView(this.viewId);
+                if (this.viewId) {
+                    this.getView(this.viewId);
+                }
             });
     }
     ngOnInit() {
+        this.getDepartments();        
     }
     getView(viewId) {
             this.provider_services.getCustomViewDetail(viewId)
@@ -54,19 +61,24 @@ export class CustomViewComponent implements OnInit {
                         this.viewDetailsList = data;
                         this.customViewName = this.viewDetailsList.name;
                         this.getDepartments();
+                        this.selectedDeptIds = this.viewDetailsList.customViewConditions.departments;
+                        console.log(this.selectedDeptIds);
                         for (const id of this.viewDetailsList.customViewConditions.departments) {
                             this.selectedDepts.push(id.departmentId);
                         }
                         this.getUsers();
+                        this.selectedUserIds = this.viewDetailsList.customViewConditions.users;
                         for (const id of this.viewDetailsList.customViewConditions.users) {
                             this.selectedDocts.push(id.id);
                         }
                         this.getServices();
                         console.log(this.selectedDocts);
                         this.getQs();
+                        this.selectedServiceIds = this.viewDetailsList.customViewConditions.services;
                         for (const id of this.viewDetailsList.customViewConditions.services) {
                             this.selectedServices.push(id.id);
                         }
+                        this.selectedQIds = this.viewDetailsList.customViewConditions.queues;
                         for (const id of this.viewDetailsList.customViewConditions.queues) {
                             this.selectedQueues.push(id.id);
                         }
@@ -126,18 +138,19 @@ export class CustomViewComponent implements OnInit {
                 });
     }
     depSelected(depIds) {
-        if (this.selectedDepts.indexOf(depIds) === -1) {
-            this.selectedDepts.push(depIds);
-            // this.departments[i].selected = true;
-        } else {
-            this.selectedDepts.splice(this.selectedDepts.indexOf(depIds), 1);
-            // this.departments[i].selected = false;
-        }
+        console.log(depIds);
+     if (this.selectedDepts.indexOf(depIds) === -1) {
+             this.selectedDepts.push(depIds);
+             this.getUsers();
+         } else {
+             this.selectedDepts.splice(this.selectedDepts.indexOf(depIds), 1);
+         }
     }
     doctorSelected(userIds) {
         // this.users_list[i].selected = !this.users_list[i].selected;
         if (this.selectedDocts.indexOf(userIds) === -1) {
             this.selectedDocts.push(userIds);
+            this.getServices();
             // this.users_list[index].selected = true;
         } else {
             this.selectedDocts.splice(this.selectedDocts.indexOf(userIds), 1);
@@ -147,6 +160,7 @@ export class CustomViewComponent implements OnInit {
     servSelected(servIds) {
         if (this.selectedServices.indexOf(servIds) === -1) {
             this.selectedServices.push(servIds);
+            this.getQs();
         } else {
             this.selectedServices.splice(this.selectedServices.indexOf(servIds), 1);
         }
@@ -208,11 +222,13 @@ export class CustomViewComponent implements OnInit {
         if (this.viewId) {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data: any) => {
+                    this.shared_functions.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
                 }
             );
         } else {
             this.provider_services.createCustomView(customViewInput).subscribe(
                 (data: any) => {
+                    this.shared_functions.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
                 }
             );
         }

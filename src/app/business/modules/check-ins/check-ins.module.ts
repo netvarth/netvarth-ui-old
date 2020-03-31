@@ -24,6 +24,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CustomViewComponent } from './custom-view/custom-view.component';
 import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 import { CustomViewListComponent } from './custom-view-list/custom-view-list.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { CustomViewListComponent } from './custom-view-list/custom-view-list.com
         FormMessageDisplayModule,
         CheckinAddMemberModule,
         NgbModule,
-        OwlModule
+        OwlModule,
+        NgxMatSelectSearchModule
     ],
     declarations: [
         CheckInsComponent,
@@ -54,7 +56,7 @@ import { CustomViewListComponent } from './custom-view-list/custom-view-list.com
         ProviderWaitlistCheckInDetailComponent,
         ApplyLabelComponent,
         CustomViewComponent,
-        CustomViewListComponent
+        CustomViewListComponent,
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,
