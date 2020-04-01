@@ -182,12 +182,13 @@ export class ProviderCreateCheckinComponent implements OnInit {
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
-        this.activated_route.queryParams.subscribe(qparams => {
+        this.activated_route.queryParams.subscribe(qparams => {            
             console.log(this.qParams);
-            //     this.uuid = params.id;
-            //   });
-
-
+                      this.customer_data.firstName = qparams.firstName;
+                      this.customer_data.lastName = qparams.lastName;
+                      this.customer_data.email = qparams.email;
+                      this.customer_data.dob = qparams.dob;                      
+                      console.log(this.customer_data.firstName);                  
         });
     }
     ngOnInit() {
@@ -238,7 +239,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
         });
     }
     createNew() {
-        const navigationExtras: NavigationExtras = {
+       const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);

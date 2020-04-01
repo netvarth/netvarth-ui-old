@@ -41,6 +41,9 @@ export class CustomerDetailComponent implements OnInit {
     source;
     phoneNo: any;
     email: any;
+    firstName:any;
+    lastName:any;
+    dob:any;
 
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
@@ -116,7 +119,7 @@ export class CustomerDetailComponent implements OnInit {
             'address': form_data.address,
             //   }
         };
-
+      
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
@@ -124,12 +127,21 @@ export class CustomerDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                     const qParams = {};
                     console.log(data);
+                  
+                    console.log(qParams);
                     qParams['pid'] = data;
+                    console.log(post_data);
                     if (this.source === 'checkin') {
                         const navigationExtras: NavigationExtras = {
-                            queryParams : qParams
-                        };
-                        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras );
+                            queryParams : {qParams ,
+                                firstName:post_data.firstName,
+                                lastName:post_data.lastName,
+                                phoneNo: post_data.phoneNo,
+                                email: post_data.email,                               
+                                dob:post_data.dob
+                             }                    
+                            };
+                         this.router.navigate(['provider', 'check-ins', 'create'], navigationExtras );
                     } else {
                         this.amForm.reset();
                     }
