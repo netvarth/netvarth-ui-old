@@ -206,24 +206,27 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedServices.splice(this.selectedServices.indexOf(servIds), 1);
         }
-        console.log(this.qSelection());
+        this.qSelection();
     }
     qSelection() {
         console.log(this.selectedServiceIds);
-        console.log(this.qstoDisplay);
-        for (let i = 0; i < this.selectedServiceIds.length; i++) {
-            for (let j = 0; j < this.qstoDisplay.length; j++) {
-                for (let k = 0; k < this.qstoDisplay[j].services.length; k++) {
-                    if (this.selectedServiceIds[i].id === this.qstoDisplay[j].services[k].id) {
-                        // console.log(this.selectedServiceIds[i].id);
-                        // this.queuestoDisplay.push(this.qstoDisplay[j]);
-                        return true;
+        const qs = [];
+        if (this.selectedServiceIds.length > 0) {
+            for (let i = 0; i < this.selectedServiceIds.length; i++) {
+                for (let j = 0; j < this.qstoDisplay.length; j++) {
+                    for (let k = 0; k < this.qstoDisplay[j].services.length; k++) {
+                        if (this.selectedServiceIds[i].id === this.qstoDisplay[j].services[k].id) {
+                            qs.push(this.qstoDisplay[j]);
+                        }
                     }
                 }
             }
+            console.log(qs);
+            this.qstoDisplay = qs;
+            return false;
+        } else {
+            this.qstoDisplay = this.queuestoDisplay;
         }
-        return false;
-        // console.log(this.queuestoDisplay);
     }
     selectedQs(QIds) {
         if (this.selectedQueues.indexOf(QIds) === -1) {
@@ -270,7 +273,7 @@ export class CustomViewComponent implements OnInit {
                 qids.push({ 'id': id });
             }
         } else {
-            for (const id of this.queuestoDisplay) {
+            for (const id of this.qstoDisplay) {
                 qids.push({ 'id': id.id });
             }
         }
