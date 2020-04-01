@@ -4,8 +4,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute } from '@angular/router';
 
-
-
 @Component({
     selector: 'app-custom-view',
     templateUrl: './custom-view.component.html'
@@ -67,10 +65,6 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.providerQs = data;
-                    // for (const q of data) {
-                    //     this.providerQs.push(q.id);
-                    // }
-                    // console.log(this.providerQs);
                 });
     }
     getAccountServices() {
@@ -81,22 +75,16 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.providerServices = data;
-                    // for (const q of data) {
-                    //     this.providerServices.push(q.id);
-                    // }
-                    // console.log(this.providerServices);
                 });
     }
     getView(viewId) {
         this.provider_services.getCustomViewDetail(viewId)
             .subscribe(
                 data => {
-
                     this.viewDetailsList = data;
                     this.customViewName = this.viewDetailsList.name;
                     this.getDepartments();
                     this.selectedDeptIds = this.viewDetailsList.customViewConditions.departments;
-                    // console.log(this.selectedDeptIds);
                     for (const id of this.viewDetailsList.customViewConditions.departments) {
                         this.selectedDepts.push(id.departmentId);
                     }
@@ -106,7 +94,6 @@ export class CustomViewComponent implements OnInit {
                         this.selectedDocts.push(id.id);
                     }
                     this.getServices();
-                    // console.log(this.selectedDocts);
                     this.getQs();
                     this.selectedServiceIds = this.viewDetailsList.customViewConditions.services;
                     for (const id of this.viewDetailsList.customViewConditions.services) {
@@ -145,11 +132,9 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 data => {
                     this.service_list = data;
-                    // console.log(this.service_list);
                     if (this.selectedDocts.length === 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
-                    // console.log(this.selectedDocts);
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -170,13 +155,9 @@ export class CustomViewComponent implements OnInit {
                     let allQs: any = [];
                     this.qstoDisplay = [];
                     allQs = data;
-                    // console.log(this.providerQs);
-                    // console.log(allQs);
                     if (this.selectedDocts.length === 0) {
-                        // console.log(this.selectedDocts);
                         allQs = allQs.concat(this.providerQs);
                     }
-                    // console.log(allQs);
                     for (let ii = 0; ii < allQs.length; ii++) {
                         let schedule_arr = [];
                         if (allQs[ii].queueSchedule) {
@@ -187,21 +168,17 @@ export class CustomViewComponent implements OnInit {
                         allQs[ii]['displayschedule'] = display_schedule;
                     }
                     for (let ii = 0; ii < allQs.length; ii++) {
-                        // console.log(this.qstoDisplay);
-                        // console.log(allQs[ii]);
                         if (allQs[ii].queueState === 'ENABLED' && this.qstoDisplay.indexOf(allQs[ii]) === -1) {
                             this.qstoDisplay.push(allQs[ii]);
                         }
                     }
                     this.queuestoDisplay = this.qstoDisplay;
-                    console.log(this.queuestoDisplay);
                 },
                 (error) => {
-                    console.log(error);
+
                 });
     }
     depSelected(depIds) {
-        // console.log(depIds);
         if (this.selectedDepts.indexOf(depIds) === -1) {
             this.selectedDepts.push(depIds);
             this.getUsers();
@@ -217,7 +194,6 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedDocts.splice(this.selectedDocts.indexOf(userIds), 1);
         }
-        // console.log(this.selectedDocts);
         if (this.selectedDocts.length === 0) {
             this.getQs(this.selectedDoctors);
             this.getServices(this.selectedDoctors);
@@ -230,35 +206,24 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedServices.splice(this.selectedServices.indexOf(servIds), 1);
         }
-        // this.qSelection();
-        // // console.log(this.selectedServiceIds);
-        // // console.log(this.qstoDisplay);
-        // for (let i = 0; i < this.selectedServiceIds.length; i++) {
-        //     for (let j = 0; j < this.qstoDisplay.length; j++) {
-        //         for (let k = 0; k < this.qstoDisplay[j].services.length; k++) {
-        //             if (this.selectedServiceIds[i].id === this.qstoDisplay[j].services[k].id) {
-        //                 // console.log(this.qstoDisplay[j].name);
-        //                 this.queuestoDisplay.push(this.qstoDisplay[j]);
-        //             }
-        //         }
-        //     }
-        // }
-        // console.log(this.queuestoDisplay);
+        console.log(this.qSelection());
     }
     qSelection() {
-          console.log(this.selectedServiceIds);
-        // console.log(this.qstoDisplay);
+        console.log(this.selectedServiceIds);
+        console.log(this.qstoDisplay);
         for (let i = 0; i < this.selectedServiceIds.length; i++) {
             for (let j = 0; j < this.qstoDisplay.length; j++) {
                 for (let k = 0; k < this.qstoDisplay[j].services.length; k++) {
                     if (this.selectedServiceIds[i].id === this.qstoDisplay[j].services[k].id) {
-                        console.log(this.qstoDisplay[j].name);
-                        this.queuestoDisplay.push(this.qstoDisplay[j]);
+                        // console.log(this.selectedServiceIds[i].id);
+                        // this.queuestoDisplay.push(this.qstoDisplay[j]);
+                        return true;
                     }
                 }
             }
         }
-        console.log(this.queuestoDisplay);
+        return false;
+        // console.log(this.queuestoDisplay);
     }
     selectedQs(QIds) {
         if (this.selectedQueues.indexOf(QIds) === -1) {
@@ -267,16 +232,7 @@ export class CustomViewComponent implements OnInit {
             this.selectedQueues.splice(this.selectedQueues.indexOf(QIds), 1);
         }
     }
-    // userFilters() {
-    //     let apiFilter = {};
-    //     apiFilter['userType-eq'] = 'PROVIDER';
-    //     if (this.selectedDepts.length > 0) {
-    //         apiFilter['departmentId-eq'] = this.selectedDepts.toString();
-    //     }
-    //     return apiFilter;
-    // }
     getUsers() {
-        // let passingFilters = this.userFilters();
         const apiFilter = {};
         apiFilter['userType-eq'] = 'PROVIDER';
         if (this.selectedDepts.length > 0) {
@@ -290,10 +246,8 @@ export class CustomViewComponent implements OnInit {
                         this.selectedDoctors.push(user.id);
                     }
                 }
-                // setTimeout(() => {
                 this.getQs(this.selectedDoctors);
                 this.getServices(this.selectedDoctors);
-                // }, 1000);
             }
         );
     }
@@ -307,27 +261,19 @@ export class CustomViewComponent implements OnInit {
             userids.push({ 'id': id });
         }
         const servicesids = [];
-        // if (this.selectedServices.length !== 0) {
         for (const id of this.selectedServices) {
             servicesids.push({ 'id': id });
         }
-        // } else {
-        //     for (const id of this.providerServices) {
-        //         servicesids.push({ 'id': id });
-        //     }
-        // }
-
         const qids = [];
-        // console.log(this.selectedQueues);
-        // if (this.selectedQueues.length !== 0) {
-        for (const id of this.selectedQueues) {
-            qids.push({ 'id': id });
+        if (this.selectedQueues.length !== 0) {
+            for (const id of this.selectedQueues) {
+                qids.push({ 'id': id });
+            }
+        } else {
+            for (const id of this.queuestoDisplay) {
+                qids.push({ 'id': id.id });
+            }
         }
-        // } else {
-        //     for (const id of this.providerQs) {
-        //         qids.push({ 'id': id });
-        //     }
-        // }
         const customViewInput = {
             'name': this.customViewName,
             'merged': true,
@@ -337,17 +283,16 @@ export class CustomViewComponent implements OnInit {
                 'services': servicesids,
                 'queues': qids
             }
-
         };
         if (this.viewId) {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
-                (data: any) => {
+                (data) => {
                     this.shared_functions.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
                 }
             );
         } else {
             this.provider_services.createCustomView(customViewInput).subscribe(
-                (data: any) => {
+                (data) => {
                     this.shared_functions.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
                 }
             );
