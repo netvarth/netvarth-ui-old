@@ -6,53 +6,51 @@
         <div class="table-outer">
             <div class="pubs card adwds w-dta">
                 <h6>Header Settings</h6>
-                <div class="add" style="padding-top: 10px;padding-left: 40px;display: flex;">
-                    <div style="width: 400px;">
+                <div class="add glbl-seting-body">
+                    <div class="glbl-seting-cmn-width">
                         <span>
-                            <span *ngIf="!is_image" (click)="fileInput.click()"><img style="width: 90px;"
-                                    src="assets/images/img_uplod.png" alt="Jaldee"></span>
-                            <span id="image" *ngIf="is_image" (click)="fileInput.click()">
-                                    <img class="glbl-seting-img" *ngIf="imageUrl" [src]="imageUrl">
-                                </span>
+                            <span *ngIf="!is_image" (click)="fileInput.click()"><img class="glbl-seting-img-width" src="assets/images/img_uplod.png" alt="Jaldee"></span>
+                            <span *ngIf="is_image" (click)="fileInput.click()">
+                                <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
+                            </span>
                             <br>
 
-                            <p *ngIf="!is_image" style="font-weight: 600;">Choose Image</p>
+                            <p *ngIf="!is_image" class="glbl-seting-font-wight">Choose Image</p>
                             <!-- <p *ngIf="is_image" style="font-weight: 600;">Change Image</p> -->
                         </span>
-                        <input type="file" style="padding-top: 10px;visibility: hidden;"
-                            (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg" #fileInput>
-
+                        <input type="file" class="glbl-seting-btn" (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg" #fileInput>
                     </div>
                     <div class="ynw-common-form-nm">
-                        <table style="width:400px;border: hidden;">
+                        <table class="glbl-seting-tbl">
                             <tr>
                                 <td>Width</td>
-                                <td style="padding-bottom: 10px;"><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
+                                <td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding-bottom: 10px;">Height</td>
+                                <td>Height</td>
                                 <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
                             </tr>
                             <tr>
                                 <td>Position</td>
                                 <td>
-                                    <mat-form-field style="width: 150px;">
+                                    <mat-form-field>
                                         <select matNativeControl id="mySelectId">
-                                          <option value="none" sselected>None</option>
-                                          <option value="right">Right</option>
-                                          <option value="left">Left</option>
+                                            <option value="none" sselected>None</option>
+                                            <option value="right">Right</option>
+                                            <option value="left">Left</option>
                                         </select>
-                                        </mat-form-field>
+                                    </mat-form-field>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div style="display: inline-flex;">
-                    <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="headerContent"></div>
+                <div class="glbl-seting-heder">
+                    <div class="glbl-seting-heder-div" [innerHTML]="headerContent">
+                    </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div style=" width: 700px;border: ridge;">
+                    <div class="glbl-seting-editor">
                         <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="headerContent"></ckeditor>
                     </div>
                 </div>
@@ -62,27 +60,33 @@
         <div class="table-outer">
             <div class="pubs card adwds w-dta">
                 <h6>Footer Settings</h6>
-                <div style="display: inline-flex;">
-                    <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="footerContent"></div>
+                <div class="glbl-seting-heder">
+                    <div class="glbl-seting-heder-div" [innerHTML]="footerContent">
+                    </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div style="width: 700px;border: ridge;">
+                    <div class="glbl-seting-editor">
                         <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent"></ckeditor>
                     </div>
                 </div>
             </div>
-            <div class="pubs card adwds w-dta" style="margin-bottom:10px;display: inline-flex;padding-top: 30px;">
+            <div class="pubs card adwds w-dta glbl-seting-buttons">
                 <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
                 <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
                 <button type="submit" class="cs-btn bt1">Save</button>
             </div>
         </div>
     </div>
-    <div *ngIf="is_preview" class="col-md-12 col-xs-12 col-sm-12">
-        <div class="pubs card adwds w-dta">
-            <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" *ngIf="imageUrl" [src]="imageUrl"
-                class="image">
-            <div [innerHTML]="model.editorData"></div>
-            <button (click)="closePrevw()">close</button>
+    <!-- Page preview code comes here -->
+    <div *ngIf=!show_visible style="visibility: hidden;"  id="previewPage">
+        <div style="text-align-last: center;padding-top: 50px">
+            <p>{{headerContent}}</p>
+        </div>
+        <div style="text-align-last: center" >
+            <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="imageUrl">
+        </div>
+        <div style="text-align-last: center;padding-top: 50px">
+            <p>{{footerContent}}</p>
         </div>
     </div>
+
 </section>

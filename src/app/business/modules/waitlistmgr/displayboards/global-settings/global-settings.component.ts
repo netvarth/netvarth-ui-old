@@ -19,6 +19,7 @@ export class GlobalSettingsComponent implements OnInit {
     is_preview = false;
     width;
     height;
+    show_visible = false;
     public model = {
         editorData: ''
     };
@@ -40,7 +41,6 @@ export class GlobalSettingsComponent implements OnInit {
         }
     ];
     largeImage: string;
-    imageWidth: any;
     constructor(
         private router: Router) {
     }
@@ -67,27 +67,10 @@ export class GlobalSettingsComponent implements OnInit {
         reader.readAsDataURL(this.fileToUpload);
     }
     showPreview() {
-        this.largeImage = document.getElementById('image').innerHTML;
-        this.imageWidth = this.width;
-        console.log(this.imageWidth)
+        this.largeImage = document.getElementById('previewPage').innerHTML;
         const WindowPrt = window.open('', '', 'left=0,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
-        WindowPrt.document.write('<html><head><title></title>');
-        WindowPrt.document.write('</head><body>');
-        WindowPrt.document.write('<div style="text-align-last: center;padding-top: 50px">');
-        WindowPrt.document.write('<p>' + this.headerContent + '<p>');
-        WindowPrt.document.write('</div>');
-        WindowPrt.document.write('<div style="text-align-last: center;">');
         WindowPrt.document.write('<p>' + this.largeImage + '<p>');
-        WindowPrt.document.write('</div>');
-        WindowPrt.document.write('<div style="text-align-last: center;padding-top: 50px">');
-        WindowPrt.document.write('<p>' + this.footerContent + '<p>');
-        WindowPrt.document.write('</div>');
-        WindowPrt.document.write('</body></html>');
         WindowPrt.document.close();
-
-    }
-    closePrevw() {
-        this.is_preview = false;
     }
     onUpload() {
 

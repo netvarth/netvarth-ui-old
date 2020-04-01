@@ -7604,5 +7604,49 @@ width: fit-content;
   width: 150px !important;
   height: 150px  !important;
   object-fit: scale-down !important;
-} 
-
+}
+.glbl-seting-body{
+  padding-top: 10px !important;
+  padding-left: 40px !important;
+  display: flex !important;
+}
+.glbl-seting-cmn-width{
+  widows: 400px !important;
+}
+.glbl-seting-img-width{
+  width:90px !important;
+}
+.glbl-seting-font-wight{
+font-weight: 600px !important;
+}
+.glbl-seting-btn{
+  padding-top: 10px !important;
+  visibility: hidden !important;
+}
+.glbl-seting-tbl{
+  width:400px !important;
+  border: hidden !important;
+}
+.glbl-seting-tbl td{
+  padding-bottom: 10px !important;
+}
+.glbl-seting-tbl mat-form-field{
+  width: 150px !important;
+}
+.glbl-seting-heder{
+  display: inline-flex !important;
+}
+.glbl-seting-heder-div{
+  width: 400px;
+  overflow-wrap: break-word;
+  padding-top: 20px;
+}
+.glbl-seting-editor{
+  width: 700px !important;
+  border: ridge !important;
+}
+.glbl-seting-buttons{
+  margin-bottom:10px !important;
+  display: inline-flex !important;
+  padding-top: 30px !important;
+}
