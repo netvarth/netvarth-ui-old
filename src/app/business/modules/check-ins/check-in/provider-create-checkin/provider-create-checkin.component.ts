@@ -173,6 +173,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
     carouselOne;
     notes = false;
     attachments = false;
+    customer: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -182,6 +183,11 @@ export class ProviderCreateCheckinComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            console.log(this.qParams);
+            //     this.uuid = params.id;
+            //   });
+
+
         });
     }
     ngOnInit() {
@@ -215,7 +221,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
             },
             {
 
-                title :'Create CheckIn'
+                title :'Find and Ceate customer'
                 // title: this.get_token_cap
             }
         ];
@@ -227,14 +233,13 @@ export class ProviderCreateCheckinComponent implements OnInit {
         this.getDisplayboardCount();
     }
     createForm() {
-        this.searchForm = this.fb.group({
+                this.searchForm = this.fb.group({
             search_input: ['', Validators.compose([Validators.required])]
         });
     }
     createNew() {
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
-
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
@@ -252,6 +257,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
             this.searchCustomer(form_data);
         }
     }
+   
     searchCustomer(form_data) {
         this.qParams = {};
         let mode = 'id';
@@ -275,7 +281,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
             }
         }
         this.qParams['source'] = 'checkin';
-        switch (mode) {
+              switch (mode) {
             case 'phone':
                 post_data = {
                     'phoneNo-eq': form_data.search_input
@@ -302,9 +308,11 @@ export class ProviderCreateCheckinComponent implements OnInit {
                         this.form_data = data;
                         this.create_new = true;
                     } else {
+                       
                         this.customer_data = data[0];
                         this.getFamilyMembers();
                         this.initCheckIn();
+                         console.log(this.customer_data);
                     }
                 },
                 error => {
@@ -312,6 +320,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
                 }
             );
     }
+    
     initCheckIn() {
         this.showCheckin = true;
         this.waitlist_for = [];
@@ -783,6 +792,7 @@ export class ProviderCreateCheckinComponent implements OnInit {
                     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION'));
                 }
                 this.showCheckin = false;
+                this.checkin = false; 
                 this.searchForm.reset();
             },
                 error => {

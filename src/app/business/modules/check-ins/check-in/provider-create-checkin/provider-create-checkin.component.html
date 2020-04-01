@@ -25,28 +25,48 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-md-12 no-padding" *ngIf="create_new">
+                            <!-- <div class="col-md-12 no-padding" *ngIf="create_new">
                                 <hr class="wide-separator-line" />
-                            </div>
-                            <div class=""*ngIf="create_new" >
+                            </div> -->
+                            <div class="" *ngIf="create_new" >
                             <div class="create_new mgn-bt-20"*ngIf="!showCheckin">
                                 <span>Sorry, We were not able to find the record in our {{customer_label}}s list.</span>
                                 <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
                                     {{customer_label}}</button>
                             </div>
                         </div>
-
+                               
                             <div class="create_new mgn-bt-20" *ngIf="showCheckin">
-                                <span>This {{customer_label}} Already in jaldee Do You want take </span>
-                                <button class="create_new_button cs-btn bt3" (click)="CHECKIN()">CHECKIN</button>
-                            </div>
+                               
+                                    <div class="col-md-6" class="createcheckin">
+                                        <div><b>Name:</b></div>
+                                        <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
+                                    </div>
+                                    <div class="col-md-6" class="createcheckin">
+                                        <div><b>phoneNo:</b></div>
+                                        <div>{{customer_data.phoneNo}}</div>
+                                    </div>
+                                    <div class="col-md-6"  class="createcheckin">
+                                        <div><b>Email:</b></div>
+                                        <div>{{customer_data.email}}</div>
+                                    </div>
+                                    <div class="col-md-6" class="createcheckin">
+                                         <div><b>Dob</b></div>
+                                         <div>{{customer_data.dob}}</div>
+                                     </div>                                                           
+                                 <hr class="wide-separator-line" />
+                                <span>Do You want take Check-In For this {{customer_label}} </span>
+                                <!-- <button class="create_new_button cs-btn bt3" (click)="CHECKIN()">clickHere </button> -->
+                                <i class = "fa fa- pointer-cursor" (click)="CHECKIN()" > <u>clickHere</u> </i>
+                                
+                                   </div>
                         </div>
                         <div class="lbr col-sm-12 col-md-4 col-lg-4">
                         </div>
                     </div>
                 </div>
             </div>
-  
+            
             <div class="card p0" *ngIf="checkin">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-7 col-lg-7">
@@ -215,7 +235,7 @@
                                         </ng-container>
                                     </div>
                                 </ng-container>
-                                <!-- <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner> -->
+                                <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                             </div>
                             <div class="col-md-12 mgn-up-20" *ngIf="consumerNote" >
                                 <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
