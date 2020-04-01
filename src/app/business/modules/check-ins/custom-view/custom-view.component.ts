@@ -209,7 +209,6 @@ export class CustomViewComponent implements OnInit {
         this.qSelection();
     }
     qSelection() {
-        console.log(this.selectedServiceIds);
         const qs = [];
         if (this.selectedServiceIds.length > 0) {
             for (let i = 0; i < this.selectedServiceIds.length; i++) {
@@ -221,7 +220,6 @@ export class CustomViewComponent implements OnInit {
                     }
                 }
             }
-            console.log(qs);
             this.qstoDisplay = qs;
             return false;
         } else {

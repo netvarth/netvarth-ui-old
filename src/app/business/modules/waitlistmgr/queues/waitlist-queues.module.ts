@@ -6,7 +6,7 @@ import { WaitlistQueueDetailComponent } from './details/waitlist-queuedetail.com
 import { WaitlistQueuesRoutingModule } from './waitlist-queues.routing.module';
 import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../shared/modules/common/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
@@ -21,7 +21,8 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
         ReactiveFormsModule,
         NgbTimepickerModule,
         CapitalizeFirstPipeModule,
-        FormMessageDisplayModule
+        FormMessageDisplayModule,
+        FormsModule
     ],
     declarations: [
         WaitlistQueuesComponent,

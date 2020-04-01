@@ -86,6 +86,37 @@
                                                 </mat-slide-toggle>
                                             </div>
                                         </div> -->
+                                        <div class="c-ot row col-sm-12 mgn-bt-15 mgn-up-10">
+                                            <div style="font-weight: 500">
+                                                Batch settings
+                                                <mat-slide-toggle class="example-margin mgn-lt-10" [(ngModel)]="batchStatus"
+                                                (change)="changeBatchStatus($event)">
+                                            </mat-slide-toggle>
+                                            </div>
+                                            <!-- <div class="mgn-lt-10">
+                                                <mat-slide-toggle class="example-margin" [(ngModel)]="batchStatus"
+                                                    (change)="changeBatchStatus($event)">
+                                                </mat-slide-toggle>
+                                            </div> -->
+                                        </div>
+                                        <div class="c-ot row col-md-12 ynw-common-form-nm" *ngIf="batchStatus">
+                                            <div class="item col-md-5">
+                                                <mat-form-field>
+                                                    <input style="padding-top: 20px!important;" matInput placeholder="Prefix" [(ngModel)]="prefixName"
+                                                        autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="item col-md-5">
+                                                <mat-form-field>
+                                                    <input style="padding-top: 20px!important;" matInput placeholder="Suffix" [(ngModel)]="suffixName"
+                                                        autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-2 mgn-up-20">
+                                                <button class="btn bt3 btn-default" (click)="addBatchName()"
+                                                    type="button">ok</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -187,8 +218,9 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         <div *ngFor="let services of department.serviceIds;let j = index">
                                             <mat-checkbox class="example-margin"
                                                 (change)="serviceunderdept(j,department.departmentName, i, services)"
-                                                [checked]="serviceSelection[department.departmentName][j]" *ngIf="SelService[i] && services"
-                                                style="display:block">{{services}}</mat-checkbox>
+                                                [checked]="serviceSelection[department.departmentName][j]"
+                                                *ngIf="SelService[i] && services" style="display:block">{{services}}
+                                            </mat-checkbox>
                                         </div>
                                     </section>
                                 </div>

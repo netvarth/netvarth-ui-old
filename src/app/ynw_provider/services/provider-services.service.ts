@@ -952,10 +952,10 @@ export class ProviderServices {
       const url = 'provider/user';
       return this.servicemeta.httpGet(url, null, filter);
    }
-    getUsersCount(filter = {}) {
+   getUsersCount(filter = {}) {
       const url = 'provider/user/count';
       return this.servicemeta.httpGet(url, null, filter);
-      }
+   }
    createUser(post_data) {
       const url = 'provider/user';
       return this.servicemeta.httpPost(url, post_data);
@@ -1038,57 +1038,63 @@ export class ProviderServices {
    uploaduserLogo(passdata, id) {
       return this.servicemeta.httpPost('provider/user/logo/' + id, passdata);
    }
-     updateuserlinkProfile(id, profid)
-{
-return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
+   updateuserlinkProfile(id, profid) {
+      return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
+   }
+   getUserNotificationList(id) {
+      const url = 'provider/settings/notification/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderWaitlistNotesnew(uuid) {
+      const url = 'provider/waitlist/' + uuid + '/notes';
+      return this.servicemeta.httpGet(url);
+   }
+   addProviderSchedule(data) {
+      return this.servicemeta.httpPost('provider/appointment/schedule', data);
+   }
+   editProviderSchedule(data) {
+      return this.servicemeta.httpPut('provider/appointment/schedule', data);
+   }
+   getProviderSchedules() {
+      return this.servicemeta.httpGet('provider/appointment/schedule');
+   }
+   readConsumerMessages(consumerId, messageIds) {
+      const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
+      return this.servicemeta.httpPut(url);
+   }
+   // CustomViewUrls
+   createCustomView(post_data) {
+      const url = 'provider/customView';
+      return this.servicemeta.httpPost(url, post_data);
+   }
+   getCustomViewDetail(id) {
+      return this.servicemeta.httpGet('provider/customView/' + id);
+   }
+   getCustomViewList() {
+      return this.servicemeta.httpGet('provider/customView');
+   }
+   deleteCustomView(id) {
+      const path = 'provider/customView/' + id;
+      return this.servicemeta.httpDelete(path);
+   }
+   updateCustomView(id, post_data) {
+      const url = 'provider/customView/' + id;
+      return this.servicemeta.httpPut(url, post_data);
+   }
+   changeProviderScheduleStatus(id, chstatus) {
+      const url = 'provider/appointment/schedule/' + id + '/' + chstatus;
+      return this.servicemeta.httpPut(url);
+   }
+   getScheduleDetail(queue_id) {
+      const url = 'provider/appointment/schedule/' + queue_id;
+      return this.servicemeta.httpGet(url);
+   }
+   changeBatchStatus(queueId, status) {
+      const url = 'provider/waitlist/queues/batch/' + queueId + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   updateBatch(queueId, data) {
+      const url = 'provider/waitlist/queues/batch/pattern/' + queueId;
+      return this.servicemeta.httpPut(url, data);
+   }
 }
-getUserNotificationList(id) {
-   const url = 'provider/settings/notification/' + id;
-   return this.servicemeta.httpGet(url);
-}
-getProviderWaitlistNotesnew(uuid) {
-   const url = 'provider/waitlist/' + uuid + '/notes';
-   return this.servicemeta.httpGet(url);
-}
-addProviderSchedule(data) {
-   return this.servicemeta.httpPost('provider/appointment/schedule', data);
- }
- editProviderSchedule(data) {
-   return this.servicemeta.httpPut('provider/appointment/schedule', data);
- }
- getProviderSchedules() {
-   return this.servicemeta.httpGet('provider/appointment/schedule');
- }
- readConsumerMessages(consumerId, messageIds) {
-   const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
-   return this.servicemeta.httpPut(url);
-}
-//CustomViewUrls
-createCustomView(post_data) {
-   const url = 'provider/customView';
-   return this.servicemeta.httpPost(url, post_data);
- }
- getCustomViewDetail(id) {
-   return this.servicemeta.httpGet('provider/customView/' + id);
- }
- getCustomViewList() {
-   return this.servicemeta.httpGet('provider/customView');
- }
- deleteCustomView(id) {
-   const path = 'provider/customView/' + id;
-   return this.servicemeta.httpDelete(path);
- }
- updateCustomView(id, post_data) {
-   const url = 'provider/customView/' + id;
-   return this.servicemeta.httpPut(url, post_data);
- }
- changeProviderScheduleStatus(id, chstatus) {
-   const url = 'provider/appointment/schedule/' + id + '/' + chstatus;
-   return this.servicemeta.httpPut(url);
-}
-getScheduleDetail(queue_id) {
-   const url = 'provider/appointment/schedule/' + queue_id;
-   return this.servicemeta.httpGet(url);
-}
-}
-

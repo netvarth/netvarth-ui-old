@@ -84,6 +84,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
   selected_location;
   selected_locationId;
   api_loading1 = true;
+  prefixName;
+  suffixName;
+  batchStatus = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -355,6 +358,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.queue_data = data;
+          this.batchStatus = this.queue_data.batch;
+          this.prefixName = this.queue_data.batchPatternSettings.prefix;
+          this.suffixName = this.queue_data.batchPatternSettings.suffix;
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.queueSchedule) {
@@ -630,7 +636,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     if (!form_data.qname.replace(/\s/g, '').length) {
       const error = 'Please enter queue name';
       // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-      this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       return;
     }
     const selser: any = [];
@@ -657,35 +663,33 @@ export class WaitlistQueueDetailComponent implements OnInit {
     if (!found) {
       const error = 'Please select services';
       // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-      this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       return;
     }
     // Check whether atleast one day is selected
     if (this.selday_arr.length === 0) {
       const error = 'Please select the days';
       // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-      this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       return;
     } else {
       // Numeric validation
       if (isNaN(form_data.qcapacity)) {
-        console.log(isNaN(form_data.qcapacity));
-        console.log(form_data.qcapacity);
         const error = 'Please enter a numeric value for capacity';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       }
       if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
         const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       } else {
         if (form_data.qcapacity === 0) {
           const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
           // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-          this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           return;
         }
       }
@@ -693,19 +697,19 @@ export class WaitlistQueueDetailComponent implements OnInit {
       if (isNaN(form_data.qserveonce)) {
         const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       }
       if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
         const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
         // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-        this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       } else {
         if (form_data.qserveonce === 0) {
           const error = this.customer_label + 's served at a time should be greater than 0';
           // this.shared_Functionsobj.apiErrorAutoHide(this, error);
-          this.shared_Functionsobj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           return;
         }
       }
@@ -964,5 +968,20 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+  changeBatchStatus(event) {
+    const status = (event.checked) ? 'Enabled' : 'Disabled';
+    this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
+      this.batchStatus = event.checked;
+      this.shared_Functionsobj.openSnackBar('Batch settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+    });
+  }
+  addBatchName() {
+    const post_data = {
+      'prefix': this.prefixName,
+      'suffix': this.suffixName
+    };
+    this.provider_services.updateBatch(this.queue_id, post_data).subscribe(data => {
+      this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+    });
+  }
 }
-
