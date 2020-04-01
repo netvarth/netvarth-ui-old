@@ -7,9 +7,8 @@ import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loa
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { CommonModule } from '@angular/common';
 import { GlobalSettingsComponent } from './global-settings.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { GlobalSettingsRoutingModule } from './global-settings.routing.module';
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
     declarations: [
@@ -19,8 +18,8 @@ import { GlobalSettingsRoutingModule } from './global-settings.routing.module';
         BreadCrumbModule,
         CommonModule,
         GlobalSettingsRoutingModule,
-        AngularEditorModule,
         FormsModule,
+        CKEditorModule,
         MaterialModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,

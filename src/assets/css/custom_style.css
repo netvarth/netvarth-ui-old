@@ -7600,5 +7600,9 @@ width: fit-content;
   width: 25%;
   padding: 10px;
 }
- 
+.glbl-seting-img{
+  width: 150px !important;
+  height: 150px  !important;
+  object-fit: scale-down !important;
+} 
 

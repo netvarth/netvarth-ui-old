@@ -11,9 +11,9 @@
                         <span>
                             <span *ngIf="!is_image" (click)="fileInput.click()"><img style="width: 90px;"
                                     src="assets/images/img_uplod.png" alt="Jaldee"></span>
-                            <span *ngIf="is_image" (click)="fileInput.click()"><img
-                                    style="width: 150px;height:150px;object-fit: scale-down;" *ngIf="imageUrl"
-                                    [src]="imageUrl" class="image"></span>
+                            <span id="image" *ngIf="is_image" (click)="fileInput.click()">
+                                    <img class="glbl-seting-img" *ngIf="imageUrl" [src]="imageUrl">
+                                </span>
                             <br>
 
                             <p *ngIf="!is_image" style="font-weight: 600;">Choose Image</p>
@@ -52,9 +52,8 @@
                 <div style="display: inline-flex;">
                     <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="headerContent"></div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div style=" width: 700px;">
-                        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="headerContent">
-                        </angular-editor>
+                    <div style=" width: 700px;border: ridge;">
+                        <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="headerContent"></ckeditor>
                     </div>
                 </div>
             </div>
@@ -66,14 +65,13 @@
                 <div style="display: inline-flex;">
                     <div style=" width: 400px;overflow-wrap: break-word;padding-top: 20px;" [innerHTML]="footerContent"></div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div style=" width: 700px;">
-                        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="footerContent">
-                        </angular-editor>
+                    <div style="width: 700px;border: ridge;">
+                        <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent"></ckeditor>
                     </div>
                 </div>
             </div>
             <div class="pubs card adwds w-dta" style="margin-bottom:10px;display: inline-flex;padding-top: 30px;">
-                <button type="button" class="cs-btn bt2">Cancel</button> &nbsp;&nbsp;
+                <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
                 <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
                 <button type="submit" class="cs-btn bt1">Save</button>
             </div>
