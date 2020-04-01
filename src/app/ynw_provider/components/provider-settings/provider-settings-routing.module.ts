@@ -11,6 +11,7 @@ const routes: Routes = [
       { path: 'miscellaneous', loadChildren: () => import('../../../business/modules/miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule)},
       { path: 'appointmentmanager', loadChildren: () => import('../../../business/modules/appointmentmanager/appointmentmanager.module').then(m => m.AppointmentmanagerModule)},
       { path: 'users', loadChildren: () => import('../../../business/modules/miscellaneous/users/users.module').then(m => m.UsersModule)},
+      { path: 'customview', loadChildren: () => import('../../../business/modules/miscellaneous/customview/customview.module').then(m => m.CustomViewmodule)},
       { path: 'home-service', loadChildren: () => import('../../../business/modules/homeservice/homeservice.module').then(m => m.HomeServiceModule)},
       { path: 'q-manager', loadChildren: () => import('../../../business/modules/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) }
     ]

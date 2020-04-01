@@ -25,6 +25,8 @@ const routes: Routes = [
     { path: 'labels', loadChildren: () => import('./labels/labels.module').then(m => m.LabelsModule)},
     { path: 'skins', loadChildren: () => import('./skins/provider-skins.module').then(m => m.ProviderSkinsModule) },
     { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+    { path: 'customview', loadChildren: () => import('./customview/customview.module').then(m => m.CustomViewmodule) },
+
     { path: 'corporate', loadChildren: () => import('./corporate/corporate.module').then(m => m.CorporateModule) },
     { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)}
 ];
