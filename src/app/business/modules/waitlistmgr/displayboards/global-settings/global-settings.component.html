@@ -35,7 +35,7 @@
                                 <td>Position</td>
                                 <td>
                                     <mat-form-field>
-                                        <select matNativeControl id="mySelectId">
+                                        <select matNativeControl id="mySelectId" (change)="selectChangeHandler($event)">
                                             <option value="none" sselected>None</option>
                                             <option value="right">Right</option>
                                             <option value="left">Left</option>
@@ -77,15 +77,9 @@
         </div>
     </div>
     <!-- Page preview code comes here -->
-    <div *ngIf=!show_visible style="visibility: hidden;"  id="previewPage">
-        <div style="text-align-last: center;padding-top: 50px">
-            <p>{{headerContent}}</p>
-        </div>
+    <div *ngIf=!show_visible style="display: none;"  id="previewPage">
         <div style="text-align-last: center" >
-            <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="imageUrl">
-        </div>
-        <div style="text-align-last: center;padding-top: 50px">
-            <p>{{footerContent}}</p>
+            <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px', 'transform' : position}" [src]="imageUrl">
         </div>
     </div>
 

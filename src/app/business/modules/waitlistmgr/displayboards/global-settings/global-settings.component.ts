@@ -41,6 +41,7 @@ export class GlobalSettingsComponent implements OnInit {
         }
     ];
     largeImage: string;
+    position: string;
     constructor(
         private router: Router) {
     }
@@ -66,10 +67,19 @@ export class GlobalSettingsComponent implements OnInit {
         };
         reader.readAsDataURL(this.fileToUpload);
     }
+    selectChangeHandler(event) {
+        if (event.target.value === 'left') {
+            this.position = 'scaleX(-1)';
+        } else {
+            this.position = 'none';
+        }
+    }
     showPreview() {
         this.largeImage = document.getElementById('previewPage').innerHTML;
-        const WindowPrt = window.open('', '', 'left=0,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
+        const WindowPrt = window.open('', '', 'left=50,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
+        WindowPrt.document.write('<div style="padding-top: 50px">' + this.headerContent + '</div>');
         WindowPrt.document.write('<p>' + this.largeImage + '<p>');
+        WindowPrt.document.write('<div style="padding-top: 50px">' + this.footerContent + '</div>');
         WindowPrt.document.close();
     }
     onUpload() {
