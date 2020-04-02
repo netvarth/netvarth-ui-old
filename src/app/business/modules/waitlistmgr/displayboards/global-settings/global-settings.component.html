@@ -9,7 +9,7 @@
                 <div class="card">
                     <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Header Settings</h6>
                     <div style="background: #f8f8f8;">
-                        <div style="display: flex;">
+                        <div class="glbl-seting-h-div">
                             <div class="lbr col-sm-12 col-md-4 col-lg-4">
                                 <div style="padding-left: 20%;padding-top: 4%;">
                                     <div *ngIf="!is_image" (click)="fileInput.click()"><img
@@ -56,7 +56,7 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div style="display: flex;padding-top: 5%;">
+                        <div class="glbl-seting-disp-div">
                             <div class="lbr col-sm-12 col-md-8 col-lg-8">
                                 <div class="glbl-seting-heder-div" [innerHTML]="headerContent"></div>
                             </div>
@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="card">
                     <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Footer Settings</h6>
-                    <div style="display: flex;background: #f8f8f8;">
+                    <div class="glbl-seting-f-div">
                         <div class="lbr col-sm-12 col-md-8 col-lg-8">
                             <div class="glbl-seting-heder-div" [innerHTML]="footerContent"></div>
                         </div>

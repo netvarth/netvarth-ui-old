@@ -7674,3 +7674,13 @@ font-weight: 600px !important;
 .batch h6 {
   font-weight: 500;
 }
+.glbl-seting-h-div {
+  display: flex;
+}
+.glbl-seting-f-div {
+  display: flex;
+  background: #f8f8f8;
+}
+.glbl-seting-disp-div {
+  display: flex;padding-top: 5%;
+}
