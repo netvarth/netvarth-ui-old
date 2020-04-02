@@ -10,6 +10,7 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomViewComponent } from './customview-create/custom-view.component';
 import { CustomViewListComponent } from './customview-list/custom-view-list.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { CustomViewroutingmodule } from './customview.routing.module';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         LoadingSpinnerModule,
         FormsModule,
         MaterialModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
+        CustomViewroutingmodule,
     ],
     declarations:[
         CustomViewComponent,

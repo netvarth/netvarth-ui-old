@@ -4,8 +4,8 @@ import { CustomViewListComponent } from './customview-list/custom-view-list.comp
 import { CustomViewComponent } from './customview-create/custom-view.component';
 
 const routes: Routes = [
-    { path: '', component: CustomViewListComponent },
-    { path: '', component: CustomViewComponent },
+    { path: '', component: CustomViewListComponent},
+    { path: ' :id', component: CustomViewComponent },
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

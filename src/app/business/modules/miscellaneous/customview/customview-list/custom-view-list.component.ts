@@ -4,6 +4,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-custom-view-list',
@@ -24,6 +25,7 @@ export class CustomViewListComponent implements OnInit {
     ];
 
     constructor(private _formBuilder: FormBuilder,
+      private router: Router,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -68,4 +70,7 @@ export class CustomViewListComponent implements OnInit {
             }
           );
       }
+      addView() {
+        this.router.navigate(['provider/settings/miscellaneous/customview/add']);
+    }
 }
