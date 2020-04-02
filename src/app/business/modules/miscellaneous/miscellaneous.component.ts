@@ -43,6 +43,9 @@ export class MiscellaneousComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     }
+    gotocustomview() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+    }
     gotobranchsps() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
     }

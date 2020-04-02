@@ -11,10 +11,9 @@
                                     <div class="col-md-12 no-padding">
                                         <ul class="nav jd-custom-nav chkn-dash">
                                             <li class="dropdown notifications-menu pull-right">
-                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click) = "addView()"
                                                     class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                                    <span>
-                                                        <i class="fa fa-plus" (click) = "addView()"></i> Create view
+                                                    <span ><i class="fa fa-plus"></i>Create view
                                                     </span>
                                                 </a>
                                             </li>

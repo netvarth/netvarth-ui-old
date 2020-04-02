@@ -91,6 +91,15 @@
                     </span>
                 </div>
             </div>
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotocustomview()">
+                        <h2>Custom Views</h2>
+                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
         </div>
         <div class="clearfix"></div>
     </div>
