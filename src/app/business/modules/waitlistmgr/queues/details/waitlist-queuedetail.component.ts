@@ -87,6 +87,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   prefixName;
   suffixName;
   batchStatus = false;
+  showEditSection = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -361,6 +362,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
           this.batchStatus = this.queue_data.batch;
           this.prefixName = this.queue_data.batchPatternSettings.prefix;
           this.suffixName = this.queue_data.batchPatternSettings.suffix;
+          if (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '') {
+            this.showEditSection = true;
+          }
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.queueSchedule) {
@@ -969,10 +973,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
       });
   }
   changeBatchStatus(event) {
-    const status = (event.checked) ? 'Enabled' : 'Disabled';
+    const status = (event.checked) ? 'enabled' : 'disabled';
     this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
       this.batchStatus = event.checked;
-      this.shared_Functionsobj.openSnackBar('Batch settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
     });
   }
   addBatchName() {
@@ -981,7 +985,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
       'suffix': this.suffixName
     };
     this.provider_services.updateBatch(this.queue_id, post_data).subscribe(data => {
-      this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+      this.showEditSection = false;
+      this.getQueueDetail();
+      // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
     });
+  }
+  editBatchnames() {
+    this.showEditSection = true;
   }
 }

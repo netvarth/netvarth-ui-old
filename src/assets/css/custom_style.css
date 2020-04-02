@@ -7667,3 +7667,12 @@ font-weight: 600px !important;
   display: inline-flex !important;
   padding-top: 30px !important;
 }
+.batch {
+  border-top: 1px solid #f2f2f2 !important;
+}
+.disabled-text {
+  color: #999999;
+}
+.batch h6 {
+  font-weight: 500;
+}
