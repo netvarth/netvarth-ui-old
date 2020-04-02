@@ -7684,3 +7684,17 @@ font-weight: 600px !important;
 .glbl-seting-disp-div {
   display: flex;padding-top: 5%;
 }
+@media only screen and (max-width: 575px) {
+  .glbl-seting-disp-div  {
+    display: block !important;
+    padding-top: 5% !important;
+  }
+  .glbl-seting-f-div {
+    background: #f8f8f8 !important;
+    display: block !important;
+  }
+  .glbl-seting-h-div {
+    padding: 0% !important;
+    display: block !important;
+  }
+}
