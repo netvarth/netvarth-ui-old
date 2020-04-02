@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 
 export class CustomViewListComponent implements OnInit {
+    api_loading: boolean;
     customViewList: any = [];
     removeitemdialogRef;
     breadcrumbs = [
@@ -32,6 +33,7 @@ export class CustomViewListComponent implements OnInit {
         private provider_services: ProviderServices) {
     }
     ngOnInit() {
+        this.api_loading = true;
         this.getCustomViewList();
     }
 
@@ -39,9 +41,12 @@ export class CustomViewListComponent implements OnInit {
         this.provider_services.getCustomViewList().subscribe(
             (data: any) => {
                 this.customViewList = data;
+                this.api_loading = false;
                 console.log(this.customViewList)
-            }
-        );
+            },
+            (error: any) => {
+              this.api_loading = false;
+          });
     }
     doRemoveView(view) {
         const id = view.id;

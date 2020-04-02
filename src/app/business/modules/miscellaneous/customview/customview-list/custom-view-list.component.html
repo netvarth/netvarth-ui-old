@@ -5,7 +5,12 @@
         <div class="content displayboard loc-list users">
                 <div class="col-md-12 no-padding-small">
                     <div class="row">
-                        <div class="col-md-12 no-padding">
+                            <div class="col-md-12 no-padding">
+                                    <div class="card" *ngIf="api_loading">
+                                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                    </div>
+                                </div>
+                        <div class="col-md-12 no-padding" *ngIf="!api_loading">
                             <div class="card no-padding">
                                 <div class="copy">
                                     <div class="col-md-12 no-padding">
@@ -13,7 +18,7 @@
                                             <li class="dropdown notifications-menu pull-right">
                                                 <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click) = "addView()"
                                                     class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                                    <span ><i class="fa fa-plus"></i>Create view
+                                                    <span ><i class="fa fa-plus"></i> Create view
                                                     </span>
                                                 </a>
                                             </li>
