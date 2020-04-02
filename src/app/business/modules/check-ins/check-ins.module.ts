@@ -22,7 +22,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
@@ -40,14 +39,13 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         CustomerModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,
-        NgxMatSelectSearchModule,
         NgbModule,
-        OwlModule
+        OwlModule,
+        NgxMatSelectSearchModule
     ],
     declarations: [
         CheckInsComponent,
         ProviderCheckinComponent,
-        ProviderCreateCheckinComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,

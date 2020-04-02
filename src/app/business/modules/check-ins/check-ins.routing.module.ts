@@ -5,7 +5,6 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckInsComponent } from './check-ins.component';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
-import { ProviderCreateCheckinComponent } from './check-in/provider-create-checkin/provider-create-checkin.component';
 import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay.component';
 // { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
 const routes: Routes = [
@@ -13,7 +12,6 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            {path : 'create' ,component :ProviderCreateCheckinComponent },
             {path : 'add', component : ProviderCheckinComponent},
             {path : 'adjustdelay', component : AdjustqueueDelayComponent},
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },

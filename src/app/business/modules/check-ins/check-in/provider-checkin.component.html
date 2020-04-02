@@ -83,6 +83,26 @@
                                         </mat-form-field>
                                     </ng-container>
                                 </div>
+                                <div class="service-outer" *ngIf="users.length > 0">
+                                    <ng-container>
+                                        <mat-form-field *ngIf="users.length == 1">
+                                            <input matInput *ngFor="let user of users" [readonly]="true"
+                                                placeholder="Doctors"
+                                                value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
+                                        </mat-form-field>
+                                        <mat-form-field *ngIf="users.length > 1">
+                                            <mat-select placeholder="Select Doctor" [ngModel]="selected_user" #usersel
+                                                (selectionChange)="handleUserSelection(usersel.value)">
+                                                <mat-option *ngFor="let user of users" [value]="user">
+                                                    {{user.firstName}} {{user.lastName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <!-- <ng-container *ngIf="servicesjson.length == 0">
+                                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                                        </ng-container> -->
+                                    </ng-container>
+                                </div>
                                 <div class="service-outer" *ngIf="servicesjson.length > 0">
                                     <ng-container>
                                         <mat-form-field *ngIf="servicesjson.length == 1">
@@ -126,7 +146,7 @@
                                     <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                                         <mat-chip-list class="pcheckin-owl">
                                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
-                                                class="width-100" [items]="queuejson">
+                                                 [items]="queuejson">
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                                                     [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">

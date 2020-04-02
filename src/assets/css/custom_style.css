@@ -6086,7 +6086,7 @@ border-color: #3c8dbc !important;
 
 .nav-cust-btn-new {
   border: 1px solid;
-  border-radius: 25px;
+  border-radius: 5px;
   margin-left: 5px !important;
   margin-top: 10px;
   font-size: 0.75rem;
@@ -7413,6 +7413,15 @@ hr.wide-separator-line{
 .pcheckin-owl .owl-item {
   text-align: center;
 }
+.pcheckin-owl .owl-item::first-child {
+  margin-left:20px !important;
+}
+
+.pcheckin-owl .mat-chip-list-wrapper {
+  padding-left:25px !important;
+  padding-right: 25px !important;
+}
+
 .checkin-nav .owl-prev i {
   font-size: 2rem;
   color: #000;
@@ -7596,6 +7605,12 @@ width: fit-content;
   background: #00aef2;
   color: white;
   padding: 9px 10px;
+}
+.ov-hid {
+  overflow: hidden !important;
+}
+.ptp17 {
+  padding-top: 17px !important;
 }
 .createcheckin {
   float: left;

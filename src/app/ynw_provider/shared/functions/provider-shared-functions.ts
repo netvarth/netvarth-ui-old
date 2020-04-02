@@ -5,7 +5,7 @@ import { AddProviderWaitlistQueuesComponent } from '../../components/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-//import { customersInboxMessageComponent } from '../../../shared/components/customersInboxMessage/customersInboxMessage.component';
+
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
@@ -88,39 +88,6 @@ export class ProviderSharedFuctions {
     }
     return statusCode;
   }
-
-  //  changecouponStatus(ob, obj) {
-  //       let chgstatus = '';
-  //       let chstatusmsg = '';
-  //       if (obj.couponStatus === 'Active') {
-  //         chgstatus = 'Inactive';
-  //         chstatusmsg = 'disabled';
-  //       } else {
-  //         chgstatus = 'Active';
-  //         chstatusmsg = 'enabled';
-  //       }
-  //      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
-  //      }
-  // addEditServicePopup(ob, type, source, obj = null, services = null) {
-  //   ob.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass', 'add-service'],
-  //     disableClose: true,
-  //     autoFocus: true,
-  //     data: {
-  //       service: obj,
-  //       source: source,
-  //       type: type,
-  //       services: services
-  //     },
-  //   });
-  //   ob.servicedialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'reloadlist') {
-  //       this.serviceReloadApi(ob, source);
-  //     }
-  //   });
-  // }
-
   /**
    * Funtion will return the required fields set
    */
@@ -185,14 +152,6 @@ export class ProviderSharedFuctions {
       resolve({ msg: msg, chgstatus: chgstatus });
     });
   }
-
-  // openSnackBar(message: string, params: any = []) {
-  //   // const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-  //   // const snackBarRef = this.snackBar.open(message, '', {duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass });
-  //   // return snackBarRef;
-  //   return this.shared_functions.openSnackBar(message, params);
-  // }
-
   queueReloadApi(ob, source = 'queue_list') {
     if (source === 'queue_list') {
       ob.getProviderQueues();
@@ -351,21 +310,21 @@ export class ProviderSharedFuctions {
     const custids = [];
     let type;
     let ynwcustid;
-    let custid = [] ;
+    let custid = [];
     let name;
     if (customerlist.length > 1) {
       type = 'multiple';
       for (const custlst of customerlist) {
         custids.push(custlst.id);
       }
-    } else if ( customerlist.length === 1 ) {
+    } else if (customerlist.length === 1) {
       type = 'single';
       custid = customerlist[0].id || null;
       name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
-    } 
+    }
     if (type === 'single') {
       ynwcustid = custid;
-      } else { 
+    } else {
       ynwcustid = custids;
     }
     const terminologies = this.common_datastorage.get('terminologies');
@@ -381,7 +340,7 @@ export class ProviderSharedFuctions {
           type: 'send',
           terminologies: terminologies,
           name: name
-        } 
+        }
       });
 
       this.sendglobalmsgdialogRef.afterClosed().subscribe(result => {
@@ -403,5 +362,39 @@ export class ProviderSharedFuctions {
 
   getActiveQueues() {
     return this.activeQueues;
+  }
+
+  getLiveTrackMessage(distance, unit, hours, minutes, mode ) {
+    let message = '';
+    if (distance === 0) {
+      message += 'Your customer is close to you, will arrive shortly';
+    } else {
+      message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
+      if (hours !== 0) {
+        message += ' ' + hours;
+        if (hours === 1) {
+          message += ' hr';
+        } else {
+          message += ' hrs';
+        }
+      }
+      if (minutes !== 0) {
+        message += ' ' + minutes;
+        if (minutes === 1) {
+          message += ' min';
+        } else {
+          message += ' mins';
+        }
+      }
+      if (mode === 'WALKING') {
+        message += ' walk';
+      } else if (mode === 'DRIVING') {
+        message += ' drive';
+      } else if (mode === 'BICYCLING') {
+        message += ' ride';
+      }
+      message += ' to reach here';
+    }
+    return message;
   }
 }
