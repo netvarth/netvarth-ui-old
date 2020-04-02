@@ -2,83 +2,106 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div *ngIf="!is_preview" class="col-md-12 col-xs-12 col-sm-12">
-        <div class="table-outer">
-            <div class="pubs card adwds w-dta">
-                <h6>Header Settings</h6>
-                <div class="add glbl-seting-body">
-                    <div class="glbl-seting-cmn-width">
-                        <span>
-                            <span *ngIf="!is_image" (click)="fileInput.click()"><img class="glbl-seting-img-width" src="assets/images/img_uplod.png" alt="Jaldee"></span>
-                            <span *ngIf="is_image" (click)="fileInput.click()">
-                                <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
-                            </span>
-                            <br>
-
-                            <p *ngIf="!is_image" class="glbl-seting-font-wight">Choose Image</p>
-                            <!-- <p *ngIf="is_image" style="font-weight: 600;">Change Image</p> -->
-                        </span>
-                        <input type="file" class="glbl-seting-btn" (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg" #fileInput>
-                    </div>
-                    <div class="ynw-common-form-nm">
-                        <table class="glbl-seting-tbl">
-                            <tr>
-                                <td>Width</td>
-                                <td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Height</td>
-                                <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
-                            </tr>
-                            <tr>
-                                <td>Position</td>
-                                <td>
-                                    <mat-form-field>
-                                        <select matNativeControl id="mySelectId" (change)="selectChangeHandler($event)">
-                                            <option value="none" sselected>None</option>
-                                            <option value="right">Right</option>
-                                            <option value="left">Left</option>
-                                        </select>
-                                    </mat-form-field>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="glbl-seting-heder">
-                    <div class="glbl-seting-heder-div" [innerHTML]="headerContent">
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="glbl-seting-editor">
-                        <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="headerContent"></ckeditor>
+    <!-- Header section -->
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-paddig-small">
+            <div class="row">
+                <div class="card">
+                    <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Header Settings</h6>
+                    <div style="background: #f8f8f8;">
+                        <div style="display: flex;">
+                            <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                                <div style="padding-left: 20%;padding-top: 4%;">
+                                    <div *ngIf="!is_image" (click)="fileInput.click()"><img
+                                            class="glbl-seting-img-width" src="assets/images/img_uplod.png"
+                                            alt="Jaldee"></div>
+                                    <div *ngIf="is_image" (click)="fileInput.click()">
+                                        <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
+                                    </div>
+                                    <p *ngIf="!is_image" class="glbl-seting-font-wight">Choose Image</p>
+                                </div>
+                                <input type="file" class="glbl-seting-btn"
+                                    (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg"
+                                    #fileInput>
+                            </div>
+                            <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
+                                <div style="padding-left: 3%;padding-top: 2%;">
+                                    <table class="glbl-seting-tbl">
+                                        <tr>
+                                            <td>Width</td>
+                                            <td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Height</td>
+                                            <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Position</td>
+                                            <td>
+                                                <mat-form-field style="width: 80%;">
+                                                    <select matNativeControl id="mySelectId"
+                                                        (change)="selectChangeHandler($event)">
+                                                        <option value="none" sselected>None</option>
+                                                        <option value="right">Right</option>
+                                                        <option value="left">Left</option>
+                                                    </select>
+                                                </mat-form-field>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- <div>
+                                    <i class="fa fa-eye fa-4x" aria-hidden="true"></i>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div style="display: flex;padding-top: 5%;">
+                            <div class="lbr col-sm-12 col-md-8 col-lg-8">
+                                <div class="glbl-seting-heder-div" [innerHTML]="headerContent"></div>
+                            </div>
+                            <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
+                                <div class="no-paddig-small glbl-seting-editor">
+                                    <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="headerContent">
+                                    </ckeditor>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="table-outer">
-            <div class="pubs card adwds w-dta">
-                <h6>Footer Settings</h6>
-                <div class="glbl-seting-heder">
-                    <div class="glbl-seting-heder-div" [innerHTML]="footerContent">
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="glbl-seting-editor">
-                        <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent"></ckeditor>
+        </div>&nbsp;&nbsp;&nbsp;
+    </div>
+    <!-- Footer section -->
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-paddig-small">
+            <div class="row">
+                <div class="card">
+                    <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Footer Settings</h6>
+                    <div style="display: flex;background: #f8f8f8;">
+                        <div class="lbr col-sm-12 col-md-8 col-lg-8">
+                            <div class="glbl-seting-heder-div" [innerHTML]="footerContent"></div>
+                        </div>
+                        <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
+                            <div class="no-paddig-small glbl-seting-editor">
+                                <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent">
+                                </ckeditor>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="pubs card adwds w-dta glbl-seting-buttons">
-                <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
-                <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
-                <button type="submit" class="cs-btn bt1">Save</button>
             </div>
         </div>
     </div>
+    <div class="pubs card adwds w-dta glbl-seting-buttons">
+        <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
+        <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
+        <button type="submit" class="cs-btn bt1">Save</button>
+    </div>
+
     <!-- Page preview code comes here -->
-    <div *ngIf=!show_visible style="display: none;"  id="previewPage">
-        <div style="text-align-last: center" >
+    <div style="display: none;" id="previewPage">
+        <div style="text-align-last: center">
             <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px', 'transform' : position}" [src]="imageUrl">
         </div>
     </div>

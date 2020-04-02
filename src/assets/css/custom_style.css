@@ -7638,28 +7638,26 @@ font-weight: 600px !important;
 }
 .glbl-seting-btn{
   padding-top: 10px !important;
-  visibility: hidden !important;
+  display: none !important;
 }
 .glbl-seting-tbl{
-  width:400px !important;
+  /* width:400px !important; */
   border: hidden !important;
 }
 .glbl-seting-tbl td{
   padding-bottom: 10px !important;
-}
-.glbl-seting-tbl mat-form-field{
-  width: 150px !important;
+  font-weight: 500;
+  padding-left: 3%;
 }
 .glbl-seting-heder{
   display: inline-flex !important;
 }
 .glbl-seting-heder-div{
-  width: 400px;
-  overflow-wrap: break-word;
+  word-break: break-all;
   padding-top: 20px;
 }
 .glbl-seting-editor{
-  width: 700px !important;
+  /* width: 700px !important; */
   border: ridge !important;
 }
 .glbl-seting-buttons{
