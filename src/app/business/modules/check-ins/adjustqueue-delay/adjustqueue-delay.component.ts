@@ -370,6 +370,9 @@ getServicebyLocationId(locid, pdate) {
            this.sharedfunctionObj.openSnackBar( this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
            // this.closePopup('reloadlist');
           }
+            setTimeout(() => {
+                this.disableButton = false;
+             }, projectConstants.TIMEOUT_DELAY_LARGE);
         },
         error => {
             this.sharedfunctionObj.openSnackBar( error, { 'panelClass': 'snackbarerror' });
