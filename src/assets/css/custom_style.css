@@ -6814,3 +6814,16 @@ label.notifi-togl {
 .statusbtn i{
   margin-right: 10px !important;
 }
+.batch {
+  border-top: 1px solid #f2f2f2 !important;
+}
+.disabled-text {
+  color: #999999;
+}
+.batch h6 {
+  font-weight: 500;
+}
+.batchname {
+  font-size: 0.8rem !important;
+  margin-top: 5px !important;
+}

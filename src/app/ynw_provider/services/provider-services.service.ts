@@ -898,4 +898,12 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/appointment/' + status + '/' + queueId;
     return this.servicemeta.httpPut(url);
   }
+  changeBatchStatus(queueId, status) {
+    const url = 'provider/waitlist/queues/batch/' + queueId + '/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  updateBatch(queueId, data) {
+    const url = 'provider/waitlist/queues/batch/pattern/' + queueId;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

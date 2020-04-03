@@ -995,6 +995,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              Batch: {{checkin.batchName}}
+                            </span>
                               <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
                                 <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
                               </div> -->

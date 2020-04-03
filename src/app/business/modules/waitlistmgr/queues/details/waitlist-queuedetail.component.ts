@@ -51,6 +51,10 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
     queuedialogRef;
     api_loading = true;
     appointment = false;
+    prefixName;
+    suffixName;
+    batchStatus = false;
+    showEditSection = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -83,6 +87,16 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    this.batchStatus = this.queue_data.batch;
+                    if (this.queue_data.batchPatternSettings) {
+                        this.prefixName = this.queue_data.batchPatternSettings.prefix;
+                        this.suffixName = this.queue_data.batchPatternSettings.suffix;
+                    }
+                    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) ||  (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
+                        this.showEditSection = true;
+                    } else {
+            this.showEditSection = false;
+                    }
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
@@ -151,5 +165,25 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
             error => {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
+    }
+    changeBatchStatus(event) {
+        const status = (event.checked) ? 'enabled' : 'disabled';
+        this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
+            this.batchStatus = event.checked;
+            this.getQueueDetail();
+            this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        });
+    }
+    addBatchName() {
+        const post_data = {
+            'prefix': this.prefixName,
+            'suffix': this.suffixName
+        };
+        this.provider_services.updateBatch(this.queue_id, post_data).subscribe(data => {
+            this.getQueueDetail();
+        });
+    }
+    editBatchnames() {
+        this.showEditSection = true;
     }
 }
