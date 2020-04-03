@@ -7641,7 +7641,7 @@ font-weight: 600px !important;
   display: none !important;
 }
 .glbl-seting-tbl{
-  /* width:400px !important; */
+  /* width:60% !important; */
   border: hidden !important;
 }
 .glbl-seting-tbl td{
@@ -7682,7 +7682,8 @@ font-weight: 600px !important;
   background: #f8f8f8;
 }
 .glbl-seting-disp-div {
-  display: flex;padding-top: 5%;
+  display: flex;
+  padding-top: 5%;
 }
 .glbl-seting-img-smal{
   display: none;
@@ -7691,7 +7692,24 @@ font-weight: 600px !important;
   padding-left: 20%;
   padding-top: 4%;
 }
+.glbl-tbl-div{
+  padding-left: 3%;
+  padding-top: 2%;
+}
+.glbl-seting-tbl mat-form-field{
+  width: 80%;
+}
+.glbl-seting-h6{
+  padding-left: 10px;
+    font-weight: 600;
+    font-size: 1.25rem; 
+}
 @media only screen and (max-width: 575px) {
+  .glbl-seting-h6{
+    padding-left: 10px;
+    font-weight: 500;
+    font-size: medium;
+  }
   .glbl-seting-disp-div  {
     display: block !important;
     padding-top: 5% !important;
@@ -7706,13 +7724,41 @@ font-weight: 600px !important;
   }
   .glbl-seting-img-smal{
     border-radius: 50%;
-    width: 50%;
+    width: 40%;
     display: block !important;
   }
   .glbl-seting-img-width{
     display: none;
   }
   .glbl-file-input-div{
-    padding-left: 31%;
+    padding-left: 35%;
+  }
+  .glbl-file-input-div p{
+    font-size: smaller;
+  }
+  .glbl-tbl-div{
+    padding-left: 21%;
+    padding-top: 2%;
+  }
+  .glbl-seting-tbl input{
+    width: 40%;
+  }
+  .glbl-seting-tbl mat-form-field{
+    width: 40%;
+  }
+  .glbl-txt-align{
+    text-align-last: center !important;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .glbl-seting-disp-div  {
+    display: block !important;
+  }
+  .glbl-seting-f-div {
+    background: #f8f8f8 !important;
+    display: block !important;
+  }
+  .glbl-tbl-div{
+    font-size: smaller;
   }
 }

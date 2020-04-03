@@ -7,7 +7,7 @@
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
-                    <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Header Settings</h6>
+                    <h6 class="glbl-seting-h6">Header Settings</h6>
                     <div style="background: #f8f8f8;">
                         <div class="glbl-seting-h-div">
                             <div class="lbr col-sm-12 col-md-4 col-lg-4">
@@ -18,17 +18,20 @@
                                             <img class="glbl-seting-img-smal" src="assets/images/round_img.png"
                                             alt="Jaldee">
                                         </div>
-                                    <div *ngIf="is_image" (click)="fileInput.click()">
+                                    <!-- <div *ngIf="is_image" (click)="fileInput.click()">
                                         <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
-                                    </div>
+                                    </div> -->
                                     <p *ngIf="!is_image" class="glbl-seting-font-wight">Choose Image</p>
+                                </div>
+                                <div class="glbl-txt-align" *ngIf="is_image" (click)="fileInput.click()">
+                                    <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
                                 </div>
                                 <input type="file" class="glbl-seting-btn"
                                     (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg"
                                     #fileInput>
                             </div>
                             <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
-                                <div style="padding-left: 3%;padding-top: 2%;">
+                                <div class="glbl-tbl-div">
                                     <table class="glbl-seting-tbl">
                                         <tr>
                                             <td>Width</td>
@@ -42,7 +45,7 @@
                                         <tr>
                                             <td>Position</td>
                                             <td>
-                                                <mat-form-field style="width: 80%;">
+                                                <mat-form-field>
                                                     <select matNativeControl id="mySelectId"
                                                         (change)="selectChangeHandler($event)">
                                                         <option value="none" sselected>None</option>
@@ -80,7 +83,7 @@
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
-                    <h6 style="padding-left: 10px;font-weight: 500;font-size: 1.25rem;">Footer Settings</h6>
+                    <h6 class="glbl-seting-h6">Footer Settings</h6>
                     <div class="glbl-seting-f-div">
                         <div class="lbr col-sm-12 col-md-8 col-lg-8">
                             <div class="glbl-seting-heder-div" [innerHTML]="footerContent"></div>
