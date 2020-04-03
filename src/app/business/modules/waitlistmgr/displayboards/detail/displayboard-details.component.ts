@@ -140,6 +140,10 @@ export class DisplayboardDetailComponent implements OnInit {
     refreshInterval;
     nestedRefreshInterval;
     sbIds;
+    headers = 1;
+    footers = 2;
+    headerSetting = false;
+    footerSetting = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -291,6 +295,12 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     handleLayoutMetric(selectedItem, position) {
         this.metricSelected[position] = selectedItem;
+    }
+    headerClick() {
+        this.headerSetting = true;
+    }
+    footerClick() {
+        this.footerSetting = true;
     }
     onSubmit() {
         if (!this.qboardSelected) {

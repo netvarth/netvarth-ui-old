@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
@@ -42,9 +42,11 @@ export class GlobalSettingsComponent implements OnInit {
     ];
     largeImage: string;
     position: string;
-    constructor(
-        private router: Router) {
-    }
+    onlyHeader = false;
+    onlyFooter = false;
+    constructor(private router: Router) {}
+    @Input() headerResult;
+    @Input() footerResult;
     breadcrumbs = this.breadcrumbs_init;
     url = '';
     public Editor = DecoupledEditor;
@@ -54,9 +56,14 @@ export class GlobalSettingsComponent implements OnInit {
             editor.ui.getEditableElement()
         );
         const data = editor.getData();
-        console.log(data);
     }
     ngOnInit() {
+        if (this.headerResult) {
+            this.onlyHeader = true;
+          }
+        if (this.footerResult) {
+            this.onlyFooter = true;
+        }
     }
     onFileSelected(file: FileList) {
         this.fileToUpload = file.item(0);

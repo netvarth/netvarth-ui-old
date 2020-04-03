@@ -1,9 +1,9 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
+</section> -->
 <section>
     <!-- Header section -->
-    <div class="content w-manager settings comn-cls lic-page">
+    <div *ngIf="onlyHeader" class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
@@ -79,7 +79,7 @@
         </div>&nbsp;&nbsp;&nbsp;
     </div>
     <!-- Footer section -->
-    <div class="content w-manager settings comn-cls lic-page">
+    <div *ngIf="onlyFooter" class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
@@ -99,11 +99,12 @@
             </div>
         </div>
     </div>
-    <div class="pubs card adwds w-dta glbl-seting-buttons">
+    <!-- save buttons -->
+    <!-- <div *ngIf="onlyHeader" class="pubs card adwds w-dta glbl-seting-buttons">
         <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
         <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp;
         <button type="submit" class="cs-btn bt1">Save</button>
-    </div>
+    </div> -->
 
     <!-- Page preview code comes here -->
     <div style="display: none;" id="previewPage">
