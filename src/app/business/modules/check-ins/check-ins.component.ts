@@ -1708,7 +1708,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   searchCustomer(source, appttime) {
-    this.router.navigate(['provider', 'check-ins', 'create']);
+    this.router.navigate(['provider', 'customers', 'FindORSearch']); 
+    // this.router.navigate(['provider', 'check-ins', 'create']);
     // this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
     //   width: '50%',
     //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],

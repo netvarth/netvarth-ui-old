@@ -7614,8 +7614,17 @@ width: fit-content;
 }
 .createcheckin {
   float: left;
-  width: 25%;
-  padding: 10px;
+  width: 50%;
+  height: 50px;
+  padding-left: 30px;
+}
+.createcheckinsty {
+  padding-left: 30px;
+}
+.createcheckinstyle {
+  color: #3c8dbc;  
+  font-size: medium;
+  padding-left: 10px;
 }
 .glbl-seting-img{
   width: 150px !important;
