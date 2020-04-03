@@ -11,10 +11,13 @@
                     <div style="background: #f8f8f8;">
                         <div class="glbl-seting-h-div">
                             <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                                <div style="padding-left: 20%;padding-top: 4%;">
+                                <div class="glbl-file-input-div">
                                     <div *ngIf="!is_image" (click)="fileInput.click()"><img
                                             class="glbl-seting-img-width" src="assets/images/img_uplod.png"
-                                            alt="Jaldee"></div>
+                                            alt="Jaldee">
+                                            <img class="glbl-seting-img-smal" src="assets/images/round_img.png"
+                                            alt="Jaldee">
+                                        </div>
                                     <div *ngIf="is_image" (click)="fileInput.click()">
                                         <img *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
                                     </div>

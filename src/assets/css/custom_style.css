@@ -7684,6 +7684,13 @@ font-weight: 600px !important;
 .glbl-seting-disp-div {
   display: flex;padding-top: 5%;
 }
+.glbl-seting-img-smal{
+  display: none;
+}
+.glbl-file-input-div{
+  padding-left: 20%;
+  padding-top: 4%;
+}
 @media only screen and (max-width: 575px) {
   .glbl-seting-disp-div  {
     display: block !important;
@@ -7696,5 +7703,16 @@ font-weight: 600px !important;
   .glbl-seting-h-div {
     padding: 0% !important;
     display: block !important;
+  }
+  .glbl-seting-img-smal{
+    border-radius: 50%;
+    width: 50%;
+    display: block !important;
+  }
+  .glbl-seting-img-width{
+    display: none;
+  }
+  .glbl-file-input-div{
+    padding-left: 31%;
   }
 }
