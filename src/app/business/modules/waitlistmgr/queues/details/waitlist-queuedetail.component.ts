@@ -92,10 +92,10 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
                         this.prefixName = this.queue_data.batchPatternSettings.prefix;
                         this.suffixName = this.queue_data.batchPatternSettings.suffix;
                     }
-                    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) ||  (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
+                    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
                         this.showEditSection = true;
                     } else {
-            this.showEditSection = false;
+                        this.showEditSection = false;
                     }
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];

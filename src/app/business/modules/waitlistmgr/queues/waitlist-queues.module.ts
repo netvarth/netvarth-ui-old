@@ -30,4 +30,4 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
     ],
     exports: [WaitlistQueuesComponent]
 })
-export class WaitlistQueuesModule {}
+export class WaitlistQueuesModule { }
