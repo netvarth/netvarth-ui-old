@@ -1,0 +1,73 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list p-checkin ynw-common-form-nm">
+        <div class="col-md-12 no-padding">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+                                <div class="form-group col-md-12 mgn-up-10 sc-frm no-padding">
+                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
+                                        <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
+                                            <mat-form-field>
+                                                <input matInput placeholder="Enter Phone Number/Id/email" type="text"
+                                                    class="form-control" formControlName="search_input"
+                                                    (keypress)="findCustomer(searchForm.value, $event)">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-2 col-xs-2 col-sm-2">
+                                            <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value,selectedMode)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                <div class="mgn-bt-20" *ngIf="searchClicked && !foundCustomer">
+                                    <span>Sorry, We were not able to find the record in our {{customer_label}}s
+                                        list.</span>
+                                    <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
+                                        {{customer_label}}</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
+                                *ngIf="searchClicked && foundCustomer">
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Name:</b></div>
+                                    <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Email:</b></div>
+                                    <div>{{customer_data.email}}</div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>phoneNo:</b></div>
+                                    <div>{{customer_data.phoneNo}}</div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Dob</b></div>
+                                    <div>{{customer_data.dob}}</div>
+                                </div>
+                                <hr class="wide-separator-line" />
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+                                    Do You want take Check-In For this
+                                        {{customer_label}} &nbsp;
+                                    <i class="fa fa- pointer-cursor" (click)="checkinClicked()"><u
+                                            class="createcheckinstyle">Click here</u></i>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="lbr col-sm-12 col-md-6 col-lg-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</section>

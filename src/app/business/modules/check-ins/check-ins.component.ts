@@ -4,7 +4,6 @@ import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, Even
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
-import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -14,13 +13,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { filter, pairwise } from 'rxjs/operators';
-import { SearchProviderCustomerComponent } from '../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
-import { AddProviderCustomerComponent } from './add-provider-customer/add-provider-customer.component';
-// import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -29,7 +24,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
-  @Output() reloadActionSubheader = new EventEmitter<any>();
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -189,11 +183,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
-  adjustdialogRef;
   notedialogRef;
   addnotedialogRef;
-  billdialogRef;
-  viewbilldialogRef;
   makPaydialogRef;
   sendmsgdialogRef;
   locateCustomerdialogRef;
@@ -204,11 +195,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   returnedFromCheckDetails = false;
   breadcrumb_moreoptions: any = [];
   apis_loaded = false;
-  breadcrumbs_init = [
-    {
-      title: 'Dashboard'
-    }
-  ];
+  breadcrumbs_init = [{ title: 'Dashboard' }];
   noFilter = true;
   arr: any = [];
   breadcrumbs = this.breadcrumbs_init;
@@ -290,6 +277,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilterData = '';
   labelsCount: any = [];
   statusMultiCtrl: any = [];
+  carouselOne;
+  views: any = [];
+  selectedView: any;
+  selQIds: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -336,69 +327,82 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.apis_loaded = true;
-      if (this.unAvailableSlots.length > 0) {
-        this.scrollToSection();
-      }
-
-      if (this.futureUnAvailableSlots.length > 0) {
-        this.scrollToSection();
-      }
+      this.carouselOne = {
+        dots: false,
+        nav: true,
+        navContainer: '.checkins-nav',
+        navText: [
+          '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+          '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        autoplay: false,
+        // autoplayTimeout: 6000,
+        // autoplaySpeed: 1000,
+        // autoplayHoverPause: true,
+        mouseDrag: false,
+        touchDrag: true,
+        pullDrag: false,
+        loop: false,
+        autoWidth: false,
+        // margin: 10,
+        responsiveClass: true,
+        responsiveBaseElement: '.checkins-owl',
+        responsive: {
+          0: {
+              items: 1
+          },
+          479: {
+              items: 3
+          },
+          768: {
+              items: 4
+          },
+          979: {
+              items: 4
+          },
+          1200: {
+              items: 5
+          }
+        }
+      };
     });
-  }
-  scrollToSection() {
-    if (this.time_type === 2) {
-      this.slotIds.toArray().forEach(element => {
-        if (element.nativeElement.innerText === this.futureUnAvailableSlots[0]) {
-          element.nativeElement.scrollIntoViewIfNeeded();
-          return false;
-        }
-      });
-    }
-    if (this.time_type === 1) {
-      this.slotIds.toArray().forEach(element => {
-        if (element.nativeElement.innerText === this.unAvailableSlots[0]) {
-          element.nativeElement.scrollIntoViewIfNeeded();
-          return false;
-        }
-      });
-    }
   }
   ngOnInit() {
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+
     if (this.server_date) {
       this.getTomorrowDate();
     }
+
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
     } else {
       this.shared_functions.setitemToGroupStorage('sortBy', 'sort_token');
     }
-    this.getDisplayboardCount();
     this.showstatus['new'] = true;
-    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-      if (this.time_type === 1) {
-        this.getTodayCheckIn();
-      }
-      if (this.time_type === 2) {
-        this.getFutureCheckIn();
-      }
-    });
+    // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+    //   if (this.time_type === 1) {
+    //     this.getTodayCheckIn();
+    //   }
+    //   if (this.time_type === 2) {
+    //     this.getFutureCheckIn();
+    //   }
+    // });
     this.route.queryParams.subscribe((qparams) => {
       this.time_type = +qparams.time_type || 1;
       if (this.time_type >= 0) {
         this.setTimeType(this.time_type);
       }
     });
-
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
+    this.getViews();
     this.getPos();
     this.getServiceList();
-    // this.getLocationList();
     this.getLabel();
     this.getDepartments();
     this.getLocationList().then(
@@ -407,13 +411,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-        // if (!this.server_date) { this.setSystemDate(); }
         this.router.events
           .pipe(filter((e: any) => e instanceof RoutesRecognized),
             pairwise()
           ).subscribe((e: any) => {
             this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
           });
+
         const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
         if (savedtype !== undefined && savedtype !== null) {
           this.time_type = savedtype;
@@ -461,104 +465,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  getLocationList() {
-    const self = this;
-    return new Promise(function (resolve, reject) {
-      self.selected_location = null;
-      self.provider_services.getProviderLocations()
-        .subscribe(
-          (data: any) => {
-            const locations = data;
-            self.locations = [];
-            for (const loc of locations) {
-              if (loc.status === 'ACTIVE') {
-                self.locations.push(loc);
-              }
-            }
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
-            if (cookie_location_id === '') {
-              if (self.locations[0]) {
-                self.changeLocation(self.locations[0]);
-              }
-            } else {
-              self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
-            }
-            resolve();
-          },
-          () => {
-            reject();
-          },
-          () => {
-          }
-        );
-    },
-    );
-  }
-  gotoLocations() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
-  }
-  onChangeLocationSelect(event) {
-    const value = event;
-    this.changeLocation(this.locations[value] || []);
-  }
-  selectLocationFromCookie(cookie_location_id) {
-    let selected_location = null;
-    for (const location of this.locations) {
-      if (location.id === cookie_location_id) {
-        selected_location = location;
-      }
-    }
-    return (selected_location !== null) ? selected_location : this.locations[0];
-  }
-  selectLocationFromCookies(cookie_location_id) {
-    this.changeSelectedLocation(this.selectLocationFromCookie(cookie_location_id));
-  }
-  changeSelectedLocation(location) {
-    this.selected_location = location;
-    if (this.selected_location) {
-      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
-    }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
-    this.getQueueList();
-    // const pdata = { 'ttype': 'location_change' };
-    // this.shared_functions.sendSwitchMessage(pdata);
-  }
-  routeLoadIndicator(e) {
-    this.apiloading = e;
-  }
-  closeCounters() {
-    if (this.cronHandle) { this.cronHandle.unsubscribe(); }
-  }
-  filterClicked(type) {
-    this.filters[type] = !this.filters[type];
-    if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
-        this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
-        this.filter[type] = 'all';
-      } else if (type === 'waitlist_status') {
-        this.statusMultiCtrl = [];
-      } else {
-        this.filter[type] = '';
-      }
-      this.doSearch();
-    }
-  }
-  setSystemDate() {
-    this.shared_services.getSystemDate()
-      .subscribe(
-        res => {
-          this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
-        });
-  }
-  performActions(action) {
-    if (action === 'adjustdelay') {
-      this.showAdjustDelay();
-    } else if (action === 'learnmore') {
-      this.learnmore_clicked(action);
-    }
-  }
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -566,20 +472,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if (this.adjustdialogRef) {
-      this.adjustdialogRef.close();
-    }
     if (this.notedialogRef) {
       this.notedialogRef.close();
     }
     if (this.addnotedialogRef) {
       this.addnotedialogRef.close();
-    }
-    if (this.billdialogRef) {
-      this.billdialogRef.close();
-    }
-    if (this.viewbilldialogRef) {
-      this.viewbilldialogRef.close();
     }
     if (this.makPaydialogRef) {
       this.makPaydialogRef.close();
@@ -631,244 +528,144 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  getBussinessProfileApi() {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.provider_services.getBussinessProfile()
-        .subscribe(
-          data => {
-            resolve(data);
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-  }
-  // get the logo url for the provider
-  getProviderLogo(bname = '', bsector = '', bsubsector = '') {
-    let blogo;
-    this.provider_services.getProviderLogo()
-      .subscribe(
-        data => {
-          blogo = data;
-          let logo = '';
-          if (blogo[0]) {
-            logo = blogo[0].url;
-          } else {
-            logo = '';
-          }
-          // calling function which saves the business related details to show in the header
-          this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo);
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.shared_functions.sendMessage(pdata);
-        },
-        () => {
-        }
-      );
-  }
-  getProviderSettings() {
-    this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
-        this.settings = data;
-        this.calculationmode = this.settings.calculationMode;
-        this.showToken = this.settings.showTokenId;
-      }, () => {
-      });
-  }
-  getServiceList() {
-    this.provider_services.getServicesList()
-      .subscribe(
-        data => {
-          this.services = data;
-          this.getProviderSettings();
-        },
-        () => { }
-      );
-  }
-  getQueueList() {
-    this.selected_queue = null;
-    if (this.selected_location && this.selected_location.id) {
-      this.provider_services.getProviderLocationQueues(this.selected_location.id)
-        .subscribe(
-          (data: any) => {
-            const Cqueues = data;
-            this.all_queues = [];
-            let indx = 0;
-            for (const que of Cqueues) {
-              if (que.queueState === 'ENABLED') {
-                que.qindx = indx;
-                this.all_queues.push(que);
-                indx += 1;
-              }
-            }
-            if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
-              return;
-            }
-            let getsavedqueueid = '';
-            if (this.time_type === 2) {
-              getsavedqueueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
-            } else {
-              getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq') || '';
-            }
-            /*const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
-            if (!getsavedqueueid) {
-              const selid = this.findCurrentActiveQueue(this.all_queues);
-              this.selectedQueue(this.all_queues[selid]);
-            }*/
-            let selqid = 0;
-            for (let ii = 0; ii < this.all_queues.length; ii++) {
-              let schedule_arr = [];
-              // extracting the schedule intervals
-              if (this.all_queues[ii].queueSchedule) {
-                schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
-              }
-              let display_schedule = [];
-              display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-              this.all_queues[ii]['displayschedule'] = display_schedule[0];
-              if (this.all_queues[ii].id === getsavedqueueid) {
-                selqid = ii;
-              }
-            }
-            this.selected_queue = this.all_queues[selqid];
-            if (getsavedqueueid === '') {
-              const selid = this.findCurrentActiveQueue(this.all_queues);
-              this.selectedQueue(this.all_queues[selid]);
-            }
-            this.getTodayCheckinCount();
-            // if (this.time_type === 1) {
-            //   this.getTodayCheckIn();
-            // }
-            if (this.time_type === 3) {
-              this.getHistoryCheckIn();
-            }
-            if (this.time_type === 2) {
-              this.getFutureCheckIn();
-            }
-          },
-          () => { },
-          () => { }
-        );
-    }
-  }
-  getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
-      this.pos = data['enablepos'];
-    });
-  }
-  getTomorrowDate() {
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const serverdate = moment(server).format();
-    const servdate = new Date(serverdate);
-    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
-      this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
-      // this.tomorrowDate = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
-    } else {
-      this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
-    }
-  }
-  getQueueListByDate() {
-    this.load_queue = 0;
-    if (this.time_type === 2) {
-      if (this.filter.futurecheckin_date === null) {
-        this.getTomorrowDate();
-      }
-      this.queue_date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
-    } else {
-      this.queue_date = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-    }
-    if (this.selected_location && this.selected_location.id) {
-      this.provider_services.getProviderLocationQueuesByDate(
-        this.selected_location.id, this.queue_date)
-        .subscribe(
-          (data: any) => {
-            const Cqueues = data;
-            this.queues = [];
-            let savedQ;
-            if (this.time_type === 2) {
-              savedQ = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
-            } else {
-              savedQ = this.shared_functions.getitemFromGroupStorage('pdq') || '';
-            }
-            const savedQok = [];
-            let indx = 0;
-            for (const que of Cqueues) {
-              if (que.queueState === 'ENABLED') {
-                if (que.id === savedQ) {
-                  savedQok.push(que);
-                }
-                que.qindx = indx;
-                this.queues.push(que);
-                indx += 1;
-              }
-            }
-            if (savedQok.length > 0) {
-              this.selectedQueue(savedQok[0]);
-            } else {
-              if (this.time_type === 2) {
-                this.selectedQueue(this.queues[0]);
-              } else {
-                if (this.queues[0] && this.selected_queue == null) {
-                  const selectedQindx = this.findCurrentActiveQueue(this.queues);
-                  this.selectedQueue(this.queues[selectedQindx]);
-                }
-              }
-            }
-          },
-          () => {
-            this.selected_queue = null;
-            this.queues = [];
-            this.load_queue = 1;
-          },
-          () => {
-            this.load_queue = 1;
-          }
-        );
-    }
-  }
-  findCurrentActiveQueue(ques) {
-    let selindx = 0;
-    const cday = new Date();
-    const currentday = (cday.getDay() + 1);
-    const curtime = cday.getHours() + ':' + cday.getMinutes() + ':00';
-    // const curtime = '21:00:00';
-    let stime;
-    let etime;
-    const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
-    const curtimeforchk = new Date(tday + ' ' + curtime);
-    for (let i = 0; i < ques.length; i++) {
-      for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
-        const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
-        if (currentday === pday) {
-          stime = new Date(tday + ' ' + this.AMHourto24(ques[i].queueSchedule.timeSlots[0].sTime));
-          etime = new Date(tday + ' ' + this.AMHourto24(ques[i].queueSchedule.timeSlots[0].eTime));
-          if ((curtimeforchk.getTime() >= stime.getTime()) && (curtimeforchk.getTime() <= etime.getTime())) {
-            selindx = i;
-          }
-        }
-      }
-    }
-    return selindx;
-  }
-  AMHourto24(time12) {
-    const time = time12;
-    let hours = Number(time.match(/^(\d+)/)[1]);
-    const minutes = Number(time.match(/:(\d+)/)[1]);
-    const AMPM = time.match(/\s(.*)$/)[1];
-    if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
-    if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
-    let sHours = hours.toString();
-    let sMinutes = minutes.toString();
-    if (hours < 10) {
-      sHours = '0' + sHours;
-    }
-    if (minutes < 10) {
-      sMinutes = '0' + sMinutes;
-    }
-    const time24 = sHours + ':' + sMinutes + ':00';
-    return time24;
-  }
+  // getQueueList() {
+  //   this.selected_queue = null;
+  //   if (this.selected_location && this.selected_location.id) {
+  //     this.provider_services.getProviderLocationQueues(this.selected_location.id)
+  //       .subscribe(
+  //         (data: any) => {
+  //           const Cqueues = data;
+  //           this.all_queues = [];
+  //           let indx = 0;
+  //           for (const que of Cqueues) {
+  //             if (que.queueState === 'ENABLED') {
+  //               que.qindx = indx;
+  //               this.all_queues.push(que);
+  //               indx += 1;
+  //             }
+  //           }
+  //           if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+  //             return;
+  //           }
+  //           let getsavedqueueid = '';
+  //           if (this.time_type === 2) {
+  //             getsavedqueueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
+  //           } else {
+  //             getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq') || '';
+  //           }
+  //           let selqid = 0;
+  //           for (let ii = 0; ii < this.all_queues.length; ii++) {
+  //             let schedule_arr = [];
+  //             // extracting the schedule intervals
+  //             if (this.all_queues[ii].queueSchedule) {
+  //               schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+  //             }
+  //             let display_schedule = [];
+  //             display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+  //             this.all_queues[ii]['displayschedule'] = display_schedule[0];
+  //             if (this.all_queues[ii].id === getsavedqueueid) {
+  //               selqid = ii;
+  //             }
+  //           }
+  //           this.selected_queue = this.all_queues[selqid];
+  //           if (getsavedqueueid === '') {
+  //             const selid = this.findCurrentActiveQueue(this.all_queues);
+  //             this.selectedQueue(this.all_queues[selid]);
+  //           }
+  //           this.getTodayCheckinCount();
+  //           // if (this.time_type === 1) {
+  //           //   this.getTodayCheckIn();
+  //           // }
+  //           if (this.time_type === 3) {
+  //             this.getHistoryCheckIn();
+  //           }
+  //           if (this.time_type === 2) {
+  //             this.getFutureCheckIn();
+  //           }
+  //         },
+  //         () => { },
+  //         () => { }
+  //       );
+  //   }
+  // }
+  // getQueueListByDate() {
+  //   this.load_queue = 0;
+  //   if (this.time_type === 2) {
+  //     if (this.filter.futurecheckin_date === null) {
+  //       this.getTomorrowDate();
+  //     }
+  //     this.queue_date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+  //   } else {
+  //     this.queue_date = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  //   }
+  //   if (this.selected_location && this.selected_location.id) {
+  //     const filter_new = {
+  //       // 4,
+  //       'id-eq': '15,21,59,60,91'
+  //     };
+  //     this.provider_services.getProviderQueues(filter_new).subscribe(
+  //       (queues: any) => {
+  //         // this.provider_services.getProviderLocationQueuesByDate(
+  //         //     this.selected_location.id, this.queue_date)
+  //         //     .subscribe(
+  //         // (queues: any) => {
+  //         console.log(queues);
+  //         this.queues = [];
+  //         this.queues = queues;
+  //         this.load_queue = 1;
+  //         const selectedQindx = this.findCurrentActiveQueue(this.queues);
+  //         this.selectedQueue(this.queues[selectedQindx]);
+  //       }
+  //     );
+  //     // this.provider_services.getProviderLocationQueuesByDate(
+  //     //   this.selected_location.id, this.queue_date)
+  //     //   .subscribe(
+  //     //     (data: any) => {
+  //     //       const Cqueues = data;
+  //     //       this.queues = [];
+  //     //       let savedQ;
+  //     //       if (this.time_type === 2) {
+  //     //         savedQ = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
+  //     //       } else {
+  //     //         savedQ = this.shared_functions.getitemFromGroupStorage('pdq') || '';
+  //     //       }
+  //     //       const savedQok = [];
+  //     //       let indx = 0;
+  //     //       for (const que of Cqueues) {
+  //     //         if (que.queueState === 'ENABLED') {
+  //     //           if (que.id === savedQ) {
+  //     //             savedQok.push(que);
+  //     //           }
+  //     //           que.qindx = indx;
+  //     //           this.queues.push(que);
+  //     //           indx += 1;
+  //     //         }
+  //     //       }
+  //     //       if (savedQok.length > 0) {
+  //     //         this.selectedQueue(savedQok[0]);
+  //     //       } else {
+  //     //         if (this.time_type === 2) {
+  //     //           this.selectedQueue(this.queues[0]);
+  //     //         } else {
+  //     //           if (this.queues[0] && this.selected_queue == null) {
+  //     //             const selectedQindx = this.findCurrentActiveQueue(this.queues);
+  //     //             this.selectedQueue(this.queues[selectedQindx]);
+  //     //           }
+  //     //         }
+  //     //       }
+  //     //     },
+  //     //     () => {
+  //     //       this.selected_queue = null;
+  //     //       this.queues = [];
+  //     //       this.load_queue = 1;
+  //     //     },
+  //     //     () => {
+  //     //       this.load_queue = 1;
+  //     //       console.log(this.queues);
+  //     //     }
+  //     //   );
+  //   }
+  // }
   changeLocation(location) {
     this.selected_location = location;
     this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
@@ -893,44 +690,68 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
   }
-  selectedQueue(selected_queue) {
-    // this.selected_queue = '';
-    this.selected_queue = selected_queue;
-    if (selected_queue.id && this.time_type === 1) {
-      this.sel_queue_indx = selected_queue.qindx;
-      this.shared_functions.setitemToGroupStorage('pdq', selected_queue.id);
-      this.today_waitlist_count = 0;
-      this.getTodayCheckIn();
+  // selectedQueue(selected_queue, index?) {
+  //   // this.selected_queue = '';
+  //   this.selected_queue = selected_queue;
+  //   if (selected_queue.id && this.time_type === 1) {
+  //     this.sel_queue_indx = selected_queue.qindx;
+  //     this.shared_functions.setitemToGroupStorage('pdq', selected_queue.id);
+  //     this.today_waitlist_count = 0;
+  //     this.getTodayCheckIn();
+  //   }
+  //   if (selected_queue.id && this.time_type === 2) {
+  //     this.sel_queue_indx = selected_queue.qindx;
+  //     this.shared_functions.setitemToGroupStorage('f_pdq', selected_queue.id);
+  //     this.future_waitlist_count = 0;
+  //     this.getFutureCheckIn();
+  //   }
+  //   this.resetAll();
+  // }
+  // handleQueueSel(mod) {
+  //   let selqindx;
+  //   if (mod === 'next') {
+  //     if ((this.queues.length - 1) > this.sel_queue_indx) {
+  //       selqindx = this.sel_queue_indx + 1;
+  //       this.selectedQueue(this.queues[selqindx]);
+  //     }
+  //   } else if (mod === 'prev') {
+  //     if ((this.queues.length > 0) && (this.sel_queue_indx > 0)) {
+  //       selqindx = this.sel_queue_indx - 1;
+  //       this.selectedQueue(this.queues[selqindx]);
+  //     }
+  //   }
+  // }
+  handleViewSel(view) {
+    console.log(view);
+    if (this.time_type === 1) {
+        this.shared_functions.setitemonLocalStorage('t_slv', view);
+    } else if (this.time_type === 2) {
+      this.shared_functions.setitemonLocalStorage('t_slv', view);
+    } if (this.time_type === 3) {
+      this.shared_functions.setitemonLocalStorage('t_slv', view);
     }
-    if (selected_queue.id && this.time_type === 2) {
-      this.sel_queue_indx = selected_queue.qindx;
-      this.shared_functions.setitemToGroupStorage('f_pdq', selected_queue.id);
-      this.future_waitlist_count = 0;
-      this.getFutureCheckIn();
-    }
-    this.resetAll();
-  }
-  handleQueueSel(mod) {
-    let selqindx;
-    if (mod === 'next') {
-      if ((this.queues.length - 1) > this.sel_queue_indx) {
-        selqindx = this.sel_queue_indx + 1;
-        this.selectedQueue(this.queues[selqindx]);
-      }
-    } else if (mod === 'prev') {
-      if ((this.queues.length > 0) && (this.sel_queue_indx > 0)) {
-        selqindx = this.sel_queue_indx - 1;
-        this.selectedQueue(this.queues[selqindx]);
-      }
-    }
+    this.initView(view);
+    this.reloadAPIs();
+    // let selqindx;
+    // if (mod === 'next') {
+    //   if ((this.queues.length - 1) > this.sel_queue_indx) {
+    //     selqindx = this.sel_queue_indx + 1;
+    //     this.selectedQueue(this.queues[selqindx]);
+    //   }
+    // } else if (mod === 'prev') {
+    //   if ((this.queues.length > 0) && (this.sel_queue_indx > 0)) {
+    //     selqindx = this.sel_queue_indx - 1;
+    //     this.selectedQueue(this.queues[selqindx]);
+    //   }
+    // }
   }
   getFutureCheckinCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
+    // const queueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
     let no_filter = false;
-    if (!Mfilter && this.selected_location && this.selected_location.id && queueid) {
+    if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'queue-eq': queueid
+        'queue-eq': this.selQIds.toString()
       };
       no_filter = true;
     }
@@ -1003,11 +824,36 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_count;
   }
 
+  initView(view) {
+    return new Promise((resolve, reject) => {
+      const qIds = [];
+      for (let i = 0; i < view.customViewConditions.queues.length; i++) {
+        qIds.push(view.customViewConditions.queues[i]['id']);
+      }
+      console.log(qIds);
+      const filter_new = {
+        // 4,
+        'id-eq': qIds.toString()
+      };
+      this.selQIds = qIds;
+      this.provider_services.getProviderQueues(filter_new).subscribe(
+        (queues: any) => {
+          console.log(queues);
+          this.queues = [];
+          this.queues = queues;
+          resolve();
+          this.load_queue = 1;
+        }
+      );
+    });
+  }
+
   getTodayCheckIn() {
     this.loading = true;
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     Mfilter[this.sortBy] = 'asc';
+    Mfilter['queue-eq'] = this.selQIds.toString();
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -1049,16 +895,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
-          if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
-            this.getAvaiableSlots('today');
-            if (this.unAvailableSlots.length > 0) {
-              setTimeout(() => {
-                this.scrollToSection();
-              }, 500);
-            }
-          } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
-            this.shared_functions.removeitemFromGroupStorage('interval');
-          }
           this.loading = false;
         },
         () => {
@@ -1069,20 +905,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
 
   }
-  sortCheckins(checkins) {
-    checkins.sort(function (message1, message2) {
-      if (message1.token > message2.token) {
-        return 11;
-      } else if (message1.token < message2.token) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-  }
   getFutureCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
+    Mfilter['queue-eq'] = this.selQIds.toString();
     const promise = this.getFutureCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -1115,6 +941,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loading = true;
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
+    Mfilter['queue-eq'] = this.selQIds.toString();
     const promise = this.getHistoryCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -1125,13 +952,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             data => {
               this.new_checkins_list = [];
               this.check_in_list = this.check_in_filtered_list = data;
-              // this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
-              // if (this.grouped_list && this.grouped_list['checkedIn']) {
-              //   this.new_checkins_list = this.grouped_list['checkedIn'].slice();
-              // }
-              // if (this.grouped_list && this.grouped_list['arrived']) {
-              //   Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
-              // }
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
@@ -1184,19 +1004,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filterapplied = false;
     this.loadApiSwitch('setTimeType');
   }
-  setFilterDateMaxMin() {
-    this.filter_date_start_min = null;
-    this.filter_date_start_max = null;
-    this.filter_date_end_min = null;
-    this.filter_date_end_max = null;
-    if (this.time_type === 0) {
-      this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
-    } else if (this.time_type === 2) {
-      this.filter_date_start_min = moment(new Date()).add(+1, 'days');
-      this.filter_date_end_min = moment(new Date()).add(+1, 'days');
-    }
-  }
+
 
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -1211,16 +1019,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
-
-  // checkFilterdobMaxMin(type) {
-  //   if (type === 'dob_start_date') {
-  //     this.filter_dob_end_min = this.filter.dob_start_date;
-  //   } else if (type === 'dob_end_date') {
-  //     this.filter_dob_start_max = this.filter.dob_end_date;
-  //   }
-  //   this.doSearch();
-  // }
-
   loadApiSwitch(source) {
     this.resetAll();
     let chkSrc = true;
@@ -1242,29 +1040,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     switch (this.time_type) {
-      case 1: this.getQueueListByDate();
-        this.noOfColumns = 8;
+      case 1:
+        // this.initView();
+        this.getTodayCheckIn();
+        // this.noOfColumns = 8;
         break;
-      case 2: this.getQueueListByDate();
+      case 2: this.getFutureCheckIn();
+        this.shared_functions.getitemfromLocalStorage('f_slv');
         // this.getQueueList();
-        this.noOfColumns = 8;
+        // this.noOfColumns = 8;
         break;
-      case 3: this.getQueueList();
-        this.noOfColumns = 9;
+      case 3:
+        this.shared_functions.getitemfromLocalStorage('h_slv');
+        this.getHistoryCheckIn();
+        // this.noOfColumns = 9;
         break;
-    }
-  }
-  resetLabelFilter() {
-    this.labelMultiCtrl = [];
-    this.labelFilter = [];
-    this.labelFilterData = '';
-  }
-  showAdjustDelay() {
-    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
-      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
-      return false;
-    } else {
-      this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
     }
   }
   editLocation() {
@@ -1276,15 +1066,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.edit_location = 1;
   }
   reloadAPIs() {
-    this.countApiCall();
+    // this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
-  }
-  countApiCall() {
-    // if (this.shared_functions.getitemfromLocalStorage('pdq') !== 'null') {
-    //   this.getTodayCheckinCount();
-    // }
-    this.getHistoryCheckinCount();
-    this.getFutureCheckinCount();
   }
   changeStatusType(type) {
     this.status_type = type;
@@ -1378,7 +1161,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(this.selected_queue);
     const api_filter = {};
     if (this.time_type === 1) {
-      api_filter['queue-eq'] = this.selected_queue.id;
+      // api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
       }
@@ -1439,7 +1222,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    api_filter['location-eq'] = this.selected_location.id;
+    if (this.selected_location && this.selected_location.id) {
+      api_filter['location-eq'] = this.selected_location.id;
+    }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1494,13 +1279,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     this.statusMultiCtrl = [];
   }
-  goCheckinDetail(checkin) {
-    if (this.time_type === 3) {
-      this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
-      this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
-    }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
-  }
   addProviderNote(source, waitlist?) {
     let checkin;
     if (source === 'history' || source === 'future') {
@@ -1520,37 +1298,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') { }
     });
   }
-  viewBillPage(source, checkin?) {
-    let checkin_details;
-    if (source === 'history' || source === 'future') {
-      checkin_details = checkin;
-    } else {
-      checkin_details = this.selectedCheckin[source];
-    }
-    this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
-      .subscribe(
-        data => {
-          this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-    // this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
-  }
-  resetPaginationData() {
-    this.filter.page = 1;
-    this.pagination.startpageval = 1;
-    this.shared_functions.removeitemfromLocalStorage('hP');
-    this.shared_functions.removeitemfromLocalStorage('hPFil');
-  }
-  handle_pageclick(pg) {
-    this.pagination.startpageval = pg;
-    this.filter.page = pg;
-    this.shared_functions.setitemToGroupStorage('hP', pg);
-    this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
-    this.doSearch();
-  }
+
   addConsumerInboxMessage(source, waitlst?) {
     let waitlist = [];
     if (source === 'new') {
@@ -1570,23 +1318,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  // reloadActionSubheader() { this.reloadAPIs(); }
   getStatusLabel(status) {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
-  }
-  focusInput(ev, input) {
-    const kCode = parseInt(ev.keyCode, 10);
-    if (kCode === 13) { input.focus(); }
-  }
-  focusInputSp(ev) {
-    const kCode = parseInt(ev.keyCode, 10);
-    if (kCode === 13) { this.doSearch(); }
-  }
-  learnmore_clicked(action) {
-    if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/dashboard']);
-    }
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -1631,16 +1365,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  isNumeric(evt) {
-    return this.shared_functions.isNumeric(evt);
-  }
-  isvalid(evt) {
-    if (evt.keyCode === 13) {
-      this.doSearch();
-    }
-    return this.shared_functions.isValid(evt);
-  }
-
   isCheckinActive() {
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
@@ -1668,242 +1392,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
-  checkinClicked() {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: { action: 'editbase' }
-    // };
-    this.router.navigate(['provider', 'check-ins', 'add']);
-  }
-  // checkinClicked(appttime) {
-  //   if (this.isCheckinActive()) {
-  //     this.provider_services.getServicesList()
-  //       .subscribe(
-  //         data => {
-  //           if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
-  //             this.isCheckin = 4;
-  //             this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-  //             this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-  //             return false;
-  //           } else {
-  //             this.provider_services.getProviderQueues()
-  //               .subscribe(
-  //                 data1 => {
-  //                   if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
-  //                     this.isCheckin = 5;
-  //                     this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-  //                     this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-  //                     return false;
-  //                   } else {
-  //                     this.searchCustomer('providerCheckin', appttime);
-  //                     return true;
-  //                   }
-  //                 },
-  //                 () => {
-  //                 });
-  //           }
-  //         },
-  //         () => {
-  //         }
-  //       );
-  //   }
-  // }
-  searchCustomer(source, appttime) {
-    this.router.navigate(['provider', 'customers', 'FindORSearch']); 
-    // this.router.navigate(['provider', 'check-ins', 'create']);
-    // this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-    //   disableClose: true,
-    //   data: {
-    //     source: source,
-    //     calc_mode: this.calculationmode,
-    //     showToken: this.showToken
-    //   }
-    // });
-    // this.srchcustdialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
-    //     this.createCheckin(result.data, appttime);
-    //   } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
-    //     this.createCustomer(result.data, source, appttime);
-    //   } else if (result && result.message && (result.message === 'noCustomer' || result.message === 'newCustomer') && source === 'providerCheckin') {
-    //     this.createCustomer(result.data, source, appttime, result.message);
-    //   }
-    // });
-  }
-  createCustomer(search_data, next_page = null, appttime, message?) {
-    // this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-    //   disableClose: true,
-    //   data: {
-    //     search_data: search_data,
-    //     message: message
-    //   }
-    // });
-    // this.crtCustdialogRef.afterClosed().subscribe(result => {
-    //   if (next_page !== 'createCustomer' && result.message === 'reloadlist') {
-    //     this.createCheckin(result.data, appttime);
-    //   }
-    // });
-  }
 
-  createCheckin(user_data, appttime) {
-    const post_data = {};
-    // let selected_location = null;
-    // const cookie_location_id = this.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider home page
-    // if (cookie_location_id === '') {
-    //   if (this.locations[0]) {
-    //     selected_location = this.locations[0];
-    //   }
-    // } else {
-    //   selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-    // }
-    if (this.selected_location != null) {
-      post_data['location'] = {
-        'id': this.selected_location['id'],
-        'name': this.selected_location['place']
-      };
-    }
-    post_data['provider'] = {
-      unique_id: this.bprofile.uniqueId,
-      account_id: this.bprofile.id,
-      name: this.bprofile.businessName
-    };
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const cdate = new Date(todaydt);
-    const mn = cdate.getMonth() + 1;
-    const dy = cdate.getDate();
-    let mon = '';
-    let day = '';
-    if (mn < 10) {
-      mon = '0' + mn;
-    } else {
-      mon = '' + mn;
-    }
-    if (dy < 10) {
-      day = '0' + dy;
-    } else {
-      day = '' + dy;
-    }
-    let curdate;
-
-    if (this.time_type === 2) {
-      curdate = this.queue_date;
-    } else {
-      curdate = cdate.getFullYear() + '-' + mon + '-' + day;
-    }
-    // this.ChkindialogRef = this.dialog.open(CheckInComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-    //   disableClose: true,
-    //   data: {
-    //     type: 'provider',
-    //     is_provider: 'true',
-    //     customer_data: user_data,
-    //     moreparams: {
-    //       source: 'provider_checkin',
-    //       bypassDefaultredirection: 1,
-    //       provider: post_data['provider'],
-    //       location: post_data['location'],
-    //       sel_date: curdate
-    //     },
-    //     datechangereq: true,
-    //     apptTime: appttime,
-    //     queue: this.selected_queue
-    //   }
-    // });
-    // this.ChkindialogRef.afterClosed().subscribe(result => {
-    //   if (result === 'reloadlist') {
-    //     this.reloadActionSubheader.emit(result);
-    //     this.reloadAPIs();
-    //   }
-    // });
-  }
-  applyLabel(checkin) {
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
-  }
-  getLabel() {
-    this.providerLabels = [];
-    this.provider_services.getLabelList().subscribe(data => {
-      this.providerLabels = data;
-    });
-  }
-  getDisplayname(label) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      if (this.providerLabels[i].label === label) {
-        return this.providerLabels[i].displayName;
-      }
-    }
-  }
-
-  addLabel() {
-    this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
-      this.getTodayCheckIn();
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
-  deleteLabel(label) {
-    this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
-      this.getTodayCheckIn();
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
-  changeLabelvalue(status, labelname, value) {
-    this.showLabels[status] = false;
-    const checkin = this.selectedCheckin[status];
-    this.checkinId = checkin.ynwUuid;
-    this.labelMap = new Object();
-    this.labelMap[labelname] = value;
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        if (this.providerLabels[i].valueSet[j].value === value) {
-          if (!this.providerLabels[i].valueSet[j].selected) {
-            this.providerLabels[i].valueSet[j].selected = true;
-            this.addLabel();
-          } else {
-            this.providerLabels[i].valueSet[j].selected = false;
-            this.deleteLabel(labelname);
-          }
-        } else {
-          if (this.providerLabels[i].label === labelname) {
-            this.providerLabels[i].valueSet[j].selected = false;
-          }
-        }
-      }
-    }
-  }
-  addLabelvalue(status, source, label?) {
-    const checkin = this.selectedCheckin[status];
-    this.checkinId = this.selectedCheckin[status].ynwUuid;
-    this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        checkin: checkin,
-        source: source,
-        label: label
-      }
-    });
-    this.labeldialogRef.afterClosed().subscribe(data => {
-      if (data) {
-        setTimeout(() => {
-          this.labels(this.selectedCheckin[status]);
-          this.labelMap = new Object();
-          this.labelMap[data.label] = data.value;
-          this.addLabel();
-          this.getDisplayname(data.label);
-          this.getTodayCheckIn();
-        }, 500);
-      }
-      this.getLabel();
-    });
-  }
 
   openActionsWindow(type, index, status?) {
     switch (type) {
@@ -2068,20 +1557,306 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (result === 'reloadlist') {
         }
       });
-
-      //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
-      //   this.distance = this.trackDetail.jaldeeDistance.distance;
-      //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
-      //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
-      //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
-      //   this.hours = Math.floor(this.travelTime / 60);
-      //   this.minutes = this.travelTime % 60;
-      //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-      // }
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
+  }
+  waitlistStatusClick(status) {
+    if (!this.showstatus[status]) {
+      this.showstatus[status] = true;
+    } else {
+      this.showstatus[status] = false;
+      this.resetAll();
+    }
+  }
+  resetAll() {
+    this.waitlistSelected = [];
+    this.startedwaitlistSelected = [];
+    this.cancelledwaitlistSelected = [];
+    this.completedwaitlistSelected = [];
+    this.waitlistSelection = 0;
+    this.startedwaitlistSelection = 0;
+    this.cancelledwaitlistSelection = 0;
+    this.completedwaitlistSelection = 0;
+  }
+  setSortByParam(sortBy) {
+    this.sortBy = sortBy;
+    this.shared_functions.setitemToGroupStorage('sortBy', this.sortBy);
+    this.getTodayCheckIn();
+  }
+  callingWaitlist(checkin) {
+    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
+    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+      () => {
+        this.loadApiSwitch('reloadAPIs');
+      });
+  }
+
+  /**
+   * Router Navigations
+   */
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
+  }
+  gotoCustomViews() {
+    this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+  }
+  checkinClicked() {
+    this.router.navigate(['provider', 'check-ins', 'add']);
+  }
+  searchCustomer(source, appttime) {
+    this.router.navigate(['provider', 'customers', 'find']);
+  }
+  showAdjustDelay() {
+    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
+      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
+      return false;
+    } else {
+      this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
+    }
+  }
+  applyLabel(checkin) {
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
+  }
+  goCheckinDetail(checkin) {
+    if (this.time_type === 3) {
+      this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
+      this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
+    }
+    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
+  }
+  viewBillPage(source, checkin?) {
+    let checkin_details;
+    if (source === 'history' || source === 'future') {
+      checkin_details = checkin;
+    } else {
+      checkin_details = this.selectedCheckin[source];
+    }
+    this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
+      .subscribe(
+        data => {
+          this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  learnmore_clicked(action) {
+    if (action === 'learnmore') {
+      this.routerobj.navigate(['/provider/' + this.domain + '/dashboard']);
+    }
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+  }
+  performActions(action) {
+    if (action === 'adjustdelay') {
+      this.showAdjustDelay();
+    } else if (action === 'learnmore') {
+      this.learnmore_clicked(action);
+    }
+  }
+  isQueueSelected(qId) {
+    if (this.selQIds.indexOf(qId) !== -1) {
+      return true;
+    }
+    return false;
+  }
+  viewQClicked(qId) {
+    alert(this.selQIds.toString());
+    const qindx = this.selQIds.indexOf(qId);
+    if (qindx !== -1) {
+      if (this.selQIds.length === 1) {
+        return false;
+      }
+      this.selQIds.splice(qindx, 1);
+    } else {
+      this.selQIds.push(qId);
+    }
+    console.log(this.selQIds);
+
+    this.reloadAPIs();
+
+    // this.getTodayCheckIn();
+  }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
+  isvalid(evt) {
+    if (evt.keyCode === 13) {
+      this.doSearch();
+    }
+    return this.shared_functions.isValid(evt);
+  }
+  focusInput(ev, input) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) { input.focus(); }
+  }
+  focusInputSp(ev) {
+    const kCode = parseInt(ev.keyCode, 10);
+    if (kCode === 13) { this.doSearch(); }
+  }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
+  }
+  getViews() {
+    this.provider_services.getCustomViewList().subscribe(data => {
+      this.views = data;
+      this.selectedView = this.views[0];
+      this.initView(this.selectedView);
+    });
+  }
+  onChangeLocationSelect(event) {
+    const value = event;
+    this.changeLocation(this.locations[value] || []);
+  }
+  selectLocationFromCookie(cookie_location_id) {
+    let selected_location = null;
+    for (const location of this.locations) {
+      if (location.id === cookie_location_id) {
+        selected_location = location;
+      }
+    }
+    return (selected_location !== null) ? selected_location : this.locations[0];
+  }
+  selectLocationFromCookies(cookie_location_id) {
+    this.changeSelectedLocation(this.selectLocationFromCookie(cookie_location_id));
+  }
+  changeSelectedLocation(location) {
+    this.selected_location = location;
+    if (this.selected_location) {
+      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+    }
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    // this.getQueueList();
+  }
+  routeLoadIndicator(e) {
+    this.apiloading = e;
+  }
+  closeCounters() {
+    if (this.cronHandle) { this.cronHandle.unsubscribe(); }
+  }
+  getLocationList() {
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      self.selected_location = null;
+      self.provider_services.getProviderLocations()
+        .subscribe(
+          (data: any) => {
+            const locations = data;
+            self.locations = [];
+            for (const loc of locations) {
+              if (loc.status === 'ACTIVE') {
+                self.locations.push(loc);
+              }
+            }
+            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+            if (cookie_location_id === '') {
+              if (self.locations[0]) {
+                self.changeLocation(self.locations[0]);
+              }
+            } else {
+              self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
+            }
+            resolve();
+          },
+          () => {
+            reject();
+          },
+          () => {
+          }
+        );
+    },
+    );
+  }
+  getDepartments() {
+    this.provider_services.getDepartments().subscribe(
+      data => {
+        this.departments = data['departments'];
+      },
+      error => { }
+    );
+  }
+  getBussinessProfileApi() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  // get the logo url for the provider
+  getProviderLogo(bname = '', bsector = '', bsubsector = '') {
+    let blogo;
+    this.provider_services.getProviderLogo()
+      .subscribe(
+        data => {
+          blogo = data;
+          let logo = '';
+          if (blogo[0]) {
+            logo = blogo[0].url;
+          } else {
+            logo = '';
+          }
+          // calling function which saves the business related details to show in the header
+          this.shared_functions.setBusinessDetailsforHeaderDisp(bname || '', bsector || '', bsubsector || '', logo);
+          const pdata = { 'ttype': 'updateuserdetails' };
+          this.shared_functions.sendMessage(pdata);
+        },
+        () => {
+        }
+      );
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.calculationmode = this.settings.calculationMode;
+        this.showToken = this.settings.showTokenId;
+      }, () => {
+      });
+  }
+  getServiceList() {
+    this.provider_services.getServicesList()
+      .subscribe(
+        data => {
+          this.services = data;
+          this.getProviderSettings();
+        },
+        () => { }
+      );
+  }
+  sortCheckins(checkins) {
+    checkins.sort(function (message1, message2) {
+      if (message1.token > message2.token) {
+        return 11;
+      } else if (message1.token < message2.token) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
   locateCustomerMsg(details) {
     if (details && details.jaldeeDistance) {
@@ -2091,41 +1866,213 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const hours = Math.floor(travelTime / 60);
       const mode = details.jaldeelTravelTime.travelMode;
       const minutes = travelTime % 60;
-      // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-      let message = '';
-      if (distance === 0) {
-        message += 'Your customer is close to you, will arrive shortly';
-      } else {
-        message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
-        if (hours !== 0) {
-          message += ' ' + hours;
-          if (hours === 1) {
-            message += ' hr';
-          } else {
-            message += ' hrs';
-          }
-        }
-        if (minutes !== 0) {
-          message += ' ' + minutes;
-          if (minutes === 1) {
-            message += ' min';
-          } else {
-            message += ' mins';
-          }
-        }
-        if (mode === 'WALKING') {
-          message += ' walk';
-        } else if (mode === 'DRIVING') {
-          message += ' drive';
-        } else if (mode === 'BICYCLING') {
-          message += ' ride';
-        }
-        message += ' to reach here';
-      }
-      return message;
+      return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
     }
   }
 
+  /**
+   * Labels Section
+   */
+  resetLabelFilter() {
+    this.labelMultiCtrl = [];
+    this.labelFilter = [];
+    this.labelFilterData = '';
+  }
+  labelClick(status) {
+    this.showLabels[status] = true;
+  }
+  getLabel() {
+    this.providerLabels = [];
+    this.provider_services.getLabelList().subscribe(data => {
+      this.providerLabels = data;
+    });
+  }
+  getDisplayname(label) {
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      if (this.providerLabels[i].label === label) {
+        return this.providerLabels[i].displayName;
+      }
+    }
+  }
+  labelfilterClicked(index, label) {
+    delete this.labelMultiCtrl[label];
+    this.labelFilter[index] = !this.labelFilter[index];
+    if (!this.labelFilter[index]) {
+      this.doSearch();
+    }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    this.labelsCount = [];
+    let count = 0;
+    Object.keys(this.labelMultiCtrl).forEach(key => {
+      if (this.labelMultiCtrl[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          const labelvalues = this.labelMultiCtrl[key].join(',');
+          const labelvaluesArray = labelvalues.split(',');
+          for (const value of labelvaluesArray) {
+            const lblFilter = key + '::' + value;
+            const Mfilter = this.setFilterForApi();
+            Mfilter['label-eq'] = lblFilter;
+            const promise = this.getHistoryCheckinCount(Mfilter);
+            promise.then(
+              result => {
+                if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
+                  this.labelsCount.push(value + ' - ' + result);
+                }
+              });
+          }
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.labelMultiCtrl[key].join(',');
+          }
+        }
+      } else {
+        delete this.labelMultiCtrl[key];
+      }
+    });
+  }
+  labels(checkin) {
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+        this.providerLabels[i].valueSet[j].selected = false;
+      }
+    }
+    setTimeout(() => {
+      const values = [];
+      for (const value of Object.values(checkin.label)) {
+        values.push(value);
+      }
+      for (let i = 0; i < this.providerLabels.length; i++) {
+        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+          for (let k = 0; k < values.length; k++) {
+            if (this.providerLabels[i].valueSet[j].value === values[k]) {
+              this.providerLabels[i].valueSet[j].selected = true;
+            }
+          }
+        }
+      }
+    }, 100);
+  }
+  addLabel() {
+    this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
+      this.getTodayCheckIn();
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  deleteLabel(label) {
+    this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
+      this.getTodayCheckIn();
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  changeLabelvalue(status, labelname, value) {
+    this.showLabels[status] = false;
+    const checkin = this.selectedCheckin[status];
+    this.checkinId = checkin.ynwUuid;
+    this.labelMap = new Object();
+    this.labelMap[labelname] = value;
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+        if (this.providerLabels[i].valueSet[j].value === value) {
+          if (!this.providerLabels[i].valueSet[j].selected) {
+            this.providerLabels[i].valueSet[j].selected = true;
+            this.addLabel();
+          } else {
+            this.providerLabels[i].valueSet[j].selected = false;
+            this.deleteLabel(labelname);
+          }
+        } else {
+          if (this.providerLabels[i].label === labelname) {
+            this.providerLabels[i].valueSet[j].selected = false;
+          }
+        }
+      }
+    }
+  }
+  addLabelvalue(status, source, label?) {
+    const checkin = this.selectedCheckin[status];
+    this.checkinId = this.selectedCheckin[status].ynwUuid;
+    this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        checkin: checkin,
+        source: source,
+        label: label
+      }
+    });
+    this.labeldialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        setTimeout(() => {
+          this.labels(this.selectedCheckin[status]);
+          this.labelMap = new Object();
+          this.labelMap[data.label] = data.value;
+          this.addLabel();
+          this.getDisplayname(data.label);
+          this.getTodayCheckIn();
+        }, 500);
+      }
+      this.getLabel();
+    });
+  }
+
+  /**
+   * Filter Actions
+   */
+  filterClicked(type) {
+    this.filters[type] = !this.filters[type];
+    if (!this.filters[type]) {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+        this.filter[type] = null;
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
+        this.filter[type] = 'all';
+      } else if (type === 'waitlist_status') {
+        this.statusMultiCtrl = [];
+      } else {
+        this.filter[type] = '';
+      }
+      this.doSearch();
+    }
+  }
+  setFilterDateMaxMin() {
+    this.filter_date_start_min = null;
+    this.filter_date_start_max = null;
+    this.filter_date_end_min = null;
+    this.filter_date_end_max = null;
+    if (this.time_type === 0) {
+      this.filter_date_start_max = moment(new Date()).add(-1, 'days');
+      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
+    } else if (this.time_type === 2) {
+      this.filter_date_start_min = moment(new Date()).add(+1, 'days');
+      this.filter_date_end_min = moment(new Date()).add(+1, 'days');
+    }
+  }
+  resetPaginationData() {
+    this.filter.page = 1;
+    this.pagination.startpageval = 1;
+    this.shared_functions.removeitemfromLocalStorage('hP');
+    this.shared_functions.removeitemfromLocalStorage('hPFil');
+  }
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.shared_functions.setitemToGroupStorage('hP', pg);
+    this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
+    this.doSearch();
+  }
+
+  /**
+   * Selection of waitlist types
+   */
   selectnewWaitlist(index, waitlist?) {
     this.newWaitlistforMsg = [];
     let wtlst;
@@ -2248,182 +2195,51 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  labels(checkin) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        this.providerLabels[i].valueSet[j].selected = false;
-      }
-    }
-    setTimeout(() => {
-      const values = [];
-      for (const value of Object.values(checkin.label)) {
-        values.push(value);
-      }
-      for (let i = 0; i < this.providerLabels.length; i++) {
-        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-          for (let k = 0; k < values.length; k++) {
-            if (this.providerLabels[i].valueSet[j].value === values[k]) {
-              this.providerLabels[i].valueSet[j].selected = true;
-            }
+  findCurrentActiveQueue(ques) {
+    let selindx = 0;
+    const cday = new Date();
+    const currentday = (cday.getDay() + 1);
+    const curtime = cday.getHours() + ':' + cday.getMinutes() + ':00';
+    // const curtime = '21:00:00';
+    let stime;
+    let etime;
+    const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
+    const curtimeforchk = new Date(tday + ' ' + curtime);
+    for (let i = 0; i < ques.length; i++) {
+      for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
+        const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
+        if (currentday === pday) {
+          stime = new Date(tday + ' ' + this.provider_shared_functions.AMHourto24(ques[i].queueSchedule.timeSlots[0].sTime));
+          etime = new Date(tday + ' ' + this.provider_shared_functions.AMHourto24(ques[i].queueSchedule.timeSlots[0].eTime));
+          if ((curtimeforchk.getTime() >= stime.getTime()) && (curtimeforchk.getTime() <= etime.getTime())) {
+            selindx = i;
           }
         }
       }
-    }, 100);
+    }
+    return selindx;
   }
-  labelClick(status) {
-    this.showLabels[status] = true;
-    // (!this.showLabels[status]) ? this.showLabels[status] = true : this.showLabels[status] = false;
-  }
-  waitlistStatusClick(status) {
-    if (!this.showstatus[status]) {
-      this.showstatus[status] = true;
+  getTomorrowDate() {
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
+      this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
     } else {
-      this.showstatus[status] = false;
-      this.resetAll();
+      this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
-  getDepartments() {
-    this.provider_services.getDepartments()
-      .subscribe(
-        data => {
-          this.departments = data['departments'];
-        },
-        error => {
-        }
-      );
+  /**
+   * Actions
+   */
+  countApiCall() {
+    // if (this.shared_functions.getitemfromLocalStorage('pdq') !== 'null') {
+    //   this.getTodayCheckinCount();
+    // }
+    // this.getHistoryCheckinCount();
+    // this.getFutureCheckinCount();
   }
 
-  resetAll() {
-    this.waitlistSelected = [];
-    this.startedwaitlistSelected = [];
-    this.cancelledwaitlistSelected = [];
-    this.completedwaitlistSelected = [];
-    this.waitlistSelection = 0;
-    this.startedwaitlistSelection = 0;
-    this.cancelledwaitlistSelection = 0;
-    this.completedwaitlistSelection = 0;
-  }
-  showFilterSidebar() {
-    this.filter_sidebar = true;
-  }
-  hideFilterSidebar() {
-    this.filter_sidebar = false;
-  }
-  setSortByParam(sortBy) {
-    this.sortBy = sortBy;
-    this.shared_functions.setitemToGroupStorage('sortBy', this.sortBy);
-    this.getTodayCheckIn();
-  }
-  getDisplayboardCount() {
-    let layout_list: any = [];
-    let displayboards: any = [];
-    this.provider_services.getDisplayboards()
-      .subscribe(
-        data => {
-          displayboards = data;
-          layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
-          this.board_count = layout_list.length;
-        });
-  }
-
-  callingWaitlist(checkin) {
-    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
-    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
-      () => {
-        this.loadApiSwitch('reloadAPIs');
-      });
-  }
-  isAvailableSlot(slot) {
-    if (this.unAvailableSlots.indexOf(slot) !== -1) {
-      return false;
-    }
-    return true;
-  }
-  isAvailableSlotFuture(slot) {
-    if (this.futureUnAvailableSlots.indexOf(slot) !== -1) {
-      return false;
-    }
-    return true;
-  }
-  getAvaiableSlots(type?) {
-    const nextTimeDt = this.shared_functions.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
-    this.availableSlots = [];
-    this.unAvailableSlots = [];
-    this.futureUnAvailableSlots = [];
-    if (this.selected_queue.timeInterval) {
-      this.shared_functions.setitemToGroupStorage('interval', this.selected_queue.timeInterval);
-      const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
-      if (type) {
-        for (let i = 0; i < allSlots.length; i++) {
-
-          const endTimeStr = moment(allSlots[i], ['HH:mm A']).format('HH:mm A').toString();
-          const endDTime = this.shared_functions.getDateFromTimeString(endTimeStr);
-          if (nextTimeDt <= endDTime) {
-            this.unAvailableSlots.push(allSlots[i]);
-          }
-        }
-      }
-      const activeSlots = [];
-      const availableSlots = [];
-      const checkins = [];
-      for (let i = 0; i < this.check_in_list.length; i++) {
-        if (this.check_in_list[i].waitlistStatus === 'started' || this.check_in_list[i].waitlistStatus === 'done') {
-          if (this.check_in_list[i].appointmentTime) {
-            activeSlots.push(this.check_in_list[i].appointmentTime);
-          }
-        } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
-          checkins.push(this.check_in_list[i]);
-        }
-        if (this.check_in_list[i].waitlistStatus !== 'cancelled') {
-          if (this.check_in_list[i].appointmentTime) {
-            availableSlots.push(this.check_in_list[i].appointmentTime);
-          }
-        }
-      }
-      this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
-      this.futureUnAvailableSlots = allSlots.filter(x => !availableSlots.includes(x));
-      this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
-      this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
-    }
-  }
-  labelSelection() {
-    this.labelFilterData = '';
-    this.labelsCount = [];
-    let count = 0;
-    Object.keys(this.labelMultiCtrl).forEach(key => {
-      if (this.labelMultiCtrl[key].length > 0) {
-        count++;
-        if (!this.labelFilterData.includes(key)) {
-          const labelvalues = this.labelMultiCtrl[key].join(',');
-          const labelvaluesArray = labelvalues.split(',');
-          for (const value of labelvaluesArray) {
-            const lblFilter = key + '::' + value;
-            const Mfilter = this.setFilterForApi();
-            Mfilter['label-eq'] = lblFilter;
-            const promise = this.getHistoryCheckinCount(Mfilter);
-            promise.then(
-              result => {
-                if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
-                  this.labelsCount.push(value + ' - ' + result);
-                }
-              });
-          }
-          if (count === 1) {
-            this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
-          } else {
-            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.labelMultiCtrl[key].join(',');
-          }
-        }
-      } else {
-        delete this.labelMultiCtrl[key];
-      }
-    });
-  }
-  labelfilterClicked(index, label) {
-    delete this.labelMultiCtrl[label];
-    this.labelFilter[index] = !this.labelFilter[index];
-    if (!this.labelFilter[index]) {
-      this.doSearch();
-    }
-  }
 }
+

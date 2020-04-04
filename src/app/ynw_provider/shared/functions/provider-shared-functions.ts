@@ -363,7 +363,24 @@ export class ProviderSharedFuctions {
   getActiveQueues() {
     return this.activeQueues;
   }
-
+  AMHourto24(time12) {
+    const time = time12;
+    let hours = Number(time.match(/^(\d+)/)[1]);
+    const minutes = Number(time.match(/:(\d+)/)[1]);
+    const AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM === 'PM' && hours < 12) { hours = hours + 12; }
+    if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
+    let sHours = hours.toString();
+    let sMinutes = minutes.toString();
+    if (hours < 10) {
+      sHours = '0' + sHours;
+    }
+    if (minutes < 10) {
+      sMinutes = '0' + sMinutes;
+    }
+    const time24 = sHours + ':' + sMinutes + ':00';
+    return time24;
+  }
   getLiveTrackMessage(distance, unit, hours, minutes, mode ) {
     let message = '';
     if (distance === 0) {

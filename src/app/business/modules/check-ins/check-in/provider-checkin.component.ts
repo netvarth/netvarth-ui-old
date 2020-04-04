@@ -175,6 +175,7 @@ export class ProviderCheckinComponent implements OnInit {
     attachments = false;
     users = [];
     userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    customerid: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -184,6 +185,18 @@ export class ProviderCheckinComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.ph) {
+                const filter: any = {
+                    'phoneNo-eq': qparams.ph
+                };
+                this.provider_services.getProviderCustomers(filter).subscribe(
+                    (data) => {
+                        this.customer_data = data[0];
+                        this.getFamilyMembers();
+                        this.initCheckIn();
+                    }
+                );
+            }
         });
     }
     ngOnInit() {
@@ -202,6 +215,7 @@ export class ProviderCheckinComponent implements OnInit {
             mouseDrag: false,
             touchDrag: true,
             pullDrag: false,
+            autoWidth: true,
             loop: false,
             responsiveClass: true,
             responsive: {0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
