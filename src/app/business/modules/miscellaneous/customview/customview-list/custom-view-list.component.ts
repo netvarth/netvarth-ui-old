@@ -17,11 +17,15 @@ export class CustomViewListComponent implements OnInit {
     removeitemdialogRef;
     breadcrumbs = [
         {
-            title: 'Dashboard',
-            url: '/provider'
+            title: 'Settings',
+            url: '/provider/settings'
         },
         {
-            title: 'Custom View List'
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
+        },
+        {
+            title: 'Custom Views'
         }
     ];
 

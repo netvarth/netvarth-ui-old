@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-custom-view',
@@ -33,8 +33,12 @@ export class CustomViewComponent implements OnInit {
     selectedDoctors: any = [];
     breadcrumbs = [
         {
-            title: 'Dashboard',
-            url: '/provider'
+            title: 'Settings',
+            url: '/provider/settings'
+        },
+        {
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
         },
         {
             title: 'Custom View'
@@ -42,6 +46,7 @@ export class CustomViewComponent implements OnInit {
     ];
 
     constructor(public shared_functions: SharedFunctions,
+        private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices) {
         this.activated_route.queryParams.subscribe((qparams) => {
@@ -291,12 +296,14 @@ export class CustomViewComponent implements OnInit {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data) => {
                     this.shared_functions.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
+                    this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
                 }
             );
         } else {
             this.provider_services.createCustomView(customViewInput).subscribe(
                 (data) => {
                     this.shared_functions.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
+                    this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
                 }
             );
         }
