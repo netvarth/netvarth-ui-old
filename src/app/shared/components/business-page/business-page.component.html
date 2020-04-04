@@ -1,4 +1,5 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet" [source]="'business'">
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
+    [source]="'business'">
 </app-header>
 <section class="content pro_details">
     <div class="container">
@@ -112,7 +113,6 @@
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
-                                    <!-- && location_exists -->
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -120,13 +120,15 @@
                                             class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
 
-                                    <li><span class="icon-history"
-                                            (click)="redirectMe('history')">{{history_cap}}</span></li>
-                                    <li *ngIf="!isInFav"><span class="fav icon-favourite"
+                                    <li *ngIf="userType !== 'provider'"><span class="icon-history"
+                                            (click)="redirectToHistory()">{{history_cap}}</span>
+                                    </li>
+                                    <li *ngIf="!isInFav && userType !== 'provider'"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
-                                    <li *ngIf="isInFav"><span class="icon-favourite-filled"
+                                    <li *ngIf="isInFav && userType !== 'provider'"><span class="icon-favourite-filled"
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
-                                    <li><span class="icon-message" (click)="communicateHandler()"
+                                    <li *ngIf="userType !== 'provider'"><span class="icon-message"
+                                            (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
@@ -333,156 +335,185 @@
                     </ng-container> -->
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <ng-container *ngIf="locationjson.length > 0 && !api_loading">
-                        <div *ngFor="let loc of locationjson">
-                            <div class="location">
-                                <div class="top-sect">
-                                    <div class="tp-l">
-                                        <div class="tp2">
-                                            <span class="ch-title" *ngIf="loc.checkins && loc.checkins.length>0"
-                                                (click)="showExistingCheckin(loc.fields.location_id1)">{{you_have_cap}}
-                                                <span class="count">{{loc.checkins.length}}
-                                                    {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
-                                            <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
-                                                    class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
-                                                </sup></h3>
-                                            <div *ngIf="!isPlaceisSame"> {{loc.fields.address1 | capitalizeFirst}}</div>
-                                            <h3 *ngIf="isPlaceisSame">{{loc.fields.address1 | capitalizeFirst}}<sup
-                                                    class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
-                                                </sup></h3>
-                                            <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
-                                                target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
-                                            <div class="clr">
-                                                <div class="schedule" *ngIf="loc.fields.display_schedule.length > 0">
-                                                    <span class="sub-title">Business Working Hours</span>
-                                                    <ul>
-                                                        <li *ngFor="let schedule of loc.fields.display_schedule">
-                                                            <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
-                                                                class="time">{{schedule.time}}
-                                                                <span class="form-level-settings"
-                                                                    *ngIf="schedule.recurrtype === 'Once'">(only for
-                                                                    today)</span>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
+                        <div class="loc-accor">
+                            <mat-accordion *ngFor="let loc of locationjson">
+                                <mat-expansion-panel style="margin-top: 10px !important;
+                            box-shadow: none !important;" [expanded]="true">
+                                    <mat-expansion-panel-header expandedHeight="80px" collapsedHeight="80px"
+                                        style="background-color: white !important;">
+                                        <mat-panel-title>
+                                            <div class="location-accord">
+                                                <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
+                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                                    </sup>
+                                                    <a style="margin-left: 20px;" rel="noopener" class="directions"
+                                                        [href]="'https://www.google.com/maps/place/'+loc.fields.location1+'/@'+loc.fields.location1+',15z'"
+                                                        target="_blank"
+                                                        *ngIf="loc.fields.location1">{{get_directions_cap}}</a></h3>
+                                                <div *ngIf="!isPlaceisSame"> {{loc.fields.address1 | capitalizeFirst}}
                                                 </div>
-                                                <div class="services" *ngIf="loc.fields.departments">
-                                                    <span class="sub-title">Departments</span>
-                                                    <ul>
-                                                        <li *ngFor="let dept of loc.fields.departments"
-                                                            (click)="getServicesByDepartment(loc, dept)">{{dept}}</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="services"
-                                                    *ngIf="!loc.fields.departments && loc.fields.services && loc.fields.services.length > 0">
-                                                    <span class="sub-title">{{services_offered}}</span>
-                                                    <ul>
-                                                        <li *ngFor="let serv of loc.fields.services"
-                                                            (click)="showServiceDetail(serv, businessjson.businessName)">
-                                                            {{serv}}</li>
-                                                    </ul>
+                                                <h3 *ngIf="isPlaceisSame">{{loc.fields.address1 | capitalizeFirst}}<sup
+                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                                    </sup></h3>
+                                            </div>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="location">
+                                        <div class="top-sect">
+                                            <div class="tp-l">
+                                                <div class="tp2">
+                                                    <span class="ch-title" *ngIf="loc.checkins && loc.checkins.length>0"
+                                                        (click)="showExistingCheckin(loc.fields.location_id1)">{{you_have_cap}}
+                                                        <span class="count">{{loc.checkins.length}}
+                                                            {{getTerminologyTerm('waitlist')}}</span>
+                                                        {{at_this_loc_cap}}</span>
+                                                    <div class="clr">
+                                                        <div class="schedule"
+                                                            *ngIf="loc.fields.display_schedule && loc.fields.display_schedule.length > 0">
+                                                            <span class="sub-title">Business Working Hours</span>
+                                                            <ul>
+                                                                <li
+                                                                    *ngFor="let schedule of loc.fields.display_schedule">
+                                                                    <span class="day">{{schedule.dstr}}&nbsp;:</span>
+                                                                    <span class="time">{{schedule.time}}
+                                                                        <span class="form-level-settings"
+                                                                            *ngIf="schedule.recurrtype === 'Once'">(only
+                                                                            for
+                                                                            today)</span>
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="services" *ngIf="loc.fields.departments">
+                                                            <span class="sub-title">Departments</span>
+                                                            <ul>
+                                                                <li *ngFor="let dept of loc.fields.departments"
+                                                                    (click)="getServicesByDepartment(loc, dept)">
+                                                                    {{dept}}</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="services"
+                                                            *ngIf="!loc.fields.departments && loc.fields.services && loc.fields.services.length > 0">
+                                                            <span class="sub-title">{{services_offered}}</span>
+                                                            <ul>
+                                                                <li *ngFor="let serv of loc.fields.services"
+                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                                    {{serv}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="tp-r">
+                                                <ul class="badges">
+                                                    <li *ngIf="loc.fields.parking_type_location1 && loc.fields.parking_type_location1!=='' && loc.fields.parking_type_location1 != undefined && loc.fields.parking_type_location1 != 'none'"
+                                                        [matTooltip]="'Parking Type: ' + loc.fields.parking_type_location1">
+                                                        <span class="icon-parking"></span></li>
+                                                    <li
+                                                        *ngIf="loc.always_open_location1 && loc.always_open_location1==1">
+                                                        <span class="icon-open-time"
+                                                            [matTooltip]="'24 Hours Open'"></span></li>
+                                                    <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1==1"
+                                                        [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
+                                                    </li>
+                                                    <li *ngIf="loc.fields.docambulance_location1 && loc.fields.docambulance_location1==1"
+                                                        [matTooltip]="'Ambulance Services'"><span
+                                                            class="icon-ambulance"></span>
+                                                    </li>
+                                                    <li [matTooltip]="'Emergency Services'"
+                                                        *ngIf="(loc.fields.physiciansemergencyservices_location1 && loc.fields.physiciansemergencyservices_location1==1) || 
+                                                (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1==1) || 
+                                                    (loc.fields.altemergencyservices_location1 && loc.fields.altemergencyservices_location1==1) || 
+                                                    (loc.fields.hosemergencyservices_location1 && loc.fields.hosemergencyservices_location1==1)">
+                                                        <span class="icon-emergency"></span></li>
+                                                    <li *ngIf="loc.fields.firstaid_location1 && loc.fields.firstaid_location1==1"
+                                                        [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tp-r">
-                                        <ul class="badges">
-                                            <li *ngIf="loc.fields.parking_type_location1 && loc.fields.parking_type_location1!=='' && loc.fields.parking_type_location1 != undefined && loc.fields.parking_type_location1 != 'none'"
-                                                [matTooltip]="'Parking Type: ' + loc.fields.parking_type_location1">
-                                                <span class="icon-parking"></span></li>
-                                            <li *ngIf="loc.always_open_location1 && loc.always_open_location1==true">
-                                                <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
-                                            <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1=='true'"
-                                                [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
-                                            <li *ngIf="loc.fields.docambulance_location1 && loc.fields.docambulance_location1=='true'"
-                                                [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span>
-                                            </li>
-                                            <li [matTooltip]="'Emergency Services'"
-                                                *ngIf="(loc.fields.physiciansemergencyservices_location1 && loc.fields.physiciansemergencyservices_location1=='true') || 
-                                            (loc.fields.dentistemergencyservices_location1 && loc.fields.dentistemergencyservices_location1=='true') || 
-                                                (loc.fields.altemergencyservices_location1 && loc.fields.altemergencyservices_location1=='true') || 
-                                                (loc.fields.hosemergencyservices_location1 && loc.fields.hosemergencyservices_location1=='true')">
-                                                <span class="icon-emergency"></span></li>
-                                            <li *ngIf="loc.fields.firstaid_location1 && loc.fields.firstaid_location1=='true'"
-                                                [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="bottom-sect pdetail" style="padding-bottom: 10px">
-                                    <div class="bt-l">
-                                        <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
-                                            <div class="o-now" *ngIf="loc.opennow">
-                                                {{open_now_cap}}</div>
-                                            <div
-                                                *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && showToken)">
-                                                <div class="timing" *ngIf="loc['personAhead']">
-                                                    <div style="display: flex">
-                                                        <b>{{loc['personAhead']}} &nbsp;</b>
-                                                        <span *ngIf="loc['personAhead'] > 1" class="people-ahead">
-                                                            {{people_ahead}}</span>
-                                                        <span *ngIf="loc['personAhead'] == 1" class="people-ahead">
-                                                            {{one_person_ahead}}</span></div>
+                                        <div class="bottom-sect pdetail" style="padding-bottom: 10px">
+                                            <div class="bt-l">
+                                                <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
+                                                    <div class="o-now" *ngIf="loc.opennow">
+                                                        {{open_now_cap}}</div>
+                                                    <div
+                                                        *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && showToken)">
+                                                        <div class="timing" *ngIf="loc['personAhead']">
+                                                            <div style="display: flex">
+                                                                <b>{{loc['personAhead']}} &nbsp;</b>
+                                                                <span *ngIf="loc['personAhead'] > 1"
+                                                                    class="people-ahead">
+                                                                    {{people_ahead}}</span>
+                                                                <span *ngIf="loc['personAhead'] == 1"
+                                                                    class="people-ahead">
+                                                                    {{one_person_ahead}}</span></div>
 
-                                                </div>
-                                                <div class="timing" *ngIf="loc['personAhead'] === 0">
-                                                    <div class="">
-                                                        {{loc['personAhead']}} {{people_ahead}} </div>Be the first in
-                                                    line
+                                                        </div>
+                                                        <div class="timing" *ngIf="loc['personAhead'] === 0">
+                                                            <div class="">
+                                                                {{loc['personAhead']}} {{people_ahead}} </div>Be the
+                                                            first in
+                                                            line
+                                                        </div>
+                                                    </div>
+                                                    <div class="wt-tme notallowed"
+                                                        *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
+                                                        {{loc['estimatedtime_det']['message']}}
+                                                    </div>
+                                                    <span class="claim-business"
+                                                        *ngIf="businessjson.claimStatus === 'Unclaimed'"
+                                                        (click)="claimBusiness()">
+                                                        {{claim_my_business_cap}} <i style="font-size: 1.1rem;"
+                                                            class="fa fa-hand-o-up" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="wt-tme notallowed"
-                                                *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
-                                                {{loc['estimatedtime_det']['message']}}
-                                            </div>
-                                            <span class="claim-business"
-                                                *ngIf="businessjson.claimStatus === 'Unclaimed'"
-                                                (click)="claimBusiness()">
-                                                {{claim_my_business_cap}} <i style="font-size: 1.1rem;"
-                                                    class="fa fa-hand-o-up" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="bottom-actions-root"
-                                        *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                        <div class="checkin-est"
-                                            *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                            <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
-                                            <span class="time-data">{{loc['estimatedtime_det']['time']}}
-                                            </span>
-                                        </div>
-                                        <ng-container
-                                            *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
-                                            <ng-container *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                <span class="checkin-est" *ngIf="!loc.opennow">
-                                                    <span class="est-time"> Next Available Time </span>
+                                            <div class="bottom-actions-root"
+                                                *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
+                                                <div class="checkin-est"
+                                                    *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                                                     <span
-                                                        class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
-                                            </ng-container>
-                                        </ng-container>
-                                        <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span class="checkin-btn"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
-                                        <span class="checkin-btn disabled" style="cursor: auto"
-                                            *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span class="checkin-btn disabled" style="cursor: auto"
-                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
-                                        <span class="checkin-future pdetailbt10"
-                                            *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                            (click)="checkinClicked(loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
-                                            <span
-                                                *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
-                                            <span
-                                                *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
-                                            {{for_cap}}
-                                            <span>{{different_date_cap}}</span></span>
+                                                        class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
+                                                    <span class="time-data">{{loc['estimatedtime_det']['time']}}
+                                                    </span>
+                                                </div>
+                                                <ng-container
+                                                    *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
+                                                    <ng-container
+                                                        *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
+                                                        <span class="checkin-est" *ngIf="!loc.opennow">
+                                                            <span class="est-time"> Next Available Time </span>
+                                                            <span
+                                                                class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <span class="checkin-btn"
+                                                    (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                                    *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
+                                                <span class="checkin-btn"
+                                                    (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                                    *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
+                                                <span class="checkin-btn disabled" style="cursor: auto"
+                                                    *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
+                                                <span class="checkin-btn disabled" style="cursor: auto"
+                                                    *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
+                                                <span class="checkin-future pdetailbt10"
+                                                    *ngIf="loc['estimatedtime_det']['cdate'] && loc.fields.hasOwnProperty('future_checkins') && loc.fields.future_checkins==1"
+                                                    (click)="checkinClicked(loc, loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                                    <span
+                                                        *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
+                                                    <span
+                                                        *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
+                                                    {{for_cap}}
+                                                    <span>{{different_date_cap}}</span></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
                         </div>
                     </ng-container>
-
                 </div>
                 <!-- Department wise doctors listing -->
                 <div class="c-body prov-detail-outer" *ngIf="showServices">
@@ -538,9 +569,14 @@
                         </ng-container>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->
+<footer class="main-footer" style="margin-left: 0px">
+    <div class="pull-right hidden-xs footer_info">
+    </div>
+    <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
+        reserved.</span>
+</footer>

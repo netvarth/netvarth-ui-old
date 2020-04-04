@@ -447,9 +447,9 @@
                                         [matTooltip]="'24 Hours Open'"><span class="icon-open-time"></span></li>
                                     <li *ngIf="search_result.fields.traumacentre_location1==1"
                                         [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
-                                    <li [matTooltip]="'Emergency Services'"
-                                        *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 ||
-                                        search_result.fields.veterinaryemergencyservices_location1 == 1">
+                                    <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || 
+                                        search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1==1 || 
+                                        search_result.fields.hosemergencyservices_location1==1">
                                         <span class="icon-emergency"></span></li>
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'">
                                         <span class="icon-first-aid"></span></li>

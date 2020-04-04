@@ -7514,6 +7514,62 @@ width: fit-content;
   background: #fafafa !important;
   /* box-shadow: 0 5px 5px 1px rgba(0,0,0,0.14) !important; */
 }
+.loc-accor .content .c-outer .c-body .mat-accordion .location-accord {
+  background: transparent !important;
+  box-shadow: none !important;
+  margin-bottom: 0px !important;
+  font-size: .875rem !important;
+  font-weight: 500 !important;
+}
+.loc-accor .content .c-outer .c-body .mat-accordion .mat-expansion-panel {
+  margin-top: 10px !important;
+  border: 1px solid #ccc !important; 
+  box-shadow: none !important;
+}
+.location-accord h3 {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 5px !important;
+  margin-right: 20px !important;
+}
+.content .c-outer .c-body .location-accord .directions:before {
+  font-family: custom-ynw!important;
+  content: "\6a";
+  left: 0;
+  margin-right: 5px;
+}
+@media only screen and (max-width: 575px) {
+  .location-accord .directions {
+    display: block;
+    margin-left: 0px !important;
+    margin-top: 5px;
+  }
+}
+@media (max-width: 575px) {
+  .change-mob-style .mat-form-field-label {
+      margin-top: 0px!important;
+  }
+}
+.statusbtn {
+  display: flex !important;
+  margin-top: 5px !important;
+}
+.statusbtn i{
+  margin-right: 10px !important;
+}
+.batch {
+  border-top: 1px solid #f2f2f2 !important;
+}
+.disabled-text {
+  color: #999999;
+}
+.batch h6 {
+  font-weight: 500;
+}
+.batchname {
+  font-size: 0.8rem !important;
+  margin-top: 5px !important;
+}
 .onlineProfile{
   padding: 10px;
     border: 1px solid #00aef2;

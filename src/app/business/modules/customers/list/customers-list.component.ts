@@ -197,7 +197,9 @@ export class CustomersListComponent implements OnInit {
         };
     }
     setPaginationFilter(api_filter) {
-
+        if (this.customer_count <= 10) {
+            this.pagination.startpageval = 1;
+        }
         api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
         api_filter['count'] = this.filter.page_count;
         return api_filter;
@@ -300,4 +302,3 @@ export class CustomersListComponent implements OnInit {
              );
     }
 }
-

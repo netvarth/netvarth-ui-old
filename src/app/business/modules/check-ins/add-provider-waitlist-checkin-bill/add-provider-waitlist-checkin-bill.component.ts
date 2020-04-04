@@ -1042,7 +1042,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const discount = {};
     discount['id'] = this.selOrderDiscount.id;
     if (this.selOrderDiscount.discType === 'OnDemand') {
-      discount['discValue'] = this.discAmount;
+      const len = this.discAmount.split('.').length;
+      if (len > 2) {
+        this.sharedfunctionObj.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
+      } else {
+        discount['discValue'] = this.discAmount;
+      }
     }
     if (this.discProvNote) {
       discount['privateNote'] = this.discProvNote;
@@ -1053,7 +1058,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discounts.push(discount);
     data['discounts'] = discounts;
     this.disableDiscountbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data);
+    if ((this.selOrderDiscount.discType === 'OnDemand' && discount['discValue']) || this.selOrderDiscount.discType !== 'OnDemand') {
+      this.applyAction(action, this.bill_data.uuid, data);
+    } else {
+      this.disableDiscountbtn = false;
+    }
   }
   applyOrderCoupon() {
     const action = 'addProviderCoupons';
@@ -1438,4 +1447,3 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 }
-

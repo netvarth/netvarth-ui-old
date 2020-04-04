@@ -972,10 +972,45 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   makeFailedPayment(waitlist) {
+<<<<<<< HEAD
     const navigationExtras: NavigationExtras = {
         queryParams: { account_id: waitlist.providerAccount.id }
     };
     this.router.navigate(['consumer', 'checkin', 'payment', waitlist.ynwUuid], navigationExtras);
+=======
+    let prepayamt = 0;
+    this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
+      .subscribe(data => {
+        this.servicesjson = data;
+        for (let i = 0; i < this.servicesjson.length; i++) {
+          if (this.servicesjson[i].id === waitlist.service.id) {
+            prepayamt = waitlist.partySize * this.servicesjson[i].minPrePaymentAmount || 0;
+            if (prepayamt > 0) {
+              const payData = {
+                'amount': prepayamt,
+                // 'paymentMode': 'DC',
+                'uuid': waitlist.ynwUuid,
+                'accountId': waitlist.provider.id,
+                'purpose': 'prePayment'
+              };
+              const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                  'details': payData,
+                  'origin': 'consumer'
+                }
+              });
+            } else {
+              this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
+            }
+          }
+        }
+      },
+        error => {
+        });
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
   }
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {

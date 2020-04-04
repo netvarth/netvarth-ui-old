@@ -351,7 +351,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.loctype = obj.lontyp;
       this.latitude = obj.la;
       this.longitude = obj.lo;
-      this.kw = obj.kw;
+      this.kw = obj.kw.trim();
       this.kwautoname = obj.kwauto;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
@@ -419,9 +419,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.loctype = obj.locationtype;
       this.latitude = obj.latitude;
       this.longitude = obj.longitude;
-      this.kw = obj.kw;
+      this.kw = obj.kw.trim();
       this.kwautoname = obj.kwautoname;
-      this.kw = obj.kw;
       this.kwdomain = obj.kwdomain;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;

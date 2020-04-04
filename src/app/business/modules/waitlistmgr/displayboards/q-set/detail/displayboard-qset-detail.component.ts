@@ -58,6 +58,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     board_count = 0;
     categoryIds: any = [];
     api_loading = false;
+    multipeLocationAllowed = false;
     step = 1;
     selectedWtlstList: any = [];
     waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
@@ -82,6 +83,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
     }
     ngOnInit() {
+    this.getBussinessProfile();
         this.deptMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
@@ -648,6 +650,17 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     layout_list = data;
                     this.board_count = layout_list.length;
                 });
+    }
+    getBussinessProfile() {
+        const bconf = this.shared_Functionsobj.getitemfromLocalStorage('ynw-bconf');
+        this.provider_services.getBussinessProfile()
+            .subscribe((data: any) => {
+                for (const domains of bconf.bdata) {
+                    if (domains.id === data.serviceSector.id) {
+                        this.multipeLocationAllowed = domains.multipleLocation;
+                    }
+                }
+            });
     }
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {

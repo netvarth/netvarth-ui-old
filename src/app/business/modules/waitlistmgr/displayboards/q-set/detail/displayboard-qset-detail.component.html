@@ -81,8 +81,8 @@
             <div class="form-group col-md-6 mgn-up-20" *ngIf="locName">
                 <div class="col-md-12">
                     <label style="margin: 0px;">Location: &nbsp;</label>{{locName}}
-                    <ul class="info-lst serviceadd-info">
-                        <li>To change location for this QBoard, go to Dashboard.
+                    <ul class="info-lst serviceadd-info" *ngIf="multipeLocationAllowed">
+                        <li>To create a queue board for a different location, choose the location from the dashboard.
                         </li>
                     </ul>
                 </div>

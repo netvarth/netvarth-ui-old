@@ -43,13 +43,13 @@
                                         </div>
                                         <div class="quantity">{{qnty_cap}}
                                             {{service.quantity}}</div>
-                                        <div class="price">{{(service.quantity * service.price) |
+                                        <div class="price" style="flex-basis: 30% !important">{{(service.quantity * service.price) |
                                             currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngFor="let discount of service.discount">
                                             <div class="name">{{discount.name}}</div>
-                                            <div class="price">(-){{discount.discountValue |
+                                            <div class="price" style="flex-basis: 30% !important">(-){{discount.discountValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
                                             <div class="name">JDN</div>
-                                            <div class="price">(-){{bill_data.jdn.discount |
+                                            <div class="price" style="flex-basis: 30% !important">(-){{bill_data.jdn.discount |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div> 
@@ -115,7 +115,7 @@
                                             <div class="name">
                                                 {{discount.name}}
                                             </div>
-                                            <div class="price">(-){{discount.discValue |
+                                            <div class="price" style="flex-basis: 30% !important">(-){{discount.discValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@
                                             <div class="name">
                                                 {{coupon.name}}
                                             </div>
-                                            <div class="price">(-){{coupon.couponValue |
+                                            <div class="price" style="flex-basis: 30% !important">(-){{coupon.couponValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@
                                             <div class="name">
                                                 Amount Paid
                                             </div>
-                                            <div class="price">{{bill_data.totalAmountPaid |
+                                            <div class="price" style="flex-basis: 30% !important">{{bill_data.totalAmountPaid |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>

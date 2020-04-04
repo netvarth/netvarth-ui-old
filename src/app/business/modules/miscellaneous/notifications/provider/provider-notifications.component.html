@@ -26,7 +26,7 @@
                     <span [class.icon-add]="!sms" [class.icon-minus]="sms" (click)="smsAddClicked()"></span>
                     <div class="form-group" *ngIf="sms">
                       <div class="input-group mb-3 phadd">
-                        <input type="text" class="form-control" placeholder="Phonenumber"
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Add</button>
@@ -83,7 +83,7 @@
                       (click)="cancelledCheckinsmsAddClicked()"></span>
                     <div class="form-group" *ngIf="cancelsms">
                       <div class="input-group mb-3 phadd">
-                        <input type="text" class="form-control" placeholder="Phonenumber"
+                        <input type="text" class="form-control" placeholder="Phonenumber"  (keypress)="isNumeric($event)"
                           [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addCheknCanclph()" type="button">Add</button>

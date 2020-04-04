@@ -4,36 +4,12 @@
 <div class="overlay" [class.show]="showLearnMore" [class.learnmore]="showLearnMore" (click)="hideLearnmore()"></div>
 <div class="lm-popup" *ngIf="showLearnMore">
     <span (click)="hideLearnmore()" class="close"></span>
-    <!-- <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore> -->
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
             <div class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-            
-            
-                <!-- <div class="container-fluid"> -->
-            <!-- <div class="navbar-header">
-                <button type="button" class="navbar1-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                </div> -->
-          
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <!-- <div  class="" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Jaldee Products</a></li>
-                  <li (click)="gotoPricing()">Jaldee Pricing</li>
-                  <li><a href="#">Jaldee sales</a></li>
-                  <li><a href="#">Contact us</a></li>
-                </ul> -->
-              
-            <!-- </div> -->
-          
         </div>
         <div *ngIf=" includedfrom =='phome'">
             <ul class="navul ">

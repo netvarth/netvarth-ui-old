@@ -796,6 +796,9 @@
                               <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
                               {{label.value}}
                             </span>
+                            <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -991,6 +994,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </span>
+                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                              Batch: {{timeSlotCheckins[slot][0].batchName}}
+                            </div>
                             <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
                                 <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
                               </div> -->
@@ -1171,6 +1177,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </span>
+                             <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1260,6 +1269,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </span>
+                            <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"

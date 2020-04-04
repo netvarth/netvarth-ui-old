@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{your_cap}} {{checkinLabel}} {{at_cap}} {{this.data.locdet.place | capitalizeFirst}}
+<h1 class="mat-dialog-title">{{your_cap}} {{checkinLabel}} {{at_cap}} {{this.data.locName | capitalizeFirst}}
     <button #queue [mat-dialog-close]="changeOccured" class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="c-checkin-blank" *ngIf="loc.length==0">
-        {{no_cap}} {{checkinLabel}} {{exists_at_cap}} {{this.data.locdet.place | capitalizeFirst}}
+        {{no_cap}} {{checkinLabel}} {{exists_at_cap}} {{this.data.locName | capitalizeFirst}}
     </div>
 </mat-dialog-content>
 
