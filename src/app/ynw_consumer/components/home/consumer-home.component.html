@@ -89,7 +89,7 @@
                                     <span *ngIf="waitlist.personsAhead > 1"> <span
                                             class="forwhom">{{waitlist.personsAhead}}</span>{{people_ahead}} </span>
                                 </div>
-                                <div class="lt0" *ngIf="waitlist.token">
+                                <div class="lt0" *ngIf="!waitlist.batchName && waitlist.token">
                                     {{token_no}} <span class="token">{{waitlist.token}} </span>
                                 </div>
                                 <div class="lt0" *ngIf="waitlist.batchName" style="font-size: 0.9rem;">
@@ -98,7 +98,8 @@
                                 <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
                                     {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                 </div>
-                                <div class="lt0 payment" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                <div class="lt0 payment"
+                                    *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
                                     <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
                                         {{checkindisablemsg1}}</span>
                                 </div>
@@ -250,7 +251,7 @@
                                             (click)="viewBill(waitlist)">Bill</span>
                                     </li>
                                     <li (click)="makeFailedPayment(waitlist)"
-                                        *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                        *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
                                         <span class="payment">{{make_pay_cap}}</span>
                                     </li>
                                     <li (click)="addWaitlistMessage(waitlist)">

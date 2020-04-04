@@ -428,6 +428,9 @@
                               *ngIf="selected_queue && selected_queue.services.length>1">
                               {{checkin.service.name}}
                             </span>
+                            <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              Batch: {{checkin.batchName}}
+                            </span>
                           </div>
                           <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.waitlistStatus === 'cancelled'">
                             <span class="info-box-text" style="font-size: smaller;">
@@ -531,6 +534,9 @@
                           <span class="info-box-text service"
                             *ngIf="selected_queue && selected_queue.services.length>1">
                             {{timeSlotCheckins[slot][0].service.name}}
+                          </span>
+                          <span class="info-box-text service" *ngIf="timeSlotCheckins[slot][0].batchName">
+                            Batch: {{timeSlotCheckins[slot][0].batchName}}
                           </span>
                         </div>
                         <div class="col-md-3 col-xs-3 p0"
@@ -799,6 +805,9 @@
                                 style="margin-right: 10px;">
                                 <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
                                 {{label.value}}
+                              </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
                               </span>
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
@@ -1125,6 +1134,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </div>
+                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                              Batch: {{timeSlotCheckins[slot][0].batchName}}
+                            </div>
                           </div>
                           <div class="col-md-12 col-xs-12 p0 visible-xs">
                             <div class="info-box-text forwhom pointer-cursor"
@@ -1140,6 +1152,9 @@
                             <div class="checkin-label" *ngFor="let label of timeSlotCheckins[slot][0].label | keyvalue"
                               style="margin-right: 10px;">
                               {{label.value}}
+                            </div>
+                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                              Batch: {{timeSlotCheckins[slot][0].batchName}}
                             </div>
                             <div>
                               <span class="icon-cloud icon-btn1 "
@@ -1323,6 +1338,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1411,6 +1429,9 @@
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
                                 style="margin-right: 10px;">
                                 {{label.value}}
+                              </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
                               </span>
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
