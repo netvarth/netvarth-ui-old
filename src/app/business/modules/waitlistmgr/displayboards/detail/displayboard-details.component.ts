@@ -156,6 +156,12 @@ export class DisplayboardDetailComponent implements OnInit {
             this.actionparam = params.id;
         }
         );
+        this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.value === 'view') {
+                this.actionparam = qparams.value;
+            }
+        }
+        );
         this.activated_route.queryParams.subscribe(
             qparams => {
                 this.layout_id = qparams.id;

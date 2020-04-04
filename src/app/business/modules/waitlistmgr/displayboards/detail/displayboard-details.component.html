@@ -375,8 +375,8 @@
                 <div *ngIf="actionparam === 'view'" class="row">
                     <div class="card p0">
                         <span class="b-link">
-                            <h6>
-                                Header Settings
+                            <h6 class="disp-bord-heder">
+                                Header and Footer Settings
                             </h6>
                         </span>
                     </div>
@@ -385,22 +385,6 @@
          </div>
          <div *ngIf="headerSetting">
             <app-global-settings [headerResult]="headers"></app-global-settings>
-         </div>
-         <div *ngIf="!headerSetting && !footerSetting" class="content w-manager settings comn-cls lic-page">
-            <div class="col-md-12 no-padding-small" (click)="footerClick()">
-               <div *ngIf="actionparam === 'view'" class="row">
-                   <div class="card p0">
-                       <span class="b-link">
-                           <h6>
-                               Footer Settings
-                           </h6>
-                       </span>
-                   </div>
-               </div>
-            </div>
-        </div>
-        <div *ngIf="footerSetting">
-            <app-global-settings [footerResult]="footers"></app-global-settings>
          </div>
     </div>
 </section>

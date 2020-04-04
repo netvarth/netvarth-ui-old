@@ -46,7 +46,6 @@ export class GlobalSettingsComponent implements OnInit {
     onlyFooter = false;
     constructor(private router: Router) {}
     @Input() headerResult;
-    @Input() footerResult;
     breadcrumbs = this.breadcrumbs_init;
     url = '';
     public Editor = DecoupledEditor;
@@ -61,9 +60,6 @@ export class GlobalSettingsComponent implements OnInit {
         if (this.headerResult) {
             this.onlyHeader = true;
           }
-        if (this.footerResult) {
-            this.onlyFooter = true;
-        }
     }
     onFileSelected(file: FileList) {
         this.fileToUpload = file.item(0);
@@ -82,15 +78,21 @@ export class GlobalSettingsComponent implements OnInit {
         }
     }
     showPreview() {
-        this.largeImage = document.getElementById('previewPage').innerHTML;
-        const WindowPrt = window.open('', '', 'left=50,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
-        WindowPrt.document.write('<div style="padding-top: 50px">' + this.headerContent + '</div>');
-        WindowPrt.document.write('<p>' + this.largeImage + '<p>');
-        WindowPrt.document.write('<div style="padding-top: 50px">' + this.footerContent + '</div>');
-        WindowPrt.document.close();
+        this.is_preview = true;
+        // this.largeImage = document.getElementById('previewPage').innerHTML;
+        // const WindowPrt = window.open('', '', 'left=50,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
+        // WindowPrt.document.write('<div style="display:flex">');
+        // WindowPrt.document.write('<div>' + this.headerContent + '</div>');
+        // WindowPrt.document.write('<p>' + this.largeImage + '<p>');
+        // WindowPrt.document.write('</div>');
+        // WindowPrt.document.write('<div>' + this.footerContent + '</div>');
+        // WindowPrt.document.close();
     }
     onUpload() {
 
+    }
+    previewCancel() {
+        this.is_preview = false;
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);

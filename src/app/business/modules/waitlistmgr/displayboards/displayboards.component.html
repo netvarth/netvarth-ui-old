@@ -24,13 +24,6 @@
                                                 <i class="fa fa-plus"></i> {{statusboard_cap}}
                                             </span>
                                         </a>
-                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                            (click)="addGlobalSettings()"
-                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                            <span>
-                                                 Global settings
-                                            </span>
-                                        </a>
                                     </li>
 
 
@@ -76,6 +69,9 @@
                                             {{layout.displayName | capitalizeFirst}}<span *ngIf="!layout.container" class="layout_name"> (Id - {{layout.id}})
                                             </span></h3>
                                         <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item (click)="ViewDisplayboardLayout(layout)"><i class="fa fa-eye" aria-hidden="true"></i>
+                                                View
+                                            </button>
                                             <button mat-menu-item (click)="editDisplayboardLayout(layout)">
                                                 <i class="icon-edit"></i>
                                                 Edit

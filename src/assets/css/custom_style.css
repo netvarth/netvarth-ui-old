@@ -7713,12 +7713,18 @@ font-weight: 600px !important;
   padding-top: 2%;
 }
 .glbl-seting-tbl mat-form-field{
-  width: 80%;
+  width: 55%;
 }
 .glbl-seting-h6{
   padding-left: 10px;
     font-weight: 600;
     font-size: 1.25rem; 
+}
+.disp-bord-heder {
+  margin-bottom: 0;
+  font-size: 1.07rem;
+  font-weight: 500;
+  /* color: #3c8dbc; */
 }
 @media only screen and (max-width: 575px) {
   .glbl-seting-h6{
@@ -7765,6 +7771,19 @@ font-weight: 600px !important;
   .glbl-txt-align{
     text-align-last: center !important;
   }
+}
+.glbl-preview{
+  display: flex;
+}
+.glbl-preview-eye {
+  cursor: pointer;
+}
+.glbl-heder-color{
+  background: #f8f8f8;
+}
+.glbl-heder-color-prvw{
+  background: #f8f8f8;
+  width: 100%;
 }
 @media only screen and (max-width: 800px) {
   .glbl-seting-disp-div  {

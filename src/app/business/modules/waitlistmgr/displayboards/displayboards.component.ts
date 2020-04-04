@@ -90,14 +90,19 @@ export class DisplayboardsComponent implements OnInit {
     addDisplayboardLayout() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
     }
-    addGlobalSettings() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'global']);
-    }
     listContainers() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
     }
     gotoDisplayboardQSet() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set']);
+    }
+    ViewDisplayboardLayout(layout) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { value: 'view',
+                           id: layout.id }
+        };
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'view'], navigationExtras);
     }
     editDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
