@@ -106,59 +106,6 @@
                                             <div class="mgn-up-10 ynw-common-form-nm" *ngIf="batchStatus">
                                                 <div class="c-ot" *ngIf="!showEditSection">
                                                     <div class="item"
-                                                        *ngIf="queue_data.batchPatternSettings.prefix != ''">
-                                                        <span class="ttle"> Prefix </span><span
-                                                            class="day">{{queue_data.batchPatternSettings.prefix}}</span>
-                                                    </div>
-                                                    <div class="item"
-                                                        *ngIf="queue_data.batchPatternSettings.suffix != ''">
-                                                        <span class="ttle"> Suffix </span><span
-                                                            class="day">{{queue_data.batchPatternSettings.suffix}}</span>
-                                                    </div>
-                                                    <span
-                                                        *ngIf="queue_data.batchPatternSettings.prefix != '' || queue_data.batchPatternSettings.suffix != ''"
-                                                        class="editbt" (click)="editBatchnames()"></span>
-                                                </div>
-                                                <div *ngIf="showEditSection">
-                                                    <div class="item">
-                                                        <mat-form-field>
-                                                            <input
-                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Prefix" [(ngModel)]="prefixName"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="item">
-                                                        <mat-form-field>
-                                                            <input
-                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Suffix" [(ngModel)]="suffixName"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="mgn-up-20">
-                                                        <button class="btn bt3 btn-default" (click)="addBatchName()"
-                                                            type="button">ok</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
-                                            <div class="mgn-up-10" style="display: flex;">
-                                                <h6> Batch mode </h6>
-                                                <mat-slide-toggle class="example-margin mgn-lt-10"
-                                                    [(ngModel)]="batchStatus" (change)="changeBatchStatus($event)">
-                                                </mat-slide-toggle>
-                                                <span class="greenc mgn-lt-5" *ngIf="batchStatus">
-                                                    Enabled
-                                                </span>
-                                                <span class="disabled-text mgn-lt-5" *ngIf="!batchStatus">
-                                                    Disabled
-                                                </span>
-                                            </div>
-                                            <div class="mgn-up-10 ynw-common-form-nm" *ngIf="batchStatus">
-                                                <div class="c-ot" *ngIf="!showEditSection">
-                                                    <div class="item"
                                                         *ngIf="queue_data.batchPatternSettings && queue_data.batchPatternSettings.prefix != ''">
                                                         <span class="ttle"> Prefix </span><span
                                                             class="day">{{queue_data.batchPatternSettings.prefix}}</span>

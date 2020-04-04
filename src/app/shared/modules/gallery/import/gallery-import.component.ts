@@ -35,7 +35,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     canceldisabled = false;
     source_id;
     subscription: Subscription;
-    @ViewChild('filed') fileInput: ElementRef;
+    @ViewChild('filed', {static: false} ) fileInput: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,

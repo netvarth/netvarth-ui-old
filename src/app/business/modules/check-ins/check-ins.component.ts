@@ -464,109 +464,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-
-<<<<<<< HEAD
-=======
-  getLocationList() {
-    const self = this;
-    return new Promise(function (resolve, reject) {
-      self.selected_location = null;
-      self.provider_services.getProviderLocations()
-        .subscribe(
-          (data: any) => {
-            const locations = data;
-            self.locations = [];
-            for (const loc of locations) {
-              if (loc.status === 'ACTIVE') {
-                self.locations.push(loc);
-              }
-            }
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
-            if (cookie_location_id === '') {
-              if (self.locations[0]) {
-                self.changeLocation(self.locations[0]);
-              }
-            } else {
-              self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
-            }
-            resolve();
-          },
-          () => {
-            reject();
-          },
-          () => {
-          }
-        );
-    },
-    );
-  }
-  gotoLocations() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
-  }
-  onChangeLocationSelect(event) {
-    const value = event;
-    this.changeLocation(this.locations[value] || []);
-  }
-  selectLocationFromCookie(cookie_location_id) {
-    let selected_location = null;
-    for (const location of this.locations) {
-      if (location.id === cookie_location_id) {
-        selected_location = location;
-      }
-    }
-    return (selected_location !== null) ? selected_location : this.locations[0];
-  }
-  selectLocationFromCookies(cookie_location_id) {
-    this.changeSelectedLocation(this.selectLocationFromCookie(cookie_location_id));
-  }
-  changeSelectedLocation(location) {
-    this.selected_location = location;
-    if (this.selected_location) {
-      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
-    }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
-    this.getQueueList();
-    // const pdata = { 'ttype': 'location_change' };
-    // this.shared_functions.sendSwitchMessage(pdata);
-  }
-  routeLoadIndicator(e) {
-    this.apiloading = e;
-  }
-  closeCounters() {
-    if (this.cronHandle) { this.cronHandle.unsubscribe(); }
-  }
-  filterClicked(type) {
-    this.filters[type] = !this.filters[type];
-    if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
-        this.filter[type] = null;
-        this.setFilterDateMaxMin();
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
-        this.filter[type] = 'all';
-      } else if (type === 'waitlist_status') {
-        this.statusMultiCtrl = [];
-      } else {
-        this.filter[type] = '';
-      }
-      this.doSearch();
-    }
-  }
-  setSystemDate() {
-    this.shared_services.getSystemDate()
-      .subscribe(
-        res => {
-          this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
-        });
-  }
-  performActions(action) {
-    if (action === 'adjustdelay') {
-      this.showAdjustDelay();
-    } else if (action === 'learnmore') {
-      this.learnmore_clicked(action);
-    }
-  }
->>>>>>> refs/remotes/origin/1.2.4-SRCM
   ngOnDestroy() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -1106,26 +1003,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filterapplied = false;
     this.loadApiSwitch('setTimeType');
   }
-<<<<<<< HEAD
-
-=======
-  setFilterDateMaxMin() {
-    this.filter_date_start_min = null;
-    this.filter_date_start_max = null;
-    this.filter_date_end_min = null;
-    this.filter_date_end_max = null;
-    if (this.time_type === 3) {
-      this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
-      this.filter_date_start_max = new Date(this.filter_date_start_max);
-      this.filter_date_end_max = new Date(this.filter_date_end_max);
-    } else if (this.time_type === 2) {
-      this.filter_date_start_min = moment(new Date()).add(+1, 'days');
-      this.filter_date_end_min = moment(new Date()).add(+1, 'days');
-    }
-  }
->>>>>>> refs/remotes/origin/1.2.4-SRCM
-
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
     this.filter_dob_end_max = new Date();
@@ -1791,7 +1668,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return false;
   }
   viewQClicked(qId) {
-    alert(this.selQIds.toString());
     const qindx = this.selQIds.indexOf(qId);
     if (qindx !== -1) {
       if (this.selQIds.length === 1) {

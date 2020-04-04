@@ -11,11 +11,11 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-waitlist-queuedetail',
-    templateUrl: './waitlist-queuedetail.component.html'
+  selector: 'app-waitlist-queuedetail',
+  templateUrl: './waitlist-queuedetail.component.html'
 })
 
-export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
+export class WaitlistQueueDetailComponent implements OnInit {
   location_cap = Messages.Q_DET_LOCATION_CAP;
   service_cap = Messages.Q_DET_SERVICE_OFFERD_CAP;
   enabled_cap = Messages.Q_DET_ENABLED_CAP;
@@ -236,11 +236,14 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.queue_data = data;
-          this.batchStatus = this.queue_data.batch;
-          this.prefixName = this.queue_data.batchPatternSettings.prefix;
-          this.suffixName = this.queue_data.batchPatternSettings.suffix;
-          if (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '') {
+          if (this.queue_data.batchPatternSettings) {
+            this.prefixName = this.queue_data.batchPatternSettings.prefix;
+            this.suffixName = this.queue_data.batchPatternSettings.suffix;
+          }
+          if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
             this.showEditSection = true;
+          } else {
+            this.showEditSection = false;
           }
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
@@ -334,7 +337,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
   changeProviderQueueStatus(obj) {
     this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
   }
-   createForm() {
+  createForm() {
     if (this.action === 'edit') {
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
