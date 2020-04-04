@@ -308,4 +308,7 @@ export class CustomViewComponent implements OnInit {
             );
         }
     }
+    onCancel() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+      }
 }
