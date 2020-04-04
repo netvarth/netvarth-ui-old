@@ -11,7 +11,7 @@
 
                           <div class="ynw-common-form-nm">
                           
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 mgn-lt-20">
                                     <mat-form-field>
                                       <input [(ngModel)]= "customViewName" matInput type="text" class="form-control"  placeholder="Custom view name *" autocomplete="off">
                                     </mat-form-field>
@@ -48,13 +48,13 @@
                                     <mat-form-field>
                                         <mat-select placeholder="Doctors" [(ngModel)]="selectedUserIds" [multiple]="true">
                                             <ngx-mat-select-search placeholderLabel="Search Doctors"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let doctors of users_list" [value] = "users" (click) = "doctorSelected(doctors.id)">
+                                            <mat-option *ngFor=" let doctors of users_list" [value] = "doctors" (click) = "doctorSelected(doctors.id)">
                                               {{doctors.firstName}} {{doctors.lastName}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUserIds.length > 0">
+                                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUserIds.length > 0">
                                   <p>
                                       Selected Doctors:
                                   </p>
@@ -63,7 +63,7 @@
                                           {{users.firstName}}
                                       </li>
                                   </ul>
-                              </div> -->
+                              </div>
                             </div>
                               <div class="form-group col-md-12">
                                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
