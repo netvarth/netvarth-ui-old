@@ -1096,4 +1096,8 @@ export class ProviderServices {
       const url = 'provider/waitlist/queues/batch/pattern/' + queueId;
       return this.servicemeta.httpPut(url, data);
    }
+   getMergestatement(refId){
+      const url = 'provider/license/invoice/' + refId +'/merge/stmt';
+      return this.servicemeta.httpGet(url);
+   }
 }

@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 // import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-statements',
@@ -38,6 +38,7 @@ export class StatementsComponent implements OnInit {
   api_error = null;
   api_success = null;
   invoice: any = null;
+
   payMentShow = 0;
   payment_modes: any = [];
   payment_detail: any = [];
@@ -52,8 +53,10 @@ export class StatementsComponent implements OnInit {
     amount: 0,
     //  paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null,
+    refno:null,
     purpose: null
   };
+  invoices: any = [];
   payment_popup = null;
   source = 'payment-history';
   payment_loading = false;
@@ -72,6 +75,9 @@ export class StatementsComponent implements OnInit {
   };
   showPreviousDue = false;
   show = false;
+  showref=false;
+  refno = 'show ref no';
+  mergeinvoicerefno:any = [];
   temp;
   temp4;
   discountDetailsTxt = 'Show discount details';
@@ -93,7 +99,10 @@ export class StatementsComponent implements OnInit {
   tempp: any;
   var: any;
   temp1;
+  mergestatement: any;
+ 
   constructor(
+    private provider_servicesobj: ProviderServices,
     public dialogRef: MatDialogRef<StatementsComponent>,
     private dialog: MatDialog,
     private router: Router,
@@ -110,7 +119,9 @@ export class StatementsComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.data = qParams;
+        console.log(this.data);
         this.temp = this.data.source;
+        console.log(this.temp);
 
       });
     if (this.data.data1 === 'invo-statement NotPaid') {
@@ -118,6 +129,8 @@ export class StatementsComponent implements OnInit {
       this.breadcrumbs_init.map((e) => {
         breadcrumbs.push(e);
       });
+      
+
       breadcrumbs.push({
         title: 'Invoice / Statement',
         url: '/provider/license/invoicestatus'
@@ -168,7 +181,7 @@ export class StatementsComponent implements OnInit {
         title: 'Statements',
       });
       this.breadcrumbs = breadcrumbs;
-
+     
     }
 
     // this.invoice = data.invoice || null;
@@ -189,7 +202,9 @@ export class StatementsComponent implements OnInit {
     // this.pay_data.amount = this.invoice.null;
 
     this.pay_data.uuid = invoiceJson.ynwUuid;
-    // console.log(this.pay_data.uuid);
+// console.log(this.pay_data.uuid);
+    this.pay_data.refno = invoiceJson.invoiceRefNumber;
+    console.log(this.pay_data.refno);
   }
 
   ngOnInit() {
@@ -203,7 +218,7 @@ export class StatementsComponent implements OnInit {
     this.getgst();
 
     this.invoiceDetail();
-
+   
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
       this.payment_loading = true;
       this.getPaymentModes();
@@ -218,13 +233,14 @@ export class StatementsComponent implements OnInit {
     this.loading = false;
   }
 
-
+  
   invoiceDetail() {
     this.provider_services.getInvoice(this.pay_data.uuid)
       .subscribe(
         data => {
           this.invoice = data;
-          //  console.log(this.invoice)
+
+           console.log(this.invoice)
           //  console.log(this.invoice.periodFrom)
           if (this.invoice.creditDebitJson) {
             this.credt_debtJson = JSON.parse(this.invoice.creditDebitJson);
@@ -238,6 +254,7 @@ export class StatementsComponent implements OnInit {
             });
           }
           if (this.invoice.mergedStatements) {
+            
             this.checkPreviousStatements(this.invoice.mergedStatements);
           }
         },
@@ -274,12 +291,33 @@ export class StatementsComponent implements OnInit {
         this.checkPreviousStatements(object.mergedStatements);
       });
     }
-
+      
   }
   togglePreviousDue() {
     this.showPreviousDue = !this.showPreviousDue;
   }
-
+  PreviousInvoiceReferenceNo(invoicerefno){
+    this.showPreviousDue = !this.showPreviousDue;
+    this.provider_services.getMergestatement(invoicerefno).subscribe(data =>{
+    this.mergeinvoicerefno = data;
+  });
+  }
+  previousRefstmt(mergeinvoicerefno){
+    console.log(mergeinvoicerefno); 
+    let stmt=[];
+    stmt=this.invoice.mergedStatements;
+    console.log(stmt);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        
+         InvoiceRefNo:mergeinvoicerefno
+          
+            }
+    };
+    this.router.navigate(['provider', 'license', 'viewstatement'],navigationExtras);
+    
+    }
+   
   toggleDiscountDetails() {
     this.show = !this.show;
     if (this.show) {

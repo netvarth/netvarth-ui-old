@@ -1,3 +1,6 @@
+<!-- <section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" ></app-breadcrumb>
+</section> -->
 <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
@@ -141,7 +144,7 @@
                                       </tr> 
                                     <tr [hidden]="showPreviousDue == false">
                                         <td>Previous Invoicerefno</td>
-                                        <td class="previousDue" style="text-align: end;"*ngFor="let row of mergeinvoicerefno;let i=index"(click)="previousRefstmt(mergeinvoicerefno[i])"><a class="pointlist" style="text-decoration: underline;">{{mergeinvoicerefno[i]}}</a></td>
+                                        <td class="previousDue" style="text-align: end;"*ngFor="let row of mergeinvoicerefno;let i=index"(click)="previousrefstmt(mergeinvoicerefno[i])"><a class="pointlist" style="text-decoration: underline;">{{mergeinvoicerefno[i]}}</a></td>
                                     </tr>
                         
                                           <!-- <tr [hidden]="previousStatements.addonDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let addon of previousStatements.addonDetailsArray">

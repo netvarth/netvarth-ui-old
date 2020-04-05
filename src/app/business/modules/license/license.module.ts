@@ -20,6 +20,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { licenseusageComponent } from './licenseusage/licenseusage.component';
 import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
+import { viewprevstatementComponent } from './statements/viewprevstatement.component';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component'
         ProviderAuditLogComponent,
         ProviderLicenceInvoiceDetailComponent,
         StatementsComponent,
+        viewprevstatementComponent
     ],
     entryComponents: [
         AddproviderAddonComponent,
@@ -57,6 +59,7 @@ import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component'
         ProviderAuditLogComponent,
         ProviderLicenceInvoiceDetailComponent,
         StatementsComponent,
+        viewprevstatementComponent
     ],
     exports: [LicenseComponent]
 })
