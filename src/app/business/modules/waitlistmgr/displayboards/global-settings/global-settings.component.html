@@ -4,9 +4,9 @@
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
-                    <h6 class="glbl-seting-h6">Header Settings</h6>
+                    <h6 class="glbl-seting-h6" [ngClass]="{'glbl-seting-hiden': is_hidden}">Header Settings</h6>
                     <div [ngClass]="{'glbl-preview': is_preview}">
-                        <div [ngClass]="{'glbl-heder-color-prvw': is_preview, 'glbl-heder-color': !is_preview}">
+                        <div [ngClass]="{'glbl-heder-color-prvw': is_preview, 'glbl-heder-color': !is_preview, 'glbl-seting-hiden': is_hidden}">
                             <div class="glbl-seting-h-div">
                                 <div class="lbr col-sm-12 col-md-4 col-lg-4">
                                     <div class="glbl-file-input-div">
@@ -98,8 +98,8 @@
                             <div>
                                 <div>
                                     <div [innerHTML]="headerContent"></div>
-                                    <div> <img
-                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px', 'transform' : position}"
+                                    <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
+                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}"
                                             [src]="imageUrl" style="width: 50%;height: auto;"></div>
                                 </div>
                                 <div style="font-size: smaller;" [innerHTML]="footerContent"></div>
@@ -111,7 +111,7 @@
         </div>&nbsp;&nbsp;&nbsp;
     </div>
     <!-- Footer section -->
-    <div *ngIf="onlyHeader" class="content w-manager settings comn-cls lic-page">
+    <div *ngIf="onlyHeader" [ngClass]="{'glbl-seting-hiden': is_hidden, 'content w-manager settings comn-cls lic-page': !is_hidden}">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">

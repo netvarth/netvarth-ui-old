@@ -17,6 +17,7 @@ export class GlobalSettingsComponent implements OnInit {
     imageUrl;
     is_image = false;
     is_preview = false;
+    is_hidden = false;
     width;
     height;
     show_visible = false;
@@ -72,13 +73,14 @@ export class GlobalSettingsComponent implements OnInit {
     }
     selectChangeHandler(event) {
         if (event.target.value === 'left') {
-            this.position = 'scaleX(-1)';
+            this.position = 'left';
         } else {
-            this.position = 'none';
+            this.position = 'right';
         }
     }
     showPreview() {
         this.is_preview = true;
+        this.is_hidden = true;
         // this.largeImage = document.getElementById('previewPage').innerHTML;
         // const WindowPrt = window.open('', '', 'left=50,top=0,width=500,height=700,toolbar=0,scrollbars=0,status=0');
         // WindowPrt.document.write('<div style="display:flex">');
@@ -93,6 +95,7 @@ export class GlobalSettingsComponent implements OnInit {
     }
     previewCancel() {
         this.is_preview = false;
+        this.is_hidden = false;
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);

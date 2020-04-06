@@ -7803,7 +7803,13 @@ font-weight: 600px !important;
   cursor: none;
   display: none;
 }
+.glbl-seting-hiden{
+  display: inline;
+}
 @media only screen and (max-width: 575px) {
+  .glbl-seting-hiden{
+    display: none !important;
+  }
   .glbl-seting-h6{
     padding-left: 10px;
     font-weight: 500;
