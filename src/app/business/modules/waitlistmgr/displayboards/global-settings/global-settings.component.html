@@ -5,17 +5,19 @@
             <div class="row">
                 <div class="card">
                     <h6 class="glbl-seting-h6" [ngClass]="{'glbl-seting-hiden': is_hidden}">Header Settings</h6>
+                    <h6 class="glbl-setting-h6" [ngClass]="{'glbl-setting-h6-small': is_preview}">Preview</h6>
                     <div [ngClass]="{'glbl-preview': is_preview}">
-                        <div [ngClass]="{'glbl-heder-color-prvw': is_preview, 'glbl-heder-color': !is_preview, 'glbl-seting-hiden': is_hidden}">
+                        <div
+                            [ngClass]="{'glbl-heder-color-prvw': is_preview, 'glbl-heder-color': !is_preview, 'glbl-seting-hiden': is_hidden}">
                             <div class="glbl-seting-h-div">
                                 <div class="lbr col-sm-12 col-md-4 col-lg-4">
                                     <div class="glbl-file-input-div">
                                         <div *ngIf="!is_image">
-                                            <img (click)="fileInput.click()" class="glbl-seting-img-width" src="assets/images/img_uplod.png"
-                                                alt="Jaldee">
+                                            <img (click)="fileInput.click()" class="glbl-seting-img-width"
+                                                src="assets/images/img_uplod.png" alt="Jaldee">
                                             <div class="glbl-seting-disply-cmn">
                                                 <div (click)="fileInput.click()">
-                                                    <img  class="glbl-seting-img-smal" src="assets/images/round_img.png"
+                                                    <img class="glbl-seting-img-smal" src="assets/images/round_img.png"
                                                         alt="Jaldee">
                                                 </div>
                                                 <div (click)="showPreview()">
@@ -28,9 +30,10 @@
                                     </div>
                                     <div *ngIf="is_image" class="glbl-txt-align">
                                         <div>
-                                            <img (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl" class="glbl-seting-img">
+                                            <img (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
+                                                class="glbl-seting-img">
                                             <i (click)="showPreview()" class="fa fa-eye fa-2x glbl-preview-eye-small"
-                                                    aria-hidden="true"></i>
+                                                aria-hidden="true"></i>
                                             <!-- <div (click)="showPreview()">
                                                 <i class="fa fa-eye fa-2x glbl-preview-eye-small"
                                                     aria-hidden="true"></i>
@@ -73,7 +76,9 @@
                                         </div> -->
                                 </div>
                                 <div class="glbl-preview-eye" (click)="showPreview()"><i class="fa fa-eye fa-3x"
-                                        aria-hidden="true"></i>Preview</div>
+                                        aria-hidden="true"></i>
+                                    <p>Preview</p>
+                                </div>
                             </div>
                             <div class="glbl-seting-disp-div">
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8">
@@ -99,8 +104,8 @@
                                 <div>
                                     <div [innerHTML]="headerContent"></div>
                                     <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
-                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}"
-                                            [src]="imageUrl" style="width: 50%;height: auto;"></div>
+                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="imageUrl"
+                                            style="width: 50%;height: auto;"></div>
                                 </div>
                                 <div style="font-size: smaller;" [innerHTML]="footerContent"></div>
                             </div>
@@ -111,7 +116,8 @@
         </div>&nbsp;&nbsp;&nbsp;
     </div>
     <!-- Footer section -->
-    <div *ngIf="onlyHeader" [ngClass]="{'glbl-seting-hiden': is_hidden, 'content w-manager settings comn-cls lic-page': !is_hidden}">
+    <div *ngIf="onlyHeader"
+        [ngClass]="{'glbl-seting-hiden': is_hidden, 'content w-manager settings comn-cls lic-page': !is_hidden}">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">

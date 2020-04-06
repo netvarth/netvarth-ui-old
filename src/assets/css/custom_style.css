@@ -7776,6 +7776,9 @@ font-weight: 600px !important;
     font-weight: 600;
     font-size: 1.25rem; 
 }
+.glbl-setting-h6{
+  display: none;
+}
 .disp-bord-heder {
   margin-bottom: 0;
   font-size: 1.07rem;
@@ -7807,6 +7810,12 @@ font-weight: 600px !important;
   display: inline;
 }
 @media only screen and (max-width: 575px) {
+  .glbl-setting-h6-small{
+    padding-left: 10px;
+    font-weight: 600;
+    font-size: 1.25rem; 
+    display: inline !important;
+  }
   .glbl-seting-hiden{
     display: none !important;
   }
@@ -7854,12 +7863,16 @@ font-weight: 600px !important;
   .glbl-txt-align{
     text-align-last: center !important;
   }
-}
-@media only screen and (max-width: 800px) {
+  .glbl-preview-eye {
+    cursor: none;
+    display: none;
+  }
   .glbl-preview-eye-small {
     cursor: pointer;
     display: inline !important;
   }
+}
+@media only screen and (max-width: 800px) {
   .glbl-seting-disp-div  {
     display: block !important;
   }
@@ -7873,8 +7886,6 @@ font-weight: 600px !important;
   .glbl-preview{
     display: block;
   }
-  .glbl-preview-eye {
-    cursor: none;
-    display: none;
-  }
+}
+@media only screen and (max-width: 600px) {
 }
