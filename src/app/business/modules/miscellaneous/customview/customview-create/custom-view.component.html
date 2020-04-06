@@ -1,128 +1,129 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
   <div class="content w-manager settings comn-cls lic-page">
-      <div class="col-md-12 no-padding-small">
-          <div class="w-dta">
-              <div class="row">
-                  <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
-                      <div class=" row no-padding">
+    <div class="col-md-12 no-padding-small">
+      <div class="w-dta">
+        <div class="row">
+          <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
+            <div class=" row no-padding">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              <div class="ynw-common-form-nm" *ngIf="!loading">
+                <div class="form-group col-md-6 mgn-lt-20">
+                  <mat-form-field>
+                    <input [(ngModel)]="customViewName" matInput type="text" class="form-control"
+                      placeholder="Custom view name *" autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Department</label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Departments" [(ngModel)]="selectedDepartments" [multiple]="true">
+                        <ngx-mat-select-search placeholderLabel="Search departments"></ngx-mat-select-search>
+                        <mat-option *ngFor=" let dept of departments" [value]="dept"
+                          (click)="deptSelection(dept.departmentId)">
+                          {{dept.departmentName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedDepartments.length > 0">
+                    <p>
+                      Selected Departments:
+                    </p>
+                    <ul *ngFor="let department of selectedDepartments">
+                      <li>
+                        {{department.departmentName}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Doctors</label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Doctors" [(ngModel)]="selectedUsers" [multiple]="true">
+                        <ngx-mat-select-search placeholderLabel="Search Doctors"></ngx-mat-select-search>
+                        <mat-option *ngFor=" let doctor of users_list" [value]="doctor"
+                          (click)="userSelection(doctor.id)">
+                          {{doctor.firstName}} {{doctor.lastName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUsers.length > 0">
+                    <p>
+                      Selected Doctors:
+                    </p>
+                    <ul *ngFor="let users of selectedUsers">
+                      <li>
+                        {{users.firstName}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Services</label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Services" [(ngModel)]="selectedServices" [multiple]="true">
+                        <ngx-mat-select-search placeholderLabel="Search services"></ngx-mat-select-search>
+                        <mat-option *ngFor=" let service of service_list" [value]="service"
+                          (click)="serviceSelection(service.id)">
+                          {{service.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedServices.length > 0">
+                    <p>
+                      Selected Services:
+                    </p>
+                    <ul *ngFor="let service of selectedServices">
+                      <li>
+                        {{service.name}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Queues</label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Queues" [(ngModel)]="selectedQs" [multiple]="true">
+                        <ngx-mat-select-search placeholderLabel="Search queues"></ngx-mat-select-search>
+                        <mat-option *ngFor=" let queue of qstoDisplay" [value]="queue" (click)="qSelection(queue.id)">
+                          {{queue.name}}
+                          {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedQs.length > 0">
+                    <p>
+                      Selected Queues:
+                    </p>
+                    <ul *ngFor="let queue of selectedQs">
+                      <li>
+                        {{queue.name}}<br>
+                        {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
+                  <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;
+                  <button mat-button type="submit" class="cs-btn bt1" (click)="createCustomView()">Save</button>
+                </div>
+              </div>
 
-                          <div class="ynw-common-form-nm">
-                          
-                                <div class="form-group col-md-6 mgn-lt-20">
-                                    <mat-form-field>
-                                      <input [(ngModel)]= "customViewName" matInput type="text" class="form-control"  placeholder="Custom view name *" autocomplete="off">
-                                    </mat-form-field>
-                                  </div>
-
-                                  <div class="form-group col-md-12" >
-                                    <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                                        Department</label>
-                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                        <mat-form-field>
-                                            <mat-select placeholder="Departments" [(ngModel)]="selectedDeptIds" [multiple]="true">
-                                                <ngx-mat-select-search  placeholderLabel="Search departments"></ngx-mat-select-search>
-                                                <mat-option *ngFor=" let depName of departments" [value] = "depName" (click) = "depSelected(depName.departmentId)" >
-                                                  {{depName.departmentName}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedDeptIds.length > 0">
-                                      <p>
-                                          Selected Departments:
-                                      </p>
-                                      <ul *ngFor="let department of selectedDeptIds">
-                                          <li>
-                                              {{department.departmentName}}
-                                          </li>
-                                      </ul>
-                                  </div>
-                                  </div>
-                              <div class="form-group col-md-12">
-                                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                                    Doctors</label>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Doctors" [(ngModel)]="selectedUserIds" [multiple]="true">
-                                            <ngx-mat-select-search placeholderLabel="Search Doctors"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let doctors of users_list" [value] = "doctors" (click) = "doctorSelected(doctors.id)">
-                                              {{doctors.firstName}} {{doctors.lastName}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUserIds.length > 0">
-                                  <p>
-                                      Selected Doctors:
-                                  </p>
-                                  <ul *ngFor="let users of selectedUserIds">
-                                      <li>
-                                          {{users.firstName}}
-                                      </li>
-                                  </ul>
-                              </div>
-                            </div>
-                              <div class="form-group col-md-12">
-                                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                                    Services</label>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Services" [(ngModel)]="selectedServiceIds" [multiple]="true">
-                                            <ngx-mat-select-search placeholderLabel="Search services"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let serNames of service_list" [value] = "serNames" (click) = "servSelected(serNames.id)">
-                                                {{serNames.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedServiceIds.length > 0">
-                                  <p>
-                                      Selected Services:
-                                  </p>
-                                  <ul *ngFor="let service of selectedServiceIds">
-                                      <li>
-                                          {{service.name}}
-                                      </li>
-                                  </ul>
-                              </div>
-                            </div>
-                              <div class="form-group col-md-12">
-                                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                                    Queues</label>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Queues" [(ngModel)]="selectedQIds" [multiple]="true">
-                                            <ngx-mat-select-search placeholderLabel="Search queues"></ngx-mat-select-search>
-                                            <mat-option *ngFor=" let queues of qstoDisplay" [value] = "queues" (click) = "selectedQs(queues.id)">
-                                                {{queues.name}}
-                                                {{queues.displayschedule[0].dstr}}[{{queues.displayschedule[0].time}}]
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedQIds.length > 0">
-                                  <p>
-                                      Selected Queues:
-                                  </p>
-                                  <ul *ngFor="let queue of selectedQIds">
-                                      <li>
-                                          {{queue.name}}<br>
-                                          {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]
-                                      </li>
-                                  </ul>
-                              </div>
-                            </div>
-                              <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
-                                <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;
-                                <button mat-button type="submit" class="cs-btn bt1" (click) = "createCustomView()">Save</button>
-                                </div>        
-                         </div>
-                         
-                             
-                         <!-- <div class="col-md-6">
+              <!-- <div class="col-md-6">
                               <div class="pay-section left">
                                   <div class="lc22">
                                     <div class="lc2-1 lcd custom-help">
@@ -169,11 +170,10 @@
                                </div>                          
                           </div>                                 
                          </div>                              -->
-                   </div>                  
-               </div>  
             </div>
-         </div>
-     </div>
- </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-      
