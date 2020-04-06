@@ -52,12 +52,11 @@ export class CustomViewComponent implements OnInit {
         this.activated_route.queryParams.subscribe((qparams) => {
             this.viewId = qparams.id;
             this.getDepartments();
+            this.getUsers();
+            this.getAccountQs();
+            this.getAccountServices();
             if (this.viewId) {
                 this.getView(this.viewId);
-            } else {
-                this.getUsers();
-                this.getAccountQs();
-                this.getAccountServices();
             }
         });
     }
@@ -93,11 +92,13 @@ export class CustomViewComponent implements OnInit {
                     this.selectedUserIds = [];
                     this.selectedServiceIds = [];
                     this.selectedQueues = [];
-                    for (const id of this.viewDetailsList.customViewConditions.departments) {
-                        this.selectedDepts.push(id.departmentId);
-                        for (const dept of this.departments) {
-                            if (dept.departmentId === id.departmentId) {
-                                this.selectedDeptIds.push(dept);
+                    if (this.viewDetailsList && this.viewDetailsList.customViewConditions && this.viewDetailsList.customViewConditions.departments.length > 0) {
+                        for (const id of this.viewDetailsList.customViewConditions.departments) {
+                            this.selectedDepts.push(id.departmentId);
+                            for (const dept of this.departments) {
+                                if (dept.departmentId === id.departmentId) {
+                                    this.selectedDeptIds.push(dept);
+                                }
                             }
                         }
                     }
@@ -135,7 +136,7 @@ export class CustomViewComponent implements OnInit {
                     if (this.selectedDocts.length === 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
-                    if (this.viewDetailsList && this.viewDetailsList.customViewConditions.services) {
+                    if (this.viewDetailsList && this.viewDetailsList.customViewConditions && this.viewDetailsList.customViewConditions.services.length > 0) {
                         for (const id of this.viewDetailsList.customViewConditions.services) {
                             this.selectedServices.push(id.id);
                             for (const service of this.service_list) {
@@ -185,7 +186,7 @@ export class CustomViewComponent implements OnInit {
                         }
                     }
                     this.queuestoDisplay = this.qstoDisplay;
-                    if (this.viewDetailsList && this.viewDetailsList.customViewConditions.queues) {
+                    if (this.viewDetailsList && this.viewDetailsList.customViewConditions && this.viewDetailsList.customViewConditions.queues.length > 0) {
                         for (const id of this.viewDetailsList.customViewConditions.queues) {
                             this.selectedQueues.push(id.id);
                             for (const q of this.qstoDisplay) {
@@ -269,7 +270,7 @@ export class CustomViewComponent implements OnInit {
                         this.selectedDoctors.push(user.id);
                     }
                 }
-                if (this.viewDetailsList && this.viewDetailsList.customViewConditions.users) {
+                if (this.viewDetailsList && this.viewDetailsList.customViewConditions && this.viewDetailsList.customViewConditions.users.length > 0) {
                     for (const id of this.viewDetailsList.customViewConditions.users) {
                         this.selectedDocts.push(id.id);
                         for (const user of this.users_list) {
