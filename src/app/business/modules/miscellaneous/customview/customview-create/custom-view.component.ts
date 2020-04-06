@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-custom-view',
@@ -31,6 +33,12 @@ export class CustomViewComponent implements OnInit {
     viewId;
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
+    deptMultiFilterCtrl: FormControl = new FormControl();
+    serviceMultiFilterCtrl: FormControl = new FormControl();
+    qMultiFilterCtrl: FormControl = new FormControl();
+    onDestroy = new Subject<void>();
+    filterDepList: any = [];
+
     breadcrumbs = [
         {
             title: 'Settings',
@@ -63,6 +71,40 @@ export class CustomViewComponent implements OnInit {
         });
     }
     ngOnInit() {
+        this.deptMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this.onDestroy))
+        .subscribe(() => {
+            this.filterDeptbySearch();
+        });
+    this.serviceMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this.onDestroy))
+        .subscribe(() => {
+            this.filterServicebySearch();
+        });
+    this.qMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this.onDestroy))
+        .subscribe(() => {
+            this.filterQbySearch();
+        });
+    }
+    filterDeptbySearch() {
+        if (!this.departments) {
+            return;
+        }
+        let search = this.deptMultiFilterCtrl.value;
+        if (!search) {
+            this.filterDepList = this.departments.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.filterDepList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
+    }
+    filterServicebySearch() {
+
+    }
+    filterQbySearch() {
+
     }
     getAccountQs() {
         const filter = {

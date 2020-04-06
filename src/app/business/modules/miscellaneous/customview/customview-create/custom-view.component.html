@@ -22,7 +22,7 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Departments" [(ngModel)]="selectedDepartments" [multiple]="true">
-                        <ngx-mat-select-search placeholderLabel="Search departments"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"></ngx-mat-select-search>
                         <mat-option *ngFor=" let dept of departments" [value]="dept"
                           (click)="deptSelection(dept.departmentId)">
                           {{dept.departmentName}}
