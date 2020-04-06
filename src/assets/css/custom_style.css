@@ -7714,8 +7714,7 @@ font-weight: 600px !important;
   display: none !important;
 }
 .glbl-seting-tbl{
-  /* width:400px !important; */
-  /* border: hidden !important; */
+  width: 80%;
 }
 .glbl-seting-tbl td{
   padding-bottom: 10px !important;
@@ -7770,7 +7769,7 @@ font-weight: 600px !important;
   padding-top: 2%;
 }
 .glbl-seting-tbl mat-form-field{
-  width: 55%;
+  width: 45%;
 }
 .glbl-seting-h6{
   padding-left: 10px;
@@ -7791,6 +7790,7 @@ font-weight: 600px !important;
 }
 .glbl-preview-eye {
   cursor: pointer;
+  text-align: center;
 }
 .glbl-heder-color{
   background: #f8f8f8;
