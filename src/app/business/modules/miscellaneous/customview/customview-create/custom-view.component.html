@@ -22,7 +22,8 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Departments" [(ngModel)]="selectedDepartments" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
+                          placeholderLabel="Search departments"></ngx-mat-select-search>
                         <mat-option *ngFor=" let dept of departments" [value]="dept"
                           (click)="deptSelection(dept.departmentId)">
                           {{dept.departmentName}}
@@ -47,7 +48,8 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Doctors" [(ngModel)]="selectedUsers" [multiple]="true">
-                        <ngx-mat-select-search placeholderLabel="Search Doctors"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search Doctors">
+                        </ngx-mat-select-search>
                         <mat-option *ngFor=" let doctor of users_list" [value]="doctor"
                           (click)="userSelection(doctor.id)">
                           {{doctor.firstName}} {{doctor.lastName}}
@@ -72,7 +74,8 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Services" [(ngModel)]="selectedServices" [multiple]="true">
-                        <ngx-mat-select-search placeholderLabel="Search services"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
+                          placeholderLabel="Search services"></ngx-mat-select-search>
                         <mat-option *ngFor=" let service of service_list" [value]="service"
                           (click)="serviceSelection(service.id)">
                           {{service.name}}
@@ -97,7 +100,8 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Queues" [(ngModel)]="selectedQs" [multiple]="true">
-                        <ngx-mat-select-search placeholderLabel="Search queues"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues">
+                        </ngx-mat-select-search>
                         <mat-option *ngFor=" let queue of qstoDisplay" [value]="queue" (click)="qSelection(queue.id)">
                           {{queue.name}}
                           {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]

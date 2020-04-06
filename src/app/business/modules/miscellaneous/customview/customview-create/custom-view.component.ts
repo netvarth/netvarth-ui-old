@@ -34,11 +34,13 @@ export class CustomViewComponent implements OnInit {
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
     deptMultiFilterCtrl: FormControl = new FormControl();
+    userMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
     qMultiFilterCtrl: FormControl = new FormControl();
     onDestroy = new Subject<void>();
     filterDepList: any = [];
-
+    filterUsersList: any = [];
+    filterServiicesList: any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -72,39 +74,78 @@ export class CustomViewComponent implements OnInit {
     }
     ngOnInit() {
         this.deptMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this.onDestroy))
-        .subscribe(() => {
-            this.filterDeptbySearch();
-        });
-    this.serviceMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this.onDestroy))
-        .subscribe(() => {
-            this.filterServicebySearch();
-        });
-    this.qMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this.onDestroy))
-        .subscribe(() => {
-            this.filterQbySearch();
-        });
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterDeptbySearch();
+            });
+        this.userMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterUserbySearch();
+            });
+        this.serviceMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterServicebySearch();
+            });
+        this.qMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterQbySearch();
+            });
     }
     filterDeptbySearch() {
-        if (!this.departments) {
+        if (!this.filterDepList) {
             return;
         }
         let search = this.deptMultiFilterCtrl.value;
         if (!search) {
-            this.filterDepList = this.departments.slice();
+            this.departments = this.filterDepList.slice();
             return;
         } else {
             search = search.toLowerCase();
         }
-        this.filterDepList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
+        this.departments = this.filterDepList.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
+    }
+
+    filterUserbySearch() {
+        if (!this.filterUsersList) {
+            return;
+        }
+        let search = this.userMultiFilterCtrl.value;
+        if (!search) {
+            this.users_list = this.filterUsersList.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.users_list = this.filterUsersList.filter(user => user.firstName.toLowerCase().indexOf(search) > -1);
     }
     filterServicebySearch() {
-
+        if (!this.filterServiicesList) {
+            return;
+        }
+        let search = this.serviceMultiFilterCtrl.value;
+        if (!search) {
+            this.service_list = this.filterServiicesList.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.service_list = this.filterServiicesList.filter(service => service.name.toLowerCase().indexOf(search) > -1);
     }
     filterQbySearch() {
-
+        if (!this.queuestoDisplay) {
+            return;
+        }
+        let search = this.qMultiFilterCtrl.value;
+        if (!search) {
+            this.qstoDisplay = this.queuestoDisplay.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.qstoDisplay = this.queuestoDisplay.filter(q => q.name.toLowerCase().indexOf(search) > -1);
     }
     getAccountQs() {
         const filter = {
@@ -195,6 +236,7 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.departments = data.departments;
+                    this.filterDepList = data.departments;
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -215,6 +257,7 @@ export class CustomViewComponent implements OnInit {
                     if (this.selectedUsersId.length === 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
+                    this.filterServiicesList = this.service_list;
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -329,6 +372,7 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getUsers(apiFilter).subscribe(
             (data: any) => {
                 this.users_list = data;
+                this.filterUsersList = data;
                 for (const user of this.users_list) {
                     if (this.allUsersIds.indexOf(user.id) === -1) {
                         this.allUsersIds.push(user.id);

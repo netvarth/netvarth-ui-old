@@ -349,19 +349,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         responsiveBaseElement: '.checkins-owl',
         responsive: {
           0: {
-              items: 1
+            items: 1
           },
           479: {
-              items: 3
+            items: 3
           },
           768: {
-              items: 4
+            items: 4
           },
           979: {
-              items: 4
+            items: 4
           },
           1200: {
-              items: 5
+            items: 5
           }
         }
       };
@@ -723,7 +723,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleViewSel(view) {
     console.log(view);
     if (this.time_type === 1) {
-        this.shared_functions.setitemonLocalStorage('t_slv', view);
+      this.shared_functions.setitemonLocalStorage('t_slv', view);
     } else if (this.time_type === 2) {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     } if (this.time_type === 3) {
@@ -1486,9 +1486,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 const labels = [];
-                Object.keys(this.historyCheckins[i].label).forEach(key => {
-                  labels.push(this.historyCheckins[i].label[key]);
-                });
+                if (this.historyCheckins[i].label) {
+                  Object.keys(this.historyCheckins[i].label).forEach(key => {
+                    labels.push(this.historyCheckins[i].label[key]);
+                  });
+                }
                 checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
               }
               checkin_html += '</table>';
