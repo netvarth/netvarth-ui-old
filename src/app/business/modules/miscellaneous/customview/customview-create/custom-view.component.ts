@@ -423,6 +423,9 @@ export class CustomViewComponent implements OnInit {
                 (data) => {
                     this.shared_functions.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
                     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         } else {
@@ -430,6 +433,9 @@ export class CustomViewComponent implements OnInit {
                 (data) => {
                     this.shared_functions.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
                     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }
