@@ -29,15 +29,24 @@
                                         <p *ngIf="!is_image" class="glbl-seting-font-wight">Choose Image</p>
                                     </div>
                                     <div *ngIf="is_image" class="glbl-txt-align">
-                                        <div>
-                                            <img (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
-                                                class="glbl-seting-img">
+                                        <div class="glbl-overlay-div">
+                                            <a style="position: relative;">
+                                                <span class="overlay-icon" (click)="fileInput.click()">
+                                                    change
+                                                </span>
+                                                <img (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
+                                                    class="glbl-seting-img">
+
+                                            </a>
+
+                                            <!-- <img id="my-img" (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
+                                                class="glbl-seting-img"> -->
+
+                                            <!-- <span class="material-icons">
+                                                    edit
+                                                </span>     -->
                                             <i (click)="showPreview()" class="fa fa-eye fa-2x glbl-preview-eye-small"
                                                 aria-hidden="true"></i>
-                                            <!-- <div (click)="showPreview()">
-                                                <i class="fa fa-eye fa-2x glbl-preview-eye-small"
-                                                    aria-hidden="true"></i>
-                                            </div> -->
                                         </div>
                                     </div>
                                     <input type="file" class="glbl-seting-btn"

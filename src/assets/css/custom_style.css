@@ -7693,6 +7693,8 @@ width: fit-content;
   width: 150px !important;
   height: 150px  !important;
   object-fit: scale-down !important;
+  cursor: pointer;
+  border-radius: 50%;
 }
 .glbl-seting-body{
   padding-top: 10px !important;
@@ -7809,7 +7811,28 @@ font-weight: 600px !important;
 .glbl-seting-hiden{
   display: inline;
 }
-@media only screen and (max-width: 575px) {
+.glbl-overlay-div{
+  display: inline;
+}
+.overlay-icon{
+  display: none;
+}
+.glbl-overlay-div:hover .overlay-icon {
+  display: unset;
+  position: absolute;
+  left: 26px;
+  top: 30px;
+  width: 100px;
+  height: 25px;
+  background: #fffc;
+  text-align: center;
+  font-size: medium;
+  color: black;
+  font-weight: 500;
+  cursor: pointer;
+}
+@media only screen and 
+(max-width: 575px) {
   .glbl-setting-h6-small{
     padding-left: 10px;
     font-weight: 600;
