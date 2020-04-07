@@ -83,6 +83,7 @@
                                                     {{waitlist.cancelled_time}}</span>
                                             </div>
                                         </div>
+                                        </ng-container>
                                     <div class="lt0"
                                         *ngIf="waitlist.waitlistStatus != 'cancelled' && waitlist.calculationMode == 'NoCalc' && waitlist.token">
                                         <span *ngIf="waitlist.personsAhead === 0"> {{first_person}}</span>
