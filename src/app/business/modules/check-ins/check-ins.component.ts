@@ -16,6 +16,7 @@ import { filter, pairwise } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
+import { queue } from 'rxjs/internal/scheduler/queue';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -281,6 +282,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   views: any = [];
   selectedView: any;
   selQIds: any = [];
+  allActiveQs: any[];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -400,7 +402,37 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.domain = user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
-    this.getViews();
+    this.getQs().then(
+      (queues: any) => {
+        const allActiveQs = [];
+        for (let i = 0; i < queues.length; i++) {
+          // console.log(queues[i]);
+          if (queues[i].queueState === 'ENABLED') {
+            const queueActive = {};
+            queueActive['id'] = queues[i].id;
+            allActiveQs.push(queueActive);
+          }
+        }
+        console.log(allActiveQs);
+        this.getViews().then(
+          (data: any) => {
+            this.views = data;
+            const tempView = {};
+            tempView['name'] = 'Default';
+            tempView['id'] = 0;
+            tempView['customViewConditions'] = {};
+            tempView['customViewConditions'].queues = allActiveQs;
+            this.views.push(tempView);
+            this.selectedView = tempView;
+            // if (this.views.length > 1) {
+            //   this.selectedView = this.views[0];
+            // console.log(this.selectedView);
+            // alert('helo');
+            this.initView(this.selectedView);
+          }
+        );
+      }
+    );
     this.getPos();
     this.getServiceList();
     this.getLabel();
@@ -463,6 +495,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     );
+  }
+  getQs() {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      _this.provider_services.getProviderQueues().subscribe(
+        (queues: any) => {
+          resolve(queues);
+        });
+    });
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -721,7 +762,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   handleViewSel(view) {
-    console.log(view);
+    
     if (this.time_type === 1) {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     } else if (this.time_type === 2) {
@@ -729,7 +770,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } if (this.time_type === 3) {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     }
-    this.initView(view);
+    this.selectedView = view;
+    console.log(this.selectedView);
+    this.initView(this.selectedView);
     this.reloadAPIs();
     // let selqindx;
     // if (mod === 'next') {
@@ -1486,11 +1529,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 const labels = [];
-                if (this.historyCheckins[i].label) {
-                  Object.keys(this.historyCheckins[i].label).forEach(key => {
-                    labels.push(this.historyCheckins[i].label[key]);
-                  });
-                }
                 checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
               }
               checkin_html += '</table>';
@@ -1714,10 +1752,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getViews() {
-    this.provider_services.getCustomViewList().subscribe(data => {
-      this.views = data;
-      this.selectedView = this.views[0];
-      this.initView(this.selectedView);
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getCustomViewList().subscribe(data => {
+        resolve(data);
+      });
     });
   }
   onChangeLocationSelect(event) {
