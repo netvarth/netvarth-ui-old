@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 
 
 @Component({
@@ -18,8 +20,8 @@ export class GlobalSettingsComponent implements OnInit {
     is_image = false;
     is_preview = false;
     is_hidden = false;
-    width;
-    height;
+    width: string;
+    height: string;
     show_visible = false;
     public model = {
         editorData: ''
@@ -45,7 +47,14 @@ export class GlobalSettingsComponent implements OnInit {
     position: string;
     onlyHeader = false;
     onlyFooter = false;
-    constructor(private router: Router) {}
+    displaybord_data;
+    api_loading: boolean;
+    constructor(
+        private router: Router,
+        private provider_services: ProviderServices,
+        private shared_Functionsobj: SharedFunctions,
+        private shared_functions: SharedFunctions,
+        ) {}
     @Input() headerResult;
     breadcrumbs = this.breadcrumbs_init;
     url = '';
@@ -60,6 +69,9 @@ export class GlobalSettingsComponent implements OnInit {
     ngOnInit() {
         if (this.headerResult) {
             this.onlyHeader = true;
+            this.provider_services.getDisplayboard(this.headerResult).subscribe(data => {
+                this.displaybord_data = data;
+            });
           }
     }
     onFileSelected(file: FileList) {
@@ -91,7 +103,39 @@ export class GlobalSettingsComponent implements OnInit {
         // WindowPrt.document.close();
     }
     onUpload() {
-
+        const img_data = {
+            'width': this.width,
+            'height': this.height,
+            'position': 'LEFT',
+            'hint': 'hint',
+            'properties': this.imageUrl
+        };
+        const post_data = {
+            'id': this.displaybord_data.id,
+            'name': this.displaybord_data.name,
+            'layout': this.displaybord_data.layout,
+            'displayName': this.displaybord_data.displayName,
+            'serviceRoom': this.displaybord_data.serviceRoom,
+            'metric': this.displaybord_data.metric,
+            'headerSettings': this.headerContent,
+            'footerSettings': this.footerContent,
+        };
+        this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+            this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        },
+            error => {
+                this.api_loading = false;
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+            // this.provider_services.uploadDisplayboardLogo(this.displaybord_data.id, img_data).subscribe(data => {
+            //     this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+            //     this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+            // },
+            //     error => {
+            //         this.api_loading = false;
+            //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            //     });
     }
     previewCancel() {
         this.is_preview = false;

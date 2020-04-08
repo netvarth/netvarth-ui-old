@@ -38,6 +38,13 @@
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
+                                        <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="serviceRoom"
+                                                    placeholder="Enter the service room" [(ngModel)]="serviceRoom"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
                                         <div class="lbl col-md-12">
                                             <mat-checkbox class="terms-margin" (change)="nestedQboardSelected($event)"
                                                 [value]=true></mat-checkbox>
@@ -384,7 +391,7 @@
              </div>
          </div>
          <div *ngIf="headerSetting">
-            <app-global-settings [headerResult]="headers"></app-global-settings>
+            <app-global-settings [headerResult]="layoutData.id"></app-global-settings>
          </div>
     </div>
 </section>

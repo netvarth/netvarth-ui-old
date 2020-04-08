@@ -1099,4 +1099,8 @@ export class ProviderServices {
       const url = 'provider/license/invoice/' + refId + '/merge/stmt';
       return this.servicemeta.httpGet(url);
    }
+   uploadDisplayboardLogo(id, data) {
+      const url = 'provider/statusBoard/dimension/logo/' + id;
+      return this.servicemeta.httpPut(url, data);
+   }
 }
