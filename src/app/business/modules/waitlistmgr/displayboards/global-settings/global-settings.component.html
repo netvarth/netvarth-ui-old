@@ -34,23 +34,22 @@
                                                 <span class="overlay-icon" (click)="fileInput.click()">
                                                     change
                                                 </span>
-                                                <img (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
+                                                <img (click)="fileInput.click()" *ngIf="success_error" [src]="item_pic.base64"
                                                     class="glbl-seting-img">
 
                                             </a>
 
                                             <!-- <img id="my-img" (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
                                                 class="glbl-seting-img"> -->
-
-                                            <!-- <span class="material-icons">
-                                                    edit
-                                                </span>     -->
                                             <i (click)="showPreview()" class="fa fa-eye fa-2x glbl-preview-eye-small"
                                                 aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <input type="file" class="glbl-seting-btn"
+                                    <!-- <input type="file" class="glbl-seting-btn"
                                         (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg"
+                                        #fileInput> -->
+                                        <input type="file" class="glbl-seting-btn"
+                                        (change)="imageSelect(fileInput,$event)" accept=".png, .jpg, .jpeg"
                                         #fileInput>
                                 </div>
                                 <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
