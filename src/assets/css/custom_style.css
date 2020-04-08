@@ -7922,4 +7922,6 @@ font-weight: 600px !important;
   font-weight: 600;
   margin-right: 10px;
   }
-  
+  .owl-carousel{
+    z-index: unset !important;
+  }
