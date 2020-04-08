@@ -292,7 +292,7 @@ export class ProviderCheckinComponent implements OnInit {
                 this.qParams['phone'] = form_data.search_input;
                 break;
             case 'email':
-                this.qParams['phone'] = form_data.search_input;
+                this.qParams['email'] = form_data.search_input;
                 post_data = {
                     'email-eq': form_data.search_input
                 };

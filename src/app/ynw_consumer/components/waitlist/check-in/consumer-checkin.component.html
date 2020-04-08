@@ -378,6 +378,10 @@
                                                 </app-field-error-display>
                                             </div>
                                             <span class="input-group-btn" *ngIf="confrmshow">
+                                                <button class="btn bt3 btnCancel" type="button"
+                                                    (click)="handleGoBack(1)">
+                                                    Cancel
+                                                </button>
                                                 <button class="btn bt3 btn-default" (click)="addEmail()"
                                                     type="button">Add</button>
                                             </span>

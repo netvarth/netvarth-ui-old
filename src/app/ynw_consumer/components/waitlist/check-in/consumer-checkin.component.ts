@@ -720,47 +720,47 @@ export class ConsumerCheckinComponent implements OnInit {
         let post_data;
         let passtyp;
         if (this.payEmail) {
-          const stat = this.validateEmail(this.payEmail);
-          if (!stat) {
-            this.emailerror = 'Please enter a valid email.';
-            this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
-          }
+            const stat = this.validateEmail(this.payEmail);
+            if (!stat) {
+                this.emailerror = 'Please enter a valid email.';
+                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+            }
         }
         if (this.payEmail1) {
-          const stat1 = this.validateEmail(this.payEmail1);
-          if (!stat1) {
-            this.email1error = 'Please enter a valid email.';
-            this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
-          }
+            const stat1 = this.validateEmail(this.payEmail1);
+            if (!stat1) {
+                this.email1error = 'Please enter a valid email.';
+                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+            }
         }
         // return new Promise((resolve) => {
         if (this.payEmail === this.payEmail1) {
-          post_data = {
-            'id': this.userData.userProfile.id || null,
-            'firstName': this.userData.userProfile.firstName || null,
-            'lastName': this.userData.userProfile.lastName || null,
-            'dob': this.userData.userProfile.dob || null,
-            'gender': this.userData.userProfile.gender || null,
-            'email': this.payEmail || ''
-          };
-          passtyp = 'consumer';
-          if (this.payEmail) {
-            this.shared_services.updateProfile(post_data, passtyp)
-              .subscribe(
-                () => {
-                  this.getProfile();
-                  this.hideFilterSidebar();
-                },
-                error => {
-                  this.api_error = error.error;
-                  this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-          }
+            post_data = {
+                'id': this.userData.userProfile.id || null,
+                'firstName': this.userData.userProfile.firstName || null,
+                'lastName': this.userData.userProfile.lastName || null,
+                'dob': this.userData.userProfile.dob || null,
+                'gender': this.userData.userProfile.gender || null,
+                'email': this.payEmail || ''
+            };
+            passtyp = 'consumer';
+            if (this.payEmail) {
+                this.shared_services.updateProfile(post_data, passtyp)
+                    .subscribe(
+                        () => {
+                            this.getProfile();
+                            this.hideFilterSidebar();
+                        },
+                        error => {
+                            this.api_error = error.error;
+                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            }
         } else {
-          this.email1error = 'Email and Re-entered Email do not match';
-          this.sharedFunctionobj.openSnackBar( this.email1error, { 'panelClass': 'snackbarerror' });
+            this.email1error = 'Email and Re-entered Email do not match';
+            this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
-      }
+    }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1364,5 +1364,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.showAction = false;
+        this.payEmail = '';
+        this.payEmail1 = '';
     }
 }

@@ -7912,3 +7912,13 @@ font-weight: 600px !important;
 }
 @media only screen and (max-width: 600px) {
 }
+.btnCancel{
+  height: auto;
+  background: transparent;
+  border: 1px solid black;
+  padding: 5px 15px;
+  color: black;
+  font-size: .75rem;
+  font-weight: 600;
+  margin-right: 10px;
+  }
