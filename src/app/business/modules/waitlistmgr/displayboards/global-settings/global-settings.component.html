@@ -112,7 +112,7 @@
                                 <div>
                                     <div [innerHTML]="headerContent"></div>
                                     <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
-                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="imageUrl"
+                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="item_pic.base64"
                                             style="width: 50%;height: auto;"></div>
                                 </div>
                                 <div style="font-size: smaller;" [innerHTML]="footerContent"></div>
