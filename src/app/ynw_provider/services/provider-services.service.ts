@@ -1053,8 +1053,8 @@ export class ProviderServices {
    editProviderSchedule(data) {
       return this.servicemeta.httpPut('provider/appointment/schedule', data);
    }
-   getProviderSchedules() {
-      return this.servicemeta.httpGet('provider/appointment/schedule');
+   getProviderSchedules(filter?) {
+      return this.servicemeta.httpGet('provider/appointment/schedule', null, filter);
    }
    readConsumerMessages(consumerId, messageIds) {
       const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
@@ -1102,5 +1102,38 @@ export class ProviderServices {
    uploadDisplayboardLogo(id, data) {
       const url = 'provider/statusBoard/dimension/logo/' + id;
       return this.servicemeta.httpPut(url, data);
+   }
+   // Appointments
+   getTodayAppointments(filter) {
+      const url = 'provider/appointment/today';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getTodayAppointmentsCount(filter = {}) {
+      const url = 'provider/appointment/today/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getFutureAppointments(filter) {
+      const url = 'provider/appointment/future';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getFutureAppointmentsCount(filter = {}) {
+      const url = 'provider/appointment/future/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getHistoryAppointments(filter) {
+      const url = 'provider/appointment/history';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getHistoryAppointmentsCount(filter = {}) {
+      const url = 'provider/appointment/history/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getAppointmentSlotsByScheduleid(scheduleid) {
+      const url = 'provider/appointment/schedule/nextAvailableTime/' + scheduleid;
+      return this.servicemeta.httpGet(url);
+   }
+   getAppointmentSlotsByDate(scheduleid, date) {
+      const url = 'provider/appointment/schedule/date/' + scheduleid + '/' + date;
+      return this.servicemeta.httpGet(url);
    }
 }

@@ -276,15 +276,15 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             );
     }
     // get the list of services
-  getProviderServices() {
-    this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE' };
-    this.provider_services.getProviderServices(filter)
-      .subscribe(data => {
-        this.services_list = data;
-      });
-    this.api_loading1 = false;
-  }
+    getProviderServices() {
+        this.api_loading1 = true;
+        const filter = { 'status-eq': 'ACTIVE' };
+        this.provider_services.getProviderServices(filter)
+            .subscribe(data => {
+                this.services_list = data;
+            });
+        this.api_loading1 = false;
+    }
     goBack() {
         // this.router.navigate(['provider', 'settings', 'miscellaneous',
         //     'queues']);
@@ -327,7 +327,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                 timeSlot: ['', Validators.compose([Validators.required])],
+                timeSlot: ['', Validators.compose([Validators.required])],
             });
             this.updateForm();
         } else {
@@ -339,7 +339,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
-                 timeSlot: ['', Validators.compose([Validators.required])]
+                timeSlot: ['', Validators.compose([Validators.required])]
             });
             this.provider_services.getQStartToken()
                 .subscribe(
@@ -373,9 +373,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             // qlocation: this.queue_data.location.id || null,
             qstarttime: sttime || null,
             qendtime: edtime || null,
-           // qcapacity: this.queue_data.capacity || null,
+            // qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
-             timeSlot: this.queue_data.timeDuration || 0
+            timeSlot: this.queue_data.timeDuration || 0
         });
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
@@ -391,10 +391,10 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         }
         for (let j = 0; j < this.queue_data.services.length; j++) {
             for (let k = 0; k < this.services_list.length; k++) {
-            if (this.queue_data.services[j].id === this.services_list[k].id) {
-                this.services_list[k].checked = true;
-                this.services_selected.push(this.queue_data.services[j].id);
-            }
+                if (this.queue_data.services[j].id === this.services_list[k].id) {
+                    this.services_list[k].checked = true;
+                    this.services_selected.push(this.queue_data.services[j].id);
+                }
             }
         }
         if (this.services_selected.length === this.services_list.length) {
@@ -527,13 +527,13 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 'apptSchedule': schedulejson,
                 'apptState': 'ENABLED',
                 'parallelServing': form_data.qserveonce,
-               // 'capacity': form_data.qcapacity,
+                // 'capacity': form_data.qcapacity,
                 'location': this.selected_locationId,
                 'services': selser,
-               // 'tokenStarts': form_data.tokennum,
+                // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
-                'batch':false
-            }; 
+                'batch': false
+            };
             // schedulejson = {
             //     'recurringType': 'Weekly',
             //     'repeatIntervals': daystr,
@@ -628,123 +628,123 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         const wkdaystemp = this.weekdays;
         this.weekdays = [];
         for (let ii = 1; ii <= 7; ii++) {
-          this.handleDaychecbox(ii);
+            this.handleDaychecbox(ii);
         }
         this.weekdays = wkdaystemp;
-      }
-      handleselectnone() {
+    }
+    handleselectnone() {
         this.Selall = false;
         this.selday_arr = [];
         const wkdaystemp = this.weekdays;
         this.weekdays = [];
         this.weekdays = wkdaystemp;
-      }
-      selectAllService() {
+    }
+    selectAllService() {
         for (let i = 0; i < this.services_list.length; i++) {
-          this.services_list[i].checked = true;
+            this.services_list[i].checked = true;
         }
         this.SelServcall = true;
-      }
-      deselectAllService() {
+    }
+    deselectAllService() {
         for (let i = 0; i < this.services_list.length; i++) {
-          delete this.services_list[i].checked;
+            delete this.services_list[i].checked;
         }
         this.SelServcall = false;
-      }
-      // checks whether a given value is there in the given array
-      check_existsinArray(arr, val) {
+    }
+    // checks whether a given value is there in the given array
+    check_existsinArray(arr, val) {
         let ret = -1;
         for (let i = 0; i < arr.length; i++) {
-          if (arr[i] === val) {
-            ret = i;
-          }
+            if (arr[i] === val) {
+                ret = i;
+            }
         }
         return ret;
-      }
-      serviceunderdept(index, deptName, deptIndex, serviceid) {
+    }
+    serviceunderdept(index, deptName, deptIndex, serviceid) {
         if (this.serviceSelection[deptName][index]) {
-          delete this.serviceSelection[deptName][index];
+            delete this.serviceSelection[deptName][index];
         } else {
-          this.serviceSelection[deptName][index] = serviceid;
+            this.serviceSelection[deptName][index] = serviceid;
         }
         let count = 0;
         for (let i = 0; i < this.serviceSelection[deptName].length; i++) {
-          if (!this.serviceSelection[deptName][i]) {
-            this.SelServcall = false;
-            count++;
-          }
+            if (!this.serviceSelection[deptName][i]) {
+                this.SelServcall = false;
+                count++;
+            }
         }
         if (count === this.serviceSelection[deptName].length) {
-          this.departments[deptIndex].checked = false;
-          this.SelService[deptIndex] = false;
+            this.departments[deptIndex].checked = false;
+            this.SelService[deptIndex] = false;
         }
         if (count === 0) {
-          this.SelServcall = true;
+            this.SelServcall = true;
         }
-      }
-      selectdept() {
+    }
+    selectdept() {
         for (let i = 0; i < this.departments.length; i++) {
-          this.serviceSelection[this.departments[i].departmentName] = [];
-          this.departments[i].checked = true;
-          this.SelService[i] = true;
-          for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-            this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
-          }
+            this.serviceSelection[this.departments[i].departmentName] = [];
+            this.departments[i].checked = true;
+            this.SelService[i] = true;
+            for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+                this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
+            }
         }
         this.SelServcall = true;
-      }
-      deselectdept() {
+    }
+    deselectdept() {
         for (let i = 0; i < this.departments.length; i++) {
-          this.SelService[i] = false;
-          delete this.departments[i].checked;
+            this.SelService[i] = false;
+            delete this.departments[i].checked;
         }
         this.SelServcall = false;
-      }
-      selectdeprtservice(index, event, deptName) {
+    }
+    selectdeprtservice(index, event, deptName) {
         this.serviceSelection[deptName] = [];
         for (let i = 0; i < this.departments.length; i++) {
-          if (event.checked) {
-            this.departments[index].checked = true;
-            this.SelService[index] = true;
-            if (this.departments[i].departmentName === deptName) {
-              for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-                this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
-              }
+            if (event.checked) {
+                this.departments[index].checked = true;
+                this.SelService[index] = true;
+                if (this.departments[i].departmentName === deptName) {
+                    for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+                        this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
+                    }
+                }
+            } else {
+                this.departments[index].checked = false;
+                this.SelService[index] = false;
+                this.SelServcall = false;
             }
-          } else {
-            this.departments[index].checked = false;
-            this.SelService[index] = false;
-            this.SelServcall = false;
-          }
         }
         let count = 0;
         for (let i = 0; i < this.departments.length; i++) {
-          if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
-            for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
-              if (this.serviceSelection[this.departments[i].departmentName][j]) {
-                count = i;
-              }
+            if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
+                for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
+                    if (this.serviceSelection[this.departments[i].departmentName][j]) {
+                        count = i;
+                    }
+                }
             }
-          }
         }
         if (count === this.departments.length) {
-          this.SelServcall = false;
+            this.SelServcall = false;
         }
-      }
-      handleServicechecbox(index) {
+    }
+    handleServicechecbox(index) {
         this.SelServcall = true;
         if (this.services_list[index].checked) {
-          delete this.services_list[index].checked;
+            delete this.services_list[index].checked;
         } else {
-          this.services_list[index].checked = true;
+            this.services_list[index].checked = true;
         }
         for (let i = 0; i < this.services_list.length; i++) {
-          if (!this.services_list[i].checked) {
-            this.SelServcall = false;
-            break;
-          }
+            if (!this.services_list[i].checked) {
+                this.SelServcall = false;
+                break;
+            }
         }
-      }
+    }
 
     changeTimeslotStatus(ev) {
         const status = (ev.checked) ? 'Enable' : 'Disable';

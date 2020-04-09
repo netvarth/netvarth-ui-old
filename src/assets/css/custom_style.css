@@ -7925,3 +7925,14 @@ font-weight: 600px !important;
   .owl-carousel{
     z-index: unset !important;
   }
+.closeFilter{
+  font-weight: 500;
+  color: #323638;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 5px;
+  }
+  .userfilter .mat-select{
+  border-bottom: none !important;
+  }
+  

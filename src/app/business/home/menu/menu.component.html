@@ -56,6 +56,9 @@
           </span> -->
         </a>
         <ul class="treeview-menu">
+          <li><a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+            routerLinkActive="active-lnk"> <span> Appointments </span></a></li>
+
           <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:1}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
               <i class="material-icons" style="font-size:20px">today</i> <span> Today </span></a></li>
