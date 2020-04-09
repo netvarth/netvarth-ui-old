@@ -906,4 +906,8 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/batch/pattern/' + queueId;
     return this.servicemeta.httpPut(url, data);
   }
+  setLivetrack(status) {
+    const url = 'provider/account/settings/livetrack/' + status;
+    return this.servicemeta.httpPut(url);
+  }
 }

@@ -104,6 +104,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   provider_domain_name = '';
   onlinepresence_status: any;
   onlinepresence_statusstr: string;
+  livetrack_status: any;
+  livetrack_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -216,6 +218,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+  handle_liveTracking(event) {
+    const is_livetrack = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setLivetrack(is_livetrack)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getOnlinePresence();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getOnlinePresence();
+        }
+      );
+  }
   handle_waitliststatus(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setAcceptOnlineCheckin(is_check)
@@ -304,6 +320,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       (data: any) => {
       this.onlinepresence_status = data.onlinePresence;
       this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+      this.livetrack_status = data.livetrack;
+      this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
     });
   }
   handle_posStatus(event) {

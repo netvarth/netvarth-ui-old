@@ -301,6 +301,19 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li><a>Live Tracking<span class="pull-right">
+                                <mat-slide-toggle [(ngModel)]="livetrack_status"
+                                    (change)="handle_liveTracking($event)">
+                                </mat-slide-toggle>
+                                </span>
+                                <p class="sts" [class.active]="livetrack_status">{{livetrack_statusstr}}</p>
+                                <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
+                                <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints
+                                </p>
+                            </a>
+                        </li>
+
                                 <li (click)="redirecTo('nonworking')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{non_wrk_day_hr_cap}}</span> 
                                         <p class="settings_info">Manage your non working days here</p>
