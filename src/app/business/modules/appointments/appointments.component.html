@@ -157,31 +157,15 @@
           </nav>
         </header>
         <div class="head">
-          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-
-            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-8 no-padding ov-hid">
-              <mat-chip-list class="pcheckin-owl">
-                <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
-                  <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
-                    <mat-chip class="item" (click)="viewQClicked(queue.id)" [selected]="isQueueSelected(queue.id)"
-                      *ngFor="let queue of queues;let i = index">
-                      <!-- <span class="item" *ngFor="let queue of queues;let i = index"
-                    (click)="selectedQueue(queue, i);"> -->
-                      <input type="radio" [checked]="isQueueSelected(queue.id)" /><span class="break-inside: avoid">
-                        {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
-                      </span>
-                    </mat-chip>
-                  </owl-carousel>
-                  <div class="owl-theme">
-                    <div class="owl-controls">
-                      <div class="checkins-nav owl-nav"></div>
-                    </div>
-                  </div>
-                </div>
-              </mat-chip-list>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 no-padding">
               <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
+                <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
+                  {{today_cap}} ({{today_waitlist_count}})
+                </span>
+                <span class="btn-primary-n" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
+                  {{future_cap}} ({{future_waitlist_count}})
+                </span>
+                <span class="btn-primary-n" (click)="setTimeType(3)" [ngClass]="{'active': time_type==3}">
+                  {{history_cap}} ({{history_waitlist_count}})</span>
                 <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
                   <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                     <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
@@ -202,9 +186,30 @@
                   <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
                 </span>
               </div>
-            </div>
+        </div>
+
+        <div class="head">
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+            <mat-chip-list class="pcheckin-owl">
+              <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
+                <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
+                  <mat-chip class="item" (click)="viewQClicked(queue.id)" [selected]="isQueueSelected(queue.id)"
+                    *ngFor="let queue of queues;let i = index">
+                    <input type="radio" [checked]="isQueueSelected(queue.id)" /><span class="break-inside: avoid">
+                      {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
+                    </span>
+                  </mat-chip>
+                </owl-carousel>
+                <div class="owl-theme">
+                  <div class="owl-controls">
+                    <div class="checkins-nav owl-nav"></div>
+                  </div>
+                </div>
+              </div>
+            </mat-chip-list>
           </div>
         </div>
+
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">
