@@ -39,6 +39,11 @@
                                 <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
                                 {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
                             </button>
+                            <button mat-menu-item (click)="changeLiveTrackStatus(service)" *ngIf="service.status=='ACTIVE'">
+                                <i *ngIf="service.livetrack == true" class="material-icons">gps_fixed</i>
+                                <i *ngIf="service.livetrack == false" class="material-icons">gps_off</i>
+                                {{(service.livetrack== true) ? 'Tracking on' :'Tracking off'}}
+                            </button>
                         </mat-menu>
                     </div>
                 </div>

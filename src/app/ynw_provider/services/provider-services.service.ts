@@ -910,4 +910,8 @@ export class ProviderServices {
     const url = 'provider/account/settings/livetrack/' + status;
     return this.servicemeta.httpPut(url);
   }
+  setServiceLivetrack(status, serviceId) {
+    const url = 'provider/services/livetrack/' + status + '/' + serviceId;
+    return this.servicemeta.httpPut(url);
+  }
 }
