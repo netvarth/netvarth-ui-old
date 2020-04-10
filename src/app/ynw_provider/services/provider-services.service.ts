@@ -1136,4 +1136,12 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/date/' + scheduleid + '/' + date;
       return this.servicemeta.httpGet(url);
    }
+  setLivetrack(status) {
+    const url = 'provider/account/settings/livetrack/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  setServiceLivetrack(status, serviceId) {
+    const url = 'provider/services/livetrack/' + status + '/' + serviceId;
+    return this.servicemeta.httpPut(url);
+  }
 }

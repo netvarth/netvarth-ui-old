@@ -34,6 +34,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         }
     ];
     domain: any;
+    trackStatus: string;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -82,6 +83,23 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
 
     changeServiceStatus(service) {
         this.provider_shared_functions.changeServiceStatus(this, service);
+    }
+    changeLiveTrackStatus(service) {
+        if (service.livetrack === false) {
+            this.trackStatus = 'Enable';
+        } else {
+            this.trackStatus = 'Disable';
+        }
+        this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
+      .subscribe(
+        () => {
+           this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+
     }
 
     disableService(service) {

@@ -239,7 +239,7 @@
                     <span class='no-queue-available'
                         *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
                     <span class='no-queue-available'
-                        *ngIf="checkinLabel!=='Check-In'">Token{{not_accepted_for_this_date}}</span>
+                        *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
                 </ng-container>
             </div>
             <ng-container *ngIf="step==1 && queuejson.length > 0">
@@ -458,13 +458,13 @@
         <div>
             <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
             </div>
-            <ul class="info-lst serviceadd-info">
+            <ul *ngIf="tracking" class="info-lst serviceadd-info">
                 <li>Live tracking not supported outside of India.
                 </li>
             </ul>
             <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
                     <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
-            <div class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to track your
+            <div *ngIf="tracking" class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to track your
                 <p class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
                         <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)>
                         </mat-slide-toggle>
@@ -473,7 +473,7 @@
                         <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
                     </span> -->
             </div>
-            <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
+            <div  class="mgn-up-20" *ngIf="shareLoc && tracking">Automatically track your ETA
                 <span class="mgn-lt-10">
                     <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
                 </span>
@@ -482,7 +482,7 @@
                 <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is
                         turned off, you will have to enable tracking manually from your check-in. </span></div>
             </div>
-            <div class="form-group" *ngIf="shareLoc">
+            <div  class="form-group" *ngIf="shareLoc && tracking">
                 <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                     Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true"
                         (click)="getTravelMod('DRIVING')"></i>
@@ -499,7 +499,7 @@
                 </div>
             </div>
             <ng-container>
-                <div *ngIf="shareLoc && !sel_ser_det.isPrePayment"
+                <div *ngIf="shareLoc && !sel_ser_det.isPrePayment && tracking"
                     class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
                     <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
                     <button type="button" [class.disabled]="track_loading" class="cs-btn bt1 small-btn"

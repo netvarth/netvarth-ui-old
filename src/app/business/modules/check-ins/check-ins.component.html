@@ -1022,6 +1022,7 @@
                             </span>
                           </div>
                         </div>
+<<<<<<< HEAD
                         <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                           <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)"
                             *ngIf="board_count > 0" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
@@ -1029,6 +1030,776 @@
                               *ngIf="!small_device_display && checkin.callingStatus">Stop Calling</span>
                             <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
                             <span *ngIf="!small_device_display && !checkin.callingStatus"> Call</span>
+=======
+                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
+                          <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
+                            [matTooltip]="'Send message'" (click)="addConsumerInboxMessage('single', checkin)">
+                            <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
+                          </a>
+                          <a class="btn-more pointer-cursor" *ngIf="!section_future[i]"
+                            (click)="openActionsWindow('future', i)">
+                            <i class="fa fa-angle-down black"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="info-box-footer-more" *ngIf="section_future[i]">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                      <i class="fa fa-comments-o "></i> <span> Message </span>
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('future', checkin)"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                      <i class="icon-note"></i> <span> Private Note </span>
+                    </a>
+
+                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
+                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      (click)="viewBillPage('future', checkin)">
+                      <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                    </a>
+
+                    <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
+                      *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
+                      <i class="fa fa-trash-o"></i> <span> {{cancel_cap}} </span>
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                      *ngIf="checkin.waitlistStatus == 'cancelled'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Change status to ' + checkin_label">
+                      <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
+                      <i class="fa fa-undo" aria-hidden="true"></i>
+                      <span>{{checkin_label}} </span>
+                    </a>
+                    <a class="btn-more pointer-cursor" (click)="openActionsWindow('future', i)">
+                      <i class="fa fa-angle-up black"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              <!-- Timeslot enabled queue dashboard -->
+              <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
+                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
+                <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
+                  *ngFor="let slot of availableSlots, let i=index">
+                  <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
+                    <mat-chip-list>
+                      <mat-chip #appSlots class="app-info-box-icon"
+                        [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot)"
+                        (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked(slot)"
+                        [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
+                        {{slot}} </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                  <div class="info-box-content"
+                    *ngIf="timeSlotCheckins && timeSlotCheckins[slot] && timeSlotCheckins[slot][0]">
+                    <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0">
+                      <div class="col-md-7 col-xs-7 p0">
+                        <div class="col-md-8 col-xs-8 p0">
+                          <span class="info-box-text forwhom pointer-cursor"
+                            *ngFor="let user of timeSlotCheckins[slot][0].waitlistingFor"
+                            (click)="goCheckinDetail(timeSlotCheckins[slot][0])">
+                            {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
+                            {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
+                          </span>
+                          <span class="info-box-text service"
+                            *ngIf="selected_queue && selected_queue.services.length>1">
+                            {{timeSlotCheckins[slot][0].service.name}}
+                          </span>
+                          <span class="info-box-text service" *ngIf="timeSlotCheckins[slot][0].batchName">
+                            Batch: {{timeSlotCheckins[slot][0].batchName}}
+                          </span>
+                        </div>
+                        <div class="col-md-3 col-xs-3 p0"
+                          *ngIf="timeSlotCheckins[slot][0].waitlistStatus === 'cancelled'">
+                          <span class="info-box-text" style="font-size: smaller;">
+                            {{timeSlotCheckins[slot][0].waitlistStatus}}
+                          </span>
+                        </div>
+                        <div class="col-md-4 col-xs-4 p0">
+                          <span class="pull-left icon-cloud icon-btn1"
+                            *ngIf="timeSlotCheckins[slot][0].waitlistedBy == 'CONSUMER'" [matTooltipClass]="tooltipcls"
+                            [matTooltip]="cloudTooltip">
+                          </span>
+                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
+                            *ngIf="timeSlotCheckins[slot][0].consumerNote"
+                            (click)="showConsumerNote(timeSlotCheckins[slot][0])">
+                            <i class="icon-note"></i>
+                          </span>
+                          <span data-title="Payment Status" class="payment" *ngIf="pos">
+                            <ng-container *ngIf="timeSlotCheckins[slot][0].paymentStatus">
+                              <span class="paid-h icon-btn"
+                                *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'PartiallyPaid'"><span
+                                  class="text">{{partially_paid_cap}}</span></span>
+                              <span class="paid-f icon-btn"
+                                *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
+                                  class="text">{{paid_cap}}</span></span>
+                              <span class="paid-f icon-btn" style="color: red;"
+                                *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                  class="text">Refund</span></span>
+                            </ng-container>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
+                        <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Send message'"
+                          (click)="addConsumerInboxMessage('single', timeSlotCheckins[slot][0])">
+                          <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
+                        </a>
+                        <a class="btn-more pointer-cursor" *ngIf="!section_future[i]"
+                          (click)="openActionsWindow('future', i)">
+                          <i class="fa fa-angle-down black"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="info-box-footer-more"
+                    *ngIf="section_future[i] && timeSlotCheckins && timeSlotCheckins[slot] && timeSlotCheckins[slot][0]">
+                    <a class="btn-play pointer-cursor"
+                      (click)="addConsumerInboxMessage('single', timeSlotCheckins[slot][0])"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                      <i class="fa fa-comments-o "></i> <span> Message </span>
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('future', timeSlotCheckins[slot][0])"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                      <i class="icon-note"></i> <span> Private Note </span>
+                    </a>
+                    <a class="btn-play pointer-cursor"
+                      (click)="changeWaitlistStatus(timeSlotCheckins[slot][0], 'CANCEL')" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Cancel ' + checkin_label"
+                      *ngIf="(timeSlotCheckins[slot][0].waitlistStatus == 'checkedIn' || timeSlotCheckins[slot][0].waitlistStatus == 'arrived')">
+                      <i class="fa fa-trash-o"></i> <span> {{cancel_cap}} </span>
+                    </a>
+                    <a class="btn-play pointer-cursor"
+                      (click)="changeWaitlistStatus(timeSlotCheckins[slot][0], 'CHECK_IN')"
+                      *ngIf="timeSlotCheckins[slot][0].waitlistStatus == 'cancelled'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Change status to ' + checkin_label">
+                      <i class="fa fa-undo" aria-hidden="true"></i>
+                      <span>{{checkin_label}} </span>
+                    </a>
+                    <a class="btn-more pointer-cursor" (click)="openActionsWindow('future', i)">
+                      <i class="fa fa-angle-up black"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--History-->
+            <div class="col-md-12 history col-xs-12 col-sm-12 history no-padding-small" *ngIf="time_type==3">
+              <div class="no-dta col-md-12" *ngIf="check_in_filtered_list.length === 0">
+                {{no_history}}
+              </div>
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_filtered_list.length>0">
+                <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
+                  *ngFor="let checkin of check_in_filtered_list, let i=index">
+                  <div class="info-box">
+                    <div class="info-box-icon">
+                      <span data-title="Date" class="pull-left date icon-btn ">
+                        {{checkin.date | date:dateFormat}}
+                      </span>
+                      <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                      </span>
+                    </div>
+                    <div class="info-box-content">
+                      <div class="col-md-12 p0">
+                        <div class="col-md-5 col-xs-5 p0">
+                          <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.waitlistingFor"
+                            (click)="goCheckinDetail(checkin)">
+                            {{checkin.waitlistingFor[0].firstName}} {{checkin.waitlistingFor[0].lastName}}
+                          </span>
+                          <span class="info-box-text service">
+                            {{checkin.service.name}}
+                          </span>
+                          <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
+                            style="margin-right: 10px;">
+                            {{label.value}}
+                          </span>
+                          <span *ngIf="checkin.batchName" class="info-box-text service">
+                            Batch: {{checkin.batchName}}
+                          </span>
+                        </div>
+                        <div class="col-md-3 col-xs-3 p0">
+                          <span class="info-box-text" style="font-size: smaller;">
+                            {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}
+                          </span>
+                          <span class="payment-status" *ngIf="checkin.paymentStatus!='NotPaid'"
+                            style="font-size: smaller;">
+                            <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
+                                class="text">{{partially_paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
+                                class="text">{{paid_cap}}</span></span>
+                            <span class="paid-f icon-btn" style="color: red;"
+                              *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                          </span>
+                        </div>
+                        <div class="col-md-4 col-xs-4 p0 info-box-icon-right">
+                          <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'"
+                            *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived') && !section_history[i]"
+                            (click)="changeWaitlistStatus(checkin, 'STARTED')">
+                            <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                          </a>
+                          <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'DONE')"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
+                            *ngIf="checkin.waitlistStatus == 'started' && !section_history[i]">
+                            <i class="fa fa-check-circle" style="color: green;"></i> <span
+                              *ngIf="!small_device_display">
+                              {{done_cap}}</span>
+                          </a>
+                          <a class="btn-more pointer-cursor" *ngIf="!section_history[i]"
+                            (click)="openActionsWindow('history', i)">
+                            <i class="fa fa-angle-down black"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="info-box-footer-more" *ngIf="section_history[i]">
+                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'"
+                      *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
+                      (click)="changeWaitlistStatus(checkin, 'STARTED')">
+                      <i class="fa fa-play"></i> <span> Start</span>
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                      <i class="fa fa-comments-o "></i> <span> Message</span>
+                    </a>
+                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
+                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      (click)="viewBillPage('history', checkin)">
+                      <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('history', checkin)"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                      <i class="fa icon-note"></i> <span> Private Note </span>
+                    </a>
+                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Cancel ' + checkin_label" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                      *ngIf="checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived'">
+                      <i class="fa fa-trash-o"></i> <span> {{cancel_cap}}</span>
+                    </a>
+                    <a class="btn-more pointer-cursor" (click)="openActionsWindow('history', i)">
+                      <i class="fa fa-angle-up black"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Today-->
+            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0">
+              <p>{{no_service_cap}}</p>
+            </div>
+            <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
+                <div class="labelList">
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12"
+                    [class.status-width]="startedwaitlistSelection!=1">
+                    <span (click)="waitlistStatusClick('started')"> Started </span> <span
+                      *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
+                    <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
+                  <div class="navbar navbar-static-top statuslink " role="navigation"
+                    *ngIf="startedwaitlistSelection === 1" style="z-index: 1;">
+                    <div class="navbar-custom-menu">
+                      <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu loc-lst queue-menu">
+                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" [matTooltip]="'Labels'"
+                            (click)="labelClick('started')">
+                            <i class="label-img"></i></div>
+                          <ul class="dropdown-menu" *ngIf="showLabels['started']">
+                            <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
+                              <ul class="menu"
+                                style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <ul class="menu" style="overflow: hidden;max-height:none;">
+                                    <li *ngFor="let value of label.valueSet">
+                                      <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                                        (click)="changeLabelvalue('started', label.label, value.value)">
+                                        {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('started', 'newvalue', label)">
+                                    {{label.displayName}}</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li class="footer"><a class="pointer-cursor"
+                                (click)="addLabelvalue('started', 'newlabel')">{{add_label}}</a>
+                            </li>
+                            <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
+                                routerLink="/provider/settings/miscellaneous/labels">{{manage_labels}}</a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection>0" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
+                  <div class="statuslink "
+                    *ngIf="startedwaitlistSelection===1 && pos && selectedCheckin['started'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['started'].parentUuid"
+                    [matTooltip]="'Bill'">
+                    <i class="fa fa-newspaper-o" (click)="viewBillPage('started')"></i> </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Private Note'">
+                    <i class="fa icon-note" (click)="addProviderNote('started')"></i> </div>
+                </div>
+                <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 &&
+                  showstatus['started']">
+                  {{no_started_checkin_msg}}
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="started_checkins_list.length>0 &&
+                     showstatus['started']" [class.chk-scroll]="showstatus['started']">
+                  <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
+                    *ngFor="let checkin of started_checkins_list, let i=index"
+                    [class.selected-waitlist]="startedwaitlistSelected[i]">
+                    <div class="info-box" style="box-shadow:none">
+                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                        <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
+                          <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
+                        </div>
+                      </div>
+                      <div class="info-box-content" [class.tkn-leftbox]="!checkin.token">
+                        <div class="col-md-12 p0" (click)="selectstartedWaitlist(i)">
+                          <div class="col-md-7 col-xs-8 p0">
+                            <div class="col-md-8 col-xs-8 p0">
+                              <span class="info-box-text forwhom pointer-cursor"
+                                *ngFor="let user of checkin.waitlistingFor" (click)="goCheckinDetail(checkin)">
+                                {{checkin.waitlistingFor[0].firstName}}
+                                {{checkin.waitlistingFor[0].lastName}}
+                              </span>
+                              <span class="info-box-text service"
+                                *ngIf="selected_queue && selected_queue.services.length>1">
+                                {{checkin.service.name}}
+                              </span>
+                              <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
+                                style="margin-right: 10px;">
+                                <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
+                                {{label.value}}
+                              </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
+                            </div>
+                            <div class="col-md-4 col-xs-4 p0">
+                              <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                              </span>
+                              <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
+                                *ngIf="checkin.waitlistStatus == 'arrived'"></span>
+                              <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="checkin.consumerNote"
+                                (click)="showConsumerNote(checkin)">
+                                <i class="icon-note"></i>
+                              </span>
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
+                                <ng-container *ngIf="checkin.paymentStatus">
+                                  <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
+                                      class="text">{{partially_paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
+                                      class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                                </ng-container>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
+                            <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')"
+                              *ngIf="!section_start[i]" [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
+                              <i class="fa fa-check-circle" style="color: green;"></i> <span
+                                *ngIf="!small_device_display"> {{done_cap}}
+                              </span>
+                            </a>
+                            <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                              *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Change status to ' + checkin_label">
+                              <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
+                              <i class="fa fa-undo" aria-hidden="true"></i>
+                              <span *ngIf="!small_device_display"> {{checkin_label}} </span>
+                            </a>
+                            <!-- <a class="btn-play pointer-cursor"
+                              *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid && !section_start[i] && !small_device_display"
+                              (click)="viewBillPage(checkin)">
+                              <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill
+                              </span>
+                            </a> -->
+                            <!-- <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'start')"
+                              *ngIf="!section_start[i]">
+                              <i class="fa fa-angle-down black"></i>
+                            </a> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="info-box-footer-more" *ngIf="section_start[i]">
+                      <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
+                        <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                          <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
+                            {{getDisplayname(label.key)}} : {{label.value}}</span>
+                        </span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 p0">
+                        <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
+                          <i class="fa fa-check-circle" style="color: green;"></i> <span> {{done_cap}} </span>
+                        </a>
+                        <!-- <a class="btn-play pointer-cursor"
+                          *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                          (click)="viewBillPage(checkin)">
+                          <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                        </a> -->
+                        <!-- <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
+                          <i class="fa fa-comments-o "></i> <span> Message </span>
+                        </a> -->
+                        <!-- <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
+                          <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
+                        </a> -->
+                        <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                          *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Change status to ' + checkin_label">
+                          <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
+                          <i class="fa fa-undo" aria-hidden="true"></i>
+                          <span>{{checkin_label}} </span>
+                        </a>
+                        <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'start')">
+                          <i class="fa fa-angle-up black"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="chkins col-md-12 col-xs-12 col-sm-12  no-padding newwaitlist">
+                <div class="labelList col-md-12 no-padding">
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12" [class.status-width]="waitlistSelection!=1">
+                    <span (click)="waitlistStatusClick('new')"> New </span>
+                    <span>({{new_checkins_list.length}})</span></div>
+                  <div class="navbar navbar-static-top statuslink " role="navigation" *ngIf="waitlistSelection === 1"
+                    style="z-index: 1;">
+                    <div class="navbar-custom-menu">
+                      <ul class="nav navbar-nav">
+                        <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
+                          <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                            [matTooltip]="'Labels'" (click)="labelClick('new')">
+                            <i class="label-img"></i></div>
+                          <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels['new']">
+                            <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
+                              <ul class="menu"
+                                style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <ul class="menu" style="overflow: hidden;max-height:none;">
+                                    <li *ngFor="let value of label.valueSet">
+                                      <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                                        (click)="changeLabelvalue('new', label.label, value.value)">
+                                        {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('new', 'newvalue', label)">
+                                    {{label.displayName}}</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li class="footer"><a class="pointer-cursor"
+                                (click)="addLabelvalue('new', 'newlabel')">{{add_label}}</a>
+                            </li>
+                            <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
+                                routerLink="/provider/settings/miscellaneous/labels">{{manage_labels}}</a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1 && calculationmode=='NoCalc' && showToken"
+                    [matTooltip]="'Print'">
+                    <i class="fa fa-print" (click)="printCheckin('new')"></i> </div>
+                  <div class="statuslink "
+                    *ngIf="waitlistSelection===1 && pos && selectedCheckin['new'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['new'].parentUuid"
+                    [matTooltip]="'Bill'">
+                    <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Private Note'">
+                    <i class="fa icon-note" (click)="addProviderNote('new')"></i> </div>
+                  <div *ngIf="consumerTrackstatus && waitlistSelection===1" class="statuslink popup"
+                    (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
+                    <i class="fa fa-location-arrow"></i>
+                    <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
+                    <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
+                            from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
+                  </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
+                    <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="selected_queue && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed')) && new_checkins_list.length === 0 && showstatus['new']">
+                  {{no_today_checkin_msg}}
+                </div>
+                <!-- Timeslot disabled queue statusboard -->
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
+                  *ngIf="selected_queue && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed')) && new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
+                    *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
+                    <div class="info-box" style="box-shadow:none"
+                      [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
+                      *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
+                      <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
+                        <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">
+                          <ng-container>{{checkin.token}}</ng-container>
+                        </div>
+                        <div class="dashboard-wait pointer-cursor" *ngIf="calculationmode!=='NoCalc'"
+                          (click)="goCheckinDetail(checkin)">
+                          <ng-container>
+                            {{getAppxTime(checkin)}}</ng-container>
+                        </div>
+                      </div>
+                      <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                        <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
+                          <div class="col-md-7 col-xs-8 p0">
+                            <div class="col-md-8 col-xs-8 p0">
+                              <span class="info-box-text forwhom pointer-cursor"
+                                *ngFor="let user of checkin.waitlistingFor" (click)="goCheckinDetail(checkin)">
+                                {{checkin.waitlistingFor[0].firstName}}
+                                {{checkin.waitlistingFor[0].lastName}}
+                              </span>
+                              <span *ngIf="selected_queue && selected_queue.services.length>1"
+                                class="info-box-text service">
+                                {{checkin.service.name}}
+                              </span>
+                              <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
+                                style="margin-right: 10px;">
+                                {{label.value}}
+                              </span>
+                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                                Batch: {{checkin.batchName}}
+                              </span>
+                              <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
+                                <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
+                              </div> -->
+                            </div>
+                            <div class="col-md-4 col-xs-4 p0">
+                              <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                              </span>
+                              <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
+                                *ngIf="checkin.waitlistStatus == 'arrived'"></span>
+                              <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
+                                *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
+                                <i class="icon-note"></i>
+                              </span>
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
+                                <ng-container *ngIf="checkin.paymentStatus">
+                                  <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
+                                      class="text">{{partially_paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
+                                      class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="checkin.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
+                                </ng-container>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
+                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)"
+                              *ngIf="board_count > 0" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                              <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
+                                *ngIf="!small_device_display && checkin.callingStatus">Stop Calling</span>
+                              <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
+                              <span *ngIf="!small_device_display && !checkin.callingStatus"> Call</span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                              *ngIf="checkin.waitlistStatus != 'arrived' && !section_new[i]"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'">
+                              <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
+                                *ngIf="!small_device_display">Arrived </span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i]"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                              <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                              *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                              <i class="fa fa-undo" aria-hidden="true"></i>
+                              <span *ngIf="!small_device_display"> {{checkin_label}} </span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="info-box-footer-more" *ngIf="section_new[i]">
+                      <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
+                        <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                          <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
+                            {{getDisplayname(label.key)}} : {{label.value}}</span>
+                        </span>
+                      </div>
+                      <div class="col-md-12 col-xs-12 p0">
+                        <a class="btn-play pointer-cursor" *ngIf="checkin.waitlistStatus != 'arrived'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'"
+                          (click)="changeWaitlistStatus(checkin, 'REPORT')">
+                          <i class="fa"></i> <span class="icon-arrived"> Arrived </span>
+                        </a>
+                        <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          <i class="fa fa-play"></i> <span> Start</span>
+                        </a>
+                        <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                          *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                          <i class="fa fa-undo" aria-hidden="true"></i>
+                          <span> {{checkin_label}} </span>
+                        </a>
+                        <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')">
+                          <i class="fa fa-angle-up black"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <!-- Timeslot enabled queue statusboard -->
+                <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
+                  [class.chk-scroll]="showstatus['new']"
+                  *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
+                  <!-- <span class="addbt" style="padding-left: 100px !important;padding-bottom: 40px !important;"
+                        *ngIf="timeSlotCheckins && !timeSlotCheckins[slot]" (click)="checkinClicked(slot)">
+                      </span> -->
+                  <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
+                    *ngFor="let slot of availableSlots, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
+                    <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
+                      <mat-chip-list>
+                        <mat-chip #appSlots class="app-info-box-icon"
+                          [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot)"
+                          (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
+                          [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
+                          {{slot}} </mat-chip>
+                      </mat-chip-list>
+                    </div>
+                    <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0"
+                      *ngIf="timeSlotCheckins && timeSlotCheckins[slot] && timeSlotCheckins[slot][0] && (timeSlotCheckins[slot][0].waitlistStatus === 'arrived' || timeSlotCheckins[slot][0].waitlistStatus === 'checkedIn')"
+                      [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                      <div class="right" (click)="selectnewWaitlist(i, timeSlotCheckins[slot])">
+                        <div class="col-md-7 col-xs-7 p0">
+                          <div class="col-md-8 col-xs-8 p0 hidden-xs">
+                            <div class="info-box-text forwhom pointer-cursor"
+                              *ngFor="let user of timeSlotCheckins[slot][0].waitlistingFor"
+                              (click)="goCheckinDetail(timeSlotCheckins[slot][0])">
+                              {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
+                              {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
+                            </div>
+                            <div *ngIf="selected_queue && selected_queue.services.length>1"
+                              class="info-box-text service">
+                              {{timeSlotCheckins[slot][0].service.name}}
+                            </div>
+                            <div class="checkin-label" *ngFor="let label of timeSlotCheckins[slot][0].label | keyvalue"
+                              style="margin-right: 10px;">
+                              {{label.value}}
+                            </div>
+                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                              Batch: {{timeSlotCheckins[slot][0].batchName}}
+                            </div>
+                          </div>
+                          <div class="col-md-12 col-xs-12 p0 visible-xs">
+                            <div class="info-box-text forwhom pointer-cursor"
+                              *ngFor="let user of timeSlotCheckins[slot][0].waitlistingFor"
+                              (click)="goCheckinDetail(timeSlotCheckins[slot][0])">
+                              {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
+                              {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
+                            </div>
+                            <div *ngIf="selected_queue && selected_queue.services.length>1"
+                              class="info-box-text service">
+                              {{timeSlotCheckins[slot][0].service.name}}
+                            </div>
+                            <div class="checkin-label" *ngFor="let label of timeSlotCheckins[slot][0].label | keyvalue"
+                              style="margin-right: 10px;">
+                              {{label.value}}
+                            </div>
+                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                              Batch: {{timeSlotCheckins[slot][0].batchName}}
+                            </div>
+                            <div>
+                              <span class="icon-cloud icon-btn1 "
+                                *ngIf="timeSlotCheckins[slot][0].waitlistedBy == 'CONSUMER'"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                              </span>
+                              <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
+                                *ngIf="timeSlotCheckins[slot][0].waitlistStatus == 'arrived'"></span>
+                              <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
+                                *ngIf="timeSlotCheckins[slot][0].consumerNote"
+                                (click)="showConsumerNote(timeSlotCheckins[slot][0])">
+                                <i class="icon-note"></i>
+                              </span>
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
+                                <ng-container *ngIf="timeSlotCheckins[slot][0].paymentStatus">
+                                  <span class="paid-h icon-btn"
+                                    *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'PartiallyPaid'"><span
+                                      class="text">{{partially_paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn"
+                                    *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
+                                      class="text">{{paid_cap}}</span></span>
+                                  <span class="paid-f icon-btn" style="color: red;"
+                                    *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                      class="text">Refund</span></span>
+                                </ng-container>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-xs-4 p0 hidden-xs">
+                            <span class="icon-cloud icon-btn1 "
+                              *ngIf="timeSlotCheckins[slot][0].waitlistedBy == 'CONSUMER'"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                            </span>
+                            <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
+                              *ngIf="timeSlotCheckins[slot][0].waitlistStatus == 'arrived'"></span>
+                            <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
+                              *ngIf="timeSlotCheckins[slot][0].consumerNote"
+                              (click)="showConsumerNote(timeSlotCheckins[slot][0])">
+                              <i class="icon-note"></i>
+                            </span>
+                            <span data-title="Payment Status" class="payment" *ngIf="pos">
+                              <ng-container *ngIf="timeSlotCheckins[slot][0].paymentStatus">
+                                <span class="paid-h icon-btn"
+                                  *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'PartiallyPaid'"><span
+                                    class="text">{{partially_paid_cap}}</span></span>
+                                <span class="paid-f icon-btn"
+                                  *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'FullyPaid'"><span
+                                    class="text">{{paid_cap}}</span></span>
+                                <span class="paid-f icon-btn" style="color: red;"
+                                  *ngIf="timeSlotCheckins[slot][0].paymentStatus == 'Refund'"><span
+                                    class="text">Refund</span></span>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right ">
+                          <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0"
+                            (click)="callingWaitlist(timeSlotCheckins[slot][0])" [matTooltipClass]="tooltipcls"
+                            [matTooltip]="'Call'">
+                            <i class="fa fa-phone" *ngIf="timeSlotCheckins[slot][0].callingStatus"
+                              style="color: red;"></i> <span
+                              *ngIf="!small_device_display && timeSlotCheckins[slot][0].callingStatus">Stop
+                              Calling</span>
+                            <i class="fa fa-phone" *ngIf="!timeSlotCheckins[slot][0].callingStatus"
+                              style="color: green;"></i>
+                            <span *ngIf="!small_device_display && !timeSlotCheckins[slot][0].callingStatus">
+                              Call</span>
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
                           </a>
                           <a class="statusText btn-play pointer-cursor"
                             (click)="changeWaitlistStatus(checkin, 'REPORT')"

@@ -194,6 +194,8 @@ export class CheckInInnerComponent implements OnInit {
   showEditView = false;
   disable_btn = false;
   q_preselected = false;
+  tracking = false;
+  serviceDatalist;
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -966,7 +968,15 @@ export class CheckInInnerComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
           (wailist: any) => {
             this.activeWt = wailist;
-            this.liveTrack = true;
+            for ( let serv in this.serviceDatalist) {
+              if ( this.activeWt.service.id === this.serviceDatalist[serv].id) {
+                if ( this.serviceDatalist[serv].livetrack === true) {
+                  this.tracking = true;
+                  break;
+                }
+              }
+            }
+           this.liveTrack = true;
             this.resetApi();
           },
           () => {
@@ -1498,6 +1508,7 @@ export class CheckInInnerComponent implements OnInit {
     this.resetApi();
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
+        this.serviceDatalist = data;
         this.servicesjson = data;
         this.serviceslist = data;
         this.sel_ser_det = [];
@@ -1675,15 +1686,19 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   trackClose(status) {
+   if (this.tracking) {
     if (status === 'livetrack') {
       if (this.shareLoc) {
         this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
       } else {
         this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
       }
+       }
+       }
       this.dialogRef.close();
       this.router.navigate(['/']);
-    }
+    
+   
   }
   saveLiveTrackDetails() {
     this.track_loading = true;
