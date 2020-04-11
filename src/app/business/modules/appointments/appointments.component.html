@@ -33,15 +33,6 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
                   </ul>
                 </li>
-                <!-- <li class="pull-right">
-                    <mat-form-field>
-                      <mat-select [(value)]="selectedView">
-                        <mat-option *ngFor="let view of views" [value]="view" (click)="handleViewSel(view)">
-                          {{view.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </li> -->
                 <li class="dropdown messages-menu loc-lst queue-menu">
                   <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
@@ -65,35 +56,6 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <!-- <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
-                    <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
-                    <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
-                      *ngIf="selected_location">
-                      <span *ngIf="!small_device_display">
-                        {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
-                        {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
-                          *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
-                        <div class="instantQ" *ngIf="selected_queue && selected_queue.instantQueue"> [Only for today]
-                        </div>
-                      </span>
-                    </a>
-                    <ul class="dropdown-menu ques">
-                      <li>
-                        <ul class="menu">
-                          <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
-                            *ngFor="let queue of queues;let i = index">
-                            <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
-                              <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
-                                {{queue.queueSchedule.timeSlots[0].eTime }}<div *ngIf="!queue.instantQueue"
-                                  class="dashboard-qname">[{{ queue.name | capitalizeFirst }}]</div>
-                                <div *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</div>
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li> -->
                 <li class="dropdown notifications-menu">
                   <a (click)="checkinClicked()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
@@ -117,79 +79,49 @@
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
-                    <mat-datepicker-toggle matSuffix [for]="picker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <input readonly matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
-                      [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="ft-dt">
-                  </li>
-                <!-- <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
-                    <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
-                    <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
-                      *ngIf="selected_location">
-                      <span *ngIf="!small_device_display">
-                        {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
-                        {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
-                          *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
-                        <div class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</div>
-                      </span>
-                    </a>
-                    <ul class="dropdown-menu ques">
-                      <li>
-                        <ul class="menu">
-                          <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
-                            *ngFor="let queue of queues;let i = index">
-                            <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
-                              <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
-                                {{queue.queueSchedule.timeSlots[0].eTime }}<div *ngIf="!queue.instantQueue"
-                                  class="dashboard-qname">[{{ queue.name | capitalizeFirst }}]</div>
-                                <div *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</div>
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li> -->
-
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <input readonly matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
+                    [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="ft-dt">
+                </li>
               </ul>
             </div>
           </nav>
         </header>
         <div class="head">
-              <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
-                <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
-                  {{today_cap}} ({{today_waitlist_count}})
-                </span>
-                <span class="btn-primary-n" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
-                  {{future_cap}} ({{future_waitlist_count}})
-                </span>
-                <span class="btn-primary-n" (click)="setTimeType(3)" [ngClass]="{'active': time_type==3}">
-                  {{history_cap}} ({{history_waitlist_count}})</span>
-                <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Close filter window'"></i>
-                    <i class="icon-filter-one" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                      *ngIf="!open_filter"></i>
-                  </a>
-                </span>
-                <span class="btn-primary-n pull-right clr-fltr" (click)="clearFilter()" *ngIf="filterapplied === true">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="pointer" [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png"
-                        alt="" /> &nbsp;</i>
-                  </a>
-                </span>
-                <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
-                  [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
-                  <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
-                </span>
-              </div>
+          <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
+            <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
+              {{today_cap}} ({{today_waitlist_count}})
+            </span>
+            <span class="btn-primary-n" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
+              {{future_cap}} ({{future_waitlist_count}})
+            </span>
+            <span class="btn-primary-n" (click)="setTimeType(3)" [ngClass]="{'active': time_type==3}">
+              {{history_cap}} ({{history_waitlist_count}})</span>
+            <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'Close filter window'"></i>
+                <i class="icon-filter-one" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                  *ngIf="!open_filter"></i>
+              </a>
+            </span>
+            <span class="btn-primary-n pull-right clr-fltr" (click)="clearFilter()" *ngIf="filterapplied === true">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                <i class="pointer" [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png"
+                    alt="" /> &nbsp;</i>
+              </a>
+            </span>
+            <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
+              [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
+              <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
+            </span>
+          </div>
         </div>
-
         <div class="head">
-        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <mat-chip-list class="pcheckin-owl">
               <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
                 <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
@@ -209,7 +141,6 @@
             </mat-chip-list>
           </div>
         </div>
-
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">
@@ -304,23 +235,6 @@
                         </mat-select>
                       </mat-form-field>
                     </span>
-
-                    <!-- <span class="inl-blk filtr">
-                        <a [class.button_filter]="filters['waitlist_status']" *ngIf="time_type !== 1"
-                          (click)="filterClicked('waitlist_status')" class="anchorbutton remMarginRight genMarginLeft"
-                          name="check_in_status" id="btn_check_in_status_filter_id"><span>{{check_in_status}}</span></a>
-                        <mat-form-field *ngIf="time_type !== 1 && filters['waitlist_status']">
-                          <mat-select [(value)]="filter.waitlist_status">
-                            <mat-option (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
-                              {{all_cap}}
-                            </mat-option>
-                            <mat-option *ngFor="let status of check_in_statuses_filter"
-                              (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
-                              {{status.displayName}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </span> -->
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['waitlist_status']" *ngIf="time_type !== 1"
                         (click)="filterClicked('waitlist_status')" class="anchorbutton remMarginRight genMarginLeft"
@@ -342,7 +256,6 @@
                         </mat-select>
                       </mat-form-field>
                     </span>
-
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['payment_status']" *ngIf="time_type == 3"
                         (click)="filterClicked('payment_status')" class="anchorbutton remMarginRight genMarginLeft"
@@ -413,14 +326,16 @@
               <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                 *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
-                  *ngFor="let slot of availableSlots, let i=index">
+                  *ngFor="let slot of availableSlots.slot | keyvalue, let i=index">
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                     <mat-chip-list>
-                      <mat-chip #appSlots class="app-info-box-icon"
+                      <!-- <mat-chip #appSlots class="app-info-box-icon"
                         [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot)"
                         (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked(slot)"
                         [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
-                        {{slot}} </mat-chip>
+                        {{slot.key}} </mat-chip> -->
+                      <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon">
+                        {{slot.key}} </mat-chip>
                     </mat-chip-list>
                   </div>
                   <div class="info-box-content"
@@ -703,7 +618,6 @@
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
                                 style="margin-right: 10px;">
-                                <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
                                 {{label.value}}
                               </span>
                               <span class="info-box-text batchname service" *ngIf="checkin.batchName">
@@ -742,20 +656,9 @@
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                               *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Change status to ' + checkin_label">
-                              <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
                               <i class="fa fa-undo" aria-hidden="true"></i>
                               <span *ngIf="!small_device_display"> {{checkin_label}} </span>
                             </a>
-                            <!-- <a class="btn-play pointer-cursor"
-                                *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid && !section_start[i] && !small_device_display"
-                                (click)="viewBillPage(checkin)">
-                                <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill
-                                </span>
-                              </a> -->
-                            <!-- <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'start')"
-                                *ngIf="!section_start[i]">
-                                <i class="fa fa-angle-down black"></i>
-                              </a> -->
                           </div>
                         </div>
                       </div>
@@ -773,21 +676,9 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span> {{done_cap}} </span>
                         </a>
-                        <!-- <a class="btn-play pointer-cursor"
-                            *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
-                            (click)="viewBillPage(checkin)">
-                            <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
-                          </a> -->
-                        <!-- <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
-                            <i class="fa fa-comments-o "></i> <span> Message </span>
-                          </a> -->
-                        <!-- <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
-                            <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
-                          </a> -->
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                           *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Change status to ' + checkin_label">
-                          <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
                           <i class="fa fa-undo" aria-hidden="true"></i>
                           <span>{{checkin_label}} </span>
                         </a>
@@ -858,9 +749,6 @@
                   <div *ngIf="consumerTrackstatus && waitlistSelection===1" class="statuslink popup"
                     (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
                     <i class="fa fa-location-arrow"></i>
-                    <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
-                    <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
-                              from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
                   </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
@@ -868,14 +756,9 @@
                 <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
-
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                   [class.chk-scroll]="showstatus['new']" *ngIf="showstatus['new'] && !loading">
-                  <!-- <span class="addbt" style="padding-left: 100px !important;padding-bottom: 40px !important;"
-                        *ngIf="timeSlotCheckins && !timeSlotCheckins[slot]" (click)="checkinClicked(slot)">
-                      </span> -->
                   <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                     *ngFor="let slot of availableSlots.slot | keyvalue, let i=index"
                     [class.selected-waitlist]="waitlistSelected[i]">
@@ -1023,7 +906,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
