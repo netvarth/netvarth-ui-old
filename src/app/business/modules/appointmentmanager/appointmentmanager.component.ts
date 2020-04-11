@@ -46,6 +46,9 @@ export class AppointmentmanagerComponent implements OnInit {
     gotoschedules() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
     }
+    // gotoAppointments(){
+    //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointment']);
+    // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
