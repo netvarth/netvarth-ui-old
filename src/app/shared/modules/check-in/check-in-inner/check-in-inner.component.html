@@ -454,48 +454,50 @@
     <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1"
             style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
-    <mat-dialog-content>
+    <mat-dialog-content [ngClass]="{'mat-dialog-content-traking-off':!tracking}">
         <div>
-            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
+            <div [ngClass]="{'successmsg_trckingoff':!tracking, 'successmsg':tracking}">Your check-in for {{activeWt.service.name}} is successful !!
             </div>
-            <ul *ngIf="tracking" class="info-lst serviceadd-info">
-                <li>Live tracking not supported outside of India.
-                </li>
-            </ul>
-            <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
-                    <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
-            <div *ngIf="tracking" class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your
-                <p class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
-                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)>
-                        </mat-slide-toggle>
-                    </span></p>
-                <!-- <span >
-                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
-                    </span> -->
-            </div>
-            <div  class="mgn-up-20" *ngIf="shareLoc && tracking">Automatically track your ETA
-                <span class="mgn-lt-10">
-                    <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
-                </span>
-                <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee
-                        will start tracking 1 hour prior to your turn. </span></div>
-                <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is
-                        turned off, you will have to enable tracking manually from your check-in. </span></div>
-            </div>
-            <div  class="form-group" *ngIf="shareLoc && tracking">
-                <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
-                    Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true"
-                        (click)="getTravelMod('DRIVING')"></i>
-                    <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
-                    <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
-                        src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" />
-                    <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
-                        src="./assets/images/walking-selected.png" alt="" style="width: 15px;height:15px;" />
-                    <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
-                    <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
+            <div *ngIf="tracking">
+                <ul  class="info-lst serviceadd-info">
+                    <li>Live tracking not supported outside of India.
+                    </li>
+                </ul>
+                <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
+                        <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
+                <div  class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your
+                    <p class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
+                            <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)>
+                            </mat-slide-toggle>
+                        </span></p>
+                    <!-- <span >
+                            <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
+                        </span> -->
                 </div>
-                <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
-                    {{liveTrackMessage}}
+                <div  class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
+                    <span class="mgn-lt-10">
+                        <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
+                    </span>
+                    <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee
+                            will start tracking 1 hour prior to your turn. </span></div>
+                    <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is
+                            turned off, you will have to enable tracking manually from your check-in. </span></div>
+                </div>
+                <div  class="form-group" *ngIf="shareLoc">
+                    <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                        Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true"
+                            (click)="getTravelMod('DRIVING')"></i>
+                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
+                        <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
+                            src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" />
+                        <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
+                            src="./assets/images/walking-selected.png" alt="" style="width: 15px;height:15px;" />
+                        <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
+                        <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
+                        {{liveTrackMessage}}
+                    </div>
                 </div>
             </div>
             <ng-container>
