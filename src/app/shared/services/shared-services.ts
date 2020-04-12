@@ -570,5 +570,12 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
   }
-
+  getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
+    const url = 'provider/appointment/schedule/' + locid + '/' + servid + dd;
+    return this.servicemeta.httpGet(url);
+  }
+  addProviderAppointment(postData) {
+    return this.servicemeta.httpPost('provider/appointment', postData);
+  }
 }
