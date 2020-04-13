@@ -1077,10 +1077,12 @@ export class CheckInInnerComponent implements OnInit {
       this.sharedFunctionobj.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
       this.api_loading = false;
     }
-    if (this.shareLoc) {
-      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
-    } else {
-      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    if (this.tracking) {
+      if (this.shareLoc) {
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+      } else {
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+      }
     }
   }
   handleGoBack(cstep) {
