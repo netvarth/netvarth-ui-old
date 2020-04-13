@@ -16,7 +16,6 @@ import { filter, pairwise } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
-import { queue } from 'rxjs/internal/scheduler/queue';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
