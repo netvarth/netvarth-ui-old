@@ -84,6 +84,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_shared_functions.changeServiceStatus(this, service);
     }
     changeLiveTrackStatus(service) {
+        this.api_loading = true;
         if (service.livetrack === false) {
             this.trackStatus = 'Enable';
         } else {
@@ -92,8 +93,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
       .subscribe(
         () => {
-        //    this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
-        window.location.reload();
+            this.getServices();
+            this.api_loading = false;
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
