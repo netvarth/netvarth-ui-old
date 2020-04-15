@@ -6827,13 +6827,3 @@ label.notifi-togl {
   font-size: 0.8rem !important;
   margin-top: 5px !important;
 }
-.lv-trk .successmsg_trckingoff {
-  color: green;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    font-size: 0.78rem !important;
-  }
-  .checkin-consumer .mat-dialog-content-traking-off {
-    text-align: center;
-    padding-top: 16%;
-  }

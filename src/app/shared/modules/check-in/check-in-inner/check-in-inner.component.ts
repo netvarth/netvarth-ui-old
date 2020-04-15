@@ -196,6 +196,7 @@ export class CheckInInnerComponent implements OnInit {
   q_preselected = false;
   tracking = false;
   serviceDatalist;
+  isPrepay: boolean;
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -968,15 +969,26 @@ export class CheckInInnerComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
           (wailist: any) => {
             this.activeWt = wailist;
-            for ( let serv in this.serviceDatalist) {
-              if ( this.activeWt.service.id === this.serviceDatalist[serv].id) {
-                if ( this.serviceDatalist[serv].livetrack === true) {
+            for (let serv in this.serviceDatalist) {
+              if (this.activeWt.service.id === this.serviceDatalist[serv].id) {
+                if (this.serviceDatalist[serv].livetrack === true) {
                   this.tracking = true;
+                  this.liveTrack = true;
+                  this.resetApi();
+                } else {
+                  if (this.serviceDatalist[serv].isPrePayment === true) {
+                    this.liveTrack = true;
+                    this.isPrepay = true;
+                    this.resetApi();
+                  } else {
+                    this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+                    setTimeout(() => {
+                      this.dialogRef.close('reloadlist');
+                    }, projectConstants.TIMEOUT_DELAY);
+                  }
                 }
               }
             }
-           this.liveTrack = true;
-            this.resetApi();
           },
           () => {
           }
@@ -1689,7 +1701,7 @@ export class CheckInInnerComponent implements OnInit {
   trackClose(status) {
     if (this.tracking) {
       if (status === 'livetrack') {
-        if (this.shareLoc ) {
+        if (this.shareLoc) {
           this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
         } else {
           this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));

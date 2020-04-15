@@ -454,9 +454,9 @@
     <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1"
             style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
-    <mat-dialog-content [ngClass]="{'mat-dialog-content-traking-off':!tracking}">
+    <mat-dialog-content [ngClass]="{'baseloc': isPrepay}">
         <div>
-            <div [ngClass]="{'successmsg_trckingoff':!tracking, 'successmsg':tracking}">Your check-in for {{activeWt.service.name}} is successful !!
+            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
             </div>
             <div *ngIf="tracking">
                 <ul  class="info-lst serviceadd-info">
@@ -522,6 +522,6 @@
         </div>
     </mat-dialog-content>
 </div>
-<!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-</app-form-success-display> -->
+</app-form-success-display>
