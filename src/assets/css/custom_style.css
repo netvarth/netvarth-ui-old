@@ -6829,7 +6829,7 @@ label.notifi-togl {
 }
 .lv-trk-prepayent {
   text-align: center;
-  display: inline;
+  display: inline !important;
 }
 .lv-trkOff-successmsg {
   color: green;
