@@ -81,12 +81,17 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
   }
-  isNumeric(evt) {
-    return this.sharedfunctionObj.isNumeric(evt);
-  }
+  // isNumeric(evt) {
+  //   return this.sharedfunctionObj.isNumeric(evt);
+  // }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
+  numberOnly(event):
+   boolean { const charCode = (event.which) ? event.which : event.keyCode; 
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) 
+  { return false; } return true; }
+
   getNotificationList() {
     this.provider_services.getConsumerNotificationSettings()
       .subscribe(

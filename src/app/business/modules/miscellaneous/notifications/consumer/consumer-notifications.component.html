@@ -38,8 +38,8 @@
                   <div class="form-group col-md-3 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
                       <input matInput min="0" max="1000" type="text" [(ngModel)]="earlyNotificatonSettings.personsAhead"
-                        placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off"
-                        (keypress)="showSubmit('EARLY');isNumeric($event)" (keyup)="isvalid($event)"><br>
+                        placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
+                        (keypress)="showSubmit('EARLY');numberOnly($event)" (keyup)="isvalid($event)"><br>
                         <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
