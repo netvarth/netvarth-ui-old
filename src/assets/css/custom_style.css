@@ -6827,3 +6827,13 @@ label.notifi-togl {
   font-size: 0.8rem !important;
   margin-top: 5px !important;
 }
+.lv-trk-prepayent {
+  text-align: center;
+  display: inline;
+}
+.lv-trkOff-successmsg {
+  color: green;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 0.78rem !important;
+  }
