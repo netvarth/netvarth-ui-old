@@ -7935,4 +7935,20 @@ font-weight: 600px !important;
   .userfilter .mat-select{
   border-bottom: none !important;
   }
+  .example-card {
+    max-width: 400px;
+  }
+  @media only screen and (min-width: 769px){.set-block {
+  min-height: 250px !important;
+}
+}
+.mat-card:hover {
+  background: #4285f4;
+  -webkit-box-shadow: 0 4px 20px -5px rgba(66, 133, 244, 0.4);
+  box-shadow: 0 4px 20px -5px rgba(66, 133, 244, 0.4);
+  top: -7px; }
+  .mat-card {
+    border: 1px solid #00aef2 !important;
+  }
+
   
