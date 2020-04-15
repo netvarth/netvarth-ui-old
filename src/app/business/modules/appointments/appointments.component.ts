@@ -282,6 +282,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedView: any;
   selQIds: any = [];
   allActiveQs: any[];
+  availableSlotDetails: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -403,6 +404,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    console.log(this.server_date);
     if (this.server_date) {
       this.getTomorrowDate();
     }
@@ -522,10 +524,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-  getQs() {
+  getQs(apifilter?) {
     const _this = this;
     return new Promise((resolve, reject) => {
-      _this.provider_services.getProviderSchedules().subscribe(
+      _this.provider_services.getProviderSchedules(apifilter).subscribe(
         (queues: any) => {
           resolve(queues);
         });
@@ -637,7 +639,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'queue-eq': this.selQIds
+        // 'queue-eq': this.selQIds
       };
       no_filter = true;
     }
@@ -713,9 +715,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view) {
     return new Promise((resolve, reject) => {
       this.selQIds = view.customViewConditions.queues[0]['id'];
-      if (this.selQIds) {
-        this.getAvaiableSlots();
-      }
+      // if (this.selQIds) {
+      //   this.getAvaiableSlots();
+      // }
       this.getQs().then(data => {
         this.queues = [];
         this.queues = data;
@@ -729,14 +731,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.loading = true;
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
-    Mfilter[this.sortBy] = 'asc';
-    Mfilter['queue-eq'] = this.selQIds;
+    // Mfilter[this.sortBy] = 'asc';
+    // Mfilter['queue-eq'] = this.selQIds;
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    if (this.selQIds) {
-      this.getAvaiableSlots();
-    }
+    const promise = this.getTodayCheckinCount(Mfilter);
+    promise.then(
+      result => {
     this.provider_services.getTodayAppointments(Mfilter)
       .subscribe(
         data => {
@@ -795,18 +797,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.load_waitlist = 1;
         });
-
+      });
   }
   getFutureCheckIn() {
-    if (this.filter.futurecheckin_date === null) {
-      this.getTomorrowDate();
-    }
+    // if (this.filter.futurecheckin_date === null) {
+    //   this.getTomorrowDate();
+    // }
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-    Mfilter['queue-eq'] = this.selQIds;
-    if (this.selQIds) {
-      this.getAvaiableSlots();
-    }
+    // Mfilter['queue-eq'] = this.selQIds;
     const promise = this.getFutureCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -878,16 +877,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-
+  isAvailableSlot(slot) {
+    if (this.unAvailableSlots.indexOf(slot) !== -1) {
+      return false;
+    }
+    return true;
+  }
   getAvaiableSlots(type?) {
-    this.provider_services.getAppointmentSlotsByScheduleid(this.selQIds).subscribe(data => {
-      this.availableSlots = data;
-    });
-
+    this.provider_services.getAppointmentSlotsByScheduleid(this.selQIds).subscribe((data: any) => {
+      this.availableSlotDetails = data;
     // const nextTimeDt = this.shared_functions.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
-    // this.availableSlots = [];
-    // this.unAvailableSlots = [];
-    // this.futureUnAvailableSlots = [];
+    this.availableSlots = [];
+    this.unAvailableSlots = [];
+    this.futureUnAvailableSlots = [];
     // if (this.selected_queue.timeInterval) {
     //   this.shared_functions.setitemToGroupStorage('interval', this.selected_queue.timeInterval);
     //   const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
@@ -901,28 +903,36 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //       }
     //     }
     //   }
-    //   const activeSlots = [];
-    //   const availableSlots = [];
-    //   const checkins = [];
-    //   for (let i = 0; i < this.check_in_list.length; i++) {
-    //     if (this.check_in_list[i].waitlistStatus === 'started' || this.check_in_list[i].waitlistStatus === 'done') {
-    //       if (this.check_in_list[i].appointmentTime) {
-    //         activeSlots.push(this.check_in_list[i].appointmentTime);
-    //       }
-    //     } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
-    //       checkins.push(this.check_in_list[i]);
-    //     }
-    //     if (this.check_in_list[i].waitlistStatus !== 'cancelled') {
-    //       if (this.check_in_list[i].appointmentTime) {
-    //         availableSlots.push(this.check_in_list[i].appointmentTime);
-    //       }
-    //     }
-    //   }
-    //   this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
-    //   this.futureUnAvailableSlots = allSlots.filter(x => !availableSlots.includes(x));
-    //   this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
-    //   this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
+      const activeSlots = [];
+      const availableSlots = [];
+      const checkins = [];
+      for (let i = 0; i < this.check_in_list.length; i++) {
+        if (this.check_in_list[i].waitlistStatus === 'started' || this.check_in_list[i].waitlistStatus === 'done') {
+          if (this.check_in_list[i].appointmentTime) {
+            activeSlots.push(this.check_in_list[i].appointmentTime);
+          }
+        } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
+          checkins.push(this.check_in_list[i]);
+        }
+        if (this.check_in_list[i].waitlistStatus !== 'cancelled') {
+          if (this.check_in_list[i].appointmentTime) {
+            availableSlots.push(this.check_in_list[i].appointmentTime);
+          }
+        }
+      }
+      console.log(this.availableSlotDetails.slot);
+      console.log(checkins);
+      console.log(activeSlots);
+      this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
+      // this.futureUnAvailableSlots = allSlots.filter(x => !availableSlots.includes(x));
+      this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
+      // this.availableSlots = this.availableSlotDetails.slot.filter(x => !activeSlots.includes(x));
+      console.log(this.unAvailableSlots);
+      // console.log(this.futureUnAvailableSlots);
+      console.log(this.timeSlotCheckins);
+      console.log(this.availableSlots);
     // }
+  });
   }
 
   setTimeType(time_type) {
@@ -998,7 +1008,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       case 1:
         this.getTodayCheckIn();
         break;
-      case 2: this.getFutureCheckIn();
+      case 2: this.getSchedulebyDate();
         this.shared_functions.getitemfromLocalStorage('f_slv');
         break;
       case 3:
@@ -1006,6 +1016,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getHistoryCheckIn();
         break;
     }
+  }
+  getSchedulebyDate() {
+    if (this.filter.futurecheckin_date === null) {
+      this.getTomorrowDate();
+    }
+    const date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+    console.log(date);
+    if (date) {
+    this.provider_services.getProviderSchedulesbyDate(date).subscribe(data => {
+this.queues = data;
+    });
+  }
+    this.getFutureCheckIn();
   }
   editLocation() {
     this.locations.forEach((loc, index) => {
@@ -1115,9 +1138,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
       }
-    } else if (this.filter.queue !== 'all') {
-      api_filter['queue-eq'] = this.filter.queue;
     }
+    //  else if (this.filter.queue !== 'all') {
+    //   api_filter['queue-eq'] = this.filter.queue;
+    // }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -1172,9 +1196,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      api_filter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   api_filter['location-eq'] = this.selected_location.id;
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1187,12 +1211,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
-      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
+      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date !== null
+      || this.filter.check_in_end_date !== null || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   resetFilter() {
@@ -1545,8 +1570,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
   }
-  checkinClicked() {
-    this.router.navigate(['provider', 'check-ins', 'add']);
+  apptClicked() {
+    this.router.navigate(['provider', 'settings', 'appointmentmanager','appointments']);
   }
   searchCustomer(source, appttime) {
     this.router.navigate(['provider', 'customers', 'find']);
@@ -2165,6 +2190,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
+    console.log(this.filter.futurecheckin_date);
   }
   /**
    * Actions

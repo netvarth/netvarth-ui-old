@@ -1056,6 +1056,9 @@ export class ProviderServices {
    getProviderSchedules(filter?) {
       return this.servicemeta.httpGet('provider/appointment/schedule', null, filter);
    }
+   getProviderSchedulesbyDate(date) {
+      return this.servicemeta.httpGet('provider/appointment/schedule/date/' + date);
+   }
    readConsumerMessages(consumerId, messageIds) {
       const url = 'provider/communications/readMessages/' + consumerId + '/' + messageIds;
       return this.servicemeta.httpPut(url);
@@ -1104,7 +1107,7 @@ export class ProviderServices {
       return this.servicemeta.httpPut(url, data);
    }
    // Appointments
-   getTodayAppointments(filter) {
+   getTodayAppointments(filter = {}) {
       const url = 'provider/appointment/today';
       return this.servicemeta.httpGet(url, null, filter);
    }
@@ -1112,7 +1115,7 @@ export class ProviderServices {
       const url = 'provider/appointment/today/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
-   getFutureAppointments(filter) {
+   getFutureAppointments(filter = {}) {
       const url = 'provider/appointment/future';
       return this.servicemeta.httpGet(url, null, filter);
    }
@@ -1120,7 +1123,7 @@ export class ProviderServices {
       const url = 'provider/appointment/future/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
-   getHistoryAppointments(filter) {
+   getHistoryAppointments(filter = {}) {
       const url = 'provider/appointment/history';
       return this.servicemeta.httpGet(url, null, filter);
    }

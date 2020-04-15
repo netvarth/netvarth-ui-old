@@ -57,15 +57,15 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked()"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
-                    data-toggle="dropdown">
-                    <i class="fa fa-plus"></i>
-                    <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
-                      {{checkin_label |capitalizeFirst}}</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span>
+                  <a (click)="apptClicked()"
+                  class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                  data-toggle="dropdown">
+                  <i class="fa fa-plus"></i>
+                  <span >
+                  New appointment</span>
+                  <!-- <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span> -->
                   </a>
-                </li>
+                  </li>
                 <li class="dropdown notifications-menu">
                   <a (click)="searchCustomer('createCustomer')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
@@ -127,7 +127,7 @@
                 <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
                   <mat-chip class="item" (click)="viewQClicked(queue.id)" [selected]="isQueueSelected(queue.id)"
                     *ngFor="let queue of queues;let i = index">
-                    <input type="radio" [checked]="isQueueSelected(queue.id)" /><span class="break-inside: avoid">
+                   <span class="break-inside: avoid">
                       {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
                     </span>
                   </mat-chip>
@@ -318,15 +318,15 @@
             </div>
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
-              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
+              <!-- <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
                 {{no_future_checkins}}
-              </div>
+              </div> -->
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <!-- Timeslot enabled queue dashboard -->
               <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
+                *ngIf="showstatus['new'] && !loading && availableSlotDetails && availableSlotDetails.slot">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
-                  *ngFor="let slot of availableSlots.slot | keyvalue, let i=index">
+                *ngFor="let slot of availableSlotDetails.slot | keyvalue, let i=index">
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                     <mat-chip-list>
                       <!-- <mat-chip #appSlots class="app-info-box-icon"
@@ -334,8 +334,9 @@
                         (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked(slot)"
                         [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
                         {{slot.key}} </mat-chip> -->
-                      <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon">
-                        {{slot.key}} </mat-chip>
+                        <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon"
+                        (click)="apptClicked(slot)">
+                          {{slot.key}} </mat-chip>
                     </mat-chip-list>
                   </div>
                   <div class="info-box-content"
@@ -753,14 +754,14 @@
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
-                <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
+                <!-- <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
-                </div>
+                </div> -->
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                  [class.chk-scroll]="showstatus['new']" *ngIf="showstatus['new'] && !loading">
+                  [class.chk-scroll]="showstatus['new']" *ngIf="showstatus['new'] && !loading && availableSlotDetails && availableSlotDetails.slot">
                   <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
-                    *ngFor="let slot of availableSlots.slot | keyvalue, let i=index"
+                    *ngFor="let slot of availableSlotDetails.slot | keyvalue, let i=index"
                     [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                       <mat-chip-list>
@@ -769,7 +770,8 @@
                           (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
                           {{slot.key}} </mat-chip> -->
-                        <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon">
+                        <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon"
+                        [selected] (click)="apptClicked(slot.key)">
                           {{slot.key}} </mat-chip>
                       </mat-chip-list>
                     </div>
