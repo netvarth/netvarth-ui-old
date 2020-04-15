@@ -100,11 +100,8 @@
                                                                                         </mat-menu>
                                                                                 </span>
                                                                         </div>
-                                                                        <div *ngIf="action=='edit'"
-                                                                                style="margin-top: -23px">
-                                                                                <label class="labelstyle">{{location_cap}}:
-                                                                                </label>
-                                                                                <div>{{loc_name}}</div>
+                                                                        <div *ngIf="action=='edit'">
+                                                                                {{loc_name}}
                                                                         </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -142,7 +139,7 @@
                                                                                         class="icon-customer-line pointer-cursor"
                                                                                         (click)="capacityClick()">
                                                                                         <span
-                                                                                                style="color: #00aef2">10</span>
+                                                                                                style="color: #00aef2">{{capacity}}</span>
                                                                                 </span>
                                                                                 <div class="form-group num qerrmsg"
                                                                                         *ngIf="capacityEditable">
@@ -171,7 +168,7 @@
                                                                                         class="icon-customer-served pointer-cursor"
                                                                                         (click)="servedClick()">
                                                                                         <span
-                                                                                                style="color: #00aef2">1</span>
+                                                                                                style="color: #00aef2">{{parllelLimit}}</span>
                                                                                 </span>
                                                                                 <div class="form-group num qerrmsg"
                                                                                         *ngIf="parallelServeEditable">
@@ -506,7 +503,8 @@
                                                                                                                 style="font-size: small; color: black;">({{schedule.dstr}})</span></span>
                                                                                                 <div
                                                                                                         style="font-size: small; color: black; margin-top: 2px; display: block;">
-                                                                                                        [<span>{{queue.name}}                                                                                                                -
+                                                                                                        [<span>{{queue.name}}
+                                                                                                                -
                                                                                                         </span>
                                                                                                         <span
                                                                                                                 *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>

@@ -85,7 +85,7 @@
                                         <div class="c-ot row col-sm-12">
                                             <div class="item" style="display: flex;">
                                                 <span class="ttle mgn-rt-20">Enable time slot</span>
-                                                <mat-slide-toggle class="example-margin" [checked]="appointment"
+                                                <mat-slide-toggle class="example-margin" [(ngModel)]="appointment"
                                                     (change)="changeTimeslotStatus($event)">
                                                 </mat-slide-toggle>
                                             </div>

@@ -111,7 +111,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     todayQLoading: any = [];
     scheduleLoading: any = [];
     domain: any;
-
+    capacity = 10;
+    parllelLimit = 1;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -255,6 +256,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.qId = q.id;
         this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
         this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
+        this.capacity = q.capacity;
+        this.parllelLimit = q.parallelServing;
         const sttime = {
             hour: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
