@@ -572,10 +572,18 @@ export class SharedServices {
   }
   getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
-    const url = 'provider/appointment/schedule/' + locid + '/' + servid + dd;
+    const url = 'consumer/appointment/schedule/' + locid + '/' + servid + dd;
+    // const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid;
     return this.servicemeta.httpGet(url);
   }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
+  }
+  addCustomerAppointment(accountid, postData) {
+    return this.servicemeta.httpPost('consumer/appointment?account=' + accountid, postData);
+  }
+  getTodaysAvailableTimeSlots(date, sheduleid) {
+    const url = 'consumer/appointment/schedule/date/' + sheduleid + '/' + date;
+    return this.servicemeta.httpGet(url);
   }
 }

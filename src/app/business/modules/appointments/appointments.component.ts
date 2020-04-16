@@ -589,6 +589,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             if (statusCode === 0) {
             }
             this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
+            console.log('biunee');
             this.reloadAPIs();
           }
         },
@@ -638,7 +639,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        // 'queue-eq': this.selQId
+        'schedule-eq': this.selQId
       };
       no_filter = true;
     }
@@ -680,8 +681,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'waitlistStatus-neq': 'prepaymentPending',
-        // 'queue-eq': queueid
+        'apptStatus-neq': 'prepaymentPending',
+        'schedule-eq': queueid
       };
       no_filter = true;
     }
@@ -698,7 +699,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getCount(list, status) {
     return list.filter(function (elem) {
-      return elem.waitlistStatus === status;
+      return elem.apptStatus === status;
     }).length;
   }
   setCounts(list) {
@@ -717,6 +718,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (this.selQId) {
       //   this.getAvaiableSlots();
       // }
+      console.log(this.selQId);
       this.getQs().then(data => {
         this.queues = [];
         this.queues = data;
@@ -731,7 +733,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     // Mfilter[this.sortBy] = 'asc';
-    // Mfilter['queue-eq'] = this.selQId;
+    console.log(this.selQId);
+    console.log(this.queues);
+    // if (!this.selQId) {
+    //   this.selQId = 
+    // }
+    Mfilter['schedule-eq'] = this.selQId;
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -746,7 +753,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.completed_checkins_list = [];
               this.cancelled_checkins_list = [];
               this.check_in_list = data;
-              this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
+              this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'apptStatus');
               if (this.grouped_list && this.grouped_list['started']) {
                 this.started_checkins_list = this.grouped_list['started'].slice();
               }
@@ -799,12 +806,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getFutureCheckIn() {
-    if (this.filter.futurecheckin_date === null) {
-      this.getTomorrowDate();
-    }
+    // if (this.filter.futurecheckin_date === null) {
+    //   this.getTomorrowDate();
+    // }
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-    // Mfilter['queue-eq'] = this.selQId;
+    Mfilter['schedule-eq'] = this.selQId;
     const promise = this.getFutureCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -849,7 +856,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.loading = true;
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-    // Mfilter['queue-eq'] = this.selQId;
+    Mfilter['schedule-eq'] = this.selQId;
     const promise = this.getHistoryCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -914,14 +921,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const availableSlots = [];
       const checkins = [];
       for (let i = 0; i < this.check_in_list.length; i++) {
-        if (this.check_in_list[i].waitlistStatus === 'started' || this.check_in_list[i].waitlistStatus === 'done') {
+        if (this.check_in_list[i].apptStatus === 'started' || this.check_in_list[i].apptStatus === 'done') {
           if (this.check_in_list[i].appointmentTime) {
             activeSlots.push(this.check_in_list[i].appointmentTime);
           }
-        } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
+        } else if (this.check_in_list[i].apptStatus === 'arrived' || this.check_in_list[i].apptStatus === 'checkedIn') {
           checkins.push(this.check_in_list[i]);
         }
-        if (this.check_in_list[i].waitlistStatus !== 'cancelled') {
+        if (this.check_in_list[i].apptStatus !== 'cancelled') {
           if (this.check_in_list[i].appointmentTime) {
             availableSlots.push(this.check_in_list[i].appointmentTime);
           }
@@ -1010,11 +1017,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.resetLabelFilter();
       }
     }
+    console.log(this.time_type);
     switch (this.time_type) {
       case 1:
         this.getTodayCheckIn();
         break;
-      case 2: this.getFutureCheckIn();
+      case 2: this.getQsbyDate();
         this.shared_functions.getitemfromLocalStorage('f_slv');
         break;
       case 3:
@@ -1023,8 +1031,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  changefutureDate() {
+  getQsbyDate() {
+    console.log(this.filter.futurecheckin_date);
+    if (this.filter.futurecheckin_date === null) {
+      this.getTomorrowDate();
+    }
     const date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+    console.log(date);
     this.provider_services.getProviderSchedulesbyDate(date).subscribe(data => {
       this.queues = data;
       const selQ = this.queues.filter(q => q.id === this.selQId);
@@ -1064,10 +1077,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.check_in_filtered_list = this.check_in_list.filter(
       check_in => {
         if (typeof (status) === 'string' &&
-          check_in.waitlistStatus === status) {
+          check_in.apptStatus === status) {
           return check_in;
         } else if (typeof (status) === 'object') {
-          const index = status.indexOf(check_in.waitlistStatus);
+          const index = status.indexOf(check_in.apptStatus);
           if (index !== -1) {
             return check_in;
           }
@@ -1138,12 +1151,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     const api_filter = {};
     if (this.time_type === 1) {
-      // api_filter['queue-eq'] = this.selQId;
+      api_filter['schedule-eq'] = this.selQId;
       if (this.token && this.time_type === 1) {
         api_filter['token-eq'] = this.token;
       }
-    // } else if (this.filter.queue !== 'all') {
-    //   api_filter['queue-eq'] = this.filter.queue;
+    } else if (this.filter.queue !== 'all') {
+      api_filter['schedule-eq'] = this.filter.queue;
     }
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
@@ -1158,10 +1171,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       api_filter['service-eq'] = this.filter.service;
     }
     // if (this.filter.waitlist_status !== 'all') {
-    //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+    //   api_filter['apptStatus-eq'] = this.filter.waitlist_status;
     // }
     if (this.statusMultiCtrl.length > 0) {
-      api_filter['waitlistStatus-eq'] = this.statusMultiCtrl.join(',');
+      api_filter['apptStatus-eq'] = this.statusMultiCtrl.join(',');
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
@@ -1181,7 +1194,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 3) {
       if (this.filter.payment_status !== 'all') {
-        api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
+        api_filter['paymentStatus-eq'] = this.filter.payment_status;
       }
       if (this.filter.age !== '') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
@@ -2192,6 +2205,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
+    console.log(this.filter.futurecheckin_date);
   }
   /**
    * Actions

@@ -217,18 +217,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  showcheckindetails(waitlist){
+  showcheckindetails(waitlist) {
     console.log(waitlist);
-    const waitlistJSON=JSON.stringify(waitlist);
-    const navigationExtras:NavigationExtras={
-    queryParams:{
-    waitlist:waitlistJSON
-    }
+    const waitlistJSON = JSON.stringify(waitlist);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        waitlist: waitlistJSON
+      }
     };
-    this.router.navigate(['consumer','checkindetails'],navigationExtras);
-    }
-    
-    
+    this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
+  }
+
+
   closeCounters() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
@@ -785,14 +785,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   //   this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   // }
   setCheckinData(provider, location, currdate, chdatereq = false) {
-      const navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: location.id,
         sel_date: currdate,
         cur: chdatereq,
         unique_id: provider.uniqueId,
         account_id: provider.id
-       }
+      }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
     // const post_data = {
@@ -986,7 +986,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   makeFailedPayment(waitlist) {
     const navigationExtras: NavigationExtras = {
-        queryParams: { account_id: waitlist.providerAccount.id }
+      queryParams: { account_id: waitlist.providerAccount.id }
     };
     this.router.navigate(['consumer', 'checkin', 'payment', waitlist.ynwUuid], navigationExtras);
   }
@@ -1126,5 +1126,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
         });
     }
+  }
+  goAppointment(data, location, currdata, chdatereq, type) {
+    let provider_data = null;
+    if (type === 'fav_provider') {
+      provider_data = data;
+    } else {
+      provider_data = data.provider || null;
+    }
+    this.setAppointmentData(provider_data, location, currdata, chdatereq);
+  }
+  setAppointmentData(provider, location, currdate, chdatereq = false) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: location.id,
+        sel_date: currdate,
+        cur: chdatereq,
+        unique_id: provider.uniqueId,
+        account_id: provider.id
+      }
+    };
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
 }

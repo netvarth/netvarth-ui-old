@@ -2,8 +2,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/modules/common/shared.module';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 // import { ModalGalleryModule } from 'angular-modal-gallery';
 
 
@@ -19,17 +19,17 @@ import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 
-import {ConsumerServices } from './services/consumer-services.service';
+import { ConsumerServices } from './services/consumer-services.service';
 import { ConsumerDataStorageService } from './services/consumer-datastorage.service';
 import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.service';
 import { SharedServices } from '../shared/services/shared-services';
 
-import {ConsumerComponent} from './consumer.component';
-import {ConsumerHomeComponent} from './components/home/consumer-home.component';
-import {WaitlistComponent} from './components/waitlist/waitlist.component';
-import { ConfirmBoxComponent} from './shared/component/confirm-box/confirm-box.component';
-import { NotificationListBoxComponent} from './shared/component/notification-list-box/notification-list-box.component';
-import {MembersComponent } from './components/members/members.component';
+import { ConsumerComponent } from './consumer.component';
+import { ConsumerHomeComponent } from './components/home/consumer-home.component';
+import { WaitlistComponent } from './components/waitlist/waitlist.component';
+import { ConfirmBoxComponent } from './shared/component/confirm-box/confirm-box.component';
+import { NotificationListBoxComponent } from './shared/component/notification-list-box/notification-list-box.component';
+import { MembersComponent } from './components/members/members.component';
 import { AddMembersHolderComponent } from './components/add-members-holder/add-members-holder.component';
 // import { AddMemberComponent } from './components/add-member/add-member.component';
 import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-manage-privacy.component';
@@ -40,55 +40,58 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { checkindetailcomponent } from './components/home/checkindetail.component';
-
-
+import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
+import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
 
 
 @NgModule({
-    imports: [
-      CapitalizeFirstPipeModule,
-        ConsumerRoutingModule,
-        CommonModule,
-        SearchModule,
-        SharedModule,
-        HeaderModule,
-        CheckInModule,
-        OwlModule,
-        BreadCrumbModule,
-        AddMemberModule,
-        PagerModule,
-        LoadingSpinnerModule,
-        ConsumerCheckinHistoryListModule,
-        InboxModule,
-        RatingStarModule,
-        Nl2BrPipeModule
-    ],
-    declarations: [
-      ConsumerComponent,
-      ConsumerHomeComponent,
-      ConfirmBoxComponent,
-      checkindetailcomponent,
-      WaitlistComponent,
-      NotificationListBoxComponent,
-      MembersComponent,
-      AddMembersHolderComponent,
-      AddManagePrivacyComponent
-    ],
-    exports: [ConfirmBoxComponent],
-    entryComponents: [
-      ConfirmBoxComponent,
-      NotificationListBoxComponent,
-      AddMembersHolderComponent,
-      AddManagePrivacyComponent
-    ],
-    providers: [
-      SharedServices,
-      ConsumerServices,
-      ConsumerDataStorageService,
-      WaitlistDetailResolver,
-      {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-      {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-      {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS}
-    ]
+  imports: [
+    CapitalizeFirstPipeModule,
+    ConsumerRoutingModule,
+    CommonModule,
+    SearchModule,
+    SharedModule,
+    HeaderModule,
+    CheckInModule,
+    OwlModule,
+    BreadCrumbModule,
+    AddMemberModule,
+    PagerModule,
+    LoadingSpinnerModule,
+    ConsumerCheckinHistoryListModule,
+    InboxModule,
+    RatingStarModule,
+    Nl2BrPipeModule,
+    CheckinAddMemberModule,
+    LoadingSpinnerModule
+  ],
+  declarations: [
+    ConsumerComponent,
+    ConsumerHomeComponent,
+    ConfirmBoxComponent,
+    checkindetailcomponent,
+    WaitlistComponent,
+    NotificationListBoxComponent,
+    MembersComponent,
+    AddMembersHolderComponent,
+    AddManagePrivacyComponent,
+    ConsumerAppointmentComponent
+  ],
+  exports: [ConfirmBoxComponent],
+  entryComponents: [
+    ConfirmBoxComponent,
+    NotificationListBoxComponent,
+    AddMembersHolderComponent,
+    AddManagePrivacyComponent
+  ],
+  providers: [
+    SharedServices,
+    ConsumerServices,
+    ConsumerDataStorageService,
+    WaitlistDetailResolver,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }
+  ]
 })
-export class ConsumerModule {}
+export class ConsumerModule { }

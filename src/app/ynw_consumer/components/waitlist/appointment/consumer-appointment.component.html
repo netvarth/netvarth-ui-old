@@ -1,45 +1,10 @@
-<section>
+<section class="container no-padding">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
-<section>
+<section class="container no-padding">
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding">
-            <div class="row">
-                <div class="card p0" *ngIf="!showCheckin">
-                    <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
-                                <div class="form-group col-md-12 mgn-up-10 sc-frm">
-                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
-                                        <div class="col-md-10 col-sm-10 col-xs-10">
-                                            <mat-form-field>
-                                                <input matInput placeholder="Enter Phone Number/Id/email" type="text"
-                                                    class="form-control" formControlName="search_input"
-                                                    (keypress)="findCustomer(searchForm.value, $event)">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-2 col-xs-2 col-sm-2">
-                                            <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                        searchCustomer(searchForm.value,selectedMode)"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="col-md-12 no-padding" *ngIf="create_new">
-                                <hr class="wide-separator-line" />
-                            </div>
-                            <div class="create_new mgn-bt-20" *ngIf="create_new">
-                                <span>Sorry, We were not able to find the record in our {{customer_label}}s list.</span>
-                                <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
-                                    {{customer_label}}</button>
-                            </div>
-                        </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card p0" *ngIf="showCheckin">
+            <div class="card p0">
                 <div class="copy locd">
                     <div class="lbl col-sm-12 col-md-7 col-lg-7">
                         <div class="mainouter checkin-page ">
@@ -48,7 +13,8 @@
                                     <ul class="availer-ul">
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                             <li>
-                                                {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                                                {{waitfor.firstName | capitalizeFirst}}
+                                                {{waitfor.lastName | capitalizeFirst}}
                                                 <!-- <span class="cs-btn bt8 changemember"
                                                     (click)="handleServiceForWhom()"
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
@@ -121,6 +87,9 @@
                                             <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                                         </ng-container>
                                     </ng-container>
+                                    <div class="prepay-amt" *ngIf="sel_ser_det.isPrePayment">{{prepayment_amnt_cap}}
+                                        <span class="prepaymin-cls"><span>&#8377;
+                                            </span>{{prepaymentAmount}}</span></div>
                                 </div>
                                 <div class="date-outer">
                                     <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
@@ -146,7 +115,7 @@
                                     <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                                         <mat-chip-list class="pcheckin-owl">
                                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
-                                                 [items]="queuejson">
+                                                class="width-100" [items]="queuejson">
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                                                     [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">
@@ -215,6 +184,7 @@
                                                     {{slot}}</mat-chip>
                                             </mat-chip-list>
                                         </div> -->
+
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20"
                                         *ngIf="availableSlots.length>0 && showEditView">
                                         <div class="ttle mgn-bt-10">Select Appointment Time</div>
@@ -230,8 +200,6 @@
                                         <span class="label-bold">{{apptTime}} </span>
                                         <span style="margin-left: 30px" class="editbt" (click)="editClicked()"></span>
                                     </div>
-
-
                                         <div class="clearfix"></div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
                                         </app-common-innerloading-spinner>
@@ -246,9 +214,9 @@
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
-                        <div class="col-md-12 mgn-up-20" *ngIf="consumerNote" >
+                        <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
                             <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
-                        </div>                        
+                        </div>
                         <ng-container *ngIf="consumerNote && notes" class="notes">
                             <div class="row col-md-12" style="display: flex;">
                                 <div class="col-md-7">
@@ -256,8 +224,9 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="col-md-12 mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                        <a class="attachment pointer-cursor" (click)="toggleAttachment()" >Attachments</a>
+                        <div class="col-md-12 mgn-up-20"
+                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                            <a class="attachment pointer-cursor" (click)="toggleAttachment()">Attachments</a>
                         </div>
                         <ng-container class="attachment"
                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
@@ -395,31 +364,102 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <!-- <ng-container *ngIf="selectedMessage">
-                                        <div class="row col-md-12" style="display: flex;"
-                                            *ngFor="let item of selectedMessage.files; let i = index">
-                                            <div class="col-md-7">
-                                                <span class="ln-hgt-40">{{item.name}}</span>
+                                </ng-container>
+                                <ng-container *ngIf="action=='email'">
+                                    <div class="prepayEmail">
+                                        <label for="reason" style="margin-bottom: 15px;" class="col-form-label"> Please
+                                            enter your
+                                            email for payment</label>
+                                        <ng-container>
+                                            <div class="form-group">
+                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                                    id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                                                    autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                    onpaste="return false;" oncopy="return false" oncut="return false"
+                                                    ondrag="return false" ondrop="return false">
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                                </app-field-error-display>
                                             </div>
-                                            <div class="col-md-5">
-                                                <span class="mbt comm-menu-imgs">
-                                                    <button type="button" mat-icon-button
-                                                        [matMenuTriggerFor]="menu">
-                                                        <mat-icon>more_vert</mat-icon>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button type="button"
-                                                            (click)="deleteTempImage(i)" mat-menu-item>
-                                                            <i class="icon-delete"></i>
-                                                            <span>delete</span>
-                                                        </button>
-                                                    </mat-menu>
-                                                </span>
+                                            <div class="form-group" *ngIf="confrmshow">
+                                                <!-- <mat-form-field> -->
+                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                                    id="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                                    [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
+                                                    oncopy="return false" oncut="return false" ondrag="return false"
+                                                    ondrop="return false">
+                                                <!-- </mat-form-field> -->
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="email1error != null" errorMsg={{email1error}}>
+                                                </app-field-error-display>
+                                            </div>
+                                            <span class="input-group-btn" *ngIf="confrmshow">
+                                                <button class="btn bt3 btnCancel" type="button"
+                                                    (click)="handleGoBack(1)">
+                                                    Cancel
+                                                </button>
+                                                <button class="btn bt3 btn-default" (click)="addEmail()"
+                                                    type="button">Add</button>
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="(s3CouponsList.length > 0) && action=='coupons' && queuejson.length > 0">
+                                    <div class="coupon-outer">
+                                        <div class="form-group">
+                                            <!-- <div>Coupon Codes</div> -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                                                    *ngIf="showCouponWB">
+                                                    <p class="form-level-settings applybill"> <i
+                                                            class="icon-bell"></i>{{applied_inbilltime}}</p>
+                                                    <div class="input-group">
+                                                        <input [ngClass]="{'invalid':!couponvalid}"
+                                                            (keydown)="clearCouponErrors()"
+                                                            placeholder="Enter coupon code" type="text"
+                                                            class="form-control" [(ngModel)]="selected_coupon">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn bt3 btn-default coupon-apply-btn"
+                                                                (click)="applyCoupons(selected_coupon)"
+                                                                type="button">Add</button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                                                    <div class="coupon-outer">
+                                                        <div class="row" *ngFor="let coupon of couponsList let i=index">
+                                                            <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
+                                                                {{coupon.couponCode}} <div class="delteTC"><span
+                                                                        *ngIf="coupon.instructions"
+                                                                        (click)="toggleterms(i)"
+                                                                        class="pointer-cursor read-more-checkin">Read
+                                                                        T & C </span> <i
+                                                                        class="pointer-cursor icon-delete"
+                                                                        (click)="removeJCoupon(i)"
+                                                                        [matTooltipClass]="tooltipcls"
+                                                                        [matTooltip]="'Remove Coupon'"></i></div>
+                                                            </div>
+                                                            <div class="col-md-12 no-padding read-more-contents"
+                                                                *ngIf="coupon.showme">
+                                                                {{coupon.instructions}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </ng-container> -->
+                                    </div>
+                                    <div class="coupon-outer" *ngIf="coupon_status">
+                                        <div class="form-group">
+                                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
+                                                applied
+                                                successfully</span>
+                                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
+                                                valid</span>
+                                        </div>
+                                    </div>
                                 </ng-container>
-
                                 <!-- <ng-container *ngIf="action=='attachment'">
                                     <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'">
@@ -441,6 +481,11 @@
                                 Member</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
                                 Note</button>
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
+                                Change Email</button>
+                            <button *ngIf="s3CouponsList.length > 0" class="cs-btn bt3 width-100 mgn-up-20"
+                                (click)="handleSideScreen('coupon')">Apply Coupon
+                            </button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
                                 <!-- <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->
@@ -449,9 +494,9 @@
                                 <span> Attach
                                     File</span>
                                 <!-- </button> -->
-
                             </button>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
 
                 </div>
