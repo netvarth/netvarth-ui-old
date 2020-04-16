@@ -216,6 +216,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  showcheckindetails(waitlist){
+    console.log(waitlist);
+    const waitlistJSON=JSON.stringify(waitlist);
+    const navigationExtras:NavigationExtras={
+    queryParams:{
+    waitlist:waitlistJSON
+    }
+    };
+    this.router.navigate(['consumer','checkindetails'],navigationExtras);
+    }
+    
+    
   closeCounters() {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();

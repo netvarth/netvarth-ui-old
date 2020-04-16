@@ -1258,7 +1258,7 @@ export const Messages = {
   'CHECK_DET_NO_PVT_NOTES_FOUND_CAP': 'No private notes found',
   'CHECK_DET_HISTORY_CAP': 'History',
   'CHECK_DET_NO_HISTORY_FOUND_CAP': 'No history found',
-
+   'CHK_DET_BNAME': 'checkin',
   // App-ynw_provider-components-provider-waitlist-checkin-detail
   'Q_DET_LOCATION_CAP': 'Location',
   'Q_DET_SERVICE_CAP': 'Service',

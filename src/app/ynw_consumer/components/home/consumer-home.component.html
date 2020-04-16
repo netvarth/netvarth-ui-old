@@ -39,6 +39,18 @@
                                         <span class="icon-favourite" matTooltip="Add to Favourite"
                                             (click)="addFavProvider(waitlist.providerAccount.id)"></span>
                                     </div>
+                                    <div class="btm">
+                                        <span class="mbt">
+                                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>details</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="showcheckindetails(waitlist)">
+                                        checkindetail
+                                        </button>
+                                        </mat-menu>
+                                        </span>
+                                        </div> 
                                 </div>
                             </div>
                             <div class="details">

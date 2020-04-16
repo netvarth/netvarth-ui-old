@@ -9,6 +9,7 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
+import { checkindetailcomponent } from './components/home/checkindetail.component';
 const routes: Routes = [
   {path: '', component: ConsumerComponent, children: [
     {path: '', component: ConsumerHomeComponent},
@@ -25,6 +26,9 @@ const routes: Routes = [
       path: 'inbox',
       loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)
     },
+    {
+      path: 'checkindetails',component:checkindetailcomponent, canActivate:[AuthGuardLogin]
+      }
   ]}
 ];
 @NgModule({

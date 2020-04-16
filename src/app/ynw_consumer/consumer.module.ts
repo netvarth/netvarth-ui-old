@@ -38,6 +38,8 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
+import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { checkindetailcomponent } from './components/home/checkindetail.component';
 
 
 
@@ -55,6 +57,7 @@ import { OwlModule } from 'ngx-owl-carousel';
         BreadCrumbModule,
         AddMemberModule,
         PagerModule,
+        LoadingSpinnerModule,
         ConsumerCheckinHistoryListModule,
         InboxModule,
         RatingStarModule,
@@ -64,6 +67,7 @@ import { OwlModule } from 'ngx-owl-carousel';
       ConsumerComponent,
       ConsumerHomeComponent,
       ConfirmBoxComponent,
+      checkindetailcomponent,
       WaitlistComponent,
       NotificationListBoxComponent,
       MembersComponent,
