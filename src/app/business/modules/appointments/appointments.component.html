@@ -83,7 +83,7 @@
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <input readonly matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
-                    [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="ft-dt">
+                    [min]="tomorrowDate" #futuredate (dateChange)="changefutureDate()" class="ft-dt">
                 </li>
               </ul>
             </div>
@@ -334,8 +334,8 @@
                         (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked(slot)"
                         [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
                         {{slot.key}} </mat-chip> -->
-                        <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon"
-                        (click)="apptClicked(slot)">
+                        <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
+                        [selected]="!isAvailableSlot(slot.key)" (click)="!isAvailableSlot(slot.key) && apptClicked(slot.key)">
                           {{slot.key}} </mat-chip>
                     </mat-chip-list>
                   </div>
@@ -770,8 +770,8 @@
                           (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
                           {{slot.key}} </mat-chip> -->
-                        <mat-chip #appSlots style="min-width: 110px !important;" class="app-info-box-icon"
-                        [selected] (click)="apptClicked(slot.key)">
+                        <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
+                        [selected]="!isAvailableSlot(slot.key)" (click)="!isAvailableSlot(slot.key) && apptClicked(slot.key)">
                           {{slot.key}} </mat-chip>
                       </mat-chip-list>
                     </div>
