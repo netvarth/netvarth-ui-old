@@ -123,11 +123,10 @@
                                                         <span class="ttle"> Suffix </span><span
                                                             class="day">{{queue_data.batchPatternSettings.suffix}}</span>
                                                     </div>
-                                                    <span class="editbt" style="position: relative;"
-                                                        (click)="editBatchnames()"></span>
+                                                    <span class="editbt" (click)="editBatchnames()"></span>
                                                 </div>
-                                                <div *ngIf="showEditSection">
-                                                    <div class="col-md-2 col-xs-4 no-padding mgn-rt-20 item">
+                                                <div class="batchedit" *ngIf="showEditSection">
+                                                    <div class="col-md-2 col-xs-4 mgn-rt-20 item">
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
@@ -135,7 +134,7 @@
                                                                 autocomplete="off" maxlength="10">
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="col-md-2 col-xs-4 no-padding item">
+                                                    <div class="col-md-2 col-xs-4 item">
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
@@ -159,4 +158,5 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
 </section>

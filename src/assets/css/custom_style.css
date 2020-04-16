@@ -6841,3 +6841,31 @@ label.notifi-togl {
   font-size: .75rem;
   font-family: 'Roboto Slab', sans-serif;
 }
+.batch .ynw-common-form-nm .c-ot .item {
+  width: 25% !important;
+}
+.batch .ynw-common-form-nm .c-ot .editbt {
+  top: auto !important;
+  left: 50% !important;
+}
+@media (max-width: 990px) and (min-width: 768px) {
+  .batch .ynw-common-form-nm .c-ot .item {
+    width: 50% !important;
+  }
+  .batch .ynw-common-form-nm .c-ot .editbt {
+    left: auto !important;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .batch .ynw-common-form-nm .c-ot .item {
+    width: 100% !important;
+  }
+  .batch .ynw-common-form-nm .c-ot .editbt {
+    left: auto !important;
+  }
+}
+@media (max-width: 420px) {
+  .batch .batchedit .item {
+    width: 100% !important;
+  }
+}
