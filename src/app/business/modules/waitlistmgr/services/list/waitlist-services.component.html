@@ -46,7 +46,7 @@
                                     class="material-icons">gps_fixed</i>
                                 <i *ngIf="service.livetrack == true && liveTrackStatus"
                                     class="material-icons">gps_off</i>
-                                <i [matTooltip]="'Please turn on Livetrack in settings'" *ngIf="!liveTrackStatus" class="material-icons">help</i>
+                                <i [matTooltip]="'Please turn on Livetrack in settings'" *ngIf="!liveTrackStatus" class="material-icons" style="cursor: help;">help</i>
                                 {{(service.livetrack== true) ? 'Tracking off' :'Tracking on'}} 
                             </button>
                         </mat-menu>
