@@ -961,4 +961,11 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     });
         });
     }
+    changeBatchStatus(q) {
+        const status = (q.batch) ? 'disabled' : 'enabled';
+        this.provider_services.changeBatchStatus(q.id, !q.batch).subscribe(data => {
+            this.getQs();
+            this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        });
+    }
 }

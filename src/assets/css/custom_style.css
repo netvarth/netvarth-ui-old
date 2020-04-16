@@ -6820,8 +6820,8 @@ label.notifi-togl {
 .disabled-text {
   color: #999999;
 }
-.batch h6 {
-  font-weight: 500;
+.batch h5, .batch span {
+  font-weight: 600;
 }
 .batchname {
   font-size: 0.8rem !important;
@@ -6836,4 +6836,8 @@ label.notifi-togl {
   padding-bottom: 10px;
   padding-top: 10px;
   font-size: 0.78rem !important;
-  }
+}
+.batch-hint {
+  font-size: .75rem;
+  font-family: 'Roboto Slab', sans-serif;
+}

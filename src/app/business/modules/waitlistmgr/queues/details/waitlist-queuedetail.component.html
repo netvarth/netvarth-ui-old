@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                             <div class="mgn-up-10" style="display: flex;">
-                                                <h6> Batch mode </h6>
+                                                <h5> Batch mode </h5>
                                                 <mat-slide-toggle class="example-margin mgn-lt-10"
                                                     [(ngModel)]="batchStatus" (change)="changeBatchStatus($event)">
                                                 </mat-slide-toggle>
@@ -103,7 +103,15 @@
                                                     Disabled
                                                 </span>
                                             </div>
-                                            <div class="mgn-up-10 ynw-common-form-nm" *ngIf="batchStatus">
+                                            <div class="batch-hint mgn-bt-20">
+                                                Batch Mode is a feature that groups up the customers who take check-ins
+                                                with
+                                                the provider. Batch number together with prefix and suffix is the unique
+                                                identifier assigned to customers who come under a batch. Batch size will
+                                                be
+                                                the number of customers served at a time.
+                                            </div>
+                                            <div class="mgn-up-25 ynw-common-form-nm" *ngIf="batchStatus">
                                                 <div class="c-ot" *ngIf="!showEditSection">
                                                     <div class="item"
                                                         *ngIf="queue_data.batchPatternSettings && queue_data.batchPatternSettings.prefix != ''">
@@ -115,26 +123,27 @@
                                                         <span class="ttle"> Suffix </span><span
                                                             class="day">{{queue_data.batchPatternSettings.suffix}}</span>
                                                     </div>
-                                                    <span class="editbt" (click)="editBatchnames()"></span>
+                                                    <span class="editbt" style="position: relative;"
+                                                        (click)="editBatchnames()"></span>
                                                 </div>
                                                 <div *ngIf="showEditSection">
-                                                    <div class="item">
+                                                    <div class="col-md-2 col-xs-4 no-padding mgn-rt-20 item">
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
                                                                 matInput placeholder="Prefix" [(ngModel)]="prefixName"
-                                                                autocomplete="off">
+                                                                autocomplete="off" maxlength="10">
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="item">
+                                                    <div class="col-md-2 col-xs-4 no-padding item">
                                                         <mat-form-field>
                                                             <input
                                                                 style="padding-top: 20px!important;padding-bottom: 5px !important;"
                                                                 matInput placeholder="Suffix" [(ngModel)]="suffixName"
-                                                                autocomplete="off">
+                                                                autocomplete="off" maxlength="10">
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="mgn-up-20">
+                                                    <div class="col-md-2 col-xs-2 mgn-up-25">
                                                         <button class="btn bt3 btn-default" (click)="addBatchName()"
                                                             type="button">ok</button>
                                                     </div>

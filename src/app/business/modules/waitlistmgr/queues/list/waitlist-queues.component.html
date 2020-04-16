@@ -291,6 +291,12 @@
                                                                 </div>
                                                                 <mat-menu #appMenu="matMenu">
                                                                         <button mat-menu-item
+                                                                                (click)="changeBatchStatus(queue)">
+                                                                                <i
+                                                                                        class="fa fa-object-group"></i>{{(queue.batch) ? 'Disable' : 'Enable'}}
+                                                                                Batch
+                                                                        </button>
+                                                                        <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED' && todayQcountCaption[i]">
                                                                                 <i *ngIf="sqShowTodayCount[i] || sqShowActiveQTodayCount[i]"
@@ -432,6 +438,12 @@
                                                                                 </div>
                                                                         </div>
                                                                         <mat-menu #appMenu="matMenu">
+                                                                                <button mat-menu-item
+                                                                                        (click)="changeBatchStatus(queue)">
+                                                                                        <i
+                                                                                                class="fa fa-object-group"></i>{{(queue.batch) ? 'Disable' : 'Enable'}}
+                                                                                        Batch
+                                                                                </button>
                                                                                 <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                         *ngIf="queue.queueState=='ENABLED' && futureQcountCaption[i]">
