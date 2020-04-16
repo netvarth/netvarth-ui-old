@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router} from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -35,6 +35,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     ];
     domain: any;
     trackStatus: string;
+    liveTrackStatus: any;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -43,6 +44,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.liveTrackStatus = data.livetrack;
+            });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
