@@ -48,6 +48,7 @@ export class checkindetailcomponent{
     checkin_label = '';
     details_cap = Messages.CHECK_DET_DETAILS_CAP;
     dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
     cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP
     locn: any;
     service: any;
@@ -64,6 +65,7 @@ export class checkindetailcomponent{
     consumerNote: any;
     ynwUuid: any;
     communication_history: any = [];
+    statusUpdatedTime: any;
     
     constructor( 
     private activated_route: ActivatedRoute,
@@ -98,6 +100,7 @@ export class checkindetailcomponent{
     this.paymntstats=waitlistjson.paymentStatus;
     this.batchname=waitlistjson.batchName;
     this.status=waitlistjson.waitlistStatus;
+    this.statusUpdatedTime=waitlistjson.statusUpdatedTime;
     this.consumerNote=waitlistjson.consumerNote;
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);

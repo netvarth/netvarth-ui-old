@@ -60,14 +60,18 @@
     </div> 
     </div>
     <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
-    <div class="card">
-    <h2>{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
-    <div class="c-history-outer">
-    <div class="item"><span> {{status |
-    capitalizeFirst}}</span></div> 
-    </div>
-    </div> 
-    <div class="card p0">
+        <div class="card">
+        <h2>{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
+        <div class="c-history-outer">
+        <ul class="c-history">
+        <li class="{{status}}">
+        <div class="action">{{status}}</div>
+        <div class="time">{{ statusUpdatedTime| date: dateTimeFormat}}</div>
+        </li>
+        </ul>
+        </div> 
+        </div>
+     <div class="card p0">
     <mat-accordion class="provider-notes">
     <mat-expansion-panel>
     <mat-expansion-panel-header>
