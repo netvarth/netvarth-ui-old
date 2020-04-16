@@ -83,7 +83,7 @@
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <input readonly matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
-                    [min]="tomorrowDate" #futuredate (dateChange)="getQsbyDate()" class="ft-dt">
+                    [min]="tomorrowDate" #futuredate (dateChange)="getFutureCheckIn()" class="ft-dt">
                 </li>
               </ul>
             </div>
