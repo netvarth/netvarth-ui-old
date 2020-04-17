@@ -28,4 +28,4 @@ import { DiscountDetailsComponent } from './details/discountdetails.component';
     ],
     exports: [DiscountComponent]
 })
-export class DiscountModule {}
+export class DiscountModule { }

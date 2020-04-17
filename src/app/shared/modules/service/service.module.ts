@@ -6,7 +6,7 @@ import { FormMessageDisplayModule } from '../form-message-display/form-message-d
 import { MaterialModule } from '../common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { SharedModule } from '../common/shared.module';
-import { AddServiceComponent } from '../../../business/modules/miscellaneous/users/manageSettings/services/addservice/addservice.component';
+import { AddServiceComponent } from '../../../business/modules/settings/miscellaneous/users/manageSettings/services/addservice/addservice.component';
 
 @NgModule({
     imports: [
@@ -22,4 +22,4 @@ import { AddServiceComponent } from '../../../business/modules/miscellaneous/use
     exports: [ServiceComponent]
 })
 
-export class ServiceModule {}
+export class ServiceModule { }
