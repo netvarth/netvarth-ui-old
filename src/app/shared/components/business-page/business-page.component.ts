@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -204,7 +204,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     private shared_services: SharedServices,
     private routerobj: Router,
     private dialog: MatDialog,
-    private searchdetailserviceobj: SearchDetailServices
+    private searchdetailserviceobj: SearchDetailServices,
+    public router: Router
   ) { }
 
   ngOnInit() {
@@ -905,15 +906,19 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.shared_services.getFavProvider()
         .subscribe(data => {
           this.favprovs = data;
-          this.isInFav = false;
-          if (this.favprovs.length > 0) {
-            for (let i = 0; i < this.favprovs.length; i++) {
-              if (this.favprovs[i].id === this.provider_bussiness_id) {
-                this.isInFav = true;
-              }
-            }
+          if (this.favprovs.length === 0) {
+            this.handle_Fav('add');
           } else {
             this.isInFav = false;
+            if (this.favprovs.length > 0) {
+              for (let i = 0; i < this.favprovs.length; i++) {
+                if (this.favprovs[i].id === this.provider_bussiness_id) {
+                  this.isInFav = true;
+                }
+              }
+            } else {
+              this.isInFav = false;
+            }
           }
         }, error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1054,39 +1059,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(locid, locname, curdate, origin?) {
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: {
-          source: 'provdet_checkin',
-          bypassDefaultredirection: 1,
-          provider: {
-            unique_id: this.provider_id,
-            account_id: this.provider_bussiness_id,
-            name: this.businessjson.businessName
-          },
-          location: {
-            id: locid,
-            name: locname
-          },
-          sel_date: curdate,
-          terminologies: this.terminologiesjson
-        },
-        datechangereq: this.changedate_req
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
       }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-      // if (result === 'reloadlist') {
-
-      // this.getbusinessprofiledetails_json('location', true);
-
-      // this.routerobj.navigate(['/']);
-      // }
-    });
+    };
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {

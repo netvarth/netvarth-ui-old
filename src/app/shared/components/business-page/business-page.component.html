@@ -410,7 +410,7 @@
                                                         [matTooltip]="'Parking Type: ' + loc.fields.parking_type_location1">
                                                         <span class="icon-parking"></span></li>
                                                     <li
-                                                        *ngIf="loc.always_open_location1 && loc.always_open_location1==1">
+                                                        *ngIf="loc.fields.always_open_location1 && loc.fields.always_open_location1==1">
                                                         <span class="icon-open-time"
                                                             [matTooltip]="'24 Hours Open'"></span></li>
                                                     <li *ngIf="loc.fields.traumacentre_location1 && loc.fields.traumacentre_location1==1"
