@@ -15,7 +15,7 @@ export class AppointmentmanagerComponent implements OnInit {
             title: 'Settings'
         },
         {
-            title: 'Appointmentmanager'
+            title: 'Appointment Manager'
         }
     ];
     domain;
@@ -27,7 +27,10 @@ export class AppointmentmanagerComponent implements OnInit {
     provider_domain_name = '';
     customer_label = '';
     provider_label = '';
-
+    services_cap = Messages.WAITLIST_SERVICES_CAP;
+    statusboard_cap = Messages.DISPLAYBOARD_HEADING;
+    service_count: any = 0;
+    board_count: any = 0;
     constructor(
         private router: Router,
         private routerobj: Router,
