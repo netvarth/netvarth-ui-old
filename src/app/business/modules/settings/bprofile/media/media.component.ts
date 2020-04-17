@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, ButtonType } from 'angular-modal-gallery';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
-import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderBprofileSearchSocialMediaComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { MatDialog } from '@angular/material';
-import { ProviderBprofileSearchGalleryComponent } from '../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
+import { ProviderBprofileSearchGalleryComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { Router } from '@angular/router';
-import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-media',
@@ -124,7 +124,7 @@ export class MediaComponent implements OnInit, OnDestroy {
             this.delgaldialogRef.close();
         }
     }
-    
+
 
     handleGalleryImages() {
         this.gallerydialogRef = this.dialog.open(ProviderBprofileSearchGalleryComponent, {

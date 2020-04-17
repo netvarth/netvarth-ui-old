@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { projectConstants } from '../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
-import { Messages } from '../../../../shared/constants/project-messages';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { NavigationExtras } from '@angular/router';
-import { AddProviderBprofilePrivacysettingsComponent } from '../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
+import { AddProviderBprofilePrivacysettingsComponent } from '../../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-privacy',

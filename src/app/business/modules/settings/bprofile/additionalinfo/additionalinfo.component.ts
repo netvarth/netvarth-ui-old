@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
-import { Messages } from '../../../../shared/constants/project-messages';
-import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',

@@ -1,21 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Messages } from '../../../shared/constants/project-messages';
+import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Router, NavigationExtras } from '@angular/router';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-import { SharedServices } from '../../../shared/services/shared-services';
-import { ProviderBprofileSearchPrimaryComponent } from '../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
-import { AddProviderWaitlistLocationsComponent } from '../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
-import { ProviderBprofileSearchSchedulepopupComponent } from '../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
-import { AddProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { ProviderBprofileSearchPrimaryComponent } from '../../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
+import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
+import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
+import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 
 @Component({
   selector: 'app-bprofile',

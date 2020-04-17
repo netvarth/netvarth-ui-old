@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Messages } from '../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
-import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
-import { AddProviderBprofileSpecializationsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { AddProviderBprofileSpecializationsComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-specializatons',
@@ -49,21 +49,21 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.initSpecializations();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     // learnmore_clicked(parent, child) {}
     performActions() {
-        
+
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->specializations']);
-        
-      }
+
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
-      }
+    }
     initSpecializations() {
         this.bProfile = [];
         this.getBussinessProfileApi()

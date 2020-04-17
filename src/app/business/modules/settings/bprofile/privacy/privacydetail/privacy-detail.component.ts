@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
-import { SharedFunctions } from './../../../../../shared/functions/shared-functions';
+import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'privacy-detail',
+  selector: 'app-privacy-detail',
   templateUrl: './privacy-detail.component.html',
 })
 export class PrivacyDetailComponent implements OnInit {
@@ -83,7 +83,7 @@ export class PrivacyDetailComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.data = qParams;
-      })
+      });
     this.provider_services.getBussinessProfile()
       .subscribe(
         profile => {
@@ -198,20 +198,23 @@ export class PrivacyDetailComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONELABEL_REQ, { 'panelClass': 'snackbarerror' });// 'Phone label should not be blank';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONELABEL_REQ, { 'panelClass': 'snackbarerror' });
+        // 'Phone label should not be blank';
         return;
       }
       const curphone = this.phonenumber;
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_INVALID, { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_INVALID, { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_10DIGITS, { 'panelClass': 'snackbarerror' }); // 'Mobile number should have 10 digits';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_10DIGITS, { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
         return;
       }
       if (this.curid >= 0) { // case of edit
@@ -316,7 +319,7 @@ export class PrivacyDetailComponent implements OnInit {
     this.api_loading = false;
   }
   loadDetails() {
-    //this.dialogRef.close({ data: this.loadData, message: 'reloadlist' });
+    // this.dialogRef.close({ data: this.loadData, message: 'reloadlist' });
   }
   show_privacyText(txt) {
     let rettxt = '';
