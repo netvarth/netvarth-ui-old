@@ -1136,7 +1136,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    getAppointmentSlotsByDate(scheduleid, date) {
-      const url = 'provider/appointment/schedule/date/' + scheduleid + '/' + date;
+      const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
       return this.servicemeta.httpGet(url);
    }
    setLivetrack(status) {

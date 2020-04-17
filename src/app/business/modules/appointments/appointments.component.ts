@@ -284,6 +284,150 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allActiveQs: any[];
   availableSlotDetails: any = [];
   selQidsforHistory: any = [];
+  checkins = [{
+    'date': '2020-04-17',
+    'provider': {
+      'id': 76311,
+      'businessName': 'Spandhanam clinic',
+      'licensePkgID': 0,
+      'uniqueId': 76314,
+      'corpId': 0,
+      'branchId': 0
+    },
+    'consumer': {
+      'id': 3592,
+      'userProfile': {
+        'id': 3592,
+        'firstName': 'Layana',
+        'lastName': 'T S'
+      },
+      'favourite': true
+    },
+    'service': {
+      'id': 3134,
+      'name': 'Consultation',
+      'department': 641,
+      'deptName': 'default',
+      'livetrack': false
+    },
+    'waitlistStatus': 'arrived',
+    'statusUpdatedTime': '2020-04-17 10:56 AM',
+    'partySize': 1,
+    'consumerNote': '',
+    'recalculatedTime': '2020-04-17',
+    'lastVisitedDate': '2020-04-15',
+    'queue': {
+      'id': 6973,
+      'name': 'Time Window 2',
+      'location': {
+        'id': 76099,
+        'place': 'Chembukkav',
+        'googleMapUrl': 'https://www.google.com/maps/place/10.5327712,76.2221187/@10.5327712,76.2221187,15z'
+      },
+      'queueStartTime': '09:00 AM',
+      'queueEndTime': '12:00 PM',
+      'personAhead': 0
+    },
+    'waitlistedBy': 'PROVIDER',
+    'personsAhead': 0,
+    'waitlistingFor': [{
+      'id': 3592,
+      'firstName': 'Layana',
+      'lastName': 'T S',
+      'primaryMobileNo': '5550002028',
+      'email': 'aaa@gmail.com'
+    }],
+    'ynwUuid': 'e5ce5083-449e-466b-8664-1c7cbbbc019d_wl',
+    'paymentStatus': 'NotPaid',
+    'calculationMode': 'Fixed',
+    'checkInTime': '10:56 AM',
+    'coupons': [],
+    'amountPaid': 0.0,
+    'amountDue': 0.0,
+    'billId': 0,
+    'label': {},
+    'attchment': [{}],
+    'appmtTime': '12:00-12:10',
+    'callingStatus': false,
+    'batchId': 1,
+    'batchName': 'as1',
+    'account': 0,
+    'onlineRequest': false,
+    'kioskRequest': false,
+    'firstCheckIn': false,
+    'active': false
+  }, {
+    'date': '2020-04-17',
+    'provider': {
+      'id': 76311,
+      'businessName': 'Spandhanam clinic',
+      'licensePkgID': 0,
+      'uniqueId': 76314,
+      'corpId': 0,
+      'branchId': 0
+    },
+    'consumer': {
+      'id': 3592,
+      'userProfile': {
+        'id': 3592,
+        'firstName': 'Layana',
+        'lastName': 'T S'
+      },
+      'favourite': true
+    },
+    'service': {
+      'id': 3134,
+      'name': 'Consultation',
+      'department': 641,
+      'deptName': 'default',
+      'livetrack': false
+    },
+    'waitlistStatus': 'arrived',
+    'statusUpdatedTime': '2020-04-17 10:56 AM',
+    'partySize': 1,
+    'consumerNote': '',
+    'recalculatedTime': '2020-04-17',
+    'lastVisitedDate': '2020-04-15',
+    'queue': {
+      'id': 6973,
+      'name': 'Time Window 2',
+      'location': {
+        'id': 76099,
+        'place': 'Chembukkav',
+        'googleMapUrl': 'https://www.google.com/maps/place/10.5327712,76.2221187/@10.5327712,76.2221187,15z'
+      },
+      'queueStartTime': '09:00 AM',
+      'queueEndTime': '12:00 PM',
+      'personAhead': 0
+    },
+    'waitlistedBy': 'PROVIDER',
+    'personsAhead': 1,
+    'waitlistingFor': [{
+      'id': 4884,
+      'firstName': 'athira',
+      'lastName': 'k r',
+      'primaryMobileNo': '5550002028'
+    }],
+    'ynwUuid': '0990dd85-7a11-4cb6-8932-2e9d02fe7388_wl',
+    'paymentStatus': 'NotPaid',
+    'calculationMode': 'Fixed',
+    'checkInTime': '10:56 AM',
+    'coupons': [],
+    'amountPaid': 0.0,
+    'amountDue': 0.0,
+    'billId': 0,
+    'label': {},
+    'attchment': [{}],
+    'appmtTime': '12:00-12:10',
+    'callingStatus': false,
+    'batchId': 2,
+    'batchName': 'as2',
+    'account': 0,
+    'onlineRequest': false,
+    'kioskRequest': false,
+    'firstCheckIn': false,
+    'active': false
+  }];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -407,14 +551,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTomorrowDate();
     }
     this.showstatus['new'] = true;
-    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-      if (this.time_type === 1) {
-        this.getTodayAppointments();
-      }
-      if (this.time_type === 2) {
-        this.getFutureAppointments();
-      }
-    });
+    // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+    //   if (this.time_type === 1) {
+    //     this.getTodayAppointments();
+    //   }
+    //   if (this.time_type === 2) {
+    //     this.getFutureAppointments();
+    //   }
+    // });
     this.route.queryParams.subscribe((qparams) => {
       this.time_type = +qparams.time_type || 1;
       if (this.time_type >= 0) {
@@ -887,7 +1031,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   isAvailableSlot(slot) {
-    if (this.availableSlots.indexOf(slot) !== -1) {
+    if (slot.noOfAvailbleSlots !== 0) {
       return false;
     }
     return true;
@@ -896,52 +1040,34 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.unAvailableSlots = [];
     this.availableSlots = [];
     this.futureUnAvailableSlots = [];
-    this.provider_services.getAppointmentSlotsByScheduleid(this.selQId).subscribe((data: any) => {
+    let date;
+    if (this.time_type === 1) {
+      date = this.dateformat.transformTofilterDate(this.server_date);
+    }
+    if (this.time_type === 2) {
+      date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+    }
+    this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(data => {
       this.availableSlotDetails = data;
-      Object.keys(this.availableSlotDetails.slot).forEach(key => {
-        if (this.availableSlotDetails.slot[key] !== 0) {
-          this.availableSlots.push(key);
-        }
-      });
-      // const nextTimeDt = this.shared_functions.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
-
-      // if (this.selected_queue.timeInterval) {
-      //   this.shared_functions.setitemToGroupStorage('interval', this.selected_queue.timeInterval);
-      //   const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
-      //   if (type) {
-      //     for (let i = 0; i < allSlots.length; i++) {
-
-      //       const endTimeStr = moment(allSlots[i], ['HH:mm A']).format('HH:mm A').toString();
-      //       const endDTime = this.shared_functions.getDateFromTimeString(endTimeStr);
-      //       if (nextTimeDt <= endDTime) {
-      //         this.unAvailableSlots.push(allSlots[i]);
-      //       }
-      //     }
+      // Object.keys(this.availableSlotDetails.slot).forEach(key => {
+      //   if (this.availableSlotDetails.slot[key] !== 0) {
+      //     this.availableSlots.push(key);
       //   }
-      const activeSlots = [];
-      const availableSlots = [];
+      // });
       const checkins = [];
       for (let i = 0; i < this.check_in_list.length; i++) {
-        if (this.check_in_list[i].apptStatus === 'started' || this.check_in_list[i].apptStatus === 'done') {
-          if (this.check_in_list[i].appointmentTime) {
-            activeSlots.push(this.check_in_list[i].appointmentTime);
-          }
-        } else if (this.check_in_list[i].apptStatus === 'arrived' || this.check_in_list[i].apptStatus === 'checkedIn') {
+        if (this.check_in_list[i].apptStatus === 'arrived' || this.check_in_list[i].apptStatus === 'checkedIn') {
           checkins.push(this.check_in_list[i]);
         }
-        if (this.check_in_list[i].apptStatus !== 'cancelled') {
-          if (this.check_in_list[i].appointmentTime) {
-            availableSlots.push(this.check_in_list[i].appointmentTime);
-          }
-        }
       }
-      console.log(checkins);
-      // this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
-      // this.futureUnAvailableSlots = allSlots.filter(x => !availableSlots.includes(x));
-      this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
+      // console.log(checkins);
+      console.log(this.checkins);
+      this.timeSlotCheckins = this.shared_functions.groupBy(this.checkins, 'appmtTime');
+      // this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
+      Object.keys(this.timeSlotCheckins).forEach(key => {
+        this.waitlistSelected[key] = [];
+      });
       console.log(this.timeSlotCheckins);
-      // this.availableSlots = this.availableSlotDetails.slot.filter(x => !activeSlots.includes(x));
-      // }
     });
   }
 
@@ -1192,9 +1318,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      api_filter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   api_filter['location-eq'] = this.selected_location.id;
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1269,6 +1395,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addConsumerInboxMessage(source, waitlst?) {
+    console.log(source);
+    console.log(waitlst);
     let waitlist = [];
     if (source === 'new') {
       waitlist = this.newWaitlistforMsg;
@@ -1281,6 +1409,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (source === 'single') {
       waitlist.push(waitlst);
     }
+    console.log(waitlist);
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },
@@ -2047,22 +2176,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Selection of waitlist types
    */
-  selectnewWaitlist(index, waitlist?) {
+  selectnewWaitlist(slot, index, waitlist) {
+    console.log(index);
     this.newWaitlistforMsg = [];
-    let wtlst;
-    if (waitlist) {
-      wtlst = waitlist[0];
-    }
-    if (wtlst) {
-      if (this.waitlistSelected[index]) {
-        delete this.waitlistSelected[index];
+    // this.waitlistSelected[slot] = [];
+    // if (wtlst) {
+      if (this.waitlistSelected[slot][index]) {
+        delete this.waitlistSelected[slot][index];
+        // this.waitlistSelected[slot].splice(index, 1);
         this.waitlistSelection--;
       } else {
-        this.waitlistSelected[index] = true;
+        this.waitlistSelected[slot][index] = true;
         this.waitlistSelection++;
       }
       if (this.waitlistSelection === 1) {
-        this.selectedCheckin['new'] = wtlst;
+        this.selectedCheckin['new'] = waitlist;
         if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
           this.consumerTrackstatus = true;
         } else {
@@ -2070,38 +2198,40 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.labels(this.selectedCheckin['new']);
       }
-      for (let i = 0; i < this.waitlistSelected.length; i++) {
-        if (this.waitlistSelected[i]) {
-          if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[this.availableSlots[i]]) === -1) {
-            this.newWaitlistforMsg.push(this.timeSlotCheckins[this.availableSlots[i]][0]);
+      for (let i = 0; i < this.waitlistSelected[slot].length; i++) {
+        if (this.waitlistSelected[slot][i]) {
+          if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[slot][i]) === -1) {
+            this.newWaitlistforMsg.push(this.timeSlotCheckins[slot][i]);
           }
         }
       }
-    } else {
-      if (this.waitlistSelected[index]) {
-        delete this.waitlistSelected[index];
-        this.waitlistSelection--;
-      } else {
-        this.waitlistSelected[index] = true;
-        this.waitlistSelection++;
-      }
-      if (this.waitlistSelection === 1) {
-        this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
-        if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
-          this.consumerTrackstatus = true;
-        } else {
-          this.consumerTrackstatus = false;
-        }
-        this.labels(this.selectedCheckin['new']);
-      }
-      for (let i = 0; i < this.waitlistSelected.length; i++) {
-        if (this.waitlistSelected[i]) {
-          if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
-            this.newWaitlistforMsg.push(this.check_in_list[i]);
-          }
-        }
-      }
-    }
+      console.log(this.waitlistSelected);
+      console.log(this.newWaitlistforMsg);
+    // } else {
+    //   if (this.waitlistSelected[index]) {
+    //     delete this.waitlistSelected[index];
+    //     this.waitlistSelection--;
+    //   } else {
+    //     this.waitlistSelected[index] = true;
+    //     this.waitlistSelection++;
+    //   }
+    //   if (this.waitlistSelection === 1) {
+    //     this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
+    //     if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
+    //       this.consumerTrackstatus = true;
+    //     } else {
+    //       this.consumerTrackstatus = false;
+    //     }
+    //     this.labels(this.selectedCheckin['new']);
+    //   }
+    //   for (let i = 0; i < this.waitlistSelected.length; i++) {
+    //     if (this.waitlistSelected[i]) {
+    //       if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
+    //         this.newWaitlistforMsg.push(this.check_in_list[i]);
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   selectcompletedWaitlist(index) {

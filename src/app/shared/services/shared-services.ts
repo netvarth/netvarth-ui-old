@@ -570,20 +570,20 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
   }
-  getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
-    const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
-    const url = 'consumer/appointment/schedule/' + locid + '/' + servid + dd;
-    // const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid;
-    return this.servicemeta.httpGet(url);
-  }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
   }
   addCustomerAppointment(accountid, postData) {
     return this.servicemeta.httpPost('consumer/appointment?account=' + accountid, postData);
   }
+  getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
+    const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date' + dd;
+    // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
+    return this.servicemeta.httpGet(url);
+  }
   getTodaysAvailableTimeSlots(date, sheduleid) {
-    const url = 'consumer/appointment/schedule/date/' + sheduleid + '/' + date;
+    const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date;
     return this.servicemeta.httpGet(url);
   }
 }
