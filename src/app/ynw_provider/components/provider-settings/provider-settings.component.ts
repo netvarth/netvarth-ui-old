@@ -52,6 +52,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
   frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
   frm_appointment_cap = Messages.FRM_LEVEL_APPOINTMENT_MSG;
+  frm_donation_cap = Messages.FRM_LEVEL_DONATION_MSG;
   frm_jdn_short_cap = Messages.JDN_CAP;
   displayboard_heading = Messages.DISPLAYBOARD_HEADING;
   frm_displayboard_inhelp = Messages.DISPLAYBOARD__INHELP;
@@ -323,11 +324,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getOnlinePresence() {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
-      this.onlinepresence_status = data.onlinePresence;
-      this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
-      this.livetrack_status = data.livetrack;
-      this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
-    });
+        this.onlinepresence_status = data.onlinePresence;
+        this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        this.livetrack_status = data.livetrack;
+        this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
+      });
   }
   handle_posStatus(event) {
     const value = (event.checked) ? true : false;
@@ -365,7 +366,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.getWaitlistMgr();
         });
   }
-  redirecTo(mod,usermode?) {
+  redirecTo(mod, usermode?) {
     switch (mod) {
       case 'bprofile':
         this.routerobj.navigate(['provider', 'settings', 'bprofile']);
@@ -386,7 +387,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
         break;
       case 'locations':
-        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'locations']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'locations']);
         break;
       case 'services':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'services']);
@@ -409,7 +410,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'pos', 'coupon']);
         break;
       case 'nonworking':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'holidays']);
         break;
       case 'notifications':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
@@ -437,7 +438,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'pos', 'taxsettings']);
         break;
       case 'departments':
-        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'departments']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'departments']);
         break;
       case 'homeservice':
         this.routerobj.navigate(['provider', 'settings', 'home-service']);
@@ -451,14 +452,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'pos':
         this.routerobj.navigate(['provider', 'settings', 'pos']);
         break;
+      case 'payments':
+        this.routerobj.navigate(['provider', 'settings', 'payments']);
+        break;
       case 'miscellaneous':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
+        break;
+      case 'general':
+        this.routerobj.navigate(['provider', 'settings', 'general']);
         break;
       case 'jdn':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
         break;
       case 'labels':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'labels']);
         break;
       case 'displayboards':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
@@ -469,13 +476,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         // }
         break;
       case 'skins':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'skins']);
         break;
       case 'users':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users']);
         break;
       case 'customview':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'customview']);
         break;
       case 'corporate':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
@@ -483,40 +490,44 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       // case 'users':
       //   this.routerobj.navigate(['provider', 'settings', 'users']);
       //   break;
-        case 'doctorslist':
-            const navigationExtras: NavigationExtras = {
-              queryParams: { type: 'doctors'}
-          };
+      case 'doctorslist':
+        const navigationExtras: NavigationExtras = {
+          queryParams: { type: 'doctors' }
+        };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras);
         break;
-        case 'assistantslist':
-            const navigationExtras1: NavigationExtras = {
-              queryParams: { type: 'assistants'}
-          };
-          this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras1);
-          break;
+      case 'assistantslist':
+        const navigationExtras1: NavigationExtras = {
+          queryParams: { type: 'assistants' }
+        };
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras1);
+        break;
       case 'doctors':
-          const navigationExtras2: NavigationExtras = {
-            queryParams: { type: 'doctors',
-                            mode : usermode }
+        const navigationExtras2: NavigationExtras = {
+          queryParams: {
+            type: 'doctors',
+            mode: usermode
+          }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras2);
-       // this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
+        // this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
         break;
       case 'assistants':
-          const navigationExtras3: NavigationExtras = {
-            queryParams: { type: 'assistants' ,
-                           mode : usermode }
+        const navigationExtras3: NavigationExtras = {
+          queryParams: {
+            type: 'assistants',
+            mode: usermode
+          }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras3);
-       // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);
+        // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);
         break;
-        case 'appointmentmanager':
-          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
-          break;
-        case 'schedules':
-          this.routerobj.navigate(['provider', 'settings', 'appointmentmanager' ,'schedules']);
-          break;
+      case 'appointmentmanager':
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager']);
+        break;
+      case 'schedules':
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+        break;
     }
   }
   getLocationCount() {
@@ -533,10 +544,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           const alldisplayBoards = data;
           let count = 0;
           alldisplayBoards.forEach(element => {
-              if(element.container) {
-              } else {
-                count ++;
-              }
+            if (element.container) {
+            } else {
+              count++;
+            }
           });
           this.board_count = count;
         });
@@ -636,13 +647,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       });
   }
-getAssistantCount(){
-  this.provider_services.assistantFilterCount()
+  getAssistantCount() {
+    this.provider_services.assistantFilterCount()
       .subscribe(data => {
         this.assistantCount = data;
-       
+
       });
-}
+  }
   // onFormChange(event) {
   //   const is_check = event.checked;
   //   const postData = {

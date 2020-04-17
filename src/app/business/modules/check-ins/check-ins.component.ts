@@ -761,7 +761,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   handleViewSel(view) {
-    
+
     if (this.time_type === 1) {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     } else if (this.time_type === 2) {
@@ -1634,10 +1634,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Router Navigations
    */
   gotoLocations() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   gotoCustomViews() {
-    this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+    this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
   checkinClicked() {
     this.router.navigate(['provider', 'check-ins', 'add']);

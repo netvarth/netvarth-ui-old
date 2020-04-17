@@ -20,17 +20,17 @@ export class POSComponent implements OnInit {
       url: '/provider/settings/pos'
     }
   ];
-  payment_settings: any = [];
+  // payment_settings: any = [];
   breadcrumbs = this.breadcrumbs_init;
-  payment_status = false;
+  // payment_status = false;
   pos_status = false;
-  paytmVerified = false;
-  payuVerified = false;
-  isJaldeeAccount = false;
-  payment_statusstr = 'Off';
+  // paytmVerified = false;
+  // payuVerified = false;
+  // isJaldeeAccount = false;
+  // payment_statusstr = 'Off';
   pos_statusstr = 'Off';
   frm_public_self_cap = '';
-  accountActiveMsg = '';
+  // accountActiveMsg = '';
   domain;
   nodiscountError = false;
   noitemError = false;
@@ -40,7 +40,7 @@ export class POSComponent implements OnInit {
   discount_count = 0;
   item_list;
   item_count = 0;
-  jaldee_pay_cap: string;
+  // jaldee_pay_cap: string;
 
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
@@ -51,10 +51,10 @@ export class POSComponent implements OnInit {
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
-    this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
+    // this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-    this.getpaymentDetails();
+    // this.getpaymentDetails();
     this.getPOSSettings();
     this.getDiscounts();
     this.getitems();
@@ -87,35 +87,35 @@ export class POSComponent implements OnInit {
         });
   }
 
-  getpaymentDetails() {
-    this.provider_services.getPaymentSettings()
-      .subscribe(
-        data => {
-          this.payment_settings = data;
-          this.payment_status = (data['onlinePayment']) || false;
-          this.paytmVerified = (data['payTmVerified']) || false;
-          this.payuVerified = (data['payUVerified']) || false;
-          this.isJaldeeAccount = (data['isJaldeeAccount']) || false;
-          this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
-          if (this.payment_settings.isJaldeeAccount) {
-            this.accountActiveMsg = 'You are using Jaldee bank account';
-          } else {
-            this.accountActiveMsg = 'You are using your own bank account';
-          }
-        });
-  }
-  handle_paymentstatus(event) {
-    let status;
-    (event.checked) ? status = 'enable' : status = 'disable';
-    this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
-      this.getpaymentDetails();
-      this.shared_functions.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-    },
-      error => {
-        this.getpaymentDetails();
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
+  // getpaymentDetails() {
+  //   this.provider_services.getPaymentSettings()
+  //     .subscribe(
+  //       data => {
+  //         this.payment_settings = data;
+  //         this.payment_status = (data['onlinePayment']) || false;
+  //         this.paytmVerified = (data['payTmVerified']) || false;
+  //         this.payuVerified = (data['payUVerified']) || false;
+  //         this.isJaldeeAccount = (data['isJaldeeAccount']) || false;
+  //         this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
+  //         if (this.payment_settings.isJaldeeAccount) {
+  //           this.accountActiveMsg = 'You are using Jaldee bank account';
+  //         } else {
+  //           this.accountActiveMsg = 'You are using your own bank account';
+  //         }
+  //       });
+  // }
+  // handle_paymentstatus(event) {
+  //   let status;
+  //   (event.checked) ? status = 'enable' : status = 'disable';
+  //   this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
+  //     this.getpaymentDetails();
+  //     this.shared_functions.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+  //   },
+  //     error => {
+  //       this.getpaymentDetails();
+  //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  // }
   gotoItems() {
     if (this.noitemError) {
       this.router.navigate(['provider', 'settings', 'pos', 'items']);
@@ -133,12 +133,12 @@ export class POSComponent implements OnInit {
   gotoCoupons() {
     this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
-  gotoTaxSettings() {
-    this.router.navigate(['provider', 'settings', 'pos', 'taxsettings']);
-  }
-  gotoPaymentSettings() {
-    this.router.navigate(['provider', 'settings', 'pos', 'paymentsettings']);
-  }
+  // gotoTaxSettings() {
+  //   this.router.navigate(['provider', 'settings', 'pos', 'taxsettings']);
+  // }
+  // gotoPaymentSettings() {
+  //   this.router.navigate(['provider', 'settings', 'pos', 'paymentsettings']);
+  // }
   handle_posStatus(event) {
     const value = (event.checked) ? true : false;
     const status = (value) ? 'enabled' : 'disabled';

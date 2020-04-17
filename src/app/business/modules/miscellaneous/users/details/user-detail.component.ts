@@ -49,7 +49,7 @@ export class BranchUserDetailComponent implements OnInit {
     tday = new Date();
     minday = new Date(1900, 0, 1);
     showPrvdrFields = false;
-    type ;
+    type;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -145,8 +145,8 @@ export class BranchUserDetailComponent implements OnInit {
             state: [],
             city: []
         });
-            this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
-            this.getWaitlistMgr();
+        this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
+        this.getWaitlistMgr();
     }
     getUserData() {
         if (this.userId) {
@@ -205,7 +205,7 @@ export class BranchUserDetailComponent implements OnInit {
         } else {
             this.showPrvdrFields = false;
         }
-       
+
     }
     onSubmit(input) {
         let date_format = null;
@@ -231,7 +231,7 @@ export class BranchUserDetailComponent implements OnInit {
                 return;
             }
         }
-        if (this.fnameerror !== null || this.lnameerror !== null  || this.emailerror !== null) {
+        if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
             return;
         }
 

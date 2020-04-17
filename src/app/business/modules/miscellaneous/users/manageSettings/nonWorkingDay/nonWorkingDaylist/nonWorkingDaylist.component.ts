@@ -45,7 +45,7 @@ export class nonWorkingDaylistcomponent  implements OnInit, OnDestroy {
     }, 
       {
         title: 'Non Working Day/Hour',
-        url: '/provider/settings/miscellaneous/holidays'
+        url: '/provider/settings/general/holidays'
       }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -101,14 +101,14 @@ export class nonWorkingDaylistcomponent  implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: { action: action }
     };
-      this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays', 'add'] , navigationExtras);
+      this.router.navigate(['provider', 'settings', 'general', 'holidays', 'add'] , navigationExtras);
     }
 
     editHolidays(holiday, action) {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays', holiday.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general', 'holidays', holiday.id], navigationExtras);
       }
     doRemoveHolidays(holiday) {
       const id = holiday.id;

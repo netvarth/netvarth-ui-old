@@ -23,6 +23,7 @@ import { ProviderCheckinComponent } from './check-in/provider-checkin.component'
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
 @NgModule({
@@ -53,6 +54,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         LocateCustomerComponent,
         ProviderWaitlistCheckInDetailComponent,
         ApplyLabelComponent,
+        DateRangePickerJComponent
+
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,

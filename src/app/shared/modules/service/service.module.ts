@@ -6,6 +6,7 @@ import { FormMessageDisplayModule } from '../form-message-display/form-message-d
 import { MaterialModule } from '../common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { SharedModule } from '../common/shared.module';
+import { AddServiceComponent } from '../../../business/modules/miscellaneous/users/manageSettings/services/addservice/addservice.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import { SharedModule } from '../common/shared.module';
         CapitalizeFirstPipeModule,
         SharedModule
     ],
-    declarations: [ServiceComponent],
+    declarations: [ServiceComponent, AddServiceComponent],
     exports: [ServiceComponent]
 })
 

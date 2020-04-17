@@ -1320,7 +1320,8 @@ export const Messages = {
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
-  'FRM_LEVEL_APPOINTMENT_MSG': 'Appointment related features are here',
+  'FRM_LEVEL_APPOINTMENT_MSG': 'Manage your working hours, appointment services, schedules and QBoards here. Enable "Accept Appointments" and also book a future date for [customer]\'s appointment here.',
+  'FRM_LEVEL_DONATION_MSG': 'Manage your donation settings here. Enable "Accept Donations" here.',
 
   // form-level-provider-bprofile-search
   'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. ',
@@ -1466,5 +1467,7 @@ export const Messages = {
   // Assistants
   'BRANCHASSISTANT_ADDED': 'Assistant created successfully',
   'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
-  'BRANCHUSER_DELETED': 'User deleted successfully'
+  'BRANCHUSER_DELETED': 'User deleted successfully',
+
+  'GENERALSETTINGS': 'General'
 };

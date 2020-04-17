@@ -45,12 +45,12 @@ export class nonWorkingDaydetailscomponent implements OnInit {
       title: 'Settings'
     },
     {
-      url: '/provider/settings/miscellaneous',
-      title: 'Miscellaneous'
+      url: '/provider/settings/general',
+      title: Messages.GENERALSETTINGS
     },
     {
       title: 'Non Working Day/Hour',
-      url: '/provider/settings/miscellaneous/holidays'
+      url: '/provider/settings/general/holidays'
     }
   ];
 
@@ -176,7 +176,7 @@ export class nonWorkingDaydetailscomponent implements OnInit {
         });
     }
     onCancel() {
-      this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
+      this.router.navigate(['provider', 'settings', 'general', 'holidays']);
       this.api_loading = false;
     }
      
@@ -252,7 +252,7 @@ export class nonWorkingDaydetailscomponent implements OnInit {
                     // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('HOLIDAY_CREATED'));
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
+                    this.router.navigate(['provider', 'settings', 'general', 'holidays']);
                                
                 },
                 error => {
@@ -274,7 +274,7 @@ export class nonWorkingDaydetailscomponent implements OnInit {
             () => {
               this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('HOLIDAY_UPDATED'));
               this.api_loading = false;
-              this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
+              this.router.navigate(['provider', 'settings', 'general', 'holidays']);
            
             },
             error => {

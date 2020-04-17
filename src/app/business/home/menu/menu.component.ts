@@ -154,7 +154,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider/settings/q-manager/queues']);
   }
   holidaybtnClicked() {
-    this.router.navigate(['provider/settings/miscellaneous/holidays']);
+    this.router.navigate(['provider/settings/general/holidays']);
   }
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

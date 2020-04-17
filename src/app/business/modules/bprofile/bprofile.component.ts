@@ -389,7 +389,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
           }
           if (this.bProfile.baseLocation) {
             this.parkingType = this.bProfile.baseLocation.parkingType;
-            if(this.parkingType){
+            if (this.parkingType) {
               this.park_type = this.parkingType.charAt(0).toUpperCase() + this.parkingType.substring(1);
             }
             if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
@@ -542,14 +542,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'editbase' }
         };
-        this.routerobj.navigate(['provider', 'settings', 'q-manager',
+        this.routerobj.navigate(['provider', 'settings', 'general',
           'locations', locid], navigationExtras);
       }
     } else {
       const navigationExtras: NavigationExtras = {
         queryParams: { action: 'add' }
       };
-      this.routerobj.navigate(['provider', 'settings', 'q-manager',
+      this.routerobj.navigate(['provider', 'settings', 'general',
         'locations', 'add'], navigationExtras);
     }
   }
@@ -890,7 +890,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-  qrCodegenerate(valuetogenerate){
+  qrCodegenerate(valuetogenerate) {
     this.qr_value = this.path + '/#' + valuetogenerate;
     this.qr_code = true;
   }

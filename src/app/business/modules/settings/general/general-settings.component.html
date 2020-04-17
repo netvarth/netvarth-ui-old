@@ -1,0 +1,94 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content w-manager">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                        <label>Live Tracking
+                            <span class="ctrl">
+                                <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
+                                </mat-slide-toggle>
+                            </span>
+                            <p class="sts" [class.active]="livetrack_status"></p>
+                            <div class="onoff">{{livetrack_statusstr}}</div>
+                        </label>
+                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
+                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints</p>
+                    </div>
+                </div>
+                <!-- <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="goLocation()" class="b-link">
+                        <h2>{{locName}} <p style="font-size: inherit; margin-bottom: 0px"
+                                *ngIf="multipeLocationAllowed == true"> ({{location_count}})</p>
+                        </h2>
+                        <span class="form-level-settings">{{frm_set_loc_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-locations', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="filterbydepartment && account_type!='BRANCH_SP'">
+                <div class="card p0">
+                    <span class="b-link" (click)="goDepartments()">
+                        <h2>Departments ({{departmentCount}})</h2>
+                        <span class="form-level-settings">Add the department details here. Assign your services to
+                            departments <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-departments', $event)">Learn More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="gotoNonworkingDays()" class="b-link">
+                        <h2>Non-working Days
+                        </h2>
+                        <span class="form-level-settings">Unavailability of your services on particular days (holidays)
+                            <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('nonworking', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoLabels()">
+                        <h2>Custom fields / Labels</h2>
+                        <span class="form-level-settings">Add or manage your labels here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('labels', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotothemes()">
+                        <h2>Themes</h2>
+                        <span class="form-level-settings">Themes for your home page <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('themes', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotocustomview()">
+                        <h2>Custom Views</h2>
+                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

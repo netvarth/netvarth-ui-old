@@ -13,24 +13,24 @@ import { SharedServices } from '../../../shared/services/shared-services';
 })
 export class WaitlistMgrComponent implements OnInit, OnDestroy {
     accept_online_cap = Messages.WAITLIST_ACCEPT_ONLINE_CAP;
-    locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
+    // locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     services_cap = Messages.WAITLIST_SERVICES_CAP;
     ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
     statusboard_cap = Messages.DISPLAYBOARD_HEADING;
     bProfile = null;
     online_checkin = false;
     waitlist_manager: any = null;
-    location_count: any = 0;
+    // location_count: any = 0;
     service_count: any = 0;
     queues_count: any = 0;
     instant_count: any = 0;
-    departmentCount: any = 0;
+    // departmentCount: any = 0;
     board_count: any = 0;
-    locations: any = [];
-    selected_location = null;
-    multipeLocationAllowed = false;
-    locName;
-    businessConfig: any = [];
+    // locations: any = [];
+    // selected_location = null;
+    // multipeLocationAllowed = false;
+    // locName;
+    // businessConfig: any = [];
     checkin_label = '';
     prevcheckstatus;
     loc_list: any = [];
@@ -51,7 +51,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     isCheckin;
     domain;
     futureDateWaitlist = false;
-    filterbydepartment = false;
+    // filterbydepartment = false;
     locationExists = false;
     statusboardStatus = false;
     licenseMetadata: any = [];
@@ -61,7 +61,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         private router: Router,
         private routerobj: Router,
         private shared_functions: SharedFunctions,
-        private shared_services: SharedServices) {
+        // private shared_services: SharedServices
+        ) {
         this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.shared_functions.getMessage().subscribe(data => {
@@ -84,11 +85,11 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.getBusinessProfile();
         this.getWaitlistMgr();
-        this.getLocationCount();
+        // this.getLocationCount();
         this.getQueuesCount();
         this.getServiceCount();
-        this.getDepartmentsCount();
-        this.getBusinessConfiguration();
+        // this.getDepartmentsCount();
+        // this.getBusinessConfiguration();
         this.getDisplayboardCount();
         // this.getStatusboardLicenseStatus();
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
@@ -125,7 +126,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
                     this.provider_datastorage.set('waitlistManage', data);
-                    this.filterbydepartment = data['filterByDept'];
+                    // this.filterbydepartment = data['filterByDept'];
                 });
         this.loading = false;
     }
@@ -170,9 +171,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         //     this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
         // }
     }
-    goLocation() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
-    }
+    // goLocation() {
+    //     this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
+    // }
     goService() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
     }
@@ -183,18 +184,18 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
-    goDepartments() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'departments']);
-    }
-    getLocationCount() {
-        this.loading = true;
-        this.provider_services.getLocationCount()
-            .subscribe(
-                data => {
-                    this.location_count = data;
-                });
-        this.loading = false;
-    }
+    // goDepartments() {
+    //     this.router.navigate(['provider', 'settings', 'q-manager', 'departments']);
+    // }
+    // getLocationCount() {
+    //     this.loading = true;
+    //     this.provider_services.getLocationCount()
+    //         .subscribe(
+    //             data => {
+    //                 this.location_count = data;
+    //             });
+    //     this.loading = false;
+    // }
     getServiceCount() {
         this.loading = true;
         const filter = { 'scope-eq': 'account' };
@@ -216,34 +217,34 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.loading = false;
     }
 
-    getBusinessConfiguration() {
-        this.loading = true;
-        this.shared_services.bussinessDomains()
-            .subscribe(data => {
-                this.businessConfig = data;
-                this.getBussinessProfile();
-            });
-        this.loading = false;
-    }
-    getBussinessProfile() {
-        this.provider_services.getBussinessProfile()
-            .subscribe(data => {
-                this.bProfile = data;
-                for (let i = 0; i < this.businessConfig.length; i++) {
-                    if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
-                        if (this.businessConfig[i].multipleLocation) {
-                            this.multipeLocationAllowed = true;
-                        }
-                        if (this.multipeLocationAllowed === true) {
-                            this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
-                        }
-                        if (this.multipeLocationAllowed === false) {
-                            this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
-                        }
-                    }
-                }
-            });
-    }
+    // getBusinessConfiguration() {
+    //     this.loading = true;
+    //     this.shared_services.bussinessDomains()
+    //         .subscribe(data => {
+    //             this.businessConfig = data;
+    //             this.getBussinessProfile();
+    //         });
+    //     this.loading = false;
+    // }
+    // getBussinessProfile() {
+    //     this.provider_services.getBussinessProfile()
+    //         .subscribe(data => {
+    //             this.bProfile = data;
+    //             for (let i = 0; i < this.businessConfig.length; i++) {
+    //                 if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
+    //                     if (this.businessConfig[i].multipleLocation) {
+    //                         this.multipeLocationAllowed = true;
+    //                     }
+    //                     if (this.multipeLocationAllowed === true) {
+    //                         this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+    //                     }
+    //                     if (this.multipeLocationAllowed === false) {
+    //                         this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+    //                     }
+    //                 }
+    //             }
+    //         });
+    // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
@@ -283,15 +284,15 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    getDepartmentsCount() {
-        this.loading = true;
-        this.provider_services.getDepartmentCount()
-            .subscribe(
-                data => {
-                    this.departmentCount = data;
-                });
-        this.loading = false;
-    }
+    // getDepartmentsCount() {
+    //     this.loading = true;
+    //     this.provider_services.getDepartmentCount()
+    //         .subscribe(
+    //             data => {
+    //                 this.departmentCount = data;
+    //             });
+    //     this.loading = false;
+    // }
     getStatusboardLicenseStatus() {
         // let pkgId;
         // const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

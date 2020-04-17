@@ -14,7 +14,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
     selector: 'app-appointment-checkin',
     templateUrl: './appointment.component.html'
 })
-export class appointmentComponent implements OnInit {
+export class AppointmentComponent implements OnInit {
     appointmentSubscribtion: Subscription;
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -176,8 +176,6 @@ export class appointmentComponent implements OnInit {
     users = [];
     userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
     customerid: any;
-    showEditView = false;
-    slots;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -207,8 +205,8 @@ export class appointmentComponent implements OnInit {
             nav: true,
             navContainer: '.checkin-nav',
             navText: [
-              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-              '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+                '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+                '<i class="fa fa-angle-right" aria-hidden="true"></i>'
             ],
             autoplay: false,
             // autoplayTimeout: 6000,
@@ -220,8 +218,8 @@ export class appointmentComponent implements OnInit {
             autoWidth: true,
             loop: false,
             responsiveClass: true,
-            responsive: {0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
-          };
+            responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
+        };
         this.createForm();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
@@ -326,7 +324,7 @@ export class appointmentComponent implements OnInit {
     initAppointment() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.customer_data.apptTime });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -532,9 +530,6 @@ export class appointmentComponent implements OnInit {
         }
         return true;
     }
-    editClicked(){
-        this.showEditView = true;
-    }
     resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;
@@ -581,13 +576,13 @@ export class appointmentComponent implements OnInit {
                         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
-                        // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['eTime'] + ' ]';
-                        // this.sel_queue_timecaption = this.queuejson[selindx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['eTime'];
+                        // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+                        // this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
                         this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
                         this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
                         this.setTerminologyLabels();
-                        if (this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
-                            this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeDuration);
+                        if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+                            this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
                         }
                     } else {
                         this.sel_queue_indx = -1;
@@ -653,12 +648,12 @@ export class appointmentComponent implements OnInit {
             this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
             this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
-            // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'] + ' ]';
-            this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'];
+            // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+            this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             // this.queueReloaded = true;
-            if ( this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
-                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeDuration);
+            if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
             }
         }
     }
@@ -670,11 +665,11 @@ export class appointmentComponent implements OnInit {
         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
         this.sel_queue_name = queue.name;
-        this.sel_queue_timecaption = queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime'];
+        this.sel_queue_timecaption = queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'];
         this.sel_queue_personaahead = queue.queueSize;
         // this.queueReloaded = true;
-        if (queue.timeDuration && queue.timeDuration !== 0) {
-            this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
+        if (queue.timeInterval && queue.timeInterval !== 0) {
+            this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
         }
     }
 
@@ -743,14 +738,14 @@ export class appointmentComponent implements OnInit {
         }
     }
     saveCheckin() {
-        console.log(this.waitlist_for);
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
         // }
-        this.showEditView = false;
         const post_Data = {
-            "schedule": this.sel_queue_id,
+            'queue': {
+                'id': this.sel_queue_id
+            },
             'appmtDate': this.sel_checkindate,
             'service': {
                 'id': this.sel_ser
@@ -773,14 +768,14 @@ export class appointmentComponent implements OnInit {
 
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
-         //   post_Data['ignorePrePayment'] = true;
+            post_Data['ignorePrePayment'] = true;
             this.addAppointmentInProvider(post_Data);
         }
     }
     addAppointmentInProvider(post_Data) {
         this.api_loading = true;
-      //  this.shared_services.addProviderCheckin(post_Data)
-          this.shared_services.addProviderAppointment(post_Data)
+        //  this.shared_services.addProviderCheckin(post_Data)
+        this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
                 console.log(data);
                 this.api_loading = false;
@@ -835,7 +830,7 @@ export class appointmentComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.customer_data.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -843,15 +838,15 @@ export class appointmentComponent implements OnInit {
         caption = 'Confirm';
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName,) {
+    handleOneMemberSelect(id, firstName, lastName, ) {
         this.resetApi();
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName,apptTime:this.apptTime });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName,apptTime:this.apptTime });
+            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName, apptTime: this.apptTime });
         } else {
             let exists = false;
             let existindx = -1;
@@ -865,7 +860,7 @@ export class appointmentComponent implements OnInit {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName,apptTime:this.apptTime });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -1305,12 +1300,10 @@ export class appointmentComponent implements OnInit {
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
 
-        this.provider_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id)
+        this.provider_services.getTodaysAvailableTimeSlots(this.sel_checkindate, this.sel_queue_id)
             .subscribe(
                 (data) => {
-                    this.slots = data;
-                    this.availableSlots =  this.slots.availableSlots;
-                    console.log(this.availableSlots);
+                    this.availableSlots = data;
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1369,10 +1362,6 @@ export class appointmentComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        console.log(this.waitlist_for);
-        this.waitlist_for[0]['apptTime'] = this.apptTime;
-        console.log(this.waitlist_for);
-        this.showEditView = false;
     }
     handleSideScreen(action) {
         this.showAction = true;

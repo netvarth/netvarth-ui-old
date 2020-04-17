@@ -8,16 +8,9 @@ import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loa
 import { MaterialModule } from '../../../../../shared/modules/common/material.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
-import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { ManageSettingsComponent } from './manageSettings.component';
 import { ManageSettingsRoutingModule } from './manageSettings.routing.module';
-import { ProviderWaitlistLocationDetailComponent } from '../../../../../ynw_provider/components/provider-waitlist-location-detail/provider-waitlist-location-detail.component';
-import { DepartmentsComponent } from '../../../../../ynw_provider/components/departments/departments.component';
-import { DepartmentDetailComponent } from '../../../../../ynw_provider/components/departments/details/department.details.component';
-import { ProviderWaitlistLocationsModule } from '../../../../../ynw_provider/components/provider-waitlist-locations/provider-waitlist-locations.module';
-import { ProviderWaitlistOnlineCheckinModule } from '../../../../../ynw_provider/components/provider-waitlist-online-checkin/provider-waitlist-online-checkin.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { DepartmentModule } from '../../../../../ynw_provider/shared/modules/department/department.module';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
 import { NotificationUserModule } from './notifications/notifications.module';
 @NgModule({
@@ -33,19 +26,12 @@ import { NotificationUserModule } from './notifications/notifications.module';
         FormsModule,
         ReactiveFormsModule,
         ModalGalleryModule,
-        //GalleryModule,
-        //ProviderWaitlistLocationsModule,
-        //ProviderWaitlistOnlineCheckinModule,
         NgbTimepickerModule,
-        //DepartmentModule,
         WaitlistQueuesModule,
         NotificationUserModule
     ],
     declarations: [
         ManageSettingsComponent,
-       // ProviderWaitlistLocationDetailComponent,
-       // DepartmentsComponent,
-       // DepartmentDetailComponent
     ],
     exports: [
         ManageSettingsComponent

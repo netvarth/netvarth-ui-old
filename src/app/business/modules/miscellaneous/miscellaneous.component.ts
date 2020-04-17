@@ -43,33 +43,33 @@ export class MiscellaneousComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     }
-    gotocustomview() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
-    }
+    // gotocustomview() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+    // }
     gotobranchsps() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
     }
     gotocorporate() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
     }
-    gotoNonworkingDays() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
-    }
+    // gotoNonworkingDays() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
+    // }
     gotoNotifications() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
     }
     gotosaleschannel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
     }
-    gotothemes() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
-    }
+    // gotothemes() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
+    // }
     gotoJdn() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
     }
-    gotoLabels() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
-    }
+    // gotoLabels() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
+    // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);

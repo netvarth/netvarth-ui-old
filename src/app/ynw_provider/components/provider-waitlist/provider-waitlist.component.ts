@@ -137,7 +137,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       );
   }
   goLocation() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   goService() {
     this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
@@ -150,7 +150,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     }
   }
   goDepartments() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'departments']);
+    this.router.navigate(['provider', 'settings', 'general', 'departments']);
   }
   getLocationCount() {
     this.loading = true;

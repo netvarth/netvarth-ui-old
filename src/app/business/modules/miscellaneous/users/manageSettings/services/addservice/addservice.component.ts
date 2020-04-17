@@ -12,11 +12,11 @@ import { ProviderDataStorageService } from '../../../../../../../ynw_provider/se
 import { Router } from '@angular/router';
 
 @Component({
-    selector:'app-addservice',
-    templateUrl:'./addservice.component.html'
-    
+    selector: 'app-addservice',
+    templateUrl: './addservice.component.html'
+
 })
-export class addserviceComponent implements OnInit, OnDestroy {
+export class AddServiceComponent implements OnInit, OnDestroy {
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
     number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
