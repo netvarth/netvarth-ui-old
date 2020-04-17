@@ -107,8 +107,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Billing/POS',
-            url: '/provider/settings/pos'
+            title: 'Payments',
+            url: '/provider/settings/payments'
         },
         {
             title: 'Payment'

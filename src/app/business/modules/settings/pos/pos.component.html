@@ -1,0 +1,110 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Billing/POS
+                            <mat-slide-toggle [(ngModel)]="pos_status" (change)="handle_posStatus($event)">
+                            </mat-slide-toggle>
+                            <div class="onoff">{{pos_statusstr}}</div>
+                        </label>
+                        <div class="form-level-settings"> Create items, discounts and coupons here.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                More</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="gotoItems()" class="b-link">
+                        <h2>Items <p style="font-size: inherit; margin-bottom: 0px"> ({{item_count}})</p>
+                        </h2>
+                        <span class="form-level-settings">Create new products/items and related information here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('items', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoDiscounts()">
+                        <h2>Discounts ({{discount_count}})</h2>
+                        <span class="form-level-settings">Create your discounts here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('discount', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoCoupons()">
+                        <h2>Coupons</h2>
+                        <span class="form-level-settings">View all the coupons available here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('coupon', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="row">
+                    <div class="card pos">
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                            <label>Jaldee Pay
+                                <span class="ctrl">
+                                    <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)">
+                                    </mat-slide-toggle>
+                                </span>
+                                <div class="onoff">{{payment_statusstr}}</div>
+                            </label>
+                            <div class="form-level-settings" style="padding-bottom: 10px">{{jaldee_pay_cap}}<a
+                                    class="learnmore-pointer" id="customer-help"
+                                    (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                    More</a></div>
+                            <p class="form-level-settings" *ngIf="!payment_status" style="margin-bottom: 0px">
+                                {{frm_public_self_cap}}</p>
+                            <div *ngIf="payment_status">
+                                <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active
+                                    payment
+                                    mode : PayTm </div>
+                                <div class="payTypeVerify" *ngIf="payuVerified && !paytmVerified && !isJaldeeAccount">Active
+                                    payment
+                                    mode : CC/DC/Netbanking</div>
+                                <div class="payTypeVerify" *ngIf="paytmVerified && payuVerified && !isJaldeeAccount">Active
+                                    payment
+                                    modes : CC/DC/Netbanking and PayTm</div>
+                                <div class="payTypeVerify" *ngIf="isJaldeeAccount">Active payment mode : Jaldee
+                                    Bank</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            <!-- <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoPaymentSettings()">
+                        <h2>Payment</h2>
+                        <span class="form-level-settings">Set up your Payment modes here. <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div> -->
+            <!-- <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoTaxSettings()">
+                        <h2>Tax</h2>
+                        <span class="form-level-settings">Set up and turn on tax configuration.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('tax-settings', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div> -->
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

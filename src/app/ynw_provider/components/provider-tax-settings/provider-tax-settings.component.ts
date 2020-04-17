@@ -18,8 +18,8 @@ export class ProvidertaxSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Billing/POS',
-            url: '/provider/settings/pos'
+            title: 'Payments',
+            url: '/provider/settings/payments'
         },
         {
             title: 'Tax'

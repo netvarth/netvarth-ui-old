@@ -9,6 +9,8 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { PaymentSettingsComponent } from './payment-settings.component';
 import { PaymentSettingsRoutingModule } from './payment-settings.routing.module';
+import { ProviderPaymentSettingsComponent } from '../../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
+import { ProvidertaxSettingsComponent } from '../../../../ynw_provider/components/provider-tax-settings/provider-tax-settings.component';
 
 @NgModule({
     imports: [
@@ -24,7 +26,9 @@ import { PaymentSettingsRoutingModule } from './payment-settings.routing.module'
         PaymentSettingsRoutingModule
     ],
     declarations: [
-        PaymentSettingsComponent
+        PaymentSettingsComponent,
+        ProviderPaymentSettingsComponent,
+        ProvidertaxSettingsComponent
     ],
     exports: [
         PaymentSettingsComponent
