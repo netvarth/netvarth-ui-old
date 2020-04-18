@@ -8466,3 +8466,6 @@ hr.wide-separator-line {
 .dashboard-card-list {
   padding-bottom: 5px;
 }
+.mat-radio-button-createpatient {
+  padding-left: 10px
+}

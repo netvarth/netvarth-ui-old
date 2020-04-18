@@ -1,6 +1,6 @@
-<!-- <section>
+<section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
+</section>
 <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
@@ -85,8 +85,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="form-group">
                                     <label class="col-form-label" for="gender">{{gender_cap}}</label>
                                     <mat-radio-group formControlName="gender">
-                                        <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
-                                        <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button-createpatient" value="male">{{male_cap}}</mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button-createpatient" value="female">{{female_cap}}</mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button-createpatient" value="others">Others</mat-radio-button>
                                     </mat-radio-group>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
                                         errorMsg="Please select the gender.">
