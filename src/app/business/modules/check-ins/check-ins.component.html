@@ -993,9 +993,11 @@
                 <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
+                
                 <!-- Timeslot disabled queue statusboard -->
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
+                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of new_checkins_list, let i=index"
                     [class.selected-waitlist]="waitlistSelected[i]">
@@ -1012,7 +1014,7 @@
                             {{getAppxTime(checkin)}}</ng-container>
                         </div>
                       </div>
-                      <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                       <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
                         <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
@@ -1021,20 +1023,17 @@
                                 {{checkin.waitlistingFor[0].firstName}}
                                 {{checkin.waitlistingFor[0].lastName}}
                               </span>
-                              <span *ngIf="selected_queue && selected_queue.services.length>1"
-                                class="info-box-text service">
+                              <!-- <span *ngIf="selected_queue && selected_queue.services.length>1" -->
+                                <span class="info-box-text service">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
-                              <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
-                                Batch: {{timeSlotCheckins[slot][0].batchName}}
+                              <div *ngIf="checkin.batchName" class="info-box-text service">
+                                Batch: {{checkin.batchName}}
                               </div>
-                              <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
-                                <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
-                              </div> -->
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1087,7 +1086,7 @@
                             </a>
                           </div>
                         </div>
-                      </div>
+                      </div> 
                     </div>
                     <div class="clearfix"></div>
                     <div class="info-box-footer-more" *ngIf="section_new[i]">
@@ -1118,7 +1117,7 @@
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div> 
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               </div>
