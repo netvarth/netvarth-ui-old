@@ -198,12 +198,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" *ngIf="qr_code">
-                                             <ngx-qrcode  id="print-section"  [qrc-element-type]="elementType" [qrc-value] = "qr_value" >    
-                                                </ngx-qrcode>
-                                            <br>
-                                         <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button>  
-                                    </div>
+                                   
                                 </div>
                                 <div class="pubs card adwds customBus w-dta">
                                     <h2>Online ID</h2>
@@ -227,6 +222,8 @@
                                                                     <i class="fa fa-copy"></i>
                                                                     <span>copy link</span>
                                                                 </button>
+                                                                <button type="button" (click)="qrCodegenerate(bProfile.uniqueId)" mat-menu-item><i class="fa fa-qrcode"></i>
+                                                                    <span>QR generate</span></button>
                                                             </mat-menu>
                                                         </span>
                                                         <span class="custid" rel="noopener"
@@ -236,6 +233,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6" *ngIf="qr_code">
+                                        <ngx-qrcode  id="print-section"  [qrc-element-type]="elementType" [qrc-value] = "qr_value" >    
+                                           </ngx-qrcode>
+                                       <br>
+                                    <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button>  
+                               </div>
                                 </div>
 
                                 <!-- <div class="pubs card adwds customBus w-dta">
