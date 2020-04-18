@@ -100,7 +100,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   badge_map_arr: any = [];
   loc_list: any = [];
   mapurl;
-  qr_code = false;
+  qr_code_cId = false;
+  qr_code_oId = false;
   qr_value;
   base_loc: any = [];
 
@@ -890,9 +891,19 @@ export class BProfileComponent implements OnInit, OnDestroy {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-  qrCodegenerate(valuetogenerate) {
+  qrCodegenerateOnlineID(valuetogenerate) {
     this.qr_value = this.path + '/#' + valuetogenerate;
-    this.qr_code = true;
+    this.qr_code_oId = true;
+  }
+  qrCodegenerateCustID(valuetogenerate) {
+    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_code_cId = true;
+  }
+  closeOnlineQR() {
+    this.qr_code_oId = false;
+  }
+  closeCustomQR() {
+    this.qr_code_cId = false;
   }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
