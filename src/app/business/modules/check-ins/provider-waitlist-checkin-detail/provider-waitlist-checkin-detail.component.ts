@@ -156,8 +156,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             // tslint:disable-next-line: radix
             // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
             this.apptTime = this.waitlist_data.appmtTime;
-          // } else {
-          //   this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+            // } else {
+            //   this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
           }
           const waitlist_date = new Date(this.waitlist_data.date);
           this.today.setHours(0, 0, 0, 0);

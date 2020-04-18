@@ -326,8 +326,7 @@
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
-                        [selected]="!isAvailableSlot(slot)" (click)="!isAvailableSlot(slot) && apptClicked(slot.time)"
-                        >
+                        [selected]="!isAvailableSlot(slot)" (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
@@ -336,8 +335,8 @@
                       <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0">
                         <div class="col-md-7 col-xs-7 p0">
                           <div class="col-md-8 col-xs-8 p0">
-                            <span class="info-box-text forwhom pointer-cursor"
-                              *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                            <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                              (click)="goCheckinDetail(checkin)">
                               {{checkin.appmtFor[0].firstName}}
                               {{checkin.appmtFor[0].lastName}}
                             </span>
@@ -589,8 +588,8 @@
                         <div class="col-md-12 p0" (click)="selectstartedWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
-                              <span class="info-box-text forwhom pointer-cursor"
-                                *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                              <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                                (click)="goCheckinDetail(checkin)">
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </span>
@@ -744,8 +743,8 @@
                     <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                       <mat-chip-list>
                         <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
-                          [selected]="!isAvailableSlot(slot)" (click)="!isAvailableSlot(slot) && apptClicked(slot.time)"
-                          >
+                          [selected]="!isAvailableSlot(slot)"
+                          (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
                           {{slot.time}} </mat-chip>
                       </mat-chip-list>
                     </div>
@@ -758,8 +757,8 @@
                         <div class="right" (click)="selectnewWaitlist(slot.time, i, checkin)">
                           <div class="col-md-7 col-xs-7 p0">
                             <div class="col-md-8 col-xs-8 p0 hidden-xs">
-                              <div class="info-box-text forwhom pointer-cursor"
-                                *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                              <div class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                                (click)="goCheckinDetail(checkin)">
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </div>
@@ -776,8 +775,8 @@
                               </div>
                             </div>
                             <div class="col-md-12 col-xs-12 p0 visible-xs">
-                              <div class="info-box-text forwhom pointer-cursor"
-                                *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                              <div class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                                (click)="goCheckinDetail(checkin)">
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </div>
@@ -848,8 +847,8 @@
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(checkin, 'Arrived')"
-                              *ngIf="checkin.apptStatus != 'Arrived' && !section_new[i]"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'">
+                              *ngIf="checkin.apptStatus != 'Arrived' && !section_new[i]" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Arrived'">
                               <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
                                 *ngIf="!small_device_display">Arrived </span>
                             </a>
@@ -879,7 +878,8 @@
                     [class.status-width]="completedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('completed')"> Completed </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.Completed)">(0)</span>
-                    <span *ngIf="grouped_list && grouped_list.Completed">({{grouped_list.Completed.length}})</span></div>
+                    <span *ngIf="grouped_list && grouped_list.Completed">({{grouped_list.Completed.length}})</span>
+                  </div>
                   <div class="navbar navbar-static-top statuslink " role="navigation"
                     *ngIf="completedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
@@ -949,8 +949,8 @@
                         <div class="col-md-12 p0" (click)="selectcompletedWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
-                              <span class="info-box-text forwhom pointer-cursor"
-                                *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                              <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                                (click)="goCheckinDetail(checkin)">
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </span>
@@ -1041,8 +1041,8 @@
                         <div class="col-md-12 p0" (click)="selectcancelledWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
-                              <span class="info-box-text forwhom pointer-cursor"
-                                *ngFor="let user of checkin.appmtFor" (click)="goCheckinDetail(checkin)">
+                              <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
+                                (click)="goCheckinDetail(checkin)">
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </span>

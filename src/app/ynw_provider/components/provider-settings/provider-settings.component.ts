@@ -111,6 +111,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   onlinepresence_statusstr: string;
   livetrack_status: any;
   livetrack_statusstr: string;
+  createappointment_status: any;
+  createappointment_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -328,6 +330,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.livetrack_status = data.livetrack;
         this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
+        this.createappointment_status = data.appointment;
+        this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
       });
   }
   handle_posStatus(event) {
@@ -528,6 +532,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'schedules':
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
         break;
+      case 'appservices':
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'services']);
+        break;
+      case 'appdisplayboards':
+        this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
+        break;
     }
   }
   getLocationCount() {
@@ -723,6 +733,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       //     }
       //   }
     });
+  }
+  handle_appointmentPresence(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setAppointmentPresence(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Appointment creation ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getOnlinePresence();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getOnlinePresence();
+        }
+      );
   }
 }
 

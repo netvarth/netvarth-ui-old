@@ -1563,7 +1563,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.uid], {queryParams: {source: 'appt'}});
+    this.router.navigate(['provider', 'check-ins', checkin.uid], { queryParams: { source: 'appt' } });
   }
   viewBillPage(source, checkin?) {
     let checkin_details;

@@ -1147,10 +1147,10 @@ export class ProviderServices {
       const url = 'provider/services/livetrack/' + status + '/' + serviceId;
       return this.servicemeta.httpPut(url);
    }
-   getTodaysAvailableTimeSlots(date, sheduleid) {
-      const url = 'provider/appointment/schedule/' + date + '/' + '{' + sheduleid + '}' + '/' + '{' + date + '}';
-      return this.servicemeta.httpGet(url);
-   }
+   // getTodaysAvailableTimeSlots(date, sheduleid) {
+   //    const url = 'provider/appointment/schedule/' + date + '/' + '{' + sheduleid + '}' + '/' + '{' + date + '}';
+   //    return this.servicemeta.httpGet(url);
+   // }
    changeProviderApptStatus(appmntId, status, message = {}) {
       const url = 'provider/appointment/statuschange/' + status + '/' + appmntId;
       return this.servicemeta.httpPut(url, message);
@@ -1158,5 +1158,9 @@ export class ProviderServices {
    getAppointmentById(appmntId) {
       const url = 'provider/appointment/' + appmntId;
       return this.servicemeta.httpGet(url);
+   }
+   setAppointmentPresence(status) {
+      const url = 'provider/account/settings/appointment/' + status;
+      return this.servicemeta.httpPut(url);
    }
 }

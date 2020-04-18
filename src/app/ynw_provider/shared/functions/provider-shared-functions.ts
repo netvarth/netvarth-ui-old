@@ -218,7 +218,8 @@ export class ProviderSharedFuctions {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          waitlist: waitlist
+          waitlist: waitlist,
+          appt: true
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -309,8 +310,8 @@ export class ProviderSharedFuctions {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
       } else {
-      uuid = waitlist[0].ynwUuid || null;
-      name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+        uuid = waitlist[0].ynwUuid || null;
+        name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
       }
     }
     if (type === 'single') {
@@ -418,7 +419,7 @@ export class ProviderSharedFuctions {
     const time24 = sHours + ':' + sMinutes + ':00';
     return time24;
   }
-  getLiveTrackMessage(distance, unit, hours, minutes, mode ) {
+  getLiveTrackMessage(distance, unit, hours, minutes, mode) {
     let message = '';
     if (distance === 0) {
       message += 'Your customer is close to you, will arrive shortly';
