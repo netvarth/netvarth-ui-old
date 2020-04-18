@@ -44,7 +44,21 @@ export class CustomerDetailComponent implements OnInit {
     firstName: any;
     lastName: any;
     dob: any;
-
+    breadcrumbs_init = [
+        {
+            title: 'Dashboard',
+            url: 'provider/check-ins'
+        },
+        {
+            title: 'Customers',
+            url: 'provider/customers'
+        },
+        {
+            title: 'create'
+        }
+    ];
+    breadcrumbs = this.breadcrumbs_init;
+    breadcrumb_moreoptions: any = [];
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
