@@ -212,7 +212,7 @@ export class ProviderSharedFuctions {
   }
 
   changeWaitlistStatus(ob, waitlist, action) {
-    if (action === 'CANCEL') {
+    if (action === 'CANCEL' || action === 'Cancelled') {
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -231,6 +231,36 @@ export class ProviderSharedFuctions {
       ob.changeWaitlistStatusApi(waitlist, action);
     }
   }
+
+  changeApptStatusApi(ob, waitlist, action, post_data = {}) {
+    return new Promise((resolve, reject) => {
+      ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
+        .subscribe(
+          () => {
+            resolve('changeWaitlistStatusApi');
+            let status_msg = '';
+            switch (action) {
+              case 'Arrived': status_msg = '[arrived]'; break;
+              case 'Started': status_msg = '[started]'; break;
+              case 'Cancelled': status_msg = '[cancelled]'; break;
+              case 'Confirmed': status_msg = '[waitlisted]'; break;
+              case 'Completed': status_msg = 'completed'; break;
+            }
+            const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+            this.shared_functions.openSnackBar(msg);
+          },
+          error => {
+            waitlist.disableDonebtn = false;
+            waitlist.disableStartbtn = false;
+            waitlist.disableArrivedbtn = false;
+            const errMsg = error.error.replace('[checkedIn]', 'checked-in');
+            this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
+            reject();
+          }
+        );
+    });
+  }
+
   changeWaitlistStatusApi(ob, waitlist, action, post_data = {}) {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
@@ -260,12 +290,14 @@ export class ProviderSharedFuctions {
     });
   }
 
-  addConsumerInboxMessage(waitlist, Cthis?) {
+  addConsumerInboxMessage(waitlist, Cthis?, appt?) {
+    console.log(appt);
     const uuids = [];
     let type;
     let ynwUuid;
     let uuid;
     let name;
+    console.log(waitlist);
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
@@ -273,8 +305,13 @@ export class ProviderSharedFuctions {
       }
     } else {
       type = 'single';
+      if (appt) {
+        uuid = waitlist[0].uid || null;
+        name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
+      } else {
       uuid = waitlist[0].ynwUuid || null;
       name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+      }
     }
     if (type === 'single') {
       ynwUuid = uuid;
