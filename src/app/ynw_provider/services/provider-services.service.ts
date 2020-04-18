@@ -1151,4 +1151,12 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + date + '/' + '{' + sheduleid + '}' + '/' + '{' + date + '}';
       return this.servicemeta.httpGet(url);
    }
+   changeProviderApptStatus(appmntId, status, message = {}) {
+      const url = 'provider/appointment/statuschange/' + status + '/' + appmntId;
+      return this.servicemeta.httpPut(url, message);
+   }
+   getAppointmentById(appmntId) {
+      const url = 'provider/appointment/' + appmntId;
+      return this.servicemeta.httpGet(url);
+   }
 }

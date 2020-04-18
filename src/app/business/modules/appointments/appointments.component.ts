@@ -284,150 +284,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allActiveQs: any[];
   availableSlotDetails: any = [];
   selQidsforHistory: any = [];
-  checkins = [{
-    'date': '2020-04-17',
-    'provider': {
-      'id': 76311,
-      'businessName': 'Spandhanam clinic',
-      'licensePkgID': 0,
-      'uniqueId': 76314,
-      'corpId': 0,
-      'branchId': 0
-    },
-    'consumer': {
-      'id': 3592,
-      'userProfile': {
-        'id': 3592,
-        'firstName': 'Layana',
-        'lastName': 'T S'
-      },
-      'favourite': true
-    },
-    'service': {
-      'id': 3134,
-      'name': 'Consultation',
-      'department': 641,
-      'deptName': 'default',
-      'livetrack': false
-    },
-    'waitlistStatus': 'arrived',
-    'statusUpdatedTime': '2020-04-17 10:56 AM',
-    'partySize': 1,
-    'consumerNote': '',
-    'recalculatedTime': '2020-04-17',
-    'lastVisitedDate': '2020-04-15',
-    'queue': {
-      'id': 6973,
-      'name': 'Time Window 2',
-      'location': {
-        'id': 76099,
-        'place': 'Chembukkav',
-        'googleMapUrl': 'https://www.google.com/maps/place/10.5327712,76.2221187/@10.5327712,76.2221187,15z'
-      },
-      'queueStartTime': '09:00 AM',
-      'queueEndTime': '12:00 PM',
-      'personAhead': 0
-    },
-    'waitlistedBy': 'PROVIDER',
-    'personsAhead': 0,
-    'waitlistingFor': [{
-      'id': 3592,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'primaryMobileNo': '5550002028',
-      'email': 'aaa@gmail.com'
-    }],
-    'ynwUuid': 'e5ce5083-449e-466b-8664-1c7cbbbc019d_wl',
-    'paymentStatus': 'NotPaid',
-    'calculationMode': 'Fixed',
-    'checkInTime': '10:56 AM',
-    'coupons': [],
-    'amountPaid': 0.0,
-    'amountDue': 0.0,
-    'billId': 0,
-    'label': {},
-    'attchment': [{}],
-    'appmtTime': '12:00-12:10',
-    'callingStatus': false,
-    'batchId': 1,
-    'batchName': 'as1',
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  }, {
-    'date': '2020-04-17',
-    'provider': {
-      'id': 76311,
-      'businessName': 'Spandhanam clinic',
-      'licensePkgID': 0,
-      'uniqueId': 76314,
-      'corpId': 0,
-      'branchId': 0
-    },
-    'consumer': {
-      'id': 3592,
-      'userProfile': {
-        'id': 3592,
-        'firstName': 'Layana',
-        'lastName': 'T S'
-      },
-      'favourite': true
-    },
-    'service': {
-      'id': 3134,
-      'name': 'Consultation',
-      'department': 641,
-      'deptName': 'default',
-      'livetrack': false
-    },
-    'waitlistStatus': 'arrived',
-    'statusUpdatedTime': '2020-04-17 10:56 AM',
-    'partySize': 1,
-    'consumerNote': '',
-    'recalculatedTime': '2020-04-17',
-    'lastVisitedDate': '2020-04-15',
-    'queue': {
-      'id': 6973,
-      'name': 'Time Window 2',
-      'location': {
-        'id': 76099,
-        'place': 'Chembukkav',
-        'googleMapUrl': 'https://www.google.com/maps/place/10.5327712,76.2221187/@10.5327712,76.2221187,15z'
-      },
-      'queueStartTime': '09:00 AM',
-      'queueEndTime': '12:00 PM',
-      'personAhead': 0
-    },
-    'waitlistedBy': 'PROVIDER',
-    'personsAhead': 1,
-    'waitlistingFor': [{
-      'id': 4884,
-      'firstName': 'athira',
-      'lastName': 'k r',
-      'primaryMobileNo': '5550002028'
-    }],
-    'ynwUuid': '0990dd85-7a11-4cb6-8932-2e9d02fe7388_wl',
-    'paymentStatus': 'NotPaid',
-    'calculationMode': 'Fixed',
-    'checkInTime': '10:56 AM',
-    'coupons': [],
-    'amountPaid': 0.0,
-    'amountDue': 0.0,
-    'billId': 0,
-    'label': {},
-    'attchment': [{}],
-    'appmtTime': '12:00-12:10',
-    'callingStatus': false,
-    'batchId': 2,
-    'batchName': 'as2',
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  }];
+
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -462,7 +319,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: this.checkedin_upper, value: 'checkedIn' },
       { name: this.cancelled_upper, value: 'cancelled' },
       { name: this.started_upper, value: 'started' },
-      { name: this.arrived_upper, value: 'arrived' },
+      { name: this.arrived_upper, value: 'Arrived' },
       { name: this.done_upper, value: 'complete' }];
   }
   payStatusList = [
@@ -580,16 +437,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             allActiveQs.push(queueActive);
           }
         }
+
+        const tempView = {};
+        tempView['name'] = 'Default';
+        tempView['id'] = 0;
+        tempView['customViewConditions'] = {};
+        tempView['customViewConditions'].queues = allActiveQs;
+        this.selectedView = tempView;
         this.getViews().then(
           (data: any) => {
             this.views = data;
-            const tempView = {};
-            tempView['name'] = 'Default';
-            tempView['id'] = 0;
-            tempView['customViewConditions'] = {};
-            tempView['customViewConditions'].queues = allActiveQs;
             this.views.push(tempView);
-            this.selectedView = tempView;
+            this.initView(this.selectedView);
+          },
+          error => {
+            this.views.push(tempView);
             this.initView(this.selectedView);
           }
         );
@@ -663,7 +525,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise((resolve, reject) => {
       _this.provider_services.getProviderSchedules(apifilter).subscribe(
         (queues: any) => {
-          resolve(queues);
+          const qs = [];
+          for (let i = 0; i < queues.length; i++) {
+            if (queues[i].apptState === 'ENABLED') {
+              qs.push(queues[i]);
+            }
+          }
+          console.log(qs);
+          resolve(qs);
         });
     });
   }
@@ -832,7 +701,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }).length;
   }
   setCounts(list) {
-    this.today_arrived_count = this.getCount(list, 'arrived');
+    this.today_arrived_count = this.getCount(list, 'Arrived');
     this.today_checkedin_count = this.getCount(list, 'checkedIn');
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
     this.today_started_count = this.getCount(list, 'started');
@@ -865,7 +734,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.queues = queue;
       this.load_waitlist = 0;
       const Mfilter = this.setFilterForApi();
-      console.log(this.selQId);
       if (this.selQId) {
         Mfilter['schedule-eq'] = this.selQId;
       }
@@ -884,20 +752,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.cancelled_checkins_list = [];
                 this.check_in_list = data;
                 this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'apptStatus');
-                if (this.grouped_list && this.grouped_list['started']) {
-                  this.started_checkins_list = this.grouped_list['started'].slice();
+                if (this.grouped_list && this.grouped_list['Started']) {
+                  this.started_checkins_list = this.grouped_list['Started'].slice();
                 }
-                if (this.grouped_list && this.grouped_list['done']) {
-                  this.completed_checkins_list = this.grouped_list['done'].slice();
+                if (this.grouped_list && this.grouped_list['Completed']) {
+                  this.completed_checkins_list = this.grouped_list['Completed'].slice();
                 }
-                if (this.grouped_list && this.grouped_list['cancelled']) {
-                  this.cancelled_checkins_list = this.grouped_list['cancelled'].slice();
+                if (this.grouped_list && this.grouped_list['Cancelled']) {
+                  this.cancelled_checkins_list = this.grouped_list['Cancelled'].slice();
                 }
-                if (this.grouped_list && this.grouped_list['checkedIn']) {
-                  this.new_checkins_list = this.grouped_list['checkedIn'].slice();
+                if (this.grouped_list && this.grouped_list['Confirmed']) {
+                  this.new_checkins_list = this.grouped_list['Confirmed'].slice();
                 }
-                if (this.grouped_list && this.grouped_list['arrived']) {
-                  Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
+                if (this.grouped_list && this.grouped_list['Arrived']) {
+                  Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['Arrived'].slice());
                 }
                 this.sortCheckins(this.new_checkins_list);
                 if (this.filterapplied === true) {
@@ -1026,10 +894,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   isAvailableSlot(slot) {
-    if (slot.noOfAvailbleSlots !== 0) {
-      return false;
+    if (slot.noOfAvailbleSlots === '0') {
+      return true;
     }
-    return true;
+    return false;
   }
   getAvaiableSlots() {
     this.unAvailableSlots = [];
@@ -1046,14 +914,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.availableSlotDetails = data;
       const checkins = [];
       for (let i = 0; i < this.check_in_list.length; i++) {
-        if (this.check_in_list[i].apptStatus === 'arrived' || this.check_in_list[i].apptStatus === 'checkedIn') {
+        if (this.check_in_list[i].apptStatus === 'Arrived' || this.check_in_list[i].apptStatus === 'Confirmed') {
           checkins.push(this.check_in_list[i]);
         }
       }
-      // console.log(checkins);
-      console.log(this.checkins);
-      this.timeSlotCheckins = this.shared_functions.groupBy(this.checkins, 'appmtTime');
-      // this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
+      this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
       Object.keys(this.timeSlotCheckins).forEach(key => {
         this.waitlistSelected[key] = [];
       });
@@ -1168,7 +1033,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('pdStyp', this.status_type);
     let status: any = this.status_type;
     switch (type) {
-      case 'all': status = ['checkedIn', 'arrived'];
+      case 'all': status = ['checkedIn', 'Arrived'];
     }
     this.check_in_filtered_list = this.check_in_list.filter(
       check_in => {
@@ -1184,22 +1049,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatus(waitlist, action) {
-    if (!waitlist.ynwUuid) {
+    if (!waitlist.uid) {
       waitlist = this.selectedCheckin[waitlist];
     }
-    if (action === 'DONE') {
+    if (action === 'Completed') {
       waitlist.disableDonebtn = true;
     }
-    if (action === 'STARTED') {
+    if (action === 'Started') {
       waitlist.disableStartbtn = true;
     }
-    if (action === 'REPORT') {
+    if (action === 'Arrived') {
       waitlist.disableArrivedbtn = true;
     }
     this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+    this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
           this.section_cancel = [];
@@ -1364,21 +1229,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.statusMultiCtrl = [];
   }
   addProviderNote(source, waitlist?) {
-    console.log(source);
-    console.log(waitlist);
     let checkin;
     if (source === 'history' || source === 'future') {
       checkin = waitlist;
     } else {
       checkin = this.selectedCheckin[source];
     }
-    console.log(checkin);
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin_id: checkin.ynwUuid
+        checkin_id: checkin.uid
       }
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
@@ -1387,8 +1249,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addConsumerInboxMessage(source, waitlst?) {
-    console.log(source);
-    console.log(waitlst);
     let waitlist = [];
     if (source === 'new') {
       waitlist = this.newWaitlistforMsg;
@@ -1401,8 +1261,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (source === 'single') {
       waitlist.push(waitlst);
     }
-    console.log(waitlist);
-    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
+    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this, 'appt')
       .then(
         () => { },
         () => { }
@@ -1443,7 +1302,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   saveClicked(esttime) {
     for (let i = 0; i < this.check_in_list.length; i++) {
       if (esttime) {
-        this.provider_services.editWaitTime(this.check_in_list[i].ynwUuid, esttime).subscribe(
+        this.provider_services.editWaitTime(this.check_in_list[i].uid, esttime).subscribe(
           () => {
             this.showEditView = false;
             this.setTimeType(1);
@@ -1523,13 +1382,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     checkin_html += '</div>';
     checkin_html += '<div style="float:left;height:100px;font-weight:500">';
     checkin_html += '<div style="padding-top:5px;padding-left:5px">';
-    checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
+    checkin_html += checkinlist.appmtFor[0].firstName + ' ' + checkinlist.appmtFor[0].lastName;
     checkin_html += '</div>';
     checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
     checkin_html += this.bname + ' / ' + checkinlist.service.name;
     checkin_html += '</div>';
     checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-    checkin_html += checkinlist.date + ' ' + checkinlist.checkInTime;
+    checkin_html += checkinlist.date + ' ' + checkinlist.appmtTime;
     checkin_html += '</div>';
     checkin_html += '</div>';
     checkin_html += '</div>';
@@ -1567,8 +1426,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 const labels = [];
                 checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
@@ -1622,7 +1481,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locateCustomer(source) {
     const waitlistData = this.selectedCheckin[source];
-    this.provider_services.getCustomerTrackStatus(waitlistData.ynwUuid).subscribe(data => {
+    this.provider_services.getCustomerTrackStatus(waitlistData.uid).subscribe(data => {
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
@@ -1667,7 +1526,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   callingWaitlist(checkin) {
     const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
-    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+    this.provider_services.setCallStatus(checkin.uid, status).subscribe(
       () => {
         this.loadApiSwitch('reloadAPIs');
       });
@@ -1697,14 +1556,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   applyLabel(checkin) {
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
+    this.router.navigate(['provider', 'check-ins', checkin.uid, 'add-label'], { queryParams: checkin.label });
   }
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'check-ins', checkin.uid], {queryParams: {source: 'appt'}});
   }
   viewBillPage(source, checkin?) {
     let checkin_details;
@@ -1713,10 +1572,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       checkin_details = this.selectedCheckin[source];
     }
-    this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
+    this.provider_services.getWaitlistBill(checkin_details.uid)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
+          this.router.navigate(['provider', 'bill', checkin_details.uid]);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1809,6 +1668,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
+      }, error => {
+        reject();
       });
     });
   }
@@ -2064,7 +1925,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   changeLabelvalue(status, labelname, value) {
     this.showLabels[status] = false;
     const checkin = this.selectedCheckin[status];
-    this.checkinId = checkin.ynwUuid;
+    this.checkinId = checkin.uid;
     this.labelMap = new Object();
     this.labelMap[labelname] = value;
     for (let i = 0; i < this.providerLabels.length; i++) {
@@ -2087,7 +1948,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addLabelvalue(status, source, label?) {
     const checkin = this.selectedCheckin[status];
-    this.checkinId = this.selectedCheckin[status].ynwUuid;
+    this.checkinId = this.selectedCheckin[status].uid;
     this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
@@ -2180,7 +2041,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.labels(this.selectedCheckin['new']);
     }
-    console.log(this.selectedCheckin);
     for (let i = 0; i < this.waitlistSelected[slot].length; i++) {
       if (this.waitlistSelected[slot][i]) {
         if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[slot][i]) === -1) {
