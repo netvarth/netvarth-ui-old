@@ -1159,8 +1159,16 @@ export class ProviderServices {
       const url = 'provider/appointment/' + appmntId;
       return this.servicemeta.httpGet(url);
    }
-   setAppointmentPresence(status) {
+     setAppointmentPresence(status) {
       const url = 'provider/account/settings/appointment/' + status;
       return this.servicemeta.httpPut(url);
+   }
+   getJaldeeIntegrationSettings() {
+      const url = 'provider/account/settings/jaldeeIntegrationSettings';
+      return this.servicemeta.httpGet(url);
+   }
+   setJaldeeIntegration(data) {
+      const url = 'provider/account/settings/jaldeeIntegration';
+      return this.servicemeta.httpPut(url, data);
    }
 }

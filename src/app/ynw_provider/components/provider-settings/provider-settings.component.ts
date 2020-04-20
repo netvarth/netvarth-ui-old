@@ -111,6 +111,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   onlinepresence_statusstr: string;
   livetrack_status: any;
   livetrack_statusstr: string;
+  walkinConsumer_status: any;
+  walkinConsumer_statusstr: string;
+  jaldeeintegration_status: any;
+  jaldeeintegration_statusstr: string;
   createappointment_status: any;
   createappointment_statusstr: string;
   constructor(private provider_services: ProviderServices,
@@ -181,7 +185,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getCoupons();
     this.getitems();
     this.getPOSSettings();
-    this.getOnlinePresence();
+    this.getGlobalSettingsStatus();
+    this.getJaldeeIntegrationSettings();
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
     // this.getStatusboardLicenseStatus();
@@ -211,17 +216,54 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.filterbydepartment = data['filterByDept'];
         });
   }
-  handle_jaldeeOnlinePresence(event) {
+  handle_jaldeeWalkinConsumer(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
-    this.provider_services.setOnlinePresence(is_check)
+    const data = {
+      'walkinConsumer': event.checked
+    };
+    this.provider_services.setJaldeeIntegration(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.shared_functions.openSnackBar('Jaldee.com for Mob App ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.getJaldeeIntegrationSettings();
+        }
+      );
+  }
+  handle_jaldeeIntegration(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    const data = {
+      'jaldeeIntegration': event.checked
+    };
+    this.provider_services.setJaldeeIntegration(data)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
+        }
+      );
+  }
+  handle_jaldeeOnlinePresence(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    const data = {
+      'onlinePresence': event.checked
+    };
+    this.provider_services.setJaldeeIntegration(data)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
         }
       );
   }
@@ -231,11 +273,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.getGlobalSettingsStatus();
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.getGlobalSettingsStatus();
         }
       );
   }
@@ -286,6 +328,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         );
     });
   }
+  getJaldeeIntegrationSettings() {
+    this.provider_services.getJaldeeIntegrationSettings().subscribe(
+      (data: any) => {
+        this.onlinepresence_status = data.onlinePresence;
+        this.walkinConsumer_status = data.walkinConsumer;
+        this.jaldeeintegration_status = data.onlinePresence;
+        this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
+        this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
+      }
+    );
+  }
   getpaymentDetails() {
     this.provider_services.getPaymentSettings()
       .subscribe(
@@ -323,11 +377,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     });
   }
-  getOnlinePresence() {
+  getGlobalSettingsStatus() {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
-        this.onlinepresence_status = data.onlinePresence;
-        this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        // this.onlinepresence_status = data.onlinePresence;
+        // this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.livetrack_status = data.livetrack;
         this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
         this.createappointment_status = data.appointment;
@@ -393,7 +447,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'locations':
         this.routerobj.navigate(['provider', 'settings', 'general', 'locations']);
         break;
-        case 'services':
+      case 'services':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'services']);
         break;
       case 'causes':
@@ -467,6 +521,21 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'general':
         this.routerobj.navigate(['provider', 'settings', 'general']);
+        break;
+      case 'customers':
+        this.routerobj.navigate(['provider', 'settings', 'customers']);
+        break;
+      case 'custid':
+        this.routerobj.navigate(['provider', 'settings', 'customers', 'custid']);
+        break;
+      case 'comm':
+        this.routerobj.navigate(['provider', 'settings', 'comm']);
+        break;
+      case 'video':
+        this.routerobj.navigate(['provider', 'settings', 'comm', 'video']);
+        break;
+      case 'integration':
+        this.routerobj.navigate(['provider', 'settings', 'jaldee-integration']);
         break;
       case 'jdn':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
@@ -745,13 +814,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.shared_functions.openSnackBar('Appointment creation ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.getGlobalSettingsStatus();
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getOnlinePresence();
+          this.getGlobalSettingsStatus();
         }
       );
   }
 }
-

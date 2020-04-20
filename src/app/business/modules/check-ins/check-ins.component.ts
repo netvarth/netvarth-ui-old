@@ -382,14 +382,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('sortBy', 'sort_token');
     }
     this.showstatus['new'] = true;
-    // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-    //   if (this.time_type === 1) {
-    //     this.getTodayCheckIn();
-    //   }
-    //   if (this.time_type === 2) {
-    //     this.getFutureCheckIn();
-    //   }
-    // });
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+      if (this.time_type === 1) {
+        this.getTodayCheckIn();
+      }
+      if (this.time_type === 2) {
+        this.getFutureCheckIn();
+      }
+    });
     this.route.queryParams.subscribe((qparams) => {
       this.time_type = +qparams.time_type || 1;
       if (this.time_type >= 0) {
@@ -1755,6 +1755,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
+      },
+      (error) => {
+        resolve([]);
       });
     });
   }
