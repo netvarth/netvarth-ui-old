@@ -71,7 +71,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_started_checkin_msg = '';
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
-  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
+  check_in_statuses_filter = projectConstants.APPT_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
@@ -1571,7 +1571,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'check-ins', checkin.uid], { queryParams: { source: 'appt' } });
+    this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { source: 'appt' } });
   }
   viewBillPage(source, checkin?) {
     let checkin_details;

@@ -65,7 +65,9 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
     }
     this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
+    if (this.data.waitlist.providerAccount) {
     this.rep_provname = this.titleCaseWord(this.data.waitlist.providerAccount.businessName);
+    }
     this.getDefaultMessages();
     this.createForm();
   }

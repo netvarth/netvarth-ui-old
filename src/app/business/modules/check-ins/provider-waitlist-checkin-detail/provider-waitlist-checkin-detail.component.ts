@@ -166,10 +166,16 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // this.getWaitlistNotes();
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          this.getCheckInHistory(this.waitlist_data.ynwUuid);
-          this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          // this.getWaitlistNotes();  
+          if (this.source) {
+            this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getCheckInHistory(this.waitlist_data.uid);
+            this.getCommunicationHistory(this.waitlist_data.uid);
+          } else {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            this.getCheckInHistory(this.waitlist_data.ynwUuid);
+            this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          }
         },
         error => {
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -202,9 +208,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             this.waitlist_data.history = true;
           }
           // this.getWaitlistNotes();
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          this.getCheckInHistory(this.waitlist_data.ynwUuid);
-          this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          if (this.source) {
+            this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getCheckInHistory(this.waitlist_data.uid);
+            this.getCommunicationHistory(this.waitlist_data.uid);
+          } else {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            this.getCheckInHistory(this.waitlist_data.ynwUuid);
+            this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          }
         },
         error => {
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

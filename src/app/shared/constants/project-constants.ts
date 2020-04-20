@@ -406,6 +406,14 @@ export const projectConstants = {
     { displayName: 'Completed', value: 'done' },
     { displayName: 'Cancelled', value: 'cancelled' }
   ],
+  APPT_STATUSES_FILTER: [
+    { displayName: 'Confirmed', value: 'Confirmed' },
+    { displayName: 'Arrived', value: 'Arrived' },
+    { displayName: 'Started', value: 'Started' },
+    { displayName: 'Completed', value: 'Completed' },
+    { displayName: 'Cancelled', value: 'Cancelled' },
+    { displayName: 'Rejected', value: 'Rejected' }
+  ],
   FUTURE_CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Cancelled', value: 'cancelled' }

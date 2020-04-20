@@ -13,7 +13,6 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
-import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerModule } from '../customer/customer.module';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
@@ -23,7 +22,8 @@ import { ProviderCheckinComponent } from './check-in/provider-checkin.component'
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
+import { ProviderWaitlistCheckInDetailModule } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module';
+// import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
 @NgModule({
@@ -42,7 +42,8 @@ import { DateRangePickerJComponent } from '../../../shared/components/date-range
         CheckinAddMemberModule,
         NgbModule,
         OwlModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
+        ProviderWaitlistCheckInDetailModule
     ],
     declarations: [
         CheckInsComponent,
@@ -52,9 +53,8 @@ import { DateRangePickerJComponent } from '../../../shared/components/date-range
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
         LocateCustomerComponent,
-        ProviderWaitlistCheckInDetailComponent,
         ApplyLabelComponent,
-        DateRangePickerJComponent
+        // DateRangePickerJComponent
 
     ],
     entryComponents: [

@@ -155,8 +155,12 @@
                     {{communication_history_cap}}
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-                  (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)"></app-inbox-list>
+                <app-inbox-list *ngIf="!source" [messages]="communication_history"
+                  [fromsource]="'provider_checkin_detail'" (reloadApi)="getCommunicationHistory(waitlist_data.ynwUuid)">
+                </app-inbox-list>
+                <app-inbox-list *ngIf="source" [messages]="communication_history"
+                  [fromsource]="'provider_checkin_detail'" (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
+                </app-inbox-list>
               </mat-expansion-panel>
             </mat-accordion>
           </div>
@@ -192,7 +196,8 @@
                   *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
                   <p>{{waitlist_data.consumerNote}}</p>
                 </div>
-                <div *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote === '' || !waitlist_data.consumerNote">
+                <div
+                  *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote === '' || !waitlist_data.consumerNote">
                   <p>{{no_cus_notes_cap}}</p>
                 </div>
               </mat-expansion-panel>

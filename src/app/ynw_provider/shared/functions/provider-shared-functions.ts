@@ -246,6 +246,7 @@ export class ProviderSharedFuctions {
               case 'Cancelled': status_msg = '[cancelled]'; break;
               case 'Confirmed': status_msg = '[waitlisted]'; break;
               case 'Completed': status_msg = 'completed'; break;
+              case 'Rejected': status_msg = 'completed'; break;
             }
             const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
             this.shared_functions.openSnackBar(msg);
