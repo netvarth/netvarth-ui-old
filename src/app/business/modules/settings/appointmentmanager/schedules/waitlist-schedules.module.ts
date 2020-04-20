@@ -29,4 +29,4 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
     ],
     exports: [WaitlistSchedulesComponent]
 })
-export class WaitlistSchedulesModule { }
+export class WaitlistSchedulesModule {}

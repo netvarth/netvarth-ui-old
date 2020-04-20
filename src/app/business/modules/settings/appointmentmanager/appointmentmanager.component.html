@@ -8,9 +8,9 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Appointments
-                            <mat-slide-toggle [(ngModel)]="pos_status" (change)="handle_posStatus($event)">
+                            <mat-slide-toggle [(ngModel)]="createappointment_status" (change)="handle_appointmentPresence($event)">
                             </mat-slide-toggle>
-                            <div class="onoff">{{pos_statusstr}}</div>
+                            <div class="onoff">{{createappointment_statusstr}}</div>
                         </label>
                         <div class="form-level-settings"> Create items, discounts and coupons here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
@@ -18,16 +18,19 @@
                     </div>
                 </div>
             </div>
+           
             <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="goService()">
-                        <h2>{{services_cap}} ({{service_count}})</h2>
-                        <span class="form-level-settings">{{frm_set_ser_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-services', $event)">Learn
+                    <span class="b-link" (click)="gotoservices()">
+                        <h2>Services</h2>
+                        <span class="form-level-settings">Add or manage your services here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('services', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
             </div>
+           
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoschedules()">
@@ -39,20 +42,27 @@
                     </span>
                 </div>
             </div>
+
             <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoDisplayboards()">
-                        <h2>{{statusboard_cap}}s ({{board_count}})</h2>
-                        <span class="form-level-settings">Create and manage QBoards here<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-displayboards', $event)">Learn
+                    <span class="b-link" (click)="gotodisplayboards()">
+                        <h2>QBoards</h2>
+                        <span class="form-level-settings">Add or manage your qboards here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('displayboards', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
             </div>
+
             <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAppointments()">
                         <h2>Take appointmet</h2>
+                        <span class="form-level-settings">Add or manage your schedules here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('schedules', $event)">Learn
+                                More</a></span>
                     </span>
                 </div>
             </div> -->

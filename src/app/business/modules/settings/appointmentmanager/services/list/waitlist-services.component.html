@@ -1,0 +1,60 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row" *ngFor="let service of service_list">
+                <div class="card" *ngIf="api_loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card" [class.disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
+                    <div class="copy">
+                        <span class="mbt">
+                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </span>
+                        <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
+                        <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
+                                capitalizeFirst}}</h3>
+                        <div class="c-ot m0">
+                            <div class="item" *ngIf="isServiceBillable">
+                                <span class="ttle">{{est_duration_cap}}</span>
+                                <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
+                            </div>
+                            <div class="item" *ngIf="isServiceBillable && service.totalAmount!=0">
+                                <span class="ttle">{{price_cap}}</span>
+                                <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                            </div>
+                        </div>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
+                                <i class="icon-edit"></i>
+                                Edit
+                            </button>
+                            <button mat-menu-item (click)="changeServiceStatus(service)">
+                                <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable"></i>
+                                <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
+                                {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                            </button>
+                            <button mat-menu-item (click)="changeLiveTrackStatus(service)" *ngIf="service.status=='ACTIVE'">
+                                <i *ngIf="service.livetrack == true" class="material-icons">gps_fixed</i>
+                                <i *ngIf="service.livetrack == false" class="material-icons">gps_off</i>
+                                {{(service.livetrack== true) ? 'Tracking on' :'Tracking off'}}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="!api_loading && service_list.length === 0">
+            No services added.
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

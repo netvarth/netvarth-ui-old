@@ -27,10 +27,9 @@ export class AppointmentmanagerComponent implements OnInit {
     provider_domain_name = '';
     customer_label = '';
     provider_label = '';
-    services_cap = Messages.WAITLIST_SERVICES_CAP;
-    statusboard_cap = Messages.DISPLAYBOARD_HEADING;
-    service_count: any = 0;
-    board_count: any = 0;
+    createappointment_status: any;
+    createappointment_statusstr: string;
+
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -43,11 +42,18 @@ export class AppointmentmanagerComponent implements OnInit {
     }
     ngOnInit() {
         this.getDomainSubdomainSettings();
-        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
-        this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+        this.getOnlinePresence();
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
+        this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     }
     gotoschedules() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
+    }
+    gotoservices(){
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'services']);
+    }
+    gotodisplayboards(){
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
     }
     // gotoAppointments(){
     //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointment']);
@@ -74,4 +80,25 @@ export class AppointmentmanagerComponent implements OnInit {
                 );
         });
     }
+    handle_appointmentPresence(event) {
+        const is_check = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setAppointmentPresence(is_check)
+          .subscribe(
+            () => {
+              this.shared_functions.openSnackBar('Appointment creation ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+              this.getOnlinePresence();
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.getOnlinePresence();
+            }
+          );
+      }
+      getOnlinePresence() {
+        this.provider_services.getGlobalSettings().subscribe(
+          (data: any) => {
+            this.createappointment_status = data.appointment;
+            this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
+          });
+      }
 }

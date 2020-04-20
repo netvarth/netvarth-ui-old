@@ -36,17 +36,17 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
-
+        
         {
             url: '/provider/settings/appointmentmanager',
             title: 'Appointmentmanager'
-        },
-
+          },
+        
         {
             url: '/provider/settings/appointmentmanager/schedules',
             title: 'Schedules'
-
-        }
+      
+          }
 
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -108,12 +108,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private activatedRoot: ActivatedRoute,
-        private fb: FormBuilder) {
-        this.activatedRoot.params.subscribe(params => {
-            this.userId = params.id;
+        private fb: FormBuilder) { 
+            this.activatedRoot.params.subscribe(params => {
+                this.userId = params.id;
+            }
+            );
         }
-        );
-    }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -533,7 +533,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'appointmentmanager','schedules', queue.id], navigationExtras);
     }
     /**
      * For clearing api errors
@@ -716,7 +716,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'appointmentmanager','schedules', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
@@ -772,7 +772,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                             this.api_loading = false;
                         }
                     );
-                });
+                 });
     }
     /**
      * Method to set values for instant Queue creation

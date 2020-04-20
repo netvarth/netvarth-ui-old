@@ -39,7 +39,7 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
         AppointmentComponent
     ],
     entryComponents: [
-        // AddProviderNonworkingdaysComponent
+       // AddProviderNonworkingdaysComponent
     ],
     exports: [AppointmentmanagerComponent]
 })

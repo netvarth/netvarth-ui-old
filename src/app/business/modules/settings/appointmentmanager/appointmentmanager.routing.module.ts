@@ -8,8 +8,9 @@ const routes: Routes = [
     { path: '', component: AppointmentmanagerComponent },
     { path: 'appointments', component: AppointmentComponent },
     { path: 'schedules', loadChildren: () => import('./schedules/waitlist-schedules.module').then(m => m.WaitlistSchedulesModule) },
-
-    // { path: 'holidays', loadChildren: () => import('./NonWorkingDay/NonWorkingDay.module').then(m => m.NonWorkingDaymodule)},
+    {path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
+    {path: 'displayboards', loadChildren: () => import('./displayboards/displayboards.module').then(m => m.DisplayboardsModule)}
+    
 
 ];
 @NgModule({
