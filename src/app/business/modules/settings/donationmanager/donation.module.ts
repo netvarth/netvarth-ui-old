@@ -14,6 +14,7 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
 import { ServicesService } from '../../../../shared/modules/service/services.service';
 import { ServiceModule } from '../../../../shared/modules/service/service.module';
+import { donationcomponent } from './donation.component';
 
 @NgModule({
     imports: [
@@ -33,10 +34,12 @@ import { ServiceModule } from '../../../../shared/modules/service/service.module
     ],
     declarations: [
         DonationCauseListComponent,
-        DonationDetailComponent
+        DonationDetailComponent,
+        donationcomponent
     ],
     exports: [
-        DonationCauseListComponent
+        DonationCauseListComponent ,
+        donationcomponent
     ],
     providers: [
         ServicesService
