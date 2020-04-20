@@ -161,7 +161,7 @@ export class AppointmentComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     activeWt;
     searchForm: FormGroup;
-    apptTime: any;
+    apptTime = '';
     board_count = 0;
     allSlots: any = [];
     availableSlots: any = [];
@@ -326,7 +326,7 @@ export class AppointmentComponent implements OnInit {
     initAppointment() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -835,7 +835,7 @@ export class AppointmentComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -1370,8 +1370,10 @@ export class AppointmentComponent implements OnInit {
     timeSelected(slot) {
         this.apptTime = slot;
         console.log(this.waitlist_for);
-       // this.waitlist_for[0]['apptTime'] = this.apptTime;
-        //console.log(this.waitlist_for); 
+        for(let list of this.waitlist_for){
+            list['apptTime'] = this.apptTime;
+        }
+      //  console.log(this.waitlist_for); 
         this.showEditView = false;
     }
     handleSideScreen(action) {
