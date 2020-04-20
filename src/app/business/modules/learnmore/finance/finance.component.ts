@@ -57,6 +57,7 @@ export class FinanceComponent implements OnInit {
   showaddon = false;
   showadwords = false;
   showcustom = false;
+  showonlineid = false;
   showdashboard = false;
   showdashbord = false;
   showcustomer = false;
@@ -102,7 +103,7 @@ export class FinanceComponent implements OnInit {
           }
         } else {
           this.child = 'public-search';
-          this.parent = 'profile-search';
+          this.parent = 'jaldeeonline';
         }
         this.handleScroll(this.child, this.parent);
       });
@@ -128,7 +129,7 @@ export class FinanceComponent implements OnInit {
     this.menu(parentContent, childContent);
   }
   menu(parentContent, childContent?) {
-    if (parentContent === 'profile-search') {
+    if (parentContent === 'jaldeeonline') {
       this.showprofilesearch = true;
       if (childContent === 'public-search') {
         this.showpublic = true;
@@ -147,6 +148,9 @@ export class FinanceComponent implements OnInit {
       }
       if (childContent === 'custom-id') {
         this.showcustom = true;
+      }
+      if (childContent === 'online-id') {
+        this.showonlineid = true;
       }
       if (childContent === 'languages-known') {
         this.showlanguagesknown = true;
