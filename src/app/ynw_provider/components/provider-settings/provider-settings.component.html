@@ -486,7 +486,7 @@
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>These settings allows the customers to see their
                                         walkin check-ins</a></li>
-                                <li><a>Jaldee.com Integration<span class="pull-right">
+                                <!-- <li><a>Jaldee.com Integration<span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="jaldeeintegration_status"
                                                 (change)="handle_jaldeeIntegration($event)">
                                             </mat-slide-toggle>
@@ -495,7 +495,7 @@
                                             {{jaldeeintegration_statusstr}}</p>
                                         <p class="settings_info">If true, then only you can set the following</p>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li><a>Jaldee.com Online Presence<span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="onlinepresence_status"
                                                 (change)="handle_jaldeeOnlinePresence($event)">
@@ -509,7 +509,7 @@
                                 </li>
                                 <li><a>Jaldee Mobile App Integration<span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
-                                                (change)="handle_jaldeeOnlineWalkin($event)">
+                                                (change)="handle_jaldeeWalkinConsumer($event)">
                                             </mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="walkinConsumer_status">

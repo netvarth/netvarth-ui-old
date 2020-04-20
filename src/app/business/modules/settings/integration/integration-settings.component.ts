@@ -40,30 +40,30 @@ export class IntegrationSettingsComponent implements OnInit {
             (data: any) => {
                 this.onlinepresence_status = data.onlinePresence;
                 this.walkinConsumer_status = data.walkinConsumer;
-                this.jaldeeintegration_status = data.onlinePresence;
+                // this.jaldeeintegration_status = data.onlinePresence;
                 this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
                 this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
-                this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
+                // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
             }
         );
     }
-    handle_jaldeeIntegration(event) {
-        const is_check = (event.checked) ? 'Enable' : 'Disable';
-        const data = {
-            'jaldeeIntegration': event.checked
-        };
-        this.provider_services.setJaldeeIntegration(data)
-            .subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-                    this.getJaldeeIntegrationSettings();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getJaldeeIntegrationSettings();
-                }
-            );
-    }
+    // handle_jaldeeIntegration(event) {
+    //     const is_check = (event.checked) ? 'Enable' : 'Disable';
+    //     const data = {
+    //         'jaldeeIntegration': event.checked
+    //     };
+    //     this.provider_services.setJaldeeIntegration(data)
+    //         .subscribe(
+    //             () => {
+    //                 this.shared_functions.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+    //                 this.getJaldeeIntegrationSettings();
+    //             },
+    //             error => {
+    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.getJaldeeIntegrationSettings();
+    //             }
+    //         );
+    // }
     handle_jaldeeWalkinConsumer(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         const data = {
