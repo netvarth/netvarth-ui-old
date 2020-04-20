@@ -60,7 +60,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     }
     performActions(action) {
         if (action === 'addcause') {
-            this.router.navigate(['provider', 'settings', 'donation', 'add']);
+            this.router.navigate(['provider', 'settings', 'donationmanager', 'add']);
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
