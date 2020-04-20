@@ -7,6 +7,7 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
+import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 
 @Component({
     selector: 'app-donation-detail',
@@ -28,12 +29,15 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            url: '/provider/settings/miscellaneous',
-            title: 'Miscellaneous'
+            title: 'Donation Manager',
+            url: '/provider/settings/donation'
         },
         {
-            url: '/provider/settings/miscellaneous/users',
-            title: 'Users'
+            title: 'Causes',
+            url: '/provider/settings/donation'
+        },
+        {
+            title: 'Add'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -46,6 +50,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
     userId: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
+        public fed_service: FormMessageDisplayService,
         private servicesService: ServicesService,
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,

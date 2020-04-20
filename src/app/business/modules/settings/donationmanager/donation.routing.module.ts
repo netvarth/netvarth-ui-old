@@ -7,7 +7,7 @@ import { from } from 'rxjs';
 const routes: Routes = [
     { path: '', component: donationcomponent },
     { path: '', component: DonationCauseListComponent },
-    { path: ':sid', component: DonationDetailComponent }
+    { path: ':id', component: DonationDetailComponent }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

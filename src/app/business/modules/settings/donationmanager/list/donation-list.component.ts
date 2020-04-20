@@ -51,35 +51,16 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        // breadcrumbs.push({
-        //     title: this.userId,
-        //     url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-        // });
-        // breadcrumbs.push({
-        //     title: 'Settings',
-        //     url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-        // });
-        // breadcrumbs.push({
-        //     title: 'Services'
-        // });
-        // this.breadcrumbs = breadcrumbs;
-        // this.getServices();
-        // this.breadcrumb_moreoptions = {
-        //     'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
-        //     'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
-        //     { 'title': 'Help', 'type': 'learnmore' }]
-        // };
+        this.breadcrumb_moreoptions = {
+            'actions': [{ 'title': 'Add Cause', 'type': 'addcause' }]
+        };
     }
 
     ngOnDestroy() {
     }
     performActions(action) {
-        if (action === 'addservice') {
-            this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', 'add']);
+        if (action === 'addcause') {
+            this.router.navigate(['provider', 'settings', 'donation', 'add']);
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
