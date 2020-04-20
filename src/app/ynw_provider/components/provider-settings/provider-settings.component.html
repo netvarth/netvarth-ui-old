@@ -408,14 +408,14 @@
                         <ul class="nav nav-stacked  set-block-4">
                             <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
                             <li><a>Accept Donations<span class="pull-right">
-                                        <mat-slide-toggle [(ngModel)]="onlinepresence_status"
-                                            (change)="handle_jaldeeOnlinePresence($event)">
+                                        <mat-slide-toggle [(ngModel)]="Donations_status"
+                                            (change)="handle_Donations($event)">
                                         </mat-slide-toggle>
                                     </span>
-                                    <p class="sts" [class.active]="onlinepresence_status">
-                                        {{onlinepresence_statusstr}}</p>
-                                    <p class="settings_info" *ngIf="onlinepresence_status">Accept Donations hints.</p>
-                                    <p class="settings_info" *ngIf="!onlinepresence_status">Accept Donations hints
+                                    <p class="sts" [class.active]="Donations_status">
+                                        {{Donations_statusstr}}</p>
+                                    <p class="settings_info" *ngIf="Donations_status">Accept Donations hints.</p>
+                                    <p class="settings_info" *ngIf="!Donations_status">Accept Donations hints
                                     </p>
                                 </a>
                             </li>

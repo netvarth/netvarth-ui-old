@@ -117,6 +117,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   jaldeeintegration_statusstr: string;
   createappointment_status: any;
   createappointment_statusstr: string;
+  Donations_status: any;
+  Donations_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -386,6 +388,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
         this.createappointment_status = data.appointment;
         this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
+        this.Donations_status = data.donation;
+        this.Donations_statusstr = (this.Donations_status) ? 'On' : 'Off';
       });
   }
   handle_posStatus(event) {
@@ -821,5 +825,19 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.getGlobalSettingsStatus();
         }
       );
+  }
+  handle_Donations(event) {
+    const is_Donation = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setDonations(is_Donation)
+        .subscribe(
+            () => {
+                this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+                this.getGlobalSettingsStatus();
+            },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.getGlobalSettingsStatus();
+            }
+        );
   }
 }

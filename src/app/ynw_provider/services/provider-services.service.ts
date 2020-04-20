@@ -1171,4 +1171,9 @@ export class ProviderServices {
       const url = 'provider/account/settings/jaldeeIntegration';
       return this.servicemeta.httpPut(url, data);
    }
+   setDonations(status) {
+      const url = 'provider/account/settings/donationFundRaising/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+
 }
