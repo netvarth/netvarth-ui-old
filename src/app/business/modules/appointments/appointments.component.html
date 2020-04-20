@@ -125,8 +125,8 @@
             <mat-chip-list class="pcheckin-owl">
               <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
                 <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
-                  <mat-chip class="item" (click)="viewQClicked(queue.id)" [selected]="isQueueSelected(queue.id)"
-                    *ngFor="let queue of queues;let i = index">
+                  <mat-chip class="pointer-cursor item" (click)="viewQClicked(queue.id)"
+                    [selected]="isQueueSelected(queue.id)" *ngFor="let queue of queues;let i = index">
                     <span class="break-inside: avoid">
                       {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
                     </span>
@@ -211,7 +211,7 @@
                           <mat-option (click)="setFilterData('queue', 'all')" [value]="'all'">
                             {{all_cap}}
                           </mat-option>
-                          <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)"
+                          <mat-option *ngFor="let queue of queues" (click)="setFilterData('queue', queue.id)"
                             [value]="queue.id">
                             <span class="time_label">{{queue.displayschedule.time}}</span>
                             <span class="dashboard-qname"> [{{queue.name}}]</span>
@@ -323,16 +323,19 @@
                 *ngIf="showstatus['new'] && !loading && availableSlotDetails">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                   *ngFor="let slot of availableSlotDetails.availableSlots, let i=index">
-                  <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
+                  <div class="col-md-2 col-xs-4 col-sm-2 no-padding ">
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
-                        [selected]="!isAvailableSlot(slot)" (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
+                        [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
+                        (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
-                  <div class="info-box-content" *ngIf="timeSlotCheckins && timeSlotCheckins[slot.time]">
-                    <div *ngFor="let checkin of timeSlotCheckins[slot.time]">
-                      <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0">
+                  <div class="col-md-10 col-xs-8 col-sm-10 pad-rt-0 no-padding"
+                    *ngIf="timeSlotCheckins && timeSlotCheckins[slot.time]">
+                    <div class="col-md-12 col-xs-12 col-sm-12"
+                      *ngFor="let checkin of timeSlotCheckins[slot.time]">
+                      <div class="right">
                         <div class="col-md-7 col-xs-7 p0">
                           <div class="col-md-8 col-xs-8 p0">
                             <span class="info-box-text forwhom pointer-cursor" *ngFor="let user of checkin.appmtFor"
@@ -740,20 +743,20 @@
                   <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                     *ngFor="let slot of availableSlotDetails.availableSlots"
                     [class.selected-waitlist]="timeSlotCheckins[slot.time] && timeSlotCheckins[slot.time].length === 1 && newWaitlistforMsg.length === 1">
-                    <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
+                    <div class="col-md-2 col-xs-4 col-sm-2 no-padding ">
                       <mat-chip-list>
                         <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
-                          [selected]="!isAvailableSlot(slot)"
+                          [selected]="!isAvailableSlot(slot)" [class.pointer-cursor]="!isAvailableSlot(slot)"
                           (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
                           {{slot.time}} </mat-chip>
                       </mat-chip-list>
                     </div>
-                    <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0"
+                    <div class="col-md-10 col-xs-8 col-sm-10 pad-rt-0 no-padding"
                       *ngIf="timeSlotCheckins && timeSlotCheckins[slot.time]"
                       [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
                       <div class="col-md-12 col-xs-12 col-sm-12"
                         *ngFor="let checkin of timeSlotCheckins[slot.time], let i=index"
-                        [class.selected-waitlist]="timeSlotCheckins[slot.time] && timeSlotCheckins[slot.time].length > 1 && waitlistSelected[slot.time][i]">
+                        [class.selected-waitlist]="timeSlotCheckins[slot.time] && timeSlotCheckins[slot.time].length > 1 && waitlistSelected[slot.time] && waitlistSelected[slot.time][i]">
                         <div class="right" (click)="selectnewWaitlist(slot.time, i, checkin)">
                           <div class="col-md-7 col-xs-7 p0">
                             <div class="col-md-8 col-xs-8 p0 hidden-xs">

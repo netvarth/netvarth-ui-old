@@ -192,7 +192,7 @@
                   *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
                   <p>{{waitlist_data.consumerNote}}</p>
                 </div>
-                <div *ngIf="waitlist_data && waitlist_data.consumerNote === '' || !waitlist_data.consumerNote">
+                <div *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote === '' || !waitlist_data.consumerNote">
                   <p>{{no_cus_notes_cap}}</p>
                 </div>
               </mat-expansion-panel>

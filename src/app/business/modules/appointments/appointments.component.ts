@@ -531,7 +531,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               qs.push(queues[i]);
             }
           }
-          console.log(qs);
           resolve(qs);
         });
     });
@@ -921,8 +920,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
       Object.keys(this.timeSlotCheckins).forEach(key => {
         this.waitlistSelected[key] = [];
+        if (this.newWaitlistforMsg.length > 0) {
+          for (let i = 0; i < this.newWaitlistforMsg.length; i++) {
+            for (let j = 0; j < this.timeSlotCheckins[key].length; j++) {
+              if (this.newWaitlistforMsg[i].uid === this.timeSlotCheckins[key][j].uid) {
+                this.waitlistSelected[key][j] = true;
+              }
+            }
+          }
+        }
       });
-      console.log(this.timeSlotCheckins);
+      // console.log(this.timeSlotCheckins);
     });
   }
 
@@ -1892,14 +1900,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     setTimeout(() => {
       const values = [];
-      for (const value of Object.values(checkin.label)) {
-        values.push(value);
-      }
-      for (let i = 0; i < this.providerLabels.length; i++) {
-        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-          for (let k = 0; k < values.length; k++) {
-            if (this.providerLabels[i].valueSet[j].value === values[k]) {
-              this.providerLabels[i].valueSet[j].selected = true;
+      if (checkin.label) {
+        for (const value of Object.values(checkin.label)) {
+          values.push(value);
+        }
+        for (let i = 0; i < this.providerLabels.length; i++) {
+          for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+            for (let k = 0; k < values.length; k++) {
+              if (this.providerLabels[i].valueSet[j].value === values[k]) {
+                this.providerLabels[i].valueSet[j].selected = true;
+              }
             }
           }
         }
