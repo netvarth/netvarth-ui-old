@@ -30,11 +30,11 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         },
         {
             title: 'Donation Manager',
-            url: '/provider/settings/donation'
+            url: '/provider/settings/donationmanager'
         },
         {
             title: 'Causes',
-            url: '/provider/settings/donation'
+            url: '/provider/settings/donationmanager'
         },
         {
             title: 'Add'

@@ -22,11 +22,11 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            url: '/provider/settings/donation',
+            url: '/provider/settings/donationmanager',
             title: 'Donation Manager'
         },
         {
-            url: '/provider/settings/donation/causes',
+            url: '/provider/settings/donationmanager/causes',
             title: 'Causes'
         }
     ];
