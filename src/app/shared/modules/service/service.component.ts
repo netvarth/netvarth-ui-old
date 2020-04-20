@@ -56,6 +56,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tooltip = Messages.NEW_SERVICE_TOOLTIP;
     rupee_symbol = '₹';
     base_licence = false;
+    is_virtual_serv = false;
     button_title = 'Save';
     customer_label = '';
     char_count = 0;
@@ -179,6 +180,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.advanced = false;
         }
+    }
+    selectServiceHandler(event) {
+        if (event === 'virtualService') {
+            this.is_virtual_serv = true;
+        } else {
+            this.is_virtual_serv = false;
+        }
+    }
+    selectServiceTypeHandler(event) {
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {

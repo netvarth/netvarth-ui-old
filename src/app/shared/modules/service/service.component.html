@@ -102,6 +102,28 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="form-group" [ngClass]="{'glbl-preview':is_virtual_serv}">
+                <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
+                    <mat-select  placeholder="Categories" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
+                        <mat-option  [value]="'virtualService'">
+                            Virtual Service
+                        </mat-option>
+                        <mat-option  [value]="'physicalService'">
+                            Physical Service
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="is_virtual_serv" class="example-full-width mat-select-virtualservice">
+                    <mat-select placeholder="Select type" #type (selectionChange)="selectServiceTypeHandler(type.value)">
+                        <mat-option [value]="'audioService'">
+                            Audio
+                        </mat-option>
+                        <mat-option [value]="'videoService'">
+                            Video
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
                 <ng-container class="example-full-width">
                     <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
