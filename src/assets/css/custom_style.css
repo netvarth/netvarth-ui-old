@@ -8469,3 +8469,10 @@ hr.wide-separator-line {
 .mat-radio-button-createpatient {
   padding-left: 10px
 }
+.mat-select-virtualservice{
+  width:50% !important;
+  padding-left: 6%;
+}
+.mat-select-virtualsrvcategory{
+  width:50% !important;
+}
