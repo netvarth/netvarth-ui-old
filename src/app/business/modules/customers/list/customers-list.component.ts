@@ -78,6 +78,7 @@ export class CustomersListComponent implements OnInit {
     selectedIndex: any = [];
 
     constructor(private provider_services: ProviderServices,
+        private router: Router,
         public dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
         public dateformat: DateFormatPipe,
@@ -234,34 +235,36 @@ export class CustomersListComponent implements OnInit {
         }
     }
     searchCustomer(source) {
-        this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-            disableClose: true,
-            data: {
-                source: source,
-                calc_mode: this.calculationmode,
-                showToken: this.showToken
-            }
-        });
-        this.srchcustdialogRef.afterClosed().subscribe(result => {
-            if (result && result.message) {
-                this.createCustomer(result.data);
-            }
-        });
-    }
-    createCustomer(search_data) {
-        this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-            disableClose: true,
-            data: {
-                search_data: search_data
-            }
-        });
-        this.crtCustdialogRef.afterClosed().subscribe(result => {
+        this.router.navigate(['provider', 'customers', 'find']);
 
-        });
+    //     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
+    //         width: '50%',
+    //         panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+    //         disableClose: true,
+    //         data: {
+    //             source: source,
+    //             calc_mode: this.calculationmode,
+    //             showToken: this.showToken
+    //         }
+    //     });
+    //     this.srchcustdialogRef.afterClosed().subscribe(result => {
+    //         if (result && result.message) {
+    //             this.createCustomer(result.data);
+    //         }
+    //     });
+    // }
+    // createCustomer() {
+        // this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
+        //     width: '50%',
+        //     panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+        //     disableClose: true,
+        //     data: {
+        //         search_data: search_data
+        //     }
+        // });
+        // this.crtCustdialogRef.afterClosed().subscribe(result => {
+
+        // });
     }
     showFilterSidebar() {
         this.filter_sidebar = true;
