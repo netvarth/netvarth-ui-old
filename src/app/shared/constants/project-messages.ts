@@ -1469,5 +1469,6 @@ export const Messages = {
   'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
-  'GENERALSETTINGS': 'General'
+  'GENERALSETTINGS': 'General',
+  'APPOINTMNT_SUCC': 'Appointment created successfully'
 };

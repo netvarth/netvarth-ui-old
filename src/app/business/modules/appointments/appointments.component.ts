@@ -613,7 +613,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   handleViewSel(view) {
-      this.shared_functions.setitemonLocalStorage('t_slv', view);
+    this.shared_functions.setitemonLocalStorage('t_slv', view);
     this.selectedView = view;
     this.initView(this.selectedView);
     this.reloadAPIs();
@@ -703,12 +703,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log(this.selQidsforHistory);
       if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ')) {
         this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
-        } else {
-          this.selQidsforHistory = qIds;
-          this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
-        }
+      } else {
+        this.selQidsforHistory = qIds;
+        this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
+      }
       if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
-      this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+        this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
       } else {
         this.selQId = view.customViewConditions.queues[0]['id'];
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
@@ -1546,8 +1546,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
   }
-  apptClicked() {
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments']);
+  apptClicked(time?) {
+    let slot = '';
+    if (time) {
+      slot = time;
+    }
+    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot } });
   }
   searchCustomer(source, appttime) {
     this.router.navigate(['provider', 'customers', 'find']);
