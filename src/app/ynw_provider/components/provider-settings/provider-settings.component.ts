@@ -840,4 +840,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             }
         );
   }
+  handle_virtualCallingModeStatus(event) {
+    const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
+    .subscribe(
+    () => {
+    this.shared_functions.openSnackBar('Virtual Calling Mode' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+    // this.getDonationStatus();
+    },
+    error => {
+    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    // this.getDonationStatus();
+    }
+    );
+    }
 }

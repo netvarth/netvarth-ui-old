@@ -2,16 +2,110 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content w-manager settings comn-cls">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                    <div class="card pos">
-                        <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
-                            
+    <div class="content displayboard loc-list users">
+            <div class="col-md-12 no-padding-small">
+                <div class="row">
+                        <div class="col-md-12 no-padding">
+                                <div class="card" *ngIf="api_loading">
+                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                </div>
+                            </div>
+                    <div class="col-md-12 no-padding ynw-common-form-nm" *ngIf="!api_loading">
+                        <div class="card no-padding">
+                            <div class="copy">
+                                <div class="mgn-up-20 col-md-12">
+                                    <div class="disply-field">
+                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="skypeSelected($event)"
+                                        [value]=true>
+                                            Skype
+                                        </mat-checkbox>
+                                        <div *ngIf="skypeselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="skypeMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter Skype ID" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="disply-field">
+                                        <mat-checkbox  [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="whatsappSelected($event)"
+                                        [value]=true>
+                                            Whatsapp
+                                        </mat-checkbox>
+                                        <div *ngIf="whatsappselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="whatsappMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter Whats app number" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="disply-field">
+                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="hangoutSelected($event)"
+                                        [value]=true>
+                                            Hangouts
+                                        </mat-checkbox>
+                                        <div *ngIf="hangoutselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="hangoutMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter Hangouts ID" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="disply-field">
+                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="botimSelected($event)"
+                                        [value]=true>
+                                            Botim
+                                        </mat-checkbox>
+                                        <div *ngIf="botimselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="botimMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter Botim ID" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="disply-field">
+                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="imoSelected($event)"
+                                        [value]=true>
+                                            IMO
+                                        </mat-checkbox>
+                                        <div *ngIf="imoselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="imoMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter IMO ID" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="disply-field">
+                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="jaldeeSelected($event)"
+                                        [value]=true>
+                                            Jaldee Integrated Video
+                                        </mat-checkbox>
+                                        <div *ngIf="jaldeeselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input [(ngModel)]="jaldeeMode" matInput type="text" class="form-control" 
+                                                        placeholder="Enter ID" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
+                                        <button mat-button type="button" class="cs-btn bt1" (click) = "addVideocallMode()">SAVE</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </div>
 </section>

@@ -1179,5 +1179,18 @@ export class ProviderServices {
       const url = '/provider/account/settings/jaldeeIdFormat/' + customerSeries;
       return this.servicemeta.httpPut(url, data);
    }
+   //Comm urls
+   getVirtualCallingModes() {
+      const url = 'provider/account/settings/virtualCallingModes';
+      return this.servicemeta.httpGet(url);
+   }
+   setVirtualCallingMode(status) {
+      const url = 'provider/account/settings/virtualServices/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   addVirtualCallingModes(post_data) {
+      const url = 'provider/account/settings/virtualCallingModes';
+      return this.servicemeta.httpPut(url, post_data);
+   }
 
 }

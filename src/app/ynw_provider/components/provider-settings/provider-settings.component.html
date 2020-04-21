@@ -565,6 +565,18 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>These settings allows the video call options</a></li>
+                                <li><a>Virtual Calling Mode<span class="pull-right">
+                                    <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                                    (change)="handle_virtualCallingModeStatus($event)">
+                                    </mat-slide-toggle>
+                                    </span>
+                                    <p class="sts" [class.active]="virtualCallingMode_status">
+                                    ON</p>
+                                    <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling hints.</p>
+                                    <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling hints
+                                    </p>
+                                    </a>
+                                    </li>
                                 <li (click)="redirecTo('video')"><a class="pointer-cursor"><span
                                             class="lnk setings">Video Call
                                         </span>

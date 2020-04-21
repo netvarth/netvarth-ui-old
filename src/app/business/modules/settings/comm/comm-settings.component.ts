@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     'templateUrl': './comm-settings.component.html'
 })
 export class CommSettingsComponent implements OnInit {
+    virtualCallingMode_status = false;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -34,5 +35,19 @@ export class CommSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         // this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
+      }
+      handle_virtualCallingModeStatus(event) {
+        const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Virtual Calling Mode' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    // this.getDonationStatus();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    // this.getDonationStatus();
+                }
+            );
       }
 }

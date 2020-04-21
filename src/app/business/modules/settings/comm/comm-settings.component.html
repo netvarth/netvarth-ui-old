@@ -4,6 +4,19 @@
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
+                <div class="row">
+                        <div class="card pos">
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                                <label>Virtual Calling Mode
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="virtualCallingMode_status" (change)="handle_virtualCallingModeStatus($event)">
+                                        </mat-slide-toggle>
+                                    </span>
+                                    <div class="onoff">ON</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoVideoSettings()">
