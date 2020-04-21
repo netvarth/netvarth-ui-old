@@ -366,6 +366,8 @@
                                                         *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
                                                     {{for_cap}}
                                                     <span>{{different_date_cap}}</span></span>
+                                                    <span class="checkin-btn"
+                                                    (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
                                             </div>
                                         </div>
                                     </div>

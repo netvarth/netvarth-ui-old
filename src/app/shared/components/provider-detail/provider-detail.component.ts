@@ -975,6 +975,23 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   }
+
+  appointmentClicked(locid, locname, cdate, chdatereq) {
+    this.changedate_req = chdatereq;
+    this.showAppointment(locid, locname, cdate, 'consumer');
+  }
+  showAppointment(locid, locname, curdate, origin?) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
+       }
+    };
+    this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
+  }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
       return true;

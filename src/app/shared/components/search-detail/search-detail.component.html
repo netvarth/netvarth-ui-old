@@ -558,6 +558,8 @@
                                             *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                         {{for_cap}} <span>{{different_date}}</span></span>
                                 </div>
+                                <span class="checkin-btn" (click)="appointmentClicked(search_result, false)"
+                                    >Appointment</span>
                             </div>
                         </div>
                     </div>

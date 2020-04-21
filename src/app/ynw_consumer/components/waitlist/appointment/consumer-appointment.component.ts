@@ -207,7 +207,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbs = [
             {
-                title: 'appointment'
+                title: 'Appointment'
             }
         ];
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
@@ -1272,7 +1272,9 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        this.waitlist_for[0]['apptTime'] = this.apptTime;
+        for(let list of this.waitlist_for){
+            list['apptTime'] = this.apptTime;
+        }
         this.showEditView = false;
     }
     getProfile() {
