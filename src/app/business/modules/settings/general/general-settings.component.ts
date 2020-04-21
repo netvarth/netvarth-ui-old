@@ -75,6 +75,10 @@ export class GeneralSettingsComponent implements OnInit {
     gotoLabels() {
         this.router.navigate(['provider', 'settings', 'general', 'labels']);
     }
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
+      }
     getLocationCount() {
         this.loading = true;
         this.provider_services.getLocationCount()

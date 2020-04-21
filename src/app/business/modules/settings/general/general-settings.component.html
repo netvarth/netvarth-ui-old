@@ -16,8 +16,10 @@
                             <p class="sts" [class.active]="livetrack_status"></p>
                             <div class="onoff">{{livetrack_statusstr}}</div>
                         </label>
-                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
-                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints</p>
+                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints. <a class="learnmore-pointer" id="customer-help"
+                            (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
+                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints <a class="learnmore-pointer" id="customer-help"
+                            (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
                     </div>
                 </div>
                 <!-- <div class="card p0" *ngIf="loading">
@@ -31,7 +33,7 @@
                                 *ngIf="multipeLocationAllowed == true"> ({{location_count}})</p>
                         </h2>
                         <span class="form-level-settings">{{frm_set_loc_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-locations', $event)">Learn
+                                id="customer-help" (click)="learnmore_clicked('locations', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -42,7 +44,7 @@
                         <h2>Departments ({{departmentCount}})</h2>
                         <span class="form-level-settings">Add the department details here. Assign your services to
                             departments <a class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('settings-departments', $event)">Learn More</a></span>
+                                (click)="learnmore_clicked('departments', $event)">Learn More</a></span>
                     </span>
                 </div>
             </div>
@@ -83,7 +85,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotocustomview()">
                         <h2>Custom Views</h2>
-                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer">Learn
+                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('customview', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

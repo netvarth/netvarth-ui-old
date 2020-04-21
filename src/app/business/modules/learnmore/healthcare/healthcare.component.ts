@@ -40,6 +40,7 @@ export class HealthCareComponent implements OnInit {
   showadditionalinfo = false;
   showsocialmedia = false;
   showgallery = false;
+  showgeneral = false;
   showbilling = false;
   showpayment = false;
   showtax = false;
@@ -63,6 +64,8 @@ export class HealthCareComponent implements OnInit {
   showdashboard = false;
   showdashbord = false;
   showcustomer = false;
+  showcustomview = false;
+  showlivetrackstatus = false;
   showdownpanel = false;
   showdisplayboard = false;
   showlabel = false;
@@ -178,6 +181,30 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'photo-gallery') {
         this.showgallery = true;
+      }
+    }
+    if(parentContent === 'general'){
+      this.showgeneral = true;
+      if(childContent === 'locations'){
+        this.showlocations = true;
+      }
+      if (childContent === 'departments') {
+        this.showdepartment = true;
+      }
+      if (childContent === 'livetrackstatus') {
+        this.showlivetrackstatus = true;
+      }
+      if (childContent === 'customview') {
+        this.showcustomview = true;
+      }
+      if (childContent === 'nonworking') {
+        this.shownonworking = true;
+      }
+      if (childContent === 'labels') {
+        this.showlabel = true;
+      }
+      if (childContent === 'themes') {
+        this.showthemes = true;
       }
     }
 

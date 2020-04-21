@@ -1228,7 +1228,273 @@
                             </mat-accordion>
                         </mat-expansion-panel>
                     </mat-accordion>
+                    <!-- next -->
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]='showgeneral'>
+                            <mat-expansion-panel-header class="accordion">
+                                <mat-panel-title class="accordion-title" (click)="menu('general')">
+                                   General
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span>The General explains  other features that are mentioned here.
+                                </span>
+                            </div>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="showlocations && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent"
+                                                (click)="handleScroll('locations','general')">Locations</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
 
+                                    <div class="helpcontent">
+                                        <ul class="ul-normal">
+                                            <li>The information related to the business location comes under this
+                                                section.</li>
+                                            <li>This page prompts a provider to <strong>“Add new location�?</strong>, in
+                                                case he/she has
+                                                not
+                                                added any location during the initial profile set up.</li>
+                                            <li><strong>“Add new location�?</strong> allows the provider to add a new
+                                                location for the
+                                                enterprise.
+                                                <ol class="ol-normal">
+                                                    <li>When the provider clicks on this button, a location window pops up
+                                                        where one can
+                                                        select a location on the map.</li>
+                                                    <li>Click <strong>“Yes I’m Done�?</strong> after choosing a location
+                                                        in the map, then
+                                                        enter location name and rest of the fields will be filled
+                                                        automatically. If one
+                                                        cannot find the new location in the map, the provider will be
+                                                        required to manually
+                                                        enter the location details in the respective fields.</li>
+                                                    <li>In <strong>Queues</strong> the provider is required to add
+                                                        time schedule
+                                                        (Please refer <strong>Queues</strong> section below) and
+                                                        click on
+                                                        <strong>“Save�?</strong> to add the new location.</li>
+                                                    <li>Click <strong>“Save�?</strong> to submit all the information.
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li>The location details entered during the time of the profile activation
+                                                process is by
+                                                default
+                                                set as the base location of the business. </li>
+                                            <li>Multiple locations that are added in the profile is displayed here</li>
+                                            <li>To set a particular location as the base location, click on the three
+                                                dots menu in the
+                                                right
+                                                corner of the location name and click <strong>“Set as Base
+                                                    Location�?</strong>.</li>
+                                            <li>The provider can make any added location open/close to patient. To close a
+                                                location for
+                                                patients, click on the <strong>“Disable�?</strong> button from the three
+                                                dots menu in
+                                                the
+                                                right corner of the location name.</li>
+                                            <li>Click on the location name to view the details of a location including
+                                                the location
+                                                amenities and working hours.</li>
+                                            <li>The provider can also edit the location and location amenities of the
+                                                enterprise.</li>
+                                            <li>Working hours (please refer <strong>Queues</strong> section
+                                                below) of a selected
+                                                location is displayed in the bottom of the page.</li>
+                                            <li>Multiple activities related to the Queues such as adding another
+                                                working hours,
+                                                editing the existing working hour, enabling/disabling the working hours
+                                                can be done by
+                                                clicking on the three dots menu.</li>
+                                        </ul>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="showdepartment && showgeneral">
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent"
+                                                        (click)="handleScroll('departments','general')">Departments</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+        
+                                            <div class="helpcontent">
+                                                <span>A corporate structure consists of various departments which performs
+                                                    specific functions
+                                                    while
+                                                    constantly collaborating with each other to achieve specific goals. In
+                                                    Jaldee, provider can
+                                                    add in
+                                                    departments and can allow patient check-ins department wise.</span><br>
+                                                <span><strong>How to add a department?</strong></span>
+                                                <ul class="ul-normal">
+                                                    <li>Initially, a default department is added with all the services offered
+                                                        by the provider which can be edited.</li>
+                                                    <li>Click “Add Department�? button to add new department.</li>
+                                                    <li>Enter the department name, department id and give a brief description.
+                                                    </li>
+                                                    <li>Click <strong>“Save�?</strong> to add the department.</li>
+                                                    <li>Most importantly, add available services to each department.</li>
+                                                    <li>The added departments are listed here. provider can enable or disable
+                                                        added departments
+                                                        from
+                                                        three dots menu.</li>
+                                                    <li>To edit department details, click on the department name.</li>
+                                                    <li>To allow patients to check-in department wise enable the toggle button
+                                                        <strong>“Select
+                                                            services by department�?</strong> from Q manager.</li>
+                                                </ul>
+                                            </div>
+        
+                                        
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="showlivetrackstatus && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent"
+                                                (click)="handleScroll('livetrackstatus','general')">Livetracking</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent"></div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="shownonworking && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent" (click)="handleScroll('nonworking', 'general')">Non
+                                                Working
+                                                Day</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+            
+                                    <div class="helpcontent">
+                                        <span>Non-Working Day allows the provider to set up different Public holidays
+                                            and other
+                                            non-working
+                                            days. Unless a holiday has been mentioned in this section, it will be
+                                            assumed that the
+                                            service
+                                            is being provided during the working hours specified under the Working
+                                            Hours. Here is how a
+                                            provider can update non-working days in <strong>Jaldee</strong>.</span>
+                                        <ol class="ol-normal adjust-delay-num">
+                                            <li>Click <strong>“Add Non-Working Day�?</strong> under Miscellaneous.
+                                            </li>
+                                            <li>Select the corresponding date of the holiday (use calendar).</li>
+                                            <li>Enter the reason for the holiday.</li>
+                                            <li>Next, enter the duration of non-working hours. Keep in mind that the
+                                                start time cannot
+                                                be a
+                                                different time from the timing of the working hours.</li>
+                                            <li>Before adding a non-working day, ensure to have no pending waitlists
+                                                for the day’s
+                                                working
+                                                hours.</li>
+                                            <li>Upon having all the information, click <strong>“Save�?</strong> to
+                                                add the holiday.</li>
+                                            <li>Subsequently, to add more holidays, click <strong>“(+)�?.</strong>
+                                            </li>
+                                            <li>The date, time, and reason for each non-working day are listed here.
+                                            </li>
+                                            <li>A provider can edit or delete a particular non-working day. To do so,
+                                                click on the three
+                                                dots
+                                                menu given in the right corner.</li>
+                                        </ol>
+                                    </div>
+            
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="showlabel && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent" (click)="handleScroll('labels', 'general')">
+                                                Custom fields/labels</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+            
+                                    <div class="helpcontent">
+                                        Jaldee allows their provider to add and manage their own custom fields or labels for the
+                                        check-ins list in the dashboard.The steps you take in the Custom Fields/Labels option from
+                                        provider dashboard, create the label and make it available for use from the check-ins list
+                                        in the dashboard. And also you can use the New Label/Manage Label option from check-in list
+                                        in
+                                        dashboard to add new label or manage the existing labels.<br>
+                                        <strong>How to create a new lablel?</strong>
+                                        <ul>
+                                            <li>To get started with creating new label click the button “ADD LABELS�?.</li>
+                                            <li>Input the label name and briefly describe the label you wish to add.</li>
+                                            <li>Then click the button <strong>“Short label button�?</strong> to add the values of the
+                                                label which can be
+                                                used to sort the check-ins list in the dashboard.</li>
+                                            <li>Enter a value and a corresponding short value and click “ADD�? to save.
+                                            </li>
+                                            <li>You can also delete the added values from here.
+                                            </li>
+                                            <li>Click SAVE to save all the information.</li>
+                                            <li>And once a label is created, when a particular check-in is selected from dashboard a
+                                                label
+                                                symbol appears in right corner , click that symbol and assign a particular value to
+                                                this
+                                                check-in.
+                                            </li>
+                                        </ul>
+                                        <strong>EXAMPLE:</strong> A provider creates a label named <strong>“Check-ins�?</strong> and
+                                        describing this label as “Both walk-in and online check-ins�?. Then he clicks <strong>“Short
+                                            label button�?</strong>.First he entered a value “Walk-in�? and gave a shortcut value “W�?,
+                                        again he added the second value “Online�?and gave shortcut value “O�?. Now from the check-ins
+                                        list in the dashboard, provider chooses the label for each check-in using that symbol appeared
+                                        in the right corner of the selected check-in and
+                                        assign respective values according to the type of check-in that patient has taken ie;
+                                        either
+                                        <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
+                                    </div>
+            
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="showcusomview && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent"
+                                                (click)="handleScroll('customview','general')">CustomView</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent"></div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="showthemes && showgeneral">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent" (click)="handleScroll('themes', 'general')">
+                                                Themes</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+            
+                                    <div class="helpcontent">
+                                        Every newly created provider dashboard has a default theme set in Jaldee. If you wish to
+                                        change the view of your profile, you can select the available themes from. The selection
+                                        will automatically switch your profile’s appearance according to your selection.
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </mat-expansion-panel>
+                     </mat-accordion>
 
 
 

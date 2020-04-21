@@ -76,6 +76,9 @@ export class VeterinaryComponent implements OnInit {
   showjdn = false;
   showsaleschannel = false;
   showthemes = false;
+  showgeneral = false;
+  showlivetrackstatus = false;
+  showcustomview = false;
   domain;
   show = 'false';
   constructor(
@@ -108,7 +111,7 @@ export class VeterinaryComponent implements OnInit {
         } else {
           this.child = 'public-search';
           this.parent = 'jaldeeonline';
-        }
+        } 
         this.handleScroll(this.child, this.parent);
       });
   }
@@ -170,6 +173,30 @@ export class VeterinaryComponent implements OnInit {
       }
       if (childContent === 'photo-gallery') {
         this.showgallery = true;
+      }
+    }
+    if(parentContent === 'general'){
+      this.showgeneral = true;
+      if(childContent === 'locations'){
+        this.showlocations = true;
+      }
+      if (childContent === 'departments') {
+        this.showdepartment = true;
+      }
+      if (childContent === 'livetrackstatus') {
+        this.showlivetrackstatus = true;
+      }
+      if (childContent === 'customview') {
+        this.showcustomview = true;
+      }
+      if (childContent === 'nonworking') {
+        this.shownonworking = true;
+      }
+      if (childContent === 'labels') {
+        this.showlabel = true;
+      }
+      if (childContent === 'themes') {
+        this.showthemes = true;
       }
     }
 
