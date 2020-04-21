@@ -1175,5 +1175,9 @@ export class ProviderServices {
       const url = 'provider/account/settings/donationFundRaising/' + status;
       return this.servicemeta.httpPut(url);
    }
+   updatecustomerseries(customerSeries, data) {
+      const url = '/provider/account/settings/jaldeeIdFormat/' + customerSeries;
+      return this.servicemeta.httpPut(url, data);
+   }
 
 }

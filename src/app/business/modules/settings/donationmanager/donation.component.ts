@@ -27,9 +27,17 @@ export class donationcomponent {
     private shared_functions: SharedFunctions,
     private provider_services: ProviderServices)
     {}
+    ngOnInit() {
+        this.getDonationStatus();
+        this.getDonationcount();
+                
+    }
+    getDonationcount() {
+             
+    }
  
   gotocauses() {
-    //  this.router.navigate(['provider', 'settings', 'donationmanager' ,'list']);
+     this.router.navigate(['provider', 'settings', 'donationmanager' ,'details']);
   }
 
   handle_Donations(event) {
