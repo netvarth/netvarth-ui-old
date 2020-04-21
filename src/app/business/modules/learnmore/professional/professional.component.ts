@@ -182,7 +182,7 @@ export class ProfessionalCareComponent implements OnInit {
       if (childContent === 'departments') {
         this.showdepartment = true;
       }
-      if (childContent === 'livetrackstatus') {
+      if (childContent === 'livetracking') {
         this.showlivetrackstatus = true;
       }
       if (childContent === 'customview') {

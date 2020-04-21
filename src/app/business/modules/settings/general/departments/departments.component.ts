@@ -43,7 +43,7 @@ export class DepartmentsComponent implements OnInit {
         this.loading = true;
         this.getDepartments();
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
+            'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }, { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -95,7 +95,7 @@ export class DepartmentsComponent implements OnInit {
             this.router.navigate(['provider', 'settings', 'general',
                 'department', 'add']);
         } else if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-departments']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/general->departments']);
 
         }
     }

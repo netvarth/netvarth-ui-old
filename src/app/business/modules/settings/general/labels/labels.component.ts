@@ -35,7 +35,7 @@ export class LabelsComponent implements OnInit {
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
+            'show_learnmore': true, 'scrollKey': 'general->labels', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
 

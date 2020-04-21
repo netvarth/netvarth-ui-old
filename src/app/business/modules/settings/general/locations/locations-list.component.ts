@@ -82,7 +82,7 @@ export class LocationsListComponent implements OnInit {
         if (action === 'addlocation') {
             this.addLocation();
         } else if (action === 'learnmore') {
-            this.router.navigate(['/provider/' + this.domain + '/checkinmanager->settings-locations']);
+            this.router.navigate(['/provider/' + this.domain + '/general->locations']);
         }
     }
     getBussinessProfile() {
@@ -147,7 +147,7 @@ export class LocationsListComponent implements OnInit {
                         actions.push({ 'title': 'Help', 'type': 'learnmore' });
                     }
                     this.breadcrumb_moreoptions = {
-                        'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-locations', 'subKey': '', 'classname': 'b-loc',
+                        'show_learnmore': true, 'scrollKey': 'general->locations', 'subKey': '', 'classname': 'b-loc',
                         'actions': actions
                     };
                     this.init_location = false;

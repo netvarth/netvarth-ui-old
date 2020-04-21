@@ -36,6 +36,6 @@ export class ProviderSkinsComponent implements OnInit {
     this.shared_functions.sendMessage({ ttype: 'skin', selectedSkin: skin });
   }
   performActions() {
-    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->themes']);
+    this.routerobj.navigate(['/provider/' + this.domain + '/general->themes']);
   }
 }
