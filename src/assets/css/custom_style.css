@@ -8476,3 +8476,6 @@ hr.wide-separator-line {
 .mat-select-virtualsrvcategory{
   width:50% !important;
 }
+.virtual-serv-div {
+  display: flex !important;
+}

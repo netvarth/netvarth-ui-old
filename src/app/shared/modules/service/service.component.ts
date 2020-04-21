@@ -83,6 +83,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     locationExists = false;
     serv_mode: any;
     serv_type: any;
+    is_physical = 0;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -129,6 +130,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                         'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                         'department': this.service_data['department'] || this.serviceForm.get('department').value,
+                                        'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
+                                        'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                         'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
                                         'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
                                         'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
@@ -187,8 +190,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.serv_type = event;
         if (event === 'virtualService') {
             this.is_virtual_serv = true;
+            this.is_physical = 1;
         } else {
             this.is_virtual_serv = false;
+            this.is_physical = 2;
         }
     }
     selectServiceTypeHandler(event) {
@@ -312,6 +317,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 description: ['', Validators.compose([Validators.maxLength(500)])],
                 department: ['', Validators.compose([Validators.maxLength(500)])],
+                serviceType: ['', Validators.compose([Validators.maxLength(500)])],
+                virtualServiceType: ['', Validators.compose([Validators.maxLength(500)])],
                 serviceDuration: ['', Validators.compose([Validators.required])],
                 totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                 isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],

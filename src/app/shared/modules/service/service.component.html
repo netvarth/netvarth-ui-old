@@ -112,9 +112,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="form-group" [ngClass]="{'glbl-preview':is_virtual_serv}">
+            <div class="form-group" [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
                 <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
-                    <mat-select  placeholder="Category" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
+                    <mat-select formControlName="serviceType" placeholder="Category" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
                         <mat-option  [value]="'virtualService'">
                             Virtual Service
                         </mat-option>
@@ -123,8 +123,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field *ngIf="is_virtual_serv" class="example-full-width mat-select-virtualservice">
-                    <mat-select  placeholder="Select mode" #type (selectionChange)="selectServiceTypeHandler(type.value)">
+                <mat-form-field *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)" class="example-full-width mat-select-virtualservice">
+                    <mat-select formControlName="virtualServiceType"  placeholder="Select mode" #type (selectionChange)="selectServiceTypeHandler(type.value)">
                         <mat-option [value]="'audioService'">
                             Audio
                         </mat-option>
