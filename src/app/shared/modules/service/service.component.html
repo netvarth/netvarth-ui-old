@@ -24,6 +24,16 @@
                     <span class=" ttle">{{pre_pay_amt}}</span>
                     <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
+                <div class="item" *ngIf="service_data.serviceType">
+                    <span class=" ttle">Service Type</span>
+                    <span *ngIf="service_data.serviceType==='virtualService'">Virtual</span>
+                    <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
+                </div>
+                <div class="item" *ngIf="service_data.virtualServiceType">
+                    <span class=" ttle">Service Mode</span>
+                    <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
+                    <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
+                </div>
             </div>
             <div class="c-ot m0">
                 <div class="item">
@@ -104,7 +114,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" [ngClass]="{'glbl-preview':is_virtual_serv}">
                 <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
-                    <mat-select  placeholder="Categories" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
+                    <mat-select  placeholder="Category" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
                         <mat-option  [value]="'virtualService'">
                             Virtual Service
                         </mat-option>
@@ -114,7 +124,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field *ngIf="is_virtual_serv" class="example-full-width mat-select-virtualservice">
-                    <mat-select placeholder="Select type" #type (selectionChange)="selectServiceTypeHandler(type.value)">
+                    <mat-select  placeholder="Select mode" #type (selectionChange)="selectServiceTypeHandler(type.value)">
                         <mat-option [value]="'audioService'">
                             Audio
                         </mat-option>

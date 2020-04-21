@@ -81,6 +81,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     departmentName;
     bprofile: any = [];
     locationExists = false;
+    serv_mode: any;
+    serv_type: any;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -182,6 +184,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceHandler(event) {
+        this.serv_type = event;
         if (event === 'virtualService') {
             this.is_virtual_serv = true;
         } else {
@@ -189,6 +192,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceTypeHandler(event) {
+        this.serv_mode = event;
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {
@@ -251,6 +255,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
             const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
             form_data.serviceDuration = duration;
         }
+        form_data['serviceType'] = this.serv_type;
+        form_data['virtualServiceType'] = this.serv_mode;
         const serviceActionModel = {};
         serviceActionModel['action'] = this.action;
         serviceActionModel['service'] = form_data;
