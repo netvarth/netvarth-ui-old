@@ -1530,10 +1530,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.showCheckin('consumer');
     } else if (usertype === '') {
       const passParam = { callback: '', current_provider: obj };
-      this.doLogin('consumer', passParam);
+      this.doLogin('checkin','consumer', passParam);
     }
   }
-  doSignup(passParam?) {
+  appointmentClicked(obj, chdatereq) {
+    this.current_provider = obj;
+    console.log(obj);
+    this.changedate_req = chdatereq;
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (usertype === 'consumer') {
+      this.showAppointment('consumer');
+    } else if (usertype === '') {
+      const passParam = { callback: '', current_provider: obj };
+      this.doLogin('appointment','consumer', passParam);
+    }
+  }
+  doSignup(state,passParam?) {
     // this.api_loading = false;
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
@@ -1556,12 +1568,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
-          this.showCheckin('consumer');
+          if(state === 'checkin') {
+            this.showCheckin('consumer');
+        }else{
+            this.showAppointment('consumer');
+         }
         }
       }
     });
   }
-  doLogin(origin?, passParam?) {
+  doLogin(state,origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     let is_test_account = null;
@@ -1596,10 +1612,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
-          this.showCheckin('consumer');
+           if(state === 'checkin') {
+               this.showCheckin('consumer');
+           }else{
+               this.showAppointment('consumer');
+            }
         }
       } else if (result === 'showsignup') {
-        this.doSignup(passParam);
+        this.doSignup(state,passParam);
       }
     });
   }
@@ -1644,6 +1664,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // this.checkindialogRef.afterClosed().subscribe(result => {
     // });
   }
+
+  showAppointment(origin?) {
+    const acc_loc_id = this.current_provider.id.split('-');
+    const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
+    const unique_id = this.current_provider.fields['unique_id'];
+    const navigationExtras: NavigationExtras = {
+          queryParams: {
+            loc_id: acc_loc_id[1],
+            sel_date: seldate,
+            cur: this.changedate_req,
+            unique_id: unique_id,
+            account_id: acc_loc_id[0]
+          }
+        };
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
+      }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }

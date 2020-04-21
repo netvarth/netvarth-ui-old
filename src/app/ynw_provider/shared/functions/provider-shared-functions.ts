@@ -212,7 +212,7 @@ export class ProviderSharedFuctions {
   }
 
   changeWaitlistStatus(ob, waitlist, action) {
-    if (action === 'CANCEL' || action === 'Cancelled') {
+    if (action === 'CANCEL' || action === 'Rejected') {
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -223,7 +223,7 @@ export class ProviderSharedFuctions {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result && result.cancelReason) {
+        if (result && result.cancelReason || result.rejectReason) {
           ob.changeWaitlistStatusApi(waitlist, action, result);
         }
       });
@@ -241,15 +241,15 @@ export class ProviderSharedFuctions {
             resolve('changeWaitlistStatusApi');
             let status_msg = '';
             switch (action) {
-              case 'Arrived': status_msg = '[arrived]'; break;
-              case 'Started': status_msg = '[started]'; break;
-              case 'Cancelled': status_msg = '[cancelled]'; break;
-              case 'Confirmed': status_msg = '[waitlisted]'; break;
+              case 'Arrived': status_msg = 'arrived'; break;
+              case 'Started': status_msg = 'started'; break;
+              case 'Cancelled': status_msg = 'cancelled'; break;
+              case 'Confirmed': status_msg = 'confirmed'; break;
               case 'Completed': status_msg = 'completed'; break;
-              case 'Rejected': status_msg = 'Rejected'; break;
+              case 'Rejected': status_msg = 'rejected'; break;
             }
-            const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
-            this.shared_functions.openSnackBar(msg);
+            // const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+            this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
           },
           error => {
             waitlist.disableDonebtn = false;
@@ -454,3 +454,4 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
+

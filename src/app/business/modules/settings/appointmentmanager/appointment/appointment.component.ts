@@ -1315,6 +1315,9 @@ export class AppointmentComponent implements OnInit {
                     this.slots = data;
                     this.availableSlots =  this.slots.availableSlots;
                     console.log(this.availableSlots);
+                    if(this.apptTime === ''){
+                    this.apptTime = this.availableSlots[0].time;
+                    }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

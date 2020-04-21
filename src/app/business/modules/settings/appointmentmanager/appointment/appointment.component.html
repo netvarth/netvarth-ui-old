@@ -123,7 +123,7 @@
                                     </ng-container>
                                 </div>
                                 <div class="date-outer">
-                                    <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                                    <div class="date-head">Appointment {{date_cap}}</div>
                                     <div class="date-body">
                                         <span class="selected-date"> <span class="icon-minus"
                                                 [class.disable]="disableMinus()"
@@ -238,7 +238,7 @@
                                     </ng-container>
                                     <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                                         <span class='no-queue-available'
-                                            *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
+                                            *ngIf="checkinLabel==='Check-In'">Appointment{{not_accepted_for_this_date}}</span>
                                         <span class='no-queue-available'
                                             *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
                                     </ng-container>

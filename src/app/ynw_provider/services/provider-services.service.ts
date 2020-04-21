@@ -1159,7 +1159,7 @@ export class ProviderServices {
       const url = 'provider/appointment/' + appmntId;
       return this.servicemeta.httpGet(url);
    }
-     setAppointmentPresence(status) {
+   setAppointmentPresence(status) {
       const url = 'provider/account/settings/appointment/' + status;
       return this.servicemeta.httpPut(url);
    }
@@ -1192,5 +1192,12 @@ export class ProviderServices {
       const url = 'provider/account/settings/virtualCallingModes';
       return this.servicemeta.httpPut(url, post_data);
    }
-
+   addLabeltoAppointment(uuid, data) {
+      const url = 'provider/appointment/label/' + uuid;
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelfromAppointment(uuid, label) {
+      const url = 'provider/appointment/label/' + uuid + '/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
 }

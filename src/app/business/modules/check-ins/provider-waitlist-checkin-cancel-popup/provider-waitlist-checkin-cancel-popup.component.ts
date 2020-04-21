@@ -66,7 +66,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     }
     this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
     if (this.data.waitlist.providerAccount) {
-    this.rep_provname = this.titleCaseWord(this.data.waitlist.providerAccount.businessName);
+      this.rep_provname = this.titleCaseWord(this.data.waitlist.providerAccount.businessName);
     }
     this.getDefaultMessages();
     this.createForm();
@@ -94,9 +94,16 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   onSubmit(form_data) {
     this.resetApiErrors();
-    const post_data = {
-      'cancelReason': form_data.reason
-    };
+    let post_data;
+    if (this.data.appt) {
+      post_data = {
+        'rejectReason': form_data.reason
+      };
+    } else {
+      post_data = {
+        'cancelReason': form_data.reason
+      };
+    }
     if (form_data.send_message) {
       if (!form_data.message.replace(/\s/g, '').length) {
         this.api_error = 'Message cannot be empty';
@@ -122,7 +129,6 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     //   this.amForm.controls['message'].disable();
     // }
   }
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;

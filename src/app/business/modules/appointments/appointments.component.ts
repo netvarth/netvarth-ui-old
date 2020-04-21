@@ -103,6 +103,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_started_count = 0;
   today_completed_count = 0;
   today_cancelled_count = 0;
+  today_rejected_count = 0;
+  today_cancelled_checkins_count = 0;
   today_checkedin_count = 0;
   section_new: any = [];
   section_future: any = [];
@@ -283,6 +285,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allActiveQs: any[];
   availableSlotDetails: any = [];
   selQidsforHistory: any = [];
+  servicesCount;
 
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -686,12 +689,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setCounts(list) {
     this.today_arrived_count = this.getCount(list, 'Arrived');
-    this.today_checkedin_count = this.getCount(list, 'checkedIn');
+    this.today_checkedin_count = this.getCount(list, 'Confirmed');
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
-    this.today_started_count = this.getCount(list, 'started');
-    this.today_completed_count = this.getCount(list, 'done');
-    this.today_cancelled_count = this.getCount(list, 'cancelled');
-    this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_count;
+    this.today_started_count = this.getCount(list, 'Started');
+    this.today_completed_count = this.getCount(list, 'Completed');
+    this.today_cancelled_count = this.getCount(list, 'Cancelled');
+    this.today_rejected_count = this.getCount(list, 'Rejected');
+    this.today_cancelled_checkins_count = this.today_cancelled_count + this.today_cancelled_checkins_count;
+    this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_checkins_count;
   }
 
   initView(view) {
@@ -709,8 +714,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
         this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+        console.log(this.queues);
+        console.log(this.selQId);
+        console.log(this.queues.filter(q => q.id === this.selQId));
       } else {
         this.selQId = view.customViewConditions.queues[0]['id'];
+        this.servicesCount = view.customViewConditions.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       }
       this.getQs().then(data => {
@@ -755,6 +764,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 if (this.grouped_list && this.grouped_list['Cancelled']) {
                   this.cancelled_checkins_list = this.grouped_list['Cancelled'].slice();
+                }
+                if (this.grouped_list && this.grouped_list['Rejected']) {
+                  Array.prototype.push.apply(this.cancelled_checkins_list, this.grouped_list['Rejected'].slice());
                 }
                 if (this.grouped_list && this.grouped_list['Confirmed']) {
                   this.new_checkins_list = this.grouped_list['Confirmed'].slice();
@@ -809,6 +821,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const selQ = this.queues.filter(q => q.id === this.selQId);
       if (selQ.length === 0) {
         this.selQId = this.queues[0].id;
+        this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       }
       this.load_waitlist = 0;
@@ -1584,7 +1597,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getWaitlistBill(checkin_details.uid)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'bill', checkin_details.uid]);
+          this.router.navigate(['provider', 'bill', checkin_details.uid], {queryParams: { source: 'appt'}});
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1624,23 +1637,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
-  viewQClicked(qId) {
+  viewQClicked(q) {
     if (this.time_type === 3) {
-      const qindx = this.selQidsforHistory.indexOf(qId);
+      const qindx = this.selQidsforHistory.indexOf(q.id);
       if (qindx !== -1) {
         if (this.selQidsforHistory.length === 1) {
           return false;
         }
         this.selQidsforHistory.splice(qindx, 1);
       } else {
-        this.selQidsforHistory.push(qId);
+        this.selQidsforHistory.push(q.id);
       }
       console.log(this.selQidsforHistory);
     } else {
-      if (this.selQId === qId) {
+      if (this.selQId === q.id) {
         return false;
       } else {
-        this.selQId = qId;
+        this.selQId = q.id;
+        this.servicesCount = q.services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       }
     }
@@ -1920,7 +1934,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 100);
   }
   addLabel() {
-    this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
+    this.provider_services.addLabeltoAppointment(this.checkinId, this.labelMap).subscribe(data => {
       this.getTodayAppointments();
     },
       error => {
@@ -1928,7 +1942,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   deleteLabel(label) {
-    this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
+    this.provider_services.deleteLabelfromAppointment(this.checkinId, label).subscribe(data => {
       this.getTodayAppointments();
     },
       error => {

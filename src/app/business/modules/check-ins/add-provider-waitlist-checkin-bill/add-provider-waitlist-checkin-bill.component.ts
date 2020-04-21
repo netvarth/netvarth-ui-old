@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
-import { startWith ,  map } from 'rxjs/operators';
+import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -95,15 +95,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   update_display_note = Messages.UPDATE_DISPLAY_NOTE;
   update_private_note = Messages.UPDATE_PRIVATE_NOTE;
   update_note_btn = Messages.UPDATE_NOTE;
-  @ViewChild('itemservicesearch', {static: false} ) item_service_search;
-  @ViewChild('itemserviceqty', {static: false}) item_service_qty;
+  @ViewChild('itemservicesearch', { static: false }) item_service_search;
+  @ViewChild('itemserviceqty', { static: false }) item_service_qty;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   checkin = null;
   bill_data: any = [];
   message = '';
-  source = 'add';
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   timeFormat = 'h:mm a';
@@ -208,7 +207,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   isService;
   mode;
   isItem;
-
+  source;
+  
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -221,7 +221,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.activated_route.params.subscribe(params => {
       this.uuid = params.id;
     });
-    this.getCheckinDetails();
+    this.activated_route.queryParams.subscribe(qparams => {
+      console.log(qparams.source);
+      this.source = qparams.source;
+      if (this.source) {
+        this.getApptDetails();
+      } else {
+        this.getCheckinDetails();
+      }
+    });
   }
   ngOnInit() {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
@@ -258,6 +266,28 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         });
   }
+
+  getApptDetails() {
+    this.provider_services.getAppointmentById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          this.getWaitlistBill();
+          this.getPrePaymentDetails()
+            .then(
+              () => {
+                this.bill_load_complete = 1;
+              },
+              () => {
+                this.bill_load_complete = 0;
+              }
+            );
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
   getCheckinDetails() {
     this.provider_services.getProviderWaitlistDetailById(this.uuid)
       .subscribe(
@@ -1122,7 +1152,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
             if (status === 2) {
-              this.getCheckinDetails();
+              if (this.source) {
+                this.getApptDetails();
+              } else {
+                this.getCheckinDetails();
+              }
               this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, 'DONE');
             }
             this.hidePayWorkBench();
@@ -1261,7 +1295,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
@@ -1294,7 +1328,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (item.discount && item.discount.length > 0) {
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';

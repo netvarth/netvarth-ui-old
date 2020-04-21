@@ -125,7 +125,7 @@
             <mat-chip-list class="pcheckin-owl">
               <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
                 <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
-                  <mat-chip class="pointer-cursor item" (click)="viewQClicked(queue.id)"
+                  <mat-chip class="pointer-cursor item" (click)="viewQClicked(queue)"
                     [selected]="isQueueSelected(queue.id)" *ngFor="let queue of queues;let i = index">
                     <span class="break-inside: avoid">
                       {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
@@ -344,13 +344,14 @@
                               {{checkin.appmtFor[0].lastName}}
                             </span>
                             <span class="info-box-text service"
-                              *ngIf="selected_queue && selected_queue.services.length>1">
+                              *ngIf="servicesCount>1">
                               {{checkin.service.name}}
                             </span>
                           </div>
-                          <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.apptStatus === 'Cancelled'">
+                          <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.apptStatus === 'Cancelled' || checkin.apptStatus === 'Rejected'">
                             <span class="info-box-text" style="font-size: smaller;">
-                              {{checkin.apptStatus}}
+                              <!-- {{checkin.apptStatus}} -->
+                              Cancelled
                             </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
@@ -384,7 +385,7 @@
                           </a>
                         </div>
                       </div>
-                    </div>
+                    <!-- </div> -->
                     <div class="info-box-footer-more" *ngIf="section_future[i]">
                       <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
@@ -394,13 +395,18 @@
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
                         <i class="icon-note"></i> <span> Private Note </span>
                       </a>
-                      <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'Cancelled')"
+                      <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
+                      *ngIf="pos && checkin.apptStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      (click)="viewBillPage('future', checkin)">
+                      <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                    </a>
+                      <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'Rejected')"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
                         *ngIf="(checkin.apptStatus == 'Confirmed' || checkin.apptStatus == 'Arrived')">
                         <i class="fa fa-trash-o"></i> <span> {{cancel_cap}} </span>
                       </a>
                       <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'Confirmed')"
-                        *ngIf="checkin.apptStatus == 'Confirmed'" [matTooltipClass]="tooltipcls"
+                        *ngIf="checkin.apptStatus == 'Cancelled' || checkin.apptStatus == 'Rejected'" [matTooltipClass]="tooltipcls"
                         [matTooltip]="'Change status to ' + checkin_label">
                         <i class="fa fa-undo" aria-hidden="true"></i>
                         <span>{{checkin_label}} </span>
@@ -409,6 +415,7 @@
                         <i class="fa fa-angle-up black"></i>
                       </a>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -501,7 +508,7 @@
                       <i class="fa icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Cancel ' + checkin_label" (click)="changeWaitlistStatus(checkin, 'Cancelled')"
+                      [matTooltip]="'Cancel ' + checkin_label" (click)="changeWaitlistStatus(checkin, 'Rejected')"
                       *ngIf="checkin.apptStatus == 'Confirmed' || checkin.apptStatus == 'Arrived'">
                       <i class="fa fa-trash-o"></i> <span> {{cancel_cap}}</span>
                     </a>
@@ -571,6 +578,8 @@
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('started')"></i> </div>
+                    <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Cancel'">
+                      <i class="fa fa-trash-o" (click)="changeWaitlistStatus('started', 'Rejected')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 &&
                     showstatus['started']">
@@ -597,7 +606,7 @@
                                 {{checkin.appmtFor[0].lastName}}
                               </span>
                               <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                                *ngIf="servicesCount>1">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
@@ -735,7 +744,7 @@
                     <i class="fa fa-location-arrow"></i>
                   </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
-                    <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'Cancelled')"></i> </div>
+                    <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'Rejected')"></i> </div>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
@@ -765,7 +774,7 @@
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </div>
-                              <div *ngIf="selected_queue && selected_queue.services.length>1"
+                              <div *ngIf="servicesCount>1"
                                 class="info-box-text service">
                                 {{checkin.service.name}}
                               </div>
@@ -783,7 +792,7 @@
                                 {{checkin.appmtFor[0].firstName}}
                                 {{checkin.appmtFor[0].lastName}}
                               </div>
-                              <div *ngIf="selected_queue && selected_queue.services.length>1"
+                              <div *ngIf="servicesCount>1"
                                 class="info-box-text service">
                                 {{checkin.service.name}}
                               </div>
@@ -958,7 +967,7 @@
                                 {{checkin.appmtFor[0].lastName}}
                               </span>
                               <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                                *ngIf="servicesCount>1">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
@@ -1011,9 +1020,11 @@
                 <div class="labelList">
                   <div class="statuses col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="cancelledwaitlistSelection!=1">
-                    <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
-                      *ngIf="!grouped_list || (grouped_list && !grouped_list.Cancelled)">(0)</span>
-                    <span *ngIf="grouped_list && grouped_list.Cancelled">({{grouped_list.Cancelled.length}})</span>
+                    <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span>
+                     <!-- <span
+                      *ngIf="!grouped_list || (grouped_list && !grouped_list.Cancelled)">(0)</span> -->
+                    <!-- <span *ngIf="grouped_list && grouped_list.Cancelled">({{grouped_list.Cancelled.length}})</span> -->
+                    <span>({{today_cancelled_checkins_count}})</span>
                   </div>
                   <div class="statuslink " *ngIf="cancelledwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i>
@@ -1050,7 +1061,7 @@
                                 {{checkin.appmtFor[0].lastName}}
                               </span>
                               <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                                *ngIf="servicesCount>1">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
