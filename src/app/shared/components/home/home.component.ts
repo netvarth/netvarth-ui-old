@@ -285,7 +285,7 @@ export class HomeComponent implements OnInit {
   doLearnMore() {
     // alert('Clicked learn more');
   }
-  providerLinkClicked() {
+  doSignuppage() {
     this.routerobj.navigate(['/provider-home']);
   }
   checkProvider(type) {

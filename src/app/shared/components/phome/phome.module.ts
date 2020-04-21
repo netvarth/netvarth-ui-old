@@ -12,6 +12,8 @@ import { JaldeepricingComponent } from './pricing/jaldeepricing.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../modules/form-message-display/form-message-display.module';
 import { jaldeepricingModule } from './pricing/jaldeepricing.module';
+import { ProvidersignupComponent } from '../providersignup/providersignup.component';
+import { ProvidersignupModule } from '../providersignup/providersignup.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -25,10 +27,12 @@ import { jaldeepricingModule } from './pricing/jaldeepricing.module';
         FormsModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
-        jaldeepricingModule
+        jaldeepricingModule,
+        ProvidersignupModule
+        
     ],
     declarations: [
-        PhomeComponent],
+        PhomeComponent,],
          entryComponents: [
        
         ],

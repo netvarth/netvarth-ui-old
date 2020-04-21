@@ -178,8 +178,21 @@ export const projectConstants = {
     'docambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
   },
+  DOMAIN_ICONS: {
+    healthCare: {iconClass:'healthcare_icon'},
+    personalCare: {iconClass:'personalCare_icon'},
+    foodJoints: {iconClass:'food_icon'},
+    professionalConsulting: {iconClass:'professionalConsulting_icon'},
+    vastuAstrology: {iconClass:'vastuAstrology_icon'},
+    religiousPriests: {iconClass:'religiousPriests_icon'},
+    finance: {iconClass:'finance_icon'},
+    veterinaryPetcare: {iconClass:'veterinary_icon'},
+    retailStores: {iconClass:'retailstores_icon'},
+    otherMiscellaneous: {iconClass:'other_icon'},
+
+  },
   SUBDOMAIN_ICONS: {
-    physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doci' },
+    physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doc' },
     hospital: { help: 'multiple doctors facility', iconClass: 'hospital_doc' },
     dentists: { help: 'single doctor facility', iconClass: 'dentists_doc' },
     dentalHosp: { help: 'multiple doctors facility', iconClass: 'dentalHosp_doc' },

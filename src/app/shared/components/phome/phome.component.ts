@@ -293,4 +293,22 @@ this.qParams = data;
       this.resetApiErrors();
     }
   }
+
+
+  doSignuppage() {
+    this.routerobj.navigate(['provider-home/providersignup']);
+  }
+  // doForgotPassword() {
+  //   const dialogRef = this.dialog.open(ForgotPasswordComponent, {
+  //     width: '60%',
+  //     panelClass: 'forgotpasswordmainclass',
+  //     data: {
+  //       is_provider : this.is_provider
+  //     }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // this.animal = result;
+  //   });
+  // }
 }

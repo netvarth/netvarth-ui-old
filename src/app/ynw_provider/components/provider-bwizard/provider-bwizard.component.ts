@@ -874,7 +874,7 @@ export class ProviderbWizardComponent implements OnInit {
       case 'bussnesnmerror':
         this.bussnesnmerror = '';
         break;
-    }
+    } 
   }
 
   // Service Section

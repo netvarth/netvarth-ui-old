@@ -38,8 +38,9 @@ export class SignUpComponent implements OnInit {
   packages;
   activeDomainIndex;
   activeSubDomainIndex;
-  subDomainList = [];
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
+  subDomainList = [];
+  
   dropdownSettings = {
     singleSelection: false,
     text: 'Select Sub Sector',
@@ -47,6 +48,7 @@ export class SignUpComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     enableSearchFilter: true,
     classes: 'myclass custom-class'
+    
   };
   selectedDomain = null;
   signupForm: FormGroup;

@@ -1,0 +1,347 @@
+<app-header [headerTitle]="" [includedfrom]="'phome'" id="pro_home" (jnav)="handleScroll($event)"></app-header>
+
+
+<section class="signup">
+    <!-- <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
+onSubmit()" (keyup)="resetApiErrors()"> -->
+    <div class="container1">
+
+        <div *ngIf="active_step==0">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Service provider<br>Sign up</h2>
+                    <form method="POST" [formGroup]="signupForm" class="register-form" novalidate
+                        (keyup)="resetApiErrors()" id="register-form">
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" formControlName="phonenumber" name="phone" id="phone"
+                                placeholder="Mobile number" maxlength=10 />
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
+                                [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+                                {
+                                  'required' : 'Mobile number is required',
+                                  'minlength' : 'Enter a 10 digit mobile number',
+                                  'maxlength' : 'Enter a 10 digit mobile number',
+                                  'pattern' : 'Only numbers are allowed'
+                                })">
+                            </app-field-error-display>
+
+
+
+                        </div>
+                        <div class="form-group">
+                            <label for="Firstname"><i class="zmdi zmdi-email"></i></label>
+                            <input type="text" formControlName="first_name" name="Firstname" id="Firstname"
+                                placeholder="First name*" />
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')"
+                                [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
+{
+  'required' : 'First name is required',
+  'pattern' : 'Only alphabets are allowed'
+})">
+                            </app-field-error-display>
+                        </div>
+                        <div class="form-group">
+                            <label for="Lastname"><i class="zmdi-account material-icons-name"></i></label>
+                            <input type="text" formControlName="last_name" name="Lastname" id="Lastname"
+                                placeholder="Last name" />
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')"
+                                [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
+                                {
+                                  'required' : 'Last name is required',
+                                  'pattern' : 'Only alphabets are allowed'
+                                })">
+                            </app-field-error-display>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="Email"><i class="zmdi zmdi-email"></i></label>
+                            <input type="text" name="Email" id="pass" placeholder="Email" />
+                        </div> -->
+
+                        <!-- <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                                statements in <a href="#" class="term-service">Terms of service</a></label>
+                        </div> -->
+                        <div class="form-group agree">
+                            <mat-checkbox class="terms-margin" formControlName="terms_condition" [value]=true>
+                            </mat-checkbox> <span class="terms-link">{{i_agree_cap}}
+                                <a rel="noopener" [routerLink]="['/terms']"
+                                    target="_blank">{{terms_cond_cap}}</a></span>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"
+                                [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid"
+                                (click)="showdomainstep()">
+                        </div>
+                    </form>
+
+                </div>
+                <div class="signup-image">
+                    <figure><img src="../../../../assets/images/home/signup-image.jpg"></figure>
+                    <a href="#" class="signup-image-link">I am already member</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- step1 domain -->
+    <div *ngIf="active_step==1">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1 class="form-title">Select your domain </h1>
+                            <div>
+                                <ul *ngFor="let domain of business_domains">
+                                    <li [class.domainstyle]="domain.domain==selectedDomain.domain">
+                                        <!-- <img src="domainicons[domain.domain]" width="40" height="40" /> -->
+                                        <!-- <div class="pull-right subdom_img {{subdomainSettings[domain.value].iconClass}}"  >      
+                                        </div> -->
+                                        <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
+                                            *ngIf="domainSettings[domain.domain]">
+                                        </div>
+                                        <h3 (click)="domSelection(domain)">{{domain.displayName}}&nbsp; </h3>
+
+                                        <!-- <p>&nbsp;</p> -->
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12 control">
+
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
+                                    (click)="showregistersection()">
+                               <span><input type="submit" name="signup" id="signup" class="form-submit" value="Next"
+                                    (click)="showsubdomainstep()"></span> 
+                            </div>
+
+                            
+                        </div>
+
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- step2 subdomain-->
+    <div *ngIf="active_step==2">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <div class="signup-form">
+                    
+                            <h1 class="form-title">Select your subdomain </h1>
+                            <div>
+                                <ul *ngFor="let subdomain of subdomainlist">
+                                    <li [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain">
+                                        <!-- <img src="../../icons/doctor.png" width="40" height="41"> -->
+                                        <!-- <div class="subdom_img {{subdomainSettings[subdomain.subDomain].iconClass}}"
+                                            *ngIf="subdomainSettings[subdomain.subDomain]">
+                                        </div> -->
+                                        <h3 (click)="subdomSelection(subdomain)">{{subdomain.displayName}}&nbsp; </h3>
+                                        <p>&nbsp;</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Send Otp"
+                                (click)="onSubmit()">
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Back"
+                                (click)="showdomainstep()">
+                        </div>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">I am already member</a>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- step4 otp section -->
+
+
+    <div *ngIf="active_step==3">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1 class="form-title"><strong>OTP is sent to Your Mobile Number</strong></h1>
+                        <div class="success"></div>
+                        <form id="frm-mobile-verification">
+                            <!-- <div class="form-row">
+		<label>OTP is sent to Your Mobile Number</label>		
+	</div> -->
+
+                            <!-- <div class="form-row">
+                                <input type="number" id="mobileOtp" class="form-input" placeholder="Enter the OTP">  -->
+
+                            <div class="example-container otpouter">
+                                <app-providerotp [type]="'signup'" [submitdata]="user_details"
+                                    (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
+                                    [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+                                    [resendemailotpsuccess]="resendemailotpsuccess">
+                                </app-providerotp>
+                            </div>
+
+
+                            <!-- <div class="form-group form-button">
+                                <input [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+                                (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"
+                                    (click)="showhowteyHeard()"> -->
+                            <!-- </div>  -->
+                        </form>
+
+
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">I am already a provider</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <!-- step4 -->
+    <div *ngIf="active_step==4">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1 class="form-title"><strong>How did you hear us?</strong></h1>
+                        <div>
+                            <ul>
+                                <li [class.domainstyle]="hearus=='SalesReps'"   (click)="saleschannelselection('SalesReps')">
+                                    <img src="../../../../assets/images/home/signup/sales.png" width="33" height="40" />
+                                    <h3>Sales Reps</h3>
+                                    <app-saleschannel (retfromSC)="onReferalSubmit($event)"
+                                        (resetApiErrors)="resetApiErrors()">
+                                    </app-saleschannel>
+                                </li>
+
+                                <li [class.domainstyle]="hearus=='Jaldee'" (click)="saleschannelselection('Jaldee')">
+                                    <img src="../../../../assets/images/home/signup/jaldee.png" width="40"
+                                        height="40" />
+                                    <h3>Jaldee</h3>
+
+                                </li>
+
+                                <li [class.domainstyle]="hearus=='Facebook'" (click)="saleschannelselection('Facebook')">
+                                    <img src="../../../../assets/images/home/signup/facebook-01.png" width="40"
+                                        height="40" />
+                                    <h3>Facebook</h3>
+
+                                </li>
+
+                                <li  [class.domainstyle]="hearus=='Friend'" (click)="saleschannelselection('Friend')">
+                                    <img src="../../../../assets/images/home/signup/Friend-01.png" width="40"
+                                        height="40" />
+                                    <h3>Friend</h3>
+
+                                </li>
+                                <li  [class.domainstyle]="hearus=='Google'" (click)="saleschannelselection('Google')">
+                                    <img src="../../../../assets/images/home/signup/Google.png" width="40"
+                                        height="40" />
+                                    <h3>Google</h3>
+
+                                </li>
+                                <li  [class.domainstyle]="hearus=='Twitter'" (click)="saleschannelselection('Twitter')">
+                                    <img src="../../../../assets/images/home/signup/Twitter.png" width="40"
+                                        height="40" />
+                                    <h3>Twitter</h3>
+
+                                </li>
+                                <li  [class.domainstyle]="hearus=='Other'" (click)="saleschannelselection('Other')">
+                                    <img src="../../../../assets/images/home/signup/Other-01.png" width="40"
+                                        height="40" />
+                                    <h3>Other</h3>
+
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
+                                (click)="submitHearus()">
+
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Back"
+                                (click)="onSubmit()">
+                        </div>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup/how.png" alt="sin up image" width="1800"
+                                height="1792">
+                        </figure>
+                        <a href="#" class="signup-image-link">Skip</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- step5 -->
+    <div *ngIf="active_step==5">
+        <section class="signup">
+            <div class="container1">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h1 class="form-title">Congratulations!</h1>
+                        <h2 class="form-title">You have become a Jaldee partner.</h2>
+
+                        <h3 class="form-title">Please set your password to Finish sign up process.</h3>
+                        <form method="POST" [formGroup]="spForm" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="password"></label>
+                                <input type="password" formControlName="new_password" name="name" id="name"
+                                    placeholder="Enter password" />
+                                <app-field-error-display [displayError]="true" errorMsg="{{api_error}}">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-enter"></label>
+                                <input type="password" formControlName="confirm_password" name="passsword" id="password"
+                                    placeholder="Re-enter password*" />
+                                <app-field-error-display [displayError]="true" errorMsg="{{api_error}}">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="join Jaldee"
+                                    (click)="onPasswordSubmit()">
+
+                            </div>
+
+                        </form>
+                        <!-- <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+    (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form> -->
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+
+
+    <!-- </form>  -->
+</section>

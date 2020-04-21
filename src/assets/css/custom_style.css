@@ -8479,3 +8479,23 @@ hr.wide-separator-line {
 .virtual-serv-div {
   display: flex !important;
 }
+.navul {
+  list-style-type: none;
+  float: right;
+  margin-top: 30px;
+  
+  
+}
+.navli {
+  display: inline;
+  margin-left: 15px;
+  cursor: pointer;
+   text-align: right;
+   font-weight: 900;
+   color:#000;
+}
+.navli:hover {
+  background: #00aef2;
+  color: white;
+  padding: 9px 10px;
+}
