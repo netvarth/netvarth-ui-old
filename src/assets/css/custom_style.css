@@ -7344,7 +7344,7 @@ label.filterHeaders {
 }
 
 .filterClosebtn {
-  color: white;
+  /* color: white; */
   margin-top: 8px;
   margin-left: 18px;
 }
