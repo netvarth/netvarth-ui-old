@@ -30,6 +30,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
     track_loading: boolean;
     api_error: any;
     api_loading: boolean;
+    payment_popup: any;
     firstTimeClick = true;
     constructor(public router: Router,
         public route: ActivatedRoute,

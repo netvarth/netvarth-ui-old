@@ -7,7 +7,7 @@ import { KeywordsComponent } from './keywords/keywords.component';
 import { licenseusageComponent } from './licenseusage/licenseusage.component';
 import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
-import { viewprevstatementComponent } from './statements/viewprevstatement.component';
+import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       {
         path:'viewstatement',
-        component: viewprevstatementComponent
+        component: ViewPrevStatementComponent
       }
     ]
   },

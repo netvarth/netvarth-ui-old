@@ -4,12 +4,12 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
-    selector: 'app-donationmanager',
-    templateUrl: './donation.component.html'
+  selector: 'app-donationmanager',
+  templateUrl: './donation-mgr.component.html'
 })
-export class donationcomponent {
+export class DonationMgrComponent {
 
-  breadcrumbs_init = [
+   breadcrumbs_init = [
     {
       url: '/provider/settings',
       title: 'Settings'
@@ -62,10 +62,8 @@ export class donationcomponent {
         });
   }
 
-//   learnmore_clicked(mod, e) {
-//     e.stopPropagation();
-//     this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
-//   }
-// }
-  
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+  }
 }

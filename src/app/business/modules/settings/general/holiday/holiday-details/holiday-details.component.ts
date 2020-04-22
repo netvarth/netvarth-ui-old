@@ -9,11 +9,11 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-nonworkingday-details',
+  selector: 'app-holiday-details',
   templateUrl: './holiday-details.component.html'
 })
 
-export class NonWorkingDayDetailsComponent implements OnInit {
+export class HolidayDetailsComponent implements OnInit {
 
   non_working_day_cap = Messages.NON_WORK_DAY_HI_CAP;
   non_working_day_or_hr_cap = Messages.NON_WORK_DAY_OR_HR_CAP;

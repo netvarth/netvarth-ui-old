@@ -239,9 +239,12 @@ export class CustomerSearchComponent implements OnInit {
         }
     }
 
-    searchCustomer(form_data) {
+    searchCustomer(form_data, mod?) {
         this.qParams = {};
         let mode = 'id';
+        if (mod) {
+            mode = mod;
+        }
         this.form_data = null;
         this.create_new = false;
         console.log(form_data);
@@ -315,7 +318,7 @@ export class CustomerSearchComponent implements OnInit {
         }
         return true;
     }
-    resetApiErrors() {
+    resetApiErrors(event) {
         this.emailerror = null;
         this.email1error = null;
         this.phoneerror = null;

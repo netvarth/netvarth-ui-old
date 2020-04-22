@@ -59,6 +59,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   customfields_cap = Messages.CUSTOMFIELDS_CAPTION;
   displayboards_cap = Messages.DISPLAYBOARD_HEADING;
   displayboards_layout_cap = Messages.DISPLAYBOARDLAYOUT_CAP;
+  appointmentmanager;
+  general;
+  payments;
+  integration;
+  customers;
+  comm;
   waitlist_status = false;
   futureDateWaitlist = false;
   waitlist_statusstr = 'Off';
@@ -615,7 +621,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
         break;
         case 'donationmanager':
-          this.routerobj.navigate(['provider', 'settings', 'donationmanager']);       
+          this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
      }
   }
   getLocationCount() {

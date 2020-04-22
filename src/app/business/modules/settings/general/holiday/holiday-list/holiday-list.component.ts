@@ -9,11 +9,11 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 
 @Component({
-  selector: 'app-nonworkingday-list',
+  selector: 'app-holiday-list',
   templateUrl: './holiday-list.component.html'
 
 })
-export class NonWorkingDaylistComponent implements OnInit, OnDestroy {
+export class HolidayListComponent implements OnInit, OnDestroy {
 
   non_working_cap = Messages.NON_WORK_DAY_HI_CAP;
   add_cap = Messages.ADD_BTN;

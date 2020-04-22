@@ -41,8 +41,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { checkindetailcomponent } from './components/home/checkindetail.component';
 import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
-import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
-
+import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
 
 @NgModule({
   imports: [
@@ -63,7 +62,8 @@ import { ConsumerAppointmentComponent } from './components/waitlist/appointment/
     RatingStarModule,
     Nl2BrPipeModule,
     CheckinAddMemberModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    ConsumerAppointmentModule
   ],
   declarations: [
     ConsumerComponent,
@@ -74,8 +74,7 @@ import { ConsumerAppointmentComponent } from './components/waitlist/appointment/
     NotificationListBoxComponent,
     MembersComponent,
     AddMembersHolderComponent,
-    AddManagePrivacyComponent,
-    ConsumerAppointmentComponent
+    AddManagePrivacyComponent
   ],
   exports: [ConfirmBoxComponent],
   entryComponents: [

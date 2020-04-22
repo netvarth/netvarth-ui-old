@@ -10,15 +10,11 @@ import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-m
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { OwlModule } from 'ngx-owl-carousel';
-//import { ConsumerPaymentComponent } from './payment/payment.component';
-//import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 
 @NgModule({
     declarations: [
-        ConsumerAppointmentComponent,
-       // ConsumerPaymentComponent,
-       // ConsumerLiveTrackComponent
+        ConsumerAppointmentComponent
     ],
     imports: [
         FormMessageDisplayModule,

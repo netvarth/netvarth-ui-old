@@ -24,13 +24,8 @@ const routes: Routes = [
       { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin] },
       { path: 'learn_more', loadChildren: () => import('./components/help/consumer-learnmore.module').then(m => m.ConsumerLearnmoreModule), canActivate: [AuthGuardLogin] },
       { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin] },
-      {
-        path: 'inbox',
-        loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)
-      },
-      {
-        path: 'checkindetails', component: checkindetailcomponent, canActivate: [AuthGuardLogin]
-      },
+      { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)},
+      { path: 'checkindetails', component: checkindetailcomponent, canActivate: [AuthGuardLogin]},
       { path: 'appointment', component: ConsumerAppointmentComponent }
     ]
   }
