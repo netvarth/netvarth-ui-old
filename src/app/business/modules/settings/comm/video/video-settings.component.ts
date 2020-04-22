@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -9,7 +9,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
     'selector': 'app-video-settings',
     'templateUrl': './video-settings.component.html'
 })
-export class VideoSettingsComponent {
+export class VideoSettingsComponent implements OnInit {
     api_loading: boolean;
     virtualCallModesList: any = [];
     skypeselected = false;
