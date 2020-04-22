@@ -10,7 +10,7 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 import { CommSettingsRoutingModule } from './comm-settings.routing.module';
 import { CommSettingsComponent } from './comm-settings.component';
 import { VideoSettingsComponent } from './video/video-settings.component';
-import { AddVideoCallComponent } from './add-videocall/add-videocall.component';
+
 
 @NgModule({
     imports: [
@@ -27,8 +27,7 @@ import { AddVideoCallComponent } from './add-videocall/add-videocall.component';
     ],
     declarations: [
         CommSettingsComponent,
-        VideoSettingsComponent,
-        AddVideoCallComponent
+        VideoSettingsComponent
     ],
     exports: [
         CommSettingsComponent
