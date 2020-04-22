@@ -38,7 +38,7 @@ export class DonationMgrComponent implements OnInit {
   }
 
   gotocauses() {
-    this.router.navigate(['provider', 'settings', 'donationmanager', 'details']);
+    this.router.navigate(['provider', 'settings', 'donationmanager','causes']);
   }
 
   handle_Donations(event) {
