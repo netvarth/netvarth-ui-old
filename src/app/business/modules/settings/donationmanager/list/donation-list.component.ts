@@ -10,13 +10,17 @@ import { Messages } from '../../../../../shared/constants/project-messages';
     templateUrl: './donation-list.component.html'
 })
 export class DonationCauseListComponent implements OnInit, OnDestroy {
+    add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;
+    est_duration_cap = Messages.SER_EST_DURATION_CAP;
+    min_cap = Messages.SER_MIN_CAP;
+    price_cap = Messages.SER_PRICE_CAP;
     isServiceBillable = false;
     api_loading = true;
     service_list: any = [];
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
-    breadcrumbs_init = [
+    breadcrumbs = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -30,29 +34,27 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
             title: 'Causes'
         }
     ];
-    breadcrumbs = this.breadcrumbs_init;
     domain: any;
-    domainList: any = [];
-    subDomain;
-    userId: any;
+    trackStatus: string;
+    cause_list: any = [];
+    causes_list: any;
+
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
-        private activated_route: ActivatedRoute,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
-        public router: Router) {
-        this.activated_route.params.subscribe(params => {
-            this.userId = params.id;
-        }
-        );
-    }
+        public router: Router) { }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
+        this.getDomainSubdomainSettings();
+        this.getServices();
         this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': 'Add Cause', 'type': 'addcause' }]
+            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
+            'actions': [{ 'title': 'Add Cause', 'type': 'addcause' },
+            { 'title': 'Help', 'type': 'learnmore' }]
         };
     }
 
@@ -67,13 +69,16 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     }
     getServices() {
         this.api_loading = true;
-        this.provider_services.getUserServicesList(this.userId)
+        const filter = { 'scope-eq': 'account' };
+        this.provider_services.getProviderServices(filter)
             .subscribe(
                 data => {
-                    console.log(data);
-                    this.service_list = data;
-
-
+                    this.cause_list = data;
+                    for (const cause of this.cause_list) {
+                        if (cause.serviceType === 'donationService') {
+                            this.service_list.push(cause);
+                        }
+                    }
                     this.api_loading = false;
                 },
                 error => {
@@ -85,6 +90,23 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
 
     changeServiceStatus(service) {
         this.provider_shared_functions.changeServiceStatus(this, service);
+    }
+    changeLiveTrackStatus(service) {
+        if (service.livetrack === false) {
+            this.trackStatus = 'Enable';
+        } else {
+            this.trackStatus = 'Disable';
+        }
+        this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
+      .subscribe(
+        () => {
+           this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+
     }
 
     disableService(service) {
@@ -114,13 +136,19 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', service.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'donationmanager', service.id], navigationExtras);
     }
+
     goServiceDetail(service) {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'services', service.id]);
+        this.router.navigate(['provider', 'settings', 'donationmanager', service.id]);
     }
+
     getDomainSubdomainSettings() {
-        this.provider_services.domainSubdomainSettings(this.domain, this.subDomain)
+        this.api_loading = true;
+        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const domain = user_data.sector || null;
+        const sub_domain = user_data.subSector || null;
+        this.provider_services.domainSubdomainSettings(domain, sub_domain)
             .subscribe(
                 (data: any) => {
                     if (data.serviceBillable) {

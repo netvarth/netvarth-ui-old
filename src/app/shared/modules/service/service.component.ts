@@ -129,20 +129,40 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
                                     });
                                 } else {
-                                    this.serviceForm.setValue({
-                                        'name': this.service_data['name'] || this.serviceForm.get('name').value,
-                                        'description': this.service_data['description'] || this.serviceForm.get('description').value,
-                                        'department': this.service_data['department'] || this.serviceForm.get('department').value,
-                                        'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
-                                        'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
-                                        'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
-                                        'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
-                                        'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
-                                            this.service_data['minPrePaymentAmount'] !== 0
-                                        ) ? true : false,
-                                        'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
-                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
-                                    });
+                                    if (this.service_data.serviceType === 'donationService') {
+                                        this.serviceForm.setValue({
+                                            'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                            'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'department': this.service_data['department'] || this.serviceForm.get('department').value,
+                                            'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
+                                            'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
+                                            'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
+                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '0',
+                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '0',
+                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '0',
+                                            'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
+                                                this.service_data['minPrePaymentAmount'] !== 0
+                                            ) ? true : false,
+                                            'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                        });
+                                    } else {
+                                        this.serviceForm.setValue({
+                                            'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                            'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'department': this.service_data['department'] || this.serviceForm.get('department').value,
+                                            'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
+                                            'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
+                                            'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
+                                            'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
+                                                this.service_data['minPrePaymentAmount'] !== 0
+                                            ) ? true : false,
+                                            'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                        });
+                                    }
                                     this.convertTime(this.service_data['serviceDuration']);
                                     this.changePrepayment();
                                 }
@@ -259,7 +279,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         if (this.is_donation) {
             if (!this.subdomainsettings.serviceBillable) {
                 form_data.bType = 'Waitlist';
-                form_data['totalAmount'] = 10;
+                form_data['totalAmount'] = 0;
+                form_data['minDonationAmount'] = 0;
+                form_data['maxDonationAmount'] = 0;
+                form_data['multiples'] = 0;
                 form_data['isPrePayment'] = false;
                 form_data['taxable'] = false;
             } else {
@@ -268,9 +291,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
             form_data['serviceDuration'] = 1;
             form_data['serviceType'] = this.serv_type;
-            form_data['minDonationAmount'] = 100;
-            form_data['maxDonationAmount'] = 1000;
-            form_data['multiples'] = 5;
+            // form_data['minDonationAmount'] = 0;
+            // form_data['maxDonationAmount'] = 0;
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
@@ -342,18 +364,36 @@ export class ServiceComponent implements OnInit, OnDestroy {
     createForm() {
         this.getDepartments();
         if (this.subdomainsettings.serviceBillable) {
-            this.serviceForm = this.fb.group({
-                name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-                description: ['', Validators.compose([Validators.maxLength(500)])],
-                department: ['', Validators.compose([Validators.maxLength(500)])],
-                serviceType: ['', Validators.compose([Validators.maxLength(500)])],
-                virtualServiceType: ['', Validators.compose([Validators.maxLength(500)])],
-                serviceDuration: ['', Validators.compose([Validators.required])],
-                totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-                isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
-                taxable: [false],
-                notification: [false]
-            });
+            if (this.is_donation === true) {
+                this.serviceForm = this.fb.group({
+                    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                    description: ['', Validators.compose([Validators.maxLength(500)])],
+                    department: ['', Validators.compose([Validators.maxLength(500)])],
+                    serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    serviceDuration: [''],
+                    totalAmount: [0],
+                    minDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    maxDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    taxable: [false],
+                    notification: [false]
+                });
+            } else {
+                this.serviceForm = this.fb.group({
+                    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                    description: ['', Validators.compose([Validators.maxLength(500)])],
+                    department: ['', Validators.compose([Validators.maxLength(500)])],
+                    serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    serviceDuration: ['', Validators.compose([Validators.required])],
+                    totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    taxable: [false],
+                    notification: [false]
+                });
+            }
         } else {
             this.serviceForm = this.fb.group({
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],

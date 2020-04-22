@@ -28,11 +28,24 @@
                     <span class=" ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Virtual</span>
                     <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
+                    <span *ngIf="service_data.serviceType==='donationService'">Donation</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
                     <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
+                </div>
+                <div class="item" *ngIf="service_data.minDonationAmount">
+                    <span class=" ttle">Min Amount</span>
+                    <span>{{service_data.minDonationAmount}}</span>
+                </div>
+                <div class="item" *ngIf="service_data.maxDonationAmount">
+                    <span class=" ttle">Max Amount</span>
+                    <span>{{service_data.maxDonationAmount}}</span>
+                </div>
+                <div class="item" *ngIf="service_data.multiples">
+                    <span class=" ttle">Multiples</span>
+                    <span>{{service_data.multiples}}</span>
                 </div>
             </div>
             <div class="c-ot m0">
@@ -43,11 +56,17 @@
                         'Yes' : 'No'}}</span></span>
                 </div>
                 <div class="item" *ngIf="service_data.notificationType">
-                    <span>{{end_service_notify_cap}}:
+                    <span *ngIf="service_data.serviceType !== 'donationService'">{{end_service_notify_cap}}:
                         <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
                         <span class="noti-it"
                             *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                    <span *ngIf="service_data.serviceType === 'donationService'">{{end_cause_notify_cap}}:
+                        <span class="noti-it"
+                            *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                        <span class="noti-it"
+                            *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+
                 </div>
             </div>
             <div class="btm-ctrl">
@@ -78,7 +97,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group">
                 <mat-form-field>
                     <input matInput type="text" class="form-control" id="service_name"
-                         placeholder="{{is_donation ? 'Cause *' : service_name_cap}}" formControlName="name" autocomplete="off">
+                        placeholder="{{is_donation ? 'Cause *' : service_name_cap}}" formControlName="name"
+                        autocomplete="off">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'name')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'name',
     {
@@ -89,7 +109,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group">
                 <mat-form-field>
-                    <textarea matInput class="form-control" id="description" placeholder="{{is_donation ? 'Briefly describe cause' : 'Briefly describe service'}}"
+                    <textarea matInput class="form-control" id="description"
+                        placeholder="{{is_donation ? 'Briefly describe cause' : 'Briefly describe service'}}"
                         formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
                         (blur)="lostDescFocus()" maxlength="500"> </textarea>
                 </mat-form-field>
@@ -112,22 +133,28 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="form-group" [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
-                <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
-                    <mat-select formControlName="serviceType" placeholder="Category" #virtual (selectionChange)="selectServiceHandler(virtual.value)">
-                        <mat-option *ngIf="!is_donation"  [value]="'virtualService'">
+            <div class="form-group"
+                [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
+                <mat-form-field class="example-full-width"
+                    [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
+                    <mat-select formControlName="serviceType" placeholder="Category" #virtual
+                        (selectionChange)="selectServiceHandler(virtual.value)">
+                        <mat-option *ngIf="!is_donation" [value]="'virtualService'">
                             Virtual Service
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
                             Physical Service
                         </mat-option>
-                        <mat-option *ngIf="is_donation"  [value]="'donationService'">
+                        <mat-option *ngIf="is_donation" [value]="'donationService'">
                             Donation Service
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)" class="example-full-width mat-select-virtualservice">
-                    <mat-select formControlName="virtualServiceType"  placeholder="Select mode" #type (selectionChange)="selectServiceTypeHandler(type.value)">
+                <mat-form-field
+                    *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
+                    class="example-full-width mat-select-virtualservice">
+                    <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
+                        (selectionChange)="selectServiceTypeHandler(type.value)">
                         <mat-option [value]="'audioService'">
                             Audio
                         </mat-option>
@@ -155,7 +182,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   })"> </app-field-error-display> -->
                 </ng-container>
             </div>
-            <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
+            <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
                 <mat-form-field>
                     <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
                         maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'totalAmount')"
@@ -169,7 +196,38 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 10 digits are allowed'})">
                 </app-field-error-display>
             </div>
-
+            <div class="form-group glbl-preview" *ngIf="subdomainsettings.serviceBillable && is_donation">
+                <mat-form-field>
+                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
+                        placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount"
+                        autocomplete="off">
+                </mat-form-field>
+                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'minDonationAmount')"
+                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minDonationAmount',
+    {'required' : 'Please enter price',
+    'pattern' : 'Enter a valid price',
+    'maxlength' : 'Only 10 digits are allowed'})">
+                </app-field-error-display> -->
+                <mat-form-field>
+                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
+                        placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount"
+                        autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="form-group" *ngIf="is_donation">
+                <mat-form-field>
+                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'multiples')"
+                        placeholder="Multiples" formControlName="multiples" autocomplete="off">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'multiples')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'multiples',
+    {'required' : 'Please enter a multiple',
+    'pattern' : 'Enter a valid multiple',
+    'maxlength' : 'Only 4 digits are allowed'})">
+                </app-field-error-display>
+            </div>
             <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
             <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings">
                 <!-- <mat-accordion>
@@ -177,7 +235,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <!-- <mat-expansion-panel-header class="advancedheader">
                                 <mat-panel-title>Advanced</mat-panel-title></mat-expansion-panel-header> -->
 
-                <div class="form-group inline" style="margin-top: 10px" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                <div class="form-group inline" style="margin-top: 10px"
+                    *ngIf="subdomainsettings.serviceBillable && !is_donation">
                     <label class="col-form-label">{{enable_prepayment_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
                         (change)="changePrepayment()">

@@ -17,11 +17,16 @@
                             </button>
                         </span>
                         <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
-                        <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> servicename</h3>
+                        <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
+                                capitalizeFirst}}</h3>
                         <div class="c-ot m0">
+                            <div class="item" *ngIf="isServiceBillable">
+                                <span class="ttle">{{est_duration_cap}}</span>
+                                <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
+                            </div>
                             <div class="item" *ngIf="isServiceBillable && service.totalAmount!=0">
-                                <span class="ttle">price</span>
-                                <!-- <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span> -->
+                                <span class="ttle">{{price_cap}}</span>
+                                <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                             </div>
                         </div>
                         <mat-menu #appMenu="matMenu">
@@ -34,17 +39,12 @@
                                 <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
                                 {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
                             </button>
-                            <button mat-menu-item (click)="changeLiveTrackStatus(service)" *ngIf="service.status=='ACTIVE'">
-                                <i *ngIf="service.livetrack == true" class="material-icons">gps_fixed</i>
-                                <i *ngIf="service.livetrack == false" class="material-icons">gps_off</i>
-                                {{(service.livetrack== true) ? 'Tracking on' :'Tracking off'}}
-                            </button>
                         </mat-menu>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" *ngIf="!api_loading && service_list.length === 0">
             No causes added.
         </div>
         <div class="clearfix"></div>
