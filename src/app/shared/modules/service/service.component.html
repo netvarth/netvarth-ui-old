@@ -27,17 +27,20 @@
             </div>
             <div class="c-ot m0">
                 <div class="item">
-                    <span>{{tax_applicable_cap}}:
-                        <span class="noti-it" [class.yes]="service_data.taxable==true"
-                            [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
-                        'Yes' : 'No'}}</span></span>
+                    <span class="ttle">{{tax_applicable_cap}}</span>
+                    <span>{{(service_data.taxable) ?
+                        'Yes' : 'No'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.notificationType">
-                    <span>{{end_service_notify_cap}}:
-                        <span class="noti-it"
-                            *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
-                        <span class="noti-it"
-                            *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                    <span class="ttle">{{end_service_notify_cap}}</span>
+                    <span class="noti-it" *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                    <span
+                        *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span>
+                </div>
+                <div class="item" *ngIf="service_data.notificationType">
+                    <span class="ttle">Live tracking </span>
+                    <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
+
                 </div>
             </div>
             <div class="btm-ctrl">

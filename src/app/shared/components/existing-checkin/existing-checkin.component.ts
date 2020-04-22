@@ -39,6 +39,7 @@ export class ExistingCheckinComponent implements OnInit {
   cancelledlabel;
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   tokenenabled = false;
+  batchEnabled = false;
 
   constructor(
     public dialogRef: MatDialogRef<ExistingCheckinComponent>,
@@ -80,6 +81,9 @@ export class ExistingCheckinComponent implements OnInit {
         for (const details of this.loc) {
           if (details.token) {
             this.tokenenabled = true;
+          }
+          if (details.batchName) {
+            this.batchEnabled = true;
           }
         }
       },
