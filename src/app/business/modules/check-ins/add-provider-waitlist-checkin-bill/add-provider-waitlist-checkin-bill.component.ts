@@ -208,7 +208,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   mode;
   isItem;
   source;
-  
+
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -521,7 +521,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
-      this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
+      let uid;
+      if (this.source) {
+        uid = this.checkin.uid;
+      } else {
+        uid = this.checkin.ynwUuid;
+      }
+      this.provider_services.getPaymentDetail(uid)
         .subscribe(
           data => {
             this.pre_payment_log = data;
@@ -1140,7 +1146,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPayWorkBench = false;
   }
   makePayment(mode, amount, paynot, status?) {
-    this.pay_data.uuid = this.checkin.ynwUuid;
+    if (this.source) {
+      this.pay_data.uuid = this.checkin.uid;
+    } else {
+      this.pay_data.uuid = this.checkin.ynwUuid;
+    }
     this.pay_data.acceptPaymentBy = mode;
     this.pay_data.amount = amount;
     this.pay_data.paynot = paynot;

@@ -751,7 +751,7 @@
                   [class.chk-scroll]="showstatus['new']" *ngIf="showstatus['new'] && !loading && availableSlotDetails">
                   <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                     *ngFor="let slot of availableSlotDetails.availableSlots"
-                    [class.selected-waitlist]="timeSlotCheckins[slot.time] && timeSlotCheckins[slot.time].length === 1 && newWaitlistforMsg.length === 1">
+                    [class.selected-waitlist]="timeSlotCheckins[slot.time] && timeSlotCheckins[slot.time].length === 1 && waitlistSelected[slot.time][0]">
                     <div class="col-md-2 col-xs-4 col-sm-2 no-padding ">
                       <mat-chip-list>
                         <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"

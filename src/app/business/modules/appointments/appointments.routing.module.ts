@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppointmentsComponent } from './appointments.component';
+import { ProviderAppointmentDetailComponent } from './provider-appointment-detail/provider-appointment-detail.component';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
         path: '',
         children: [
-            { path: ':id', loadChildren: () => import('../check-ins/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module').then(m => m.ProviderWaitlistCheckInDetailModule) }
+            { path: ':id', component: ProviderAppointmentDetailComponent }
         ]
     }
 ];

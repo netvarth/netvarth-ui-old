@@ -15,14 +15,14 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerModule } from '../customer/customer.module';
-import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { ProviderWaitlistCheckInDetailModule } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.module';
+import { ApplyLabelModule } from './apply-label/apply-label.module';
+import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -43,7 +43,7 @@ import { ProviderWaitlistCheckInDetailModule } from './provider-waitlist-checkin
         NgbModule,
         OwlModule,
         NgxMatSelectSearchModule,
-        ProviderWaitlistCheckInDetailModule
+        ApplyLabelModule
     ],
     declarations: [
         CheckInsComponent,
@@ -53,7 +53,7 @@ import { ProviderWaitlistCheckInDetailModule } from './provider-waitlist-checkin
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
         LocateCustomerComponent,
-        ApplyLabelComponent,
+        ProviderWaitlistCheckInDetailComponent
         // DateRangePickerJComponent
 
     ],
@@ -61,8 +61,7 @@ import { ProviderWaitlistCheckInDetailModule } from './provider-waitlist-checkin
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
-        LocateCustomerComponent,
-        ApplyLabelComponent
+        LocateCustomerComponent
     ],
     exports: [CheckInsComponent]
 })

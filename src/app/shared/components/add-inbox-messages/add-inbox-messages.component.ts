@@ -54,6 +54,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
+    console.log(this.data.appt);
     if (this.data.caption) {
       this.caption = this.data.caption;
     } else {
@@ -232,19 +233,35 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
-        .subscribe(
-          () => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
-            this.disableButton = false;
-          }
-        );
+      if (this.data.appt) {
+        this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
+      } else {
+        this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
+      }
     }
   }
   consumerToProviderWaitlistNote(post_data) {
