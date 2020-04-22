@@ -27,6 +27,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
     number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
+    end_cause_notify_cap = '';
     service_cap = Messages.PRO_SERVICE_CAP;
     description_cap = Messages.DESCRIPTION_CAP;
     price_cap = Messages.PRICES_CAP;
@@ -54,6 +55,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     serv_status = Messages.SERVICE_STATUS_CAP;
     photo_cap = Messages.SERVICE_PHOTO_CAP;
     tooltip = Messages.NEW_SERVICE_TOOLTIP;
+    tooltipDonation = Messages.NEW_DONATION_TOOLTIP;
     rupee_symbol = '₹';
     base_licence = false;
     is_virtual_serv = false;
@@ -84,6 +86,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     serv_mode: any;
     serv_type: any;
     is_physical = 0;
+    is_donation = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -151,6 +154,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
         );
     }
+    @Input() donationservice;
     setDescFocus() {
         this.isfocused = true;
         this.char_count = this.max_char_count - this.serviceForm.get('description').value.length;
@@ -214,7 +218,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.end_service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
+        this.end_cause_notify_cap = Messages.DONATION_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
+        if (this.donationservice) {
+            this.is_donation = true;
+        }
     }
     ngOnDestroy() {
         this.serviceSubscription.unsubscribe();
@@ -248,24 +256,45 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
-        if (!this.subdomainsettings.serviceBillable) {
-            form_data.bType = 'Waitlist';
-            form_data['totalAmount'] = 0;
-            form_data['isPrePayment'] = false;
-            form_data['taxable'] = false;
+        if (this.is_donation) {
+            if (!this.subdomainsettings.serviceBillable) {
+                form_data.bType = 'Waitlist';
+                form_data['totalAmount'] = 10;
+                form_data['isPrePayment'] = false;
+                form_data['taxable'] = false;
+            } else {
+                form_data['isPrePayment'] = false;
+                form_data['minPrePaymentAmount'] = 0;
+            }
+            form_data['serviceDuration'] = 1;
+            form_data['serviceType'] = this.serv_type;
+            form_data['minDonationAmount'] = 100;
+            form_data['maxDonationAmount'] = 1000;
+            form_data['multiples'] = 5;
+            const serviceActionModel = {};
+            serviceActionModel['action'] = this.action;
+            serviceActionModel['service'] = form_data;
+            this.servicesService.actionPerformed(serviceActionModel);
         } else {
-            form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
-                0 : form_data.minPrePaymentAmount;
-            form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
-            const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
-            form_data.serviceDuration = duration;
+            if (!this.subdomainsettings.serviceBillable) {
+                form_data.bType = 'Waitlist';
+                form_data['totalAmount'] = 0;
+                form_data['isPrePayment'] = false;
+                form_data['taxable'] = false;
+            } else {
+                form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
+                    0 : form_data.minPrePaymentAmount;
+                form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+                const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
+                form_data.serviceDuration = duration;
+            }
+            form_data['serviceType'] = this.serv_type;
+            form_data['virtualServiceType'] = this.serv_mode;
+            const serviceActionModel = {};
+            serviceActionModel['action'] = this.action;
+            serviceActionModel['service'] = form_data;
+            this.servicesService.actionPerformed(serviceActionModel);
         }
-        form_data['serviceType'] = this.serv_type;
-        form_data['virtualServiceType'] = this.serv_mode;
-        const serviceActionModel = {};
-        serviceActionModel['action'] = this.action;
-        serviceActionModel['service'] = form_data;
-        this.servicesService.actionPerformed(serviceActionModel);
     }
     onCancel() {
         let source;

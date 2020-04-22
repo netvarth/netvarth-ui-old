@@ -134,6 +134,7 @@ export const Messages = {
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
   'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
+  'NEW_DONATION_TOOLTIP': 'Please add this cause to the relevant Queues by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
@@ -734,6 +735,7 @@ export const Messages = {
   'PREPAYMENT_CAP': 'Prepayment Amount ',
   'TAX_APPLICABLE_CAP': 'Tax applicable',
   'SERVICE_NOTIFY_CAP': 'Notify [customer] when service is completed',
+  'DONATION_NOTIFY_CAP': 'Notify [customer] when donation is received',
   'PUSH_MESSAGE_CAP': 'Push Message',
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',

@@ -586,4 +586,16 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date;
     return this.servicemeta.httpGet(url);
   }
+
+
+  
+  addProviderAppointmentNote(uuid, body) {
+    const url = 'provider/appointment/communicate/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerAppointmentNote(accountid, uuid, body) {
+    const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
+  }
+
 }

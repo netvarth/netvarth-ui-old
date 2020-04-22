@@ -1570,7 +1570,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'customers', 'find']);
   }
   showAdjustDelay() {
-    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
+    console.log(this.queues);
+    console.log(this.selQId);
+    if (this.queues.length === 0 || !this.selQId) {
       this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
@@ -2068,6 +2070,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.labels(this.selectedCheckin['new']);
     }
+    console.log(this.waitlistSelected);
     for (let i = 0; i < this.waitlistSelected[slot].length; i++) {
       if (this.waitlistSelected[slot][i]) {
         if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[slot][i]) === -1) {
@@ -2075,6 +2078,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+    console.log(this.newWaitlistforMsg);
+    console.log(this.timeSlotCheckins);
   }
 
   selectcompletedWaitlist(index) {

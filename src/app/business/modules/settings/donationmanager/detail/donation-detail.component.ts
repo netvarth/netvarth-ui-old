@@ -7,16 +7,15 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
-import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 
 @Component({
     selector: 'app-donation-detail',
     templateUrl: './donation-detail.component.html'
 })
+
 export class DonationDetailComponent implements OnInit, OnDestroy {
     actionparam = 'show'; // To know whether clicked edit/view from the services list page
     serviceParams = { 'action': 'show' };
-    servicelevel = 'userlevel';
     service_id = null;
     api_loading = false;
     customer_label: any;
@@ -35,9 +34,6 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         {
             title: 'Causes',
             url: '/provider/settings/donationmanager'
-        },
-        {
-            title: 'Add'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -47,10 +43,8 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
-    userId: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
-        public fed_service: FormMessageDisplayService,
         private servicesService: ServicesService,
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,
@@ -58,33 +52,18 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         private provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(
             (params) => {
-                this.service_id = params.sid;
-                this.userId = params.id;
-                console.log(params.id);
-                console.log(this.service_id);
+                this.service_id = params.id;
                 this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-                // if (this.service_id === 'add') {
-                //     const breadcrumbs = [];
-                //     this.breadcrumbs_init.map((e) => {
-                //         breadcrumbs.push(e);
-                //     });
-                //     breadcrumbs.push({
-                //         title: this.userId,
-                //         url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                //     });
-                //     breadcrumbs.push({
-                //         title: 'Settings',
-                //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-                //     });
-                //     breadcrumbs.push({
-                //         title: 'Services',
-                //         url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
-                //     });
-                //     breadcrumbs.push({
-                //         title: 'Add'
-                //     });
-                //     this.breadcrumbs = breadcrumbs;
-              //  }
+                if (this.service_id === 'add') {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                }
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -138,7 +117,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
                             this.serviceParams['action'] = 'show';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
-                            this.router.navigate(['/provider/settings/miscellaneous/users/' + this.userId + '/settings/services']);
+                            this.router.navigate(['provider/settings/appointmentmanager/services']);
                         }
                     }
                 }
@@ -189,9 +168,9 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
                     });
         });
     }
-    getUserServiceDetail() {
+    getServiceDetail() {
         this.api_loading = true;
-        this.provider_services.getUserServiceDetail(this.service_id)
+        this.provider_services.getServiceDetail(this.service_id)
             .subscribe(
                 data => {
                     this.serviceParams['service'] = data;
@@ -202,18 +181,6 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
                         breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.userId,
-                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                    });
-                    breadcrumbs.push({
-                        title: 'Settings',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-                    });
-                    breadcrumbs.push({
-                        title: 'Services',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
                     });
                     breadcrumbs.push({
                         title: this.serviceParams['service'].name
@@ -243,7 +210,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
                                     this.api_loading = false;
                                 }
                                 if (this.service_id) {
-                                    this.getUserServiceDetail();
+                                    this.getServiceDetail();
                                 } else {
                                     this.serviceParams['action'] = 'add';
                                     this.servicesService.initServiceParams(this.serviceParams);
@@ -258,12 +225,11 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         );
     }
     createService(post_data) {
-        post_data['provider'] = { 'id': this.userId };
         this.provider_services.createService(post_data)
             .subscribe(
                 (id) => {
                     this.service_id = id;
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -271,12 +237,11 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
             );
     }
     updateService(post_data) {
-        post_data['provider'] = { 'id': this.userId };
         this.provider_services.updateService(post_data)
             .subscribe(
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -287,28 +252,27 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         this.provider_services.enableService(service.id)
             .subscribe(
                 () => {
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 },
                 (error) => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = false;
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 });
     }
     disableService(service) {
         this.provider_services.disableService(service.id)
             .subscribe(
                 () => {
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 },
                 (error) => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = true;
-                    this.getUserServiceDetail();
+                    this.getServiceDetail();
                 });
     }
     changeServiceStatus(service) {
-        service['provider'] = { 'id': this.userId };
         this.provider_shared_functions.changeServiceStatus(this, service);
     }
     /*Gallery Section*/
@@ -336,7 +300,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
     }
     // Gallery Section ends
     goBack() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings',
+        this.router.navigate(['provider', 'settings', 'appointmentmanager',
             'services']);
         this.api_loading = false;
     }

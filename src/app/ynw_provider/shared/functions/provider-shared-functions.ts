@@ -332,7 +332,8 @@ export class ProviderSharedFuctions {
           source: 'provider-waitlist',
           type: 'send',
           terminologies: terminologies,
-          name: name
+          name: name,
+          appt: appt
         }
       });
 

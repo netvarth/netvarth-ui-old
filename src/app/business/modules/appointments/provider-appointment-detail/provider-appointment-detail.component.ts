@@ -8,13 +8,13 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
-import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 @Component({
-  selector: 'app-provider-waitlist-checkin-detail',
-  templateUrl: './provider-waitlist-checkin-detail.component.html'
+  selector: 'app-provider-appointment-detail',
+  templateUrl: './provider-appointment-detail.component.html'
 })
 
-export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
+export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   name_cap = Messages.CHECK_DET_NAME_CAP;
@@ -79,6 +79,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   board_count = 0;
   showTimePicker = false;
   availableSlots: any = [];
+  source;
+  availableSlotDetails: ArrayBuffer;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -89,6 +91,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
+    });
+    this.activated_route.queryParams.subscribe(params => {
+      this.source = params.source;
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
@@ -129,27 +134,30 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
-        this.getWaitlistDetail();
+        if (this.source) {
+          this.getApptDetails();
+        } else {
+          this.getWaitlistDetail();
+        }
         this.api_loading = false;
       }, () => {
         this.api_loading = false;
       });
   }
-  getWaitlistDetail() {
-    this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
+
+  getApptDetails() {
+    this.provider_services.getAppointmentById(this.waitlist_id)
       .subscribe(
         data => {
           this.waitlist_data = data;
-          const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
-          if (interval) {
-            this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
-          }
-          if (this.waitlist_data.appointmentTime) {
+          console.log(this.waitlist_data);
+          // this.getTimeSlots();
+          if (this.waitlist_data.appmtTime) {
             // tslint:disable-next-line: radix
             // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
-            this.apptTime = this.waitlist_data.appointmentTime;
-          } else {
-            this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+            this.apptTime = this.waitlist_data.appmtTime;
+            // } else {
+            //   this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
           }
           const waitlist_date = new Date(this.waitlist_data.date);
           this.today.setHours(0, 0, 0, 0);
@@ -158,10 +166,57 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
+          // this.getWaitlistNotes();  
+          if (this.source) {
+            this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getCheckInHistory(this.waitlist_data.uid);
+            this.getCommunicationHistory(this.waitlist_data.uid);
+          } else {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            this.getCheckInHistory(this.waitlist_data.ynwUuid);
+            this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          }
+        },
+        error => {
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.goBack();
+        }
+      );
+  }
+  getWaitlistDetail() {
+    this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
+      .subscribe(
+        data => {
+          this.waitlist_data = data;
+          console.log(this.waitlist_data);
+          // const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
+          // if (interval) {
+          //   this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
+          // }
+          // if (this.waitlist_data.appointmentTime) {
+          //   // tslint:disable-next-line: radix
+          //   // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+          //   this.apptTime = this.waitlist_data.appointmentTime;
+          // } else {
+          //   this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+          // }
+          const waitlist_date = new Date(this.waitlist_data.date);
+          this.today.setHours(0, 0, 0, 0);
+          waitlist_date.setHours(0, 0, 0, 0);
+          this.waitlist_data.history = false;
+          if (this.today.valueOf() > waitlist_date.valueOf()) {
+            this.waitlist_data.history = true;
+          }
           // this.getWaitlistNotes();
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          this.getCheckInHistory(this.waitlist_data.ynwUuid);
-          this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          if (this.source) {
+            this.getWaitlistNotes(this.waitlist_data.uid);
+            this.getCheckInHistory(this.waitlist_data.uid);
+            this.getCommunicationHistory(this.waitlist_data.uid);
+          } else {
+            this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+            this.getCheckInHistory(this.waitlist_data.ynwUuid);
+            this.getCommunicationHistory(this.waitlist_data.ynwUuid);
+          }
         },
         error => {
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -172,9 +227,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
-    getWaitlistNotes(uuid) {
-      this.provider_services.getProviderWaitlistNotesnew(uuid)
-    
+  getWaitlistNotes(uuid) {
+    this.provider_services.getProviderWaitlistNotesnew(uuid)
+
       .subscribe(
         data => {
           this.waitlist_notes = data;
@@ -247,7 +302,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       if (result === 'reloadlist') {
         // this.getWaitlistNotes();
         this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-        
+
       }
     });
   }
@@ -260,13 +315,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
       .then(
         () => {
-          this.getWaitlistDetail();
+          if (this.source) {
+            this.getApptDetails();
+          } else {
+            this.getWaitlistDetail();
+          }
         }
       );
   }
 
   addConsumerInboxMessage() {
-	const waitlist = [];
+    const waitlist = [];
     waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.ynwUuid || null;
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
@@ -282,54 +341,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   gotoPrev() {
     this.locationobj.back();
   }
-  getTimeSlots(QStartTime, QEndTime, interval) {
-    this.availableSlots = [];
-    const _this = this;
-    const locId = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
-    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
-    // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-    const nextTimeDt = this.shared_Functionsobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
-    const filter = {};
-    this.availableSlots = [];
-    filter['queue-eq'] = _this.shared_Functionsobj.getitemFromGroupStorage('pdq');
-    filter['location-eq'] = locId.id;
-    filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
-    const activeSlots = [];
-    const allSlots = this.shared_Functionsobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
-    if (this.pdtype === 1) {
-      _this.provider_services.getTodayWaitlist(filter).subscribe(
-        (waitlist: any) => {
-          for (let i = 0; i < waitlist.length; i++) {
-            if (waitlist[i]['appointmentTime']) {
-              activeSlots.push(waitlist[i]['appointmentTime']);
-            }
-          }
-          activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
-          const slots = allSlots.filter(x => !activeSlots.includes(x));
-          for (let i = 0; i < slots.length; i++) {
-            const endTimeStr = moment(slots[i], ['HH:mm A']).format('HH:mm A').toString();
-            const endDTime = this.shared_Functionsobj.getDateFromTimeString(endTimeStr);
-            if (nextTimeDt <= endDTime) {
-              this.availableSlots.push(slots[i]);
-            }
-          }
-        }
-      );
-    } else {
-      filter['date-eq'] = _this.waitlist_data.date;
-      _this.provider_services.getFutureWaitlist(filter).subscribe(
-        (waitlist: any) => {
-          for (let i = 0; i < waitlist.length; i++) {
-            if (waitlist[i]['appointmentTime']) {
-              activeSlots.push(waitlist[i]['appointmentTime']);
-            }
-          }
-          activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
-          const slots = allSlots.filter(x => !activeSlots.includes(x));
-          this.availableSlots = slots;
-        }
-      );
-    }
+  getTimeSlots() {
+    console.log(this.waitlist_data.schedule);
+    console.log(this.waitlist_data.appmtDate);
+    this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule, this.waitlist_data.appmtDate).subscribe(data => {
+      this.availableSlotDetails = data;
+    });
   }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
@@ -411,7 +428,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
     const sHours = hours;
     const sMinutes = minutes;
-    // alert(sHours + ':' + sMinutes);
     const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);
@@ -429,7 +445,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.provider_services.editWaitTime(this.waitlist_data.ynwUuid, esttime).subscribe(
         () => {
           this.showEditView = false;
-          this.getWaitlistDetail();
+          if (this.source) {
+            this.getApptDetails();
+          } else {
+            this.getWaitlistDetail();
+          }
         }, (error) => {
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
@@ -446,20 +466,21 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editApptTime() {
     // tslint:disable-next-line: radix
     this.editAppntTime = true;
-    this.apptTime = this.waitlist_data.appointmentTime;
+    this.apptTime = this.waitlist_data.appmtTime;
   }
   cancelUpdation() {
     this.editAppntTime = false;
   }
-  // changetime(passtime) {
-  //   this.appttime = passtime;
-  // }
+
   saveApptTime(time) {
-    // const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
     this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, time).subscribe(
       () => {
         this.editAppntTime = false;
-        this.getWaitlistDetail();
+        if (this.source) {
+          this.getApptDetails();
+        } else {
+          this.getWaitlistDetail();
+        }
       }, (error) => {
         this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }

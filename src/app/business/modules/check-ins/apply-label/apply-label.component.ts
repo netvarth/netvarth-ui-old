@@ -182,11 +182,12 @@ export class ApplyLabelComponent implements OnInit {
                         }, projectConstants.TIMEOUT_DELAY);
                     },
                     error => {
-                        // this.shared_functions.apiErrorAutoHide(this, error);
-                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                        this.shared_functions.apiErrorAutoHide(this, error);
+                        // this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
                     });
             }
         }
+        console.log(this.api_error);
     }
     resetApiErrors() {
         this.api_error = [];
