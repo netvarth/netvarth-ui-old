@@ -492,7 +492,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      */
     getMode(mod) {
         let moreOptions = {};
-        moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'q-manager->settings-queues', 'subKey': mod };
         return moreOptions;
     }
     /**
@@ -627,7 +627,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      */
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
         } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }

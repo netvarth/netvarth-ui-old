@@ -255,21 +255,15 @@ export class HealthCareComponent implements OnInit {
       }
     }
 
-    if (parentContent === 'checkinmanager') {
+    if (parentContent === 'q-manager') {
       this.showcheckinmanager = true;
-      if (childContent === 'settings-locations') {
-        this.showlocations = true;
-      }
       if (childContent === 'settings-services') {
         this.showservices = true;
       }
       if (childContent === 'settings-time_windows') {
         this.showtime = true;
       }
-      if (childContent === 'settings-departments') {
-        this.showdepartment = true;
-      }
-      if (childContent === 'settings-displayboards') {
+     if (childContent === 'settings-q-boards') {
         this.showdisplayboard = true;
       }
     }

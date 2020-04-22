@@ -197,6 +197,18 @@ export class FoodJointComponent implements OnInit {
         this.showthemes = true;
       }
     }
+    if (parentContent === 'q-manager') {
+      this.showcheckinmanager = true;
+      if (childContent === 'settings-services') {
+        this.showservices = true;
+      }
+      if (childContent === 'settings-time_windows') {
+        this.showtime = true;
+      }
+     if (childContent === 'settings-q-boards') {
+        this.showdisplayboard = true;
+      }
+    }
     if (parentContent === 'billing') {
       this.showbilling = true;
       if (childContent === 'payment-settings') {
@@ -238,25 +250,7 @@ export class FoodJointComponent implements OnInit {
       }
     }
 
-    if (parentContent === 'checkinmanager') {
-      this.showcheckinmanager = true;
-      if (childContent === 'settings-locations') {
-        this.showlocations = true;
-      }
-      if (childContent === 'settings-services') {
-        this.showservices = true;
-      }
-      if (childContent === 'settings-time_windows') {
-        this.showtime = true;
-      }
-      if (childContent === 'settings-departments') {
-        this.showdepartment = true;
-      }
-      if (childContent === 'settings-displayboards') {
-        this.showdisplayboard = true;
-      }
-    }
-
+    
     if (parentContent === 'license') {
       this.showlicense = true;
       if (childContent === 'upgradelicense') {

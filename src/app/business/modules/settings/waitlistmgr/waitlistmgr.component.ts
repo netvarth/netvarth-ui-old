@@ -93,7 +93,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.getDisplayboardCount();
         // this.getStatusboardLicenseStatus();
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
+        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'q-manager->settings' };
         // Update from footer
         this.subscription = this.shared_functions.getMessage()
             .subscribe(
@@ -164,7 +164,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             );
     }
     gotoDisplayboards() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'q-boards']);
         // if (this.statusboardStatus) {
         //     this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // } else {
@@ -247,7 +247,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
     }
     // getMode(mod) {
     //   let moreOptions = {};

@@ -1502,7 +1502,7 @@
                     <mat-accordion>
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="menu('checkinmanager')">
+                                <mat-panel-title class="accordion-title" (click)="menu('q-manager')">
                                     Q Manager
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -1519,7 +1519,7 @@
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('settings', 'checkinmanager')">Settings</span>
+                                                (click)="handleScroll('settings', 'q-manager')">Settings</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
@@ -1528,16 +1528,16 @@
 
                                         <ul class="ul-normal">
                                             <li>Here, a provider gets full control over online customers check-in.</li>
-                                            <li>Complete the <strong>“Profile & Summary�?</strong> section with details.
+                                            <li>Complete the <strong>“Profile & Summary“</strong> section with details.
                                                 To do so,
                                                 click
                                                 on
-                                                the <strong>“Profile�?</strong> under <strong>Settings</strong> and enter
+                                                the <strong>“Profile“</strong> under <strong>Settings</strong> and enter
                                                 the
                                                 details.
                                                 Once
-                                                done, set Public Search to <strong>“ON�?.</strong></li>
-                                            <li>Afterwards, a provider can enable <strong>“Online Check-in�?.</strong>
+                                                done, set Public Search to <strong>“ON“.</strong></li>
+                                            <li>Afterwards, a provider can enable <strong>“Online Check-in“.</strong>
                                             </li>
                                             <li>Provider can choose two options:
                                                 <ul class="ul-normal">
@@ -1581,7 +1581,7 @@
                                                 advisable that the service provider is equipped with enough resources.
                                                 An additional
                                                 option
-                                                is available for providers choosing “Manual�? wait time calculation.
+                                                is available for providers choosing “Manual“ wait time calculation.
                                                 He/She can edit
                                                 individual check-ins wait time from the check-in details in provider
                                                 dashboard.</li>
@@ -1625,7 +1625,7 @@
                                                 the services
                                                 for a
                                                 future date</li>
-                                            <li>In case a provider disables<strong>“Accept Future Check-in�?,</strong>
+                                            <li>In case a provider disables<strong>“Accept Future Check-in“,</strong>
                                                 customers can
                                                 only
                                                 check-in for the current day’s working hours.</li>
@@ -1635,7 +1635,7 @@
 
                                 </mat-expansion-panel>
                             </mat-accordion>
-                            <mat-accordion>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="showlocations && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -1714,14 +1714,14 @@
                                     </div>
 
                                 </mat-expansion-panel>
-                            </mat-accordion>
+                            </mat-accordion> -->
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showservices && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('settings-services','checkinmanager')">Services</span>
+                                                (click)="handleScroll('settings-services','q-manager')">Services</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
@@ -1735,11 +1735,11 @@
                                             more about the services offered by the priest.</span>
 
                                         <ul class="ul-normal">
-                                            <li>When the provider clicks on the <strong>“Services�?</strong>, a page
+                                            <li>When the provider clicks on the <strong>“Services“</strong>, a page
                                                 appears where
                                                 one
                                                 can
-                                                view a service by default name “Facial�?(If provider has edited the
+                                                view a service by default name “Facial“(If provider has edited the
                                                 default service
                                                 during
                                                 the initial profile set up, the updated service details is seen here).
@@ -1749,7 +1749,7 @@
                                                 by default.
                                                 The
                                                 provider can edit this section by clicking on the pencil button.</li>
-                                            <li>Tax Applicable field can be set to “Yes�?, only if tax settings is
+                                            <li>Tax Applicable field can be set to “Yes“, only if tax settings is
                                                 completed under
                                                 the
                                                 Payments section in Settings.</li>
@@ -1774,7 +1774,7 @@
                                                 the price in
                                                 the
                                                 specified field.</li>
-                                            <li><strong>“Add Service�?</strong> button enables the provider to add a new
+                                            <li><strong>“Add Service“</strong> button enables the provider to add a new
                                                 service to
                                                 the
                                                 profile. When a provider clicks this button, a service window pops up
@@ -1831,7 +1831,7 @@
                                                         added here.
                                                     </li>
                                                 </ul>
-                                            <li>Click on <strong>“Save�?</strong> after adding all the information. A
+                                            <li>Click on <strong>“Save“</strong> after adding all the information. A
                                                 success window
                                                 appears
                                                 informing that the service has been added successfully and will ask to
@@ -1858,7 +1858,7 @@
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('settings-time_windows','checkinmanager')">
+                                                (click)="handleScroll('settings-time_windows','q-manager')">
                                                 Queues</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -1882,11 +1882,11 @@
                                             for weekdays and the other one for the Weekends.</span>
 
                                         <ul class="ul-normal">
-                                            <li>This page prompts to <strong>“Add working hours�?,</strong> in case the
+                                            <li>This page prompts to <strong>“Add working hours“,</strong> in case the
                                                 provider has
                                                 not
                                                 added any working hour during the initial profile set up.</li>
-                                            <li><strong>“ADD WORKING HOURS�?</strong> button enables the provider to add
+                                            <li><strong>“ADD WORKING HOURS</strong> button enables the provider to add
                                                 new working
                                                 hours.
                                                 When a provider clicks this button a window appears where one can input
@@ -1910,7 +1910,7 @@
                                                     <li><strong>Schedule :</strong> Select the days according to the
                                                         schedule. A
                                                         provider has the option to
-                                                        choose <strong>“Select all days�?</strong>, in case the business
+                                                        choose <strong>“Select all days“</strong>, in case the business
                                                         is open 7
                                                         days a week.</li>
                                                     <li><strong>Start Time/End Time :</strong> Enter the start time and
@@ -1961,7 +1961,7 @@
                                                 three dots
                                                 menu.
                                             </li>
-                                            <li>Also <strong>“Show Checkins Count�?</strong> is available in the three
+                                            <li>Also <strong>“Show Checkins Count“</strong> is available in the three
                                                 dots menu, to
                                                 see
                                                 the
@@ -1980,7 +1980,7 @@
                                             <li>A working hour window appears where the fields show current data. Edit
                                                 the sections
                                                 and
-                                                click on the <strong>“Save�?</strong> button to retain the modified data.
+                                                click on the <strong>“Save“</strong> button to retain the modified data.
                                             </li>
                                         </ul>
 
@@ -1996,7 +1996,7 @@
                                         <span>Step by step instructions to add an instant working hour in Jaldee:</span>
                                         <ul class="ul-normal">
                                             <li>Click on (+) symbol, adjacent to the label <strong>“My Availability
-                                                    Today�?</strong>.
+                                                    Today“</strong>.
                                             </li>
                                             <li>Edit the time period you are available to offer services.</li>
                                             <li>Check the services listed, you wish to offer during this instant working
@@ -2007,7 +2007,7 @@
                                             <li>Option to edit maximum customers served and customers served at a time,
                                                 is available.
                                             </li>
-                                            <li>Finally, click <strong>“MAKE ME AVAILABLE�?</strong> button to create an
+                                            <li>Finally, click <strong>“MAKE ME AVAILABLE“</strong> button to create an
                                                 instant
                                                 queue.
                                             </li>
@@ -2018,7 +2018,7 @@
 
                                 </mat-expansion-panel>
                             </mat-accordion>
-                            <mat-accordion>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="showdepartment && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -2061,21 +2061,21 @@
                                     </div>
 
                                 </mat-expansion-panel>
-                            </mat-accordion>
+                            </mat-accordion> -->
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('settings-displayboards','checkinmanager')">Queue
+                                                (click)="handleScroll('settings-q-boards','q-manager')">Queue
                                                 Status boards</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
                                         Get an immediate overview or a quick reference of check-ins or any related
-                                        information at the premise with the feature “Queue Board�? in Jaldee. To
+                                        information at the premise with the feature “Queue Board in Jaldee“. To
                                         create and display a queue board the provider has to purchase a Queue Status
                                         Board addon from license section. Provider can customize the queue boards to
                                         show any information they want by selecting the layout and also queue board
@@ -2083,7 +2083,7 @@
                                         boards with Queue Board to display check-in information.
                                         <ul>
                                             <li>To create a Queue Board, first you have to create a “Status Board
-                                                Criteria�?.</li>
+                                                Criteria“.</li>
                                             <li>Queue Board Querys are created to display the required information
                                                 in Queue Board. Once a queue board query is set, it can be
                                                 added to the queue board to display.
@@ -2091,8 +2091,8 @@
                                         </ul>
                                         <strong><u>How to create a queue board query?</u></strong><br>
                                         <ol>
-                                            <li>Click <strong>“CREATE A QUEUE BOARD�?</strong> and to start with
-                                                creating a queue board query, click <strong>“CREATE�?</strong>.
+                                            <li>Click <strong>“CREATE A QUEUE BOARD“</strong> and to start with
+                                                creating a queue board query, click <strong>“CREATE“</strong>.
                                             </li>
                                             <li>Here, enter the name of the queue board query you are about to
                                                 create.
@@ -2108,7 +2108,7 @@
                                             <li>And then select the fields to be displayed in queue board. Also
                                                 you can edit the field name from here.
                                             </li>
-                                            <li>When you have all the information set, click “Save�? and thus a status
+                                            <li>When you have all the information set, click “Save“ and thus a status
                                                 board criteria is created.
                                             </li>
                                             <li>Once created these can be edited using the pencil icon in the right
@@ -2117,7 +2117,7 @@
                                         <strong><u>How to create a Queue Board?
                                             </u></strong><br>
                                         <ol>
-                                            <li>To start with click on<strong>“CREATE A QUEUE BOARD�?</strong> .
+                                            <li>To start with click on<strong>“CREATE A QUEUE BOARD“</strong> .
                                             </li>
                                             <li>Select a layout that you want from the list.</li>
                                             <li>Give a title for the queue board.</li>
@@ -2138,9 +2138,9 @@
                                                         chosen.</li>
                                                 </ul>
                                             </li>
-                                            <li>Click “Save�? and a new queue board is created.</li>
+                                            <li>Click “Save“ and a new queue board is created.</li>
                                             <li>From the list of queue boards created click the three dots menu
-                                                in the right corner click “Open�? to view the queue board. Options to
+                                                in the right corner click “Open “to view the queue board. Options to
                                                 edit or delete the status boards are given in the three dots menu.</li>
                                         </ol>
 
@@ -2186,7 +2186,7 @@
                                             will be no drop-down menu.</li>
                                         <li>Check-in/Get Token/Order window has a feature to add or change a family
                                             member whom the
-                                            customer wishes to do a check-in for. Click “Add/Change Member�? to add a new
+                                            customer wishes to do a check-in for. Click “Add/Change Member“ to add a new
                                             member
                                             with
                                             the first name and the last name. In case the family member is already
@@ -2200,11 +2200,11 @@
                                         <li>If a customer has any note, the provider can click <strong>“If you have a
                                                 note, Click
                                                 here
-                                                (+)�? to write the message in the textbox.</strong></li>
+                                                (+) to write the message in the textbox.</strong></li>
                                         <li>With all this information the provider can now proceed with the check-in
                                             process of
                                             the
-                                            walk-in customer by clicking on <strong>“Confirm Check-in�?.</strong></li>
+                                            walk-in customer by clicking on <strong>“Confirm Check-in“.</strong></li>
                                         <li>Push message will be sent to the customer's mobile and an email notification
                                             to the
                                             registered email address regarding the information of check-in.</li>
