@@ -5,7 +5,7 @@ import { DonationDetailComponent } from './detail/donation-detail.component';
 import { donationcomponent } from './donation.component';
 import { from } from 'rxjs';
 const routes: Routes = [
-    { path: '', component: donationcomponent },
+   // { path: '', component: donationcomponent },
     { path: '', component: DonationCauseListComponent },
     { path: ':id', component: DonationDetailComponent }
 ];
