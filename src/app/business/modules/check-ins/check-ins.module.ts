@@ -23,6 +23,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
 import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -43,12 +44,12 @@ import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-chec
         NgbModule,
         OwlModule,
         NgxMatSelectSearchModule,
-        ApplyLabelModule
+        ApplyLabelModule,
+        AddProviderWaitlistCheckInProviderNoteModule
     ],
     declarations: [
         CheckInsComponent,
         ProviderCheckinComponent,
-        AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
@@ -58,7 +59,6 @@ import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-chec
 
     ],
     entryComponents: [
-        AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
         LocateCustomerComponent

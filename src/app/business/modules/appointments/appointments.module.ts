@@ -12,6 +12,7 @@ import { ApplyLabelModule } from '../check-ins/apply-label/apply-label.module';
 import { ProviderAppointmentDetailComponent } from './provider-appointment-detail/provider-appointment-detail.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
         LoadingSpinnerModule,
         ApplyLabelModule,
         InboxModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        AddProviderWaitlistCheckInProviderNoteModule
     ],
     declarations: [
         AppointmentsComponent,
