@@ -46,7 +46,7 @@ export class DisplayboardsComponent implements OnInit {
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
+            'show_learnmore': true, 'scrollKey': 'appointmentmanager->q-boards', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
@@ -84,7 +84,7 @@ export class DisplayboardsComponent implements OnInit {
     performActions(action) {
         this.addDisplayboardLayout();
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-displayboards']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->q-boards']);
         }
     }
     addDisplayboardLayout() {

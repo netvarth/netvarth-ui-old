@@ -658,7 +658,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      */
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
         } else {
             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', 'add']);
         }

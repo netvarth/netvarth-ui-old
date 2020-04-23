@@ -2553,6 +2553,393 @@
                     </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
+                            <mat-expansion-panel [expanded]='showappointments'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="menu('appointmentmanager')">
+                                        Appointment Manager
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                    <div class="helpcontent">
+                                    <span>
+                                         Manage your working hours, appointment services, schedules and QBoards here. 
+                                    </span>
+                                    </div>
+                                <mat-accordion> 
+                                    <mat-expansion-panel [expanded]="showappointment && showappointments">
+                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                            class="accordion">
+                                            <mat-panel-title class="accordion-title">
+                                                <span class="helpcontent"
+                                                    (click)="handleScroll('accept-appointments', 'appointmentmanager')">Accept Appointments</span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                            <div class="helpcontent">
+                                                <section>
+                                                    <span>In this section, a provider can select the  Appointments mode with which he/she wishes
+                                                         to
+                                                        Accept Appointments and also book a future date for [customer]'s appointment here.
+                                                    </span>
+                                                </section>
+                                                <section>
+                                                    <ul class="ul-normal">
+                                                        <li>To enable Accept Appointments , a provider has to switch
+                                                            on the
+                                                                "Accept Appointments" mode. Initially, this is set to off mode.</li>
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion> 
+                                        <mat-expansion-panel [expanded]="showservices && showappointments">
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent"
+                                                            (click)="handleScroll('services', 'appointmentmanager')">Services</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <span>This page lists all the services offered to the customers. While listing
+                                                            the services,
+                                                                please
+                                                                keep the name of services simple and comprehensible which will help the
+                                                                customers easily
+                                                                know
+                                                                more about the services offered by the provider.</span>
+                                                                <ul class="ul-normal">
+                                                                    <li>When the provider clicks on the <strong>“Services“</strong>, a page
+                                                                        appears where one can
+                                                                        view
+                                                                        a service by default name “Consultation“(If provider has edited the
+                                                                        default service during
+                                                                        the
+                                                                        initial profile set up, the updated service details is seen here). Other
+                                                                        details such as
+                                                                        Estimated duration, End of Service notification fields also have values
+                                                                        by default. The
+                                                                        provider can edit this section by clicking on the pencil button.</li>
+                                                                    <li>Tax Applicable field can be set to “Yes“, only if tax settings is
+                                                                        completed under the
+                                                                        Payments section in Settings.</li>
+                                                                    <li>Service status is enabled by default. Only enabled services are
+                                                                        available for customers
+                                                                        to
+                                                                        proceed with the check-in process.</li>
+                                                                    <li>The provider, at his/her convenience, can enable/disable the status of
+                                                                        any
+                                                                        service by
+                                                                        clicking
+                                                                        on the three dots menu.</li>
+                                                                    <li>All the services created are displayed here.</li>
+                                                                    <li>To view the complete details of a service, click on the service names.
+                                                                        One can edit the
+                                                                        details only if the status of service is set to enabled. In the detailed
+                                                                        view, the
+                                                                        provider
+                                                                        can enable or disable the service’s status.</li>
+                                                                    <li>No price is set for any default service created. The provider can input
+                                                                        the price in the
+                                                                        specified field.</li>
+                                                                    <li><strong>“Add Service“</strong> button enables the provider to add a new
+                                                                        service to the
+                                                                        profile. When a provider clicks this button, a service window pops up
+                                                                        where one can input
+                                                                        the
+                                                                        service details.
+                                                                        <ul class="ul-normal">
+                                                                            <li><strong>Service Name :</strong> Enter the name of the service.
+                                                                            </li>
+                                                                            <li><strong>Briefly describe service :</strong> Provide a brief
+                                                                                explanation of the
+                                                                                service that is being offered.</li>
+                                                                            <li><strong>Choose Department :</strong> If already added
+                                                                                departments to your profile, choose one from the drop down menu.
+                                                                            </li>
+                                                                            <li><strong>Estimated Duration (min) :</strong> Enter the minimum
+                                                                                time (in minutes)
+                                                                                required to complete the mentioned service.</li>
+                                                                            <li><strong>Price :</strong> Enter the price of the mentioned
+                                                                                service.</li>
+                                                                            <li><strong>Enable Prepayment :</strong> A provider can enable the
+                                                                                prepayment option.
+                                                                                To
+                                                                                accept payment in advance before checking in for the offered
+                                                                                services, enable
+                                                                                this
+                                                                                option. Prepayment option can be enabled only when the payment
+                                                                                settings are
+                                                                                completed <strong>(Settings -> Payments)</strong>.</li>
+                                                                            <li><strong>Tax Applicable :</strong> If a provider has enabled the
+                                                                                Tax application
+                                                                                button, he/she can collect a certain percentage of tax from the
+                                                                                customers (the
+                                                                                percentage of tax can be set under Tax settings). This option
+                                                                                can be enabled
+                                                                                only if
+                                                                                the Tax settings are already set.</li>
+                                                                            <li><strong>End of Service Notification :</strong> When a provider
+                                                                                enables the
+                                                                                notification button, two options, viz, Push messages and Email
+                                                                                appear. A provider
+                                                                                can
+                                                                                select any of these media to pass a message to the customers
+                                                                                informing that the
+                                                                                service has been completed.</li>
+                                                                            <li><strong>Gallery :</strong> Multiple images of the service are
+                                                                                added here.</li>
+                                                                        </ul>
+                                                                    <li>Click on <strong>“Save“</strong> after adding all the information. A
+                                                                        success window
+                                                                        appears
+                                                                        informing that the service has been added successfully and will ask to
+                                                                        add this service
+                                                                        to
+                                                                        the relevant working hours.</li>
+                                                                    <li>A newly added services will be displayed to the customers, only if the
+                                                                        service has been
+                                                                        added to any existing/new working hours. This can also be edited by
+                                                                        clicking on the
+                                                                        pencil
+                                                                        button.</li>
+                                                                </ul>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="showschedules && showappointments">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                    class="accordion">
+                                                    <mat-panel-title class="accordion-title">
+                                                        <span class="helpcontent"
+                                                            (click)="handleScroll('schedules', 'appointmentmanager')">Schedules</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                 <div class="helpcontent">
+                                                    <section>
+                                                            <span>In this section, a provider can schedule the  Appointments and also book a future date for [customer]'s appointment here.
+                                                                Also schedule the queue and disable the queue.
+                                                                A provider can manage the schedules for his/her appointments.
+                                                            </span>
+                                                            <span>Queues simply means the active time of the business. One can add
+                                                                    multiple Working
+                                                                    Hours
+                                                                    according to the business schedule. To understand this with an example,
+                                                                    suppose a business
+                                                                    works
+                                                                    from Monday to Friday (9 am to 5 pm) whereas, on Weekends (i.e. Saturday and
+                                                                    Sunday), it
+                                                                    operates only for 4 hours (9 am to 1 pm). In such cases, one can create two
+                                                                    working hours,
+                                                                    one
+                                                                    for weekdays and the other one for the Weekends.</span>
+                        
+                                                                <ul class="ul-normal">
+                                                                    <li>This page prompts to <strong>“Add working hours“,</strong> in case the
+                                                                        provider has not
+                                                                        added
+                                                                        any working hour during the initial profile set up.</li>
+                                                                    <li><strong>“ADD WORKING HOURS“</strong> button enables the provider to add
+                                                                        new working hours.
+                                                                        When a provider clicks this button a window appears where one can input
+                                                                        the details of the
+                                                                        schedule.
+                                                                        <ul class="ul-normal">
+                                                                            <li><strong>Queues :</strong> Enter a title for the working
+                                                                                hours here.</li>
+                                                                            <li><strong>Location :</strong> Choose a location from the drop-down
+                                                                                menu.</li>
+                                                                            <li><strong>Service :</strong> All added services offered by the
+                                                                                provider are
+                                                                                displayed
+                                                                                here. Check the services offered in this working hour from the
+                                                                                list of services
+                                                                                displayed here.</li>
+                                                                            <li><strong>Schedule :</strong> Select the days according to the
+                                                                                schedule. A provider
+                                                                                has
+                                                                                the option to choose <strong>“Select all days“</strong>, in case
+                                                                                the business is open 7 days a week.</li>
+                                                                            <li><strong>Start Time/End Time :</strong> Enter the start time and
+                                                                                the end time for
+                                                                                a
+                                                                                particular working hour.</li>
+                                                                            <li><strong>Maximum customers served :</strong> Enter the maximum
+                                                                                number of
+                                                                                customers
+                                                                                the business can serve in particular schedule. No more check-ins
+                                                                                will be
+                                                                                accepted,
+                                                                                once the limit is reached. If the limit is not set, then endless
+                                                                                check-ins will
+                                                                                be
+                                                                                accepted between the working hours.</li>
+                                                                            <li><strong>Customers served at a time :</strong> Here enter the
+                                                                                number of customers
+                                                                                that can be served at the same time.</li>
+                                                                            <li><strong>Online check-ins :</strong> Enable this toggle button to
+                                                                                make this
+                                                                                particular working hours available for customers to check-in
+                                                                                online for the same
+                                                                                day.</li>
+                                                                            <li><strong>Future check-ins :</strong> Enable this toggle button to
+                                                                                make this
+                                                                                particular working hours available for customers to check-in
+                                                                                online for a future
+                                                                                date.</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>All added working hours are displayed here.</li>
+                                                                    <li>The status of working hours can be enabled/disabled. The enabled working
+                                                                        hours are open
+                                                                        to
+                                                                        customers for the check-in process.</li>
+                                                                    <li>providers can enable or disable <strong>same day online
+                                                                            check-in</strong>
+                                                                        or
+                                                                        <strong>future
+                                                                            check-in</strong> anytime from here.</li>
+                                                                    <li>To edit or to enable/disable any particular working hour, click on the
+                                                                        three dots menu.
+                                                                    </li>
+                                                                    <li>Also <strong>“Show Checkins Count“</strong> is available in the three
+                                                                        dots menu, to see
+                                                                        the
+                                                                        number of check-ins for <strong>Today, Future</strong> and
+                                                                        <strong>Tomorrow</strong>.
+                                                                    </li>
+                                                                    <li>When the provider clicks on the enabled working hours, it displays a
+                                                                        brief
+                                                                        outlook of the
+                                                                        time
+                                                                        schedule.</li>
+                                                                    <li>To edit the timing of this particular working hours, click on the pencil
+                                                                        button given in
+                                                                        the
+                                                                        right corner.</li>
+                                                                    <li>A working hour window appears where the fields show current data. Edit
+                                                                        the sections and
+                                                                        click on the <strong>“Save“</strong> button to retain the modified data.
+                                                                    </li>
+                                                                </ul>
+                        
+                                                                <h6 id="settings-time_windows">My Availability Today(+)</h6>
+                                                                <span>In Jaldee, if provider is available to provide services to customers other
+                                                                    than the
+                                                                    available
+                                                                    working hours, he/she can create an instant working hour for a time period
+                                                                    other than the
+                                                                    saved
+                                                                    working hours.</span>
+                                                                <span>Step by step instructions to add an instant working hour in Jaldee:</span>
+                                                                <ul class="ul-normal">
+                                                                    <li>Click on (+) symbol, adjacent to the label <strong>“My Availability
+                                                                            Today“</strong>.
+                                                                    </li>
+                                                                    <li>Edit the time period you are available to offer services.</li>
+                                                                    <li>Check the services listed, you wish to offer during this instant working
+                                                                        hour. If all
+                                                                        services are offered, check the <strong>All Services</strong> checkbox.
+                                                                    </li>
+                                                                    <li>Option to edit maximum customers served and customers served at a time,
+                                                                        is
+                                                                        available.
+                                                                    </li>
+                                                                    <li>Finally, click <strong>“MAKE ME AVAILABLE“</strong> button to create an
+                                                                        instant queue.
+                                                                    </li>
+                                                                    <li>Now customer check-ins can be accepted for this instant queue.</li>
+                                                                </ul>
+                                                         </section>
+                                                </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion> 
+                                    <mat-accordion> 
+                                        <mat-expansion-panel [expanded]="showdisplayboard && showappointments">
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent"
+                                                            (click)="handleScroll('q-boards', 'appointmentmanager')">Qboards</span>
+                                                </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent"> 
+                                                        Get an immediate overview or a quick reference of check-ins or any related
+                                                        information at the premise with the feature “Queue Board“ in Jaldee. To
+                                                        create and display a queue board the provider has to purchase a Queue Status
+                                                        Board addon from license section. Provider can customize the queue boards to
+                                                        show any information they want by selecting the layout and also queue board
+                                                        criterias from the created list. We’ll help you replace the conventional display
+                                                        boards with Queue Board to display check-in information.
+                                                        <ul>
+                                                            <li>To create a Queue Board, first you have to create a “Status Board
+                                                                Criteria“.</li>
+                                                            <li>Queue Board Querys are created to display the required information
+                                                                in Queue Board. Once a queue board query is set, it can be
+                                                                added to the queue board to display.
+                                                            </li>
+                                                        </ul>
+                                                        <strong><u>How to create a queue board query?</u></strong><br>
+                                                        <ol>
+                                                            <li>Click <strong>“CREATE A QUEUE BOARD“</strong> and to start with
+                                                                creating a queue board query, click <strong>“CREATE“</strong>.
+                                                            </li>
+                                                            <li>Here, enter the name of the queue board query you are about to
+                                                                create.
+                                                            </li>
+                                                            <li>Under category, choose from <strong>Services, Queues,</strong> or
+                                                                <strong>Departments</strong>(only when department is enabled)to be
+                                                                displayed.</li>
+                                                            <li>Then choose from the options listed corresponding to the category
+                                                                selected. For example if category chosen is services, the list of
+                                                                services added to the provider profile is listed here. Choose one
+                                                                service from the list.
+                                                            </li>
+                                                            <li>And then select the fields to be displayed in queue board. Also
+                                                                you can edit the field name from here.
+                                                            </li>
+                                                            <li>When you have all the information set, click “Save“ and thus a status
+                                                                board criteria is created.
+                                                            </li>
+                                                            <li>Once created these can be edited using the pencil icon in the right
+                                                                corner.</li>
+                                                        </ol>
+                                                        <strong><u>How to create a Queue Board?
+                                                            </u></strong><br>
+                                                        <ol>
+                                                            <li>To start with click on<strong>“CREATE A QUEUE BOARD“</strong> .
+                                                            </li>
+                                                            <li>Select a layout that you want from the list.</li>
+                                                            <li>Give a title for the queue board.</li>
+                                                            <li>Lastly, but most importantly select the already added queue board
+                                                                criteria you wanted to display in the queue board from the list.
+                                                            </li>
+                                                            <li>Queue board query can be chosen differently in four different
+                                                                layouts. This is given below:
+                                                                <ul>
+                                                                    <li>If 1 x 1 layout is selected, only one queue board query can
+                                                                        be chosen.
+                                                                    </li>
+                                                                    <li>If 1 x 2 layout is selected two queue board query can be
+                                                                        chosen.</li>
+                                                                    <li>If 2 x 1 layout is selected two queue board query can be
+                                                                        chosen.</li>
+                                                                    <li>If 2 x 2 layout is selected four queue board query can be
+                                                                        chosen.</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>Click “Save“ and a new queue board is created.</li>
+                                                            <li>From the list of queue boards created click the three dots menu
+                                                                in the right corner click “Open“ to view the queue board. Options to
+                                                                edit or delete the status boards are given in the three dots menu.</li>
+                                                        </ol>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <!-- next -->
+                    <mat-accordion>
                         <mat-expansion-panel [expanded]='false'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('checkin', 'checkin')">
@@ -3914,7 +4301,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="helpcontent">
-                <mat-accordion>
+                <!-- <mat-accordion>
                     <mat-expansion-panel [expanded]="shownonworking && showmiscellaneous">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                             <mat-panel-title class="accordion-title">
@@ -3958,7 +4345,7 @@
                         </div>
 
                     </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
                 <mat-accordion>
                     <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -4100,7 +4487,7 @@
 
                     </mat-expansion-panel>
                 </mat-accordion>
-                <mat-accordion>
+                <!-- <mat-accordion>
                     <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                             <mat-panel-title class="accordion-title">
@@ -4147,7 +4534,7 @@
                         </div>
 
                     </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
                 <mat-accordion>
                     <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -4221,7 +4608,7 @@
 
                     </mat-expansion-panel>
                 </mat-accordion>
-                <mat-accordion>
+                <!-- <mat-accordion>
                     <mat-expansion-panel [expanded]="showthemes && showmiscellaneous">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                             <mat-panel-title class="accordion-title">
@@ -4236,7 +4623,7 @@
                             will automatically switch your profile’s appearance according to your selection.
                         </div>
                     </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
             </div>
         </mat-expansion-panel>
     </mat-accordion>

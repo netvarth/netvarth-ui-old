@@ -80,6 +80,9 @@ export class ProfessionalCareComponent implements OnInit {
   showcustomview = false;
   showpaymentsettings = false;
   showpayments = false;
+  showappointments = false;
+  showappointment = false;
+  showschedules = false;
   domain;
   show = 'false';
   constructor(
@@ -176,6 +179,7 @@ export class ProfessionalCareComponent implements OnInit {
         this.showgallery = true;
       }
     }
+
     if(parentContent === 'general'){
       this.showgeneral = true;
       if(childContent === 'locations'){
@@ -200,6 +204,7 @@ export class ProfessionalCareComponent implements OnInit {
         this.showthemes = true;
       }
     }
+
     if (parentContent === 'q-manager') {
       this.showcheckinmanager = true;
       if (childContent === 'settings-services') {
@@ -212,6 +217,23 @@ export class ProfessionalCareComponent implements OnInit {
         this.showdisplayboard = true;
       }
     }
+
+    if (parentContent === 'appointmentmanager') {
+      this.showappointments = true;
+      if (childContent === 'accept-appointments') {
+        this.showappointment = true;
+      }
+      if (childContent === 'services') {
+        this.showservices = true;
+      }
+      if (childContent === 'schedules') {
+        this.showschedules= true;
+      }
+      if (childContent === 'q-boards') {
+        this.showdisplayboard= true;
+      }
+    }
+
     if (parentContent === 'payments') {
       this.showpayments = true;
       if (childContent === 'jaldee-pay') {
@@ -241,23 +263,14 @@ export class ProfessionalCareComponent implements OnInit {
 
     if (parentContent === 'miscellaneous') {
       this.showmiscellaneous = true;
-      if (childContent === 'nonworking') {
-        this.shownonworking = true;
-      }
       if (childContent === 'notifications') {
         this.shownotifications = true;
-      }
-      if (childContent === 'labels') {
-        this.showlabel = true;
       }
       if (childContent === 'jdn') {
         this.showjdn = true;
       }
       if (childContent === 'saleschannel') {
         this.showsaleschannel = true;
-      }
-      if (childContent === 'themes') {
-        this.showthemes = true;
       }
     }
 

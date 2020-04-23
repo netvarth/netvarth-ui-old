@@ -50,7 +50,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.getDomainSubdomainSettings();
         this.getServices();
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
+            'show_learnmore': true, 'scrollKey': 'appointmentmanager->services', 'classname': 'b-service',
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
             { 'title': 'Help', 'type': 'learnmore' }]
         };
@@ -63,7 +63,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             this.router.navigate(['provider', 'settings', 'appointmentmanager',
                 'services', 'add']);
         } else if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->services']);
         }
     }
     getServices() {
