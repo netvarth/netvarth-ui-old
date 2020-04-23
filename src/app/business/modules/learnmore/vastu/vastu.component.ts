@@ -77,6 +77,8 @@ export class VastuComponent implements OnInit {
   showgeneral = false;
   showlivetrackstatus = false;
   showcustomview = false;
+  showpaymentsettings = false;
+  showpayments = false;
   domain;
   show = 'false';
   constructor(
@@ -209,15 +211,22 @@ export class VastuComponent implements OnInit {
         this.showdisplayboard = true;
       }
     }
-
-    if (parentContent === 'billing') {
-      this.showbilling = true;
-      if (childContent === 'payment-settings') {
+    if (parentContent === 'payments') {
+      this.showpayments = true;
+      if (childContent === 'jaldee-pay') {
         this.showpayment = true;
+      }
+      if (childContent === 'payment-settings') {
+        this.showpaymentsettings = true;
       }
       if (childContent === 'tax-settings') {
         this.showtax = true;
       }
+    }
+
+    if (parentContent === 'billing') {
+      this.showbilling = true;
+      
       if (childContent === 'items') {
         this.showitem = true;
       }

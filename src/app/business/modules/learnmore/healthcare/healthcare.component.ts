@@ -81,9 +81,13 @@ export class HealthCareComponent implements OnInit {
   showserviceprovider = false;
   show_corp_accordion = false;
   show_brnch_accordion = false;
+  showpayments = false;
+  showpaymentsettings = false;
   domain;
   subdomain;
   show = 'false';
+  
+  
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -207,15 +211,22 @@ export class HealthCareComponent implements OnInit {
         this.showthemes = true;
       }
     }
-
-    if (parentContent === 'billing') {
-      this.showbilling = true;
-      if (childContent === 'payment-settings') {
+    if (parentContent === 'payments') {
+      this.showpayments = true;
+      if (childContent === 'jaldee-pay') {
         this.showpayment = true;
+      }
+      if (childContent === 'payment-settings') {
+        this.showpaymentsettings = true;
       }
       if (childContent === 'tax-settings') {
         this.showtax = true;
       }
+    }
+
+    if (parentContent === 'billing') {
+      this.showbilling = true;
+      
       if (childContent === 'items') {
         this.showitem = true;
       }

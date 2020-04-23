@@ -148,12 +148,12 @@ export class ProvidertaxSettingsComponent implements OnInit {
 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/payments->' + mod]);
       }
 
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/billing->tax-settings']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/payments->tax-settings']);
         }
     }
 

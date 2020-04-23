@@ -4656,7 +4656,7 @@
                         amount, or applying discount/coupon/on demand discount).</li>
                     <li>Once settled a bill cannot be updated. The settled bill can be emailed.</li>
                 </ul>
-                <mat-accordion>
+                <!-- <mat-accordion>
                     <mat-expansion-panel [expanded]="showpayment && showbilling">
                         <mat-expansion-panel-header class="accordion" expandedHeight="48px" collapsedHeight="32px">
                             <mat-panel-title class="accordion-title">
@@ -4826,7 +4826,7 @@
                         </div>
 
                     </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
                 <mat-accordion>
                     <mat-expansion-panel [expanded]="showitem && showbilling">
                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -5049,6 +5049,206 @@
     </mat-accordion>
 
     <!-- next -->
+    <mat-accordion>
+        <mat-expansion-panel [expanded]='showpayments'>
+            <mat-expansion-panel-header class="accordion">
+                <mat-panel-title class="accordion-title" (click)="menu('payments')">
+                  Payments
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+            </div>
+            <mat-accordion> 
+                    <mat-expansion-panel [expanded]="showpayment && showpayments">
+                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                            class="accordion">
+                            <mat-panel-title class="accordion-title">
+                                <span class="helpcontent"
+                                    (click)="handleScroll('jaldee-pay', 'payments')">JaldeePay</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <section>
+                                    <span>In this section, a provider can select the payment mode with which he/she wishes
+                                        to
+                                        accept/settle payments.
+                                    </span>
+                                </section>
+                                <section>
+                                    <ul class="ul-normal">
+                                        <li>To enable online payments using any payment system, a provider has to switch
+                                            on the
+                                            "jaldee pay" mode. Initially, this is set to off mode.</li>
+                                        
+                                    </ul>
+                                </section>
+                             </div>
+                    </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion> 
+                    <mat-expansion-panel [expanded]="showpaymentsettings && showpayments">
+                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                            class="accordion">
+                            <mat-panel-title class="accordion-title">
+                                <span class="helpcontent"
+                                    (click)="handleScroll('payment-settings', 'payments')">PaymentSettings</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <section>
+                                    <ul class="ul-normal">
+                                        <li>If a provider  has not entered an email address before, click on the link
+                                                    <strong>“Go
+                                                        To
+                                                        Email Settings"</strong> (Payment Settings) to add the email id. This
+                                                    can be set
+                                                    directly from My Account.</li>
+                                        <li>Two modes of payments can be enabled. These are:</li>
+                                        <ul ol class="ol-normal">
+                                            <li><strong>Jaldee Bank :</strong>
+                                                When a provide choose Jaldee bank to accept online payments from customer,
+                                                customer can pay online for the services directly to the <strong>Jaldee
+                                                    Bank</strong> and in turn, the <strong>Jaldee team</strong> will
+                                                reimburse the amount (charging a commission for each transaction) to the
+                                                provider. The providers may or may not opt Jaldee bank for accepting online
+                                                payments from customers.
+                                                <br>
+                                                <span><strong>How is commission charged for each transaction when a provider
+                                                        selects Jaldee Bank for online payment?</strong></span>
+                                                <span>
+                                                    <ul>
+                                                        <li>If the provider choose either Jaldee bank or My Own Bank account
+                                                            for accepting online payment, the payment is transferred
+                                                            directly to Jaldee bank or My Own Bank account respectively,
+                                                            with an additional payment gateway commision of 2%, which is
+                                                            deducted from the total bill amount .
+                                                        </li>
+                                                        <li>If the provider choose Jaldee Bank for accepting online payments,
+                                                            a total of 5 % will be deducted from the total bill amount, ie
+                                                            2% payment gateway commision and 3% Jaldee transaction charge.
+                                                        </li>
+                                                        <li>Providers using their own bank account for accepting online
+                                                            payments from patients, will be eliminated from imposing jaldee
+                                                            transaction charge.
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                            </li>
+    
+                                            <li><strong>My Own Bank Account :</strong> In this section, a provider is
+                                                required to
+                                                submit the account details of <strong>Paytm/CC/DC/Net
+                                                    Banking/UPI</strong>. In case
+                                                the
+                                                provider has not added an email address, click on the link <strong>“Go To
+                                                    Email
+                                                    Settings"</strong> (Payment Settings) to add the email address.
+                                                Furthermore,
+                                                a
+                                                provider needs to click on any mode of payment (with which he/she wants to
+                                                settle
+                                                the
+                                                bill). The mode of payment can be either <strong>“Paytm"</strong> or
+                                                <strong>“CC/DC/Net Banking/UPI"</strong> or both.
+                                                <ul class="ul-normal">
+                                                    <li><strong>Paytm :</strong> This is an effortless mode of online
+                                                        payment
+                                                        commonly used these days. If the provider has a business Paytm
+                                                        account, he/she
+                                                        needs to
+                                                        provide the following details (Login to Paytm to get these
+                                                        production keys):
+                                                        <ul class="ul-normal">
+                                                            <li><strong>Mobile Number</strong></li>
+                                                            <li><strong>Merchant Id</strong></li>
+                                                            <li><strong>Merchant Key</strong></li>
+                                                            <li><strong>Website Web</strong></li>
+                                                            <li><strong>Website App</strong></li>
+                                                            <li><strong>Industry Type</strong></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><strong>CC/DC/Net Banking/UPI :</strong> To settle the bill
+                                                        using this mode
+                                                        of
+                                                        payment, a provider has to provide the following information:
+                                                        <ul class="ul-normal">
+                                                            <li><strong>Account Holder Name</strong></li>
+                                                            <li><strong>Bank Account Number</strong></li>
+                                                            <li><strong>Pan Card Number</strong></li>
+                                                            <li><strong>Bank Name</strong></li>
+                                                            <li><strong>IFSC Code</strong></li>
+                                                            <li><strong>Name on Pan Card</strong></li>
+                                                            <li><strong>Branch Name</strong></li>
+                                                            <li><strong>Business Filing Status</strong></li>
+                                                            <li><strong>Account Type</strong></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <li>To verify the <strong>Paytm/CC/DC/Net</strong> Banking and to start
+                                            accepting
+                                            digital
+                                            payments, please call the Jaldee team on 0487-2325650 or mail us to
+                                            support@jaldee.com.
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>  
+                    </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion> 
+                    <mat-expansion-panel [expanded]="showtax && showpayments">
+                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                            class="accordion">
+                            <mat-panel-title class="accordion-title">
+                                <span class="helpcontent"
+                                    (click)="handleScroll('tax-settings', 'payments')">TaxSettings</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span>Before setting up the taxes, ensure that one is familiar with the tax
+                                        requirements of
+                                        one’s
+                                        business. The following instructions will help the provider through the
+                                        tax setup of the
+                                        business
+                                        services in Jaldee:</span>
+                                    <ul ol class="ol-normal">
+                                        <li>When the provider clicks on the tax settings under the payments
+                                            section, a window
+                                            appears.
+                                            The provider is required to fill the textbox (Enter the GST number of
+                                            the business and the
+                                            tax
+                                            percentage for the respective sector here).</li>
+                                        <li>At first, enter the <strong>GST</strong> number of the business.
+                                        </li>
+                                        <li>Next, enter the <strong>Tax Percentage</strong> (5%, 12%, 18%, 28%).</li>
+                                        <li>After the complete insertion of the details, click
+                                            <strong>“Save".</strong></li>
+                                        <li>This tax will be applied to the services offered and the items that
+                                            are being sold at
+                                            the
+                                            time of billing, only if the <strong>“Tax Applicable"</strong>
+                                            toggle button is enabled
+                                            in
+                                            the respective section (i.e. Settings -> Q manager
+                                            ->Services).</li>
+                                        <li>Jaldee has no role in paying taxes paid by the customer to the
+                                            service provider. All types
+                                            of
+                                            taxes are collected directly by the service provider, so it is the
+                                            doctor’s responsibility
+                                            to
+                                            remit the taxes to the Government.</li>
+                                    </ul>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-expansion-panel>
+            </mat-accordion>
+       <!-- next -->
     <mat-accordion>
         <mat-expansion-panel [expanded]='false'>
             <mat-expansion-panel-header class="accordion">
