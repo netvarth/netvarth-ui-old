@@ -319,12 +319,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         {{tooltip}}
                     </span>
                 </div>
-                <div *ngIf="action == 'add' && is_donation">
-                    <span class="addservice-tooltip">
-                        <i class="icon-bell"></i>
-                        {{tooltipDonation}}
-                    </span>
-                </div>
             </div>
             <br />
         </ng-container>
