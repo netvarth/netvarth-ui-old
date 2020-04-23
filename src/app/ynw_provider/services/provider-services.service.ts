@@ -1204,4 +1204,8 @@ export class ProviderServices {
       const url = 'consumer/donation/count';
       return this.servicemeta.httpGet(url);
    }
+   getProviderAppointmentHistory(uuid) {
+      const url = 'provider/appointment/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
 }

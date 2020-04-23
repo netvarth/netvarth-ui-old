@@ -695,7 +695,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_completed_count = this.getCount(list, 'Completed');
     this.today_cancelled_count = this.getCount(list, 'Cancelled');
     this.today_rejected_count = this.getCount(list, 'Rejected');
-    this.today_cancelled_checkins_count = this.today_cancelled_count + this.today_cancelled_checkins_count;
+    this.today_cancelled_checkins_count = this.today_cancelled_count + this.today_rejected_count;
     this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_checkins_count;
   }
 
@@ -1076,7 +1076,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (action === 'Arrived') {
       waitlist.disableArrivedbtn = true;
     }
-    this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
+    this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action, 'appt');
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
     this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)

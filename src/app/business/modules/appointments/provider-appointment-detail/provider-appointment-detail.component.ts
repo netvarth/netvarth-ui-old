@@ -79,7 +79,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   board_count = 0;
   showTimePicker = false;
   availableSlots: any = [];
-  availableSlotDetails: ArrayBuffer;
+  availableSlotDetails: any = [];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -175,7 +175,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       );
   }
   getCheckInHistory(uuid) {
-    this.provider_services.getProviderWaitlistHistroy(uuid)
+    this.provider_services.getProviderAppointmentHistory(uuid)
       .subscribe(
         data => {
           this.waitlist_history = data;
@@ -240,11 +240,11 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   changeWaitlistStatus() {
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'Rejected', 'appt');
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+    this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
       .then(
         () => {
           this.getApptDetails();
@@ -270,10 +270,12 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.locationobj.back();
   }
   getTimeSlots() {
-    console.log(this.waitlist_data.schedule);
-    console.log(this.waitlist_data.appmtDate);
-    this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule, this.waitlist_data.appmtDate).subscribe(data => {
-      this.availableSlotDetails = data;
+    this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule.id, this.waitlist_data.appmtDate).subscribe(data => {
+      this.availableSlots = data;
+      this.availableSlotDetails = this.availableSlots.availableSlots.filter(slot => slot.noOfAvailbleSlots !== '0');
+      console.log(this.availableSlotDetails);
+      this.availableSlotDetails.push({ 'time': this.waitlist_data.appmtTime });
+      console.log(this.availableSlotDetails);
     });
   }
   getAppxTime(waitlist, retcap?) {

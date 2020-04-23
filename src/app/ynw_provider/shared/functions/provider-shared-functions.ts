@@ -211,7 +211,7 @@ export class ProviderSharedFuctions {
     });
   }
 
-  changeWaitlistStatus(ob, waitlist, action) {
+  changeWaitlistStatus(ob, waitlist, action, appt?) {
     if (action === 'CANCEL' || action === 'Rejected') {
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
@@ -219,7 +219,7 @@ export class ProviderSharedFuctions {
         disableClose: true,
         data: {
           waitlist: waitlist,
-          appt: true
+          appt: appt
         }
       });
       dialogRef.afterClosed().subscribe(result => {
