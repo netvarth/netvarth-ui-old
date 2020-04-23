@@ -393,6 +393,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [false]
                 });
+                if (this.action === 'add') {
+                    this.serviceForm.get('serviceType').setValue('physicalService');
+                }
             }
         } else {
             this.serviceForm = this.fb.group({

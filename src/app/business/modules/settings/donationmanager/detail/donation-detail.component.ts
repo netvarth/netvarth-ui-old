@@ -33,7 +33,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
         },
         {
             title: 'Causes',
-            url: '/provider/settings/donationmanager'
+            url: '/provider/settings/donationmanager/causes'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;

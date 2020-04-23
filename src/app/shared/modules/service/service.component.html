@@ -24,11 +24,10 @@
                     <span class=" ttle">{{pre_pay_amt}}</span>
                     <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
-                <div class="item" *ngIf="service_data.serviceType">
+                <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class=" ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Virtual</span>
                     <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
-                    <span *ngIf="service_data.serviceType==='donationService'">Donation</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
