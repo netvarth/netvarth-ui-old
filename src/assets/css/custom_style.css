@@ -7274,7 +7274,7 @@ input.jdn_ip {
   border-bottom: 1px solid #c4b7b7;
   border-right: 1px solid #c4b7b7;
   border-top: 1px solid #c4b7b7;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 .filterTextinput {

@@ -461,7 +461,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'services']);
         break;
       case 'causes':
-        this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
+        this.routerobj.navigate(['provider', 'settings', 'donationmanager' , 'causes']);
         break;
       case 'queues':
         if (this.locationExists) {
