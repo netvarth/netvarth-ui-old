@@ -325,7 +325,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+              //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                  timeSlot: ['', Validators.compose([Validators.required])],
             });
@@ -336,7 +336,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+               // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
                  timeSlot: ['', Validators.compose([Validators.required])]

@@ -582,13 +582,10 @@ export class SharedServices {
     // const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
-  getTodaysAvailableTimeSlots(date, sheduleid) {
-    const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date;
+  getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
+    const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-
-
-  
   addProviderAppointmentNote(uuid, body) {
     const url = 'provider/appointment/communicate/' + uuid;
     return this.servicemeta.httpPost(url, body);
@@ -597,5 +594,4 @@ export class SharedServices {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-
 }

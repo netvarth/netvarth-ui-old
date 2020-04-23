@@ -753,7 +753,9 @@ export class AppointmentComponent implements OnInit {
         // }
         this.showEditView = false;
         const post_Data = {
-            "schedule": this.sel_queue_id,
+            "schedule":{
+                'id':this.sel_queue_id
+            },
             'appmtDate': this.sel_checkindate,
             'service': {
                 'id': this.sel_ser

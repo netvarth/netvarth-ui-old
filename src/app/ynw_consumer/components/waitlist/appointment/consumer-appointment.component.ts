@@ -162,7 +162,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     };
     activeWt;
     searchForm: FormGroup;
-    apptTime: any;
+    apptTime = '';
     board_count = 0;
     allSlots: any = [];
     availableSlots: any = [];
@@ -266,7 +266,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
         // this.minDate = this.sel_checkindate;
         this.minDate = this.todaydate;
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
@@ -660,7 +660,9 @@ export class ConsumerAppointmentComponent implements OnInit {
     saveCheckin() {
         this.showEditView = false;
         const post_Data = {
-            "schedule": this.sel_queue_id,
+            "schedule":{
+                'id':this.sel_queue_id
+            },
             'appmtDate': this.sel_checkindate,
             'service': {
                 'id': this.sel_ser
@@ -679,9 +681,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
-        post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
+        //post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
-            post_Data['consumer'] = { id: this.customer_data.id };
+           // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
             this.addCheckInConsumer(post_Data);
         }
@@ -699,15 +701,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUUID);
                 }
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.router.navigate(['consumer']);
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { account_id: this.account_id }
-                };
-                if (this.sel_ser_det.isPrePayment) {
-                    this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                } else {
-                    this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
-                }
+                // const navigationExtras: NavigationExtras = {
+                //     queryParams: { account_id: this.account_id }
+                // };
+                // if (this.sel_ser_det.isPrePayment) {
+                //     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+                // } else {
+                //     this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
+                // }
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -787,7 +791,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.customer_data.apptTime });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -1214,12 +1218,15 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
 
-        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id)
+        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id,this.account_id)
             .subscribe(
                 (data) => {
                     this.slots = data;
                     this.availableSlots =  this.slots.availableSlots;
                     console.log(this.availableSlots);
+                    if(this.apptTime === ''){
+                        this.apptTime = this.availableSlots[0].time;
+                        }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
