@@ -35,6 +35,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     ];
     domain: any;
     trackStatus: string;
+    serv_list;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -71,7 +72,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.getProviderServices(filter)
             .subscribe(
                 data => {
-                    this.service_list = data;
+                    this.serv_list = data;
+                    for (const serv of this.serv_list) {
+                        if (serv.serviceType !== 'donationService') {
+                            this.service_list.push(serv);
+                        }
+                    }
+                  //  this.service_list = data;
                     this.api_loading = false;
                 },
                 error => {
