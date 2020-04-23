@@ -428,9 +428,9 @@
                               *ngIf="selected_queue && selected_queue.services.length>1">
                               {{checkin.service.name}}
                             </span>
-                            <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                            <!-- <span class="info-box-text batchname service" *ngIf="checkin.batchName">
                               Batch: {{checkin.batchName}}
-                            </span>
+                            </span> -->
                           </div>
                           <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.waitlistStatus === 'cancelled'">
                             <span class="info-box-text" style="font-size: smaller;">
@@ -535,9 +535,9 @@
                             *ngIf="selected_queue && selected_queue.services.length>1">
                             {{timeSlotCheckins[slot][0].service.name}}
                           </span>
-                          <span class="info-box-text service" *ngIf="timeSlotCheckins[slot][0].batchName">
+                          <!-- <span class="info-box-text service" *ngIf="timeSlotCheckins[slot][0].batchName">
                             Batch: {{timeSlotCheckins[slot][0].batchName}}
-                          </span>
+                          </span> -->
                         </div>
                         <div class="col-md-3 col-xs-3 p0"
                           *ngIf="timeSlotCheckins[slot][0].waitlistStatus === 'cancelled'">
@@ -645,9 +645,9 @@
                             style="margin-right: 10px;">
                             {{label.value}}
                           </span>
-                          <span *ngIf="checkin.batchName" class="info-box-text service">
+                          <!-- <span *ngIf="checkin.batchName" class="info-box-text service">
                             Batch: {{checkin.batchName}}
-                          </span>
+                          </span> -->
                         </div>
                         <div class="col-md-3 col-xs-3 p0">
                           <span class="info-box-text" style="font-size: smaller;">
@@ -809,9 +809,9 @@
                                 <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
                                 {{label.value}}
                               </span>
-                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              <!-- <span class="info-box-text batchname service" *ngIf="checkin.batchName">
                                 Batch: {{checkin.batchName}}
-                              </span>
+                              </span> -->
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1007,9 +1007,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
-                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              <!-- <span class="info-box-text batchname service" *ngIf="checkin.batchName">
                                 Batch: {{checkin.batchName}}
-                              </span>
+                              </span> -->
                               <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
                                 <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
                               </div> -->
@@ -1137,9 +1137,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </div>
-                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                            <!-- <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
                               Batch: {{timeSlotCheckins[slot][0].batchName}}
-                            </div>
+                            </div> -->
                           </div>
                           <div class="col-md-12 col-xs-12 p0 visible-xs">
                             <div class="info-box-text forwhom pointer-cursor"
@@ -1156,9 +1156,9 @@
                               style="margin-right: 10px;">
                               {{label.value}}
                             </div>
-                            <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
+                            <!-- <div *ngIf="timeSlotCheckins[slot][0].batchName" class="info-box-text service">
                               Batch: {{timeSlotCheckins[slot][0].batchName}}
-                            </div>
+                            </div> -->
                             <div>
                               <span class="icon-cloud icon-btn1 "
                                 *ngIf="timeSlotCheckins[slot][0].waitlistedBy == 'CONSUMER'"
@@ -1341,9 +1341,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
-                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              <!-- <span class="info-box-text batchname service" *ngIf="checkin.batchName">
                                 Batch: {{checkin.batchName}}
-                              </span>
+                              </span> -->
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1433,9 +1433,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
-                              <span class="info-box-text batchname service" *ngIf="checkin.batchName">
+                              <!-- <span class="info-box-text batchname service" *ngIf="checkin.batchName">
                                 Batch: {{checkin.batchName}}
-                              </span>
+                              </span> -->
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
