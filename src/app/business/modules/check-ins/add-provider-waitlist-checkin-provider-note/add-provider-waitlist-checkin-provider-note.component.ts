@@ -40,13 +40,11 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     this.checkin_id = this.data.checkin_id || null;
     this.message = this.data.message;
     this.source = this.data.source;
-
     if (!this.checkin_id) {
       setTimeout(() => {
         this.dialogRef.close('error');
       }, projectConstants.TIMEOUT_DELAY);
     }
-
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
   }
 
@@ -69,27 +67,40 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
       this.disableButton = false;
       return;
     }
-
-    this.provider_services.addProviderWaitlistNote(this.checkin_id,
-      post_data)
-      .subscribe(
-        () => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
-          setTimeout(() => {
-            this.dialogRef.close('reloadlist');
-          }, projectConstants.TIMEOUT_DELAY);
-        },
-        error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
-          this.disableButton = false;
-        }
-      );
+    if (this.source === 'appt') {
+      this.provider_services.addProviderAppointmentNotes(this.checkin_id,
+        post_data)
+        .subscribe(
+          () => {
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.disableButton = false;
+          }
+        );
+    } else {
+      this.provider_services.addProviderWaitlistNote(this.checkin_id,
+        post_data)
+        .subscribe(
+          () => {
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          error => {
+            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.disableButton = false;
+          }
+        );
+    }
   }
-
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
 }
-

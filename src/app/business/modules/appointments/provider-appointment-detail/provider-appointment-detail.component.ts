@@ -164,7 +164,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   getWaitlistNotes(uuid) {
-    this.provider_services.getProviderWaitlistNotesnew(uuid)
+    this.provider_services.getProviderAppointmentNotes(uuid)
       .subscribe(
         data => {
           this.waitlist_notes = data;
@@ -229,7 +229,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin_id: checkin.uid
+        checkin_id: checkin.uid,
+        source: 'appt'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

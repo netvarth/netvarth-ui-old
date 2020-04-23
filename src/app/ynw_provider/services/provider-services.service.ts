@@ -1208,4 +1208,12 @@ export class ProviderServices {
       const url = 'provider/appointment/states/' + uuid;
       return this.servicemeta.httpGet(url);
    }
+   getProviderAppointmentNotes(uuid) {
+      const url = 'provider/appointment/note/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   addProviderAppointmentNotes(uuid, messgae) {
+      const url = 'provider/appointment/note/' + uuid;
+      return this.servicemeta.httpPost(url, messgae);
+   }
 }
