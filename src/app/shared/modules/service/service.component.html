@@ -35,6 +35,8 @@
                     <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
+            </div>
+            <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.minDonationAmount">
                     <span class=" ttle">Min Amount</span>
                     <span>{{service_data.minDonationAmount}}</span>
@@ -48,7 +50,16 @@
                     <span>{{service_data.multiples}}</span>
                 </div>
             </div>
-            <div class="c-ot m0">
+            <div class="c-ot m0" *ngIf="is_donation">
+                <div class="item" style="width: 70%;">
+                    <span *ngIf="service_data.serviceType === 'donationService' && service_data.notification === true">{{end_cause_notify_cap}}:
+                        <span class="noti-it"
+                            *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                        <span class="noti-it"
+                            *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                </div>
+            </div>
+            <div class="c-ot m0" *ngIf="!is_donation">
                 <div class="item">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
@@ -61,12 +72,6 @@
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
                         <span class="noti-it"
                             *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
-                    <span *ngIf="service_data.serviceType === 'donationService'">{{end_cause_notify_cap}}:
-                        <span class="noti-it"
-                            *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
-                        <span class="noti-it"
-                            *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
-
                 </div>
             </div>
             <div class="btm-ctrl">
@@ -83,7 +88,7 @@
             </div>
         </div>
     </div>
-    <div class="cop-r" *ngIf="action=='show'" style="margin-bottom: 10px;margin-top: 10px;">
+    <div class="cop-r" *ngIf="action=='show' && !is_donation" style="margin-bottom: 10px;margin-top: 10px;">
         <ul class="info-lst serviceadd-info">
             <li>Please add this service to the relevant <a class="pointlist" (click)="gotoManageQueue()">Queues </a>by
                 editing it
@@ -133,7 +138,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="form-group"
+            <div class="form-group" *ngIf="!is_donation"
                 [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
                 <mat-form-field class="example-full-width"
                     [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
@@ -144,9 +149,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
                             Physical Service
-                        </mat-option>
-                        <mat-option *ngIf="is_donation" [value]="'donationService'">
-                            Donation Service
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -230,9 +232,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="is_donation">
                 <mat-form-field>
-                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="multiples"
-                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'multiples')"
-                        placeholder="Multiples" formControlName="multiples" autocomplete="off">
+                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                        id="multiples" maxlength="10" (keypress)="isNumeric($event)"
+                        (keyup)="isvalid($event, 'multiples')" placeholder="Multiples" formControlName="multiples"
+                        autocomplete="off">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'multiples')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'multiples',
     {'required' : 'Please enter a multiple',
@@ -240,8 +243,21 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 4 digits are allowed'})">
                 </app-field-error-display>
             </div>
-            <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
-            <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings">
+            <div class="form-group" *ngIf="is_donation">
+                <div class="form-group inline">
+                    <label class="col-form-label">{{end_cause_notify_cap}}</label>
+                    <mat-slide-toggle class="example-margin" formControlName="notification"
+                        (change)="changeNotification()">
+                    </mat-slide-toggle>
+                </div>
+                <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
+                        formControlName="notificationType">
+                        <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
+                        <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
+                    </mat-radio-group>
+            </div>
+            <a class="learnmore-pointer" (click)="advancedClick()" *ngIf="!is_donation"> Advanced settings</a>
+            <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings && !is_donation">
                 <!-- <mat-accordion>
                             <mat-expansion-panel> -->
                 <!-- <mat-expansion-panel-header class="advancedheader">
@@ -278,12 +294,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </div>
                 <div class="form-group inline" *ngIf="!is_donation">
                     <label class="col-form-label">{{end_service_notify_cap}}</label>
-                    <mat-slide-toggle class="example-margin" formControlName="notification"
-                        (change)="changeNotification()">
-                    </mat-slide-toggle>
-                </div>
-                <div class="form-group inline" *ngIf="is_donation">
-                    <label class="col-form-label">{{end_cause_notify_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="notification"
                         (change)="changeNotification()">
                     </mat-slide-toggle>

@@ -290,7 +290,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['minPrePaymentAmount'] = 0;
             }
             form_data['serviceDuration'] = 1;
-            form_data['serviceType'] = this.serv_type;
+            form_data['serviceType'] = 'donationService';
             // form_data['minDonationAmount'] = 0;
             // form_data['maxDonationAmount'] = 0;
             const serviceActionModel = {};
