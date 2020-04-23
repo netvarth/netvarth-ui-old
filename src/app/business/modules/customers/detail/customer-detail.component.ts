@@ -74,7 +74,6 @@ export class CustomerDetailComponent implements OnInit {
         // this.search_data = this.data.search_data;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
-            console.log(qparams);
             this.source = qparams.source;
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
@@ -157,6 +156,18 @@ export class CustomerDetailComponent implements OnInit {
                             }
                         };
                         this.router.navigate(['provider', 'check-ins', 'create'], navigationExtras);
+                    } else if (this.source === 'appointment') {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                qParams,
+                                firstName: post_data.firstName,
+                                lastName: post_data.lastName,
+                                phoneNo: post_data.phoneNo,
+                                email: post_data.email,
+                                dob: post_data.dob
+                            }
+                        };
+                        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                     } else {
                         this.amForm.reset();
                     }

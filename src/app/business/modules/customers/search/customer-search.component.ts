@@ -179,6 +179,7 @@ export class CustomerSearchComponent implements OnInit {
     customerPhone: any;
     foundCustomer = false;
     searchClicked = false;
+    appt = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -187,14 +188,16 @@ export class CustomerSearchComponent implements OnInit {
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
-        // this.activated_route.queryParams.subscribe(qparams => {
-        //     console.log(this.qParams);
-        //     this.customer_data.firstName = qparams.firstName;
-        //     this.customer_data.lastName = qparams.lastName;
-        //     this.customer_data.email = qparams.email;
-        //     this.customer_data.dob = qparams.dob;
-        //     console.log(this.customer_data.firstName);
-        // });
+        this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.appt) {
+                this.appt = qparams.appt;
+            }
+            //     this.customer_data.firstName = qparams.firstName;
+            //     this.customer_data.lastName = qparams.lastName;
+            //     this.customer_data.email = qparams.email;
+            //     this.customer_data.dob = qparams.dob;
+            //     console.log(this.customer_data.firstName);
+        });
     }
     ngOnInit() {
         this.createForm();
@@ -226,8 +229,12 @@ export class CustomerSearchComponent implements OnInit {
     checkinClicked() {
         const navigationExtras: NavigationExtras = {
             queryParams: { ph: this.customerPhone }
-          };
-        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+        };
+        if (this.appt) {
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        } else {
+            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+        }
     }
     selectMode(type) {
         this.selectedMode = type;
@@ -264,7 +271,11 @@ export class CustomerSearchComponent implements OnInit {
                 mode = 'id';
             }
         }
-        this.qParams['source'] = 'checkin';
+        if (this.appt) {
+            this.qParams['source'] = 'appointment';
+        } else {
+            this.qParams['source'] = 'checkin';
+        }
         switch (mode) {
             case 'phone':
                 post_data = {

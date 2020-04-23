@@ -1139,6 +1139,27 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + scheduleid + '/' + date;
       return this.servicemeta.httpGet(url);
    }
+   addLabeltoAppointment(uuid, data) {
+      const url = 'provider/appointment/label/' + uuid;
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelfromAppointment(uuid, label) {
+      const url = 'provider/appointment/label/' + uuid + '/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
+   getProviderAppointmentHistory(uuid) {
+      const url = 'provider/appointment/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderAppointmentNotes(uuid) {
+      const url = 'provider/appointment/note/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   addProviderAppointmentNotes(uuid, messgae) {
+      const url = 'provider/appointment/note/' + uuid;
+      return this.servicemeta.httpPost(url, messgae);
+   }
+   //
    setLivetrack(status) {
       const url = 'provider/account/settings/livetrack/' + status;
       return this.servicemeta.httpPut(url);
@@ -1192,28 +1213,8 @@ export class ProviderServices {
       const url = 'provider/account/settings/virtualCallingModes';
       return this.servicemeta.httpPut(url, post_data);
    }
-   addLabeltoAppointment(uuid, data) {
-      const url = 'provider/appointment/label/' + uuid;
-      return this.servicemeta.httpPost(url, data);
-   }
-   deleteLabelfromAppointment(uuid, label) {
-      const url = 'provider/appointment/label/' + uuid + '/' + label;
-      return this.servicemeta.httpDelete(url);
-   }
    getcauseCount() {
       const url = 'consumer/donation/count';
       return this.servicemeta.httpGet(url);
-   }
-   getProviderAppointmentHistory(uuid) {
-      const url = 'provider/appointment/states/' + uuid;
-      return this.servicemeta.httpGet(url);
-   }
-   getProviderAppointmentNotes(uuid) {
-      const url = 'provider/appointment/note/' + uuid;
-      return this.servicemeta.httpGet(url);
-   }
-   addProviderAppointmentNotes(uuid, messgae) {
-      const url = 'provider/appointment/note/' + uuid;
-      return this.servicemeta.httpPost(url, messgae);
    }
 }

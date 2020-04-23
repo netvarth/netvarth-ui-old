@@ -1570,7 +1570,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot } });
   }
   searchCustomer(source, appttime) {
-    this.router.navigate(['provider', 'customers', 'find']);
+    this.router.navigate(['provider', 'customers', 'find'], { queryParams: { appt: true } });
   }
   showAdjustDelay() {
     if (this.queues.length === 0 || !this.selQId) {
