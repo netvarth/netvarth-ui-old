@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 @Component({
     'selector': 'app-custid',
     'templateUrl': './customer-id.component.html'
 })
-export class CustomerIdSettingsComponent {
+export class CustomerIdSettingsComponent implements OnInit {
     breadcrumbs = [
         {
             title: 'Settings',
@@ -19,47 +19,62 @@ export class CustomerIdSettingsComponent {
             title: 'Customer Id'
         }
     ];
+    formats = {
+        auto: { value: 'AUTO', displayName: 'Auto' },
+        manual: { value: 'MANUAL', displayName: 'Manual' },
+        pattern: { value: 'PATTERN', displayName: 'Pattern' },
+    };
     prefixName;
     suffixName;
-    formChange = 0;
-    showfixes = false;
-    // customerSeries: any;
-
+    custIdFormat: any;
+    tempCustIdFormat: any;
+    inputChanged = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
-        ) {
+    ) {
+    }
+
+    ngOnInit() {
+        this.getGlobalSettings();
+    }
+    getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
+                this.tempCustIdFormat = data.jaldeeIdFormat;
+                if (data.jaldeeIdFormat.patternSettings) {
+                    this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
+                    this.suffixName = data.jaldeeIdFormat.patternSettings.suffix;
+                }
+            });
+    }
+    formatChanged() {
+        if (this.custIdFormat !== this.tempCustIdFormat.customerSeriesEnum) {
+            this.inputChanged = true;
+        } else if (this.tempCustIdFormat.customerSeriesEnum === this.formats.pattern.value) {
+            if (this.prefixName !== this.tempCustIdFormat.patternSettings.prefix || this.suffixName !== this.tempCustIdFormat.patternSettings.suffix) {
+                this.inputChanged = true;
+            }
+        }
+    }
+    updateCustIdConfig() {
+        const post_data = {
+            'prefix': this.prefixName,
+            'suffix': this.suffixName
         };
 
-  ngOnInit() {
-    } 
-  OnSubmit() {
-    const post_data = {
-        'prefix': this.prefixName,
-        'suffix': this.suffixName
-      };
-        
-      // this.provider_services.updatecustomerseries(this.customerSeries, post_data)
-      // .subscribe(data => {     
-      //   this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
-      // }); 
-    this.formChange = 0;
-    this.showfixes = false;
-  }
-
-onFormChange(Radiochange) {
-  console.log(Radiochange);
-  if(Radiochange.value === 'Pattern')
-    {
-      this.showfixes = true;
+        this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
+            (data: any) => {
+                this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                this.inputChanged = false;
+            },
+            (error) => {
+                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+            });
     }
-    else{
-      this.showfixes = false;
+    resetCustIdConfig() {
+        this.inputChanged = false;
+        this.getGlobalSettings();
     }
-    this.formChange = 1;
-  }
-  cancel() {
-    this.formChange = 0;
-    this.showfixes = false;
-  }
 }

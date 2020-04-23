@@ -1175,11 +1175,11 @@ export class ProviderServices {
       const url = 'provider/account/settings/donationFundRaising/' + status;
       return this.servicemeta.httpPut(url);
    }
-   updatecustomerseries(customerSeries, data) {
-      const url = '/provider/account/settings/jaldeeIdFormat/' + customerSeries;
+   updateCustIdFormat(pattern, data) {
+      const url = 'provider/account/settings/jaldeeIdFormat/' + pattern;
       return this.servicemeta.httpPut(url, data);
    }
-   //Comm urls
+   // Comm urls
    getVirtualCallingModes() {
       const url = 'provider/account/settings/virtualCallingModes';
       return this.servicemeta.httpGet(url);
