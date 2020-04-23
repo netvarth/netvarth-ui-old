@@ -1200,4 +1200,8 @@ export class ProviderServices {
       const url = 'provider/appointment/label/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
    }
+   getcauseCount() {
+      const url = 'consumer/donation/count';
+      return this.servicemeta.httpGet(url);
+   }
 }

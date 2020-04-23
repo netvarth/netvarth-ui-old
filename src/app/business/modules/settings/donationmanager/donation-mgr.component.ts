@@ -22,6 +22,7 @@ export class DonationMgrComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
   Donations_statusstr: string;
   Donations_status: any;
+  cause_count: any = 0;
 
   constructor(private router: Router,
     private routerobj: Router,
@@ -30,13 +31,15 @@ export class DonationMgrComponent implements OnInit {
 
   ngOnInit() {
     this.getDonationStatus();
-    this.getDonationcount();
-
+    this.getcauseCount();
   }
-  getDonationcount() {
-
+  getcauseCount() {
+    this.provider_services.getcauseCount()
+      .subscribe(
+        data => {
+          this.cause_count = data;
+        });
   }
-
   gotocauses() {
     this.router.navigate(['provider', 'settings', 'donationmanager','causes']);
   }
