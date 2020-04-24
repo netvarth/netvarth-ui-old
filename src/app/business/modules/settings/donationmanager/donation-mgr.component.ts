@@ -31,12 +31,12 @@ export class DonationMgrComponent implements OnInit {
 
   ngOnInit() {
     this.getDonationStatus();
-    this.getDonationcount();
+    this.getcauseCount();
 
   }
-  getDonationcount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getServiceCount(filter)
+  getcauseCount() {
+    // const filter = { 'scope-eq': 'account' };
+    this.provider_services.getcauseCount()
       .subscribe(
         data => {
           this.cause_count = data;

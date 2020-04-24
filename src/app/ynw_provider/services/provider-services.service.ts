@@ -1214,7 +1214,7 @@ export class ProviderServices {
       return this.servicemeta.httpPut(url, post_data);
    }
    getcauseCount() {
-      const url = 'consumer/donation/count';
+      const url = '/provider/donation/count';
       return this.servicemeta.httpGet(url);
    }
 }
