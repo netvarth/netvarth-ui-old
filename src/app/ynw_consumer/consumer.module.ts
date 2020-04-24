@@ -42,6 +42,7 @@ import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner
 import { checkindetailcomponent } from './components/home/checkindetail.component';
 import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
 import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
+import { ConsumerDonationModule } from './components/waitlist/donation/consumer-donation.module';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { ConsumerAppointmentModule } from './components/waitlist/appointment/con
     Nl2BrPipeModule,
     CheckinAddMemberModule,
     LoadingSpinnerModule,
-    ConsumerAppointmentModule
+    ConsumerAppointmentModule,
+    ConsumerDonationModule
   ],
   declarations: [
     ConsumerComponent,

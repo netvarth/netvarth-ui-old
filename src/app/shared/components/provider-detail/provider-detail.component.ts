@@ -204,6 +204,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   api_loading = false;
   source;
   locationId;
+  donation: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -459,6 +460,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
+            for (const serv of this.servicesjson) {
+              if ( serv.serviceType === 'donationService') {
+                  this.donation.push(serv);
+              }
+            }
             for (let i = 0; i < this.servicesjson.length; i++) {
               if (this.servicesjson[i].hasOwnProperty('departmentName')) {
                 this.showDepartments = true;
@@ -991,6 +997,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
        }
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
+  }
+  donationClicked(locid, locname, cdate, chdatereq) {
+    this.showDonation(locid, locname, cdate, 'consumer');
+  }
+  showDonation(locid, locname, curdate, origin?) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
+       }
+    };
+    this.routerobj.navigate(['consumer', 'donation'], navigationExtras);
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {

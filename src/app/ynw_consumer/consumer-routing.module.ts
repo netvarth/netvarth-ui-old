@@ -11,6 +11,7 @@ import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mo
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
 import { checkindetailcomponent } from './components/home/checkindetail.component';
 import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
+import { ConsumerDonationComponent } from './components/waitlist/donation/consumer-donation.component';
 const routes: Routes = [
   {
     path: '', component: ConsumerComponent, children: [
@@ -26,7 +27,8 @@ const routes: Routes = [
       { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin] },
       { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)},
       { path: 'checkindetails', component: checkindetailcomponent, canActivate: [AuthGuardLogin]},
-      { path: 'appointment', component: ConsumerAppointmentComponent }
+      { path: 'appointment', component: ConsumerAppointmentComponent },
+      { path: 'donation', component: ConsumerDonationComponent }
     ]
   }
 ];
