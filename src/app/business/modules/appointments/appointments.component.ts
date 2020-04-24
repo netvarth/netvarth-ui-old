@@ -196,7 +196,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   returnedFromCheckDetails = false;
   breadcrumb_moreoptions: any = [];
   apis_loaded = false;
-  breadcrumbs_init = [{ title: 'Dashboard' }];
+  breadcrumbs_init = [{ title: 'Appointments' }];
   noFilter = true;
   arr: any = [];
   breadcrumbs = this.breadcrumbs_init;

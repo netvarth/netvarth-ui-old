@@ -80,7 +80,7 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.breadcrumbs = [
         {
-            title: 'Dashboard',
+            title: 'Check-ins',
             url: 'provider/check-ins'
         },
         {

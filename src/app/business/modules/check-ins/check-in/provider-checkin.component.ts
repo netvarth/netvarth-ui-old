@@ -227,7 +227,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.get_token_cap = Messages.GET_TOKEN;
         this.breadcrumbs = [
             {
-                title: 'Dashboard',
+                title: 'Check-ins',
                 url: 'provider/check-ins'
             },
             {

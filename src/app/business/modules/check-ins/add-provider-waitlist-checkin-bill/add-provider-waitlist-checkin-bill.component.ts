@@ -181,7 +181,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   qty = '';
   breadcrumbs = [
     {
-      title: 'Dashboard',
+      title: 'Check-ins',
       url: '/provider/check-ins'
     },
     {

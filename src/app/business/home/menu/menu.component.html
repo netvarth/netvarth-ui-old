@@ -48,20 +48,30 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="">&nbsp;</li>
-      <li class="menu-open dashb" style="height: auto;">
-        <a class="pointer-cursor" (click)="dashboardClicked()">
-          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+
+      <li class="treeview">
+        <a class="pointer-cursor" routerLink="dashboardhome" (click)="closeMenu()"
+        routerLinkActive="active-lnk">
+          <i class="fa fa-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+
+      <!-- <li class="menu-open dashb" style="height: auto;"> -->
+        <!-- <a class="pointer-cursor" (click)="dashboardClicked()">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span> -->
           <!-- <span class="pull-right-container treeview">
             <i class="fa fa-angle-left pull-right"></i>
           </span> -->
-        </a>
-        <ul class="treeview-menu">
+        <!-- </a> -->
+        <!-- <ul class="treeview-menu">
             <li><a class="pointer-cursor" routerLink="dashboardhome" (click)="closeMenu()"
               routerLinkActive="active-lnk"> <span>Home </span></a></li>
           <li><a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
             routerLinkActive="active-lnk"> <span> Appointments </span></a></li>
           <li><a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()"
-              routerLinkActive="active-lnk"> <span> Check-ins </span></a></li>
+              routerLinkActive="active-lnk"> <span> Check-ins </span></a></li> -->
           <!-- <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:1}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
               <i class="material-icons" style="font-size:20px">today</i> <span> Today </span></a></li>
@@ -71,7 +81,21 @@
           <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:3}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
               <i class="material-icons" style="font-size:20px">history</i><span> History </span> </a></li> -->
-        </ul>
+        <!-- </ul> -->
+      <!-- </li> -->
+      <li class="treeview">
+        <a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+        routerLinkActive="active-lnk">
+          <i class="fa fa-calendar"></i>
+          <span> Appointments</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()"
+        routerLinkActive="active-lnk">
+          <i class="fa fa-check-circle"></i>
+          <span> Check-ins</span>
+        </a>
       </li>
       <li class="separator"></li>
       <li class="treeview">

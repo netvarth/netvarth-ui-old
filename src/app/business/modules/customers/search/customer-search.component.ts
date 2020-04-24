@@ -159,7 +159,7 @@ export class CustomerSearchComponent implements OnInit {
     };
     breadcrumbs_init = [
         {
-            title: 'Dashboard',
+            title: 'Check-ins',
             url: 'provider/check-ins'
         },
         {

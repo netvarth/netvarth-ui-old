@@ -116,9 +116,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (screenWidth <= 767) {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
-    if (this.isCheckinActive()) {
-      this.router.navigate(['/provider/check-ins'], { queryParams: { time_type: 1 } });
-    }
+    // if (this.isCheckinActive()) {
+    //   this.router.navigate(['/provider/check-ins'], { queryParams: { time_type: 1 } });
+    // }
   }
   isCheckinActive() {
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');

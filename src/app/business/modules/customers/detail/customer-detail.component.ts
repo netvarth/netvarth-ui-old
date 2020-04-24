@@ -46,7 +46,7 @@ export class CustomerDetailComponent implements OnInit {
     dob: any;
     breadcrumbs_init = [
         {
-            title: 'Dashboard',
+            title: 'Check-ins',
             url: 'provider/check-ins'
         },
         {

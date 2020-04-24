@@ -195,7 +195,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   returnedFromCheckDetails = false;
   breadcrumb_moreoptions: any = [];
   apis_loaded = false;
-  breadcrumbs_init = [{ title: 'Dashboard' }];
+  breadcrumbs_init = [{ title: 'Check-ins' }];
   noFilter = true;
   arr: any = [];
   breadcrumbs = this.breadcrumbs_init;

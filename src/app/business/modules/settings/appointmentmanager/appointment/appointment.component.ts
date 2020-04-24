@@ -235,7 +235,7 @@ export class AppointmentComponent implements OnInit {
         this.get_token_cap = Messages.GET_TOKEN;
         this.breadcrumbs = [
             {
-                title: 'Dashboard',
+                title: 'Appointments',
                 url: 'provider/check-ins'
             },
             {

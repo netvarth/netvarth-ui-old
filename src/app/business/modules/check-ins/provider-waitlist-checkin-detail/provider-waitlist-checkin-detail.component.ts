@@ -50,7 +50,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
     {
-      title: 'Dashboard',
+      title: 'Check-ins',
       url: '/provider/check-ins'
     }
   ];

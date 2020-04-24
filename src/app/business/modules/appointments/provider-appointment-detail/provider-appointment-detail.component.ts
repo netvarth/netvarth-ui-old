@@ -50,7 +50,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
     {
-      title: 'Dashboard',
+      title: 'Appointments',
       url: '/provider/check-ins'
     }
   ];
