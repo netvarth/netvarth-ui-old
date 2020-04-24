@@ -178,6 +178,8 @@ export class AppointmentComponent implements OnInit {
     customerid: any;
     showEditView = false;
     slots;
+    freeSlots: any = [];
+    isFrom = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -201,6 +203,7 @@ export class AppointmentComponent implements OnInit {
             }
             if(qparams.timeslot){
                 this.apptTime = qparams.timeslot;
+                this.isFrom = qparams.origin;
             }
         });
     }
@@ -771,10 +774,10 @@ export class AppointmentComponent implements OnInit {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         }
-        if (this.partySizeRequired) {
-            this.holdenterd_partySize = this.enterd_partySize;
-            post_Data['partySize'] = Number(this.holdenterd_partySize);
-        }
+        // if (this.partySizeRequired) {
+        //     this.holdenterd_partySize = this.enterd_partySize;
+        //     post_Data['partySize'] = Number(this.holdenterd_partySize);
+        // }
 
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
@@ -1310,16 +1313,25 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
-
         this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
                     this.slots = data;
                     this.availableSlots =  this.slots.availableSlots;
                     console.log(this.availableSlots);
-                    if(this.apptTime === ''){
-                    this.apptTime = this.availableSlots[0].time;
+                    for(let freslot of this.availableSlots){
+                        if(freslot.noOfAvailbleSlots === '1'){
+                            this.freeSlots.push(freslot);
+                        }
                     }
+                    console.log(this.freeSlots);
+                    if(this.isFrom === ''){
+                    this.apptTime =  this.freeSlots[0].time;
+                    for(let list of this.waitlist_for){
+                        list['apptTime'] = this.apptTime;
+                    }
+                    }
+                    this.isFrom = '';
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

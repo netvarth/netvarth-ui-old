@@ -183,6 +183,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     showEditView = false;
     slots;
+    freeSlots: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -677,10 +678,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         }
-        if (this.partySizeRequired) {
-            this.holdenterd_partySize = this.enterd_partySize;
-            post_Data['partySize'] = Number(this.holdenterd_partySize);
-        }
+        // if (this.partySizeRequired) {
+        //     this.holdenterd_partySize = this.enterd_partySize;
+        //     post_Data['partySize'] = Number(this.holdenterd_partySize);
+        // }
         //post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
            // post_Data['consumer'] = { id: this.customer_data.id };
@@ -1217,16 +1218,23 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
-
         this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id,this.account_id)
             .subscribe(
                 (data) => {
                     this.slots = data;
                     this.availableSlots =  this.slots.availableSlots;
                     console.log(this.availableSlots);
-                    if(this.apptTime === ''){
-                        this.apptTime = this.availableSlots[0].time;
+                    for(let freslot of this.availableSlots){
+                        if(freslot.noOfAvailbleSlots === '1'){
+                            this.freeSlots.push(freslot);
                         }
+                    }
+                  //  if(this.apptTime === ''){
+                        this.apptTime = this.freeSlots[0].time;
+                        for(let list of this.waitlist_for){
+                            list['apptTime'] = this.apptTime;
+                        }
+                      //  }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

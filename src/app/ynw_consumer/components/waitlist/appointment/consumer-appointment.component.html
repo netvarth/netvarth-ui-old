@@ -176,20 +176,20 @@
                                 <div>
                                     <ng-container *ngIf="queuejson.length > 0">
                                         <!-- <div class="col-md-12 form-group queue-outer mgn-up-20"
-                                            *ngIf="board_count > 0 && availableSlots.length>0">
+                                            *ngIf="board_count > 0 && freeSlots.length>0">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
                                             <mat-chip-list class="check-in-chip">
-                                                <mat-chip *ngFor="let slot of availableSlots"
+                                                <mat-chip *ngFor="let slot of freeSlots"
                                                     [selected]="slot === apptTime" (click)="timeSelected(slot);">
                                                     {{slot}}</mat-chip>
                                             </mat-chip-list>
                                         </div> -->
 
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20"
-                                        *ngIf="availableSlots.length>0 && showEditView">
+                                        *ngIf="freeSlots.length>0 && showEditView">
                                         <div class="ttle mgn-bt-10">Select Appointment Time</div>
                                         <mat-chip-list class="check-in-chip">
-                                            <mat-chip *ngFor="let slot of availableSlots" [selected]="slot.time === apptTime"
+                                            <mat-chip *ngFor="let slot of freeSlots" [selected]="slot.time === apptTime"
                                                 (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
                                         </mat-chip-list>
                                        
