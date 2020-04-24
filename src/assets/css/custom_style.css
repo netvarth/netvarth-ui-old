@@ -8505,3 +8505,30 @@ hr.wide-separator-line {
   padding: 5px !important;
 
 }
+.donat-service {
+  margin-bottom: 0;
+}
+.sub-title-donate {
+  margin-bottom: 3px;
+  color: #999999;
+  display: block;
+  font-size: .75rem;
+  font-weight: 600;
+}
+.donat-service ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.donat-service ul li {
+  list-style: none;
+  margin-right: 10px;
+  border: 1px solid #666;
+  font-size: .75rem;
+  padding: 0 5px;
+  border-radius: 20px;
+  background-clip: padding-box;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
