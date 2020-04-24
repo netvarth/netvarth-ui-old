@@ -1217,4 +1217,8 @@ export class ProviderServices {
       const url = '/provider/donation/count';
       return this.servicemeta.httpGet(url);
    }
+   getDonationServices() {
+      const url = 'provider/donation';
+      return this.servicemeta.httpGet(url);
+   }
 }

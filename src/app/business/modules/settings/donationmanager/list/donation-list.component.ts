@@ -70,22 +70,17 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     getServices() {
         this.api_loading = true;
         const filter = { 'scope-eq': 'account' };
-        this.provider_services.getProviderServices(filter)
-            .subscribe(
-                data => {
-                    this.cause_list = data;
-                    for (const cause of this.cause_list) {
-                        if (cause.serviceType === 'donationService') {
-                            this.service_list.push(cause);
-                        }
-                    }
-                    this.api_loading = false;
-                },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                }
-            );
+        this.provider_services.getDonationServices()
+        .subscribe(
+            data => {
+                this.service_list = data;
+                this.api_loading = false;
+            },
+            error => {
+                this.api_loading = false;
+                this.shared_functions.apiErrorAutoHide(this, error);
+            }
+        );
     }
 
     changeServiceStatus(service) {
