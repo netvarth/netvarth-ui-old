@@ -96,6 +96,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   location_count: any = 0;
   service_count: any = 0;
   queues_count: any = 0;
+  cause_count: any = 0;
   checkin_label = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
   subscription: Subscription;
@@ -188,6 +189,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getQueuesCount();
     this.getServiceCount();
     this.getDepartmentsCount();
+    this.getcauseCount();
     this.getSearchstatus();
     this.getWaitlistMgr();
     this.getpaymentDetails();
@@ -692,6 +694,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             this.shared_functions.openSnackBar(error, { 'panelclass': 'snackbarerror' });
           }
         });
+  }
+  getcauseCount() {
+    this.provider_services.getcauseCount()
+    .subscribe(
+      data => {
+        this.cause_count = data;
+      });
+    
   }
   getitems() {
     this.provider_services.getProviderItems()
