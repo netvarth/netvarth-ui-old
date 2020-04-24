@@ -73,11 +73,11 @@
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
                 </li>
-                <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
+                <!-- <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
                   <a (click)="showAdjustDelay()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
-                </li>
+                </li> -->
                 <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
@@ -393,7 +393,7 @@
                         </a>
                         <a class="btn-play pointer-cursor" (click)="addProviderNote('future', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
-                          <i class="icon-note"></i> <span> Private Note </span>
+                          <i class="icon-note" style="font-size: smaller;"></i> <span> Private Note </span>
                         </a>
                         <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
                           *ngIf="pos && checkin.apptStatus != 'prepaymentPending' && !checkin.parentUuid"

@@ -9,7 +9,7 @@ import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { filter, pairwise } from 'rxjs/operators';
+import { filter, pairwise, isEmpty } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
@@ -908,8 +908,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAvaiableSlots() {
     this.unAvailableSlots = [];
-    this.availableSlots = [];
-    this.futureUnAvailableSlots = [];
     let date;
     if (this.time_type === 1) {
       date = this.dateformat.transformTofilterDate(this.server_date);
@@ -926,18 +924,37 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
-      Object.keys(this.timeSlotCheckins).forEach(key => {
-        this.waitlistSelected[key] = [];
-        if (this.newWaitlistforMsg.length > 0) {
-          for (let i = 0; i < this.newWaitlistforMsg.length; i++) {
-            for (let j = 0; j < this.timeSlotCheckins[key].length; j++) {
-              if (this.newWaitlistforMsg[i].uid === this.timeSlotCheckins[key][j].uid) {
-                this.waitlistSelected[key][j] = true;
+      if (Object.keys(this.timeSlotCheckins).length > 0) {
+        Object.keys(this.timeSlotCheckins).forEach(key => {
+          for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
+            if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
+              if (this.availableSlotDetails.availableSlots[i].time !== key) {
+                this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
               }
             }
           }
+          this.waitlistSelected[key] = [];
+          if (this.newWaitlistforMsg.length > 0) {
+            for (let i = 0; i < this.newWaitlistforMsg.length; i++) {
+              for (let j = 0; j < this.timeSlotCheckins[key].length; j++) {
+                if (this.newWaitlistforMsg[i].uid === this.timeSlotCheckins[key][j].uid) {
+                  this.waitlistSelected[key][j] = true;
+                }
+              }
+            }
+          }
+        });
+      } else {
+        for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
+          if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
+            this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+          }
         }
-      });
+      }
+      console.log(this.availableSlotDetails.availableSlots);
+      console.log(this.unAvailableSlots);
+      this.availableSlotDetails.availableSlots = this.availableSlotDetails.availableSlots.filter(x => !this.unAvailableSlots.includes(x));
+      console.log(this.availableSlotDetails.availableSlots);
     });
   }
 
@@ -1187,9 +1204,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    if (this.selected_location && this.selected_location.id) {
-      api_filter['location-eq'] = this.selected_location.id;
-    }
+    // if (this.selected_location && this.selected_location.id) {
+    //   api_filter['location-eq'] = this.selected_location.id;
+    // }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
@@ -1418,57 +1435,57 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
-    // const promise = this.getHistoryAppointmentsCount(Mfilter);
-    // promise.then(
-    //   result => {
-    this.provider_services.getHistoryAppointments(Mfilter)
-      .subscribe(
-        data => {
-          this.historyCheckins = data;
-          const params = [
-            'height=' + screen.height,
-            'width=' + screen.width,
-            'fullscreen=yes'
-          ].join(',');
-          const printWindow = window.open('', '', params);
-          let checkin_html = '';
-          checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
-          checkin_html += '<td style="padding:10px;">Sl.No.</td>';
-          checkin_html += '<td style="padding:10px;">Date & Time</td>';
-          checkin_html += '<td style="padding:10px;">Name</td>';
-          checkin_html += '<td style="padding:10px;">Service</td>';
-          checkin_html += '<td style="padding:10px;">Label</td>';
-          checkin_html += '</thead>';
-          for (let i = 0; i < this.historyCheckins.length; i++) {
-            checkin_html += '<tr style="line-height:20px;padding:10px">';
-            checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-            checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
-            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
-            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-            const labels = [];
-            checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
-          }
-          checkin_html += '</table>';
-          checkin_html += '<div style="margin:10px">';
-          // checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
-          if (!this.labelFilterData.match('$') && this.labelsCount.length > 1) {
-            for (const count of this.labelsCount) {
-              checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
-            }
-          }
-          checkin_html += '</div>';
-          printWindow.document.write('<html><head><title></title>');
-          printWindow.document.write('</head><body >');
-          printWindow.document.write(checkin_html);
-          printWindow.document.write('</body></html>');
-          printWindow.moveTo(0, 0);
-          printWindow.print();
-          printWindow.document.close();
-          setTimeout(() => {
-            printWindow.close();
-          }, 500);
-        });
-    // });
+    const promise = this.getHistoryAppointmentsCount(Mfilter);
+    promise.then(
+      result => {
+        this.provider_services.getHistoryAppointments(Mfilter)
+          .subscribe(
+            data => {
+              this.historyCheckins = data;
+              const params = [
+                'height=' + screen.height,
+                'width=' + screen.width,
+                'fullscreen=yes'
+              ].join(',');
+              const printWindow = window.open('', '', params);
+              let checkin_html = '';
+              checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
+              checkin_html += '<td style="padding:10px;">Sl.No.</td>';
+              checkin_html += '<td style="padding:10px;">Date & Time</td>';
+              checkin_html += '<td style="padding:10px;">Name</td>';
+              checkin_html += '<td style="padding:10px;">Service</td>';
+              checkin_html += '<td style="padding:10px;">Label</td>';
+              checkin_html += '</thead>';
+              for (let i = 0; i < this.historyCheckins.length; i++) {
+                checkin_html += '<tr style="line-height:20px;padding:10px">';
+                checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
+                const labels = [];
+                checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+              }
+              checkin_html += '</table>';
+              checkin_html += '<div style="margin:10px">';
+              // checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
+              if (!this.labelFilterData.match('$') && this.labelsCount.length > 1) {
+                for (const count of this.labelsCount) {
+                  checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
+                }
+              }
+              checkin_html += '</div>';
+              printWindow.document.write('<html><head><title></title>');
+              printWindow.document.write('</head><body >');
+              printWindow.document.write(checkin_html);
+              printWindow.document.write('</body></html>');
+              printWindow.moveTo(0, 0);
+              printWindow.print();
+              printWindow.document.close();
+              setTimeout(() => {
+                printWindow.close();
+              }, 500);
+            });
+      });
   }
 
   filterbyStatus(status) {

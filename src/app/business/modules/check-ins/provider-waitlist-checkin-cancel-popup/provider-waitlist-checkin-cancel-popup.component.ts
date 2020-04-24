@@ -46,7 +46,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-    this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('waitlist');
+    if (this.data.appt) {
+      this.checkin_label = 'Appointment';
+    } else {
+      this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('waitlist');
+    }
   }
 
   ngOnInit() {
@@ -168,5 +172,4 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     if (!word) { return word; }
     return word[0].toUpperCase() + word.substr(1);
   }
-
 }

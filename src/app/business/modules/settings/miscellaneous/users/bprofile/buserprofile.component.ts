@@ -257,7 +257,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
           if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
             || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
-            this.getProviderLogo();
+           // this.getProviderLogo();
             this.normal_basicinfo_show = 3;
           } else {
             this.normal_basicinfo_show = 2;

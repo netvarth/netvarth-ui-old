@@ -267,10 +267,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         // this.minDate = this.sel_checkindate;
         this.minDate = this.todaydate;
-        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
+        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
         if (this.change_date === 'true') {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
             const seldate_checker = new Date(seldateChecker);
@@ -661,8 +661,8 @@ export class ConsumerAppointmentComponent implements OnInit {
     saveCheckin() {
         this.showEditView = false;
         const post_Data = {
-            "schedule":{
-                'id':this.sel_queue_id
+            'schedule': {
+                'id': this.sel_queue_id
             },
             'appmtDate': this.sel_checkindate,
             'service': {
@@ -682,9 +682,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         //     this.holdenterd_partySize = this.enterd_partySize;
         //     post_Data['partySize'] = Number(this.holdenterd_partySize);
         // }
-        //post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
+        // post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
-           // post_Data['consumer'] = { id: this.customer_data.id };
+            // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
             this.addCheckInConsumer(post_Data);
         }
@@ -792,7 +792,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -803,12 +803,12 @@ export class ConsumerAppointmentComponent implements OnInit {
     handleOneMemberSelect(id, firstName, lastName) {
         this.resetApi();
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName,apptTime:this.apptTime });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName,apptTime:this.apptTime });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
         } else {
             let exists = false;
             let existindx = -1;
@@ -822,7 +822,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName,apptTime:this.apptTime });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -861,7 +861,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         // this.step = 4; // show add member section
         // this.main_heading = 'Add Family Member';
     }
-    editClicked(){
+    editClicked() {
         this.showEditView = true;
     }
     resetApi() {
@@ -1218,23 +1218,23 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
-        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id,this.account_id)
+        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate, this.sel_queue_id, this.account_id)
             .subscribe(
                 (data) => {
                     this.slots = data;
-                    this.availableSlots =  this.slots.availableSlots;
+                    this.availableSlots = this.slots.availableSlots;
                     console.log(this.availableSlots);
-                    for(let freslot of this.availableSlots){
-                        if(freslot.noOfAvailbleSlots === '1'){
+                    for (const freslot of this.availableSlots) {
+                        if (freslot.noOfAvailbleSlots === '1') {
                             this.freeSlots.push(freslot);
                         }
                     }
-                  //  if(this.apptTime === ''){
-                        this.apptTime = this.freeSlots[0].time;
-                        for(let list of this.waitlist_for){
-                            list['apptTime'] = this.apptTime;
-                        }
-                      //  }
+                    //  if(this.apptTime === ''){
+                    this.apptTime = this.freeSlots[0].time;
+                    for (const list of this.waitlist_for) {
+                        list['apptTime'] = this.apptTime;
+                    }
+                    //  }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1287,7 +1287,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        for(let list of this.waitlist_for){
+        for (const list of this.waitlist_for) {
             list['apptTime'] = this.apptTime;
         }
         this.showEditView = false;

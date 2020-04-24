@@ -233,7 +233,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         const submit_data = {
             'socialMedia': post_data
         };
-        this.provider_services.updateSocialMediaLinks(submit_data)
+        this.provider_services.updateUserSocialMediaLinks(submit_data,this.userId)
             .subscribe(
                 () => {
                     this.getBusinessProfile();

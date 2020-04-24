@@ -1140,15 +1140,15 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    addLabeltoAppointment(uuid, data) {
-      const url = 'provider/appointment/label/' + uuid;
+      const url = 'provider/appointment/addLabel/' + uuid;
       return this.servicemeta.httpPost(url, data);
    }
    deleteLabelfromAppointment(uuid, label) {
-      const url = 'provider/appointment/label/' + uuid + '/' + label;
+      const url = 'provider/appointment/removeLabel/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
    }
    getProviderAppointmentHistory(uuid) {
-      const url = 'provider/appointment/states/' + uuid;
+      const url = 'provider/appointment/state/' + uuid;
       return this.servicemeta.httpGet(url);
    }
    getProviderAppointmentNotes(uuid) {
