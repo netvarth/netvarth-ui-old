@@ -11,9 +11,11 @@
                                     <span class="ctrl">
                                         <mat-slide-toggle [(ngModel)]="virtualCallingMode_status" (change)="handle_virtualCallingModeStatus($event)">
                                         </mat-slide-toggle>
-                                    </span>
-                                    <div class="onoff">ON</div>
+                                    </span>                                    
+                                    <div class="onoff">{{virtualCallingMode_statusstr}}</div>
                                 </label>
+                                <p class="form-level-settings">Please select and set the preferable way of calling your
+                                    customer.</p>
                             </div>
                         </div>
                     </div>

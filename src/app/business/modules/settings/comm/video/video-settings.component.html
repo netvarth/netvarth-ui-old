@@ -3,109 +3,241 @@
 </section>
 <section>
     <div class="content displayboard loc-list users">
-            <div class="col-md-12 no-padding-small">
-                <div class="row">
-                        <div class="col-md-12 no-padding">
-                                <div class="card" *ngIf="api_loading">
-                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                                </div>
-                            </div>
-                    <div class="col-md-12 no-padding ynw-common-form-nm" *ngIf="!api_loading">
-                        <div class="card no-padding">
-                            <div class="copy">
-                                <div class="mgn-up-20 col-md-12">
-                                    <div class="disply-field">
-                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="skypeSelected($event)"
-                                        [value]=true>
-                                            Skype
-                                        </mat-checkbox>
-                                        <div *ngIf="skypeselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="skypeMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter Skype ID" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="col-md-12 no-padding">
+                    <div class="card" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding ynw-common-form-nm" *ngIf="!api_loading">
+                    <div class="card no-padding">
+                        <div class="copy locd">
+                            <!-- <div class="col-md-6"> -->
+                            
+                                <div class="lbl col-sm-12 col-md-7 col-lg-6">
+                                    <div class="mgn-up-20 col-md-12">
+                                        <label>Video Calling Modes
+                                        </label>
+                                        <p class="form-level-settings">Please select and set the preferable way of calling your
+                                            customer.</p>
                                     </div>
-                                    <div class="disply-field">
-                                        <mat-checkbox  [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="whatsappSelected($event)"
-                                        [value]=true>
-                                            Whatsapp
-                                        </mat-checkbox>
-                                        <div *ngIf="whatsappselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="whatsappMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter Whats app number" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="disply-field">
-                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="hangoutSelected($event)"
-                                        [value]=true>
-                                            Hangouts
-                                        </mat-checkbox>
-                                        <div *ngIf="hangoutselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="hangoutMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter Hangouts ID" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="disply-field">
-                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="botimSelected($event)"
-                                        [value]=true>
-                                            Botim
-                                        </mat-checkbox>
-                                        <div *ngIf="botimselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="botimMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter Botim ID" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="disply-field">
-                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="imoSelected($event)"
-                                        [value]=true>
-                                            IMO
-                                        </mat-checkbox>
-                                        <div *ngIf="imoselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="imoMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter IMO ID" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="disply-field">
-                                        <mat-checkbox [checked] = 'virtualCallModesList.callingModes' class="example-margin" style="margin-left: 30px" (change)="jaldeeSelected($event)"
-                                        [value]=true>
-                                            Jaldee Integrated Video
-                                        </mat-checkbox>
-                                        <div *ngIf="jaldeeselected" class="form-group col-md-12 row otp_scr fieldval" style="margin-left: 30px">
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <input [(ngModel)]="jaldeeMode" matInput type="text" class="form-control" 
-                                                        placeholder="Enter ID" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
-                                        <button mat-button type="button" class="cs-btn bt1" (click) = "addVideocallMode()">SAVE</button>
+                                    <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding" *ngFor="let callingMode of videoModes | keyvalue: originalOrder">
+                                        <mat-accordion>
+                                            <mat-expansion-panel>
+                                                <mat-expansion-panel-header class="brd-bt">
+                                                    <mat-panel-title class="block-level"> 
+                                                        {{callingMode.value.displayName}}<br>
+                                                        <span class="form-level-settings">{{callingMode.value.titleHelp}}</span>
+                                                        <!-- {{callingMode.key}} -->
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="col-md-12 mgn-up-10 no-padding">
+                                                    {{callingMode.value.displayName}}  &nbsp; <mat-slide-toggle [(ngModel)]="callingMode.value.enabled"
+                                                        (change)="updateVideoSettings(callingMode, callingMode.key)">
+                                                    </mat-slide-toggle>
+                                                    <mat-form-field>
+                                                        <div class="input-group">
+                                                            <input [(ngModel)]="callingMode.value.actualValue" matInput type="text"
+                                                                class="form-control" placeholder="{{callingMode.value.placeHolder}}"
+                                                                autocomplete="off">
+                                                            <div class="input-group-append">
+                                                                <button class="btn bt3 mgn-up-8"
+                                                                    (click)="updateVideoSettings(callingMode, callingMode.key)"
+                                                                    type="button">Update</button>
+                                                            </div>
+                                                        </div>
+                                                    </mat-form-field>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="lbr col-sm-12 col-md-5 col-lg-6" >
+                                    &nbsp;
+                                </div>
+
+
+
+                                
+
+<!--                                 
+                                <div class="col-md-12 mgn-up-10 no-padding">
+                                    <mat-accordion class="mgn-up-10">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level"> Skype<br>
+                                                    <span class="form-level-settings">Enable/Disable Skype
+                                                        Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10">
+                                                <label>Enable Skype
+                                                    <span class="ctrl">
+                                                        <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
+                                                            (change)="handle_jaldeeWalkinConsumer($event)">
+                                                        </mat-slide-toggle>
+                                                    </span>
+                                                    <div class="onoff">aa</div>
+                                                </label>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="skypeId" matInput type="text"
+                                                            class="form-control" placeholder="Skype ID"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="btn bt3 btn-default mgn-up-8"
+                                                                (click)="updateVideoSettings(skypeId, 'skypeId')"
+                                                                type="button">Update</button>
+                                                        </div>
+                                                    </div>
+
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+
+                                <div class="col-md-12 mgn-up-10 no-padding">
+                                    <mat-accordion class="mgn-up-10">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level"> Whatsapp<br>
+                                                    <span class="form-level-settings">Configure your Whatsapp
+                                                        Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10">
+                                                <label>Enable Whatsapp
+                                                    <span class="ctrl">
+                                                        <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
+                                                            (change)="handle_jaldeeWalkinConsumer($event)">
+                                                        </mat-slide-toggle>
+                                                    </span>
+                                                    <div class="onoff">aa</div>
+                                                </label>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="whatsappNumber" matInput type="text"
+                                                            class="form-control" placeholder="Whatsapp Number"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="btn bt3 btn-default mgn-up-8"
+                                                                (click)="updateVideoSettings(whatsappNumber, 'whatsapp')"
+                                                                type="button">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                                <div class="col-md-12 mgn-up-10 no-padding">
+                                    <mat-accordion class="mgn-up-10">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level"> Hangouts<br>
+                                                    <span class="form-level-settings">Configure your Hangouts
+                                                        Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10">
+                                                <label>Enable Hangouts
+                                                    <span class="ctrl">
+                                                        <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
+                                                            (change)="handle_jaldeeWalkinConsumer($event)">
+                                                        </mat-slide-toggle>
+                                                    </span>
+                                                    <div class="onoff">aa</div>
+                                                </label>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="hangoutId" matInput type="text"
+                                                            class="form-control" placeholder="Hangouts ID"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="btn bt3 btn-default mgn-up-8"
+                                                                (click)="updateVideoSettings(hangoutId, 'hangouts')"
+                                                                type="button">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                                <div class="col-md-12 mgn-up-10 no-padding">
+                                    <mat-accordion class="mgn-up-10 ">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level"> BOTIM<br>
+                                                    <span class="form-level-settings">Configure your BOTIM
+                                                        Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10">
+                                                <label>Enable BOTIM
+                                                    <span class="ctrl">
+                                                        <mat-slide-toggle [(ngModel)]="walkinConsumer_status"
+                                                            (change)="handle_jaldeeWalkinConsumer($event)">
+                                                        </mat-slide-toggle>
+                                                    </span>
+                                                    <div class="onoff">aa</div>
+                                                </label>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="botimId" matInput type="text"
+                                                            class="form-control" placeholder="Botim ID"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="btn bt3 btn-default mgn-up-8"
+                                                                (click)="updateVideoSettings(hangoutId, 'hangouts')"
+                                                                type="button">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                                <div class="col-md-12 mgn-up-10 mgn-bt-10 no-padding">
+                                    <mat-accordion class="">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level">IMO<br>
+                                                    <span class="form-level-settings">Configure your IMO Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10">
+                                                <label>Enable IMO
+                                                    <span class="ctrl">
+                                                        <mat-slide-toggle [(ngModel)]="imo_status"
+                                                            (change)="handle_Settings($event)">
+                                                        </mat-slide-toggle>
+                                                    </span>
+                                                    <div class="onoff">aa</div>
+                                                </label>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="imoId" matInput type="text"
+                                                            class="form-control" placeholder="IMO ID"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="btn bt3 btn-default mgn-up-8"
+                                                                (click)="updateVideoSettings(imoId, 'hangouts')"
+                                                                type="button">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div> -->
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>

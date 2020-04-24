@@ -125,6 +125,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   createappointment_statusstr: string;
   Donations_status: any;
   Donations_statusstr: string;
+  virtualCallingMode_status: any;
+  virtualCallingMode_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -396,6 +398,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
         this.Donations_status = data.donation;
         this.Donations_statusstr = (this.Donations_status) ? 'On' : 'Off';
+        this.virtualCallingMode_status = data.virtualService;
+        this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
       });
   }
   handle_posStatus(event) {
@@ -461,7 +465,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'services']);
         break;
       case 'causes':
-        this.routerobj.navigate(['provider', 'settings', 'donationmanager' , 'causes']);
+        this.routerobj.navigate(['provider', 'settings', 'donationmanager', 'causes']);
         break;
       case 'queues':
         if (this.locationExists) {
@@ -620,9 +624,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'appdisplayboards':
         this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
         break;
-        case 'donationmanager':
-          this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
-     }
+      case 'donationmanager':
+        this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
+    }
   }
   getLocationCount() {
     this.provider_services.getLocationCount()
@@ -835,29 +839,29 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   handle_Donations(event) {
     const is_Donation = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setDonations(is_Donation)
-        .subscribe(
-            () => {
-                this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
-                this.getGlobalSettingsStatus();
-            },
-            error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getGlobalSettingsStatus();
-            }
-        );
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        }
+      );
   }
   handle_virtualCallingModeStatus(event) {
     const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
-    .subscribe(
-    () => {
-    this.shared_functions.openSnackBar('Virtual Calling Mode' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
-    // this.getDonationStatus();
-    },
-    error => {
-    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    // this.getDonationStatus();
-    }
-    );
-    }
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Virtual Calling Mode ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        }
+      );
+  }
 }

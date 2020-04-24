@@ -10,7 +10,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     'templateUrl': './comm-settings.component.html'
 })
 export class CommSettingsComponent implements OnInit {
-    virtualCallingMode_status = false;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -20,15 +19,23 @@ export class CommSettingsComponent implements OnInit {
             title: 'Comm'
         }
     ];
+    virtualCallingMode_status: any;
+    virtualCallingMode_statusstr: string;
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
     }
     ngOnInit() {
-
+        this.getGlobalSettingsStatus();
     }
-
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+          (data: any) => {
+            this.virtualCallingMode_status = data.virtualService;
+            this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
+          });
+      }
     gotoVideoSettings() {
         this.router.navigate(['provider', 'settings', 'comm', 'video']);
     }
@@ -41,12 +48,12 @@ export class CommSettingsComponent implements OnInit {
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Virtual Calling Mode' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
-                    // this.getDonationStatus();
+                    this.shared_functions.openSnackBar('Virtual Calling Mode ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    // this.getDonationStatus();
+                    this.getGlobalSettingsStatus();
                 }
             );
       }

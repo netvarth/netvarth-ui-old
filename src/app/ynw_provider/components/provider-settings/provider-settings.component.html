@@ -570,8 +570,7 @@
                                     (change)="handle_virtualCallingModeStatus($event)">
                                     </mat-slide-toggle>
                                     </span>
-                                    <p class="sts" [class.active]="virtualCallingMode_status">
-                                    ON</p>
+                                    <p class="sts" [class.active]="virtualCallingMode_status">{{virtualCallingMode_statusstr}}</p>
                                     <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling hints.</p>
                                     <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling hints
                                     </p>
