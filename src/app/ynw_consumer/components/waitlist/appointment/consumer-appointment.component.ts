@@ -1218,6 +1218,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
+        this.freeSlots = [];
         this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate, this.sel_queue_id, this.account_id)
             .subscribe(
                 (data) => {

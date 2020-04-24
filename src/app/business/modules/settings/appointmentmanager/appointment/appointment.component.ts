@@ -332,7 +332,7 @@ export class AppointmentComponent implements OnInit {
     initAppointment() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1313,6 +1313,7 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
+        this.freeSlots = [];
         this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
