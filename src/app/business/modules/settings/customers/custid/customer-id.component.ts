@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Router } from '@angular/router';
 @Component({
     'selector': 'app-custid',
     'templateUrl': './customer-id.component.html'
@@ -29,14 +30,17 @@ export class CustomerIdSettingsComponent implements OnInit {
     custIdFormat: any;
     tempCustIdFormat: any;
     inputChanged = false;
+    breadcrumb_moreoptions: any = [];
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
+        private routerobj: Router,
     ) {
     }
 
     ngOnInit() {
         this.getGlobalSettings();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
@@ -76,5 +80,10 @@ export class CustomerIdSettingsComponent implements OnInit {
     resetCustIdConfig() {
         this.inputChanged = false;
         this.getGlobalSettings();
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+        //     this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
+        }
     }
 }
