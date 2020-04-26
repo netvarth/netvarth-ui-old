@@ -300,7 +300,7 @@ export class VastuComponent implements OnInit {
       }
       if (childContent === 'jaldee-app-integration') {
         this.showjaldeeintegration  = true;
-      }
+      } 
     }
 
     if (parentContent === 'customers') {

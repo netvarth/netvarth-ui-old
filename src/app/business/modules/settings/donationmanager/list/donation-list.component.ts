@@ -80,7 +80,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                 this.api_loading = false;
                 this.shared_functions.apiErrorAutoHide(this, error);
             }
-        );
+        ); 
     }
 
     changeServiceStatus(service) {
@@ -90,7 +90,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         if (service.livetrack === false) {
             this.trackStatus = 'Enable';
         } else {
-            this.trackStatus = 'Disable';
+            this.trackStatus = 'Disable'; 
         }
         this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
       .subscribe(
@@ -161,4 +161,4 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     getAppxTime(waitlist) {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
-}
+} 

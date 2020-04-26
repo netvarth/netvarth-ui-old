@@ -228,7 +228,7 @@ export class VeterinaryComponent implements OnInit {
      if (childContent === 'settings-q-boards') {
         this.showdisplayboard = true;
       }
-    }
+    } 
 
     if (parentContent === 'appointmentmanager') {
       this.showappointments = true;

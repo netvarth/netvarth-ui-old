@@ -30,7 +30,7 @@ export class CustomViewListComponent implements OnInit {
     {
       title: 'Custom Views'
     }
-  ];
+  ]; 
 
   constructor(private _formBuilder: FormBuilder,
     private router: Router,

@@ -31,7 +31,7 @@ export class CustomersSettingsComponent implements OnInit {
     }
     gotoCustomerIdSettings() {
         this.router.navigate(['provider', 'settings', 'customers', 'custid']);
-    }
+    } 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/customers->' + mod]);

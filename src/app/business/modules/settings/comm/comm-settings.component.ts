@@ -30,7 +30,7 @@ export class CommSettingsComponent implements OnInit {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.getGlobalSettingsStatus();
+        this.getGlobalSettingsStatus(); 
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(
@@ -45,7 +45,7 @@ export class CommSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
      this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
-      }
+      } 
       handle_virtualCallingModeStatus(event) {
         const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)

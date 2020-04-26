@@ -90,7 +90,7 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.inputChanged = false;
         this.getGlobalSettings();
     }
-    performActions(action) {
+    performActions(action) { 
         if (action === 'learnmore') {
         this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
         }

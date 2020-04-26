@@ -215,7 +215,7 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'customview') {
         this.showcustomview = true;
-      }
+      } 
       if (childContent === 'nonworking') {
         this.shownonworking = true;
       }

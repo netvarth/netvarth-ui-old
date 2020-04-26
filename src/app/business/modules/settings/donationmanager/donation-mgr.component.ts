@@ -46,11 +46,11 @@ export class DonationMgrComponent implements OnInit {
   gotocauses() {
     this.router.navigate(['provider', 'settings', 'donationmanager','causes']);
   }
-
+      
   handle_Donations(event) {
     const is_Donation = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setDonations(is_Donation)
-      .subscribe(
+      .subscribe( 
         () => {
           this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getDonationStatus();

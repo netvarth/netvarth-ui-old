@@ -17,7 +17,7 @@ export class IntegrationSettingsComponent implements OnInit {
         },
         {
             title: 'Jaldee.com Integration'
-        }
+        } 
     ];
     onlinepresence_status: any;
     walkinConsumer_status: any;

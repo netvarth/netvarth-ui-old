@@ -75,7 +75,7 @@ export class VideoSettingsComponent implements OnInit {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/comm->videocall-settings']);
         }
-    }
+    } 
 
     getVirtualCallingModesList() {
         this.provider_services.getVirtualCallingModes().subscribe(

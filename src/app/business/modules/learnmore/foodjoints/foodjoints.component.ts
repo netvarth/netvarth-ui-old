@@ -242,7 +242,7 @@ export class FoodJointComponent implements OnInit {
       if (childContent === 'q-boards') {
         this.showdisplayboard= true;
       }
-    }
+    } 
     if (parentContent === 'payments') {
       this.showpayments = true;
       if (childContent === 'jaldee-pay') {

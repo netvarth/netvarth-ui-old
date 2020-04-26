@@ -234,7 +234,7 @@ export class ReligiousComponent implements OnInit {
       this.showappointments = true;
       if (childContent === 'accept-appointments') {
         this.showappointment = true;
-      }
+      } 
       if (childContent === 'services') {
         this.showservices = true;
       }
