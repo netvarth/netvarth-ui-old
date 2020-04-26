@@ -18,7 +18,7 @@ export class DonationMgrComponent implements OnInit {
       title: 'Donation Manager ',
     }
   ];
-  domain;
+  domain :any;
   breadcrumbs = this.breadcrumbs_init;
   Donations_statusstr: string;
   Donations_status: any;
@@ -32,7 +32,8 @@ export class DonationMgrComponent implements OnInit {
   ngOnInit() {
     this.getDonationStatus();
     this.getcauseCount();
-
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
   }
   getcauseCount() {
     // const filter = { 'scope-eq': 'account' };
@@ -70,6 +71,6 @@ export class DonationMgrComponent implements OnInit {
 
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->' + mod]);
   }
 }

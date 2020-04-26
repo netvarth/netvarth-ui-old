@@ -30,9 +30,11 @@ export class CustomerIdSettingsComponent implements OnInit {
     custIdFormat: any;
     tempCustIdFormat: any;
     inputChanged = false;
+    domain:any;
     breadcrumb_moreoptions: any = [];
     constructor(
         private provider_services: ProviderServices,
+        public shared_functions:SharedFunctions,
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
     ) {
@@ -40,8 +42,15 @@ export class CustomerIdSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.getGlobalSettings();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
+        this.breadcrumb_moreoptions = {
+            'show_learnmore': true, 'scrollKey': 'customers->custid-settings', 
+            'actions': [
+            { 'title': 'Help', 'type': 'learnmore' }]
+        };
     }
+    
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
@@ -83,7 +92,7 @@ export class CustomerIdSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-        //     this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
         }
     }
 }

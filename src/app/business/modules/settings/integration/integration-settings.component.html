@@ -22,7 +22,9 @@
                                 </span>
                                 <div class="onoff">{{onlinepresence_statusstr}}</div>
                             </label>
-                            <p class="settings_info">If true, the provider is available in Jaldee search, he can publish online queues etc. if false he is not available in search.</p>
+                            <p class="settings_info">If true, the provider is available in Jaldee search, he can publish online queues etc. if false he is not available in search.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('onlinepresence', $event)">Learn
+                                More</a></p>
 
                                 <label>Jaldee Mobile App Integration
                                     <span class="ctrl">
@@ -31,7 +33,9 @@
                                     </span>
                                     <div class="onoff">{{walkinConsumer_statusstr}}</div>
                                 </label>
-                                <p class="settings_info">Allow customer to integrate Jaldee App to manage check-ins.</p>
+                                <p class="settings_info">Allow customer to integrate Jaldee App to manage check-ins.<a class="learnmore-pointer"
+                                    id="customer-help" (click)="learnmore_clicked('jaldee-app-integration', $event)">Learn
+                                    More</a></p>
                         </div>
                     </div>
                 </div>

@@ -34,6 +34,8 @@ export class IntegrationSettingsComponent implements OnInit {
     }
     ngOnInit() {
         this.getJaldeeIntegrationSettings();
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
     }
     getJaldeeIntegrationSettings() {
         this.provider_services.getJaldeeIntegrationSettings().subscribe(
@@ -101,6 +103,6 @@ export class IntegrationSettingsComponent implements OnInit {
 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
+        this.router.navigate(['/provider/' + this.domain + '/jaldee-integration->' + mod]);
     }
 }

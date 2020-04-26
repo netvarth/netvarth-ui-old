@@ -86,11 +86,21 @@ export class HealthCareComponent implements OnInit {
   showappointments = false;
   showappointment = false;
   showschedules = false;
+  showdonations = false;
+  showdonation = false;
+  showcauses = false;
+  showjaldeeintegrations = false;
+  showonlinepresence = false;
+  showjaldeeintegration = false;
+  showcustomers = false;
+  showcustomersid = false;
+  showvirtualcallingmodes = false;
+  showvirtualcallingmode = false;
+  showvideocallmode = false;
   domain;
   subdomain;
   show = 'false';
   
- 
   
   constructor(
     private activated_route: ActivatedRoute,
@@ -217,16 +227,16 @@ export class HealthCareComponent implements OnInit {
       }
     }
 
-    if (parentContent === 'payments') {
-      this.showpayments = true;
-      if (childContent === 'jaldee-pay') {
-        this.showpayment = true;
+    if (parentContent === 'q-manager') {
+      this.showcheckinmanager = true;
+      if (childContent === 'settings-services') {
+        this.showservices = true;
       }
-      if (childContent === 'payment-settings') {
-        this.showpaymentsettings = true;
+      if (childContent === 'settings-time_windows') {
+        this.showtime = true;
       }
-      if (childContent === 'tax-settings') {
-        this.showtax = true;
+     if (childContent === 'settings-q-boards') {
+        this.showdisplayboard = true;
       }
     }
 
@@ -247,6 +257,21 @@ export class HealthCareComponent implements OnInit {
 
     } 
 
+    if (parentContent === 'payments') {
+      this.showpayments = true;
+      if (childContent === 'jaldee-pay') {
+        this.showpayment = true;
+      }
+      if (childContent === 'payment-settings') {
+        this.showpaymentsettings = true;
+      }
+      if (childContent === 'tax-settings') {
+        this.showtax = true;
+      }
+    }
+
+    
+
     if (parentContent === 'billing') {
       this.showbilling = true;
        if (childContent === 'items') {
@@ -257,6 +282,16 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'discount') {
         this.showdiscount = true;
+      }
+    }
+
+    if (parentContent === 'donationmanager') {
+      this.showdonations = true;
+      if (childContent === 'accept-donations') {
+        this.showdonation = true;
+      }
+      if (childContent === 'causes') {
+        this.showcauses = true;
       }
     }
 
@@ -280,19 +315,33 @@ export class HealthCareComponent implements OnInit {
       }
     }
 
-    if (parentContent === 'q-manager') {
-      this.showcheckinmanager = true;
-      if (childContent === 'settings-services') {
-        this.showservices = true;
+    if (parentContent === 'jaldee-integration') {
+      this.showjaldeeintegrations = true;
+      if (childContent === 'onlinepresence') {
+        this.showonlinepresence = true;
       }
-      if (childContent === 'settings-time_windows') {
-        this.showtime = true;
-      }
-     if (childContent === 'settings-q-boards') {
-        this.showdisplayboard = true;
+      if (childContent === 'jaldee-app-integration') {
+        this.showjaldeeintegration  = true;
       }
     }
 
+    if (parentContent === 'customers') {
+      this.showcustomers = true;
+      if (childContent === 'custid-settings') {
+        this.showcustomersid = true;
+      }
+    }
+    
+    if (parentContent === 'comm') {
+      this.showvirtualcallingmodes = true;
+      if (childContent === 'virtualcallingmode') {
+        this.showvirtualcallingmode = true;
+      }
+      if (childContent === 'videocall-settings') {
+        this.showvideocallmode  = true;
+      }
+    }
+    
     if (parentContent === 'license') {
       this.showlicense = true;
       if (childContent === 'upgradelicense') {

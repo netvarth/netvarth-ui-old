@@ -16,6 +16,8 @@ export class CustomViewListComponent implements OnInit {
   api_loading: boolean;
   customViewList: any = [];
   removeitemdialogRef;
+  breadcrumb_moreoptions: any = [];
+  domain:any;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -39,7 +41,19 @@ export class CustomViewListComponent implements OnInit {
   }
   ngOnInit() {
     this.api_loading = true;
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'general->customview', 'classname': 'b-service',
+      'actions': [
+      { 'title': 'Help', 'type': 'learnmore' }]
+  };
     this.getCustomViewList();
+  }
+  performActions(action) {
+    if (action === 'learnmore') {
+      this.router.navigate(['/provider/' + this.domain + '/general->customview']);
+    } 
   }
 
   getCustomViewList() {

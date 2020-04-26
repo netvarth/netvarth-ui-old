@@ -19,19 +19,21 @@ export class CustomersSettingsComponent implements OnInit {
             title: 'Customers'
         }
     ];
+    domain: any;
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
     }
     ngOnInit() {
-
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector; 
     }
     gotoCustomerIdSettings() {
         this.router.navigate(['provider', 'settings', 'customers', 'custid']);
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        // this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
+        this.router.navigate(['/provider/' + this.domain + '/customers->' + mod]);
       }
 }

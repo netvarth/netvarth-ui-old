@@ -25,6 +25,7 @@ export class VideoSettingsComponent implements OnInit {
     botimMode = '';
     imoMode = '';
     jaldeeMode = '';
+    domain:any;
 
     videoModes = {
         SKYPE: { value: 'SKYPE', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
@@ -33,6 +34,7 @@ export class VideoSettingsComponent implements OnInit {
         BOTIM: { value: 'BOTIM', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         IMO: { value: 'IMO', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false }
     };
+    breadcrumb_moreoptions:any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -49,6 +51,7 @@ export class VideoSettingsComponent implements OnInit {
     originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return 0;
     }
+   
     constructor(private _formBuilder: FormBuilder,
         private router: Router,
         public shared_functions: SharedFunctions,
@@ -58,7 +61,20 @@ export class VideoSettingsComponent implements OnInit {
     }
     ngOnInit() {
         this.api_loading = true;
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
+        this.breadcrumb_moreoptions = {
+            'show_learnmore': true, 'scrollKey': 'comm->videocall-settings', 
+            'actions': [
+            { 'title': 'Help', 'type': 'learnmore' }]
+        };
         this.getVirtualCallingModesList();
+    }
+
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.router.navigate(['/provider/' + this.domain + '/comm->videocall-settings']);
+        }
     }
 
     getVirtualCallingModesList() {

@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     'templateUrl': './comm-settings.component.html'
 })
 export class CommSettingsComponent implements OnInit {
+    domain:any;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -27,6 +28,8 @@ export class CommSettingsComponent implements OnInit {
         private shared_functions: SharedFunctions) {
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.getGlobalSettingsStatus();
     }
     getGlobalSettingsStatus() {
@@ -41,7 +44,7 @@ export class CommSettingsComponent implements OnInit {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        // this.router.navigate(['/provider/' + this.domain + '/payments->' + mod]);
+     this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
       }
       handle_virtualCallingModeStatus(event) {
         const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';

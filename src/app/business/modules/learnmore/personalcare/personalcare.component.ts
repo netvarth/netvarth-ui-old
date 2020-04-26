@@ -81,6 +81,17 @@ export class PersonalCareComponent implements OnInit {
   showappointments = false;
   showappointment = false;
   showschedules = false;
+  showdonations = false;
+  showdonation = false;
+  showcauses = false;
+  showjaldeeintegrations = false;
+  showonlinepresence = false;
+  showjaldeeintegration = false;
+  showcustomers = false;
+  showcustomersid = false;
+  showvirtualcallingmodes = false;
+  showvirtualcallingmode = false;
+  showvideocallmode = false;
   domain;
   show = 'false';
   
@@ -260,6 +271,16 @@ export class PersonalCareComponent implements OnInit {
       }
     }
 
+    if (parentContent === 'donationmanager') {
+      this.showdonations = true;
+      if (childContent === 'accept-donations') {
+        this.showdonation = true;
+      }
+      if (childContent === 'causes') {
+        this.showcauses = true;
+      }
+    }
+
     if (parentContent === 'miscellaneous') {
       this.showmiscellaneous = true;
       if (childContent === 'notifications') {
@@ -273,6 +294,33 @@ export class PersonalCareComponent implements OnInit {
       }
     }
 
+    if (parentContent === 'jaldee-integration') {
+      this.showjaldeeintegrations = true;
+      if (childContent === 'onlinepresence') {
+        this.showonlinepresence = true;
+      }
+      if (childContent === 'jaldee-app-integration') {
+        this.showjaldeeintegration  = true;
+      }
+    }
+
+    if (parentContent === 'customers') {
+      this.showcustomers = true;
+      if (childContent === 'custid-settings') {
+        this.showcustomersid = true;
+      }
+    }
+    
+    if (parentContent === 'comm') {
+      this.showvirtualcallingmodes = true;
+      if (childContent === 'virtualcallingmode') {
+        this.showvirtualcallingmode = true;
+      }
+      if (childContent === 'videocall-settings') {
+        this.showvideocallmode  = true;
+      }
+    }
+    
    
     if (parentContent === 'license') {
       this.showlicense = true;

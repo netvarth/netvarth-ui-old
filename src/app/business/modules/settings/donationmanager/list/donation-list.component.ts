@@ -52,7 +52,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         this.getDomainSubdomainSettings();
         this.getServices();
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
+            'show_learnmore': true, 'scrollKey': 'donationmanager->causes', 'classname': 'b-service',
             'actions': [{ 'title': 'Add Cause', 'type': 'addcause' },
             { 'title': 'Help', 'type': 'learnmore' }]
         };
@@ -64,7 +64,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         if (action === 'addcause') {
             this.router.navigate(['provider', 'settings', 'donationmanager', 'add']);
         } else if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->causes']);
         }
     }
     getServices() {

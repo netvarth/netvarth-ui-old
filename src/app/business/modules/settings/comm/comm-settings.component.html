@@ -15,7 +15,9 @@
                                     <div class="onoff">{{virtualCallingMode_statusstr}}</div>
                                 </label>
                                 <p class="form-level-settings">Please select and set the preferable way of calling your
-                                    customer.</p>
+                                    customer.<a class="learnmore-pointer"
+                                    id="customer-help" (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
+                                    More</a></p>
                             </div>
                         </div>
                     </div>
@@ -24,7 +26,7 @@
                     <span class="b-link" (click)="gotoVideoSettings()">
                         <h2>Video Call</h2>
                         <span class="form-level-settings">Configure your video call preferences here. <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('custid-settings', $event)">Learn
+                                id="customer-help" (click)="learnmore_clicked('videocall-settings', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
