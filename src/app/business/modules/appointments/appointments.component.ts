@@ -702,8 +702,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view) {
     return new Promise((resolve, reject) => {
       const qIds = [];
-      for (let i = 0; i < view.customViewConditions.queues.length; i++) {
-        qIds.push(view.customViewConditions.queues[i]['id']);
+      if (view.customViewConditions.queues.length > 0) {
+        for (let i = 0; i < view.customViewConditions.queues.length; i++) {
+          qIds.push(view.customViewConditions.queues[i]['id']);
+        }
       }
       if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ')) {
         this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
@@ -721,9 +723,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           const selQdetails = this.queues.filter(q => q.id === this.selQId);
           this.servicesCount = selQdetails[0].services.length;
         } else {
-          this.selQId = view.customViewConditions.queues[0]['id'];
+          if (view.customViewConditions.queues) {
+            this.selQId = view.customViewConditions.queues[0]['id'];
+          }
           if (view.customViewConditions.queues[0].services) {
-          this.servicesCount = view.customViewConditions.queues[0].services.length;
+            this.servicesCount = view.customViewConditions.queues[0].services.length;
           }
           this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
         }

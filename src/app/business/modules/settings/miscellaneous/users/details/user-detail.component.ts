@@ -115,6 +115,8 @@ export class BranchUserDetailComponent implements OnInit {
                     break;
                 }
             }
+            console.log(this.subDomains);
+            this.userForm.get('selectedSubDomain').setValue(this.subDomains[0].id);
         } else {
             this.shared_services.bussinessDomains()
                 .subscribe(
@@ -145,6 +147,7 @@ export class BranchUserDetailComponent implements OnInit {
             state: [],
             city: []
         });
+       
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
         this.getWaitlistMgr();
     }
@@ -225,12 +228,12 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.last_name.trim() === '') {
             this.lnameerror = 'Last name is required';
         }
-        if (input.selectedUserType === 'PROVIDER') {
-            if (input.selectedSubDomain === null) {
-                this.subdomainerror = 'Service specialization or Occupation is required';
-                return;
-            }
-        }
+        // if (input.selectedUserType === 'PROVIDER') {
+        //     if (input.selectedSubDomain === null) {
+        //         this.subdomainerror = 'Service specialization or Occupation is required';
+        //         return;
+        //     }
+        // }
         if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
             return;
         }

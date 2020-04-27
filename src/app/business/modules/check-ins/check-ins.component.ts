@@ -1645,13 +1645,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        source : source
+        source: source
       }
-  };
+    };
     this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
   }
   showAdjustDelay() {
-    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
+    if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
@@ -1761,9 +1761,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
       },
-      (error) => {
-        resolve([]);
-      });
+        (error) => {
+          resolve([]);
+        });
     });
   }
   onChangeLocationSelect(event) {
