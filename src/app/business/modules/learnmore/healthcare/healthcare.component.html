@@ -3928,10 +3928,956 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                          <!-- next -->
+                         <mat-accordion>
+                            <mat-expansion-panel [expanded]='showdashboard && showdashboard'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="handleScroll('dashboard-home', 'dashboard-home')">
+                                        Dashboard
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                    <section>
+                                        <span>The dashboard section lets the doctor manage and monitor the check-ins of a
+                                            patient.
+                                            Here
+                                            a doctor can monitor the current check-ins <strong>(Today)</strong> and the
+                                            future
+                                            check-ins
+                                            <strong>(Future).</strong> The patient's previous check-ins can be viewed in
+                                            this
+                                            section
+                                            under the <strong>“History“</strong> tab. To view the details, click on the
+                                            patient's
+                                            name.
+                                            There are location and working hours to help the doctor monitor the details of
+                                            check-ins
+                                            in
+                                            different windows.</span>
+                                    </section>
+                                    <ol class="ol-normal adjust-delay-num">
+                                        <li><strong>Today ()</strong> - All the present day’s online and walk-in check-ins
+                                            are
+                                            listed
+                                            here. The adjoined brackets display the number of check-ins.</li>
+                                        <li><strong>Future()</strong> - All the check-ins for future dates are listed here.
+                                            The
+                                            adjoined
+                                            brackets display the number of future check-ins.</li>
+                                        <li><strong>History</strong> - All of the patient's previous check-ins until a day
+                                            before
+                                            are
+                                            listed here. To view the details click on the “date of check-in“or on the “name
+                                            of the
+                                            patient". Actions can also be changed from here.</li>
+                                    </ol>
+                                    <section>
+                                        <h6>Location Selection</h6>
+                                        <span>Here a doctor can select the exact location if multiple locations are
+                                            available. The
+                                            doctor
+                                            can check the details of a particular check-in for a specific
+                                            location.</span><br>
+                                        <span><strong>Note: A doctor needs to select the location of service while he/she
+                                                checks-in a
+                                                “walk-in“ patient.</strong></span>
+                                    </section>
+                                    <section>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title>
+                                                        <span class="helpcontent">Check-Ins</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <ul class="ul-normal">
+                                                        <li>If the business has multiple locations, select the location and
+                                                            the
+                                                            working
+                                                            hour from the dashboard.</li>
+                                                        <li>Here the doctor can see a list of patients who have checked in
+                                                            (Online
+                                                            or
+                                                            Walk-in ).</li>
+                                                        <li>In some cases, a “cloud symbol“ is prefixed to a name, it means
+                                                            that the
+                                                            patient has checked in online. </li>
+                                                        <li>To view the check-in details of a patient, doctor can click on
+                                                            the name
+                                                            of
+                                                            the patient. Check-in history, communication history, and
+                                                            history of
+                                                            private notes are listed here. In addition to that, the user can
+                                                            cancel
+                                                            a
+                                                            patient's check-in and inform this through <strong>Send
+                                                                Message.</strong> A
+                                                            doctor can add a private note for a patient using <strong>Add
+                                                                private
+                                                                note.</strong></li>
+                                                        <li>For <strong>“Manual�?</strong> wait time calculation, the doctor
+                                                            can edit
+                                                            individual check-ins wait time from the check-in details.</li>
+                                                        <li>Each of the patient's <strong>Name, Wait Time</strong> and
+                                                            <strong>Service</strong> is displayed here.</li>
+                                                        <li>The three dots menu in the right side of check-in has the
+                                                            following
+                                                            options:
+                                                        </li>
+                                                        <ol class="ol-normal">
+                                                            <li><strong>Send Message :</strong> Instantly type and send a
+                                                                message to
+                                                                the
+                                                                patient here. These messages can be seen in communication
+                                                                history
+                                                                anytime.</li>
+                                                            <li><strong>Cancel check-in :</strong>
+                                                                <ul class="ul-normal">
+                                                                    <li>To cancel a patient's check-in, click on
+                                                                        <strong>“Cancel
+                                                                            Check-In“</strong>.</li>
+                                                                    <li>patients are notified about the cancellation of
+                                                                        Check-in
+                                                                        through push message/email.</li>
+                                                                    <li>When a doctor clicks on <strong>“Cancel
+                                                                            Check-In“</strong> a
+                                                                        pop-up window appears which shows the reasons for
+                                                                        cancellation
+                                                                        of the check-in. Use the checkboxes to select from
+                                                                        the
+                                                                        suggested
+                                                                        reasons and then click <strong>“Save“.</strong>
+                                                                    </li>
+                                                                    <li>The doctor can inform the patient about the
+                                                                        cancellation.
+                                                                        To do
+                                                                        this, click on the <strong>Send Message</strong>
+                                                                        button. A
+                                                                        text
+                                                                        box will appear with a default message for each
+                                                                        reason,
+                                                                        doctor
+                                                                        can either send the default message or can edit and
+                                                                        type a
+                                                                        personalized message.</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li><strong>Add private note :</strong> In case the doctor wants
+                                                                to keep
+                                                                a
+                                                                personal note about a particular patient, he/she can write
+                                                                and add
+                                                                a
+                                                                note here. This note can be seen anytime the patient
+                                                                checks-in
+                                                                again
+                                                                with the doctor under <strong>“Private Notes“.</strong></li>
+                                                            <li><strong>Change Status to Check-in :</strong> The option to
+                                                                check-in
+                                                                a
+                                                                patient appears only when the patient's status is
+                                                                <strong>“Arrived“.</strong> The doctor can change the status
+                                                                back to
+                                                                <strong>“Check-in“</strong> using this option. This can be
+                                                                used in
+                                                                the
+                                                                following circumstances:
+                                                                <ul class="ul-normal">
+                                                                    <li>When a patient gets cancelled for some reason and
+                                                                        wanted to
+                                                                        check-in again.</li>
+                                                                    <li>When a patient's check-in status has been mistakenly
+                                                                        changed to
+                                                                        <strong>Arrived</strong> status.</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ol>
+                                                    </ul>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title> <span class="helpcontent">Actions</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <span>The following are the main actions the doctor can perform:</span>
+                                                    <ol class="ol-normal adjust-delay-num">
+                                                        <li><strong>Arrived :</strong> This button is used when a patient
+                                                            arrives
+                                                            at
+                                                            the premise of the business location to avail the services. When
+                                                            a
+                                                            doctor
+                                                            clicks this button, an <strong>“Arrived“</strong> label gets
+                                                            adjoined to
+                                                            the
+                                                            name of the patient. In case of a walk-in or kiosk patient, the
+                                                            <strong>“Arrived“</strong> label is automatically adjoined as
+                                                            the
+                                                            patients
+                                                            are present at the premises. Service can now be started.</li>
+                                                        <li><strong>Start :</strong> Click on <strong>“Start“</strong> when
+                                                            the
+                                                            service
+                                                            is started. This will move the patient's entry to
+                                                            <strong>“Started“</strong> tab. This will lead to the activation
+                                                            of the
+                                                            other two buttons, namely, <strong>“Complete“</strong> and
+                                                            <strong>“Bill“.</strong> Click on these buttons as and when
+                                                            required.
+                                                        </li>
+                                                        <li><strong>Complete :</strong>Click on the
+                                                            <strong>“Complete“</strong> tab
+                                                            after completion of the service. The check-in status of the
+                                                            patient
+                                                            changes
+                                                            to complete. This will move the patient's entry to the
+                                                            <strong>“Completed“</strong> tab. The completed tab generates
+                                                            two
+                                                            actions,
+                                                            namely <strong>“Bill“</strong> & <strong>“Accept
+                                                                Payment“.</strong></li>
+                                                        <li><strong>Cancel :</strong>If the service gets cancelled for some
+                                                            reason,
+                                                            click on the <strong>“Cancel“</strong> tab. This will remove the
+                                                            patient's
+                                                            check-in entry from the list.</li>
+                                                        <li><strong>Bill :</strong>After the completion of the service, a
+                                                            bill gets
+                                                            generated. Click on the <strong>“Bill“</strong> tab to view the
+                                                            receipt.
+                                                            Here a doctor can add extra services or items in the bill. From
+                                                            the
+                                                            three
+                                                            dots menu, a doctor can also <strong>“Apply order discount“,
+                                                                “Apply
+                                                                coupon“
+                                                                & “Apply Jaldee coupon�?</strong> to the bill. The bill can
+                                                            be
+                                                            settled
+                                                            either by <strong></strong>JaldeePay or <strong>Pay by Cash or
+                                                                Others.</strong></li>
+                                                        <li><strong>Accept Payment :</strong>Click on <strong>“Accept
+                                                                Payment�?</strong>“Accept Payment“tab to receive the payment
+                                                            for the
+                                                            services. This opens the generated Bill page. Once the patient
+                                                            pays the
+                                                            bill, a doctor can settle the bill by clicking on the
+                                                            <strong>“Settle“</strong> tab.</li>
+                                                    </ol>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title>
+                                                        <span class="helpcontent">Started</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <ul class="ul-normal">
+                                                        <li>Under this tab, a doctor can view the list of patients who have
+                                                            already
+                                                            started availing the service. The check-in tab will no longer
+                                                            contain
+                                                            these
+                                                            patients entry.</li>
+                                                        <li>Name, Wait Time and Service will be the same as that in the
+                                                            check-ins
+                                                            tab.
+                                                        </li>
+                                                        <li>Two actions are available here:</li>
+                                                    </ul>
+                                                    <ol class="ol-normal">
+                                                        <li><strong>Complete :</strong> Click on the
+                                                            <strong>“Complete“</strong>
+                                                            button
+                                                            after the completion of the service. This will move the
+                                                            patient's entry
+                                                            from <strong>Started tab</strong> to the <strong>Completed
+                                                                tab.</strong>
+                                                            In
+                                                            case the <strong>“End of Service Notification“</strong> button
+                                                            is
+                                                            enabled in
+                                                            the <strong>“Add Service�?</strong>, a push message or email will
+                                                            be sent
+                                                            to
+                                                            the patient, thus informing them about the service completion.
+                                                        </li>
+                                                        <li><strong>Bill :</strong> A <strong>“Bill“</strong> button appears
+                                                            when a
+                                                            service is started. This opens the bill generated for the
+                                                            service. Click
+                                                            on
+                                                            <strong>“Add Service/Item�?</strong> in order to add more
+                                                            services or
+                                                            items
+                                                            to the bill before proceeding with the payment. The three dots
+                                                            menu near
+                                                            this button has the following options:
+                                                            <ul class="ul-normal">
+                                                                <li><strong>Apply Jaldee Coupon :</strong> These coupons
+                                                                    have been
+                                                                    provided by Jaldee.</li>
+                                                                <li><strong>Apply Coupon :</strong> These are coupons
+                                                                    generated by
+                                                                    doctor.</li>
+                                                                <li><strong>Apply Order Discount :</strong> These discounts
+                                                                    are
+                                                                    offered
+                                                                    by the doctor.</li>
+                                                                <span>*The option to Add Private Note and patient Note is
+                                                                    available
+                                                                    here.
+                                                                </span>
+                                                                <li>These coupons are applied to the total bill amount.</li>
+                                                                <li>Discounts can either be applied to the Gross amount or
+                                                                    to each
+                                                                    item.
+                                                                </li>
+                                                                <li>Three dots menu near service/item in the bill has the
+                                                                    following
+                                                                    actions:
+                                                                    <ol class="ol-normal">
+                                                                        <li><strong>Change Quantity :</strong> Here a doctor
+                                                                            can
+                                                                            change
+                                                                            the quantity of the item or service already
+                                                                            added to the
+                                                                            bill.</li>
+                                                                        <li><strong>Apply Discount :</strong> Here a doctor
+                                                                            can
+                                                                            apply a
+                                                                            discount to the bill.</li>
+                                                                        <li><strong>Remove Service/Item :</strong> Click
+                                                                            here to
+                                                                            remove
+                                                                            a service or item from the bill.</li>
+                                                                    </ol>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ol>
+                                                    <ul class="ul-normal">
+                                                        <li>Additionally the option to <strong>“Add Private Note“, “Send
+                                                                Message“,
+                                                                and
+                                                                “Change Status to Check-in�?</strong> is also available.
+                                                            <ol class="ol-normal">
+                                                                <li><strong>Add Private Note :</strong> Write a note about a
+                                                                    particular
+                                                                    patient here.</li>
+                                                                <li><strong>Send Message :</strong> Write text to the
+                                                                    patient here
+                                                                    and
+                                                                    send it to the patient. All of the sent messages can be
+                                                                    seen in
+                                                                    communication history anytime.</li>
+                                                                <li><strong>Change Status to check-in :</strong>The option
+                                                                    to
+                                                                    check-in a
+                                                                    patient appears only if the patients status is marked to
+                                                                    <strong>“Arrived�?.</strong> A doctor can change the
+                                                                    status back
+                                                                    to
+                                                                    <strong>“Check-in�?</strong> using this option. This can
+                                                                    be used
+                                                                    in
+                                                                    the following circumstances:
+                                                                    <ul>
+                                                                        <li>When a patient gets cancelled for some reason
+                                                                            and
+                                                                            wanted to
+                                                                            check-in again.</li>
+                                                                        <li>When a patient's check-in status has been
+                                                                            mistakenly
+                                                                            changed to <strong>“Arrived�?</strong> status.
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ol>
+                                                        </li>
+                                                        <li><strong>Payment Status:</strong> This shows the payment status
+                                                            (not
+                                                            paid,
+                                                            partially paid, or fully paid) of the patient.</li>
+                                                        <li><strong>patient Note:</strong> When a patient adds any note
+                                                            while
+                                                            checking-in, it is displayed here.</li>
+                                                    </ul>
+                    
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title> <span class="helpcontent">Completed</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <ul class="ul-normal">
+                                                        <li>Once a service is done click on“Complete“button, the patient's
+                                                            entry
+                                                            will
+                                                            move under the <strong>“Completed“</strong> tab.</li>
+                                                        <li>The doctor is equipped with the following actions in this
+                                                            section:
+                                                            <ol class="ol-normal">
+                                                                <li><strong>Accept Payment :</strong> Click on this button
+                                                                    to view
+                                                                    the
+                                                                    saved bill. A doctor has the option to either continue
+                                                                    with the
+                                                                    payment procedure or to edit the bill by adding new
+                                                                    services or
+                                                                    items to the bill. The bill has the following options:
+                                                                    <ul class="normal-abc">
+                                                                        <li><strong>Settle Bill :</strong> Click on this
+                                                                            button to
+                                                                            settle the bill. The due amount in the bill is
+                                                                            also
+                                                                            visible
+                                                                            in the patient dashboard.</li>
+                                                                        <li><strong>Jaldee Pay :</strong> This enables the
+                                                                            patient
+                                                                            to
+                                                                            pay online by generating the bill to the patient
+                                                                            dashboard
+                                                                            also.</li>
+                                                                        <li><strong>Pay by cash or others :</strong> This
+                                                                            enables
+                                                                            the
+                                                                            patient to complete the bill settlement either
+                                                                            in cash
+                                                                            or
+                                                                            by other means.</li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ol>
+                                                        </li>
+                                                        <li>Additionally the options <strong>“Add Private Note“</strong> and
+                                                            <strong>“Send Message“</strong> are also available.
+                                                            <ol class="ol-normal">
+                                                                <li><strong>Add Private Note :</strong> Write a note about a
+                                                                    particular
+                                                                    patient here.</li>
+                                                                <li><strong>Send Message :</strong> Write text to the
+                                                                    patient here
+                                                                    and
+                                                                    send it to the patient. All of the sent messages can be
+                                                                    seen in
+                                                                    communication history anytime.</li>
+                                                            </ol>
+                                                        </li>
+                    
+                                                    </ul>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title>
+                                                        <span class="helpcontent">Cancelled</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <ul class="ul-normal">
+                                                        <li>Here the doctor can view the list of all cancelled patient
+                                                            check-ins.
+                                                        </li>
+                                                        <li>The three dot menu available has the following options:
+                                                            <ul class="normal-abc">
+                                                                <li><strong>Add Private Note :</strong> Write a note about a
+                                                                    particular
+                                                                    patient here.</li>
+                                                                <li><strong>Send Message :</strong> Write text to the
+                                                                    patient here
+                                                                    and
+                                                                    send it to the patient. All of the sent messages can be
+                                                                    seen in
+                                                                    communication history anytime.</li>
+                                                                <li><strong>Change Status to check-in :</strong> The option
+                                                                    to
+                                                                    check-in
+                                                                    a patient appears only if the patient's status is marked
+                                                                    to
+                                                                    <strong>“Arrived“.</strong> A doctor can change the
+                                                                    status back
+                                                                    to
+                                                                    <strong>“Check-in“</strong> using this option.</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </section>
+                                </div>
+                               
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <!-- next -->
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]='showdbappointments'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="handleScroll('appointments', 'appointments')">
+                                        Appointments
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                        <section>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Check-Ins</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <ul class="ul-normal">
+                                                                <li>If the business has multiple locations, select the location and
+                                                                    the
+                                                                    working
+                                                                    hour from the dashboard.</li>
+                                                                <li>Here the doctor can see a list of patients who have checked in
+                                                                    (Online
+                                                                    or
+                                                                    Walk-in ).</li>
+                                                                <li>In some cases, a “cloud symbol“ is prefixed to a name, it means
+                                                                    that the
+                                                                    patient has checked in online. </li>
+                                                                <li>To view the check-in details of a patient, doctor can click on
+                                                                    the name
+                                                                    of
+                                                                    the patient. Check-in history, communication history, and
+                                                                    history of
+                                                                    private notes are listed here. In addition to that, the user can
+                                                                    cancel
+                                                                    a
+                                                                    patient's check-in and inform this through <strong>Send
+                                                                        Message.</strong> A
+                                                                    doctor can add a private note for a patient using <strong>Add
+                                                                        private
+                                                                        note.</strong></li>
+                                                                <li>For <strong>“Manual�?</strong> wait time calculation, the doctor
+                                                                    can edit
+                                                                    individual check-ins wait time from the check-in details.</li>
+                                                                <li>Each of the patient's <strong>Name, Wait Time</strong> and
+                                                                    <strong>Service</strong> is displayed here.</li>
+                                                                <li>The three dots menu in the right side of check-in has the
+                                                                    following
+                                                                    options:
+                                                                </li>
+                                                                <ol class="ol-normal">
+                                                                    <li><strong>Send Message :</strong> Instantly type and send a
+                                                                        message to
+                                                                        the
+                                                                        patient here. These messages can be seen in communication
+                                                                        history
+                                                                        anytime.</li>
+                                                                    <li><strong>Cancel check-in :</strong>
+                                                                        <ul class="ul-normal">
+                                                                            <li>To cancel a patient's check-in, click on
+                                                                                <strong>“Cancel
+                                                                                    Check-In“</strong>.</li>
+                                                                            <li>patients are notified about the cancellation of
+                                                                                Check-in
+                                                                                through push message/email.</li>
+                                                                            <li>When a doctor clicks on <strong>“Cancel
+                                                                                    Check-In“</strong> a
+                                                                                pop-up window appears which shows the reasons for
+                                                                                cancellation
+                                                                                of the check-in. Use the checkboxes to select from
+                                                                                the
+                                                                                suggested
+                                                                                reasons and then click <strong>“Save“.</strong>
+                                                                            </li>
+                                                                            <li>The doctor can inform the patient about the
+                                                                                cancellation.
+                                                                                To do
+                                                                                this, click on the <strong>Send Message</strong>
+                                                                                button. A
+                                                                                text
+                                                                                box will appear with a default message for each
+                                                                                reason,
+                                                                                doctor
+                                                                                can either send the default message or can edit and
+                                                                                type a
+                                                                                personalized message.</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li><strong>Add private note :</strong> In case the doctor wants
+                                                                        to keep
+                                                                        a
+                                                                        personal note about a particular patient, he/she can write
+                                                                        and add
+                                                                        a
+                                                                        note here. This note can be seen anytime the patient
+                                                                        checks-in
+                                                                        again
+                                                                        with the doctor under <strong>“Private Notes“.</strong></li>
+                                                                    <li><strong>Change Status to Check-in :</strong> The option to
+                                                                        check-in
+                                                                        a
+                                                                        patient appears only when the patient's status is
+                                                                        <strong>“Arrived“.</strong> The doctor can change the status
+                                                                        back to
+                                                                        <strong>“Check-in“</strong> using this option. This can be
+                                                                        used in
+                                                                        the
+                                                                        following circumstances:
+                                                                        <ul class="ul-normal">
+                                                                            <li>When a patient gets cancelled for some reason and
+                                                                                wanted to
+                                                                                check-in again.</li>
+                                                                            <li>When a patient's check-in status has been mistakenly
+                                                                                changed to
+                                                                                <strong>Arrived</strong> status.</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ol>
+                                                            </ul>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                            <mat-panel-title> <span class="helpcontent">Actions</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <span>The following are the main actions the doctor can perform:</span>
+                                                            <ol class="ol-normal adjust-delay-num">
+                                                                <li><strong>Arrived :</strong> This button is used when a patient
+                                                                    arrives
+                                                                    at
+                                                                    the premise of the business location to avail the services. When
+                                                                    a
+                                                                    doctor
+                                                                    clicks this button, an <strong>“Arrived“</strong> label gets
+                                                                    adjoined to
+                                                                    the
+                                                                    name of the patient. In case of a walk-in or kiosk patient, the
+                                                                    <strong>“Arrived“</strong> label is automatically adjoined as
+                                                                    the
+                                                                    patients
+                                                                    are present at the premises. Service can now be started.</li>
+                                                                <li><strong>Start :</strong> Click on <strong>“Start“</strong> when
+                                                                    the
+                                                                    service
+                                                                    is started. This will move the patient's entry to
+                                                                    <strong>“Started“</strong> tab. This will lead to the activation
+                                                                    of the
+                                                                    other two buttons, namely, <strong>“Complete“</strong> and
+                                                                    <strong>“Bill“.</strong> Click on these buttons as and when
+                                                                    required.
+                                                                </li>
+                                                                <li><strong>Complete :</strong>Click on the
+                                                                    <strong>“Complete“</strong> tab
+                                                                    after completion of the service. The check-in status of the
+                                                                    patient
+                                                                    changes
+                                                                    to complete. This will move the patient's entry to the
+                                                                    <strong>“Completed“</strong> tab. The completed tab generates
+                                                                    two
+                                                                    actions,
+                                                                    namely <strong>“Bill“</strong> & <strong>“Accept
+                                                                        Payment“.</strong></li>
+                                                                <li><strong>Cancel :</strong>If the service gets cancelled for some
+                                                                    reason,
+                                                                    click on the <strong>“Cancel“</strong> tab. This will remove the
+                                                                    patient's
+                                                                    check-in entry from the list.</li>
+                                                                <li><strong>Bill :</strong>After the completion of the service, a
+                                                                    bill gets
+                                                                    generated. Click on the <strong>“Bill“</strong> tab to view the
+                                                                    receipt.
+                                                                    Here a doctor can add extra services or items in the bill. From
+                                                                    the
+                                                                    three
+                                                                    dots menu, a doctor can also <strong>“Apply order discount“,
+                                                                        “Apply
+                                                                        coupon“
+                                                                        & “Apply Jaldee coupon�?</strong> to the bill. The bill can
+                                                                    be
+                                                                    settled
+                                                                    either by <strong></strong>JaldeePay or <strong>Pay by Cash or
+                                                                        Others.</strong></li>
+                                                                <li><strong>Accept Payment :</strong>Click on <strong>“Accept
+                                                                        Payment�?</strong>“Accept Payment“tab to receive the payment
+                                                                    for the
+                                                                    services. This opens the generated Bill page. Once the patient
+                                                                    pays the
+                                                                    bill, a doctor can settle the bill by clicking on the
+                                                                    <strong>“Settle“</strong> tab.</li>
+                                                            </ol>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Started</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <ul class="ul-normal">
+                                                                <li>Under this tab, a doctor can view the list of patients who have
+                                                                    already
+                                                                    started availing the service. The check-in tab will no longer
+                                                                    contain
+                                                                    these
+                                                                    patients entry.</li>
+                                                                <li>Name, Wait Time and Service will be the same as that in the
+                                                                    check-ins
+                                                                    tab.
+                                                                </li>
+                                                                <li>Two actions are available here:</li>
+                                                            </ul>
+                                                            <ol class="ol-normal">
+                                                                <li><strong>Complete :</strong> Click on the
+                                                                    <strong>“Complete“</strong>
+                                                                    button
+                                                                    after the completion of the service. This will move the
+                                                                    patient's entry
+                                                                    from <strong>Started tab</strong> to the <strong>Completed
+                                                                        tab.</strong>
+                                                                    In
+                                                                    case the <strong>“End of Service Notification“</strong> button
+                                                                    is
+                                                                    enabled in
+                                                                    the <strong>“Add Service�?</strong>, a push message or email will
+                                                                    be sent
+                                                                    to
+                                                                    the patient, thus informing them about the service completion.
+                                                                </li>
+                                                                <li><strong>Bill :</strong> A <strong>“Bill“</strong> button appears
+                                                                    when a
+                                                                    service is started. This opens the bill generated for the
+                                                                    service. Click
+                                                                    on
+                                                                    <strong>“Add Service/Item�?</strong> in order to add more
+                                                                    services or
+                                                                    items
+                                                                    to the bill before proceeding with the payment. The three dots
+                                                                    menu near
+                                                                    this button has the following options:
+                                                                    <ul class="ul-normal">
+                                                                        <li><strong>Apply Jaldee Coupon :</strong> These coupons
+                                                                            have been
+                                                                            provided by Jaldee.</li>
+                                                                        <li><strong>Apply Coupon :</strong> These are coupons
+                                                                            generated by
+                                                                            doctor.</li>
+                                                                        <li><strong>Apply Order Discount :</strong> These discounts
+                                                                            are
+                                                                            offered
+                                                                            by the doctor.</li>
+                                                                        <span>*The option to Add Private Note and patient Note is
+                                                                            available
+                                                                            here.
+                                                                        </span>
+                                                                        <li>These coupons are applied to the total bill amount.</li>
+                                                                        <li>Discounts can either be applied to the Gross amount or
+                                                                            to each
+                                                                            item.
+                                                                        </li>
+                                                                        <li>Three dots menu near service/item in the bill has the
+                                                                            following
+                                                                            actions:
+                                                                            <ol class="ol-normal">
+                                                                                <li><strong>Change Quantity :</strong> Here a doctor
+                                                                                    can
+                                                                                    change
+                                                                                    the quantity of the item or service already
+                                                                                    added to the
+                                                                                    bill.</li>
+                                                                                <li><strong>Apply Discount :</strong> Here a doctor
+                                                                                    can
+                                                                                    apply a
+                                                                                    discount to the bill.</li>
+                                                                                <li><strong>Remove Service/Item :</strong> Click
+                                                                                    here to
+                                                                                    remove
+                                                                                    a service or item from the bill.</li>
+                                                                            </ol>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ol>
+                                                            <ul class="ul-normal">
+                                                                <li>Additionally the option to <strong>“Add Private Note“, “Send
+                                                                        Message“,
+                                                                        and
+                                                                        “Change Status to Check-in�?</strong> is also available.
+                                                                    <ol class="ol-normal">
+                                                                        <li><strong>Add Private Note :</strong> Write a note about a
+                                                                            particular
+                                                                            patient here.</li>
+                                                                        <li><strong>Send Message :</strong> Write text to the
+                                                                            patient here
+                                                                            and
+                                                                            send it to the patient. All of the sent messages can be
+                                                                            seen in
+                                                                            communication history anytime.</li>
+                                                                        <li><strong>Change Status to check-in :</strong>The option
+                                                                            to
+                                                                            check-in a
+                                                                            patient appears only if the patients status is marked to
+                                                                            <strong>“Arrived�?.</strong> A doctor can change the
+                                                                            status back
+                                                                            to
+                                                                            <strong>“Check-in�?</strong> using this option. This can
+                                                                            be used
+                                                                            in
+                                                                            the following circumstances:
+                                                                            <ul>
+                                                                                <li>When a patient gets cancelled for some reason
+                                                                                    and
+                                                                                    wanted to
+                                                                                    check-in again.</li>
+                                                                                <li>When a patient's check-in status has been
+                                                                                    mistakenly
+                                                                                    changed to <strong>“Arrived�?</strong> status.
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ol>
+                                                                </li>
+                                                                <li><strong>Payment Status:</strong> This shows the payment status
+                                                                    (not
+                                                                    paid,
+                                                                    partially paid, or fully paid) of the patient.</li>
+                                                                <li><strong>patient Note:</strong> When a patient adds any note
+                                                                    while
+                                                                    checking-in, it is displayed here.</li>
+                                                            </ul>
+                            
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                            <mat-panel-title> <span class="helpcontent">Completed</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <ul class="ul-normal">
+                                                                <li>Once a service is done click on“Complete“button, the patient's
+                                                                    entry
+                                                                    will
+                                                                    move under the <strong>“Completed“</strong> tab.</li>
+                                                                <li>The doctor is equipped with the following actions in this
+                                                                    section:
+                                                                    <ol class="ol-normal">
+                                                                        <li><strong>Accept Payment :</strong> Click on this button
+                                                                            to view
+                                                                            the
+                                                                            saved bill. A doctor has the option to either continue
+                                                                            with the
+                                                                            payment procedure or to edit the bill by adding new
+                                                                            services or
+                                                                            items to the bill. The bill has the following options:
+                                                                            <ul class="normal-abc">
+                                                                                <li><strong>Settle Bill :</strong> Click on this
+                                                                                    button to
+                                                                                    settle the bill. The due amount in the bill is
+                                                                                    also
+                                                                                    visible
+                                                                                    in the patient dashboard.</li>
+                                                                                <li><strong>Jaldee Pay :</strong> This enables the
+                                                                                    patient
+                                                                                    to
+                                                                                    pay online by generating the bill to the patient
+                                                                                    dashboard
+                                                                                    also.</li>
+                                                                                <li><strong>Pay by cash or others :</strong> This
+                                                                                    enables
+                                                                                    the
+                                                                                    patient to complete the bill settlement either
+                                                                                    in cash
+                                                                                    or
+                                                                                    by other means.</li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ol>
+                                                                </li>
+                                                                <li>Additionally the options <strong>“Add Private Note“</strong> and
+                                                                    <strong>“Send Message“</strong> are also available.
+                                                                    <ol class="ol-normal">
+                                                                        <li><strong>Add Private Note :</strong> Write a note about a
+                                                                            particular
+                                                                            patient here.</li>
+                                                                        <li><strong>Send Message :</strong> Write text to the
+                                                                            patient here
+                                                                            and
+                                                                            send it to the patient. All of the sent messages can be
+                                                                            seen in
+                                                                            communication history anytime.</li>
+                                                                    </ol>
+                                                                </li>
+                            
+                                                            </ul>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Cancelled</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <ul class="ul-normal">
+                                                                <li>Here the doctor can view the list of all cancelled patient
+                                                                    check-ins.
+                                                                </li>
+                                                                <li>The three dot menu available has the following options:
+                                                                    <ul class="normal-abc">
+                                                                        <li><strong>Add Private Note :</strong> Write a note about a
+                                                                            particular
+                                                                            patient here.</li>
+                                                                        <li><strong>Send Message :</strong> Write text to the
+                                                                            patient here
+                                                                            and
+                                                                            send it to the patient. All of the sent messages can be
+                                                                            seen in
+                                                                            communication history anytime.</li>
+                                                                        <li><strong>Change Status to check-in :</strong> The option
+                                                                            to
+                                                                            check-in
+                                                                            a patient appears only if the patient's status is marked
+                                                                            to
+                                                                            <strong>“Arrived“.</strong> A doctor can change the
+                                                                            status back
+                                                                            to
+                                                                            <strong>“Check-in“</strong> using this option.</li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                            </section>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                         <!-- next -->
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]='false'>
+                        <mat-expansion-panel [expanded]='showcheckin'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="handleScroll('checkin', 'checkin')">
+                                <mat-panel-title class="accordion-title" (click)="handleScroll('check-ins', 'check-ins')">
                                     Check-In
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -5257,501 +6203,7 @@
     </mat-accordion>
     <!-- next -->
     
-    <mat-accordion>
-        <mat-expansion-panel [expanded]='showdashboard && showdashbord'>
-            <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="handleScroll('dashboard', 'dashboard')">
-                    Dashboard
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="helpcontent">
-                <section>
-                    <span>The dashboard section lets the doctor manage and monitor the check-ins of a
-                        patient.
-                        Here
-                        a doctor can monitor the current check-ins <strong>(Today)</strong> and the
-                        future
-                        check-ins
-                        <strong>(Future).</strong> The patient's previous check-ins can be viewed in
-                        this
-                        section
-                        under the <strong>“History�?</strong> tab. To view the details, click on the
-                        patient's
-                        name.
-                        There are location and working hours to help the doctor monitor the details of
-                        check-ins
-                        in
-                        different windows.</span>
-                </section>
-                <ol class="ol-normal adjust-delay-num">
-                    <li><strong>Today ()</strong> - All the present day’s online and walk-in check-ins
-                        are
-                        listed
-                        here. The adjoined brackets display the number of check-ins.</li>
-                    <li><strong>Future()</strong> - All the check-ins for future dates are listed here.
-                        The
-                        adjoined
-                        brackets display the number of future check-ins.</li>
-                    <li><strong>History</strong> - All of the patient's previous check-ins until a day
-                        before
-                        are
-                        listed here. To view the details click on the “date of check-in�? or on the “name
-                        of the
-                        patient". Actions can also be changed from here.</li>
-                </ol>
-                <section>
-                    <h6>Location Selection</h6>
-                    <span>Here a doctor can select the exact location if multiple locations are
-                        available. The
-                        doctor
-                        can check the details of a particular check-in for a specific
-                        location.</span><br>
-                    <span><strong>Note: A doctor needs to select the location of service while he/she
-                            checks-in a
-                            “walk-in�? patient.</strong></span>
-                </section>
-                <section>
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                <mat-panel-title>
-                                    <span class="helpcontent">Check-Ins</span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <ul class="ul-normal">
-                                    <li>If the business has multiple locations, select the location and
-                                        the
-                                        working
-                                        hour from the dashboard.</li>
-                                    <li>Here the doctor can see a list of patients who have checked in
-                                        (Online
-                                        or
-                                        Walk-in ).</li>
-                                    <li>In some cases, a “cloud symbol�? is prefixed to a name, it means
-                                        that the
-                                        patient has checked in online. </li>
-                                    <li>To view the check-in details of a patient, doctor can click on
-                                        the name
-                                        of
-                                        the patient. Check-in history, communication history, and
-                                        history of
-                                        private notes are listed here. In addition to that, the user can
-                                        cancel
-                                        a
-                                        patient's check-in and inform this through <strong>Send
-                                            Message.</strong> A
-                                        doctor can add a private note for a patient using <strong>Add
-                                            private
-                                            note.</strong></li>
-                                    <li>For <strong>“Manual�?</strong> wait time calculation, the doctor
-                                        can edit
-                                        individual check-ins wait time from the check-in details.</li>
-                                    <li>Each of the patient's <strong>Name, Wait Time</strong> and
-                                        <strong>Service</strong> is displayed here.</li>
-                                    <li>The three dots menu in the right side of check-in has the
-                                        following
-                                        options:
-                                    </li>
-                                    <ol class="ol-normal">
-                                        <li><strong>Send Message :</strong> Instantly type and send a
-                                            message to
-                                            the
-                                            patient here. These messages can be seen in communication
-                                            history
-                                            anytime.</li>
-                                        <li><strong>Cancel check-in :</strong>
-                                            <ul class="ul-normal">
-                                                <li>To cancel a patient's check-in, click on
-                                                    <strong>�?Cancel
-                                                        Check-In�?</strong>.</li>
-                                                <li>patients are notified about the cancellation of
-                                                    Check-in
-                                                    through push message/email.</li>
-                                                <li>When a doctor clicks on <strong>“Cancel
-                                                        Check-In�?</strong> a
-                                                    pop-up window appears which shows the reasons for
-                                                    cancellation
-                                                    of the check-in. Use the checkboxes to select from
-                                                    the
-                                                    suggested
-                                                    reasons and then click <strong>“Save�?.</strong>
-                                                </li>
-                                                <li>The doctor can inform the patient about the
-                                                    cancellation.
-                                                    To do
-                                                    this, click on the <strong>Send Message</strong>
-                                                    button. A
-                                                    text
-                                                    box will appear with a default message for each
-                                                    reason,
-                                                    doctor
-                                                    can either send the default message or can edit and
-                                                    type a
-                                                    personalized message.</li>
-                                            </ul>
-                                        </li>
-                                        <li><strong>Add private note :</strong> In case the doctor wants
-                                            to keep
-                                            a
-                                            personal note about a particular patient, he/she can write
-                                            and add
-                                            a
-                                            note here. This note can be seen anytime the patient
-                                            checks-in
-                                            again
-                                            with the doctor under <strong>“Private Notes�?.</strong></li>
-                                        <li><strong>Change Status to Check-in :</strong> The option to
-                                            check-in
-                                            a
-                                            patient appears only when the patient's status is
-                                            <strong>“Arrived�?.</strong> The doctor can change the status
-                                            back to
-                                            <strong>“Check-in�?</strong> using this option. This can be
-                                            used in
-                                            the
-                                            following circumstances:
-                                            <ul class="ul-normal">
-                                                <li>When a patient gets cancelled for some reason and
-                                                    wanted to
-                                                    check-in again.</li>
-                                                <li>When a patient's check-in status has been mistakenly
-                                                    changed to
-                                                    <strong>Arrived</strong> status.</li>
-                                            </ul>
-                                        </li>
-                                    </ol>
-                                </ul>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                <mat-panel-title> <span class="helpcontent">Actions</span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <span>The following are the main actions the doctor can perform:</span>
-                                <ol class="ol-normal adjust-delay-num">
-                                    <li><strong>Arrived :</strong> This button is used when a patient
-                                        arrives
-                                        at
-                                        the premise of the business location to avail the services. When
-                                        a
-                                        doctor
-                                        clicks this button, an <strong>“Arrived�?</strong> label gets
-                                        adjoined to
-                                        the
-                                        name of the patient. In case of a walk-in or kiosk patient, the
-                                        <strong>“Arrived�?</strong> label is automatically adjoined as
-                                        the
-                                        patients
-                                        are present at the premises. Service can now be started.</li>
-                                    <li><strong>Start :</strong> Click on <strong>“Start�?</strong> when
-                                        the
-                                        service
-                                        is started. This will move the patient's entry to
-                                        <strong>“Started�?</strong> tab. This will lead to the activation
-                                        of the
-                                        other two buttons, namely, <strong>“Complete�?</strong> and
-                                        <strong>“Bill�?.</strong> Click on these buttons as and when
-                                        required.
-                                    </li>
-                                    <li><strong>Complete :</strong>Click on the
-                                        <strong>“Complete�?</strong> tab
-                                        after completion of the service. The check-in status of the
-                                        patient
-                                        changes
-                                        to complete. This will move the patient's entry to the
-                                        <strong>“Completed�?</strong> tab. The completed tab generates
-                                        two
-                                        actions,
-                                        namely <strong>“Bill�?</strong> & <strong>“Accept
-                                            Payment�?.</strong></li>
-                                    <li><strong>Cancel :</strong>If the service gets cancelled for some
-                                        reason,
-                                        click on the <strong>“Cancel�?</strong> tab. This will remove the
-                                        patient's
-                                        check-in entry from the list.</li>
-                                    <li><strong>Bill :</strong>After the completion of the service, a
-                                        bill gets
-                                        generated. Click on the <strong>“Bill�?</strong> tab to view the
-                                        receipt.
-                                        Here a doctor can add extra services or items in the bill. From
-                                        the
-                                        three
-                                        dots menu, a doctor can also <strong>“Apply order discount�?,
-                                            “Apply
-                                            coupon�?
-                                            & “Apply Jaldee coupon�?</strong> to the bill. The bill can
-                                        be
-                                        settled
-                                        either by <strong></strong>JaldeePay or <strong>Pay by Cash or
-                                            Others.</strong></li>
-                                    <li><strong>Accept Payment :</strong>Click on <strong>“Accept
-                                            Payment�?</strong>“Accept Payment�? tab to receive the payment
-                                        for the
-                                        services. This opens the generated Bill page. Once the patient
-                                        pays the
-                                        bill, a doctor can settle the bill by clicking on the
-                                        <strong>“Settle�?</strong> tab.</li>
-                                </ol>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                <mat-panel-title>
-                                    <span class="helpcontent">Started</span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <ul class="ul-normal">
-                                    <li>Under this tab, a doctor can view the list of patients who have
-                                        already
-                                        started availing the service. The check-in tab will no longer
-                                        contain
-                                        these
-                                        patients entry.</li>
-                                    <li>Name, Wait Time and Service will be the same as that in the
-                                        check-ins
-                                        tab.
-                                    </li>
-                                    <li>Two actions are available here:</li>
-                                </ul>
-                                <ol class="ol-normal">
-                                    <li><strong>Complete :</strong> Click on the
-                                        <strong>“Complete�?</strong>
-                                        button
-                                        after the completion of the service. This will move the
-                                        patient's entry
-                                        from <strong>Started tab</strong> to the <strong>Completed
-                                            tab.</strong>
-                                        In
-                                        case the <strong>“End of Service Notification�?</strong> button
-                                        is
-                                        enabled in
-                                        the <strong>“Add Service�?</strong>, a push message or email will
-                                        be sent
-                                        to
-                                        the patient, thus informing them about the service completion.
-                                    </li>
-                                    <li><strong>Bill :</strong> A <strong>“Bill�?</strong> button appears
-                                        when a
-                                        service is started. This opens the bill generated for the
-                                        service. Click
-                                        on
-                                        <strong>“Add Service/Item�?</strong> in order to add more
-                                        services or
-                                        items
-                                        to the bill before proceeding with the payment. The three dots
-                                        menu near
-                                        this button has the following options:
-                                        <ul class="ul-normal">
-                                            <li><strong>Apply Jaldee Coupon :</strong> These coupons
-                                                have been
-                                                provided by Jaldee.</li>
-                                            <li><strong>Apply Coupon :</strong> These are coupons
-                                                generated by
-                                                doctor.</li>
-                                            <li><strong>Apply Order Discount :</strong> These discounts
-                                                are
-                                                offered
-                                                by the doctor.</li>
-                                            <span>*The option to Add Private Note and patient Note is
-                                                available
-                                                here.
-                                            </span>
-                                            <li>These coupons are applied to the total bill amount.</li>
-                                            <li>Discounts can either be applied to the Gross amount or
-                                                to each
-                                                item.
-                                            </li>
-                                            <li>Three dots menu near service/item in the bill has the
-                                                following
-                                                actions:
-                                                <ol class="ol-normal">
-                                                    <li><strong>Change Quantity :</strong> Here a doctor
-                                                        can
-                                                        change
-                                                        the quantity of the item or service already
-                                                        added to the
-                                                        bill.</li>
-                                                    <li><strong>Apply Discount :</strong> Here a doctor
-                                                        can
-                                                        apply a
-                                                        discount to the bill.</li>
-                                                    <li><strong>Remove Service/Item :</strong> Click
-                                                        here to
-                                                        remove
-                                                        a service or item from the bill.</li>
-                                                </ol>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                                <ul class="ul-normal">
-                                    <li>Additionally the option to <strong>“Add Private Note�?, “Send
-                                            Message�?,
-                                            and
-                                            “Change Status to Check-in�?</strong> is also available.
-                                        <ol class="ol-normal">
-                                            <li><strong>Add Private Note :</strong> Write a note about a
-                                                particular
-                                                patient here.</li>
-                                            <li><strong>Send Message :</strong> Write text to the
-                                                patient here
-                                                and
-                                                send it to the patient. All of the sent messages can be
-                                                seen in
-                                                communication history anytime.</li>
-                                            <li><strong>Change Status to check-in :</strong>The option
-                                                to
-                                                check-in a
-                                                patient appears only if the patients status is marked to
-                                                <strong>“Arrived�?.</strong> A doctor can change the
-                                                status back
-                                                to
-                                                <strong>“Check-in�?</strong> using this option. This can
-                                                be used
-                                                in
-                                                the following circumstances:
-                                                <ul>
-                                                    <li>When a patient gets cancelled for some reason
-                                                        and
-                                                        wanted to
-                                                        check-in again.</li>
-                                                    <li>When a patient's check-in status has been
-                                                        mistakenly
-                                                        changed to <strong>“Arrived�?</strong> status.
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ol>
-                                    </li>
-                                    <li><strong>Payment Status:</strong> This shows the payment status
-                                        (not
-                                        paid,
-                                        partially paid, or fully paid) of the patient.</li>
-                                    <li><strong>patient Note:</strong> When a patient adds any note
-                                        while
-                                        checking-in, it is displayed here.</li>
-                                </ul>
-
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                <mat-panel-title> <span class="helpcontent">Completed</span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <ul class="ul-normal">
-                                    <li>Once a service is done click on�?Complete�? button, the patient's
-                                        entry
-                                        will
-                                        move under the <strong>“Completed�?</strong> tab.</li>
-                                    <li>The doctor is equipped with the following actions in this
-                                        section:
-                                        <ol class="ol-normal">
-                                            <li><strong>Accept Payment :</strong> Click on this button
-                                                to view
-                                                the
-                                                saved bill. A doctor has the option to either continue
-                                                with the
-                                                payment procedure or to edit the bill by adding new
-                                                services or
-                                                items to the bill. The bill has the following options:
-                                                <ul class="normal-abc">
-                                                    <li><strong>Settle Bill :</strong> Click on this
-                                                        button to
-                                                        settle the bill. The due amount in the bill is
-                                                        also
-                                                        visible
-                                                        in the patient dashboard.</li>
-                                                    <li><strong>Jaldee Pay :</strong> This enables the
-                                                        patient
-                                                        to
-                                                        pay online by generating the bill to the patient
-                                                        dashboard
-                                                        also.</li>
-                                                    <li><strong>Pay by cash or others :</strong> This
-                                                        enables
-                                                        the
-                                                        patient to complete the bill settlement either
-                                                        in cash
-                                                        or
-                                                        by other means.</li>
-                                                </ul>
-                                            </li>
-                                        </ol>
-                                    </li>
-                                    <li>Additionally the options <strong>“Add Private Note�?</strong> and
-                                        <strong>“Send Message�?</strong> are also available.
-                                        <ol class="ol-normal">
-                                            <li><strong>Add Private Note :</strong> Write a note about a
-                                                particular
-                                                patient here.</li>
-                                            <li><strong>Send Message :</strong> Write text to the
-                                                patient here
-                                                and
-                                                send it to the patient. All of the sent messages can be
-                                                seen in
-                                                communication history anytime.</li>
-                                        </ol>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                <mat-panel-title>
-                                    <span class="helpcontent">Cancelled</span>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <ul class="ul-normal">
-                                    <li>Here the doctor can view the list of all cancelled patient
-                                        check-ins.
-                                    </li>
-                                    <li>The three dot menu available has the following options:
-                                        <ul class="normal-abc">
-                                            <li><strong>Add Private Note :</strong> Write a note about a
-                                                particular
-                                                patient here.</li>
-                                            <li><strong>Send Message :</strong> Write text to the
-                                                patient here
-                                                and
-                                                send it to the patient. All of the sent messages can be
-                                                seen in
-                                                communication history anytime.</li>
-                                            <li><strong>Change Status to check-in :</strong> The option
-                                                to
-                                                check-in
-                                                a patient appears only if the patient's status is marked
-                                                to
-                                                <strong>“Arrived�?.</strong> A doctor can change the
-                                                status back
-                                                to
-                                                <strong>“Check-in�?</strong> using this option.</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </section>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <!-- next -->
+    
 
     <!-- next -->
     
@@ -5885,7 +6337,7 @@
 
     </div>
     </div>
-    </div>
+    </div>  
     </div>
 </section>
 

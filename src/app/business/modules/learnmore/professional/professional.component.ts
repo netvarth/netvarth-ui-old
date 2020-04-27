@@ -96,6 +96,8 @@ export class ProfessionalCareComponent implements OnInit {
   showvideocallmode = false;
   domain;
   show = 'false';
+  showdbappointments = false;
+  showcheckin = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -335,12 +337,21 @@ export class ProfessionalCareComponent implements OnInit {
         this.showadwords = true;
       }
     }
-    if (parentContent === 'dashboard') {
+    if (parentContent === 'dashboard-home') {
       this.showdashboard = true;
-      if (childContent === 'dashboard') {
+      if (childContent === 'dashboard-home') {
         this.showdashbord = true;
       }
-    }
+     }
+    
+     if (parentContent === 'appointments' && childContent === 'appointments') {
+      this.showdbappointments = true;
+   }
+    
+   if (parentContent === 'check-ins' && childContent === 'check-ins') {
+    this.showcheckin = true;
+  }  
+
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }

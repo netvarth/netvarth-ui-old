@@ -399,6 +399,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.breadcrumb_moreoptions = {'show_learnmore': true, 'scrollKey': 'check-ins',
+    'actions': [ { 'title': 'Help', 'type': 'learnmore' }]
+    };
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
     this.getQs().then(
@@ -1687,7 +1690,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   learnmore_clicked(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/dashboard']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/check-ins']);
     }
   }
   setSystemDate() {
@@ -1702,7 +1705,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (action === 'adjustdelay') {
       this.showAdjustDelay();
     } else if (action === 'learnmore') {
-      this.learnmore_clicked(action);
+      this.routerobj.navigate(['/provider/' + this.domain + '/check-ins']);
+
     }
   }
   isQueueSelected(qId) {
