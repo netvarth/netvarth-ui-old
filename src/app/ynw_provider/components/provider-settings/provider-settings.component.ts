@@ -124,8 +124,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   jaldeeintegration_statusstr: string;
   createappointment_status: any;
   createappointment_statusstr: string;
-  Donations_status: any;
-  Donations_statusstr: string;
+  donations_status: any;
+  donations_statusstr: string;
   virtualCallingMode_status: any;
   virtualCallingMode_statusstr: string;
   constructor(private provider_services: ProviderServices,
@@ -189,13 +189,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getQueuesCount();
     this.getServiceCount();
     this.getDepartmentsCount();
-    this.getcauseCount();
+    this.getCauseCount();
     this.getSearchstatus();
     this.getWaitlistMgr();
     this.getpaymentDetails();
     this.getDiscounts();
     this.getCoupons();
-    this.getitems();
+    this.getItems();
     this.getPOSSettings();
     this.getGlobalSettingsStatus();
     this.getJaldeeIntegrationSettings();
@@ -245,23 +245,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       );
   }
-  // handle_jaldeeIntegration(event) {
-  //   const is_check = (event.checked) ? 'Enable' : 'Disable';
-  //   const data = {
-  //     'jaldeeIntegration': event.checked
-  //   };
-  //   this.provider_services.setJaldeeIntegration(data)
-  //     .subscribe(
-  //       () => {
-  //         this.shared_functions.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-  //         this.getJaldeeIntegrationSettings();
-  //       },
-  //       error => {
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //         this.getJaldeeIntegrationSettings();
-  //       }
-  //     );
-  // }
   handle_jaldeeOnlinePresence(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     const data = {
@@ -398,8 +381,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
         this.createappointment_status = data.appointment;
         this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
-        this.Donations_status = data.donation;
-        this.Donations_statusstr = (this.Donations_status) ? 'On' : 'Off';
+        this.donations_status = data.donationFundRaising;
+        this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
         this.virtualCallingMode_status = data.virtualService;
         this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
       });
@@ -695,15 +678,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           }
         });
   }
-  getcauseCount() {
+  getCauseCount() {
     this.provider_services.getcauseCount()
     .subscribe(
       data => {
         this.cause_count = data;
       });
-    
   }
-  getitems() {
+  getItems() {
     this.provider_services.getProviderItems()
       .subscribe(data => {
         this.item_list = data;

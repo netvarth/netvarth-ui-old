@@ -8,118 +8,156 @@
                 <div class="row">
                     <div class="copy one col-xs-12 col-sm-12 no-padding">
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 no-padding">
+                            <div class="card p0">
+                                <div class="pubs card w-dta bprof">
+                                    <div class="ctrl">
+                                        <div class="ct-l">
+                                            <h2>{{public_search_cap}}
+                                            </h2>
+                                            <span class="status">{{current_status_cap}} -
+                                                <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
+                                                <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
+                                            </span>
+                                        </div>
+                                        <div class="ct-r ml-auto">
+                                            <button class="cs-btn bt3 off" *ngIf="normal_search_active"
+                                                (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
+                                            <button class="cs-btn bt3 on" *ngIf="!normal_search_active"
+                                                (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
+                                        </div>
+                                    </div>
+                                    <p class="form-level-settings" *ngIf="!normal_search_active">
+                                        {{frm_public_search_cap}}{{frm_public_searchh_cap}}<a class="learnmore-pointer"
+                                            id="customer-help"
+                                            (click)="learnmore_clicked('public-search', $event)">Learn
+                                            More</a></p>
+                                    <p class="form-level-settings" *ngIf="normal_search_active">
+                                        {{frm_public_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
+                                            (click)="learnmore_clicked('public-search', $event)">Learn
+                                            More</a></p>
+                                </div>
+                            </div>
                             <div class="card p0 w-dta active">
                                 <mat-accordion>
                                     <!-- <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100"> -->
-                                            <div class="block-level userprofileheader">
-                                                {{profile_summary_cap}} <i
-                                                    *ngIf="reqFields.name "
-                                                    class="req-flds-cap">*required fields missing</i>
-                                                <p class="form-level-settings">{{frm_profile_name_cap}}<a
-                                                        class="learnmore-pointer" id="customer-help"
-                                                        (click)="learnmore_clicked('basic-information', $event)">Learn
-                                                        More</a></p>
-                                            </div>
-                                        <!-- </mat-expansion-panel-header> -->
-                                        <div class="cd-t" *ngIf="!showProfile">
-                                            <div class="warning" *ngIf="normal_basicinfo_show==1">
-                                                <app-innerloading-spinner spinnerParams="loadingParams">
-                                                </app-innerloading-spinner>
-                                            </div>
-                                            <div class="basic-i" *ngIf="normal_basicinfo_show==2">
-                                                <div class="warning">
-                                                    <i data-icon="m"></i>
-                                                    <p><span>{{have_not_add_cap}}<b>{{name_cap}} &
-                                                                {{description_cap}}.</b>
-                                                        </span> </p>
-                                                    <span class="cs-btn bt3"
-                                                        (click)="showBPrimary()">{{add_it_cap}}</span>
-                                                    <p class="smlft">* {{to_turn_search}}</p>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="normal_basicinfo_show==3">
-                                                <div class="basic-i">
-                                                    <span class="editbt" (click)="showBPrimary()"></span>
-                                                     
-                                                           <div class="bi-l" *ngIf="blogo">
-                                                                <div class="pro-pic" [class.yes]="profimg_exists">
-                                                                    <div class="pro-pic-img"><img [src]="showimg()" alt=""
-                                                                            *ngIf="blogo[0] && blogo[0].url"></div>
-                                                                    <input #logofile type="file" accept="image/*"
-                                                                        style="display:none;"
-                                                                        (change)="imageSelect(logofile,$event)">
-                                                                    <div class="add"><span
-                                                                            (click)="logofile.click()">{{add_cap}} <br />
-                                                                            {{profile_pic_cap}}</span></div>
-                                                                    <div class="change">
-                                                                        <span class="change-pic"
-                                                                            (click)="logofile.click()">{{change_cap}}
-                                                                            <br /> {{pic_cap}}</span>
-                                                                        <span class="del-pic"
-                                                                            (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                                                                                                                                               
-                                                              <div class="bi-r">
-                                                                <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
-                                                                <p class="profile-des-p"
-                                                                        [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc
-                                                                        | capitalizeFirst}}
-                                                                 </p>
-                                                              </div>
-                                                </div>
+                                    <div class="block-level userprofileheader">
+                                        {{profile_summary_cap}} <i *ngIf="reqFields.name "
+                                            class="req-flds-cap">*required fields missing</i>
+                                        <p class="form-level-settings">{{frm_profile_name_cap}}<a
+                                                class="learnmore-pointer" id="customer-help"
+                                                (click)="learnmore_clicked('basic-information', $event)">Learn
+                                                More</a></p>
+                                    </div>
+                                    <!-- </mat-expansion-panel-header> -->
+                                    <div class="cd-t" *ngIf="!showProfile">
+                                        <div class="warning" *ngIf="normal_basicinfo_show==1">
+                                            <app-innerloading-spinner spinnerParams="loadingParams">
+                                            </app-innerloading-spinner>
+                                        </div>
+                                        <div class="basic-i" *ngIf="normal_basicinfo_show==2">
+                                            <div class="warning">
+                                                <i data-icon="m"></i>
+                                                <p><span>{{have_not_add_cap}}<b>{{name_cap}} &
+                                                            {{description_cap}}.</b>
+                                                    </span> </p>
+                                                <span class="cs-btn bt3" (click)="showBPrimary()">{{add_it_cap}}</span>
+                                                <p class="smlft">* {{to_turn_search}}</p>
                                             </div>
                                         </div>
-                                       
+                                        <div *ngIf="normal_basicinfo_show==3">
+                                            <div class="basic-i">
+                                                <span class="editbt" (click)="showBPrimary()"></span>
 
-                                        <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
-                                            <h1 class="mat-dialog-title"></h1>
-                                            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
-                                            
-                                            <div class="form-group">
-                                                <mat-form-field>
-                                                    <input  matInput class="form-control" formControlName="bname" autocomplete="off"
-                                                        placeholder="{{business_name_cap}}">
-                                                </mat-form-field>
-                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')" errorMsg="Please enter the business name">
-                                                </app-field-error-display>
+                                                <div class="bi-l" *ngIf="blogo">
+                                                    <div class="pro-pic" [class.yes]="profimg_exists">
+                                                        <div class="pro-pic-img"><img [src]="showimg()" alt=""
+                                                                *ngIf="blogo[0] && blogo[0].url"></div>
+                                                        <input #logofile type="file" accept="image/*"
+                                                            style="display:none;"
+                                                            (change)="imageSelect(logofile,$event)">
+                                                        <div class="add"><span (click)="logofile.click()">{{add_cap}}
+                                                                <br />
+                                                                {{profile_pic_cap}}</span></div>
+                                                        <div class="change">
+                                                            <span class="change-pic"
+                                                                (click)="logofile.click()">{{change_cap}}
+                                                                <br /> {{pic_cap}}</span>
+                                                            <span class="del-pic"
+                                                                (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bi-r">
+                                                    <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
+                                                    <p class="profile-des-p"
+                                                        [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc
+                                                                        | capitalizeFirst}}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            
-                                            <div class="form-group">
-                                                <mat-form-field>
-                                                    <textarea  maxlength="2000" matInput class="form-control"  formControlName="bdesc" row="4" placeholder="A short description about your service (Max 2000 characters)"></textarea>
-                                                    
-                                                </mat-form-field>
-                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
-                                                </app-field-error-display>
-                                            </div>
-                                           
-                                            
-                                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                            <button type="button"  class="cs-btn bt2"(click)="cancel()"[disabled]="disableButton">{{cancel_btn_cap}}</button>
-                                            <button type="submit" style="margin-left: 15px;" [disabled]="!amForm.valid && disableButton" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
-                                                            
-                                            </div>
-                                           
-                                            </form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-                                            <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display> -->
-                            
-                                            
                                         </div>
+                                    </div>
+
+
+                                    <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
+                                        <h1 class="mat-dialog-title"></h1>
+                                        <form [formGroup]="amForm" novalidate
+                                            (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                                            (keyup)="resetApiErrors()" class="ynw-common-form">
+
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <input matInput class="form-control" formControlName="bname"
+                                                        autocomplete="off" placeholder="{{business_name_cap}}">
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(amForm,'bname')"
+                                                    errorMsg="Please enter the business name">
+                                                </app-field-error-display>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <textarea maxlength="2000" matInput class="form-control"
+                                                        formControlName="bdesc" row="4"
+                                                        placeholder="A short description about your service (Max 2000 characters)"></textarea>
+
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(amForm,'bdesc')"
+                                                    errorMsg="Please enter the profile summary">
+                                                </app-field-error-display>
+                                            </div>
+
+
+                                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                                <button type="button" class="cs-btn bt2" (click)="cancel()"
+                                                    [disabled]="disableButton">{{cancel_btn_cap}}</button>
+                                                <button type="submit" style="margin-left: 15px;"
+                                                    [disabled]="!amForm.valid && disableButton" class="cs-btn bt1"
+                                                    mat-button>{{save_btn_cap}}</button>
+
+                                            </div>
+
+                                        </form>
+                                        <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+                                            <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display> -->
+
+
+                                    </div>
 
                                     <!-- </mat-expansion-panel> -->
                                 </mat-accordion>
                             </div>
                         </div>
-                    </div>              
-               </div>
-            </div> 
-            
-            
-            <div class="row"  *ngIf="bProfile && bProfile.businessName && !showProfile">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
                 <div class="card p0">
                     <span class="b-link" (click)="specializations()">
                         <h2>Specializations</h2>
@@ -151,9 +189,9 @@
                     </span>
                 </div>
             </div>
-            
-           
-           
+
+
+
         </div>
         <div class="clearfix"></div>
     </div>

@@ -157,17 +157,14 @@ export class CustomerSearchComponent implements OnInit {
         base64: [],
         caption: []
     };
-    breadcrumbs_init = [
-        {
-            title: 'Check-ins',
-            url: 'provider/check-ins'
-        },
-        {
-            title: 'Customers',
-            url: 'provider/customers'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
+    // breadcrumbs_init = [
+    //     // {
+    //     //     title: 'Check-ins',
+    //     //     url: 'provider/check-ins'
+    //     // },
+    // ];
+    breadcrumbs;
+    // = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
     searchForm: FormGroup;
     selectedMode: any = 'phone';
@@ -180,6 +177,7 @@ export class CustomerSearchComponent implements OnInit {
     foundCustomer = false;
     searchClicked = false;
     appt = false;
+    phoneNo: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -189,14 +187,17 @@ export class CustomerSearchComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
-            if (qparams.appt) {
-                this.appt = qparams.appt;
+            if (qparams.source) {
+                this.qParams['source'] = qparams.source;
             }
-            //     this.customer_data.firstName = qparams.firstName;
-            //     this.customer_data.lastName = qparams.lastName;
-            //     this.customer_data.email = qparams.email;
-            //     this.customer_data.dob = qparams.dob;
-            //     console.log(this.customer_data.firstName);
+            this.phoneNo = qparams.phoneNo;
+            // if (qparams.appt) {
+
+            // }
+            // this.qParams = qparams;
+            // if ((qparams.appt && !qparams.source) || (qparams.appt && qparams.source && qparams.source !== 'clist')) {
+            //     this.appt = qparams.appt;
+            // }
         });
     }
     ngOnInit() {
@@ -205,25 +206,36 @@ export class CustomerSearchComponent implements OnInit {
         this.api_loading = false;
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.get_token_cap = Messages.GET_TOKEN;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: 'Find'
-        });
+        const breadcrumbs = [
+            {
+                title: this.sharedFunctionobj.firstToUpper(this.customer_label) + 's',
+                url: 'provider/customers'
+            },
+            {
+                title: 'Find'
+            }
+        ];
+        // this.breadcrumbs_init.map((e) => {
+        //     breadcrumbs.push(e);
+        // });
+        // breadcrumbs.push(
+        // );
         this.breadcrumbs = breadcrumbs;
     }
     createForm() {
         this.searchForm = this.fb.group({
             search_input: ['', Validators.compose([Validators.required])]
         });
+        if (this.phoneNo) {
+            this.searchForm.setValue({ search_input: this.phoneNo });
+            this.searchCustomer(this.searchForm);
+        }
     }
     createNew() {
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/create'], navigationExtras);
+        this.router.navigate(['/provider/customers/add'], navigationExtras);
     }
 
     checkinClicked() {
@@ -247,7 +259,6 @@ export class CustomerSearchComponent implements OnInit {
     }
 
     searchCustomer(form_data, mod?) {
-        this.qParams = {};
         let mode = 'id';
         if (mod) {
             mode = mod;
@@ -271,11 +282,11 @@ export class CustomerSearchComponent implements OnInit {
                 mode = 'id';
             }
         }
-        if (this.appt) {
-            this.qParams['source'] = 'appointment';
-        } else {
-            this.qParams['source'] = 'checkin';
-        }
+        // if (this.appt) {
+        //     this.qParams['source'] = 'appointment';
+        // } else {
+        //     this.qParams['source'] = 'checkin';
+        // }
         switch (mode) {
             case 'phone':
                 post_data = {

@@ -41,6 +41,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
         }
     ];
     addonDescription = '';
+    corpSettings: any;
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
@@ -50,17 +51,24 @@ export class AddonsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.getLicenseCorpSettings();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.account_type = user.accountType;
         this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
     }
+    getLicenseCorpSettings() {
+        this.provider_servicesobj.getLicenseCorpSettings().subscribe(
+            (data: any) => {
+                this.corpSettings = data;
+            }
+        );
+    }
     getLicenseDetails(call_type = 'init') {
         this.provider_servicesobj.getLicenseDetails()
             .subscribe(data => {
                 this.currentlicense_details = data;
-                console.log(this.currentlicense_details.addons)
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
                 const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
@@ -95,14 +103,15 @@ export class AddonsComponent implements OnInit, OnDestroy {
     }
 
     addondetails(addonnss) {
-
         this.addonDescription = addonnss.description;
-        (this.showaddondetails); this.showaddondetails = true;
+        // (this.showaddondetails);
+        this.showaddondetails = true;
         // (this.showaddondetails) ? this.showaddondetails = false : this.showaddondetails = true;
 
     }
     showadd_addons() {
-        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+        // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+        if (this.corpSettings && this.corpSettings.isCentralised) {
             this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {

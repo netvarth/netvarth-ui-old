@@ -8,7 +8,7 @@ import { SearchProviderCustomerComponent } from '../../../../ynw_provider/compon
 import { MatDialog } from '@angular/material';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -234,37 +234,13 @@ export class CustomersListComponent implements OnInit {
             this.doSearch();
         }
     }
-    searchCustomer(source) {
-        this.router.navigate(['provider', 'customers', 'find']);
-
-    //     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
-    //         width: '50%',
-    //         panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-    //         disableClose: true,
-    //         data: {
-    //             source: source,
-    //             calc_mode: this.calculationmode,
-    //             showToken: this.showToken
-    //         }
-    //     });
-    //     this.srchcustdialogRef.afterClosed().subscribe(result => {
-    //         if (result && result.message) {
-    //             this.createCustomer(result.data);
-    //         }
-    //     });
-    // }
-    // createCustomer() {
-        // this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
-        //     width: '50%',
-        //     panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
-        //     disableClose: true,
-        //     data: {
-        //         search_data: search_data
-        //     }
-        // });
-        // this.crtCustdialogRef.afterClosed().subscribe(result => {
-
-        // });
+    searchCustomer() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                source: 'clist'
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
     }
     showFilterSidebar() {
         this.filter_sidebar = true;
@@ -283,14 +259,12 @@ export class CustomersListComponent implements OnInit {
             this.customerselection++;
         }
         if (this.customerselection === 1) {
-            this.customers[this.customerSelected.indexOf(true)];
+            // this.customers[this.customerSelected.indexOf(true)];
         }
         for (let i = 0; i < this.customerSelected.length; i++) {
             if (this.customerSelected[i]) {
                 if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
                     this.selectedcustomersformsg.push(this.customers[i]);
-                    
-                    
                 }
             }
         }
@@ -298,10 +272,10 @@ export class CustomersListComponent implements OnInit {
     CustomersInboxMessage() {
         let customerlist = [];
         customerlist = this.selectedcustomersformsg;
-         this.provider_shared_functions.ConsumerInboxMessage(customerlist)
+        this.provider_shared_functions.ConsumerInboxMessage(customerlist)
             .then(
                 () => { },
                 () => { }
-             );
+            );
     }
 }

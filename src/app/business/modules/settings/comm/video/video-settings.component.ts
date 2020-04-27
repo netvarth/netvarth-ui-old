@@ -36,22 +36,13 @@ export class VideoSettingsComponent implements OnInit {
     };
     breadcrumb_moreoptions:any = [];
     breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Comm',
-            url: '/provider/settings/comm'
-        },
-        {
-            title: 'Video Call',
-        }
+        { title: 'Settings', url: '/provider/settings' },
+        { title: 'Comm', url: '/provider/settings/comm' },
+        { title: 'Video Call' }
     ];
     originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return 0;
     }
-   
     constructor(private _formBuilder: FormBuilder,
         private router: Router,
         public shared_functions: SharedFunctions,
@@ -97,41 +88,15 @@ export class VideoSettingsComponent implements OnInit {
                 this.api_loading = false;
             });
     }
-    // addVideocallMode() {
-    // const virtualCallingModes = {
-    //     'virtualCallingModes': [
-    //         {
-    //             'callingMode': 'SKYPE',
-    //             'value': this.skypeMode,
-    //         },
-    //         {
-    //             'callingMode': 'WHATSAPP',
-    //             'value': this.whatsappMode,
-    //         },
-    //         {
-    //             'callingMode': 'HANGOUTS',
-    //             'value': this.hangoutMode,
-    //         },
-    //         {
-    //             'callingMode': 'BOTIM',
-    //             'value': this.botimMode,
-    //         },
-    //         {
-    //             'callingMode': 'IMO',
-    //             'value': this.imoMode,
-    //         }
-    //   ,
-    //   {
-    //     'callingMode': 'JALDEE_INTEGRATED_VIDEO',
-    //     'value': this.jaldeeMode,
-    //   },
-    //     ]
-    // };
-    // }
     updateVideoSettings(resultMode, callingMode) {
         const virtualCallingModes = [];
         console.log(resultMode);
         console.log(callingMode);
+
+        // Object.keys(this.videoModes).forEach(key => {
+
+        // });
+        let found = false;
         this.virtualCallModesList.forEach(modes => {
             if (modes.callingMode === callingMode) {
                 let status = 'INACTIVE';
@@ -144,11 +109,25 @@ export class VideoSettingsComponent implements OnInit {
                     'status': status
                 };
                 virtualCallingModes.push(mode);
+                found = true;
             } else {
                 virtualCallingModes.push(modes);
             }
         });
 
+        if (!found) {
+            let status = 'INACTIVE';
+            if (resultMode.value.enabled) {
+                status = 'ACTIVE';
+            }
+            const mode = {
+                'callingMode': callingMode,
+                'value': resultMode['value'].actualValue,
+                'status': status
+            };
+            virtualCallingModes.push(mode);
+        }
+console.log(virtualCallingModes);
         this.provider_services.addVirtualCallingModes(virtualCallingModes).subscribe(
             (data) => {
                 this.shared_functions.openSnackBar('Virtual calling modes added successfully', { 'panelclass': 'snackbarerror' });
@@ -159,22 +138,4 @@ export class VideoSettingsComponent implements OnInit {
             }
         );
     }
-    // skypeSelected(event) {
-    //     this.skypeselected = event.checked;
-    // }
-    // whatsappSelected(event) {
-    //     this.whatsappselected = event.checked;
-    // }
-    // hangoutSelected(event) {
-    //     this.hangoutselected = event.checked;
-    // }
-    // botimSelected(event) {
-    //     this.botimselected = event.checked;
-    // }
-    // imoSelected(event) {
-    //     this.imoselected = event.checked;
-    // }
-    // jaldeeSelected(event) {
-    //     this.jaldeeselected = event.checked;
-    // }
 }

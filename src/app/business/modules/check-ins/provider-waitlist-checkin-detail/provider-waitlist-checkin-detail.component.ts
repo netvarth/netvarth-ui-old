@@ -172,9 +172,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
-    getWaitlistNotes(uuid) {
-      this.provider_services.getProviderWaitlistNotesnew(uuid)
-    
+  getWaitlistNotes(uuid) {
+    this.provider_services.getProviderWaitlistNotesnew(uuid)
       .subscribe(
         data => {
           this.waitlist_notes = data;
@@ -247,7 +246,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       if (result === 'reloadlist') {
         // this.getWaitlistNotes();
         this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-        
+
       }
     });
   }
@@ -266,7 +265,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   addConsumerInboxMessage() {
-	const waitlist = [];
+    const waitlist = [];
     waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.ynwUuid || null;
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)

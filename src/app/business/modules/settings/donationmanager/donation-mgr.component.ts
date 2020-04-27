@@ -20,8 +20,8 @@ export class DonationMgrComponent implements OnInit {
   ];
   domain :any;
   breadcrumbs = this.breadcrumbs_init;
-  Donations_statusstr: string;
-  Donations_status: any;
+  donations_statusstr: string;
+  donations_status: any;
   cause_count: any = 0;
 
   constructor(private router: Router,
@@ -64,8 +64,8 @@ export class DonationMgrComponent implements OnInit {
   getDonationStatus() {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
-        this.Donations_status = data.donation;
-        this.Donations_statusstr = (this.Donations_status) ? 'On' : 'Off';
+        this.donations_status = data.donationFundRaising;
+        this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
       });
   }
 

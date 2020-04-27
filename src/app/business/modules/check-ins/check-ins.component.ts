@@ -8,7 +8,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
+import { Router, RoutesRecognized, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -1642,8 +1642,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkinClicked() {
     this.router.navigate(['provider', 'check-ins', 'add']);
   }
-  searchCustomer(source, appttime) {
-    this.router.navigate(['provider', 'customers', 'find']);
+  searchCustomer(source) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        source : source
+      }
+  };
+    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
   }
   showAdjustDelay() {
     if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {

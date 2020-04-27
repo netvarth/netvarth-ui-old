@@ -65,6 +65,9 @@ export class ProviderServices {
       const path = 'provider/items/' + data.itemId + '/image';
       return this.servicemeta.httpDelete(path);
    }
+   getLicenseCorpSettings() {
+      return this.servicemeta.httpGet('provider/corp/settings');
+   }
    getLicenseDetails() {
       return this.servicemeta.httpGet('provider/license');
    }
@@ -974,6 +977,12 @@ export class ProviderServices {
    getUserBussinessProfile(id) {
       const url = 'provider/user/providerBprofile/' + id;
       return this.servicemeta.httpGet(url);
+   }
+   getUserPublicSearch(userId) {
+      return this.servicemeta.httpGet('provider/user/search/' + userId);
+   }
+   updateUserPublicSearch(userId, status) {
+      return this.servicemeta.httpPut('provider/user/search/' + status + '/' + userId);
    }
    patchUserbProfile(data, id) {
       return this.servicemeta.httpPatch('provider/user/providerBprofile/' + id, data);

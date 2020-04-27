@@ -66,8 +66,8 @@ export class AdjustqueueDelayComponent implements OnInit {
   userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
   selected_user;
   constructor(
-   // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
-   // @Inject(MAT_DIALOG_DATA) public data: any,
+    // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -79,60 +79,60 @@ export class AdjustqueueDelayComponent implements OnInit {
   ngOnInit() {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.breadcrumbs = [
-        {
-            title: 'Check-ins',
-            url: 'provider/check-ins'
-        },
-        {
-            title: 'Adjust delay'
-        }
+      {
+        title: 'Check-ins',
+        url: 'provider/check-ins'
+      },
+      {
+        title: 'Adjust delay'
+      }
     ];
     this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
-   // this.arrived_cnt = this.data.arrived_count;
-   // this.checkedin_cnt = this.data.checkedin_count;
-   // this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;
-    //this.queues = this.data.queues;
-   // this.queue_name = this.data.queue_name;
-   // this.instantQueue = this.data.instant_queue;
-   // this.queue_schedule = this.data.queue_schedule;
-   // if (!this.data.queues || !this.data.queue_id) {
-   //   this.closePopup('error');
-   // }
-   const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
-   this.sel_loc = loc.id;
-   this.getBussinessProfileApi()
-   .then(
-       (data: any) => {
-           this.account_id = data.id;
-          
-           this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
-               (services: any) => {
-                   this.servicesjson = services;
-                   this.serviceslist = services;
-                   // this.sel_ser_det = [];
-                   if (this.servicesjson.length > 0) {
-                       //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                       //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                       //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                       this.initDepartments(this.account_id).then(
-                           () => {
-                               this.handleDeptSelction(this.selected_dept);
-                           },
-                           () => {
-                               this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                           }
-                       );
-                   }
-                  
-               });
-       }
-   );
+    // this.arrived_cnt = this.data.arrived_count;
+    // this.checkedin_cnt = this.data.checkedin_count;
+    // this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;
+    // this.queues = this.data.queues;
+    // this.queue_name = this.data.queue_name;
+    // this.instantQueue = this.data.instant_queue;
+    // this.queue_schedule = this.data.queue_schedule;
+    // if (!this.data.queues || !this.data.queue_id) {
+    //   this.closePopup('error');
+    // }
+    const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
+    this.sel_loc = loc.id;
+    this.getBussinessProfileApi()
+      .then(
+        (data: any) => {
+          this.account_id = data.id;
+
+          this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
+            (services: any) => {
+              this.servicesjson = services;
+              this.serviceslist = services;
+              // this.sel_ser_det = [];
+              if (this.servicesjson.length > 0) {
+                //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                this.initDepartments(this.account_id).then(
+                  () => {
+                    this.handleDeptSelction(this.selected_dept);
+                  },
+                  () => {
+                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                  }
+                );
+              }
+
+            });
+        }
+      );
 
 
 
     this.getDefaultMessages();
     this.amForm = this.fb.group({
-        queueControl: [''],
+      queueControl: [''],
       delay: ['', Validators.compose([Validators.required])],
       send_message: [false],
       // message: ['', Validators.compose([Validators.required])],
@@ -144,7 +144,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         this.getQueueDelay(data);
       }
     );*/
-   // this.getQueueDelay(this.data.queue_id);
+    // this.getQueueDelay(this.data.queue_id);
     this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {
@@ -152,7 +152,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         }
       );
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
-  //  this.selected_queue = this.data.queue_id;
+    //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
   }
   setDescFocus() {
@@ -178,45 +178,45 @@ export class AdjustqueueDelayComponent implements OnInit {
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-        _this.provider_services.getBussinessProfile()
-            .subscribe(
-                data => {
-                    resolve(data);
-                },
-                () => {
-                    reject();
-                }
-            );
+      _this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
     });
-}
-initDepartments(accountId) {
+  }
+  initDepartments(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-        _this.shared_services.getProviderDept(accountId).subscribe(data => {
-            _this.departmentlist = data;
-            _this.filterDepart = _this.departmentlist.filterByDept;
-            for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
-                if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
-                    if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                        _this.departments.push(_this.departmentlist['departments'][i]);
-                    }
-                }
+      _this.shared_services.getProviderDept(accountId).subscribe(data => {
+        _this.departmentlist = data;
+        _this.filterDepart = _this.departmentlist.filterByDept;
+        for (let i = 0; i < _this.departmentlist['departments'].length; i++) {
+          if (_this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
+            if (_this.departmentlist['departments'][i].serviceIds.length !== 0) {
+              _this.departments.push(_this.departmentlist['departments'][i]);
             }
-            _this.deptLength = _this.departments.length;
-            // this.selected_dept = 'None';
-            if (_this.deptLength !== 0) {
-                _this.selected_dept = _this.departments[0].departmentId;
-                resolve();
-            } else {
-                reject();
-            }
-        },
-            () => {
-                reject();
-            });
+          }
+        }
+        _this.deptLength = _this.departments.length;
+        // this.selected_dept = 'None';
+        if (_this.deptLength !== 0) {
+          _this.selected_dept = _this.departments[0].departmentId;
+          resolve();
+        } else {
+          reject();
+        }
+      },
+        () => {
+          reject();
+        });
     });
-}
-handleDeptSelction(obj) {
+  }
+  handleDeptSelction(obj) {
     this.users = [];
     this.queuejson = [];
     this.api_error = '';
@@ -224,112 +224,112 @@ handleDeptSelction(obj) {
     this.servicesjson = this.serviceslist;
     console.log(this.servicesjson);
     if (this.filterDepart) {
-        const filter = {
-            'departmentId-eq': obj
-        };
-        this.provider_services.getUsers(filter).subscribe(
-            (users: any) => {
-                console.log(users);
-                this.users = [];
-                let found = false;
-                for (let userIndex = 0; userIndex < users.length; userIndex++) {
-                for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
-                   // for (let userIndex = 0; userIndex < users.length; userIndex++) {
-                        if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
-                            this.users.push(users[userIndex]);
-                            break;
-                        }
-                        if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {
-                            found = true;
-                        }
-                    }
+      const filter = {
+        'departmentId-eq': obj
+      };
+      this.provider_services.getUsers(filter).subscribe(
+        (users: any) => {
+          console.log(users);
+          this.users = [];
+          let found = false;
+          for (let userIndex = 0; userIndex < users.length; userIndex++) {
+            for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
+              // for (let userIndex = 0; userIndex < users.length; userIndex++) {
+              if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
+                this.users.push(users[userIndex]);
+                break;
+              }
+              if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {
+                found = true;
+              }
+            }
+          }
+          console.log(this.users);
+          if (found) {
+            // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+            this.users.push(this.userN);
+          }
+          if (this.users.length !== 0) {
+            this.selected_user = this.users[0];
+            this.handleUserSelection(this.selected_user);
+          } else {
+            for (let i = 0; i < this.departmentlist['departments'].length; i++) {
+              if (obj === this.departmentlist['departments'][i].departmentId) {
+                this.services = this.departmentlist['departments'][i].serviceIds;
+              }
+            }
+            const newserviceArray = [];
+            if (this.services) {
+              for (let i = 0; i < this.serviceslist.length; i++) {
+                for (let j = 0; j < this.services.length; j++) {
+                  if (this.services[j] === this.serviceslist[i].id) {
+                    newserviceArray.push(this.serviceslist[i]);
+                  }
                 }
-                console.log(this.users);
-                if (found) {
-                    // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-                    this.users.push(this.userN);
-                }
-                if (this.users.length !== 0) {
-                    this.selected_user = this.users[0];
-                    this.handleUserSelection(this.selected_user);
-                } else {
-                    for (let i = 0; i < this.departmentlist['departments'].length; i++) {
-                        if (obj === this.departmentlist['departments'][i].departmentId) {
-                            this.services = this.departmentlist['departments'][i].serviceIds;
-                        }
-                    }
-                    const newserviceArray = [];
-                    if (this.services) {
-                        for (let i = 0; i < this.serviceslist.length; i++) {
-                            for (let j = 0; j < this.services.length; j++) {
-                                if (this.services[j] === this.serviceslist[i].id) {
-                                    newserviceArray.push(this.serviceslist[i]);
-                                }
-                            }
-                        }
-                        this.servicesjson = newserviceArray;
-                    }
-                    if (this.servicesjson.length > 0) {
-                        this.sel_ser = this.servicesjson[0].id;
-                        this.setServiceDetails(this.sel_ser);
-                        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-                    } else {
-                        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
-                    }
-                }
-            });
-        // }
+              }
+              this.servicesjson = newserviceArray;
+            }
+            if (this.servicesjson.length > 0) {
+              this.sel_ser = this.servicesjson[0].id;
+              this.setServiceDetails(this.sel_ser);
+              this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            } else {
+              this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+            }
+          }
+        });
+      // }
     }
-   
-}
-handleUserSelection(user) {
+
+  }
+  handleUserSelection(user) {
     this.queuejson = [];
     console.log(user);
     this.servicesjson = this.serviceslist;
     const newserviceArray = [];
     if (user.id && user.id !== 0) {
-        for (let i = 0; i < this.servicesjson.length; i++) {
-            if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
-                newserviceArray.push(this.serviceslist[i]);
-            }
+      for (let i = 0; i < this.servicesjson.length; i++) {
+        if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
+          newserviceArray.push(this.serviceslist[i]);
         }
+      }
     } else {
-        for (let i = 0; i < this.servicesjson.length; i++) {
-            if (!this.servicesjson[i].provider && this.servicesjson[i].department === this.selected_dept) {
-                newserviceArray.push(this.serviceslist[i]);
-            }
+      for (let i = 0; i < this.servicesjson.length; i++) {
+        if (!this.servicesjson[i].provider && this.servicesjson[i].department === this.selected_dept) {
+          newserviceArray.push(this.serviceslist[i]);
         }
+      }
     }
     console.log(newserviceArray);
     this.servicesjson = newserviceArray;
     if (this.servicesjson.length > 0) {
-        this.sel_ser = this.servicesjson[0].id;
-        this.setServiceDetails(this.sel_ser);
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+      this.sel_ser = this.servicesjson[0].id;
+      this.setServiceDetails(this.sel_ser);
+      this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     } else {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     }
-}
-getServicebyLocationId(locid, pdate) {
-  //  this.api_loading1 = true;
+  }
+  getServicebyLocationId(locid, pdate) {
+    //  this.api_loading1 = true;
     this.resetApi();
     this.shared_services.getServicesByLocationId(locid)
-        .subscribe(data => {
-            this.servicesjson = data;
-            this.serviceslist = data;
-            this.sel_ser_det = [];
-            if (this.servicesjson.length > 0) {
-                this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-            }
-           // this.api_loading1 = false;
-        },
-            () => {
-               // this.api_loading1 = false;
-                this.sel_ser = '';
-            });
-}
+      .subscribe(data => {
+        this.servicesjson = data;
+        this.serviceslist = data;
+        this.sel_ser_det = [];
+        if (this.servicesjson.length > 0) {
+          this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+          this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+          this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+        }
+        // this.api_loading1 = false;
+      },
+        () => {
+          // this.api_loading1 = false;
+          this.sel_ser = '';
+        });
+  }
 
   onSubmit(form_data) {
     this.resetApi();
@@ -343,40 +343,40 @@ getServicebyLocationId(locid, pdate) {
     this.disableButton = true;
     const time = this.getTimeinMin();
     let queueId;
-       // if (time !== 0) {
+    // if (time !== 0) {
     const post_data = {
       'delayDuration': time,
       'sendMsg': form_data.send_message,
       'message': form_data.message || '',
     };
     // this.provider_services.addQueueDelay(form_data.queue_id, post_data)
-    if(this.queuejson.length === 1){
-        for(let i = 0; i < this.queuejson.length; i++){
-           queueId = this.queuejson[i].id;
-        }
+    if (this.queuejson.length === 1) {
+      for (let i = 0; i < this.queuejson.length; i++) {
+        queueId = this.queuejson[i].id;
+      }
     } else {
-        queueId = form_data.queueControl;
+      queueId = form_data.queueControl;
     }
     this.provider_services.addQueueDelay(queueId, post_data)
       .subscribe(
         () => {
-          if ((this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) && form_data.send_message ) {
-           // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
-           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
-         // this.closePopup('reloadlist');
+          if ((this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) && form_data.send_message) {
+            // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
+            // this.closePopup('reloadlist');
           } else {
             //  console.log("delay added successfuly");
-           // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
-           this.sharedfunctionObj.openSnackBar( this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
-           // this.closePopup('reloadlist');
+            // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
+            // this.closePopup('reloadlist');
           }
-            setTimeout(() => {
-                this.disableButton = false;
-             }, projectConstants.TIMEOUT_DELAY_LARGE);
+          setTimeout(() => {
+            this.disableButton = false;
+          }, projectConstants.TIMEOUT_DELAY_LARGE);
         },
         error => {
-            this.sharedfunctionObj.openSnackBar( error, { 'panelClass': 'snackbarerror' });
-         // this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.sharedfunctionObj.apiErrorAutoHide(this, error);
           this.disableButton = false;
         }
       );
@@ -388,7 +388,7 @@ getServicebyLocationId(locid, pdate) {
     this.provider_services.getQueueDelay(queue_id)
       .subscribe(
         data => {
-           // console.log(data);
+          // console.log(data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
         },
@@ -399,22 +399,22 @@ getServicebyLocationId(locid, pdate) {
   setServiceDetails(curservid) {
     let serv;
     for (let i = 0; i < this.servicesjson.length; i++) {
-        if (this.servicesjson[i].id === curservid) {
-            serv = this.servicesjson[i];
-        }
+      if (this.servicesjson[i].id === curservid) {
+        serv = this.servicesjson[i];
+      }
     }
     this.sel_ser_det = [];
     this.sel_ser_det = {
-        name: serv.name,
-        duration: serv.serviceDuration,
-        description: serv.description,
-        price: serv.totalAmount,
-        isPrePayment: serv.isPrePayment,
-        minPrePaymentAmount: serv.minPrePaymentAmount,
-        status: serv.status,
-        taxable: serv.taxable
+      name: serv.name,
+      duration: serv.serviceDuration,
+      description: serv.description,
+      price: serv.totalAmount,
+      isPrePayment: serv.isPrePayment,
+      minPrePaymentAmount: serv.minPrePaymentAmount,
+      status: serv.status,
+      taxable: serv.taxable
     };
-}
+  }
   getTimeinMin() {
     const time_min = (this.time.hour * 60) + this.time.minute;
     return (typeof (time_min) === 'number') ? time_min : 0;
@@ -424,11 +424,11 @@ getServicebyLocationId(locid, pdate) {
     this.time.minute = time % 60;
     this.amForm.get('delay').setValue(this.time);
   }
-//   closePopup(message) {
-//     setTimeout(() => {
-//     //  this.dialogRef.close(message);
-//     }, projectConstants.TIMEOUT_DELAY);
-//   }
+  //   closePopup(message) {
+  //     setTimeout(() => {
+  //     //  this.dialogRef.close(message);
+  //     }, projectConstants.TIMEOUT_DELAY);
+  //   }
   changeCheckbox(data) {
     if (data) {
       this.amForm.addControl('message',
@@ -438,29 +438,29 @@ getServicebyLocationId(locid, pdate) {
     }
   }
   handle_queue_sel(queueid) {
-  this.getTodayCheckIn(queueid); 
-  this.getQueueDelay(queueid);
+    this.getTodayCheckIn(queueid);
+    this.getQueueDelay(queueid);
     // this.selected_queue = queueid;
     // this.getQueueDelay(this.selected_queue);
   }
   isInRange(evt) {
     return this.sharedfunctionObj.isInRange(evt);
   }
-  
-  getTodayCheckIn(queueid){
+
+  getTodayCheckIn(queueid) {
     const Mfilter = this.setFilterForApi(queueid);
     Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayWaitlist(Mfilter)
-    .subscribe(
-      data => {
-        this.check_in_list = data;
-        this.setCounts(this.check_in_list);
-    });
+      .subscribe(
+        data => {
+          this.check_in_list = data;
+          this.setCounts(this.check_in_list);
+        });
   }
 
   setFilterForApi(queueid) {
     const api_filter = {};
-      api_filter['queue-eq'] = queueid;
+    api_filter['queue-eq'] = queueid;
     return api_filter;
   }
   getCount(list, status) {
@@ -472,49 +472,49 @@ getServicebyLocationId(locid, pdate) {
     this.today_arrived_count = this.getCount(list, 'arrived');
     this.today_checkedin_count = this.getCount(list, 'checkedIn');
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
-   
+
   }
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
-        this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
-            .subscribe(data => {
-                this.queuejson = data;
-                console.log(this.queuejson);
-               // this.queueQryExecuted = true;
-                if (this.queuejson.length > 1) {
-                    for(let i = 0; i < this.queuejson.length; i++){
-                        this.amForm.get('queueControl').setValue(this.queuejson[0].id);
-                     }
-                    
-                    }
-                //     this.sel_queue_id = this.queuejson[selindx].id;
-                //     this.sel_queue_indx = selindx;
-                //     // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-                //     this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-                //     this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-                //     this.sel_queue_name = this.queuejson[selindx].name;
-                //     // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-                //     // this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
-                //     this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-                //     this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-                //     this.setTerminologyLabels();
-                //     if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-                //         this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
-                //     }
-                // } else {
-                //     this.sel_queue_indx = -1;
-                //     this.sel_queue_id = 0;
-                //     this.sel_queue_waitingmins = 0;
-                //     this.sel_queue_servicetime = '';
-                //     this.sel_queue_name = '';
-                //     this.sel_queue_timecaption = '';
-                //     this.sel_queue_personaahead = 0;
-                // }
-            });
+      this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+        .subscribe(data => {
+          this.queuejson = data;
+          console.log(this.queuejson);
+          // this.queueQryExecuted = true;
+          if (this.queuejson.length > 1) {
+            for (let i = 0; i < this.queuejson.length; i++) {
+              this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+            }
+
+          }
+          //     this.sel_queue_id = this.queuejson[selindx].id;
+          //     this.sel_queue_indx = selindx;
+          //     // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+          //     this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+          //     this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+          //     this.sel_queue_name = this.queuejson[selindx].name;
+          //     // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+          //     // this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+          //     this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+          //     this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
+          //     this.setTerminologyLabels();
+          //     if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+          //         this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+          //     }
+          // } else {
+          //     this.sel_queue_indx = -1;
+          //     this.sel_queue_id = 0;
+          //     this.sel_queue_waitingmins = 0;
+          //     this.sel_queue_servicetime = '';
+          //     this.sel_queue_name = '';
+          //     this.sel_queue_timecaption = '';
+          //     this.sel_queue_personaahead = 0;
+          // }
+        });
     }
-}
-handleServiceSel(obj) {
+  }
+  handleServiceSel(obj) {
     // this.sel_ser = obj.id;
     this.sel_ser = obj;
     this.setServiceDetails(obj);
@@ -526,8 +526,8 @@ handleServiceSel(obj) {
     // this.sel_queue_name = '';
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-}
-handleQueueSelection(queue, index) {
+  }
+  handleQueueSelection(queue, index) {
     console.log(index);
     // this.sel_queue_indx = index;
     // this.sel_queue_id = queue.id;
@@ -540,9 +540,9 @@ handleQueueSelection(queue, index) {
     // if (this.calc_mode === 'Fixed' && queue.timeInterval && queue.timeInterval !== 0) {
     //     this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
     // }
-}
-resetApi() {
+  }
+  resetApi() {
     this.api_error = null;
     this.api_success = null;
-}
+  }
 }

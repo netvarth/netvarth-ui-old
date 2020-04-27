@@ -7,15 +7,9 @@
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                        <div class="lbl col-sm-12 col-md-9 col-lg-9">
                             <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
-                                <!-- <h1 class="mat-dialog-title">{{create_cap}} {{customer_label | capitalizeFirst}}
-                                    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-                                        <i class="fa fa-window-close" aria-hidden="true"></i>
-                                    </button>
-                                </h1>
-                                <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
                                 <div class="form-group mobile-field" *ngIf="source !== 'newCustomer'">
                                     <mat-form-field>
                                         <div class="input-group">
@@ -38,7 +32,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
           })">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" matInput id="first_name"
@@ -53,8 +46,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     })">
                                     </app-field-error-display>
                                 </div>
-
-
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="last_name"
@@ -69,7 +60,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     })">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="email_id"
@@ -81,22 +71,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         errorMsg="Please enter valid email.">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-form-label" for="gender">{{gender_cap}}</label>
                                     <mat-radio-group formControlName="gender">
                                         <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
-                                        <mat-radio-button class="mat-radio-button-createpatient" value="female">{{female_cap}}</mat-radio-button>
-                                        <mat-radio-button class="mat-radio-button-createpatient" value="others">Others</mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button-createpatient" value="female">
+                                            {{female_cap}}</mat-radio-button>
+                                        <mat-radio-button class="mat-radio-button-createpatient" value="others">Others
+                                        </mat-radio-button>
                                     </mat-radio-group>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
                                         errorMsg="Please select the gender.">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group normalpicker">
                                     <label class="col-form-label" for="last_name">{{dob_cap}}</label>
-
                                     <div class="pickerouter">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
@@ -104,13 +93,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             [matDatepicker]="picker" formControlName="dob" [max]="tday" [min]="minday"
                                             placeholder="DD/MM/YYYY">
                                     </div>
-
-
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
                                         errorMsg="Please select the date of birth.">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <mat-form-field>
                                         <textarea class="form-control" matInput id="address" placeholder="Address"
@@ -120,21 +106,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="actiondiv" style="margin-top: 10px;">
                                     <div style="margin-bottom:30px;display: inline-flex;">
                                         <button type="button" (click)="onCancel()" class="cs-btn bt2"
-                                        [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
-                                       
+                                            [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
+
                                         <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
                                             class="cs-btn bt1">{{save_btn}}</button>
-                                    </div>                                
-                                </div>                      
+                                    </div>
+                                </div>
                             </form>
-                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-                            </app-field-error-display>
-
-                            <app-form-success-display [displayMsg]="true" *ngIf="api_success"
-                                successMsg="{{api_success}}">
-                            </app-form-success-display> -->
                         </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                        <div class="lbr col-sm-12 col-md-3 col-lg-3">
                         </div>
                     </div>
                 </div>

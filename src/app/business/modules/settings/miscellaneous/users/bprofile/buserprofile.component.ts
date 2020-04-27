@@ -35,14 +35,15 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   not_visible_cap = Messages.BPROFILE_ONLINE_VISIBLE_CAP;
   set_up_cap = Messages.BPROFILE_SET_UP_CAP;
   profile_summary_cap = Messages.BPROFILE_SUMMARY_CAP;
-
+  public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
   current_status_cap = Messages.BPROFILE_CURRENT_STATUS;
   on_cap = Messages.BPROFILE_ON_CAP;
   off_cap = Messages.BPROFILE_OFF_CAP;
   profile_visible_cap = Messages.BPROFILE_VISIBILITY_CAP;
   online_jaldee_cap = Messages.BPROFILE_ONLINE_JALDEE_CAP;
   offline_cap = Messages.BPROFILE_OFFLINE_CAP;
-
+  turn_off_cap = Messages.BPROFILE_TURN_OFF;
+  turn_on_cap = Messages.BPROFILE_TURN_ON;
   have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
   basic_info_cap = Messages.BPROFILE_BASIC_INFORMATION_CAP;
   such_as_cap = Messages.BPROFILE_SUCH_AS_CAP;
@@ -66,7 +67,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   name_cap = Messages.PRO_NAME_CAP;
   description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
-
+  frm_public_search_cap = '';
+  frm_public_searchh_cap = '';
+  frm_public_search_off_cap = '';
 
   checked = false;
   bProfile = null;
@@ -172,6 +175,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   disableButton = false;
   subDomains: any = [];
   user_arr;
+  normal_search_active = false;
 
 
   constructor(private provider_services: ProviderServices,
@@ -194,6 +198,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
+    this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -240,7 +247,33 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
         });
   }
-
+  getUserPublicSearch() {
+    this.provider_services.getUserPublicSearch(this.userId)
+      .subscribe(
+        data => {
+          this.public_search = (data && data.toString() === 'true') ? true : false;
+          this.normal_search_active = this.public_search;
+        },
+        () => {
+        }
+      );
+  }
+  confirm_searchStatus() {
+    if (this.normal_search_active) {
+      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+    } else {
+      this.handle_searchstatus();
+    }
+  }
+  handle_searchstatus() {
+    const changeTostatus = (this.normal_search_active === true) ? 'Disable' : 'Enable';
+    this.provider_services.updateUserPublicSearch(this.userId, changeTostatus)
+      .subscribe(() => {
+        this.getUserPublicSearch();
+      }, error => {
+        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
   getBusinessProfile() {
     this.bProfile = [];
     this.getBussinessProfileApi()

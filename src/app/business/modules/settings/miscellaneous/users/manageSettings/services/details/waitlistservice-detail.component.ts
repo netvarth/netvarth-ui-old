@@ -44,6 +44,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     userId: any;
+    userDetails: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -92,7 +93,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.serviceSubscription.unsubscribe();
     }
     ngOnInit() {
-        this.initServiceParams();
+        this.getUserDetails(this.userId).then(
+            (userInfo) => {
+                this.userDetails = userInfo;
+                this.initServiceParams();
+            });
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
                 this.provider_services.uploadServiceGallery(input.sourceId, input.value)
@@ -184,6 +189,16 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     });
         });
     }
+    getUserDetails(userId) {
+        return new Promise((resolve, reject) => {
+            this.provider_services.getUser(userId).subscribe(
+                (userInfo: any) => {
+                    resolve(userInfo);
+                }, error => {
+                    reject(error);
+                });
+        });
+    }
     getUserServiceDetail() {
         this.api_loading = true;
         this.provider_services.getUserServiceDetail(this.service_id)
@@ -233,6 +248,8 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     () => {
                         this.getTaxpercentage().then(
                             () => {
+                                this.serviceParams['userId'] = this.userId;
+                                this.serviceParams ['deptId'] = this.userDetails.deptId;
                                 if (this.service_id === 'add') {
                                     this.service_id = null;
                                     this.api_loading = false;

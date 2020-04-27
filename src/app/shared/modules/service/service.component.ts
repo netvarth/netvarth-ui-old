@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,Input,Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 // import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 // import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -23,7 +23,6 @@ import { ProviderDataStorageService } from '../../../ynw_provider/services/provi
 
 export class ServiceComponent implements OnInit, OnDestroy {
     @Input() serviceFrom;
-    @Input() userId;
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
     number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
@@ -87,6 +86,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     serv_type: any;
     is_physical = 0;
     is_donation = false;
+    userId: any;
+    departmentId: any;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -105,6 +106,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
+                    this.userId = serviceParams.userId;
+                    this.departmentId = serviceParams.deptId;
                     if (this.action === 'add') {
                         this.service = null;
                         this.createForm();
@@ -310,6 +313,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
                 form_data.serviceDuration = duration;
             }
+            if (this.departmentId) {
+                form_data ['department'] = this.departmentId;
+            }
             form_data['serviceType'] = this.serv_type;
             form_data['virtualServiceType'] = this.serv_mode;
             const serviceActionModel = {};
@@ -434,15 +440,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.locationExists = false;
                     }
                     this.provider_datastorage.set('bProfile', data);
-
                 });
     }
     gotoManageQueue() {
         if (this.locationExists) {
-            if(this.serviceFrom === 'userlevel'){
-                this.router.navigate(['provider', 'settings','miscellaneous','users', this.userId ,'settings','queues']);
-            }
-            else{
+            if (this.serviceFrom === 'userlevel') {
+                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
+            } else {
                 this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
             }
         } else {

@@ -44,20 +44,21 @@ export class CustomerDetailComponent implements OnInit {
     firstName: any;
     lastName: any;
     dob: any;
-    breadcrumbs_init = [
-        {
-            title: 'Check-ins',
-            url: 'provider/check-ins'
-        },
-        {
-            title: 'Customers',
-            url: 'provider/customers'
-        },
-        {
-            title: 'create'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
+    // breadcrumbs_init = [
+    //     // {
+    //     //     title: 'Check-ins',
+    //     //     url: 'provider/check-ins'
+    //     // },
+    //     {
+    //         title: 'Customers',
+    //         url: 'provider/customers'
+    //     },
+    //     {
+    //         title: 'Add'
+    //     }
+    // ];
+    breadcrumbs; 
+    // = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
@@ -86,18 +87,16 @@ export class CustomerDetailComponent implements OnInit {
 
     ngOnInit() {
         this.createForm();
+        this.breadcrumbs = [{
+            title: this.shared_functions.firstToUpper(this.customer_label) + 's',
+            url: 'provider/customers'
+        },
+        {
+            title: 'Add'
+        }
+        ];
     }
     createForm() {
-        // if (this.source === 'checkin') {
-        //   this.amForm = this.fb.group({
-        //     first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-        //     last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-        //     email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
-        //     dob: [''],
-        //     gender: [''],
-        //     address: ['']
-        //   });
-        // } else {
         this.amForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
             Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
@@ -114,10 +113,6 @@ export class CustomerDetailComponent implements OnInit {
         if (this.email) {
             this.amForm.get('email_id').setValue(this.email);
         }
-        //   this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
-        //   this.amForm.get('first_name').setValue(this.search_data.first_last_name);
-        // }
-        // this.api_loading = false;
     }
     onSubmit(form_data) {
         this.disableButton = true;
@@ -132,53 +127,42 @@ export class CustomerDetailComponent implements OnInit {
             'address': form_data.address,
             //   }
         };
-
+        if (form_data.mobile_number) {
+            post_data['countryCode'] = '+91';
+        }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
                     this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
                     this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                     const qParams = {};
-                    console.log(data);
-
-                    console.log(qParams);
                     qParams['pid'] = data;
                     console.log(post_data);
                     if (this.source === 'checkin') {
                         const navigationExtras: NavigationExtras = {
                             queryParams: {
-                                qParams,
-                                firstName: post_data.firstName,
-                                lastName: post_data.lastName,
-                                phoneNo: post_data.phoneNo,
-                                email: post_data.email,
-                                dob: post_data.dob
+                                ph: form_data.mobile_number
                             }
                         };
-                        this.router.navigate(['provider', 'check-ins', 'create'], navigationExtras);
+                        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
                     } else if (this.source === 'appointment') {
                         const navigationExtras: NavigationExtras = {
                             queryParams: {
-                                qParams,
-                                firstName: post_data.firstName,
-                                lastName: post_data.lastName,
-                                phoneNo: post_data.phoneNo,
-                                email: post_data.email,
-                                dob: post_data.dob
+                                ph: form_data.mobile_number
                             }
                         };
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                     } else {
-                        this.amForm.reset();
+                        const navigationExtras: NavigationExtras = {
+                            queryParams:  {
+                                phoneNo : this.phoneNo
+                            }
+                        };
+                        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
                     }
-                    //   const user_data = { 'id': data, 'userProfile': post_data.userProfile };
-                    //   setTimeout(() => {
-                    //     this.dialogRef.close({ message: 'reloadlist', data: user_data });
-                    //   }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.disableButton = false;
                 });
     }
     onCancel() {
