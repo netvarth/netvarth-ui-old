@@ -155,6 +155,7 @@ export class ConsumerDonationComponent implements OnInit {
     source: any = [];
     create_new = false;
     form_data = null;
+    donationAmount;
     selectedMessage = {
         files: [],
         base64: [],
@@ -241,14 +242,10 @@ export class ConsumerDonationComponent implements OnInit {
         this.maxsize = 1;
         this.step = 1;
         this.getProfile();
-        // this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
         this.gets3curl();
         this.getFamilyMembers();
-        // this.getCurrentLocation();
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        this.minDate = new Date(this.minDate);
         const dd = this.today.getDate();
         const mm = this.today.getMonth() + 1; // January is 0!
         const yyyy = this.today.getFullYear();
@@ -267,49 +264,17 @@ export class ConsumerDonationComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
-        // this.minDate = this.sel_checkindate;
-        this.minDate = this.todaydate;
-        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
-        if (this.change_date === 'true') {
-            const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const seldate_checker = new Date(seldateChecker);
-            const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-            const todaydate_checker = new Date(todaydateChecker);
-            if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
-                // const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
-                const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                const serverdate = moment(server).format();
-                const servdate = new Date(serverdate);
-                const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
-                // this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
-                // this.minDate = new Date(this.minDate.replace(/-/g, '/'));
-            }
-        }
-        // }
+        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+       // this.minDate = this.todaydate;
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-        // if (this.data.moreparams.terminologies) {
-        //     this.terminologiesjson = this.data.moreparams.terminologies;
-        //     this.setTerminologyLabels();
-        // }
-        // if ( this.page_source !== 'provider_checkin') {
-        // this.getPaymentModesofProvider(this.account_id);
-        // }
         const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
         const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
-        // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        }
-        // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
-        // this.sel_queue_det = retdatedet;
         this.showfuturediv = false;
         this.revealphonenumber = true;
     }
@@ -603,11 +568,11 @@ export class ConsumerDonationComponent implements OnInit {
         const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
-        if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
+        // if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+        //     this.isFuturedate = true;
+        // } else {
+        //     this.isFuturedate = false;
+        // }
         this.handleFuturetoggle();
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
@@ -636,58 +601,37 @@ export class ConsumerDonationComponent implements OnInit {
     saveCheckin() {
         this.showEditView = false;
         const post_Data = {
-            "schedule":{
-                'id':this.sel_queue_id
+            'id': 0,
+            'consumer': {
+                'id': this.customer_data.id
             },
-            'appmtDate': this.sel_checkindate,
             'service': {
-                'id': this.sel_ser
+                'id': 6
             },
-            'consumerNote': this.consumerNote,
-            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for))
+            'location': {
+                'id': this.businessjson.baseLocation.id
+            },
+            'date': this.todaydate,
+            'donationAmount': this.donationAmount,
+            'donor': {
+                'id': this.customer_data.id
+            },
+            'uid': this.businessjson.id
         };
-        // if (this.apptTime) {
-        //     post_Data['appointmentTime'] = this.apptTime;
-        // }
-        if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-            // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
-        }
-        // if (this.partySizeRequired) {
-        //     this.holdenterd_partySize = this.enterd_partySize;
-        //     post_Data['partySize'] = Number(this.holdenterd_partySize);
-        // }
-        //post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
-           // post_Data['consumer'] = { id: this.customer_data.id };
-            // post_Data['ignorePrePayment'] = true;
-            this.addCheckInConsumer(post_Data);
+            this.addDonationConsumer(post_Data);
         }
     }
-    addCheckInConsumer(post_Data) {
+    addDonationConsumer(post_Data) {
         this.api_loading = true;
-        this.shared_services.addCustomerAppointment(this.account_id, post_Data)
+        this.shared_services.addCustomerDonation(post_Data)
             .subscribe(data => {
-                const retData = data;
-                let retUUID;
-                Object.keys(retData).forEach(key => {
-                    retUUID = retData[key];
-                    this.trackUuid = retData[key];
-                });
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(retUUID);
-                }
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
-                this.router.navigate(['consumer']);
-                // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
                 // const navigationExtras: NavigationExtras = {
                 //     queryParams: { account_id: this.account_id }
                 // };
-                // if (this.sel_ser_det.isPrePayment) {
-                //     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                // } else {
-                //     this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
-                // }
+                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('DONATE_SUCC'));
+               this.router.navigate(['consumer']);
+              //this.router.navigate(['consumer', 'checkin', 'payment', retData], navigationExtras);
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -767,7 +711,7 @@ export class ConsumerDonationComponent implements OnInit {
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName,apptTime:this.apptTime });
+            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -778,12 +722,12 @@ export class ConsumerDonationComponent implements OnInit {
     handleOneMemberSelect(id, firstName, lastName) {
         this.resetApi();
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName,apptTime:this.apptTime });
+        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName,apptTime:this.apptTime });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
         } else {
             let exists = false;
             let existindx = -1;
@@ -797,7 +741,7 @@ export class ConsumerDonationComponent implements OnInit {
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName,apptTime:this.apptTime });
+                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime });
                 } else {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
@@ -836,7 +780,7 @@ export class ConsumerDonationComponent implements OnInit {
         // this.step = 4; // show add member section
         // this.main_heading = 'Add Family Member';
     }
-    editClicked(){
+    editClicked() {
         this.showEditView = true;
     }
     resetApi() {
@@ -1102,22 +1046,22 @@ export class ConsumerDonationComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
-        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate,this.sel_queue_id,this.account_id)
+        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate, this.sel_queue_id, this.account_id)
             .subscribe(
                 (data) => {
                     this.slots = data;
-                    this.availableSlots =  this.slots.availableSlots;
-                    for(let freslot of this.availableSlots){
-                        if(freslot.noOfAvailbleSlots === '1'){
+                    this.availableSlots = this.slots.availableSlots;
+                    for (let freslot of this.availableSlots) {
+                        if (freslot.noOfAvailbleSlots === '1') {
                             this.freeSlots.push(freslot);
                         }
                     }
-                  //  if(this.apptTime === ''){
-                        this.apptTime = this.freeSlots[0].time;
-                        for(let list of this.waitlist_for){
-                            list['apptTime'] = this.apptTime;
-                        }
-                      //  }
+                    //  if(this.apptTime === ''){
+                    this.apptTime = this.freeSlots[0].time;
+                    for (let list of this.waitlist_for) {
+                        list['apptTime'] = this.apptTime;
+                    }
+                    //  }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1126,7 +1070,7 @@ export class ConsumerDonationComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        for(let list of this.waitlist_for){
+        for (let list of this.waitlist_for) {
             list['apptTime'] = this.apptTime;
         }
         this.showEditView = false;

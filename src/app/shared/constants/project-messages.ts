@@ -1472,5 +1472,6 @@ export const Messages = {
   'BRANCHUSER_DELETED': 'User deleted successfully',
 
   'GENERALSETTINGS': 'General',
-  'APPOINTMNT_SUCC': 'Appointment created successfully'
+  'APPOINTMNT_SUCC': 'Appointment created successfully',
+  'DONATE_SUCC': 'Donated successfully'
 };

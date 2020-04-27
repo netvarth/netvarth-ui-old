@@ -598,4 +598,11 @@ export class SharedServices {
     const url = 'provider/appointment/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  addCustomerDonation(postData) {
+    return this.servicemeta.httpPost('consumer/donation' , postData);
+  }
+  getDonationByConsumerUUID(uuid, accountid) {
+    const url = 'consumer/donation/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
 }
