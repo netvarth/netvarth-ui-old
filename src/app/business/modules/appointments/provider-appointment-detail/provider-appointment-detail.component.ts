@@ -300,7 +300,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkTimedisplayAllowed(waitlist) {
-    if ((waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') && !this.checkIsHistory(waitlist)) {
+    if ((waitlist.appointmentStatus === 'Arrived' || waitlist.appointmentStatus === 'Confirmed') && !this.checkIsHistory(waitlist)) {
       if (waitlist.queue.queueStartTime !== undefined) {
         return true;
       }

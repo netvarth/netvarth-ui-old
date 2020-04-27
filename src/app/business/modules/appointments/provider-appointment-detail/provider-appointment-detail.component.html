@@ -66,7 +66,8 @@
                     capitalizeFirst}}<span *ngIf="waitlist_data.service.deptName">
                       ({{waitlist_data.service.deptName}})</span></span></div>
                 <div class="item"><span class="ttle">{{queue_cap}}</span>
-                  {{waitlist_data.schedule.apptSchedule.timeSlots[0].sTime}} - {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}}</div>
+                  {{waitlist_data.schedule.apptSchedule.timeSlots[0].sTime}} -
+                  {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}}</div>
                 <div class="item"><span class="ttle">{{pay_status_cap}}</span>
                   <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
                     <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
@@ -101,8 +102,6 @@
                   </mat-chip-list>
                 </div>
               </div>
-
-
               <div class="clearfix"></div>
               <div class="btm" *ngIf="waitlist_data">
                 <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>
@@ -171,9 +170,9 @@
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
             <div class="c-history-outer">
               <ul class="c-history">
-                <li class="{{history.apptStatus}}" *ngFor="let history of waitlist_history">
+                <li class="{{history.appointmentStatus}}" *ngFor="let history of waitlist_history">
                   <div class="time">{{ history.time | date: dateTimeFormat }}</div>
-                  <div class="action">{{check_in_statuses[history.apptStatus | capitalizeFirst]}}</div>
+                  <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
