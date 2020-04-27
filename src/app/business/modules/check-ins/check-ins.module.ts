@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CheckInsComponent } from './check-ins.component';
-import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
 import { AdjustqueueDelayComponent } from './adjustqueue-delay/adjustqueue-delay.component';
-import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { CheckinsRoutingModule } from './check-ins.routing.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CommonModule } from '@angular/common';
@@ -24,6 +22,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
 import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
+import { LocateCustomerModule } from './locate-customer/locate-customer.module';
+import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -45,23 +45,21 @@ import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-wai
         OwlModule,
         NgxMatSelectSearchModule,
         ApplyLabelModule,
-        AddProviderWaitlistCheckInProviderNoteModule
+        AddProviderWaitlistCheckInProviderNoteModule,
+        LocateCustomerModule,
+        ProviderWaitlistCheckInConsumerNoteModule
     ],
     declarations: [
         CheckInsComponent,
         ProviderCheckinComponent,
-        ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
         AdjustqueueDelayComponent,
-        LocateCustomerComponent,
         ProviderWaitlistCheckInDetailComponent
         // DateRangePickerJComponent
 
     ],
     entryComponents: [
-        ProviderWaitlistCheckInConsumerNoteComponent,
-        AdjustQueueDelayComponent,
-        LocateCustomerComponent
+        AdjustQueueDelayComponent
     ],
     exports: [CheckInsComponent]
 })

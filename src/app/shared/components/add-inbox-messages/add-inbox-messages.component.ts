@@ -166,6 +166,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             communicationMessage: form_data.message,
             uuid: this.uuid
           };
+          if (this.data.appt) {
+            this.shared_services.consumerMassCommunicationAppt(post_data).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+          } else {
           this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
               this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -178,6 +192,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
+          }
         }
 
       } else {

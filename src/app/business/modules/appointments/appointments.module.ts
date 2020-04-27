@@ -13,6 +13,8 @@ import { ProviderAppointmentDetailComponent } from './provider-appointment-detai
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
+import { LocateCustomerModule } from '../check-ins/locate-customer/locate-customer.module';
+import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
 
 @NgModule({
     imports: [
@@ -25,9 +27,11 @@ import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-p
         OwlModule,
         LoadingSpinnerModule,
         ApplyLabelModule,
+        LocateCustomerModule,
         InboxModule,
         Nl2BrPipeModule,
-        AddProviderWaitlistCheckInProviderNoteModule
+        AddProviderWaitlistCheckInProviderNoteModule,
+        ProviderWaitlistCheckInConsumerNoteModule
     ],
     declarations: [
         AppointmentsComponent,

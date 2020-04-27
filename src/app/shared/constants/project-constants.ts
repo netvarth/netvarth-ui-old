@@ -179,16 +179,16 @@ export const projectConstants = {
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
   },
   DOMAIN_ICONS: {
-    healthCare: {iconClass:'healthcare_icon'},
-    personalCare: {iconClass:'personalCare_icon'},
-    foodJoints: {iconClass:'food_icon'},
-    professionalConsulting: {iconClass:'professionalConsulting_icon'},
-    vastuAstrology: {iconClass:'vastuAstrology_icon'},
-    religiousPriests: {iconClass:'religiousPriests_icon'},
-    finance: {iconClass:'finance_icon'},
-    veterinaryPetcare: {iconClass:'veterinary_icon'},
-    retailStores: {iconClass:'retailstores_icon'},
-    otherMiscellaneous: {iconClass:'other_icon'},
+    healthCare: { iconClass: 'healthcare_icon' },
+    personalCare: { iconClass: 'personalCare_icon' },
+    foodJoints: { iconClass: 'food_icon' },
+    professionalConsulting: { iconClass: 'professionalConsulting_icon' },
+    vastuAstrology: { iconClass: 'vastuAstrology_icon' },
+    religiousPriests: { iconClass: 'religiousPriests_icon' },
+    finance: { iconClass: 'finance_icon' },
+    veterinaryPetcare: { iconClass: 'veterinary_icon' },
+    retailStores: { iconClass: 'retailstores_icon' },
+    otherMiscellaneous: { iconClass: 'other_icon' },
 
   },
   SUBDOMAIN_ICONS: {
@@ -284,7 +284,10 @@ export const projectConstants = {
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
   { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel', type: 2 },
-  { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' }],
+  { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' },
+  { title: 'PrePayment Pending', value: 'prePaymentPending', reasonkey: 'tooFullCancel' },
+  { title: 'Queue Disabled', value: 'QueueDisabled', reasonkey: 'tooFullCancel' },
+  { title: 'Holiday', value: 'holiday', reasonkey: 'tooFullCancel' }],
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
   DISTANCE_STATE: 300, // in Km
@@ -407,7 +410,7 @@ export const projectConstants = {
     { displayName: 'NotPaid', value: 'NotPaid' },
     { displayName: 'Cancel', value: 'Cancel' },
     { displayName: 'Waived', value: 'Waived' },
-    { displayName: 'RolledBack', value: 'RolledBack'},
+    { displayName: 'RolledBack', value: 'RolledBack' },
     // { displayName: 'Obsolete', value: 'Obsolete' },
   ],
 

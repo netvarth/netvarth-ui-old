@@ -273,10 +273,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   getTimeSlots() {
     this.provider_services.getAppointmentSlotsByDate(this.waitlist_data.schedule.id, this.waitlist_data.appmtDate).subscribe(data => {
       this.availableSlots = data;
-      this.availableSlotDetails = this.availableSlots.availableSlots.filter(slot => slot.noOfAvailbleSlots !== '0');
-      console.log(this.availableSlotDetails);
-      this.availableSlotDetails.push({ 'time': this.waitlist_data.appmtTime });
-      console.log(this.availableSlotDetails);
+      this.availableSlotDetails = this.availableSlots.availableSlots.filter(slot => slot.noOfAvailbleSlots !== '0' || (slot.time === this.waitlist_data.appmtTime && slot.noOfAvailbleSlots === '0'));
     });
   }
   getAppxTime(waitlist, retcap?) {

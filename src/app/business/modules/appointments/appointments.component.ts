@@ -925,11 +925,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appmtTime');
       if (Object.keys(this.timeSlotCheckins).length > 0) {
+        const slots = [];
         Object.keys(this.timeSlotCheckins).forEach(key => {
           for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
             if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
-              if (this.availableSlotDetails.availableSlots[i].time !== key) {
+              if (this.unAvailableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
                 this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+              }
+              if (this.availableSlotDetails.availableSlots[i].time === key) {
+                slots.push(this.availableSlotDetails.availableSlots[i]);
               }
             }
           }
@@ -944,6 +948,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         });
+        this.unAvailableSlots = this.unAvailableSlots.filter(x => !slots.includes(x));
       } else {
         for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
           if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
@@ -951,10 +956,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
-      console.log(this.availableSlotDetails.availableSlots);
-      console.log(this.unAvailableSlots);
       this.availableSlotDetails.availableSlots = this.availableSlotDetails.availableSlots.filter(x => !this.unAvailableSlots.includes(x));
-      console.log(this.availableSlotDetails.availableSlots);
     });
   }
 
