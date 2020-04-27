@@ -722,7 +722,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.servicesCount = selQdetails[0].services.length;
         } else {
           this.selQId = view.customViewConditions.queues[0]['id'];
+          if (view.customViewConditions.queues[0].services) {
           this.servicesCount = view.customViewConditions.queues[0].services.length;
+          }
           this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
         }
       });

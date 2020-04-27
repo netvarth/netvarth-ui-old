@@ -351,7 +351,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.loctype = obj.lontyp;
       this.latitude = obj.la;
       this.longitude = obj.lo;
-      this.kw = obj.kw.trim();
+      if (obj.kw) {
+        this.kw = obj.kw.trim();
+      }
       this.kwautoname = obj.kwauto;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
@@ -1530,7 +1532,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.showCheckin('consumer');
     } else if (usertype === '') {
       const passParam = { callback: '', current_provider: obj };
-      this.doLogin('checkin','consumer', passParam);
+      this.doLogin('checkin', 'consumer', passParam);
     }
   }
   appointmentClicked(obj, chdatereq) {
@@ -1542,10 +1544,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.showAppointment('consumer');
     } else if (usertype === '') {
       const passParam = { callback: '', current_provider: obj };
-      this.doLogin('appointment','consumer', passParam);
+      this.doLogin('appointment', 'consumer', passParam);
     }
   }
-  doSignup(state,passParam?) {
+  doSignup(state, passParam?) {
     // this.api_loading = false;
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
@@ -1568,16 +1570,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
-          if(state === 'checkin') {
+          if (state === 'checkin') {
             this.showCheckin('consumer');
-        }else{
+          } else {
             this.showAppointment('consumer');
-         }
+          }
         }
       }
     });
   }
-  doLogin(state,origin?, passParam?) {
+  doLogin(state, origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     let is_test_account = null;
@@ -1612,14 +1614,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
-           if(state === 'checkin') {
-               this.showCheckin('consumer');
-           }else{
-               this.showAppointment('consumer');
-            }
+          if (state === 'checkin') {
+            this.showCheckin('consumer');
+          } else {
+            this.showAppointment('consumer');
+          }
         }
       } else if (result === 'showsignup') {
-        this.doSignup(state,passParam);
+        this.doSignup(state, passParam);
       }
     });
   }
@@ -1629,14 +1631,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
     const unique_id = this.current_provider.fields['unique_id'];
     const navigationExtras: NavigationExtras = {
-          queryParams: {
-            loc_id: acc_loc_id[1],
-            sel_date: seldate,
-            cur: this.changedate_req,
-            unique_id: unique_id,
-            account_id: acc_loc_id[0]
-          }
-        };
+      queryParams: {
+        loc_id: acc_loc_id[1],
+        sel_date: seldate,
+        cur: this.changedate_req,
+        unique_id: unique_id,
+        account_id: acc_loc_id[0]
+      }
+    };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
 
     // const navigationExtras: NavigationExtras = {
@@ -1670,16 +1672,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
     const unique_id = this.current_provider.fields['unique_id'];
     const navigationExtras: NavigationExtras = {
-          queryParams: {
-            loc_id: acc_loc_id[1],
-            sel_date: seldate,
-            cur: this.changedate_req,
-            unique_id: unique_id,
-            account_id: acc_loc_id[0]
-          }
-        };
-    this.router.navigate(['consumer', 'appointment'], navigationExtras);
+      queryParams: {
+        loc_id: acc_loc_id[1],
+        sel_date: seldate,
+        cur: this.changedate_req,
+        unique_id: unique_id,
+        account_id: acc_loc_id[0]
       }
+    };
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
+  }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
@@ -1702,7 +1704,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   showProviderDetails(provid, locId) {
-    this.routerobj.navigate(['searchdetail', provid], {queryParams: {locId : locId}});
+    this.routerobj.navigate(['searchdetail', provid], { queryParams: { locId: locId } });
   }
 
   handlerefineddomainchange(val) {
