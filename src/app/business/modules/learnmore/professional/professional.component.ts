@@ -98,6 +98,8 @@ export class ProfessionalCareComponent implements OnInit {
   show = 'false';
   showdbappointments = false;
   showcheckin = false;
+  showinbox = false;
+  showhistory = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -330,6 +332,9 @@ export class ProfessionalCareComponent implements OnInit {
       if (childContent === 'upgradelicense') {
         this.showupgrade = true;
       }
+      if (childContent === 'history') {
+        this.showhistory = true;
+      }
       if (childContent === 'addon') {
         this.showaddon = true;
       }
@@ -355,6 +360,11 @@ export class ProfessionalCareComponent implements OnInit {
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }
+
+    if (parentContent === 'inbox' && childContent === 'inbox') {
+      this.showinbox = true;
+   }
+   
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
     }

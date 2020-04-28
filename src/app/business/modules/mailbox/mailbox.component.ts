@@ -6,6 +6,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,12 +41,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
     showCaptionBox: any = {};
     activeImageCaption: any = [];
     itemCaption: any = [];
+    breadcrumb_moreoptions: any = []; 
     breadcrumbs = [
         {
             title: 'Inbox'
         }
     ];
     userDet;
+    domain:any;
     obtainedMsgs = false;
     api_loading = true;
     selectedParentIndex;
@@ -57,10 +60,18 @@ export class MailboxComponent implements OnInit, OnDestroy {
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
+        private routerobj:Router,
         private provider_services: ProviderServices) { }
 
     ngOnInit() {
         this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
+        this.breadcrumb_moreoptions = {
+            'show_learnmore': true, 'scrollKey': 'inbox', 
+            'actions': [
+            { 'title': 'Help', 'type': 'learnmore' }]
+        };
         this.terminologies = this.shared_functions.getTerminologies();
         this.usertype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.usertype === 'provider') {
@@ -92,6 +103,12 @@ export class MailboxComponent implements OnInit, OnDestroy {
         // this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
         //     this.reloadApi.emit();
         // });
+    }
+    performActions(action)
+    {
+        if( action === 'learnmore'){
+            this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
+        }
     }
     setActiveMessage(message, parentIndex, childIndex) {
         if (message.messagestatus === 'out' || this.selectedMessage && this.selectedMessage[parentIndex] && childIndex === this.selectedChildIndex) {

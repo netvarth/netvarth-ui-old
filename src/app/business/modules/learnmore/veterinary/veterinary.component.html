@@ -1187,6 +1187,23 @@
                                                 three
                                                 dots menu on the right side.</li>
                                            </span>
+                                           <section>
+                                                <mat-accordion>
+                                             <mat-expansion-panel [expanded]=false>
+                                                 <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                 class="accordion"> 
+                                                     <mat-panel-title class="accordion-title">
+                                                         <span class="helpcontent"
+                                                         (click)="handleScroll('QR Code','profile-search')">QR code GENERATOR
+                                                        </span>
+                                                     </mat-panel-title>
+                                                 </mat-expansion-panel-header>
+                                                 <div class="helpcontent">
+                                                 </div>
+                                             </mat-expansion-panel>
+                                                </mat-accordion>
+                                            
+                                            </section>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -4856,6 +4873,18 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
+                    <mat-accordion>
+                            <mat-expansion-panel [expanded]='showinbox'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="handleScroll('inbox', 'inbox')">
+                                       Inbox
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                        <h6>Mailbox</h6>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]='false'>
                     <mat-expansion-panel-header class="accordion">
