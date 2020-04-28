@@ -2312,5 +2312,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getFutureCheckinCount();
   }
 
+
 }
 
