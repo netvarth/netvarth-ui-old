@@ -602,7 +602,7 @@ export class SharedServices {
     return this.servicemeta.httpPost('consumer/donation', postData);
   }
   getDonationByConsumerUUID(uuid, accountid) {
-    const url = 'consumer/donation/' + uuid + '?account=' + accountid;
+    const url = 'consumer/donation/' + uuid + '?consumer-eq=' + accountid;
     return this.servicemeta.httpGet(url);
   }
   getWaitlistDetailsbyId(encId) {
