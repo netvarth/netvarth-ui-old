@@ -1,8 +1,9 @@
 <app-header [headerTitle]="" [includedfrom]="'home'" id="home"></app-header>
-<div class="buy-theme"><a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee" target="_blank"><span>DOWNLOAD ON GOOLGE PLAY</span></a></div>
-<div class="quick-question xs-display-none"><a ><span>DOWNLOAD ON APP STORE</span></a></div>
-<div class="quick-question1 xs-display-none"><a ><span>Zero convenience fees</span></a></div>
-<div class="quick-question2 xs-display-none"><a ><span>Thousands of jaldee verified providers </span></a></div>
+<div class="buy-theme"><a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
+        target="_blank"><span>DOWNLOAD ON GOOLGE PLAY</span></a></div>
+<div class="quick-question xs-display-none"><a><span>DOWNLOAD ON APP STORE</span></a></div>
+<div class="quick-question1 xs-display-none"><a><span>Zero convenience fees</span></a></div>
+<div class="quick-question2 xs-display-none"><a><span>Thousands of jaldee verified providers </span></a></div>
 <section class="srch" id="bubbles">
     <div class="bubble x1 d-none d-lg-block"></div>
     <div class="bubble x2 d-none d-lg-block"></div>
@@ -13,6 +14,7 @@
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
             <div class="sa">
                 <h2>Avoid Waiting in Queues</h2>
+                <span><button class="jn" (click)="checkinDetailsView()">Checkin</button></span>
                 <h5 style="color:white">Find Service Provider</h5>
                 <ng-container *ngIf="domain_obtained==true">
                     <app-search [showopennow]="0" [searchfields]="searchfields" [domainlistpassed]="domainlist_data"
@@ -93,18 +95,19 @@
             <div class="item">
                 <div class="row no-margin-lr">
                     <div class="col-md-6 col-lg-6 jd_feat">
-                        <img [lazySrc]="images.jaldee_find" lazySrcVisible="visible" class="type1 jaldee-find" alt="Jaldee find" />
+                        <img [lazySrc]="images.jaldee_find" lazySrcVisible="visible" class="type1 jaldee-find"
+                            alt="Jaldee find" />
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jd_feat_txt">
                             <h5 class="white-text" style="color:#1E4079;text-transform:none">
-                              Search service provider/business:
+                                Search service provider/business:
                             </h5>
                             <ul>
-                              <li>Near me</li>
-                              <li>By Name</li>
-                              <li>By Location</li>
-                              <li>Verified by Jaldee</li>
-                              <li>By the User Rating</li>
-                              <li>By Keywords (Doctor, salon…etc.)</li>
+                                <li>Near me</li>
+                                <li>By Name</li>
+                                <li>By Location</li>
+                                <li>Verified by Jaldee</li>
+                                <li>By the User Rating</li>
+                                <li>By Keywords (Doctor, salon…etc.)</li>
                             </ul>
                         </div>
                     </div>
@@ -120,9 +123,10 @@
                             alt="Jaldee Checkin" />
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jd_feat_txt">
                             <h5 class="white-text " style="color:#1E4079;text-transform:none">
-                              Book appointments online & avoid waiting in queues<br/>
-Get added to the online queue and get on with your daily stuff; Reach the venue only at the time of consultation/appointment.
-</h5>
+                                Book appointments online & avoid waiting in queues<br />
+                                Get added to the online queue and get on with your daily stuff; Reach the venue only at
+                                the time of consultation/appointment.
+                            </h5>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 case-study-img cover-background bg-image-srcset">
@@ -137,7 +141,8 @@ Get added to the online queue and get on with your daily stuff; Reach the venue 
                             alt="Jaldee alert" />
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jd_feat_txt">
                             <h5 class="white-text" style="color:#1E4079;text-transform:none">
-                              Neither miss an appointment nor run late. <br/>Get Jaldee Alerts in your Mobile phone, until the appointment is over.
+                                Neither miss an appointment nor run late. <br />Get Jaldee Alerts in your Mobile phone,
+                                until the appointment is over.
                             </h5>
                         </div>
                     </div>
@@ -152,7 +157,8 @@ Get added to the online queue and get on with your daily stuff; Reach the venue 
                         <img class="type3 jaldee-coupons" [lazySrc]="images.jaldee_coupons" lazySrcVisible="visible"
                             alt="Jaldee coupon" />
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jd_feat_txt">
-                            <h5 class="white-text " style="color:#1E4079;text-transform:none">Search for providers offering discounts. Apply Jaldee coupon at the time of check-in / billing</h5>
+                            <h5 class="white-text " style="color:#1E4079;text-transform:none">Search for providers
+                                offering discounts. Apply Jaldee coupon at the time of check-in / billing</h5>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 case-study-img cover-background bg-image-srcset">
@@ -163,9 +169,11 @@ Get added to the online queue and get on with your daily stuff; Reach the venue 
             <div class="item">
                 <div class="row no-margin-lr ">
                     <div class="col-md-6 col-lg-6 jd_feat">
-                        <img class="type4 jaldee-pay" [lazySrc]="images.jaldee_pay" lazySrcVisible="visible" alt="Jaldee pay" />
+                        <img class="type4 jaldee-pay" [lazySrc]="images.jaldee_pay" lazySrcVisible="visible"
+                            alt="Jaldee pay" />
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 jd_feat_txt">
-                            <h5 class="white-text " style="color:#1E4079;text-transform:none">Easy & secure way to pay for services
+                            <h5 class="white-text " style="color:#1E4079;text-transform:none">Easy & secure way to pay
+                                for services
                             </h5>
                         </div>
                     </div>
@@ -183,7 +191,8 @@ Get added to the online queue and get on with your daily stuff; Reach the venue 
             <div class="col-lg-2 col-md-2">
             </div>
             <div class="col-lg-8 col-md-8">
-                <h2 style="text-align:center;margin-top:60px;">Thousands of hours are wasted by individuals, waiting in long & boring queues</h2>
+                <h2 style="text-align:center;margin-top:60px;">Thousands of hours are wasted by individuals, waiting in
+                    long & boring queues</h2>
                 <img [lazySrc]="images.jaldee_graph" lazySrcVisible="visible" alt="Jaldee Banner">
             </div>
             <div class="col-lg-2 col-md-2">
@@ -206,7 +215,7 @@ Get added to the online queue and get on with your daily stuff; Reach the venue 
 
                     <h1 class="margin-five no-margin-top">Are you a Service provider / Business owner?</h1>
                     <p class="text-med width-90 sm-width-100 no-margin-bottom">
-                      Build Your Brand at Jaldee Business<br />
+                        Build Your Brand at Jaldee Business<br />
                         ● Login with Jaldee & Project your business online<br />
                         ● Start FREE<br />
                         ● Get 24/7 online presence<br />

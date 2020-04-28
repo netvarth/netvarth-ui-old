@@ -291,5 +291,7 @@ export class HomeComponent implements OnInit {
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
+  checkinDetailsView() {
+    this.routerobj.navigate(['/waitlist-details/ecid']);
+  }
 }
-

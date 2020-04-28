@@ -32,7 +32,7 @@ import { AddInboxMessagesComponent } from './shared/components/add-inbox-message
 import { ExistingCheckinComponent } from './shared/components/existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from './shared/components/service-detail/service-detail.component';
 import { ConsumerRateServicePopupComponent } from './shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
-import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
+import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -63,9 +63,7 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
-import { ProvidersignupComponent } from './shared/components/providersignup/providersignup.component';
-
-
+import { WaitlistDetailsComponent } from './shared/components/waitlist-details/waitlist-details.component';
 
 @NgModule({
   declarations: [
@@ -90,8 +88,7 @@ import { ProvidersignupComponent } from './shared/components/providersignup/prov
     AdminLoginComponent,
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
-    
-    
+    WaitlistDetailsComponent
     // PhomeComponent,
   ],
   entryComponents: [

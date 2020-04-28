@@ -599,10 +599,14 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, data);
   }
   addCustomerDonation(postData) {
-    return this.servicemeta.httpPost('consumer/donation' , postData);
+    return this.servicemeta.httpPost('consumer/donation', postData);
   }
   getDonationByConsumerUUID(uuid, accountid) {
     const url = 'consumer/donation/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+  getWaitlistDetailsbyId(encId) {
+    const url = 'consumer/waitlist/enc/' + encId;
     return this.servicemeta.httpGet(url);
   }
 }

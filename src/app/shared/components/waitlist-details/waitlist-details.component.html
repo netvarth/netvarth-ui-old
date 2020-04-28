@@ -1,0 +1,85 @@
+<header [class]="headercls">
+  <div class="container">
+    <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+      <div class="lgo col-md-3 col-xs-5 pull-left">
+        <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
+      </div>
+      <section>
+        <div class="content comn-cls checkin-details">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 no-padding-small">
+                <div class="card">
+                  <div class="c-details">
+                    <h2>Checkin Details</h2>
+                    <div class="tp">
+                      <div class="ynw-common-form-nm col-md-12">
+                        <div class="form-group mgn-up-10 sc-frm no-padding">
+                          <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
+                            <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
+                              <mat-form-field>
+                                <input matInput placeholder="Enter waitlist ecId" type="text" class="form-control"
+                                  [(ngModel)]="waitlistId" autocomplete="off">
+                              </mat-form-field>
+                            </div>
+                            <div class="col-md-2 col-xs-2 col-sm-2">
+                              <i class="fa fa-search pointer-cursor" (click)="getVirtualCallingModesList()"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class="ynw-common-form-nm">
+                    <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
+                        <mat-form-field>
+                            <input matInput placeholder="Enter waitlist ecId" type="text"
+                                class="form-control" [(ngModel)]="waitlistId" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 col-xs-2 col-sm-2">
+                        <i class="fa fa-search pointer-cursor" (click)="getVirtualCallingModesList()"></i>
+                    </div>
+                    </div> -->
+                      <!-- <div class="form-group col-md-6 mgn-lt-20">
+                    <div class="ynw-common-form-nm">
+                        <mat-form-field>
+                            <input [(ngModel)]="waitlistId" matInput type="text" class="form-control"
+                              placeholder="Enter waitlist ecId" autocomplete="off">
+                          </mat-form-field>
+                          <span><button (click) = "getVirtualCallingModesList()"> OK</button></span>
+                    </div>
+                  </div> -->
+                      <div class="item"><span class="ttle">Waitlist for cap</span>
+                        <span class="waitlist_for">
+                          userName
+                          <span>(Mobile Number)</span>
+                        </span>
+                      </div>
+                      <div class="item"><span class="ttle">Loc cap</span><span>Location</span></div>
+                      <div class="item"><span class="ttle">Service Cap</span><span>Service Name<span>
+                            [Department name]</span></span></div>
+                      <div class="item"><span class="ttle">Q Caption</span>
+                        Start Time - End Time</div>
+                      <div class="item"><span class="ttle">Pyment status caption</span>
+                        <ng-container>
+                          <span class="paid-n"><span class="text">Not paid caption</span></span>
+                          <span class="paid-h"><span class="text">Partially paid caption</span></span>
+                          <span class="paid-f"><span class="text">Paid Caption</span></span>
+                          <span class="paid-f"><span class="text">Refund</span></span>
+                        </ng-container>
+                      </div>
+                      <div class="item"><span class="ttle">Party size caption</span><span>
+                          Party size</span></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</header>
+<app-footer [includedfrom]="'home'"></app-footer>

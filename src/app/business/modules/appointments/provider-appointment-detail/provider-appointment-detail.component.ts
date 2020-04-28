@@ -51,7 +51,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   breadcrumbs_init: any = [
     {
       title: 'Appointments',
-      url: '/provider/check-ins'
+      url: '/provider/appointments'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

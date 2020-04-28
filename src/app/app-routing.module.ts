@@ -9,6 +9,7 @@ import { BusinessPageComponent } from './shared/components/business-page/busines
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
+import { WaitlistDetailsComponent } from './shared/components/waitlist-details/waitlist-details.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -39,7 +40,9 @@ const routes: Routes = [
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
-      { path: 'manage/:id', component: ManageProviderComponent}
+    { path: 'manage/:id', component: ManageProviderComponent },
+    { path: 'waitlist-details/:id', component: WaitlistDetailsComponent }
+
     // { path: '**', redirectTo: 'not-found' }
 ];
 @NgModule({
