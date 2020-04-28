@@ -420,8 +420,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
-    this.breadcrumb_moreoptions = {'show_learnmore': true, 'scrollKey': 'appointments',
-    'actions': [ { 'title': 'Help', 'type': 'learnmore' }]
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'appointments',
+      'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     };
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
@@ -726,10 +727,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           const selQdetails = this.queues.filter(q => q.id === this.selQId);
           this.servicesCount = selQdetails[0].services.length;
         } else {
-          if (view.customViewConditions.queues) {
+          if (view.customViewConditions.queues && view.customViewConditions.queues[0]) {
             this.selQId = view.customViewConditions.queues[0]['id'];
           }
-          if (view.customViewConditions.queues[0].services) {
+          if (view.customViewConditions.queues[0] && view.customViewConditions.queues[0].services) {
             this.servicesCount = view.customViewConditions.queues[0].services.length;
           }
           this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
@@ -826,14 +827,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getProviderSchedulesbyDate(date).subscribe(queues => {
       this.queues = queues;
       const selQ = this.queues.filter(q => q.id === this.selQId);
-      if (selQ.length === 0) {
+      if (selQ.length === 0 && this.queues.length > 0) {
         this.selQId = this.queues[0].id;
         this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       }
       this.load_waitlist = 0;
       let Mfilter = this.setFilterForApi();
-      Mfilter['schedule-eq'] = this.selQId;
+      if (this.selQId) {
+        Mfilter['schedule-eq'] = this.selQId;
+      }
       const promise = this.getFutureAppointmentsCount(Mfilter);
       promise.then(
         result => {
@@ -880,7 +883,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loading = true;
       this.load_waitlist = 0;
       let Mfilter = this.setFilterForApi();
-      Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
+      if (this.selQidsforHistory.length !== 0) {
+        Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
+      }
       // const promise = this.getHistoryAppointmentsCount(Mfilter);
       // promise.then(
       //   result => {
@@ -1249,7 +1254,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       check_in_start_date: false,
       check_in_end_date: false,
       location_id: false,
-      age: false,  
+      age: false,
       gender: false
     };
     this.filter = {
@@ -1585,10 +1590,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Router Navigations
    */
   gotoLocations() {
-    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
   }
   gotoCustomViews() {
-    this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
+    this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
   apptClicked(time?) {
     let slot = '';
