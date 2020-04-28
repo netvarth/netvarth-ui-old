@@ -351,7 +351,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.loctype = obj.lontyp;
       this.latitude = obj.la;
       this.longitude = obj.lo;
-      this.kw = obj.kw.trim();
+      if (obj.kw) {
+        this.kw = obj.kw.trim();
+      }
       this.kwautoname = obj.kwauto;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
@@ -1637,7 +1639,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   showProviderDetails(provid, locId) {
-    this.routerobj.navigate(['searchdetail', provid], {queryParams: {locId : locId}});
+    this.routerobj.navigate(['searchdetail', provid], { queryParams: { locId: locId } });
   }
 
   handlerefineddomainchange(val) {
