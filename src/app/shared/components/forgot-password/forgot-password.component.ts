@@ -115,14 +115,18 @@ export class ForgotPasswordComponent {
   onPasswordSubmit(submit_data) {
 
     this.resetApiErrors();
+  
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
+    console.log(type)
     const post_data = { password: submit_data.new_password };
     this.shared_services.changePassword(type, this.otp, post_data)
       .subscribe(
         () => {
           this.api_success = 'Password changed successfully .. you will be redirected to the login page now';
           setTimeout(() => {
-
+            if(type=='provider'){
+              this.dialogRef.close();
+            }
             this.retonChangePassword.emit();
           }, projectConstants.TIMEOUT_DELAY);
 

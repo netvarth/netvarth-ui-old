@@ -9,6 +9,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 @Component({
   selector: 'app-phome',
   templateUrl: './phome.component.html'
@@ -34,6 +35,7 @@ export class PhomeComponent implements OnInit {
   carouselPricing;
   activePrice = '';
   showMoreList: any = {};
+
   images = {
     special_offers: 'assets/images/special offer-01-01.png',
     jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -81,7 +83,23 @@ this.qParams = data;
      doForgotPassword() {
       this.resetApiErrors();
       this.api_loading = false;
-      this.step = 2;
+      
+      
+        const dialogRef = this.dialog.open(ForgotPasswordComponent, {
+          width: '50%',
+          panelClass: ['loginmainclass', 'popup-class'],
+          disableClose: true,
+          data: {
+            type: origin,
+            is_provider: 'true'
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === 'showsignupfromlogin') {
+            this.doSignup(origin);
+          }
+        });
+      
 
      }
      cancelForgotPassword() {
@@ -294,6 +312,9 @@ this.qParams = data;
     }
   }
 
+  onChangePassword() {
+    this.step = 1;
+  }
 
   doSignuppage() {
     this.routerobj.navigate(['provider-home/providersignup']);

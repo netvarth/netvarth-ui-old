@@ -14,6 +14,8 @@ import { FormMessageDisplayModule } from '../../modules/form-message-display/for
 import { jaldeepricingModule } from './pricing/jaldeepricing.module';
 import { ProvidersignupComponent } from '../providersignup/providersignup.component';
 import { ProvidersignupModule } from '../providersignup/providersignup.module';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { ForgotPasswordModule } from '../forgot-password/forgot-password.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -28,12 +30,15 @@ import { ProvidersignupModule } from '../providersignup/providersignup.module';
         FormMessageDisplayModule,
         ReactiveFormsModule,
         jaldeepricingModule,
-        ProvidersignupModule
+        ProvidersignupModule,
+        ForgotPasswordModule
         
     ],
     declarations: [
-        PhomeComponent,],
+        PhomeComponent
+       ],
          entryComponents: [
+            
        
         ],
         exports: [PhomeComponent]

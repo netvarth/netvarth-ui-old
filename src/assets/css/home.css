@@ -6509,3 +6509,10 @@ padding-bottom: 40px;
 .containerbanner{
 margin-left: 70px;
 }
+@media only screen and (max-width:620px) {
+
+
+.containerbanner{
+  font-size: 14px !important;
+}
+}
