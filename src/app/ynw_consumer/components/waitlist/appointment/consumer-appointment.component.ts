@@ -1143,7 +1143,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services.getServicesByLocationId(locid)
+        this.shared_services. getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;

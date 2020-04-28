@@ -38,6 +38,7 @@ export class ApplyLabelComponent implements OnInit {
     api_success = null;
     defaultShortValue = true;
     short_value;
+    exceedLimit = false;
     // dataParams;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
@@ -54,7 +55,7 @@ export class ApplyLabelComponent implements OnInit {
         this.checkin = checkin.checkin;
         this.label = checkin.label;
         if (this.source === 'newvalue') {
-            this.caption = 'Create label ' + this.label.label;
+            this.caption = 'Create label ' + this.label.displayName;
         } else {
             this.caption = 'Create Label';
         }
@@ -140,8 +141,12 @@ export class ApplyLabelComponent implements OnInit {
                 if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
                     valueSet.push(valset);
                 }
+                let label = '';
+                if (this.labelname) {
+                    label = this.labelname.trim().replace(/ /g, '_');
+                }
                 const post_data = {
-                    'label': this.labelname.replace(' ', '_'),
+                    'label': label,
                     'displayName': this.labelname,
                     'valueSet': valueSet,
                 };
@@ -182,15 +187,22 @@ export class ApplyLabelComponent implements OnInit {
                         }, projectConstants.TIMEOUT_DELAY);
                     },
                     error => {
-                        this.shared_functions.apiErrorAutoHide(this, error);
-                        // this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                        // this.shared_functions.apiErrorAutoHide(this, error);
+                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
                     });
             }
         }
-        console.log(this.api_error);
     }
     resetApiErrors() {
         this.api_error = [];
         this.api_success = [];
+    }
+    valueKeyup(e) {
+        if (e.target.value.length > 15) {
+            this.defaultShortValue = false;
+            this.exceedLimit = true;
+        } else {
+            this.exceedLimit = false;
+        }
     }
 }
