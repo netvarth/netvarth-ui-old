@@ -609,4 +609,10 @@ export class SharedServices {
     const url = 'consumer/waitlist/enc/' + encId;
     return this.servicemeta.httpGet(url);
   }
+  getServicesforAppontmntByLocationId(locid) {
+    if (locid) {
+      const url = 'consumer/appointment/service/' + locid;
+      return this.servicemeta.httpGet(url);
+    }
+  }
 }
