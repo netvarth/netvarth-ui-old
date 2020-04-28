@@ -18,7 +18,7 @@ export class DonationMgrComponent implements OnInit {
       title: 'Donation Manager ',
     }
   ];
-  domain :any;
+  domain: any;
   breadcrumbs = this.breadcrumbs_init;
   donations_statusstr: string;
   donations_status: any;
@@ -31,26 +31,26 @@ export class DonationMgrComponent implements OnInit {
 
   ngOnInit() {
     this.getDonationStatus();
-    this.getcauseCount();
+    this.getCauseCount();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
   }
-  getcauseCount() {
-    // const filter = { 'scope-eq': 'account' };
-    this.provider_services.getcauseCount()
+  getCauseCount() {
+    const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' };
+    this.provider_services.getCauseCount(filter)
       .subscribe(
         data => {
           this.cause_count = data;
         });
   }
-  gotocauses() {
-    this.router.navigate(['provider', 'settings', 'donationmanager','causes']);
+  gotoCauses() {
+    this.router.navigate(['provider', 'settings', 'donationmanager', 'causes']);
   }
-      
+
   handle_Donations(event) {
     const is_Donation = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setDonations(is_Donation)
-      .subscribe( 
+      .subscribe(
         () => {
           this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getDonationStatus();

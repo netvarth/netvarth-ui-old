@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DonationCauseListComponent } from './list/donation-list.component';
-import { DonationDetailComponent } from './detail/donation-detail.component';
+import { DonationCauseListComponent } from './causes/causes.component';
 import { DonationMgrComponent } from './donation-mgr.component';
-import { from } from 'rxjs';
+import { CauseDetailComponent } from './causes/detail/cause-details.component';
 const routes: Routes = [
     { path: '', component: DonationMgrComponent },
     { path: 'causes', component: DonationCauseListComponent },
-    { path: ':id', component: DonationDetailComponent }
+    { path: 'causes/:id', component: CauseDetailComponent },
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DonationRoutingModule {}
+export class DonationMgrRoutingModule { }

@@ -1,19 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../../../shared/constants/project-messages';
+import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Subscription } from 'rxjs';
-import { ServicesService } from '../../../../../shared/modules/service/services.service';
-import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
+import { ServicesService } from '../../../../../../shared/modules/service/services.service';
+import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
 
 @Component({
-    selector: 'app-donation-detail',
-    templateUrl: './donation-detail.component.html'
+    selector: 'app-cause-details',
+    templateUrl: './cause-details.component.html'
 })
 
-export class DonationDetailComponent implements OnInit, OnDestroy {
+export class CauseDetailComponent implements OnInit, OnDestroy {
     actionparam = 'show'; // To know whether clicked edit/view from the services list page
     serviceParams = { 'action': 'show' };
     service_id = null;
@@ -117,7 +117,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
                             this.serviceParams['action'] = 'show';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
-                            this.router.navigate(['provider/settings/appointmentmanager/services']);
+                            this.router.navigate(['provider/settings/donationmanager/causes']);
                         }
                     }
                 }
@@ -300,8 +300,7 @@ export class DonationDetailComponent implements OnInit, OnDestroy {
     }
     // Gallery Section ends
     goBack() {
-        this.router.navigate(['provider', 'settings', 'appointmentmanager',
-            'services']);
+        this.router.navigate(['provider', 'settings', 'donationmanager', 'causes']);
         this.api_loading = false;
     }
 }

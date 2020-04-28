@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -7,7 +7,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-donation-causelist',
-    templateUrl: './donation-list.component.html'
+    templateUrl: './causes.component.html'
 })
 export class DonationCauseListComponent implements OnInit, OnDestroy {
     add_new_serv_cap = Messages.SER_ADD_NEW_SER_CAP;
@@ -62,48 +62,30 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     }
     performActions(action) {
         if (action === 'addcause') {
-            this.router.navigate(['provider', 'settings', 'donationmanager', 'add']);
+            this.router.navigate(['provider', 'settings', 'donationmanager', 'causes', 'add']);
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->causes']);
         }
     }
     getServices() {
         this.api_loading = true;
-        const filter = { 'scope-eq': 'account' };
-        this.provider_services.getDonationServices()
-        .subscribe(
-            data => {
-                this.service_list = data;
-                this.api_loading = false;
-            },
-            error => {
-                this.api_loading = false;
-                this.shared_functions.apiErrorAutoHide(this, error);
-            }
-        ); 
+        const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' };
+        this.provider_services.getCauses(filter)
+            .subscribe(
+                data => {
+                    this.service_list = data;
+                    this.api_loading = false;
+                },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
     }
 
     changeServiceStatus(service) {
         this.provider_shared_functions.changeServiceStatus(this, service);
     }
-    changeLiveTrackStatus(service) {
-        if (service.livetrack === false) {
-            this.trackStatus = 'Enable';
-        } else {
-            this.trackStatus = 'Disable'; 
-        }
-        this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
-      .subscribe(
-        () => {
-           this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-
-    }
-
     disableService(service) {
         this.provider_services.disableService(service.id)
             .subscribe(
@@ -115,7 +97,6 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                     this.getServices();
                 });
     }
-
     enableService(service) {
         this.provider_services.enableService(service.id)
             .subscribe(
@@ -131,11 +112,11 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'donationmanager', service.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'donationmanager', 'causes', service.id], navigationExtras);
     }
 
     goServiceDetail(service) {
-        this.router.navigate(['provider', 'settings', 'donationmanager', service.id]);
+        this.router.navigate(['provider', 'settings', 'donationmanager', 'causes', service.id]);
     }
 
     getDomainSubdomainSettings() {
@@ -161,4 +142,4 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     getAppxTime(waitlist) {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
-} 
+}

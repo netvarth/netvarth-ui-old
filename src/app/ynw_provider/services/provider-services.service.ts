@@ -1222,12 +1222,28 @@ export class ProviderServices {
       const url = 'provider/account/settings/virtualCallingModes';
       return this.servicemeta.httpPut(url, post_data);
    }
-   getcauseCount() {
+   getDonationsCount(filter) {
       const url = 'provider/donation/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getDonations(filter) {
+      const url = 'provider/donation';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getCauseCount(filter) {
+      const url = 'provider/services/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getCauses(filter) {
+      const url = 'provider/services';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   emailCheckin(uuid) {
+      const url = 'provider/waitlist/' + uuid + '/email';
       return this.servicemeta.httpGet(url);
    }
-   getDonationServices() {
-      const url = 'provider/donation';
+   smsCheckin(uuid) {
+      const url = 'provider/waitlist/' + uuid + '/sms';
       return this.servicemeta.httpGet(url);
    }
 }

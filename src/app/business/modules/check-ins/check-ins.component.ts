@@ -1463,6 +1463,28 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
+  smsCheckin(source) {
+    const checkinlist = this.selectedCheckin[source];
+    this.provider_services.smsCheckin(checkinlist.ynwUuid).subscribe(
+      () => {
+        this.shared_functions.openSnackBar('Check-in details mailed successfully');
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  emailCheckin(source) {
+    const checkinlist = this.selectedCheckin[source];
+    this.provider_services.emailCheckin(checkinlist.ynwUuid).subscribe(
+      () => {
+        this.shared_functions.openSnackBar('Check-in details sent successfully');
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
   printCheckin(source) {
     const checkinlist = this.selectedCheckin[source];
 
@@ -1648,9 +1670,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        source: source
+        source : source
       }
-    };
+  };
     this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
   }
   showAdjustDelay() {
@@ -1765,9 +1787,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
       },
-        (error) => {
-          resolve([]);
-        });
+      (error) => {
+        resolve([]);
+      });
     });
   }
   onChangeLocationSelect(event) {

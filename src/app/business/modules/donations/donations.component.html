@@ -1,0 +1,95 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading"
+      (performAction)="performActions($event)">
+    </app-breadcrumb>
+  </section>
+  <section class="dashboard content customers" *ngIf="!apiloading">
+    <div class="col-md-12 no-padding-small">
+      <div class="row">
+        <div class="card p0 w-dta ">
+          <div class="col-md-12 no-padding">
+            <ul class="nav cust-dash jd-custom-nav">
+              <li class="dropdown notifications-menu">
+                <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+                  <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="filtericonTooltip">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+  
+          <aside class="filterSidebar" *ngIf="filter_sidebar">
+            <section class="sidebar sidebar-bottom">
+              <div class="filterClosebtn">
+                <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+              </div>
+              <ul class="sidebar-menu">
+                <div class="filterTextinput">
+                  <li class="filterli">
+                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                  </li>
+                </div>
+                <div class="filterTextinput">
+                  <li class="filterli filterDatepicker">
+                    <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                      (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </li>
+                </div>
+                <div class="filterTextinput">
+                  <li class="filterli">
+                    <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                      (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox"
+                      placeholder="Phone Number">
+                  </li>
+                </div>
+                <div class="filterTextinput">
+                  <li class="filterli filterDatepicker">
+                    <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                      (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
+                  </li>
+                </div>
+              </ul>
+            </section>
+          </aside>
+  
+          <div class="col-md-12 cust-sect no-padding">
+            <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let donation of donations let i=index "
+              (click)="selectcustomers(i)">
+              <div class="col-md-12 col-sm-12 col-xs-12 no-padding-small" [class.selected-customer]="donationSelected[i]">
+                <div class="col-md-4 col-sm-7 mt5">
+                  <!-- {{customer.firstName}} {{customer.lastName}} -->
+                </div>
+                <!-- <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.phoneNo.length === 10">
+                  <span><i class="fa fa-mobile"></i>
+                    {{customer.phoneNo}}</span></div>
+                <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.email"><i
+                      class="fa fa-envelope"></i>{{customer.email}}</span></div>
+                <div class="col-md-2 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
+                    {{customer.lastVisitedDate | date: dateFormat }}</span></div>
+                <div class="clearfix"></div> -->
+              </div>
+            </div>
+            <div class="col-md-12 custs  pt10 pb10" *ngIf = "loadComplete && donations.length === 0">
+              No Donations Found
+            </div>
+          </div>
+          <div class="search_paging" *ngIf="loadComplete">
+            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <div *ngIf="apiloading" style="margin-top: 100px">
+    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+  </div>

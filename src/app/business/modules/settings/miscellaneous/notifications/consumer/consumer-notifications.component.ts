@@ -58,9 +58,10 @@ export class ConsumerNotificationsComponent implements OnInit {
   earlyNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   finalNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
+  wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY': false, 'PREFINAL': false, 'FINAL': false };
+  cSettings: any = { 'EARLY': false, 'PREFINAL': false, 'FINAL': false, 'WAITLISTADD': false };
   consumerNotification;
   notification_statusstr: string;
   constructor(private sharedfunctionObj: SharedFunctions,
@@ -147,6 +148,9 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL') {
         this.cSettings['FINAL'] = true;
         this.finalNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'WAITLISTADD') {
+        this.cSettings ['WAITLISTADD'] = true;
+        this.wlAddNotificationSettings = notificationObj;
       }
     });
   }
@@ -167,6 +171,8 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalNotificationSettings;
     } else if (type === 'FINAL') {
       activeInput = this.finalNotificationSettings;
+    } else if (type === 'WAITLISTADD') {
+      activeInput = this.wlAddNotificationSettings;
     }
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(

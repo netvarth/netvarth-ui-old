@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { DonationCauseListComponent } from './list/donation-list.component';
-import { DonationDetailComponent } from './detail/donation-detail.component';
+import { DonationCauseListComponent } from './causes/causes.component';
 import { CommonModule } from '@angular/common';
-import { DonationRoutingModule } from './donation-mgr.routing.module';
+import { DonationMgrRoutingModule } from './donation-mgr.routing.module';
 import { MatSlideToggleModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGalleryModule } from 'angular-modal-gallery';
@@ -15,11 +14,12 @@ import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module
 import { ServicesService } from '../../../../shared/modules/service/services.service';
 import { ServiceModule } from '../../../../shared/modules/service/service.module';
 import { DonationMgrComponent } from './donation-mgr.component';
+import { CauseDetailComponent } from './causes/detail/cause-details.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        DonationRoutingModule,
+        DonationMgrRoutingModule,
         BreadCrumbModule,
         LoadingSpinnerModule,
         MaterialModule,
@@ -34,7 +34,7 @@ import { DonationMgrComponent } from './donation-mgr.component';
     ],
     declarations: [
         DonationCauseListComponent,
-        DonationDetailComponent,
+        CauseDetailComponent,
         DonationMgrComponent
     ],
     exports: [

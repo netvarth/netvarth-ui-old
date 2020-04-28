@@ -679,7 +679,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getCauseCount() {
-    this.provider_services.getcauseCount()
+    const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' };
+    this.provider_services.getCauseCount(filter)
     .subscribe(
       data => {
         this.cause_count = data;

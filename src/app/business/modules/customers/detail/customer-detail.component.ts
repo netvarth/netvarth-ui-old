@@ -122,13 +122,15 @@ export class CustomerDetailComponent implements OnInit {
             'lastName': form_data.last_name,
             'dob': form_data.dob,
             'gender': form_data.gender,
-            'email': form_data.email_id,
             'phoneNo': form_data.mobile_number,
             'address': form_data.address,
             //   }
         };
         if (form_data.mobile_number) {
             post_data['countryCode'] = '+91';
+        }
+        if (form_data.email_id && form_data.email_id !== '') {
+            post_data['email'] = form_data.email_id;
         }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(

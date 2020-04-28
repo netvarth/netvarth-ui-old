@@ -789,6 +789,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsCheckin('started')"></i> </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailCheckin('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                   <div class="statuslink "
@@ -969,6 +973,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsCheckin('new')"></i> </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailCheckin('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1 && calculationmode=='NoCalc' && showToken"
@@ -1169,6 +1177,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsCheckin('completed')"></i> </div>
+                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailCheckin('completed')"></i> </div>
                   <div class="statuslink " *ngIf="completedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>

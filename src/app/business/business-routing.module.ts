@@ -44,7 +44,8 @@ const routes: Routes = [
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
       { path: 'bwizard', component: ProviderbWizardComponent },
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
-      { path: 'dashboardhome', loadChildren: () => import('./modules/dashboard-home/dashboard-home/dashboard-home.module').then(m => m.DashboardHomeModule) },
+      { path: 'donations', loadChildren: () => import('./modules/donations/donations.module').then(m => m.DonationsModule) },
+      { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
 
     ]
   }
