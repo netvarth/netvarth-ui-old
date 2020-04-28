@@ -11,10 +11,12 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { OwlModule } from 'ngx-owl-carousel';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
+import { ConsumerDonationPaymentComponent } from './payment/payment.component';
 
 @NgModule({
     declarations: [
-        ConsumerDonationComponent
+        ConsumerDonationComponent,
+        ConsumerDonationPaymentComponent
     ],
     imports: [
         FormMessageDisplayModule,

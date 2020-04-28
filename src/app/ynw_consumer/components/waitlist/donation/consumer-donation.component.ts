@@ -606,7 +606,7 @@ export class ConsumerDonationComponent implements OnInit {
                 'id': this.customer_data.id
             },
             'service': {
-                'id': 6
+                'id': 7
             },
             'location': {
                 'id': this.businessjson.baseLocation.id
@@ -626,12 +626,11 @@ export class ConsumerDonationComponent implements OnInit {
         this.api_loading = true;
         this.shared_services.addCustomerDonation(post_Data)
             .subscribe(data => {
-                // const navigationExtras: NavigationExtras = {
-                //     queryParams: { account_id: this.account_id }
-                // };
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('DONATE_SUCC'));
-               this.router.navigate(['consumer']);
-              //this.router.navigate(['consumer', 'checkin', 'payment', retData], navigationExtras);
+                const retData = data;
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { account_id: this.account_id }
+                };
+              this.router.navigate(['consumer', 'donation', 'payment', retData], navigationExtras);
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

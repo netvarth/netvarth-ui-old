@@ -28,7 +28,7 @@ const routes: Routes = [
       { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)},
       { path: 'checkindetails', component: checkindetailcomponent, canActivate: [AuthGuardLogin]},
       { path: 'appointment', component: ConsumerAppointmentComponent },
-      { path: 'donation', component: ConsumerDonationComponent }
+      { path: 'donation', loadChildren: () => import('../ynw_consumer/components/waitlist/donation/consumer-donation.module').then(m => m.ConsumerDonationModule) }
     ]
   }
 ];
