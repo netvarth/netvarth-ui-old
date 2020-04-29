@@ -108,7 +108,8 @@
                       <input type="password" matInput class="form-control" id="password" placeholder="Password"
                         formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
                     </mat-form-field>
-                    <a style="margin-top:30px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
+                    <a style="margin-top:30px;cursor: pointer;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
+                    
                   
                     <app-field-error-display
                       [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
@@ -298,15 +299,17 @@
             <div class="about_us_text">
               <h2><strong>Jaldee Online</strong></h2>
               <p>Create your online profile and be visible to consumers across the country. Consumers can find you
-                online and avail your services.
+                online and avail your services.<br>
+                <br>
                 Get listed in Jaldee and increase your brand awareness
                 Consumers can search you using keywords such as specialisations, domains, services etc
                 Display your amenities by uploading images to the image gallery
-                GPS and google map integration help your consumers to locate you easily.
+                GPS and google map integration help your consumers to locate you easily.<br>
+                <br>
                 Get online enquiries from consumers through Jaldee and give more awareness about your services.
                 Enable Jaldee Coupons and attract more consumers.
               </p>
-              <a href="#" class="btn_2">Explore</a>
+              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6">
@@ -321,9 +324,15 @@
           <div class="col-md-6 col-lg-5">
             <div class="about_us_text">
               <h2><strong>Jaldee PoS/Billing</strong></h2>
-              <p class="text-left"> Affordable cloud based PoS, supports billing, electronic receipts and
-                cashless transactions. Jaldee is fully integrated with credit card, debit cards, UPI and more </p>
-              <a href="#" class="btn_2">Explore</a>
+              <p class="text-left"> Affordable cloud based PoS. No separate hardware required. Data is safe in the cloud servers. 
+                Cashless transactions. Jaldee is fully integrated with Credit card, Debit card and UPI
+                Consumer one-click self pay system.
+                <br>
+                <br>
+                Reduce no show up by accepting prepayments.
+                Supports electronic receipts.
+                </p>
+              <!-- <a href="#" class="btn_2">Explore</a> -->
             </div>
           </div>
           <div class="col-md-6 col-lg-6 col-sm-12">

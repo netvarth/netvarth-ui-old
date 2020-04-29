@@ -13,8 +13,9 @@
               [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
               maxlength="5">
               
-            <button type="submit" mat-button class="btnSubmit2" [disabled]="buttonclicked || !otp_form.valid">{{ok_btn_cap}}</button>
+            
           </mat-form-field>
+          <button type="submit" mat-button class="btnSubmit2" [disabled]="buttonclicked || !otp_form.valid">{{ok_btn_cap}}</button>
           <div class="error">
           <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
             errorMsg="Please enter a valid OTP.">

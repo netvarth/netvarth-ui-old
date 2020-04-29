@@ -838,9 +838,9 @@ input[type=checkbox]:not(old):checked + label > span:before {
 
 .domainstyle {
   background-color: #4cb7ff !important;
-  display: block !important;
+  /* display: block !important;
     padding: 0 !important;
-    margin: 2px 0 0 2px  !important;
+    margin: 2px 0 0 2px  !important; */
 
 
 }

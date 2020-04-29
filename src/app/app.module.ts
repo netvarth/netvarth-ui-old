@@ -140,6 +140,7 @@ import { WaitlistDetailsComponent } from './shared/components/waitlist-details/w
     SalesChannelModule,
     ForgotPasswordModule,
     SetPasswwordModule
+
   ],
   providers: [
     AuthGuardConsumer,
@@ -151,6 +152,7 @@ import { WaitlistDetailsComponent } from './shared/components/waitlist-details/w
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,
       multi: true
+      
     },
     SharedServices,
     SharedFunctions,
