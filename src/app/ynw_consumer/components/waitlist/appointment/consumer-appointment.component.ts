@@ -702,17 +702,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUUID);
                 }
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
-                this.router.navigate(['consumer']);
+               // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+               // this.router.navigate(['consumer']);
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
-                // const navigationExtras: NavigationExtras = {
-                //     queryParams: { account_id: this.account_id }
-                // };
-                // if (this.sel_ser_det.isPrePayment) {
-                //     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                // } else {
-                //     this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
-                // }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { account_id: this.account_id }
+                };
+                if (this.sel_ser_det.isPrePayment) {
+                    this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
+                } else {
+                    this.router.navigate(['consumer', 'appointment', 'track', this.trackUuid], navigationExtras);
+                }
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1143,7 +1143,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services.getServicesforAppontmntByLocationId(locid)
+        this.shared_services. getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;

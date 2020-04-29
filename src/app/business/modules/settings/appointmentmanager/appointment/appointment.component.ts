@@ -179,7 +179,8 @@ export class AppointmentComponent implements OnInit {
     showEditView = false;
     slots;
     freeSlots: any = [];
-    isFrom = '';
+    comingSchduleId= '';
+    slotTime = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -202,8 +203,8 @@ export class AppointmentComponent implements OnInit {
                 );
             }
             if (qparams.timeslot) {
-                this.apptTime = qparams.timeslot;
-                this.isFrom = qparams.origin;
+                this.slotTime = qparams.timeslot;
+                this.comingSchduleId= qparams.scheduleId;
             }
         });
     }
@@ -382,7 +383,7 @@ export class AppointmentComponent implements OnInit {
                                 this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
                                 this.note_placeholder = 'Add Note';
                             }
-                            this.shared_services.getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
+                            this.shared_services. getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
                                 (services: any) => {
                                     this.servicesjson = services;
                                     this.serviceslist = services;
@@ -1326,13 +1327,31 @@ export class AppointmentComponent implements OnInit {
                         }
                     }
                     console.log(this.freeSlots);
-                    if (this.isFrom === '') {
+                    console.log(this.comingSchduleId);
+                    if (this.comingSchduleId === '') {
                         this.apptTime = this.freeSlots[0].time;
                         for (const list of this.waitlist_for) {
                             list['apptTime'] = this.apptTime;
                         }
-                    }
-                    this.isFrom = '';
+                    }else{
+                        for(let q of this.queuejson){
+                            console.log(q.id);
+                            if(q.id == this.comingSchduleId){
+                                console.log("scheduleid"+ q.id);
+                                this.apptTime = this.slotTime;
+                                for (const list of this.waitlist_for) {
+                                    list['apptTime'] = this.apptTime;
+                                }
+                            }else{
+                                this.apptTime = this.freeSlots[0].time;
+                        for (const list of this.waitlist_for) {
+                            list['apptTime'] = this.apptTime;
+                        }
+                            }
+
+                        }
+                    this.comingSchduleId= '';
+                }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
