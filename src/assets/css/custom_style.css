@@ -8538,3 +8538,12 @@ hr.wide-separator-line {
 .content.comn-cls .wtl-detail .lbl .card .c-details .tp .item {
   margin-top: 30px !important;
 }
+.consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+  background: none !important;
+}
+.consumer-dash .card .mat-accordion .mat-expansion-panel.mat-expanded .mat-expansion-panel-header .mat-expansion-indicator {
+  background: #00aef2 !important;
+}
+.consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
+  color: #00aef2 !important;
+}

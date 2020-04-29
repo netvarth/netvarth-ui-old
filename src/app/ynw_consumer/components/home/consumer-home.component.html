@@ -438,6 +438,20 @@
                         <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
                             <p>{{no_checkins_cap}}</p>
                         </div>
+                        <!-- History Accordian -->
+                        <div class="card history">
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]='true'>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="historyTooltip">
+                                            {{history_cap}}
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <app-consumer-checkin-history-list [reloadapi]="reload_history_api">
+                                    </app-consumer-checkin-history-list>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
                     </div>
                      </mat-expansion-panel>  
             </mat-accordion>
@@ -445,7 +459,7 @@
 
         <div class="card favourites">
             <mat-accordion>
-                <mat-expansion-panel [expanded]='true'>
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                            Appointments
@@ -461,7 +475,7 @@
 
         <div class="card favourites">
             <mat-accordion>
-                <mat-expansion-panel [expanded]='true'>
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                            Donations
@@ -477,7 +491,7 @@
 
         <div class="card favourites">
             <mat-accordion>
-                <mat-expansion-panel [expanded]='true'>
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                            Pay log
@@ -493,7 +507,7 @@
 
         <div class="card favourites">
             <mat-accordion>
-                <mat-expansion-panel [expanded]='true'>
+                <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="favTooltip">
                             {{my_fav_cap}}
@@ -613,7 +627,7 @@ Appointment</span>
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
-        <div class="card history">
+        <!-- <div class="card history">
             <mat-accordion>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -625,7 +639,7 @@ Appointment</span>
                     </app-consumer-checkin-history-list>
                 </mat-expansion-panel>
             </mat-accordion>
-        </div>
+        </div> -->
     </div>
 </section>
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
