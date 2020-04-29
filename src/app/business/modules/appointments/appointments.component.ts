@@ -711,7 +711,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           qIds.push(view.customViewConditions.queues[i]['id']);
         }
       }
-      if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ')) {
+      if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ') && this.shared_functions.getitemFromGroupStorage('appt_history_selQ').length !== 0) {
         this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
       } else {
         this.selQidsforHistory = qIds;
@@ -1596,18 +1596,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
   apptClicked(time?) {
-    let slot = '';
-    if (time) {
-      slot = time;
+    if (this.queues.length === 0) {
+      this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+    } else {
+      let slot = '';
+      if (time) {
+        slot = time;
+      }
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot } });
     }
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot } });
   }
   searchCustomer(source, appttime) {
     this.router.navigate(['provider', 'customers', 'find'], { queryParams: { appt: true } });
   }
   showAdjustDelay() {
     if (this.queues.length === 0 || !this.selQId) {
-      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
+      this.shared_functions.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
       this.router.navigate(['provider', 'check-ins', 'adjustdelay']);

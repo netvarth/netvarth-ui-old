@@ -51,11 +51,11 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
                 title: 'Payment'
             }
         ];
-        this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
+        this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
-                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.waitlistingFor.length;
+                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.appmtFor.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
                     'paymentMode': null,
