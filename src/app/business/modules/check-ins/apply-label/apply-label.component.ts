@@ -38,6 +38,7 @@ export class ApplyLabelComponent implements OnInit {
     api_success = null;
     defaultShortValue = true;
     short_value;
+    exceedLimit = false;
     // dataParams;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
@@ -54,7 +55,7 @@ export class ApplyLabelComponent implements OnInit {
         this.checkin = checkin.checkin;
         this.label = checkin.label;
         if (this.source === 'newvalue') {
-            this.caption = 'Create label ' + this.label.label;
+            this.caption = 'Create label ' + this.label.displayName;
         } else {
             this.caption = 'Create Label';
         }
@@ -140,15 +141,19 @@ export class ApplyLabelComponent implements OnInit {
                 if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
                     valueSet.push(valset);
                 }
+                let label = '';
+                if (this.labelname) {
+                    label = this.labelname.trim().replace(/ /g, '_');
+                }
                 const post_data = {
-                    'label': this.labelname.replace(' ', '_'),
+                    'label': label,
                     'displayName': this.labelname,
                     'valueSet': valueSet,
                 };
                 this.provider_services.createLabel(post_data).subscribe(
                     () => {
                         setTimeout(() => {
-                            this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
+                            this.dialogRef.close({ label: label, value: this.value, message: 'newlabel' });
                         }, 1000);
                     },
                     error => {
@@ -191,5 +196,13 @@ export class ApplyLabelComponent implements OnInit {
     resetApiErrors() {
         this.api_error = [];
         this.api_success = [];
+    }
+    valueKeyup(e) {
+        if (e.target.value.length > 15) {
+            this.defaultShortValue = false;
+            this.exceedLimit = true;
+        } else {
+            this.exceedLimit = false;
+        }
     }
 }

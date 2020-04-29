@@ -37,13 +37,14 @@
     </div>
     <div class="form-group col-md-12">
         <mat-form-field>
-            <input matInput type="text" class="form-control" id="value" (keyup)="resetApiErrors()" [(ngModel)]="value"
-                placeholder="Enter  Value*" autocomplete="off">
+            <input matInput type="text" maxlength="50" class="form-control" id="value" (keyup)="resetApiErrors()"
+                [(ngModel)]="value" placeholder="Enter  Value*" autocomplete="off" (keyup)="valueKeyup($event)">
             <app-field-error-display [displayError]="true" *ngIf="api_error['value']" errorMsg="{{api_error['value']}}">
             </app-field-error-display>
         </mat-form-field>
     </div>
-    <mat-checkbox [(ngModel)]="defaultShortValue" (change)="settingDeafultValue($event)">Set same
+    <mat-checkbox [(ngModel)]="defaultShortValue" (change)="settingDeafultValue($event)" [disabled]="exceedLimit">Set
+        same
         as short value
     </mat-checkbox>
     <div class="form-group col-md-12" *ngIf="!defaultShortValue">
