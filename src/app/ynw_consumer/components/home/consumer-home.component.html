@@ -469,6 +469,19 @@
                     <div>
                         <p>No current appointments available</p>
                     </div>
+                    <div class="card history">
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]='true'>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="historyTooltip">
+                                        {{history_cap}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <app-consumer-checkin-history-list [reloadapi]="reload_history_api">
+                                </app-consumer-checkin-history-list>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
                      </mat-expansion-panel>  
             </mat-accordion>
         </div>
