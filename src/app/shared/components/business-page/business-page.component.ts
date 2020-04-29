@@ -16,7 +16,7 @@ import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.c
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { LoginComponent } from '../login/login.component';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
 @Component({
   selector: 'app-business-page',
@@ -992,7 +992,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         is_test_account = false;
       }
     }
-    const dialogRef = this.dialog.open(LoginComponent, {
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '50%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,

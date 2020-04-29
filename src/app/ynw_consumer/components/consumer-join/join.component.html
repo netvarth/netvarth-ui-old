@@ -1,0 +1,111 @@
+<!-- Login Section starts -->
+<form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
+onSubmit(loginForm.value)">
+    <div class="mat-dialog-title"
+        style="color: #3c8dbc !important;text-align: center;background: aliceblue !important;">{{heading}} <button
+            mat-dialog-close class="modal_close" style="font-size: small;height: 39px !important;" tabindex="-1"><i
+                class="fa fa-window-close" aria-hidden="true"></i></button></div>
+    <div *ngIf="step==1" style="background: aliceblue;">
+        <div class="mat-dialog-content">
+            <div class="form-group">
+                <mat-form-field>
+                    <input type="text" matInput class="form-control" id="emailId" maxlength="10"
+                        placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
+                        (keyup)="handlekeyup($event)">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
+                    [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
+                </app-field-error-display>
+            </div>
+        </div>
+        <div class="mat-dialog-actions">
+            <button type="submit" mat-button [disabled]="api_loading" (click)="check_mob()"
+                style="width: 100%;height: 38px;">
+                <span *ngIf="!api_loading">Submit</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+    </div>
+
+    <div *ngIf="step==3" style="background: aliceblue;">
+        <div class="mat-dialog-content">
+            <div class="form-group">
+                <mat-form-field>
+                    <input type="password" matInput class="form-control" id="password" placeholder="Password"
+                        formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
+                    errorMsg="Password is required">
+                </app-field-error-display>
+            </div>
+            <!-- <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password
+                ?</a> -->
+        </div>
+        <div class="mat-dialog-actions">
+            <button type="submit" mat-button [disabled]="api_loading" (click)="showError()"
+                style="width: 100%;height: 38px;">
+                <span *ngIf="!api_loading">Login</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+    </div>
+    <div *ngIf="step==4" style="background: aliceblue;">
+        <div class="mat-dialog-content">
+            <div class="form-group">
+                <mat-form-field>
+                    <input type="text" matInput class="form-control" id="emailId" maxlength="10"
+                        placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
+                        (keyup)="handlekeyup($event)">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
+                    [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
+                </app-field-error-display>
+            </div>
+        </div>
+        <div class="mat-dialog-actions">
+            <button type="submit" mat-button [disabled]="api_loading" (click)="otpSend()"
+                style="width: 100%;height: 38px;">
+                <span *ngIf="!api_loading">Send OTP</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+    </div>
+    <div class="example-container" *ngIf="step==5">
+        <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+            (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+            [resendemailotpsuccess]="resendemailotpsuccess" [consumersection]="join">
+        </app-otp-form>
+    </div>
+    <div class="example-container" *ngIf="step==6">
+        <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
+    </div>
+    <div class="example-container" *ngIf="step==7">
+        <mat-dialog-content class="pwd_cancel_scr">
+            <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+            <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+
+<div class="example-container" *ngIf="step==2">
+    <app-forgot-password (retonChangePassword)="onChangePassword($event)"
+        (retonCancelForgotPassword)="cancelForgotPassword()"></app-forgot-password>
+</div>
+<!-- Login section ends -->
+
+<!-- Sign up section starts -->
+
+<!-- Sign up section ends -->
