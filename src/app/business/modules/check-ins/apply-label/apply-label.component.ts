@@ -153,7 +153,7 @@ export class ApplyLabelComponent implements OnInit {
                 this.provider_services.createLabel(post_data).subscribe(
                     () => {
                         setTimeout(() => {
-                            this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
+                            this.dialogRef.close({ label: label, value: this.value, message: 'newlabel' });
                         }, 1000);
                     },
                     error => {

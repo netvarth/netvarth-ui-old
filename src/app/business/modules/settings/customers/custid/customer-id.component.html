@@ -10,7 +10,7 @@
                     <label>Customer Id Format</label>
                     <p class="form-level-settings">Choose one of the three customer series options.</p>
 
-                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged($event)">
+                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
                         <mat-radio-button value="{{formats.auto.value}}"></mat-radio-button>
                         <label for="">{{formats.auto.displayName}}</label><br><br>
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
