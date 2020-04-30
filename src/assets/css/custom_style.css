@@ -6869,3 +6869,12 @@ label.notifi-togl {
     width: 100% !important;
   }
 }
+.cust-loginpge-color {
+  background: aliceblue !important;
+}
+.cust-loginpge-wdth {
+  width: 100% !important;
+}
+.cust-logpge-pwd-ip {
+  background: white !important;
+}

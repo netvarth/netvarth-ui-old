@@ -1,4 +1,4 @@
-import { Component, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -41,7 +41,7 @@ export class ForgotPasswordComponent {
   otp = null;
   submit_data = {};
   is_provider = 'true';
-
+  @Input() consumerlogin;
   @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
   @Output() retonCancelForgotPassword: EventEmitter<any> = new EventEmitter();
 
