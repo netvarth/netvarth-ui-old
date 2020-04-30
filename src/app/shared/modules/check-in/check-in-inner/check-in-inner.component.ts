@@ -197,6 +197,7 @@ export class CheckInInnerComponent implements OnInit {
   tracking = false;
   serviceDatalist;
   isPrepay: boolean;
+  phoneIn = false;
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -219,6 +220,9 @@ export class CheckInInnerComponent implements OnInit {
     this.customer_data = this.data.customer_data || [];
     if (this.data.apptTime) {
       this.apptTime = this.data.apptTime;
+    }
+    if (this.data.checkin_type === 'phonein') {
+      this.phoneIn = true;
     }
     if (this.data.queue) {
       this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];

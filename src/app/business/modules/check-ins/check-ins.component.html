@@ -61,13 +61,21 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked()"
+                  <a (click)="checkinClicked('checkin')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
                     <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
                       {{checkin_label |capitalizeFirst}}</span>
                     <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span>
+                  </a>
+                </li>
+                <li class="dropdown notifications-menu">
+                  <a (click)="checkinClicked('phonein')"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                    data-toggle="dropdown">
+                    <i class="fa fa-phone"></i>
+                    Phone in
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -515,7 +523,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots class="app-info-box-icon"
                         [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot)"
-                        (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked(slot)"
+                        (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked('checkin', slot)"
                         [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
                         {{slot}} </mat-chip>
                     </mat-chip-list>
@@ -1112,7 +1120,7 @@
                       <mat-chip-list>
                         <mat-chip #appSlots class="app-info-box-icon"
                           [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot)"
-                          (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
+                          (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked('checkin', slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
                           {{slot}} </mat-chip>
                       </mat-chip-list>

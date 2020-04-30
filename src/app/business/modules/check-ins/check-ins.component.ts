@@ -288,6 +288,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilterData = '';
   labelsCount: any = [];
   statusMultiCtrl: any = [];
+  type: any;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1698,7 +1699,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  checkinClicked(appttime) {
+  checkinClicked(type, appttime) {
+    this.type = type;
     if (this.isCheckinActive()) {
       this.provider_services.getServicesList()
         .subscribe(
@@ -1831,6 +1833,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         datechangereq: true,
         apptTime: appttime,
+        checkin_type: this.type,
         queue: this.selected_queue
       }
     });
