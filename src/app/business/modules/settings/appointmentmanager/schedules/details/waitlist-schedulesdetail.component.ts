@@ -572,7 +572,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.provider_services.addProviderSchedule(post_data)
             .subscribe(
                 (data) => {
-                    this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_CREATED, { 'panelclass': 'snackbarerror' });
+                    this.shared_Functionsobj.openSnackBar('Schedule created successfully', { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
                     this.api_loading = false;
                     this.queue_id = data;
@@ -592,7 +592,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.provider_services.editProviderSchedule(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
+                    this.shared_Functionsobj.openSnackBar('Schedule updated successfully', { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
                     this.api_loading = false;
                     this.getScheduleDetail();

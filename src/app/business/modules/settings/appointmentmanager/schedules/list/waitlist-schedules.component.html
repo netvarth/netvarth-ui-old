@@ -10,9 +10,9 @@
                         </div>
                 </div>
                 <div class="row col-md-12 m0 no-padding" *ngIf="!api_loading">
-                        <div class="card">
+                        <!-- <div class="card">
                                 <p class="form-level-settings">{{waitlist_cap}}</p>
-                                <div class="copy">
+                                <div class="copy"> -->
                                         <!-- <div class="col-md-12 no-padding" style="display: flex">
                                                 <label style="color: #222223!important"><b>My Availability
                                                                 Today</b></label>
@@ -207,7 +207,7 @@
                                                         </form>
                                                 </div>
                                         </div> -->
-                                        <div class="row col-md-12 col-xs-12 no-padding m0 mt10"
+                                        <!-- <div class="row col-md-12 col-xs-12 no-padding m0 mt10"
                                                 *ngFor="let queue of todaysQs; index as i">
                                                 <div class="col-md-12 no-padding">
                                                         <div class="copy">
@@ -269,9 +269,7 @@
                                                                         *ngIf="sqShowActiveQTodayCount[i] || sqShowActiveQFutureCount[i]">
                                                                         <h5>Check-ins</h5>
                                                                         <div class="c-ot m0">
-                                                                                <!-- <div class="col-md-12" *ngIf="todayQLoading[i]">
-                                                                                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                                                                                        </div> -->
+                                                                               
                                                                                 <div class="item"
                                                                                         *ngIf="sqShowActiveQTodayCount[i] && !todayQLoading[i]">
                                                                                         <span class="ttle">Today</span>
@@ -280,13 +278,13 @@
                                                                                 <div class="item"
                                                                                         *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
                                                                                         <span class="ttle">Future</span>
-                                                                                        <span>{{FutureCheckinsCount[i]}}</span>
+                                                                                        <span>{{futureAppointmentsCount[i]}}</span>
                                                                                 </div>
                                                                                 <div class="item"
                                                                                         *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
                                                                                         <span
                                                                                                 class="ttle">Tomorrow</span>
-                                                                                        <span>{{TomorrowCheckinsCount[i]}}</span>
+                                                                                        <span>{{tomorrowAppointmentCount[i]}}</span>
                                                                                 </div>
                                                                         </div>
                                                                 </div>
@@ -316,9 +314,9 @@
                                                                 </mat-menu>
                                                         </div>
                                                 </div>
-                                        </div>
-                                </div>
-                        </div>
+                                        </div> -->
+                                <!-- </div>
+                        </div> -->
                         <div class="card sched_q p0 mt10">
                                 <mat-accordion class="no-padding">
                                         <mat-expansion-panel [expanded]="false">
@@ -407,7 +405,7 @@
                                                                         </div>
                                                                         <div class="card"
                                                                                 *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
-                                                                                <h5>Check-ins</h5>
+                                                                                <h5>Appointments</h5>
                                                                                 <div class="c-ot m0">
                                                                                         <!-- <div class="col-md-12" *ngIf="scheduleLoading[i]">
                                                                                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -416,19 +414,19 @@
                                                                                                 *ngIf="sqShowTodayCount[i] && !scheduleLoading[i]">
                                                                                                 <span
                                                                                                         class="ttle">Today</span>
-                                                                                                <span>{{sqTodayCheckinsCount[i]}}</span>
+                                                                                                <span>{{sqTodayAppointmentsCount[i]}}</span>
                                                                                         </div>
                                                                                         <div class="item"
                                                                                                 *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
                                                                                                 <span
                                                                                                         class="ttle">Future</span>
-                                                                                                <span>{{sqFutureCheckinsCount[i]}}</span>
+                                                                                                <span>{{sqFutureAppointmentsCount[i]}}</span>
                                                                                         </div>
                                                                                         <div class="item"
                                                                                                 *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
                                                                                                 <span
                                                                                                         class="ttle">Tomorrow</span>
-                                                                                                <span>{{sqTomorrowCheckinsCount[i]}}</span>
+                                                                                                <span>{{sqTomorrowAppointmentsCount[i]}}</span>
                                                                                         </div>
                                                                                 </div>
                                                                         </div>
@@ -446,7 +444,7 @@
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                         *ngIf="queue.apptState=='ENABLED' && !futureQcountCaption[i]">
                                                                                         <i
-                                                                                                class="fa fa-plus"></i>Checkins
+                                                                                                class="fa fa-plus"></i>Appointments
                                                                                         Count
                                                                                 </button>
                                                                                 <button mat-menu-item

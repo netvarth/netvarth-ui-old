@@ -86,11 +86,11 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     sqShowActiveQFutureCount: any = [];
     sqShowActiveQTodayCount: any = [];
     TodayCheckinsCount: any = [];
-    FutureCheckinsCount: any = [];
-    TomorrowCheckinsCount: any = [];
-    sqTodayCheckinsCount: any = [];
-    sqFutureCheckinsCount: any = [];
-    sqTomorrowCheckinsCount: any = [];
+    futureAppointmentsCount: any = [];
+    tomorrowAppointmentCount: any = [];
+    sqTodayAppointmentsCount: any = [];
+    sqFutureAppointmentsCount: any = [];
+    sqTomorrowAppointmentsCount: any = [];
     todayQcountCaption: any = [];
     futureQcountCaption: any = [];
     todayQLoading: any = [];
@@ -812,9 +812,9 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
 
     viewDashboard(queueObj, index, que) {
-        this.getTodayCheckinCount(queueObj, index, que);
-        this.getfutureCheckinCount(queueObj, index, que);
-        this.getTomorrowCheckinCount(queueObj, index, que);
+        this.getTodayAppointmentCount(queueObj, index, que);
+        this.getfutureAppointmentCount(queueObj, index, que);
+        this.getTomorrowAppointmentCount(queueObj, index, que);
         this.futureQcountCaption[index] = 'Checkins Count';
         this.todayQcountCaption[index] = 'Checkins Count';
         if (que === 'scheduleQ') {
@@ -845,7 +845,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         }
     }
 
-    getfutureCheckinCount(queue, index, origin) {
+    getfutureAppointmentCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -857,21 +857,21 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'queue-eq': queueid
+                'schedule-eq': queueid
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getWaitlistFutureCount(Mfilter)
+            this.provider_services.getAppointmentWaitlistFutureCount(Mfilter)
                 .subscribe(
                     data => {
                         resolve(data);
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqFutureCheckinsCount[index] = data;
+                                this.sqFutureAppointmentsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
-                                this.FutureCheckinsCount[index] = data;
+                                this.futureAppointmentsCount[index] = data;
                                 this.todayQLoading[index] = false;
                             }
                         }
@@ -881,7 +881,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 
-    getTodayCheckinCount(queue, index, origin) {
+    getTodayAppointmentCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -893,18 +893,18 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'waitlistStatus-neq': 'prepaymentPending',
-                'queue-eq': queueid
+                'paymentStatus-neq': 'prepaymentPending',
+                'schedule-eq': queueid
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getwaitlistTodayCount(Mfilter)
+            this.provider_services.getAppointmentwaitlistTodayCount(Mfilter)
                 .subscribe(
                     data => {
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqTodayCheckinsCount[index] = data;
+                                this.sqTodayAppointmentsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
                                 this.TodayCheckinsCount[index] = data;
@@ -918,7 +918,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 
-    getTomorrowCheckinCount(queue, index, origin) {
+    getTomorrowAppointmentCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -927,7 +927,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
-        const dd = today.getDate() + 1;
+        const dd = today.getDate() ;
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
         let cmon;
@@ -943,22 +943,22 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'waitlistStatus-neq': 'prepaymentPending',
-                'queue-eq': queueid,
+                'paymentStatus-neq': 'prepaymentPending',
+                'schedule-eq': queueid,
                 'date-eq': tommorrow
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getWaitlistFutureCount(Mfilter)
+            this.provider_services.getAppointmentWaitlistFutureCount(Mfilter)
                 .subscribe(
                     data => {
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqTomorrowCheckinsCount[index] = data;
+                                this.sqTomorrowAppointmentsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
-                                this.TomorrowCheckinsCount[index] = data;
+                                this.tomorrowAppointmentCount[index] = data;
                                 this.todayQLoading[index] = false;
                             }
                         }
