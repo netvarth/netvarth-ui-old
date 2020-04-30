@@ -6878,3 +6878,25 @@ label.notifi-togl {
 .cust-logpge-pwd-ip {
   background: white !important;
 }
+.cust-logpge-txt-align {
+  text-align: center !important;
+}
+.cust-logpge-heading {
+  color: #3c8dbc !important;
+  text-align: center !important;
+  background: aliceblue !important;
+  /* padding: 20px 20px 10px!important;
+  font-size: 1rem !important; */
+}
+.cust-logpage-close {
+  font-size: small !important;
+  height: 39px !important;
+  /* right: 20px!important;
+  margin-top: -10px!important;
+  width: 24px!important;
+  color: black !important; */
+}
+.cust-logpg-submt {
+  width: 100% !important;
+  height: 38px !important;
+}

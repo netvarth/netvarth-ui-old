@@ -34,6 +34,7 @@ export class ConsumerJoinComponent implements OnInit {
   phOrem_error = '';
   signup_here = '';
   mobile_num: any;
+  terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   actionstarted: boolean;
   consumerjoin = 'consumerjoin';
   user_details;
@@ -303,7 +304,7 @@ export class ConsumerJoinComponent implements OnInit {
     this.step = 2;
   }
   cancelForgotPassword() {
-    this.step = 1;
+    this.step = 3;
   }
   handleSignup() {
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
