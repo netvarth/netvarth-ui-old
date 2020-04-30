@@ -819,6 +819,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointments() {
+    this.loading = true;
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
@@ -877,10 +878,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryAppointments() {
+    this.loading = true;
     this.getQs().then(queue => {
       this.queues = [];
       this.queues = queue;
-      this.loading = true;
       this.load_waitlist = 0;
       let Mfilter = this.setFilterForApi();
       if (this.selQidsforHistory.length !== 0) {
@@ -901,6 +902,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               this.noFilter = true;
             }
+            this.loading = false;
           },
           () => {
             this.load_waitlist = 1;
@@ -908,7 +910,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           () => {
             this.load_waitlist = 1;
           });
-      this.loading = false;
     }
     );
     // }
@@ -964,9 +965,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.unAvailableSlots = this.unAvailableSlots.filter(x => !slots.includes(x));
       } else {
-        for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
-          if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
-            this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+        if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
+          for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
+            if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
+              this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+            }
           }
         }
       }

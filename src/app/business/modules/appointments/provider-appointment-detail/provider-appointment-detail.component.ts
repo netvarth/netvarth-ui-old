@@ -140,7 +140,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.waitlist_data = data;
-          this.getTimeSlots();
+          // this.getTimeSlots();
           if (this.waitlist_data.appmtTime) {
             this.apptTime = this.waitlist_data.appmtTime;
           }
