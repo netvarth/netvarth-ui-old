@@ -12,7 +12,7 @@ onSubmit(loginForm.value)">
                         placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
                         (keyup)="handlekeyup($event)">
                 </mat-form-field>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                     [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
                 </app-field-error-display>
             </div>
@@ -35,8 +35,8 @@ onSubmit(loginForm.value)">
                     <input type="password" matInput class="form-control" id="password" placeholder="Password"
                         formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
                 </mat-form-field>
-                <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password?</a>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
+                <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password')"
                     errorMsg="Password is required">
                 </app-field-error-display>
             </div>

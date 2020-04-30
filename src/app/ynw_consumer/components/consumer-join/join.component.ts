@@ -93,7 +93,7 @@ export class ConsumerJoinComponent implements OnInit {
     }
   }
   check_mob() {
-    this.show_error = true;
+  //  this.show_error = true;
     this.mobile_num = this.document.getElementById('emailId').value;
     this.shared_services.consumerMobilenumCheck(this.mobile_num).
           subscribe((data) => {

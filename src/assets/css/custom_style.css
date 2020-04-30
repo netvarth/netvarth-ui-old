@@ -6903,3 +6903,9 @@ label.notifi-togl {
 .cust-logpg-pwd {
   padding-right: 40% !important;
 }
+.cust-logpg-fgtpwd {
+  float: right;
+  margin-top: 5px;
+  font-size: small;
+  cursor: pointer;
+}
