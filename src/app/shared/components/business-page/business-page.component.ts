@@ -905,15 +905,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.shared_services.getFavProvider()
         .subscribe(data => {
           this.favprovs = data;
-          this.isInFav = false;
-          if (this.favprovs.length > 0) {
-            for (let i = 0; i < this.favprovs.length; i++) {
-              if (this.favprovs[i].id === this.provider_bussiness_id) {
-                this.isInFav = true;
-              }
-            }
+          if (this.favprovs.length === 0) {
+            this.handle_Fav('add');
           } else {
-            this.isInFav = false;
+              for (let i = 0; i < this.favprovs.length; i++) {
+                if (this.favprovs[i].id === this.provider_bussiness_id) {
+                  this.isInFav = true;
+                } else {
+                  this.handle_Fav('add');
+                }
+              }
           }
         }, error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
