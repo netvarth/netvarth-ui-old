@@ -82,18 +82,18 @@ onSubmit(loginForm.value)">
     <div class="example-container" *ngIf="step==5">
         <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
             (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
-            [resendemailotpsuccess]="resendemailotpsuccess" [consumersection]="join">
+            [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin">
         </app-otp-form>
     </div>
     <div class="example-container" *ngIf="step==6">
         <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
-            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
+            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider" [consumerlogin]="consumerjoin"></app-sp-form>
     </div>
-    <div class="example-container" *ngIf="step==7">
+    <div class="example-container" *ngIf="step==7" style="background: aliceblue;">
         <mat-dialog-content class="pwd_cancel_scr">
             <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
         </mat-dialog-content>
-        <mat-dialog-actions>
+        <mat-dialog-actions style="text-align: center;">
             <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
             <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
         </mat-dialog-actions>

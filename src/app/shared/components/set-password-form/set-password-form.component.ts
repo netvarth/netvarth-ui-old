@@ -24,6 +24,7 @@ export class SetPasswordFormComponent implements OnInit {
   spForm;
   @Input() type;
   @Input() checkConsumerOrProvider;
+  @Input() consumerlogin;
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   // tslint:disable-next-line:no-output-on-prefix

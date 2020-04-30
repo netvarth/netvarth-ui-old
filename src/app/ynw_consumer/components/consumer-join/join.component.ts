@@ -35,6 +35,7 @@ export class ConsumerJoinComponent implements OnInit {
   signup_here = '';
   mobile_num: any;
   actionstarted: boolean;
+  consumerjoin = 'consumerjoin';
   user_details;
   cancel_btn_cap = Messages.CANCEL_BTN;
   ok_btn_cap = Messages.OK_BTN;
