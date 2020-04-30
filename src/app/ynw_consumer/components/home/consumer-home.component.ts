@@ -722,7 +722,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           location: location_data,
           sel_date: data.sel_date
         },
-        datechangereq: data.chdatereq
+        datechangereq: data.chdatereq,
+        checkin_type: 'ONLINE_CHECKIN'
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {

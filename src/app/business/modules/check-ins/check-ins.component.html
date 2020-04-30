@@ -61,7 +61,7 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked('checkin')"
+                  <a (click)="checkinClicked('WALK_IN_CHECKIN')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
@@ -71,7 +71,7 @@
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked('phonein')"
+                  <a (click)="checkinClicked('PHONE_CHECKIN')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-phone"></i>
@@ -523,7 +523,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots class="app-info-box-icon"
                         [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot)"
-                        (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked('checkin', slot)"
+                        (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot) && checkinClicked('WALK_IN_CHECKIN', slot)"
                         [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlotFuture(slot))}">
                         {{slot}} </mat-chip>
                     </mat-chip-list>
@@ -1120,7 +1120,7 @@
                       <mat-chip-list>
                         <mat-chip #appSlots class="app-info-box-icon"
                           [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot)"
-                          (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked('checkin', slot)"
+                          (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked('WALK_IN_CHECKIN', slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
                           {{slot}} </mat-chip>
                       </mat-chip-list>

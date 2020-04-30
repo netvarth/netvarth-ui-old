@@ -985,7 +985,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           sel_date: curdate,
           terminologies: this.terminologiesjson
         },
-        datechangereq: this.changedate_req
+        datechangereq: this.changedate_req,
+        checkin_type: 'ONLINE_CHECKIN'
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {

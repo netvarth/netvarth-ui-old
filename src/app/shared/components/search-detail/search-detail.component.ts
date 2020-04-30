@@ -1611,7 +1611,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         is_provider: this.checkProvider(origin),
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
         srchprovider: this.current_provider,
-        datechangereq: this.changedate_req
+        datechangereq: this.changedate_req,
+        checkin_type: 'ONLINE_CHECKIN'
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
