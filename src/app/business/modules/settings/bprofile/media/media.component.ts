@@ -84,7 +84,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'media','actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
@@ -111,8 +111,11 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
+    performActions() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->media']);   
+      }
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();

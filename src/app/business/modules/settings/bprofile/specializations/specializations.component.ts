@@ -57,12 +57,12 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     // learnmore_clicked(parent, child) {}
     performActions() {
 
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->specializations']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->specializations']);
 
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod ]);
     }
     initSpecializations() {
         this.bProfile = [];

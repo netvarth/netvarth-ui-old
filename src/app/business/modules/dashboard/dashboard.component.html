@@ -1,5 +1,5 @@
 <section>
-        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+        <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreOptions"></app-breadcrumb>
     </section>
     <section>
             <div class="content settings">

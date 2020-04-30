@@ -80,10 +80,10 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->privacy-settings']);   
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->privacy-settings']);   
       }
     getBussinessProfileApi() {
         const _this = this;
