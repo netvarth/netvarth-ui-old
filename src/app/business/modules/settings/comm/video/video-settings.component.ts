@@ -25,7 +25,7 @@ export class VideoSettingsComponent implements OnInit {
     botimMode = '';
     imoMode = '';
     jaldeeMode = '';
-    domain:any;
+    domain: any;
 
     videoModes = {
         SKYPE: { value: 'SKYPE', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
@@ -34,7 +34,7 @@ export class VideoSettingsComponent implements OnInit {
         BOTIM: { value: 'BOTIM', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         IMO: { value: 'IMO', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false }
     };
-    breadcrumb_moreoptions:any = [];
+    breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         { title: 'Settings', url: '/provider/settings' },
         { title: 'Comm', url: '/provider/settings/comm' },
@@ -46,8 +46,6 @@ export class VideoSettingsComponent implements OnInit {
     constructor(private _formBuilder: FormBuilder,
         private router: Router,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions,
         private provider_services: ProviderServices) {
     }
     ngOnInit() {
@@ -55,9 +53,9 @@ export class VideoSettingsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'comm->videocall-settings', 
+            'show_learnmore': true, 'scrollKey': 'comm->videocall-settings',
             'actions': [
-            { 'title': 'Help', 'type': 'learnmore' }]
+                { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getVirtualCallingModesList();
     }
@@ -66,7 +64,7 @@ export class VideoSettingsComponent implements OnInit {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/comm->videocall-settings']);
         }
-    } 
+    }
 
     getVirtualCallingModesList() {
         this.provider_services.getVirtualCallingModes().subscribe(
@@ -87,6 +85,17 @@ export class VideoSettingsComponent implements OnInit {
             (error: any) => {
                 this.api_loading = false;
             });
+    }
+    triggerChange(resultMode, callingMode) {
+        if (resultMode['value'].actualValue.trim() !== '' ) {
+            this.updateVideoSettings(resultMode, callingMode);
+        } else {
+            if (!resultMode.value.enabled) {
+                this.updateVideoSettings(resultMode, callingMode);
+            } else {
+                this.videoModes[callingMode].enabled = false;
+            }
+        }
     }
     updateVideoSettings(resultMode, callingMode) {
         const virtualCallingModes = [];
@@ -127,8 +136,11 @@ export class VideoSettingsComponent implements OnInit {
             };
             virtualCallingModes.push(mode);
         }
-console.log(virtualCallingModes);
-        this.provider_services.addVirtualCallingModes(virtualCallingModes).subscribe(
+        console.log(virtualCallingModes);
+        const postdata = {
+            'virtualCallingModes': virtualCallingModes
+        };
+        this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
                 this.shared_functions.openSnackBar('Virtual calling modes added successfully', { 'panelclass': 'snackbarerror' });
                 this.getVirtualCallingModesList();

@@ -10,7 +10,6 @@
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
               <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
             onSubmit(amForm.value)" class="ynw-common-form">
-                <mat-dialog-content>
                   <div class="col-md-12 col-xs-12 col-sm-12 adjustdelay no-padding">
                     <!-- <div class="form-group" *ngIf="queues.length>1"> -->
                     <p class="form-level-settings">{{frm_adjust_del_cap}}</p>
@@ -124,7 +123,6 @@
                     </div>
                     <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
                   </div>
-                </mat-dialog-content>
                 <mat-dialog-actions>
                   <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;">
                     <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
@@ -137,6 +135,7 @@
                 </app-form-success-display>
               </form>
             </div>
+            
           </div>
         </div>
       </div>

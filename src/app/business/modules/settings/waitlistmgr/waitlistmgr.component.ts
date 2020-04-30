@@ -164,7 +164,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             );
     }
     gotoDisplayboards() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'q-boards']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // if (this.statusboardStatus) {
         //     this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // } else {

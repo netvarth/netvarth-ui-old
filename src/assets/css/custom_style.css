@@ -6548,14 +6548,12 @@ li.separator.setsplit {
   width: fit-content !important;
 }
 
-.selected-waitlist {
+.selected-waitlist,  .selected-customer {
   background: #d8e2f1 !important;
 }
-
-.selected-customer {
+.dboard.selected-qboard {
   background: #d8e2f1 !important;
 }
-
 .statuslink {
   padding: 07px 10px 07px 10px !important
 }
@@ -8537,6 +8535,16 @@ hr.wide-separator-line {
 }
 .content.comn-cls .wtl-detail .lbl .card .c-details .tp .item {
   margin-top: 30px !important;
+}
+.displayboard td.action .mbt {
+  position: relative !important;
+  top: 0 !important;
+}
+.dboard h3 {
+  width: 100%;
+}
+.dboard .mbt {
+  top: 0 !important;
 }
 .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
   background: none !important;
