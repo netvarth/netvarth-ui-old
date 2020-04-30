@@ -237,7 +237,7 @@ export class AppointmentComponent implements OnInit {
         this.breadcrumbs = [
             {
                 title: 'Appointments',
-                url: 'provider/check-ins'
+                url: 'provider/appointments'
             },
             {
                 title: 'Appointment'
@@ -292,7 +292,7 @@ export class AppointmentComponent implements OnInit {
                 mode = 'id';
             }
         }
-        this.qParams['source'] = 'checkin';
+        this.qParams['source'] = 'appointment';
         switch (mode) {
             case 'phone':
                 post_data = {
