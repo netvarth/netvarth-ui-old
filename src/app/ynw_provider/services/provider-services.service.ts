@@ -1246,4 +1246,12 @@ export class ProviderServices {
       const url = 'provider/waitlist/' + uuid + '/sms';
       return this.servicemeta.httpGet(url);
    }
+   getAppointmentWaitlistFutureCount(filter = {}) {
+      const url = 'provider/appointment/future/count/';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getAppointmentwaitlistTodayCount(filter = {}) {
+      const url = 'provider/appointment/today/count/';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
 }
