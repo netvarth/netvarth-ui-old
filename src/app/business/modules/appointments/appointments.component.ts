@@ -887,33 +887,33 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selQidsforHistory.length !== 0) {
         Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
       }
-      // const promise = this.getHistoryAppointmentsCount(Mfilter);
-      // promise.then(
-      //   result => {
-      //     this.pagination.totalCnt = result;
-      Mfilter = this.setPaginationFilter(Mfilter);
-      this.provider_services.getHistoryAppointments(Mfilter)
-        .subscribe(
-          data => {
-            this.new_checkins_list = [];
-            this.check_in_list = this.check_in_filtered_list = data;
-            if (this.filterapplied === true) {
-              this.noFilter = false;
-            } else {
-              this.noFilter = true;
-            }
-            this.loading = false;
-          },
-          () => {
-            this.load_waitlist = 1;
-          },
-          () => {
-            this.load_waitlist = 1;
-          });
+      const promise = this.getHistoryAppointmentsCount(Mfilter);
+      promise.then(
+        result => {
+          this.pagination.totalCnt = result;
+          Mfilter = this.setPaginationFilter(Mfilter);
+          this.provider_services.getHistoryAppointments(Mfilter)
+            .subscribe(
+              data => {
+                this.new_checkins_list = [];
+                this.check_in_list = this.check_in_filtered_list = data;
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.loading = false;
+              },
+              () => {
+                this.load_waitlist = 1;
+              },
+              () => {
+                this.load_waitlist = 1;
+              });
+        }
+      );
     }
     );
-    // }
-    // );
   }
   isAvailableSlot(slot) {
     if (slot.noOfAvailbleSlots === '0') {
@@ -1223,9 +1223,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    // if (this.selected_location && this.selected_location.id) {
-    //   api_filter['location-eq'] = this.selected_location.id;
-    // }
+    if (this.selected_location && this.selected_location.id) {
+      api_filter['location-eq'] = this.selected_location.id;
+    }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
