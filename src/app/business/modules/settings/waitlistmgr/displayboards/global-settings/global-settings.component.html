@@ -34,38 +34,23 @@
                                                 <span class="overlay-icon" (click)="fileInput.click()">
                                                     change
                                                 </span>
-                                                <img (click)="fileInput.click()" *ngIf="success_error" [src]="item_pic.base64"
-                                                    class="glbl-seting-img">
+                                                <img (click)="fileInput.click()" *ngIf="success_error"
+                                                    [src]="item_pic.base64" class="glbl-seting-img">
 
                                             </a>
-
-                                            <!-- <img id="my-img" (click)="fileInput.click()" *ngIf="imageUrl" [src]="imageUrl"
-                                                class="glbl-seting-img"> -->
                                             <i (click)="showPreview()" class="fa fa-eye fa-2x glbl-preview-eye-small"
                                                 aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <!-- <input type="file" class="glbl-seting-btn"
-                                        (change)="onFileSelected($event.target.files)" accept=".png, .jpg, .jpeg"
-                                        #fileInput> -->
-                                        <input type="file" class="glbl-seting-btn"
-                                        (change)="imageSelect(fileInput,$event)" accept=".png, .jpg, .jpeg"
-                                        #fileInput>
+                                    <input type="file" class="glbl-seting-btn" (change)="imageSelect(fileInput,$event)"
+                                        accept=".png, .jpg, .jpeg" #fileInput>
                                 </div>
                                 <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
                                     <div class="glbl-tbl-div">
                                         <table class="glbl-seting-tbl">
-                                            <tr>
-                                                <td>Width</td>
-                                                <td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Height</td>
-                                                <td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Position</td>
+                                            <tr><td>Width</td><td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px</td></tr>
+                                            <tr><td>Height</td><td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td></tr>
+                                            <tr><td>Position</td>
                                                 <td>
                                                     <mat-form-field>
                                                         <select matNativeControl id="mySelectId"
@@ -79,9 +64,6 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    <!-- <div>
-                                            <i class="fa fa-eye fa-4x" aria-hidden="true"></i>
-                                        </div> -->
                                 </div>
                                 <div class="glbl-preview-eye" (click)="showPreview()"><i class="fa fa-eye fa-3x"
                                         aria-hidden="true"></i>
@@ -90,17 +72,19 @@
                             </div>
                             <div class="glbl-seting-disp-div">
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8">
-                                    <div class="glbl-seting-heder-div" [innerHTML]="headerContent"></div>
+                                    <div class="glbl-seting-heder-div" [innerHTML]="headerSettings.title1"></div>
                                 </div>
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                                     <div class="no-paddig-small glbl-seting-editor">
                                         <ckeditor [editor]="Editor" (ready)="onReady($event)"
-                                            [(ngModel)]="headerContent">
+                                            [(ngModel)]="headerSettings.title1">
                                         </ckeditor>
                                     </div>
                                 </div>
                             </div>
                         </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                       
+                       
                         <!-- Preview Section -->
                         <div *ngIf="is_preview" class="lbr col-sm-12 col-md-4 col-lg-4 glbl-seting-editor">
                             <div style="text-align: end; cursor: pointer;" (click)="previewCancel()">
@@ -112,12 +96,14 @@
                                 <div>
                                     <div [innerHTML]="headerContent"></div>
                                     <div *ngIf="is_image" [ngStyle]="{ 'text-align' : position }"> <img
-                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" [src]="item_pic.base64"
-                                            style="width: 50%;height: auto;"></div>
+                                            [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}"
+                                            [src]="item_pic.base64" style="width: 50%;height: auto;"></div>
                                 </div>
-                                <div style="font-size: smaller;" [innerHTML]="footerContent"></div>
+                                <div style="font-size: smaller;" [innerHTML]="footerSettings.title1"></div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -132,18 +118,17 @@
                     <h6 class="glbl-seting-h6">Footer Settings</h6>
                     <div class="glbl-seting-f-div">
                         <div class="lbr col-sm-12 col-md-8 col-lg-8">
-                            <div class="glbl-seting-heder-div" [innerHTML]="footerContent"></div>
+                            <div class="glbl-seting-heder-div" [innerHTML]="footerSettings.title1"></div>
                         </div>
                         <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                             <div class="no-paddig-small glbl-seting-editor">
-                                <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerContent">
+                                <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerSettings.title1">
                                 </ckeditor>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv labelsave mgn-up-20 ng-star-inserted">
                         <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;
-                        <!-- <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;&nbsp; -->
                         <button type="submit" (click)="onUpload()" class="cs-btn bt1">Save</button>
                     </div>
                 </div>

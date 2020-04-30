@@ -11,8 +11,6 @@ import { DisplayboardsRoutingModule } from './displayboards.routing.module';
 import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
 import { GlobalSettingsModule } from './global-settings/global-settings.module';
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
-import { ContainersComponent } from './containers/containers.component';
-import { ContainerDetailComponent } from './containers/detail/container-detail.component';
 
 @NgModule({
     declarations: [

@@ -12,8 +12,14 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 })
 export class GlobalSettingsComponent implements OnInit {
     selectedFile = null;
-    footerContent = '';
-    headerContent = '';
+    footerSettings = {
+        'title1': null,
+    };
+    headerSettings = {
+        'title1': '',
+        'title2': null,
+        'title3': null
+    };
     richdata;
     fileToUpload;
     imageUrl;
@@ -55,15 +61,15 @@ export class GlobalSettingsComponent implements OnInit {
     item_pic = {
         files: [],
         base64: null
-      };
-      selitem_pic = '';
+    };
+    selitem_pic = '';
     imgProperties;
     constructor(
         private router: Router,
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
         private shared_functions: SharedFunctions,
-        ) {}
+    ) { }
     @Input() headerResult;
     breadcrumbs = this.breadcrumbs_init;
     url = '';
@@ -81,7 +87,7 @@ export class GlobalSettingsComponent implements OnInit {
             this.provider_services.getDisplayboard(this.headerResult).subscribe(data => {
                 this.displaybord_data = data;
             });
-          }
+        }
     }
     // onFileSelected(file: FileList) {
     //     this.fileToUpload = file.item(0);
@@ -98,43 +104,39 @@ export class GlobalSettingsComponent implements OnInit {
         this.error_list = [];
         this.error_msg = '';
         if (input.files && input.files[0]) {
-          for (const file of input.files) {
-            this.success_error = this.shared_Functionsobj.imageValidation(file);
-            if (this.success_error === true) {
-              const reader = new FileReader();
-              this.item_pic.files = input.files[0];
-              this.selitem_pic = input.files[0];
-              this.is_image = true;
-              const fileobj = input.files[0];
-              reader.onload = (e) => {
-                this.item_pic.base64 = e.target['result'];
-                this.is_image = true;
-              };
-              reader.readAsDataURL(fileobj);
-                const submit_data: FormData = new FormData();
-                submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-                const propertiesDet = {
-                  'caption': 'Logo'
-                };
-                const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-                submit_data.append('properties', blobPropdata);
-                this.imgProperties = submit_data;
-            } else {
-              this.error_list.push(this.success_error);
-              if (this.error_list[0].type) {
-                this.error_msg = 'Selected image type not supported';
-              } else if (this.error_list[0].size) {
-                this.error_msg = 'Please upload images with size less than 15mb';
-              }
-              this.shared_Functionsobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+            for (const file of input.files) {
+                this.success_error = this.shared_Functionsobj.imageValidation(file);
+                if (this.success_error === true) {
+                    const reader = new FileReader();
+                    this.item_pic.files = input.files[0];
+                    this.selitem_pic = input.files[0];
+                    this.is_image = true;
+                    const fileobj = input.files[0];
+                    reader.onload = (e) => {
+                        this.item_pic.base64 = e.target['result'];
+                        this.is_image = true;
+                    };
+                    reader.readAsDataURL(fileobj);
+                    const submit_data: FormData = new FormData();
+                    submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                    const propertiesDet = {
+                        'caption': 'Logo'
+                    };
+                    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                    submit_data.append('properties', blobPropdata);
+                    this.imgProperties = submit_data;
+                } else {
+                    this.error_list.push(this.success_error);
+                    if (this.error_list[0].type) {
+                        this.error_msg = 'Selected image type not supported';
+                    } else if (this.error_list[0].size) {
+                        this.error_msg = 'Please upload images with size less than 15mb';
+                    }
+                    this.shared_Functionsobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+                }
             }
-          }
         }
-      }
-
-
-
-
+    }
     selectChangeHandler(event) {
         if (event.target.value === 'left') {
             this.position = 'left';
@@ -171,9 +173,10 @@ export class GlobalSettingsComponent implements OnInit {
             'displayName': this.displaybord_data.displayName,
             'serviceRoom': this.displaybord_data.serviceRoom,
             'metric': this.displaybord_data.metric,
-            'headerSettings': this.headerContent,
-            'footerSettings': this.footerContent,
+            'headerSettings': this.headerSettings,
+            'footerSettings': this.footerSettings
         };
+        console.log(JSON.stringify(post_data));
         this.provider_services.updateDisplayboard(post_data).subscribe(data => {
             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);

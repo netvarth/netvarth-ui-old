@@ -309,7 +309,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.footerSetting = true;
     }
     onSubmit() {
-        if (!this.qboardSelected) {
+        // if (!this.qboardSelected) {
             this.metric = [];
             let name = '';
             if (this.displayName) {
@@ -360,53 +360,53 @@ export class DisplayboardDetailComponent implements OnInit {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
             }
-        } else {
-            let name = '';
-            if (this.displayName) {
-                name = this.displayName.trim().replace(/ /g, '_');
-            }
-            if (this.actionparam === 'add') {
-                const post_data = {
-                    'name': name,
-                    'layout': '1_1',
-                    'displayName': this.displayName,
-                    'interval': this.refreshInterval,
-                    'sbDetails': this.sbDetailslist
-                };
-                this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-                    // this.editLayoutbyId(data);
-                    // this.actionparam = 'view';
-                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-                },
-                    error => {
-                        this.api_loading = false;
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-                // } else {
-                //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-                // }
-            }
-            if (this.actionparam === 'edit') {
-                const post_data = {
-                    'id': this.layoutData.id,
-                    'name': name,
-                    'layout': '1_1',
-                    'interval': this.refreshInterval,
-                    'displayName': this.displayName,
-                    'sbDetails': this.sbDetailslist
-                };
-                this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                    // this.editLayoutbyId(this.layoutData.id);
-                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-                },
-                    error => {
-                        this.api_loading = false;
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-            }
-        }
+        // } else {
+        //     let name = '';
+        //     if (this.displayName) {
+        //         name = this.displayName.trim().replace(/ /g, '_');
+        //     }
+        //     if (this.actionparam === 'add') {
+        //         const post_data = {
+        //             'name': name,
+        //             'layout': '1_1',
+        //             'displayName': this.displayName,
+        //             'interval': this.refreshInterval,
+        //             'sbDetails': this.sbDetailslist
+        //         };
+        //         this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
+        //             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+        //             // this.editLayoutbyId(data);
+        //             // this.actionparam = 'view';
+        //             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+        //         },
+        //             error => {
+        //                 this.api_loading = false;
+        //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //             });
+        //         // } else {
+        //         //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+        //         // }
+        //     }
+        //     if (this.actionparam === 'edit') {
+        //         const post_data = {
+        //             'id': this.layoutData.id,
+        //             'name': name,
+        //             'layout': '1_1',
+        //             'interval': this.refreshInterval,
+        //             'displayName': this.displayName,
+        //             'sbDetails': this.sbDetailslist
+        //         };
+        //         this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
+        //             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+        //             // this.editLayoutbyId(this.layoutData.id);
+        //             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+        //         },
+        //             error => {
+        //                 this.api_loading = false;
+        //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //             });
+        //     }
+        // }
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -455,9 +455,9 @@ export class DisplayboardDetailComponent implements OnInit {
     // gotoAddQset() {
     //     this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
     // }
-    nestedQboardSelected(event) {
-        this.qboardSelected = event.checked;
-    }
+    // nestedQboardSelected(event) {
+    //     this.qboardSelected = event.checked;
+    // }
     clearQboardSelected() {
         this.qBoardFilterMultictrl.reset();
         this.nestedRefreshInterval = '';

@@ -5316,6 +5316,12 @@ i.notavail {
 .mt5 {
   margin-top: 5px
 }
+.mt3 {
+  margin-top: 3px
+}
+.ml5 {
+  margin-left: 5px;
+}
 
 .custs span i {
   padding-right: 10px !important;
@@ -8554,4 +8560,7 @@ hr.wide-separator-line {
 }
 .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
   color: #00aef2 !important;
+}
+ .ynw-common-form-nm .qgrp_wb .mat-select {
+  padding-top:10px !important;
 }
