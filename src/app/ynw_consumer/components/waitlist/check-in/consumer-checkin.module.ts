@@ -13,12 +13,14 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { ConsumerPaymentComponent } from './payment/payment.component';
 import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
+import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
 
 @NgModule({
     declarations: [
         ConsumerCheckinComponent,
         ConsumerPaymentComponent,
-        ConsumerLiveTrackComponent
+        ConsumerLiveTrackComponent,
+        ConsumerCheckinHistoryComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -32,7 +34,7 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        BreadCrumbModule
+        BreadCrumbModule,
     ],
     exports: [ConsumerCheckinComponent]
 })

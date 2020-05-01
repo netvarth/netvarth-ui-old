@@ -227,6 +227,7 @@
                            Check-Ins
                         </mat-panel-title>
                     </mat-expansion-panel-header>
+                            <span><button class=" historybtn bt3 pull-right" (click)="checkinHistoryClicked()">{{history_cap}}</button></span>
                     <div class="outer banner">
                         <div *ngIf="waitlists && waitlists.length != 0">
                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="waitlists">
@@ -438,8 +439,9 @@
                         <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
                             <p>{{no_checkins_cap}}</p>
                         </div>
+                        
                         <!-- History Accordian -->
-                        <div class="card history">
+                        <!-- <div class="card history">
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]='true'>
                                     <mat-expansion-panel-header>
@@ -451,7 +453,7 @@
                                     </app-consumer-checkin-history-list>
                                 </mat-expansion-panel>
                             </mat-accordion>
-                        </div>
+                        </div> -->
                     </div>
                      </mat-expansion-panel>  
             </mat-accordion>
@@ -468,19 +470,6 @@
                     <div class="outer"></div>
                     <div>
                         <p>No current appointments available</p>
-                    </div>
-                    <div class="card history">
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]='true'>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title [matTooltipClass]="tooltipcls" [matTooltip]="historyTooltip">
-                                        {{history_cap}}
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <app-consumer-checkin-history-list [reloadapi]="reload_history_api">
-                                </app-consumer-checkin-history-list>
-                            </mat-expansion-panel>
-                        </mat-accordion>
                     </div>
                      </mat-expansion-panel>  
             </mat-accordion>

@@ -1148,4 +1148,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
+  checkinHistoryClicked(){
+    this.router.navigate(['consumer', 'checkin', 'history']);
+  }
 }
