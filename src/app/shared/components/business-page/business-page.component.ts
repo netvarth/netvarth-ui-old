@@ -994,7 +994,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }
     }
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '50%',
+      width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: {

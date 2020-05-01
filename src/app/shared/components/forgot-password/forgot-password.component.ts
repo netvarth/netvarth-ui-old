@@ -31,6 +31,7 @@ export class ForgotPasswordComponent {
   ok_btn_cap = Messages.OK_BTN;
   back_to_login_cap = Messages.BACK_TO_LOGIN_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
+  custmerlogpage = 'custlogpage';
   fp = new ForgotPasswordModel();
   fpForm: FormGroup;
   fpForm2: FormGroup;

@@ -44,6 +44,8 @@ export class ConsumerJoinComponent implements OnInit {
   api_success = null;
   otp: any;
   close_message: any;
+  fname: any;
+  lname: any;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -73,6 +75,8 @@ export class ConsumerJoinComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.pattern(projectConstants.VALIDATOR_MOBILE_AND_EMAIL)],
       password: ['', Validators.compose([Validators.required])],
+      first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
     });
   }
   showError() {
@@ -91,6 +95,7 @@ export class ConsumerJoinComponent implements OnInit {
         return;
       }
     }
+    this.onSubmit(this.loginForm.value);
   }
   check_mob() {
   //  this.show_error = true;
@@ -101,19 +106,18 @@ export class ConsumerJoinComponent implements OnInit {
               this.step = 3;
             } else {
               this.step = 4;
+             // this.otpSend();
             }
           }
           );
   }
-  
   onSubmit(data) {
     this.resetApiErrors();
-    // const pN = data.phonenumber.trim();
-    const pN = data.emailId.trim();
+    const pN = this.mobile_num.trim();
     const pW = data.password.trim();
     if (pN === '') {
-      if (this.document.getElementById('emailId')) {
-        this.document.getElementById('emailId').focus();
+      if (this.mobile_num) {
+        this.mobile_num.focus();
         return;
       }
     }
@@ -188,8 +192,8 @@ export class ConsumerJoinComponent implements OnInit {
     userProfile = {
       countryCode: '+91',
       primaryMobileNo: this.loginForm.get('emailId').value || null,
-      firstName: 'Jaldee',
-      lastName: 'User'
+      firstName: this.loginForm.get('first_name').value || null,
+      lastName: this.loginForm.get('last_name').value || null,
     };
     this.user_details = {
       userProfile: userProfile
@@ -297,7 +301,16 @@ export class ConsumerJoinComponent implements OnInit {
       this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
-
+  onFieldBlur(key) {
+    this.loginForm.get(key).setValue(this.toCamelCase(this.loginForm.get(key).value));
+  }
+  toCamelCase(word) {
+    if (word) {
+      return this.shared_functions.toCamelCase(word);
+    } else {
+      return word;
+    }
+  }
   doForgotPassword() {
     this.resetApiErrors();
     this.api_loading = false;

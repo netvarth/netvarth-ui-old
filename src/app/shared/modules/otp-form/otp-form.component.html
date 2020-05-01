@@ -39,37 +39,30 @@
     </mat-dialog-actions>
     <!-- consumer login section new -->
     <div class="cust-loginpge-color" *ngIf="consumerlogin">
-      <div class="mat-dialog-content" style="padding-left: 20px;">
-        <p class="fontNotify" for="otp">{{otp_mobile}}</p>
-        <div class="queue-menu">
-          <div class="form-group">
-            <mat-form-field>
-                <input class="cust-loginpge-wdth" matInput placeholder="Enter OTP"
-                  [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
-                  maxlength="5">
-            </mat-form-field>
-          </div>
-          <div class="form-group" style="padding-left: 5%;">
-        <button type="submit" mat-button class="cust-loginpge-wdth"
-        [disabled]="buttonclicked || !otp_form.valid">{{ok_btn_cap}}</button>
-          </div>
+      <div class="mat-dialog-content">
+        <div class="form-group">
+          <mat-form-field>
+            <input class="cust-loginpge-wdth" matInput placeholder="Enter OTP Received"
+              [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
+              maxlength="5">
+          </mat-form-field>
         </div>
-        
       </div>
-      <mat-dialog-actions *ngIf="consumerlogin">
-        <div class="resendouter" *ngIf="resetCounterVal==0">
-          <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
+      <div class="mat-dialog-actions">
+        <button type="submit" mat-button class="cust-logpg-submt"
+          [disabled]="buttonclicked || !otp_form.valid">verify</button>
+        <div class="resendouter" style="text-align: center !important;" *ngIf="resetCounterVal==0">
+          <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+              *ngIf="type=='change_email'">
               Email</ng-container></span>
-          <ul class="info-lst" *ngIf="type=='signup'">
-            <span class="black">Having a problem with your phone? &nbsp;<span (click)="setResendViaEmail()"
-                mat-button>{{resend_otp_email}}</span></span>
-          </ul>
+          <span (click)="setResendViaEmail()" mat-button>{{resend_otp_email}}</span>
         </div>
         <div class="counter-outer" style="font-size: 0.90em;" *ngIf="resetCounterVal>0">
           {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
         </div>
-      </mat-dialog-actions>
+      </div>
     </div>
+    <!-- consumer login section new ends here -->
   </form>
 </ng-container>
 
