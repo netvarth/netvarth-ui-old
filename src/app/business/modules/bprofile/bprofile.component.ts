@@ -213,6 +213,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   licenseMetrics: any = [];
   qr_code_cId = false;
   qr_value;
+  qr_code_oId = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -866,6 +867,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.qr_value = this.path + '/#' + valuetogenerate;
     this.qr_code_cId = true;
   }
+  qrCodegenerateOnlineID(valuetogenerate) {
+    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_code_oId = true;
+  }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
@@ -883,6 +888,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   closeCustomQR() {
     this.qr_code_cId = false;
+  }
+  closeOnlineQR() {
+    this.qr_code_oId = false;
   }
 
   copyInputMessage(valuetocopy) {

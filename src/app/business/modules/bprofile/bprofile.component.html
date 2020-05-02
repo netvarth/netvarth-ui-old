@@ -229,6 +229,8 @@
                                                                     <i class="fa fa-copy"></i>
                                                                     <span>copy link</span>
                                                                 </button>
+                                                                <button type="button" (click)="qrCodegenerateOnlineID(bProfile.uniqueId)" mat-menu-item><i class="fa fa-qrcode"></i>
+                                                                    <span>QR generate</span></button>
                                                             </mat-menu>
                                                         </span>
                                                         <span class="custid" rel="noopener"
@@ -238,6 +240,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6" *ngIf="qr_code_oId">
+                                        <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
+                                           </ngx-qrcode>
+                                       <br>
+                                    <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button> &nbsp;&nbsp;&nbsp;
+                                    <button (click)="closeOnlineQR()">close</button> 
+                               </div>
                                 </div>
 
                             </div>
