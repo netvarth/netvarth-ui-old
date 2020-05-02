@@ -10,6 +10,7 @@ import { projectConstants } from '../../../../shared/constants/project-constants
 import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html'
@@ -181,12 +182,21 @@ export class ConsumerCheckinComponent implements OnInit {
     action: any = '';
     breadcrumbs;
     breadcrumb_moreoptions: any = [];
+    showEditSection = false;
+    contactNumber;
+    consumerNum;
+    numberError = null;
+    callingMode;
+    virtualServiceArray;
+    callingModes: any = [];
+    showInputSection: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
         public route: ActivatedRoute,
+        public dateformat: DateFormatPipe,
         public provider_services: ProviderServices,
         public datastorage: CommonDataStorageService) {
         this.route.queryParams.subscribe(
@@ -267,7 +277,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         // this.minDate = this.sel_checkindate;
         this.minDate = this.todaydate;
-        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"       
+        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
         if (this.change_date === 'true') {
             const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
             const seldate_checker = new Date(seldateChecker);
@@ -450,9 +460,13 @@ export class ConsumerCheckinComponent implements OnInit {
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
             status: serv.status,
-            taxable: serv.taxable
+            taxable: serv.taxable,
+            serviceType: serv.serviceType,
+            virtualServiceType: serv.virtualServiceType,
+            virtualCallingModes: serv.virtualCallingModes
         };
         console.log(this.sel_ser_det);
+        this.callingMode = this.sel_ser_det.virtualCallingModes[0].callingMode;
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -519,6 +533,7 @@ export class ConsumerCheckinComponent implements OnInit {
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
         this.sel_ser = obj;
+        console.log(this.sel_ser);
         this.setServiceDetails(obj);
         this.queuejson = [];
         this.sel_queue_id = 0;
@@ -656,16 +671,23 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     saveCheckin() {
+        this.virtualServiceArray = {};
+        for (let i = 0; i < this.callingModes.length; i++) {
+            this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+        }
+        console.log(this.virtualServiceArray);
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
             },
-            'date': this.sel_checkindate,
+            'date': this.dateformat.transformTofilterDate(this.sel_checkindate),
             'service': {
-                'id': this.sel_ser
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'virtualService': this.virtualServiceArray
         };
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -1266,7 +1288,8 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.consumerPhoneNo = this.userPhone;
+                        this.consumerPhoneNo = this.contactNumber = this.userPhone;
+                        this.consumerNum = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
@@ -1366,5 +1389,40 @@ export class ConsumerCheckinComponent implements OnInit {
         this.showAction = false;
         this.payEmail = '';
         this.payEmail1 = '';
+    }
+    contactNumAction(action) {
+        this.numberError = null;
+        if (action === 'edit') {
+            this.showEditSection = true;
+        }
+        if (action === 'cancel') {
+            this.contactNumber = this.consumerNum;
+            this.showEditSection = false;
+        }
+        if (action === 'save') {
+            if (this.contactNumber.length < 10) {
+                this.numberError = 'Enter a 10 digit mobile number';
+            } else {
+                this.consumerNum = this.contactNumber;
+                this.showEditSection = false;
+            }
+        }
+    }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
+    addCallingmode(index) {
+        this.showInputSection[index] = false;
+    }
+    handleModeSel(index, ev) {
+        if (ev.checked) {
+            this.showInputSection[index] = true;
+        } else {
+            this.showInputSection[index] = false;
+            this.callingModes[index] = '';
+        }
+    }
+    editCallingmodes(index) {
+        this.showInputSection[index] = true;
     }
 }
