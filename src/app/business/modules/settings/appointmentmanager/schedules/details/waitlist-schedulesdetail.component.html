@@ -51,23 +51,28 @@
                                                     <span class="itm">{{service.name | capitalizeFirst}}</span>
                                                 </span>
                                             </div>
+                                            <div class="item">
+                                                <span class="ttle">{{customer_label | capitalizeFirst}}s served at a
+                                                    time</span> <span
+                                                    class="icon-customer-served">{{queue_data.parallelServing}}</span>
+                                            </div>
                                         </div>
                                         <div class="c-ot row col-sm-12">
                                             <!-- <div class="item">
                                                 <span class="ttle">Maximum {{customer_label}}s served</span> <span
                                                     class="icon-customer-line">{{queue_data.capacity}}</span>
                                             </div> -->
-                                            <div class="item">
+                                            <!-- <div class="item">
                                                 <span class="ttle">{{customer_label | capitalizeFirst}}s served at a
                                                     time</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
-                                            </div>
+                                            </div> -->
                                             <div class="item"
                                                 *ngIf="queue_data.calculationMode==='NoCalc' && queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
                                             </div>
-                                            <div class="item">
+                                            <!-- <div class="item">
                                                 <span class="ttle">Online check-ins</span> <span
                                                     *ngIf="queue_data.onlineCheckIn">On</span><span
                                                     *ngIf="!queue_data.onlineCheckIn">Off</span>
@@ -76,7 +81,7 @@
                                                 <span class="ttle">Future check-ins</span> <span
                                                     *ngIf="queue_data.futureWaitlist">On</span><span
                                                     *ngIf="!queue_data.futureWaitlist">Off</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- <div class="c-ot row col-sm-12">
                                             <div class="item" style="display: flex;">
