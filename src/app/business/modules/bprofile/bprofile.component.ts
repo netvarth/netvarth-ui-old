@@ -211,6 +211,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   showCustomId = false;
   licenseMetadata: any = [];
   licenseMetrics: any = [];
+  qr_code_cId = false;
+  qr_value;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -860,6 +862,28 @@ export class BProfileComponent implements OnInit, OnDestroy {
   //   document.execCommand('copy');
   //   inputElement.setSelectionRange(0, 0);
   // }
+  qrCodegenerateCustID(valuetogenerate) {
+    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_code_cId = true;
+  }
+  printQr(printSectionId) {
+    const printContent = document.getElementById(printSectionId);
+    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    WindowPrt.document.write('<html><head><title></title>');
+    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+    WindowPrt.document.write(printContent.innerHTML);
+    WindowPrt.document.write('</div>');
+    WindowPrt.document.write('</body></html>');
+    WindowPrt.document.close();
+    WindowPrt.focus();
+    WindowPrt.print();
+    WindowPrt.close();
+  }
+  closeCustomQR() {
+    this.qr_code_cId = false;
+  }
 
   copyInputMessage(valuetocopy) {
     const path = this.path + '/#' + valuetocopy;

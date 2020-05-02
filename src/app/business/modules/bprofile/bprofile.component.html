@@ -141,6 +141,8 @@
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
                                                             <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="qrCodegenerateCustID(bProfile.customId)" mat-menu-item><i class="fa fa-qrcode"></i>
+                                                                    <span>QR generate</span></button>
                                                                 <button type="button"
                                                                     (click)="editCustomId(bProfile.customId)"
                                                                     mat-menu-item>
@@ -196,9 +198,16 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <div class="col-md-6" *ngIf="qr_code_cId">
+                                        <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
+                                           </ngx-qrcode>
+                                       <br>
+                                    <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button>&nbsp;&nbsp;&nbsp;
+                                    <button (click)="closeCustomQR()">close</button>  
+                               </div>
                                 </div>
 
-                                <!-- <div class="pubs card adwds customBus w-dta">
+                                <div class="pubs card adwds customBus w-dta">
                                     <h2>Online ID</h2>
                                     <p class="form-level-settings">Know your unique ID here<a class="learnmore-pointer"
                                             id="customer-help">Learn
@@ -229,7 +238,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
 
                             </div>
                             <div class="card p0 w-dta active">
