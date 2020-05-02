@@ -14,6 +14,7 @@ import { ConsumerPaymentComponent } from './payment/payment.component';
 import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
+import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { ConsumerCheckinHistoryComponent } from './history/checkin-history.compo
         Nl2BrPipeModule,
         OwlModule,
         BreadCrumbModule,
+        PagerModule
     ],
     exports: [ConsumerCheckinComponent]
 })

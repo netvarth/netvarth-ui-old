@@ -37,6 +37,16 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   billdialogRef;
   paydialogRef;
   ratedialogRef;
+  breadcrumbs = [
+    {
+      title: 'Checkins',
+      url: '/consumer'
+    },
+    {
+      title: 'History'
+    }
+  ]; 
+  breadcrumb_moreoptions: any = [];
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router,
@@ -49,7 +59,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.getHistoryCount(this.params);
   }
   ngOnDestroy() {
     if (this.notedialogRef) {
