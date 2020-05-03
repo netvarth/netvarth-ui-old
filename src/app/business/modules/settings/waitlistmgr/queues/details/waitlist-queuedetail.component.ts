@@ -31,6 +31,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   save_btn = Messages.SAVE_BTN;
   queue_id = null;
   queue_data;
+  enablebatchStatus = false;
   display_schedule: any = [];
   breadcrumbs_init = [
     {
@@ -196,7 +197,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         }
       }
     }
-  }
+  } 
   advancedClick() {
     (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
   }
@@ -347,6 +348,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
+        enablebatchStatus: ['']
         // timeSlot: [0],
       });
       // this.updateForm();
@@ -362,6 +364,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
+        enablebatchStatus: [false]
         // timeSlot: [0]
       });
       this.provider_services.getQStartToken()
@@ -373,6 +376,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     this.api_loading = false;
     this.getProviderLocations();
+   
   }
 
   updateForm() {
@@ -795,8 +799,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
     const status = (event.checked) ? 'enabled' : 'disabled';
     this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
       this.batchStatus = event.checked;
-      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+     this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
     });
+   
+   
   }
   addBatchName() {
     const post_data = {
@@ -812,4 +818,16 @@ export class WaitlistQueueDetailComponent implements OnInit {
   editBatchnames() {
     this.showEditSection = true;
   }
+  changebatchStatus(event){
+   console.log(this.queue_id);
+   const status = (event.checked) ? 'enabled' : 'disabled';
+   if(status === 'enabled')
+   {
+     this.showEditSection = true;
+   }
+   else{
+     this.showEditSection = false;
+   }
+  } 
+  batchName(){}
 }
