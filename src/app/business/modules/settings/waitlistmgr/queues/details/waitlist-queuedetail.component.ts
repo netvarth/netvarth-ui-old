@@ -818,16 +818,16 @@ export class WaitlistQueueDetailComponent implements OnInit {
   editBatchnames() {
     this.showEditSection = true;
   }
+
   changebatchStatus(event){
-   console.log(this.queue_id);
-   const status = (event.checked) ? 'enabled' : 'disabled';
-   if(status === 'enabled')
-   {
-     this.showEditSection = true;
-   }
-   else{
-     this.showEditSection = false;
-   }
+    const status = (event.checked) ? 'enabled' : 'disabled';
+    if(status === 'enabled')
+    {
+      this.showEditSection = true;
+    }
+    else{
+      this.showEditSection = false;
+    }
   } 
-  batchName(){}
+ 
 }
