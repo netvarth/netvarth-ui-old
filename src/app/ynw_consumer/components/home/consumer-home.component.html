@@ -227,7 +227,7 @@
                            Check-Ins
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                            <span><button class=" historybtn bt3 pull-right" (click)="checkinHistoryClicked()">{{history_cap}}</button></span>
+                            
                     <div class="outer banner">
                         <div *ngIf="waitlists && waitlists.length != 0">
                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="waitlists">
@@ -439,7 +439,9 @@
                         <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
                             <p>{{no_checkins_cap}}</p>
                         </div>
-                        
+                        <div class = "checkin-history-border">
+                            <span><button class=" historybtn bt3 history-btn" (click)="checkinHistoryClicked()">{{history_cap}}</button></span>
+                        </div>
                         <!-- History Accordian -->
                         <!-- <div class="card history">
                             <mat-accordion>

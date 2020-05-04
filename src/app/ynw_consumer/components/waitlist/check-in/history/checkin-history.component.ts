@@ -11,6 +11,7 @@ import { ViewConsumerWaitlistCheckInBillComponent } from '../../../../../shared/
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+import { Messages } from '../../../../../shared/constants/project-messages';
 
 
 
@@ -37,6 +38,15 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   billdialogRef;
   paydialogRef;
   ratedialogRef;
+  service_provider_cap = Messages.SERV_PROVIDER_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  location_cap = Messages.LOCATION_CAP;
+  date_cap = Messages.DATE_COL_CAP;
+  status_cap = Messages.PRO_STATUS_CAP;
+  send_message_cap = Messages.SEND_MSG_CAP;
+  bill_cap = Messages.BILL_CAPTION;
+  rate_your_visit = Messages.RATE_YOU_VISIT;
+  no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   breadcrumbs = [
     {
       title: 'Checkins',
