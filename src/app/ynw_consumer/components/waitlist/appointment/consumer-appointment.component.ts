@@ -184,6 +184,10 @@ export class ConsumerAppointmentComponent implements OnInit {
     showEditView = false;
     slots;
     freeSlots: any = [];
+    callingMode;
+    virtualServiceArray;
+    callingModes: any = [];
+    showInputSection: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -267,7 +271,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         // this.minDate = this.sel_checkindate;
         this.minDate = this.todaydate;
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
@@ -390,6 +394,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.familymembers.push(mem);
                 }
             }
+            console.log(this.familymembers);
             this.api_loading1 = false;
         },
             () => {
@@ -453,7 +458,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
             status: serv.status,
-            taxable: serv.taxable
+            taxable: serv.taxable,
+            serviceType: serv.serviceType,
+            virtualServiceType: serv.virtualServiceType,
+            virtualCallingModes: serv.virtualCallingModes
         };
         console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
@@ -521,6 +529,8 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
+        this.callingModes = [];
+        this.showInputSection = [];
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -659,14 +669,31 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     saveCheckin() {
+        console.log(this.waitlist_for);
+        console.log(this.customer_data.id);
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                if (list.id === this.customer_data.id) {
+                    list['id'] = 0;
+                }
+            }
+        }
+        console.log(this.waitlist_for);
         this.showEditView = false;
+        this.virtualServiceArray = {};
+        for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes[i] !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+            }
+        }
         const post_Data = {
             'schedule': {
                 'id': this.sel_queue_id
             },
             'appmtDate': this.sel_checkindate,
             'service': {
-                'id': this.sel_ser
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for))
@@ -674,6 +701,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            post_Data['virtualService'] = this.virtualServiceArray;
+        }
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -694,6 +724,13 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === 0) {
+                            list['id'] = this.customer_data.id;
+                        }
+                    }
+                }
                 let retUUID;
                 Object.keys(retData).forEach(key => {
                     retUUID = retData[key];
@@ -702,8 +739,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUUID);
                 }
-               // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
-               // this.router.navigate(['consumer']);
+                // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                // this.router.navigate(['consumer']);
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
                 const navigationExtras: NavigationExtras = {
                     queryParams: { account_id: this.account_id }
@@ -792,7 +829,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         this.step = cstep;
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -845,7 +882,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     isChecked(id) {
+        // console.log(id);
         let retval = false;
+        // console.log(this.waitlist_for);
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
                 if (this.waitlist_for[i].id === id) {
@@ -853,6 +892,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             }
         }
+        //  console.log(retval);
         return retval;
     }
     addMember() {
@@ -1143,7 +1183,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services. getServicesforAppontmntByLocationId(locid)
+        this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;
@@ -1402,5 +1442,22 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.showAction = false;
         this.payEmail = '';
         this.payEmail1 = '';
+    }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
+    addCallingmode(index) {
+        this.showInputSection[index] = false;
+    }
+    handleModeSel(index, ev) {
+        if (ev.checked) {
+            this.showInputSection[index] = true;
+        } else {
+            this.showInputSection[index] = false;
+            this.callingModes[index] = '';
+        }
+    }
+    editCallingmodes(index) {
+        this.showInputSection[index] = true;
     }
 }

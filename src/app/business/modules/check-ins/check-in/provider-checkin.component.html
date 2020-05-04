@@ -48,7 +48,8 @@
                                     <ul class="availer-ul">
                                         <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                             <li>
-                                                {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                                                {{waitfor.firstName | capitalizeFirst}}
+                                                {{waitfor.lastName | capitalizeFirst}}
                                                 <!-- <span class="cs-btn bt8 changemember"
                                                     (click)="handleServiceForWhom()"
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
@@ -121,6 +122,32 @@
                                             <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                                         </ng-container>
                                     </ng-container>
+                                    <div class="callingmode mgn-lt-10"
+                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                                        <div class="mgn-bt-10 mgn-up-5">
+                                            <div class=""
+                                                *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
+                                                <mat-checkbox (change)="handleModeSel(i, $event)"
+                                                    [value]="mode.callingMode"
+                                                    [checked]="!showInputSection[i] && callingModes[i] || showInputSection[i]">
+                                                    {{mode.callingMode}}
+                                                </mat-checkbox>
+                                                <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
+                                                    <input style="border-bottom: 1px solid;padding: 0px;"
+                                                        class="form-control emailPrepay"
+                                                        placeholder="" [(ngModel)]="callingModes[i]"
+                                                        autocomplete="off">
+                                                    <div class="input-group-append mgn-up-5">
+                                                        <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            type="button">Add</button></div>
+                                                </div>
+                                                <div class="mgn-bt-10" *ngIf="!showInputSection[i] && callingModes[i]">
+                                                    {{callingModes[i]}}
+                                                    <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="date-outer">
                                     <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
@@ -146,7 +173,7 @@
                                     <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
                                         <mat-chip-list class="pcheckin-owl">
                                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
-                                                 [items]="queuejson">
+                                                [items]="queuejson">
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                                                     [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">
@@ -229,9 +256,9 @@
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
-                        <div class="col-md-12 mgn-up-20" *ngIf="consumerNote" >
+                        <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
                             <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
-                        </div>                        
+                        </div>
                         <ng-container *ngIf="consumerNote && notes" class="notes">
                             <div class="row col-md-12" style="display: flex;">
                                 <div class="col-md-7">
@@ -239,8 +266,9 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="col-md-12 mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                        <a class="attachment pointer-cursor" (click)="toggleAttachment()" >Attachments</a>
+                        <div class="col-md-12 mgn-up-20"
+                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                            <a class="attachment pointer-cursor" (click)="toggleAttachment()">Attachments</a>
                         </div>
                         <ng-container class="attachment"
                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">

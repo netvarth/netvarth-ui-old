@@ -179,8 +179,12 @@ export class AppointmentComponent implements OnInit {
     showEditView = false;
     slots;
     freeSlots: any = [];
-    comingSchduleId= '';
+    comingSchduleId = '';
     slotTime = '';
+    callingMode;
+    virtualServiceArray;
+    callingModes: any = [];
+    showInputSection: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -204,7 +208,7 @@ export class AppointmentComponent implements OnInit {
             }
             if (qparams.timeslot) {
                 this.slotTime = qparams.timeslot;
-                this.comingSchduleId= qparams.scheduleId;
+                this.comingSchduleId = qparams.scheduleId;
             }
         });
     }
@@ -237,7 +241,7 @@ export class AppointmentComponent implements OnInit {
         this.breadcrumbs = [
             {
                 title: 'Appointments',
-                url: 'provider/appointments'
+                url: 'provider/check-ins'
             },
             {
                 title: 'Appointment'
@@ -292,7 +296,7 @@ export class AppointmentComponent implements OnInit {
                 mode = 'id';
             }
         }
-        this.qParams['source'] = 'appointment';
+        this.qParams['source'] = 'checkin';
         switch (mode) {
             case 'phone':
                 post_data = {
@@ -333,7 +337,7 @@ export class AppointmentComponent implements OnInit {
     initAppointment() {
         this.showCheckin = true;
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -383,7 +387,7 @@ export class AppointmentComponent implements OnInit {
                                 this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
                                 this.note_placeholder = 'Add Note';
                             }
-                            this.shared_services. getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
+                            this.shared_services.getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
                                 (services: any) => {
                                     this.servicesjson = services;
                                     this.serviceslist = services;
@@ -563,7 +567,10 @@ export class AppointmentComponent implements OnInit {
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
             status: serv.status,
-            taxable: serv.taxable
+            taxable: serv.taxable,
+            serviceType: serv.serviceType,
+            virtualServiceType: serv.virtualServiceType,
+            virtualCallingModes: serv.virtualCallingModes
         };
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -610,6 +617,8 @@ export class AppointmentComponent implements OnInit {
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
+        this.callingModes = [];
+        this.showInputSection = [];
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -751,10 +760,23 @@ export class AppointmentComponent implements OnInit {
     }
     saveCheckin() {
         console.log(this.waitlist_for);
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                if (list.id === this.customer_data.id) {
+                    list['id'] = 0;
+                }
+            }
+        }
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
         // }
+        this.virtualServiceArray = {};
+        for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes[i] !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+            }
+        }
         this.showEditView = false;
         const post_Data = {
             'schedule': {
@@ -762,7 +784,8 @@ export class AppointmentComponent implements OnInit {
             },
             'appmtDate': this.sel_checkindate,
             'service': {
-                'id': this.sel_ser
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
@@ -771,6 +794,9 @@ export class AppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            post_Data['virtualService'] = this.virtualServiceArray;
+        }
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -793,6 +819,13 @@ export class AppointmentComponent implements OnInit {
             .subscribe((data) => {
                 console.log(data);
                 this.api_loading = false;
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === 0) {
+                            list['id'] = this.customer_data.id;
+                        }
+                    }
+                }
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
@@ -844,7 +877,7 @@ export class AppointmentComponent implements OnInit {
         if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
             // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
             // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         }
     }
     showCheckinButtonCaption() {
@@ -1240,7 +1273,7 @@ export class AppointmentComponent implements OnInit {
     getServicebyLocationId(locid, pdate) {
         this.api_loading1 = true;
         this.resetApi();
-        this.shared_services. getServicesforAppontmntByLocationId(locid)
+        this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 this.servicesjson = data;
                 this.serviceslist = data;
@@ -1333,25 +1366,25 @@ export class AppointmentComponent implements OnInit {
                         for (const list of this.waitlist_for) {
                             list['apptTime'] = this.apptTime;
                         }
-                    }else{
-                        for(let q of this.queuejson){
+                    } else {
+                        for (const q of this.queuejson) {
                             console.log(q.id);
-                            if(q.id == this.comingSchduleId){
-                                console.log("scheduleid"+ q.id);
+                            if (q.id === this.comingSchduleId) {
+                                console.log('scheduleid' + q.id);
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
                                 }
-                            }else{
+                            } else {
                                 this.apptTime = this.freeSlots[0].time;
-                        for (const list of this.waitlist_for) {
-                            list['apptTime'] = this.apptTime;
-                        }
+                                for (const list of this.waitlist_for) {
+                                    list['apptTime'] = this.apptTime;
+                                }
                             }
 
                         }
-                    this.comingSchduleId= '';
-                }
+                        this.comingSchduleId = '';
+                    }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1423,5 +1456,22 @@ export class AppointmentComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.showAction = false;
+    }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
+    addCallingmode(index) {
+        this.showInputSection[index] = false;
+    }
+    handleModeSel(index, ev) {
+        if (ev.checked) {
+            this.showInputSection[index] = true;
+        } else {
+            this.showInputSection[index] = false;
+            this.callingModes[index] = '';
+        }
+    }
+    editCallingmodes(index) {
+        this.showInputSection[index] = true;
     }
 }

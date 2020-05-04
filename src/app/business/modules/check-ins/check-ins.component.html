@@ -463,10 +463,36 @@
                               {{checkin.service.name}}
                             </span>
                           </div>
-                          <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.waitlistStatus === 'cancelled'">
-                            <span class="info-box-text" style="font-size: smaller;">
+                          <div class="col-md-3 col-xs-3 p0">
+                            <span *ngIf="checkin.waitlistStatus === 'cancelled'" class="info-box-text"
+                              style="font-size: smaller;">
                               {{checkin.waitlistStatus}}
                             </span>
+                            <div class="" style="display: flex;width: auto;">
+                              <span class="info-box-text service"
+                                *ngFor="let mode of checkin.virtualService | keyvalue">
+                                <a class="pointer-cursor" *ngIf="mode.key === 'WHATSAPP'" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Whatsapp'" style="color: black;">
+                                  <i class="fa fa-whatsapp"></i>
+                                </a>
+                                <a class="pointer-cursor" *ngIf="mode.key === 'SKYPE'" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Skype'" style="color: black;">
+                                  <i class="fa fa-skype"></i>
+                                </a>
+                                <a class="pointer-cursor" *ngIf="mode.key === 'IMO'" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Imo'" style="color: black;">
+                                  <i class="fa fa-whatsapp"></i>
+                                </a>
+                                <a class="pointer-cursor" *ngIf="mode.key === 'BOTIM'" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Botim'" style="color: black;">
+                                  <i class="fa fa-whatsapp"></i>
+                                </a>
+                                <a class="pointer-cursor" *ngIf="mode.key === 'HANGOUTS'" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Hnagouts'" style="color: black;">
+                                  <i class="fa fa-whatsapp"></i>
+                                </a>
+                              </span>
+                            </div>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -1001,11 +1027,11 @@
                 <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
-                
+
                 <!-- Timeslot disabled queue statusboard -->
-                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="new_checkins_list.length>0 && showstatus['new'] && !loading">
-                  
+
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of new_checkins_list, let i=index"
                     [class.selected-waitlist]="waitlistSelected[i]">
@@ -1022,7 +1048,7 @@
                             {{getAppxTime(checkin)}}</ng-container>
                         </div>
                       </div>
-                       <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                      <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
                         <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
@@ -1032,7 +1058,7 @@
                                 {{checkin.waitlistingFor[0].lastName}}
                               </span>
                               <!-- <span *ngIf="selected_queue && selected_queue.services.length>1" -->
-                                <span class="info-box-text service">
+                              <span class="info-box-text service">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
@@ -1094,7 +1120,7 @@
                             </a>
                           </div>
                         </div>
-                      </div> 
+                      </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="info-box-footer-more" *ngIf="section_new[i]">
@@ -1125,7 +1151,7 @@
                         </a>
                       </div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               </div>

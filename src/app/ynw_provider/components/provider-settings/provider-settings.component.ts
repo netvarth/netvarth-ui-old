@@ -128,6 +128,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   donations_statusstr: string;
   virtualCallingMode_status: any;
   virtualCallingMode_statusstr: string;
+  schedules_count: any = 0;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -681,10 +682,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getCauseCount() {
     const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' };
     this.provider_services.getCauseCount(filter)
-    .subscribe(
-      data => {
-        this.cause_count = data;
-      });
+      .subscribe(
+        data => {
+          this.cause_count = data;
+        });
   }
   getItems() {
     this.provider_services.getProviderItems()
@@ -820,7 +821,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.setAppointmentPresence(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Appointment creation ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -856,5 +857,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.getGlobalSettingsStatus();
         }
       );
+  }
+  getSchedulesCount() {
+    const filter = { 'scope-eq': 'account' };
+    this.provider_services.getSchedulesCount(filter)
+      .subscribe(
+        data => {
+          this.schedules_count = data;
+        });
   }
 }

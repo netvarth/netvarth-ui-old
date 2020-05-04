@@ -90,6 +90,31 @@
                                     <div class="prepay-amt" *ngIf="sel_ser_det.isPrePayment">{{prepayment_amnt_cap}}
                                         <span class="prepaymin-cls"><span>&#8377;
                                             </span>{{prepaymentAmount}}</span></div>
+                                    <div class="callingmode mgn-lt-10"
+                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                                        <div class="mgn-bt-10 mgn-up-5">
+                                            <div class="mgn-bt-20"
+                                                *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
+                                                <mat-checkbox (change)="handleModeSel(i, $event)"
+                                                    [value]="mode.callingMode">
+                                                    {{mode.callingMode}}
+                                                </mat-checkbox>
+                                                <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
+                                                    <input style="border-bottom: 1px solid"
+                                                        class="form-control emailPrepay"
+                                                        placeholder="" [(ngModel)]="callingModes[i]"
+                                                        autocomplete="off">
+                                                    <div class="input-group-append mgn-up-5">
+                                                        <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            type="button">Add</button></div>
+                                                </div>
+                                                <div *ngIf="!showInputSection[i] && callingModes[i]">
+                                                    {{callingModes[i]}}
+                                                    <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="date-outer">
                                     <div class="date-head">Appointment {{date_cap}}</div>
@@ -186,20 +211,21 @@
                                         </div> -->
 
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20"
-                                        *ngIf="freeSlots.length>0 && showEditView">
-                                        <div class="ttle mgn-bt-10">Select Appointment Time</div>
-                                        <mat-chip-list class="check-in-chip">
-                                            <mat-chip *ngFor="let slot of freeSlots" [selected]="slot.time === apptTime"
-                                                (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
-                                        </mat-chip-list>
-                                       
-                                    </div>
-                                    <div class="col-md-12 form-group queue-outer mgn-bt-20"
-                                        *ngIf="!showEditView">
-                                        <div class="ttle mgn-bt-10">Appointment Time</div>
-                                        <span class="label-bold">{{apptTime}} </span>
-                                        <span style="margin-left: 30px" class="editbt" (click)="editClicked()"></span>
-                                    </div>
+                                            *ngIf="freeSlots.length>0 && showEditView">
+                                            <div class="ttle mgn-bt-10">Select Appointment Time</div>
+                                            <mat-chip-list class="appt-in-chip">
+                                                <mat-chip *ngFor="let slot of freeSlots"
+                                                    [selected]="slot.time === apptTime"
+                                                    (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
+                                            </mat-chip-list>
+
+                                        </div>
+                                        <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
+                                            <div class="ttle mgn-bt-10">Appointment Time</div>
+                                            <span class="label-bold">{{apptTime}} </span>
+                                            <span style="margin-left: 30px" class="editbt"
+                                                (click)="editClicked()"></span>
+                                        </div>
                                         <div class="clearfix"></div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
                                         </app-common-innerloading-spinner>

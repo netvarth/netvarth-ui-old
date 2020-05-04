@@ -1254,4 +1254,8 @@ export class ProviderServices {
       const url = 'provider/appointment/today/count/';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   getSchedulesCount(filter?) {
+      const url = 'provider/apponintment/schedule/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
 }

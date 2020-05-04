@@ -176,6 +176,10 @@ export class ProviderCheckinComponent implements OnInit {
     users = [];
     userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
     customerid: any;
+    callingMode;
+    virtualServiceArray;
+    callingModes: any = [];
+    showInputSection: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -205,8 +209,8 @@ export class ProviderCheckinComponent implements OnInit {
             nav: true,
             navContainer: '.checkin-nav',
             navText: [
-              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-              '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+                '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+                '<i class="fa fa-angle-right" aria-hidden="true"></i>'
             ],
             autoplay: false,
             // autoplayTimeout: 6000,
@@ -218,8 +222,8 @@ export class ProviderCheckinComponent implements OnInit {
             autoWidth: true,
             loop: false,
             responsiveClass: true,
-            responsive: {0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
-          };
+            responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
+        };
         this.createForm();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
@@ -550,7 +554,10 @@ export class ProviderCheckinComponent implements OnInit {
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
             status: serv.status,
-            taxable: serv.taxable
+            taxable: serv.taxable,
+            serviceType: serv.serviceType,
+            virtualServiceType: serv.virtualServiceType,
+            virtualCallingModes: serv.virtualCallingModes
         };
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -597,6 +604,8 @@ export class ProviderCheckinComponent implements OnInit {
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
+        this.callingModes = [];
+        this.showInputSection = [];
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -741,18 +750,28 @@ export class ProviderCheckinComponent implements OnInit {
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
         // }
+        this.virtualServiceArray = {};
+        for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes[i] !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+            }
+        }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
             },
             'date': this.sel_checkindate,
             'service': {
-                'id': this.sel_ser
+                'id': this.sel_ser,
+                'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
         };
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            post_Data['virtualService'] = this.virtualServiceArray;
+        }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
@@ -1357,5 +1376,22 @@ export class ProviderCheckinComponent implements OnInit {
     }
     hideFilterSidebar() {
         this.showAction = false;
+    }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
+    addCallingmode(index) {
+        this.showInputSection[index] = false;
+    }
+    handleModeSel(index, ev) {
+        if (ev.checked) {
+            this.showInputSection[index] = true;
+        } else {
+            this.showInputSection[index] = false;
+            this.callingModes[index] = '';
+        }
+    }
+    editCallingmodes(index) {
+        this.showInputSection[index] = true;
     }
 }

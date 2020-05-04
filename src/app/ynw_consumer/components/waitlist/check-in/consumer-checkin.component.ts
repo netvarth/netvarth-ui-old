@@ -182,10 +182,6 @@ export class ConsumerCheckinComponent implements OnInit {
     action: any = '';
     breadcrumbs;
     breadcrumb_moreoptions: any = [];
-    showEditSection = false;
-    contactNumber;
-    consumerNum;
-    numberError = null;
     callingMode;
     virtualServiceArray;
     callingModes: any = [];
@@ -328,7 +324,6 @@ export class ConsumerCheckinComponent implements OnInit {
         });
     }
     isDepartmentHaveServices(serviceIds: any, servicesjson: any) {
-        console.log(serviceIds);
         let found = false;
         for (let j = 0; j < servicesjson.length; j++) {
             if (serviceIds.indexOf(servicesjson[j].id) !== -1) {
@@ -380,7 +375,6 @@ export class ConsumerCheckinComponent implements OnInit {
         this.api_loading1 = true;
         let fn;
         let self_obj;
-        console.log(this.customer_data);
         fn = this.shared_services.getConsumerFamilyMembers();
         self_obj = {
             'userProfile': {
@@ -466,7 +460,6 @@ export class ConsumerCheckinComponent implements OnInit {
             virtualCallingModes: serv.virtualCallingModes
         };
         console.log(this.sel_ser_det);
-        this.callingMode = this.sel_ser_det.virtualCallingModes[0].callingMode;
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -510,7 +503,6 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     handleUserSelection(user) {
-        console.log(user);
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -526,14 +518,13 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
         }
-
-        console.log(newserviceArray);
         this.servicesjson = newserviceArray;
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
+        this.callingModes = [];
+        this.showInputSection = [];
         this.sel_ser = obj;
-        console.log(this.sel_ser);
         this.setServiceDetails(obj);
         this.queuejson = [];
         this.sel_queue_id = 0;
@@ -594,7 +585,6 @@ export class ConsumerCheckinComponent implements OnInit {
     }
 
     handleQueueSelection(queue, index) {
-        console.log(index);
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
@@ -673,9 +663,10 @@ export class ConsumerCheckinComponent implements OnInit {
     saveCheckin() {
         this.virtualServiceArray = {};
         for (let i = 0; i < this.callingModes.length; i++) {
-            this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+            if (this.callingModes[i] !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+            }
         }
-        console.log(this.virtualServiceArray);
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -686,14 +677,15 @@ export class ConsumerCheckinComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
-            'virtualService': this.virtualServiceArray
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
         };
+        if (this.sel_ser_det.serviceType === 'virtualService') {
+            post_Data['virtualService'] = this.virtualServiceArray;
+        }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-            // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         }
         if (this.partySizeRequired) {
@@ -703,7 +695,6 @@ export class ConsumerCheckinComponent implements OnInit {
         post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
-            // post_Data['ignorePrePayment'] = true;
             this.addCheckInConsumer(post_Data);
         }
     }
@@ -1065,15 +1056,11 @@ export class ConsumerCheckinComponent implements OnInit {
     getProviderDepart(id) {
         this.shared_services.getProviderDept(id).
             subscribe(data => {
-                console.log(this.departmentlist);
                 this.departmentlist = data;
                 this.filterDepart = this.departmentlist.filterByDept;
                 for (let i = 0; i < this.departmentlist['departments'].length; i++) {
                     if (this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
                         if (this.departmentlist['departments'][i].serviceIds.length !== 0) {
-                            console.log(this.servicesjson);
-                            console.log(this.departmentlist['departments'][i].serviceIds);
-                            console.log(this.isDepartmentHaveServices(this.departmentlist['departments'][i].serviceIds, this.servicesjson));
                             if (this.isDepartmentHaveServices(this.departmentlist['departments'][i].serviceIds, this.servicesjson)) {
                                 this.departments.push(this.departmentlist['departments'][i]);
                             }
@@ -1082,7 +1069,6 @@ export class ConsumerCheckinComponent implements OnInit {
                     }
                 }
                 this.deptLength = this.departments.length;
-                console.log(this.deptLength);
                 // this.selected_dept = 'None';
                 if (this.deptLength !== 0) {
                     this.selected_dept = this.departments[0].departmentId;
@@ -1091,7 +1077,6 @@ export class ConsumerCheckinComponent implements OnInit {
             });
     }
     handleDeptSelction(obj) {
-        console.log(obj);
         this.api_error = '';
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
@@ -1284,12 +1269,10 @@ export class ConsumerCheckinComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
-                    console.log(this.userData);
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.consumerPhoneNo = this.contactNumber = this.userPhone;
-                        this.consumerNum = this.userPhone;
+                        this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
@@ -1389,24 +1372,6 @@ export class ConsumerCheckinComponent implements OnInit {
         this.showAction = false;
         this.payEmail = '';
         this.payEmail1 = '';
-    }
-    contactNumAction(action) {
-        this.numberError = null;
-        if (action === 'edit') {
-            this.showEditSection = true;
-        }
-        if (action === 'cancel') {
-            this.contactNumber = this.consumerNum;
-            this.showEditSection = false;
-        }
-        if (action === 'save') {
-            if (this.contactNumber.length < 10) {
-                this.numberError = 'Enter a 10 digit mobile number';
-            } else {
-                this.consumerNum = this.contactNumber;
-                this.showEditSection = false;
-            }
-        }
     }
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);

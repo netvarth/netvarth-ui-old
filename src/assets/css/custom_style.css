@@ -8571,3 +8571,15 @@ hr.wide-separator-line {
 .history-btn {
   margin-top: 30px;
 }
+.callingmode .mat-checkbox-layout .mat-checkbox-label {
+  font-weight: 500 !important;
+}
+.callingmode .input-section {
+  display: flex !important;
+  float: none !important;
+}
+.appt-in-chip .mat-chip {
+  /* width: 90px !important; */
+  font-size: .75rem !important;
+  text-align: center !important;
+}

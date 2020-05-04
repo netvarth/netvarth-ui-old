@@ -87,85 +87,31 @@
                                             <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                                         </ng-container>
                                     </ng-container>
-
-
-
-                                    <div class="prepayEmail"
+                                    <div class="callingmode mgn-lt-10"
                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
-                                        <div *ngIf="sel_ser_det.virtualServiceType === 'audioService'">
-
-
-
-                                            <div *ngIf="!showEditSection"> {{consumerNum}}
-                                                <span class="editbt mgn-lt-20"
-                                                    (click)="contactNumAction('edit')"></span> </div>
-                                            <ng-container *ngIf="showEditSection">
-                                                <div class="form-group">
-                                                    <input style="border-bottom: 1px solid"
-                                                        class="form-control emailPrepay"
-                                                        placeholder="Enter your contact number" maxlength="10"
-                                                        [(ngModel)]="contactNumber" autocomplete="off"
-                                                        (keypress)="isNumeric($event)">
-                                                    <app-field-error-display [displayError]="true"
-                                                        *ngIf="numberError != null" errorMsg={{numberError}}>
-                                                    </app-field-error-display>
-                                                </div>
-                                                <span class="input-group-btn">
-                                                    <button class="btn bt3 btnCancel" type="button"
-                                                        (click)="contactNumAction('cancel')">
-                                                        Cancel
-                                                    </button>
-                                                    <button class="btn bt3 btn-default"
-                                                        (click)="contactNumAction('save')" type="button">Add</button>
-                                                </span>
-                                            </ng-container>
-                                        </div>
-
-                                        <div class="mgn-bt-10"
-                                            *ngIf="sel_ser_det.virtualServiceType === 'videoService'">
-                                            <!-- <mat-form-field> -->
-                                            <div *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
+                                        <div class="mgn-bt-10 mgn-up-5">
+                                            <div class="mgn-bt-20"
+                                                *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
                                                 <mat-checkbox (change)="handleModeSel(i, $event)"
                                                     [value]="mode.callingMode">
                                                     {{mode.callingMode}}
                                                 </mat-checkbox>
-
-
-                                                <!-- <div class="input-group">
-                                                    <input [(ngModel)]="callingMode.value.actualValue" matInput type="text"
-                                                        class="form-control" placeholder="{{callingMode.value.placeHolder}}"
+                                                <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
+                                                    <input style="border-bottom: 1px solid"
+                                                        class="form-control emailPrepay"
+                                                        placeholder="" [(ngModel)]="callingModes[i]"
                                                         autocomplete="off">
-                                                    <div class="input-group-append">
-                                                        <button class="btn bt3 mgn-up-8"
-                                                            (click)="updateVideoSettings(callingMode, callingMode.key)"
-                                                            type="button">Update</button>
-                                                    </div>
-                                                </div> -->
-                                                <div class="input-group">
-                                                <input *ngIf="showInputSection[i]" style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                                    placeholder="Enter your contact number"
-                                                    [(ngModel)]="callingModes[i]" autocomplete="off">
-                                                    <div class="input-group-append">
-                                                    <button *ngIf="showInputSection[i] && callingModes[i]" class="btn bt3 btn-default"
-                                                    (click)="addCallingmode(i)" type="button">Add</button></div>
+                                                    <div class="input-group-append mgn-up-5">
+                                                        <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
+                                                            type="button">Add</button></div>
                                                 </div>
-                                                    <div *ngIf="!showInputSection[i] && callingModes[i]"> {{callingModes[i]}}
-                                                        <span class="editbt mgn-lt-20"
-                                                            (click)="editCallingmodes(i)"></span> </div>
-                                                <!-- <mat-select placeholder="Select a calling mode" [ngModel]="callingMode"
-                                                #callmode (selectionChange)="handleModeSel(callmode.value)">
-                                                <mat-option *ngFor="let mode of sel_ser_det.virtualCallingModes"
-                                                    [value]="mode.callingMode">
-                                                    {{mode.callingMode}}
-                                                </mat-option>
-                                            </mat-select> -->
-                                                <!-- </mat-form-field> -->
+                                                <div *ngIf="!showInputSection[i] && callingModes[i]">
+                                                    {{callingModes[i]}}
+                                                    <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
-
-
                                     <div class="prepay-amt" *ngIf="sel_ser_det.isPrePayment">{{prepayment_amnt_cap}}
                                         <span class="prepaymin-cls"><span>&#8377;
                                             </span>{{prepaymentAmount}}</span></div>

@@ -216,7 +216,8 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('schedules')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{schedules_cap}}</span>
+                                            class="lnk setings">{{schedules_cap}}<span
+                                                class="pull-right badge bg-blue">{{schedules_count}}</span></span>
                                         <p class="settings_info">Manage your schedules here</p>
                                     </a>
                                 </li>
@@ -397,37 +398,39 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 col-12  no-padding-small">
-                <!-- Widget: user widget style 1 -->
-                <div class="box box-widget widget-user-2">
-                    <div class="widget-user-header bg-blue">
-                        <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="appointmentmanager">Donation Manager <i class="fa fa-gears fl-right lnk"></i>
-                        </h4>
-                    </div>
-                    <div class="box-footer no-padding">
-                        <ul class="nav nav-stacked  set-block-4">
-                            <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
-                            <li><a>Accept Donations<span class="pull-right">
-                                        <mat-slide-toggle [(ngModel)]="donations_status"
-                                            (change)="handle_Donations($event)">
-                                        </mat-slide-toggle>
-                                    </span>
-                                    <p class="sts" [class.active]="donations_status">
-                                        {{donations_statusstr}}</p>
-                                    <p class="settings_info" *ngIf="donations_status">Accept Donations hints.</p>
-                                    <p class="settings_info" *ngIf="!donations_status">Accept Donations hints
-                                    </p>
-                                </a>
-                            </li>
-                            <li (click)="redirecTo('causes')"><a class="pointer-cursor"><span class="lnk setings">Causes
-                                        <span class="pull-right badge bg-blue">{{cause_count}}</span></span>
-                                    <p class="settings_info">Add and manage causes here</p>
-                                </a>
-                            </li>
-                        </ul>
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header bg-blue">
+                            <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager <i
+                                    class="fa fa-gears fl-right lnk"></i>
+                            </h4>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked  set-block-4">
+                                <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
+                                <li><a>Accept Donations<span class="pull-right">
+                                            <mat-slide-toggle [(ngModel)]="donations_status"
+                                                (change)="handle_Donations($event)">
+                                            </mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="donations_status">
+                                            {{donations_statusstr}}</p>
+                                        <p class="settings_info" *ngIf="donations_status">Accept Donations hints.</p>
+                                        <p class="settings_info" *ngIf="!donations_status">Accept Donations hints
+                                        </p>
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('causes')"><a class="pointer-cursor"><span
+                                            class="lnk setings">Causes
+                                            <span class="pull-right badge bg-blue">{{cause_count}}</span></span>
+                                        <p class="settings_info">Add and manage causes here</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
                 <div class="col-md-6 col-lg-4 col-12   no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
@@ -566,16 +569,19 @@
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>These settings allows the video call options</a></li>
                                 <li><a>Virtual Calling Mode<span class="pull-right">
-                                    <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
-                                    (change)="handle_virtualCallingModeStatus($event)">
-                                    </mat-slide-toggle>
-                                    </span>
-                                    <p class="sts" [class.active]="virtualCallingMode_status">{{virtualCallingMode_statusstr}}</p>
-                                    <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling hints.</p>
-                                    <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling hints
-                                    </p>
+                                            <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                                                (change)="handle_virtualCallingModeStatus($event)">
+                                            </mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="virtualCallingMode_status">
+                                            {{virtualCallingMode_statusstr}}</p>
+                                        <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling
+                                            hints.</p>
+                                        <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling
+                                            hints
+                                        </p>
                                     </a>
-                                    </li>
+                                </li>
                                 <li (click)="redirecTo('video')"><a class="pointer-cursor"><span
                                             class="lnk setings">Video Call
                                         </span>
