@@ -17,7 +17,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { ProviderBprofileSearchDynamicComponent } from '../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
+// import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { QRCodeModule } from 'angularx-qrcode';
 @NgModule({
     imports: [
         BProfileRoutingModule,
@@ -28,7 +29,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         CapitalizeFirstPipeModule,
         ModalGalleryModule,
         Nl2BrPipeModule,
-        NgxQRCodeModule,
+        // NgxQRCodeModule,
+        QRCodeModule,
         DynamicFormModule,
         GalleryModule
     ],

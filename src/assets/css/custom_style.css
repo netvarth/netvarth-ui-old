@@ -6869,9 +6869,11 @@ label.notifi-togl {
     width: 100% !important;
   }
 }
-.cust-loginpge-color {
+/* .cust-loginpge-color {
   background: aliceblue !important;
-}
+} */
+.joinotp .mat-dialog-content, .joinotp .mat-dialog-actions {padding-left: 0 !important;
+padding-right: 0 !important; padding-top: 0 !important;}
 .cust-loginpge-wdth {
   width: 100% !important;
 }

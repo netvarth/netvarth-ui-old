@@ -56,7 +56,6 @@ export class BranchUsersComponent implements OnInit {
                 }
                 this.users_list = users;
                 this.api_loading = false;
-                console.log(this.users_list);
             }
         );
     }

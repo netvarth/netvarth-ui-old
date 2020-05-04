@@ -199,11 +199,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6" *ngIf="qr_code_cId">
-                                        <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
-                                           </ngx-qrcode>
+                                        <!-- <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
+                                           </ngx-qrcode> -->
+                                           <div style="width: 200px; height: 200px;">
+                                           <qrcode id="print-section" [usesvg]=true [qrdata]="qr_value" [size]="256" [level]="'M'"></qrcode>
+                                        </div>
                                        <br>
                                     <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button>&nbsp;&nbsp;&nbsp;
-                                    <button (click)="closeCustomQR()">close</button>  
+                                    <button (click)="closeCustomQR()"><i class="fa fa-close" aria-hidden="true"></i></button>  
                                </div>
                                 </div>
 
@@ -241,11 +244,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6" *ngIf="qr_code_oId">
-                                        <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
-                                           </ngx-qrcode>
+                                        <div style="width: 200px; height: 200px;">
+                                            <qrcode id="print-section" [usesvg]=true [qrdata]="qr_value" [size]="256" [level]="'M'"></qrcode>
+                                        </div>                                        
+                                        <!-- <ngx-qrcode  id="print-section"  [elementType]="elementType" [value] = "qr_value" >    
+                                           </ngx-qrcode> -->
                                        <br>
                                     <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button> &nbsp;&nbsp;&nbsp;
-                                    <button (click)="closeOnlineQR()">close</button> 
+                                    <button (click)="closeOnlineQR()"><i class="fa fa-close" aria-hidden="true"></i></button> 
                                </div>
                                 </div>
 

@@ -46,6 +46,9 @@ export class ConsumerJoinComponent implements OnInit {
   close_message: any;
   fname: any;
   lname: any;
+  phoneExists = false;
+  isPhoneValid = false;
+  resendViaEmail: boolean;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -97,22 +100,10 @@ export class ConsumerJoinComponent implements OnInit {
     }
     this.onSubmit(this.loginForm.value);
   }
-  check_mob() {
-  //  this.show_error = true;
-    this.mobile_num = this.document.getElementById('emailId').value;
-    this.shared_services.consumerMobilenumCheck(this.mobile_num).
-          subscribe((data) => {
-            if (data) {
-              this.step = 3;
-            } else {
-              this.step = 4;
-             // this.otpSend();
-            }
-          }
-          );
+  clearPhoneExists() {
+    this.phoneExists = false;
   }
   onSubmit(data) {
-    this.resetApiErrors();
     const pN = this.mobile_num.trim();
     const pW = data.password.trim();
     if (pN === '') {
@@ -195,19 +186,27 @@ export class ConsumerJoinComponent implements OnInit {
       firstName: this.loginForm.get('first_name').value || null,
       lastName: this.loginForm.get('last_name').value || null,
     };
+    if (userProfile.firstName === null) {
+      userProfile.firstName = 'undefined';
+    }
+    if (userProfile.lastName === null) {
+      userProfile.lastName = 'undefined';
+    }
     this.user_details = {
       userProfile: userProfile
     };
     this.signUpApiConsumer(this.user_details);
   }
-
+  resendOTPEmail(status) {
+    this.resendViaEmail = status;
+  }
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
     this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
           this.actionstarted = false;
-         // this.createForm(2);
+          // this.createForm(2);
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
             user_details.userProfile.email) {
@@ -215,7 +214,7 @@ export class ConsumerJoinComponent implements OnInit {
           } else {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
-          this.step = 5;
+          this.step = 3;
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
@@ -238,56 +237,89 @@ export class ConsumerJoinComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-      this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.otp = submit_data.phone_otp;
-           // this.createForm(4);
-           this.step = 6;
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
+
+    const firstName = this.loginForm.get('first_name').value;
+    const lastName = this.loginForm.get('last_name').value;
+
+    if (firstName && firstName.trim().length > 3) {
+    } else {
+      this.api_error = 'First Name is too short';
+      this.actionstarted = false;
+      return false;
+    }
+    if (lastName && lastName.trim() !== '') {
+    } else {
+      this.api_error = 'Last Name is required';
+      this.actionstarted = false;
+      return false;
+    }
+    this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
+      .subscribe(
+        () => {
+          this.actionstarted = false;
+          this.otp = submit_data.phone_otp;
+          // this.createForm(4);
+
+          this.step = 6;
+        },
+        error => {
+          this.actionstarted = false;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        }
+      );
   }
   resendOtp(user_details) {
-      this.signUpApiConsumer(user_details);
+    this.signUpApiConsumer(user_details);
   }
   onPasswordSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
     const post_data = { password: submit_data.new_password };
-      this.shared_services.ConsumerSetPassword(this.otp, post_data)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            const login_data = {
-              'countryCode': '+91',
-              'loginId': this.user_details.userProfile.primaryMobileNo,
-              'password': post_data.password
-            };
-            // this.dialogRef.close();
-            this.shared_functions.consumerLogin(login_data, this.moreParams)
-              .then(
-                () => {
-                  const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-                  this.dialogRef.close('success');
-                },
-                error => {
-                  ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-                  // this.api_loading = false;
-                }
-              );
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
+    this.shared_services.ConsumerSetPassword(this.otp, post_data)
+      .subscribe(
+        () => {
+          this.actionstarted = false;
+          const login_data = {
+            'countryCode': '+91',
+            'loginId': this.user_details.userProfile.primaryMobileNo,
+            'password': post_data.password
+          };
+          // this.dialogRef.close();
+          this.shared_functions.consumerLogin(login_data, this.moreParams)
+            .then(
+              (login_info: any) => {
+                this.user_details.userProfile['firstName'] = this.loginForm.get('first_name').value;
+                this.user_details.userProfile['lastName'] = this.loginForm.get('last_name').value;
+                this.user_details.userProfile['id'] = login_info.id;
+                this.shared_services.updateProfile(this.user_details.userProfile, 'consumer').subscribe(
+                  () => {
+                    login_info['firstName'] = this.user_details.userProfile['firstName'];
+                    login_info['lastName'] = this.user_details.userProfile['lastName'];
+                    login_info['userName'] =  login_info['firstName'] + ' ' + login_info['lastName'];
+                    this.shared_functions.setLoginData(login_info, login_data, 'consumer');
+                    const pdata = { 'ttype': 'updateuserdetails' };
+                    this.shared_functions.sendMessage(pdata);
+                    const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                    this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                    this.dialogRef.close('success');
+                  },
+                  error => {
+                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                    return false;
+                  });
+              },
+              error => {
+                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                // this.api_loading = false;
+              }
+            );
+        },
+        error => {
+          this.actionstarted = false;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        }
+      );
   }
   continuetoPwd() {
     this.step = 6;
@@ -354,6 +386,19 @@ export class ConsumerJoinComponent implements OnInit {
     this.dialogRef.close();
     this.router.navigate(['/provider-home']);
   }
+
+  checkAccountExists() {
+    this.mobile_num = this.document.getElementById('emailId').value;
+    this.shared_services.consumerMobilenumCheck(this.mobile_num).subscribe((accountExists) => {
+      if (accountExists) {
+        this.phoneExists = true;
+        this.isPhoneValid = true;
+      } else {
+        this.phoneExists = false;
+        this.isPhoneValid = true;
+        this.otpSend();
+      }
+    }
+    );
+  }
 }
-
-
