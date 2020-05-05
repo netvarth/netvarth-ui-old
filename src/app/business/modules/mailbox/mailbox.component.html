@@ -55,7 +55,7 @@
                                                         <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
                                                             [src]="clogo">
                                                         <!-- /.direct-chat-img -->
-                                                        <div class="direct-chat-text" #messageId
+                                                        <div class="direct-chat-text"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">

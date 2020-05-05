@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription } from 'rxjs';
@@ -57,7 +57,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
     clogo: any;
     showImages: any = [];
     openState: any = [];
-    @ViewChildren('messageId') slotIds: QueryList<ElementRef>;
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
@@ -399,18 +398,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
         (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
     }
     readConsumerMessages(messages, index) {
-        
-        const ind = messages.length - 1;
-        console.log(ind);
-        console.log(messages[ind]);
-      this.slotIds.toArray().forEach(element => {
-        if (element.nativeElement.innerText === messages[ind]) {
-          element.nativeElement.scrollIntoView();
-          return false;
-        }
-      });
-
-
         const messageIds = [];
         for (const message of messages) {
             if (!message.read && message.messagestatus === 'in') {
