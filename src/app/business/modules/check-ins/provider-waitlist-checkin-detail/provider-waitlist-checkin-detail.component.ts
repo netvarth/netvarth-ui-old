@@ -79,6 +79,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   board_count = 0;
   showTimePicker = false;
   availableSlots: any = [];
+  callingModes = projectConstants.CALLING_MODES;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -140,8 +141,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
-console.log(this.waitlist_data.virtualService);
-console.log(this.waitlist_data.virtualService.WHATSAPP);
+          console.log(this.waitlist_data.virtualService);
+          console.log(this.waitlist_data.virtualService.WHATSAPP);
           const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
           if (interval) {
             this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);

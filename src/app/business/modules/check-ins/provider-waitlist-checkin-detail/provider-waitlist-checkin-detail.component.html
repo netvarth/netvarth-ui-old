@@ -151,16 +151,13 @@
               <div class="clearfix"></div>
               <!-- </mat-expansion-panel>
               </mat-accordion> -->
-
               <div class="mgn-bt-20" *ngIf="waitlist_data && waitlist_data.virtualService">
                 <h2> Calling modes </h2>
                 <div class="mgn-bt-5" *ngFor="let mode of waitlist_data.virtualService | keyvalue">
-                 <span>{{mode.key}}:  </span>  <span> {{mode.value}}</span> 
+                  <span>{{callingModes[mode.key]}}: </span> <span> {{mode.value}}</span>
                 </div>
               </div>
               <div class="clearfix"></div>
-
-
               <div class="btm" *ngIf="waitlist_data">
                 <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>
                 <button class="cs-btn bt3 addprovider"
@@ -213,11 +210,11 @@
                     {{cust_notes_cap | capitalizeFirst}}
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="pnotes"
-                  *ngIf="waitlist_data && waitlist_data.consumerNote && waitlist_data.consumerNote !== ''">
-                  <p>{{waitlist_data.consumerNote}}</p>
+                <div class="pnotes" *ngIf="waitlist_data && waitlist_data.consumerNote">
+                  <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
+                  <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
                 </div>
-                <div *ngIf="waitlist_data && waitlist_data.consumerNote === '' || !waitlist_data.consumerNote">
+                <div *ngIf="waitlist_data && !waitlist_data.consumerNote">
                   <p>{{no_cus_notes_cap}}</p>
                 </div>
               </mat-expansion-panel>

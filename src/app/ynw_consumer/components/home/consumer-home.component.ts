@@ -144,6 +144,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   statusOfTrack: any = [];
   status: Boolean;
   pollingSet: any = [];
+  callingModesDisplayName = projectConstants.CALLING_MODES;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -1148,7 +1149,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
-  checkinHistoryClicked(){
+  checkinHistoryClicked() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
 }

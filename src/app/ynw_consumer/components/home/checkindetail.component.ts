@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,19 +10,19 @@ import { Location } from '@angular/common';
 import { ConsumerServices } from '../../services/consumer-services.service';
 
 @Component({
-    selector:'app-checkindetail',
-    templateUrl:'./checkindetail.component.html'
+    selector: 'app-checkindetail',
+    templateUrl: './checkindetail.component.html'
 })
-export class checkindetailcomponent{
-    waitlist:any;
+export class CheckinDetailComponent implements OnInit {
+    waitlist: any;
     breadcrumbs = [
-    {
-    title: 'Dashboard',
-    url: '/consumer'
-    },
-    {
-    title: 'checkinDetails'
-    }
+        {
+            title: 'Dashboard',
+            url: '/consumer'
+        },
+        {
+            title: 'checkinDetails'
+        }
     ];
     api_loading = true;
     waitlistdata: any;
@@ -41,15 +41,15 @@ export class checkindetailcomponent{
     send_msg_cap = Messages.CHECK_DET_SEND_MSG_CAP;
     comm_history_cap = Messages.COMMU_HISTORY_CAP;
     status_cap;
-    BusinessName:any;
-    date:any 
-    firstname:any;
-    lastname:any;
+    BusinessName: any;
+    date: any;
+    firstname: any;
+    lastname: any;
     checkin_label = '';
     details_cap = Messages.CHECK_DET_DETAILS_CAP;
     dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
-    cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP
+    cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
     locn: any;
     service: any;
     deptName: any;
@@ -57,7 +57,7 @@ export class checkindetailcomponent{
     queueEnd: any;
     paymntstats: any;
     batchname: any;
-    status:any;
+    status: any;
     ProviderId: any;
     addnotedialogRef: any;
     customer_label: any;
@@ -66,103 +66,103 @@ export class checkindetailcomponent{
     ynwUuid: any;
     communication_history: any = [];
     statusUpdatedTime: any;
-    
-    constructor( 
-    private activated_route: ActivatedRoute,
-    private dialog: MatDialog,
-    private router:Router,
-    public locationobj: Location,
-    private shared_functions: SharedFunctions,
-    @Inject(DOCUMENT) public document,
-    private consumer_services: ConsumerServices,
-    private shared_Functionsobj: SharedFunctions,
-    )
-    {
-    this.activated_route.queryParams.subscribe(
-    (qParams) => {
-    this.waitlistdata = qParams;
-    console.log(this.waitlistdata);
-    });
-    this.waitlist=this.waitlistdata.waitlist || null;
-    console.log(this.waitlist);
-    const waitlistjson = JSON.parse(this.waitlist);
-    this.BusinessName=waitlistjson.providerAccount.businessName;
-    this.ProviderId=waitlistjson.providerAccount.id;
-    this.ynwUuid=waitlistjson.ynwUuid;
-    this.date=waitlistjson.date;
-    this.locn=waitlistjson.queue.location.place;
-    this.firstname=waitlistjson.consumer.firstName;
-    this.lastname=waitlistjson.consumer.lastName;
-    this.service=waitlistjson.service.name;
-    this.deptName=waitlistjson.service.deptName;
-    this.queueStart=waitlistjson.queue.queueStartTime;
-    this.queueEnd=waitlistjson.queue.queueEndTime;
-    this.paymntstats=waitlistjson.paymentStatus;
-    this.batchname=waitlistjson.batchName;
-    this.status=waitlistjson.waitlistStatus;
-    this.statusUpdatedTime=waitlistjson.statusUpdatedTime;
-    this.consumerNote=waitlistjson.consumerNote;
-    this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
-    this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
-    this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
-    this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-    } 
-    ngOnInit(){
+    callingModes;
+    callingModesDisplayName = projectConstants.CALLING_MODES;
+    constructor(
+        private activated_route: ActivatedRoute,
+        private dialog: MatDialog,
+        private router: Router,
+        public locationobj: Location,
+        private shared_functions: SharedFunctions,
+        @Inject(DOCUMENT) public document,
+        private consumer_services: ConsumerServices,
+        private shared_Functionsobj: SharedFunctions,
+    ) {
+        this.activated_route.queryParams.subscribe(
+            (qParams) => {
+                this.waitlistdata = qParams;
+                console.log(this.waitlistdata);
+            });
+        this.waitlist = this.waitlistdata.waitlist || null;
+        console.log(this.waitlist);
+        const waitlistjson = JSON.parse(this.waitlist);
+        this.BusinessName = waitlistjson.providerAccount.businessName;
+        this.ProviderId = waitlistjson.providerAccount.id;
+        this.ynwUuid = waitlistjson.ynwUuid;
+        this.date = waitlistjson.date;
+        this.locn = waitlistjson.queue.location.place;
+        this.firstname = waitlistjson.consumer.firstName;
+        this.lastname = waitlistjson.consumer.lastName;
+        this.service = waitlistjson.service.name;
+        this.deptName = waitlistjson.service.deptName;
+        this.queueStart = waitlistjson.queue.queueStartTime;
+        this.queueEnd = waitlistjson.queue.queueEndTime;
+        this.paymntstats = waitlistjson.paymentStatus;
+        this.batchname = waitlistjson.batchName;
+        this.status = waitlistjson.waitlistStatus;
+        this.statusUpdatedTime = waitlistjson.statusUpdatedTime;
+        this.consumerNote = waitlistjson.consumerNote;
+        this.callingModes = waitlistjson.virtualService;
+        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+        this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
+        this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
+        this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     }
-    gotoPrev(){
-    this.locationobj.back();
+    ngOnInit() {
     }
-    addCommonMessage(waitlistdata){
-    console.log(waitlistdata);
-    const pass_ob = {};
-    pass_ob['source'] = 'consumer-waitlist';
-    pass_ob['uuid'] =this.ynwUuid;
-    pass_ob['user_id'] = this.ProviderId;
-    pass_ob['name'] = this.BusinessName;
-    this.addNote(pass_ob);
+    gotoPrev() {
+        this.locationobj.back();
+    }
+    addCommonMessage(waitlistdata) {
+        console.log(waitlistdata);
+        const pass_ob = {};
+        pass_ob['source'] = 'consumer-waitlist';
+        pass_ob['uuid'] = this.ynwUuid;
+        pass_ob['user_id'] = this.ProviderId;
+        pass_ob['name'] = this.BusinessName;
+        this.addNote(pass_ob);
     }
     addNote(pass_ob) {
-    console.log(pass_ob);
-    this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
-    width: '50%',
-    panelClass: ['commonpopupmainclass', 'popup-class'],
-    disableClose: true,
-    autoFocus: true,
-    data: pass_ob
-    });
-    this.addnotedialogRef.afterClosed().subscribe(result => {
-    if (result === 'reloadlist') {
-    }
-    });
+        console.log(pass_ob);
+        this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'popup-class'],
+            disableClose: true,
+            autoFocus: true,
+            data: pass_ob
+        });
+        this.addnotedialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+            }
+        });
     }
     getCommunicationHistory() {
-    this.consumer_services.getConsumerCommunications(this.ProviderId)
-    .subscribe(
-    data => {
-    const history: any = data;
-    this.communication_history = [];
-    for (const his of history) {
-    if (his.waitlistId === this.ynwUuid) {
-    this.communication_history.push(his);
-    }
-    }
-    this.sortMessages();
-    },
-    error => {
-    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    }
-    );
+        this.consumer_services.getConsumerCommunications(this.ProviderId)
+            .subscribe(
+                data => {
+                    const history: any = data;
+                    this.communication_history = [];
+                    for (const his of history) {
+                        if (his.waitlistId === this.ynwUuid) {
+                            this.communication_history.push(his);
+                        }
+                    }
+                    this.sortMessages();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
     sortMessages() {
-    this.communication_history.sort(function (message1, message2) {
-    if (message1.timeStamp < message2.timeStamp) {
-    return 11;
-    } else if (message1.timeStamp > message2.timeStamp) {
-    return -1;
-    } else {
-    return 0;
+        this.communication_history.sort(function (message1, message2) {
+            if (message1.timeStamp < message2.timeStamp) {
+                return 11;
+            } else if (message1.timeStamp > message2.timeStamp) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
     }
-    });
-    }
-    
 }

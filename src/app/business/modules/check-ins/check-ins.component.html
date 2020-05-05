@@ -468,31 +468,6 @@
                               style="font-size: smaller;">
                               {{checkin.waitlistStatus}}
                             </span>
-                            <div class="" style="display: flex;width: auto;">
-                              <span class="info-box-text service"
-                                *ngFor="let mode of checkin.virtualService | keyvalue">
-                                <a class="pointer-cursor" *ngIf="mode.key === 'WHATSAPP'" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Whatsapp'" style="color: black;">
-                                  <i class="fa fa-whatsapp"></i>
-                                </a>
-                                <a class="pointer-cursor" *ngIf="mode.key === 'SKYPE'" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Skype'" style="color: black;">
-                                  <i class="fa fa-skype"></i>
-                                </a>
-                                <a class="pointer-cursor" *ngIf="mode.key === 'IMO'" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Imo'" style="color: black;">
-                                  <i class="fa fa-whatsapp"></i>
-                                </a>
-                                <a class="pointer-cursor" *ngIf="mode.key === 'BOTIM'" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Botim'" style="color: black;">
-                                  <i class="fa fa-whatsapp"></i>
-                                </a>
-                                <a class="pointer-cursor" *ngIf="mode.key === 'HANGOUTS'" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="'Hnagouts'" style="color: black;">
-                                  <i class="fa fa-whatsapp"></i>
-                                </a>
-                              </span>
-                            </div>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -501,6 +476,11 @@
                             <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                               <i class="icon-note"></i>
+                            </span>
+                            <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
+                              class="pull-left cnote icon-btn1 pointer-cursor"
+                              (click)="showCallingModes(checkin.virtualService)">
+                              <i class="fa fa-phone"></i>
                             </span>
                             <span data-title="Payment Status" class="payment" *ngIf="pos">
                               <ng-container *ngIf="checkin.paymentStatus">
@@ -605,6 +585,11 @@
                             *ngIf="timeSlotCheckins[slot][0].consumerNote"
                             (click)="showConsumerNote(timeSlotCheckins[slot][0])">
                             <i class="icon-note"></i>
+                          </span>
+                          <span *ngIf="timeSlotCheckins[slot][0].virtualService" [matTooltip]="'calling modes'"
+                            class="pull-left cnote icon-btn1 pointer-cursor"
+                            (click)="showCallingModes(timeSlotCheckins[slot][0].virtualService)">
+                            <i class="fa fa-phone"></i>
                           </span>
                           <span data-title="Payment Status" class="payment" *ngIf="pos">
                             <ng-container *ngIf="timeSlotCheckins[slot][0].paymentStatus">
@@ -875,6 +860,11 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
+                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
+                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-phone"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1079,6 +1069,11 @@
                                 *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
+                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
+                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-phone"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1263,6 +1258,11 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
+                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
+                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-phone"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1354,6 +1354,11 @@
                               <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="checkin.consumerNote"
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
+                              </span>
+                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
+                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-phone"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">

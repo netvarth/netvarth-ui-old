@@ -39,10 +39,10 @@ import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
-import { checkindetailcomponent } from './components/home/checkindetail.component';
 import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/checkin-add-member.module';
 import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
 import { ConsumerDonationModule } from './components/waitlist/donation/consumer-donation.module';
+import { CheckinDetailComponent } from './components/home/checkindetail.component';
 
 @NgModule({
   imports: [
@@ -71,7 +71,7 @@ import { ConsumerDonationModule } from './components/waitlist/donation/consumer-
     ConsumerComponent,
     ConsumerHomeComponent,
     ConfirmBoxComponent,
-    checkindetailcomponent,
+    CheckinDetailComponent,
     WaitlistComponent,
     NotificationListBoxComponent,
     MembersComponent,

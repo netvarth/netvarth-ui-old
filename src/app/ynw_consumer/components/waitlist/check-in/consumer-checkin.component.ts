@@ -186,6 +186,7 @@ export class ConsumerCheckinComponent implements OnInit {
     virtualServiceArray;
     callingModes: any = [];
     showInputSection: any = [];
+    callingModesDisplayName = projectConstants.CALLING_MODES;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

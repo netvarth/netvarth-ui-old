@@ -130,13 +130,12 @@
                                                 <mat-checkbox (change)="handleModeSel(i, $event)"
                                                     [value]="mode.callingMode"
                                                     [checked]="!showInputSection[i] && callingModes[i] || showInputSection[i]">
-                                                    {{mode.callingMode}}
+                                                    {{callingModesDisplayName[mode.callingMode]}}
                                                 </mat-checkbox>
                                                 <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
                                                     <input style="border-bottom: 1px solid;padding: 0px;"
-                                                        class="form-control emailPrepay"
-                                                        placeholder="" [(ngModel)]="callingModes[i]"
-                                                        autocomplete="off">
+                                                        class="form-control emailPrepay" placeholder=""
+                                                        [(ngModel)]="callingModes[i]" autocomplete="off">
                                                     <div class="input-group-append mgn-up-5">
                                                         <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
                                                             type="button">Add</button></div>

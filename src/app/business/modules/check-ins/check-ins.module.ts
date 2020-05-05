@@ -24,6 +24,7 @@ import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-chec
 import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 import { LocateCustomerModule } from './locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
+import { CallingModesModule } from './calling-modes/calling-modes.module';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -47,7 +48,8 @@ import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-c
         ApplyLabelModule,
         AddProviderWaitlistCheckInProviderNoteModule,
         LocateCustomerModule,
-        ProviderWaitlistCheckInConsumerNoteModule
+        ProviderWaitlistCheckInConsumerNoteModule,
+        CallingModesModule
     ],
     declarations: [
         CheckInsComponent,

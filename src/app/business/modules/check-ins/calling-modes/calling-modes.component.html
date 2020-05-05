@@ -1,0 +1,13 @@
+<h1 class="mat-dialog-title">Calling Modes
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+    <div class="result" *ngFor="let mode of callingModes | keyvalue">
+        <span>{{callingModesDisplayName[mode.key]}}: </span> <span> {{mode.value}}</span>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+</mat-dialog-actions>

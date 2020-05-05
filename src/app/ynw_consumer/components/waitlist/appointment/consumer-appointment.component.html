@@ -93,22 +93,22 @@
                                     <div class="callingmode mgn-lt-10"
                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
                                         <div class="mgn-bt-10 mgn-up-5">
-                                            <div class="mgn-bt-20"
+                                            <div class=""
                                                 *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
                                                 <mat-checkbox (change)="handleModeSel(i, $event)"
-                                                    [value]="mode.callingMode">
-                                                    {{mode.callingMode}}
+                                                    [value]="mode.callingMode"
+                                                    [checked]="!showInputSection[i] && callingModes[i] || showInputSection[i]">
+                                                    {{callingModesDisplayName[mode.callingMode]}}
                                                 </mat-checkbox>
                                                 <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
-                                                    <input style="border-bottom: 1px solid"
-                                                        class="form-control emailPrepay"
-                                                        placeholder="" [(ngModel)]="callingModes[i]"
-                                                        autocomplete="off">
+                                                    <input style="border-bottom: 1px solid;padding: 0px;"
+                                                        class="form-control emailPrepay" placeholder=""
+                                                        [(ngModel)]="callingModes[i]" autocomplete="off">
                                                     <div class="input-group-append mgn-up-5">
                                                         <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
                                                             type="button">Add</button></div>
                                                 </div>
-                                                <div *ngIf="!showInputSection[i] && callingModes[i]">
+                                                <div class="mgn-bt-10" *ngIf="!showInputSection[i] && callingModes[i]">
                                                     {{callingModes[i]}}
                                                     <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
                                                 </div>

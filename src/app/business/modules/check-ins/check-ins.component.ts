@@ -16,6 +16,7 @@ import { filter, pairwise } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
+import { CallingModesComponent } from './calling-modes/calling-modes.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -399,8 +400,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = {'show_learnmore': true, 'scrollKey': 'check-ins',
-    'actions': [ { 'title': 'Help', 'type': 'learnmore' }]
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'check-ins',
+      'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     };
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
@@ -1670,9 +1672,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        source : source
+        source: source
       }
-  };
+    };
     this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
   }
   showAdjustDelay() {
@@ -1787,9 +1789,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
       },
-      (error) => {
-        resolve([]);
-      });
+        (error) => {
+          resolve([]);
+        });
     });
   }
   onChangeLocationSelect(event) {
@@ -2311,7 +2313,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getHistoryCheckinCount();
     // this.getFutureCheckinCount();
   }
-
-
+  showCallingModes(modes) {
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
 }
-

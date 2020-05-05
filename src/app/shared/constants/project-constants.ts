@@ -569,5 +569,12 @@ export const projectConstants = {
     1: 'Doctor',
     2: 'Dentist',
     3: 'Alternative Medicine Practitioner'
+  },
+  CALLING_MODES: {
+    WHATSAPP: 'Whatsapp',
+    HANGOUTS: 'Hangouts',
+    SKYPE: 'Skype',
+    BOTIM: 'Botim',
+    IMO: 'Imo'
   }
 };

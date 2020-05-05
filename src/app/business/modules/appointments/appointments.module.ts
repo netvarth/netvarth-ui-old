@@ -15,6 +15,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { AddProviderWaitlistCheckInProviderNoteModule } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.module';
 import { LocateCustomerModule } from '../check-ins/locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
+import { CallingModesModule } from '../check-ins/calling-modes/calling-modes.module';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider
         InboxModule,
         Nl2BrPipeModule,
         AddProviderWaitlistCheckInProviderNoteModule,
-        ProviderWaitlistCheckInConsumerNoteModule
+        ProviderWaitlistCheckInConsumerNoteModule,
+        CallingModesModule
     ],
     declarations: [
         AppointmentsComponent,

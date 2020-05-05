@@ -15,6 +15,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/ad
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
+import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
 
 @Component({
   selector: 'app-appointments',
@@ -2227,5 +2228,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     // this.getHistoryAppointmentsCount();
     // this.getFutureAppointmentsCount();
+  }
+  showCallingModes(modes) {
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

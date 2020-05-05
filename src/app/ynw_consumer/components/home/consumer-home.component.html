@@ -143,7 +143,7 @@
                                                     <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
                                                         class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
                                                     <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
-                                                    <!-- <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
+        <!-- <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                         style="width: 15px;height:15px;"
                                                         *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
                                                     <i class="fa fa-pencil link mgn-lt-10 "
@@ -153,8 +153,8 @@
                                                     <i class="fa fa-car mgn-lt-20" [class.driving]="driving"
                                                         aria-hidden="true"
                                                         (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'DRIVING',i)"></i> -->
-                                                    <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
-                                                    <!-- <img src="./assets/images/walking.png" alt=""
+        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
+        <!-- <img src="./assets/images/walking.png" alt=""
                                                         class="walkingMode mgn-lt-20" [class.walking]="walking"
                                                         aria-hidden="true"
                                                         (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'WALKING',i)" />
@@ -224,10 +224,10 @@
                 <mat-expansion-panel [expanded]='true'>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                           Check-Ins
+                            Check-Ins
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                            
+
                     <div class="outer banner">
                         <div *ngIf="waitlists && waitlists.length != 0">
                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="waitlists">
@@ -235,13 +235,15 @@
                                     <div class="header">
                                         <div class="lt">
                                             <div class="title" (click)="providerDetail(waitlist.providerAccount)">
-                                                <h3>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h3>
+                                                <h3>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}
+                                                </h3>
                                             </div>
                                             <div class="location consumr" *ngIf="waitlist.queue.location">
                                                 {{waitlist.queue.location.place || '' | capitalizeFirst}}
-                                                <span class="consumr-loc-icon"><a *ngIf="waitlist.queue.location.googleMapUrl"
-                                                        rel="noopener" [href]="waitlist.queue.location.googleMapUrl"
-                                                        target="_blank" class="icon-location" matTooltip="Click to navigate">
+                                                <span class="consumr-loc-icon"><a
+                                                        *ngIf="waitlist.queue.location.googleMapUrl" rel="noopener"
+                                                        [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                                        class="icon-location" matTooltip="Click to navigate">
                                                     </a></span>
                                             </div>
                                             <div class="status-outer">
@@ -265,24 +267,26 @@
                                             </div>
                                             <div class="btm">
                                                 <span class="mbt">
-                                                <button mat-icon-button [matMenuTriggerFor]="menu">
-                                                <mat-icon>details</mat-icon>
-                                                </button>
-                                                <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="showcheckindetails(waitlist)">
-                                                checkindetail
-                                                </button>
-                                                </mat-menu>
+                                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>details</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item (click)="showcheckindetails(waitlist)">
+                                                            checkindetail
+                                                        </button>
+                                                    </mat-menu>
                                                 </span>
-                                                </div> 
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="details">
                                         <div class="lt">
                                             <div class="lt0">
-                                                <span class="service">{{waitlist.service.name | capitalizeFirst}}</span> for
+                                                <span class="service">{{waitlist.service.name | capitalizeFirst}}</span>
+                                                for
                                                 <span class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
-                                                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                                    {{user.firstName | capitalizeFirst}}
+                                                    {{user.lastName | capitalizeFirst}}
                                                 </span>
                                             </div>
                                             <ng-container
@@ -291,7 +295,8 @@
                                                 <div class="lt0"
                                                     *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
                                                     {{waitlist.estimated_caption}} <span class="time now">
-                                                        {{waitlist.estimated_timenow}}</span><span style="display: flex">
+                                                        {{waitlist.estimated_timenow}}</span><span
+                                                        style="display: flex">
                                                         {{waitlist.estimated_time}}</span>
                                                 </div>
                                                 <div class="lt0"
@@ -315,11 +320,12 @@
                                                     </div>
                                                     <div class="red">
                                                         {{waitlist.cancelled_caption}}
-                                                        <span class="time"> {{waitlist.cancelled_date | date: dateFormatSp}}
+                                                        <span class="time">
+                                                            {{waitlist.cancelled_date | date: dateFormatSp}}
                                                             {{waitlist.cancelled_time}}</span>
                                                     </div>
                                                 </div>
-                                                </ng-container>
+                                            </ng-container>
                                             <div class="lt0"
                                                 *ngIf="waitlist.waitlistStatus != 'cancelled' && waitlist.calculationMode == 'NoCalc' && waitlist.token">
                                                 <span *ngIf="waitlist.personsAhead === 0"> {{first_person}}</span>
@@ -327,7 +333,8 @@
                                                         class="forwhom">{{waitlist.personsAhead}}</span>{{one_person_ahead}}
                                                 </span>
                                                 <span *ngIf="waitlist.personsAhead > 1"> <span
-                                                        class="forwhom">{{waitlist.personsAhead}}</span>{{people_ahead}} </span>
+                                                        class="forwhom">{{waitlist.personsAhead}}</span>{{people_ahead}}
+                                                </span>
                                             </div>
                                             <div class="lt0" *ngIf="waitlist.token">
                                                 {{token_no}} <span class="token">{{waitlist.token}} </span>
@@ -335,7 +342,13 @@
                                             <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
                                                 {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                             </div>
-                                            <div class="lt0 payment" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                            <div class="lt0" *ngIf="waitlist.virtualService">
+                                                <div *ngFor="let mode of waitlist.virtualService | keyvalue">
+                                                    {{callingModesDisplayName[mode.key]}}<span class="persons">
+                                                        {{mode.value}}</span></div>
+                                            </div>
+                                            <div class="lt0 payment"
+                                                *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                                 <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
                                                     {{checkindisablemsg1}}</span>
                                             </div>
@@ -354,7 +367,8 @@
                                                             <label>Enable
                                                                 live tracking </label></span>
                                                         <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'"
-                                                            class="form-level-settings">Automatic Live tracking is enabled</p>
+                                                            class="form-level-settings">Automatic Live tracking is
+                                                            enabled</p>
                                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'">
                                                             <label
                                                                 *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
@@ -367,13 +381,14 @@
                                                             <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
                                                                 class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
                                                             <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
-                                                            <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
-                                                                style="width: 15px;height:15px;"
+                                                            <img src="./assets/images/walking.png" alt=""
+                                                                class="mgn-lt-20" style="width: 15px;height:15px;"
                                                                 *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
                                                             <i class="fa fa-pencil link mgn-lt-10 "
                                                                 (click)="changemode[i] = !changemode[i]"></i>
                                                         </span>
-                                                        <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]">
+                                                        <span *ngIf="changemode[i]"
+                                                            (click)="changemode[i] = !changemode[i]">
                                                             <i class="fa fa-car mgn-lt-20" [class.driving]="driving"
                                                                 aria-hidden="true"
                                                                 (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'DRIVING',i)"></i>
@@ -383,7 +398,7 @@
                                                                 aria-hidden="true"
                                                                 (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'WALKING',i)" />
                                                         </span>
-        
+
                                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"
                                                             class="pull-right">
                                                             <mat-slide-toggle [checked]="statusOfTrack[i]"
@@ -439,8 +454,9 @@
                         <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
                             <p>{{no_checkins_cap}}</p>
                         </div>
-                        <div class = "checkin-history-border">
-                            <span><button class=" historybtn bt3 history-btn" (click)="checkinHistoryClicked()">{{history_cap}}</button></span>
+                        <div class="checkin-history-border">
+                            <span><button class=" historybtn bt3 history-btn"
+                                    (click)="checkinHistoryClicked()">{{history_cap}}</button></span>
                         </div>
                         <!-- History Accordian -->
                         <!-- <div class="card history">
@@ -457,7 +473,7 @@
                             </mat-accordion>
                         </div> -->
                     </div>
-                     </mat-expansion-panel>  
+                </mat-expansion-panel>
             </mat-accordion>
         </div>
 
@@ -466,14 +482,14 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                           Appointments
+                            Appointments
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="outer"></div>
                     <div>
                         <p>No current appointments available</p>
                     </div>
-                     </mat-expansion-panel>  
+                </mat-expansion-panel>
             </mat-accordion>
         </div>
 
@@ -482,14 +498,14 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                           Donations
+                            Donations
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="outer"></div>
                     <div>
                         <p>No current donations available</p>
                     </div>
-                     </mat-expansion-panel>  
+                </mat-expansion-panel>
             </mat-accordion>
         </div>
 
@@ -498,14 +514,14 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                           Pay log
+                            Pay log
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="outer"></div>
                     <div>
                         <p></p>
                     </div>
-                     </mat-expansion-panel>  
+                </mat-expansion-panel>
             </mat-accordion>
         </div>
 
@@ -618,8 +634,8 @@
                                             <span>{{different_date_cap}}</span>
                                         </span>
                                         <span class="cs-btn chk-btn"
-(click)="goAppointment(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')">
-Appointment</span>
+                                            (click)="goAppointment(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')">
+                                            Appointment</span>
                                     </div>
                                 </div>
                             </div>
