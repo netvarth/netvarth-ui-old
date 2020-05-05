@@ -1329,10 +1329,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (phno.startsWith('55')) {
         testUser = true;
       }
-       if (!testUser) {
-      this.testuserQry = ' (not test_account:1) ';
-    } else {
-      this.testuserQry = ' test_account:1 ';
+      if (!testUser) {
+        this.testuserQry = ' (not test_account:1) ';
+      } else {
+        this.testuserQry = ' test_account:1 ';
+      }
     }
     this.q_str = '(and ' + 'account_type:' + 1 + ' branch_id:' + this.branch_id + ')';
     const searchpass_criteria = {
@@ -1348,7 +1349,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
         if (this.testuserQry) {
-        searchpass_criteria.fq = '(and' + this.testuserQry + ')';
+          searchpass_criteria.fq = '(and' + this.testuserQry + ')';
         }
         searchpass_criteria.q = this.q_str;
         searchpass_criteria.start = 0;

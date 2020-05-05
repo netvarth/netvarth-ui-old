@@ -229,99 +229,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         });
     }
   }
-  // private getWaitingTime(provids) {
-  //   if (provids.length > 0) {
-  //     const post_provids: any = [];
-  //     for (let i = 0; i < provids.length; i++) {
-  //       post_provids.push(provids[i].provid);
-  //     }
-  //     if (post_provids.length === 0) {
-  //       return;
-  //     }
-  //     this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
-  //       .subscribe(data => {
-  //         this.waitlisttime_arr = data;
-  //         if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
-  //           this.waitlisttime_arr = [];
-  //         }
-  //         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  //         const today = new Date(todaydt);
-  //         const dd = today.getDate();
-  //         const mm = today.getMonth() + 1; // January is 0!
-  //         const yyyy = today.getFullYear();
-  //         let cday = '';
-  //         if (dd < 10) {
-  //           cday = '0' + dd;
-  //         } else {
-  //           cday = '' + dd;
-  //         }
-  //         let cmon;
-  //         if (mm < 10) {
-  //           cmon = '0' + mm;
-  //         } else {
-  //           cmon = '' + mm;
-  //         }
-  //         const dtoday = yyyy + '-' + cmon + '-' + cday;
-  //         const ctoday = cday + '/' + cmon + '/' + yyyy;
-  //         let srchindx;
-  //         const check_dtoday = new Date(dtoday);
-  //         let cdate;
-  //         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
-  //           srchindx = provids[i].searchindx;
-  //           this.searchResults[srchindx]['waitingtime_res'] = this.waitlisttime_arr[i];
-  //           this.searchResults[srchindx]['estimatedtime_det'] = [];
-  //           this.searchResults[srchindx]['waitingtime_res'] = this.waitlisttime_arr[i];
-  //           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-  //             this.searchResults[srchindx]['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-  //             this.searchResults[srchindx]['estimatedtime_det']['queue_available'] = 1;
-  //             this.searchResults[srchindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
-  //             cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-  //             if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-  //               this.searchResults[srchindx]['estimatedtime_det']['availableToday'] = true;
-  //             } else {
-  //               this.searchResults[srchindx]['estimatedtime_det']['availableToday'] = false;
-  //             }
-  //             if (!this.searchResults[srchindx]['opennow']) {
-  //               this.searchResults[srchindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-  //               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-  //                 if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-  //                   this.searchResults[srchindx]['estimatedtime_det']['date'] = 'Today';
-  //                 } else {
-  //                   this.searchResults[srchindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
-  //                 }
-  //                 this.searchResults[srchindx]['estimatedtime_det']['time'] = this.searchResults[srchindx]['estimatedtime_det']['date']
-  //                   + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //               } else {
-  //                 this.searchResults[srchindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-  //                   + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-  //               }
-  //               this.searchResults[srchindx]['estimatedtime_det']['nextAvailDate'] = this.searchResults[srchindx]['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //             } else {
-  //               this.searchResults[srchindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-  //               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-  //                 this.searchResults[srchindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-  //               } else {
-  //                 this.searchResults[srchindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-  //                 this.searchResults[srchindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //               }
-  //             }
-  //           } else {
-  //             this.searchResults[srchindx]['estimatedtime_det']['queue_available'] = 0;
-  //           }
-  //           if (this.waitlisttime_arr[i]['message']) {
-  //             this.searchResults[srchindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
-  //           }
-  //         }
-  //       });
-  //   }
-  // }
-
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
     this.changedate_req = chdatereq;
@@ -334,11 +241,75 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       this.doLogin('consumer', passParam);
     }
   }
+  doLogin(origin?, passParam?) {
+    // this.shared_functions.openSnackBar('You need to login to check in');
+    // const current_provider = passParam['current_provider'];
+    let is_test_account = null;
+    if (this.current_provider) {
+      if (this.current_provider.test_account === '1') {
+        is_test_account = true;
+      } else {
+        is_test_account = false;
+      }
+    }
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: false,
+        test_account: is_test_account,
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
+        this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'communicate') {
+          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+        } else {
+          this.showCheckin('consumer');
+        }
+      } else if (result === 'showsignup') {
+        this.doSignup(passParam);
+      }
+    });
+  }
+  doSignup(passParam?) {
+    // this.api_loading = false;
+    const current_provider = passParam['current_provider'];
+    const dialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        is_provider: 'false',
+        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.shared_functions.sendMessage(pdata);
+        this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'communicate') {
+          console.log(this.current_provider);
+          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+        } else {
+          this.showCheckin('consumer');
+        }
+      }
+    });
+  }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
   showCheckin(origin?) {
+    
     // this.checkindialogRef = this.dialog.open(CheckInComponent, {
     //   width: '50%',
     //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],

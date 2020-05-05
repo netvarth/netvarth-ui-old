@@ -53,12 +53,7 @@
     "ngx-scrollbar": "^2.3.0",
     "nl2br-pipe": "^1.2.3",
     "node-sass": "^4.13.1",
-<<<<<<< HEAD
     "rxjs": "^6.5.4",
-=======
-    "rxjs": "^6.5.1",
-    "rxjs-compat": "^6.5.1",
->>>>>>> refs/remotes/origin/1.2.4-SRCM
     "underscore": "^1.8.3",
     "zone.js": "~0.9.1"
   },

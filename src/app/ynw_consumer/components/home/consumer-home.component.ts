@@ -733,63 +733,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
 
-<<<<<<< HEAD
-  // showCheckin(data, origin = 'consumer') {
-  //   const provider_data = data.provider_data;
-  //   const location_data = data.location_data;
-  //   this.checkindialogRef = this.dialog.open(CheckInComponent, {
-  //     width: '50%',
-  //     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-  //     disableClose: true,
-  //     data: {
-  //       type: origin,
-  //       is_provider: false,
-  //       moreparams: {
-  //         source: 'provdet_checkin',
-  //         bypassDefaultredirection: 1,
-  //         provider: provider_data,
-  //         location: location_data,
-  //         sel_date: data.sel_date
-  //       },
-  //       datechangereq: data.chdatereq
-  //     }
-  //   });
-  //   this.checkindialogRef.afterClosed().subscribe(result => {
-  //     // if (result === 'reloadlist') {
-  //     this.getWaitlist();
-  //     // }
-  //   });
-  // }
-=======
-  showCheckin(data, origin = 'consumer') {
-    const provider_data = data.provider_data;
-    const location_data = data.location_data;
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: {
-          source: 'provdet_checkin',
-          bypassDefaultredirection: 1,
-          provider: provider_data,
-          location: location_data,
-          sel_date: data.sel_date
-        },
-        datechangereq: data.chdatereq,
-        checkin_type: 'ONLINE_CHECKIN'
-      }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-      // if (result === 'reloadlist') {
-      this.getWaitlist();
-      // }
-    });
-  }
->>>>>>> refs/remotes/origin/1.2.4-SRCM
-
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
