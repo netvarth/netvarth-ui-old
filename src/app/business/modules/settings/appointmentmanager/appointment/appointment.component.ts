@@ -1370,7 +1370,7 @@ export class AppointmentComponent implements OnInit {
                     } else {
                         for (const q of this.queuejson) {
                             console.log(q.id);
-                            if (q.id === this.comingSchduleId) {
+                            if (q.id == this.comingSchduleId) {
                                 console.log('scheduleid' + q.id);
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
