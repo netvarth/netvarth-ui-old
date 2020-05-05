@@ -77,6 +77,7 @@ export class BranchUserDetailComponent implements OnInit {
     userTypesFormfill: any = ['ASSISTANT', 'PROVIDER'];
     dept: any;
     subDom;
+    deptLength;
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -348,6 +349,8 @@ export class BranchUserDetailComponent implements OnInit {
                     if (this.actionparam.type !== 'edit') {
                         this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentId);
                     }
+                    this.deptLength = this.departments.length;
+                    console.log(this.deptLength);
                     this.api_loading = false;
                 },
                 error => {

@@ -181,15 +181,18 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     <div class="col-md-6 col-sm-6 col-xs-12"
                                         *ngIf="filterBydept && departments.length > 0 && showPrvdrFields">
                                         <div class="form-group">
-                                            <mat-form-field>
-                                                <mat-select placeholder="Select department *"
-                                                    formControlName="selectedDepartment" #deptsel>
-                                                    <mat-option *ngFor="let dept of departments"
-                                                        [value]="dept.departmentId">
-                                                        {{dept.departmentName}}
-                                                    </mat-option>
-                                                </mat-select>
+                                            <mat-form-field *ngIf="deptLength == 1">
+                                             <input matInput *ngFor="let dept of departments" [readonly]="true" 
+                                                placeholder="Select department *"  value="{{dept.departmentName | capitalizeFirst}}">
                                             </mat-form-field>
+                                             <mat-form-field *ngIf="deptLength > 1">
+                                               <mat-select placeholder="Select department *" formControlName="selectedDepartment" #deptsel>
+                                                  <mat-option *ngFor="let dept of departments"
+                                                     [value]="dept.departmentId">
+                                                        {{dept.departmentName}}
+                                                   </mat-option>
+                                                 </mat-select>
+                                             </mat-form-field>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
