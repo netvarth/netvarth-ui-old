@@ -101,6 +101,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
            this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
+           this.service_list = [];
+           this.getServices();
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
