@@ -1258,4 +1258,16 @@ export class ProviderServices {
       const url = 'provider/apponintment/schedule/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   getApptlistMgr() {
+      const url = 'provider/settings/apptMgr/';
+      return this.servicemeta.httpGet(url);
+   }
+   setAcceptOnlineAppointment(status) {
+      const url = 'provider/settings/apptMgr/todayAppt/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   setFutureAppointmentStatus(status) {
+      const url = 'provider/settings/apptMgr/futureAppt/' + status;
+      return this.servicemeta.httpPut(url);
+   }
 }
