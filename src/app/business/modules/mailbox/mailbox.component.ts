@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription } from 'rxjs';
@@ -41,14 +41,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
     showCaptionBox: any = {};
     activeImageCaption: any = [];
     itemCaption: any = [];
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
             title: 'Inbox'
         }
     ];
     userDet;
-    domain:any;
+    domain: any;
     obtainedMsgs = false;
     api_loading = true;
     selectedParentIndex;
@@ -56,11 +56,12 @@ export class MailboxComponent implements OnInit, OnDestroy {
     blogo: any;
     clogo: any;
     showImages: any = [];
-
+    openState: any = [];
+    @ViewChildren('messageId') slotIds: QueryList<ElementRef>;
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
-        private routerobj:Router,
+        private routerobj: Router,
         private provider_services: ProviderServices) { }
 
     ngOnInit() {
@@ -68,9 +69,9 @@ export class MailboxComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'inbox', 
+            'show_learnmore': true, 'scrollKey': 'inbox',
             'actions': [
-            { 'title': 'Help', 'type': 'learnmore' }]
+                { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.terminologies = this.shared_functions.getTerminologies();
         this.usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -104,9 +105,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
         //     this.reloadApi.emit();
         // });
     }
-    performActions(action)
-    {
-        if( action === 'learnmore'){
+    performActions(action) {
+        if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
         }
     }
@@ -156,7 +156,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
             );
     }
     sendMessage(messageToSend, inboxList, parentIndex) {
-        const userId = this.getReceiverId(inboxList);
+        // const userId = this.getReceiverId(inboxList);
+        const userId = inboxList[0].accountId;
         let uuid = null;
         if (this.selectedMessage && this.selectedMessage[parentIndex]) {
             if (this.selectedMessage[parentIndex].message.waitlistid) {
@@ -218,18 +219,16 @@ export class MailboxComponent implements OnInit, OnDestroy {
         let messageStatus;
         let accountId;
         for (const message of messages) {
-            senderName = message.owner.name;
-            senderId = message.owner.id;
-            messageStatus = 'in';
-            if (senderId === message.receiver.id) {
+            if (message.receiver.id === this.userDet.id) {
+                accountId = message.owner.id;
+                senderName = message.owner.name;
+                senderId = message.owner.id;
+                messageStatus = 'in';
+            } else {
+                accountId = message.receiver.id;
                 senderId = message.receiver.id;
                 senderName = message.receiver.name;
                 messageStatus = 'out';
-            }
-            if (message.receiver.id === message.owner.id) {
-                accountId = message.accountId;
-            } else {
-                accountId = message.owner.id;
             }
             const inboxData = {
                 accountId: accountId,
@@ -247,6 +246,36 @@ export class MailboxComponent implements OnInit, OnDestroy {
             };
             this.inboxList.push(inboxData);
         }
+        // for (const message of messages) {
+        //     senderName = message.owner.name;
+        //     senderId = message.owner.id;
+        //     messageStatus = 'in';
+        //     if (senderId === message.receiver.id) {
+        //         senderId = message.receiver.id;
+        //         senderName = message.receiver.name;
+        //         messageStatus = 'out';
+        //     }
+        //     if (message.receiver.id === message.owner.id) {
+        //         accountId = message.accountId;
+        //     } else {
+        //         accountId = message.owner.id;
+        //     }
+        //     const inboxData = {
+        //         accountId: accountId,
+        //         timestamp: message.timeStamp,
+        //         username: senderName,
+        //         service: message.service,
+        //         message: message.msg,
+        //         ownerId: message.owner.id,
+        //         waitlistid: message.waitlistId,
+        //         messagestatus: messageStatus,
+        //         receiverId: message.receiver.id,
+        //         attachments: message.attachements,
+        //         messageId: message.messageId,
+        //         read: message.read
+        //     };
+        //     this.inboxList.push(inboxData);
+        // }
         localStorage.setItem('inbox', JSON.stringify(this.inboxList));
     }
     ngOnDestroy() {
@@ -370,6 +399,18 @@ export class MailboxComponent implements OnInit, OnDestroy {
         (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
     }
     readConsumerMessages(messages, index) {
+        
+        const ind = messages.length - 1;
+        console.log(ind);
+        console.log(messages[ind]);
+      this.slotIds.toArray().forEach(element => {
+        if (element.nativeElement.innerText === messages[ind]) {
+          element.nativeElement.scrollIntoView();
+          return false;
+        }
+      });
+
+
         const messageIds = [];
         for (const message of messages) {
             if (!message.read && message.messagestatus === 'in') {
@@ -380,7 +421,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         if (messageids) {
             this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
                 this.getInboxMessages();
-                this.inboxUsersList[index].expanded = true;
+                this.openState[index] = true;
             });
         }
     }

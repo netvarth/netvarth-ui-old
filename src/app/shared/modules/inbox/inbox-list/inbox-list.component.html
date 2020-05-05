@@ -23,10 +23,13 @@
                 </div>
                 <div class="td td3">
                     <!-- <div class="label">{{provider_consumer_cap}}</div> -->
-                    <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}
+
+                    <!-- <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}
                     </div>
                     <div class="result" *ngIf="user_id != message.receiver.id">
-                        {{message.receiver.userName | capitalizeFirst}}</div>
+                        {{message.receiver.userName | capitalizeFirst}}</div> -->
+                    <div class="result">{{message.owner.name | capitalizeFirst}}
+                    </div>
                 </div>
                 <!-- <div class="td td3">
                             <div class="label">To</div>

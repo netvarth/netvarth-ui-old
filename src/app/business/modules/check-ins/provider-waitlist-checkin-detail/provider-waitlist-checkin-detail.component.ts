@@ -141,8 +141,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
-          console.log(this.waitlist_data.virtualService);
-          console.log(this.waitlist_data.virtualService.WHATSAPP);
           const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
           if (interval) {
             this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);

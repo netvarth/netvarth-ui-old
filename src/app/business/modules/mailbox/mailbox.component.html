@@ -13,7 +13,7 @@
                     <div *ngIf="!api_loading">
                         <div class="card no-padding" *ngFor="let users of inboxUsersList, let parentIndex = index">
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false"
+                                <mat-expansion-panel [expanded]="openState[parentIndex]"
                                     (opened)="readConsumerMessages(users.inboxList, parentIndex)">
                                     <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
                                         <mat-panel-title>
@@ -55,7 +55,7 @@
                                                         <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
                                                             [src]="clogo">
                                                         <!-- /.direct-chat-img -->
-                                                        <div class="direct-chat-text" id="messageId[childIndex]"
+                                                        <div class="direct-chat-text" #messageId
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">

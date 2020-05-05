@@ -69,6 +69,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   futureDateWaitlist = false;
   waitlist_statusstr = 'Off';
   futurewaitlist_statusstr = 'off';
+  apptlist_status = false;
+  futureDateApptlist = false;
+  apptlist_statusstr = 'Off';
+  futureapptlist_statusstr = 'off';
   search_status = false;
   search_statusstr = 'Off';
   payment_settings: any = [];
@@ -161,6 +165,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   itemError = '';
   discountError = '';
   waitlist_details;
+  apptlist_details;
   paytmVerified = false;
   payuVerified = false;
   isJaldeeAccount = false;
@@ -193,6 +198,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getCauseCount();
     this.getSearchstatus();
     this.getWaitlistMgr();
+    this.getApptlistMgr();
     this.getpaymentDetails();
     this.getDiscounts();
     this.getCoupons();
@@ -227,6 +233,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
           this.futurewaitlist_statusstr = (this.futureDateWaitlist) ? 'On' : 'Off';
           this.filterbydepartment = data['filterByDept'];
+        });
+  }
+
+  getApptlistMgr() {
+    this.provider_services.getApptlistMgr()
+      .subscribe(
+        data => {
+          this.apptlist_details = data;
+          console.log(data);
+          // this.apptlist_status = data['onlineCheckIns'] || false;
+          // this.futureDateApptlist = data['futureDateWaitlist'] || false;
+          // this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+          // this.futurewaitlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+          // this.filterbydepartment = data['filterByDept'];
         });
   }
   handle_jaldeeWalkinConsumer(event) {
@@ -306,6 +326,36 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+  handle_apptliststatus(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setAcceptOnlineAppointment(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getApptlistMgr();
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getApptlistMgr();
+        }
+      );
+  }
+  handle_futureapptliststatus(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setFutureAppointmentStatus(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getApptlistMgr();
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
     console.log(user_data);

@@ -104,7 +104,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
 
     pass_ob['source'] = source;
-    pass_ob['user_id'] = message['owner']['id'];
+    // pass_ob['user_id'] = message['owner']['id'];
+    pass_ob['user_id'] = message['accountId'];
     pass_ob['type'] = 'reply';
     pass_ob['terminologies'] = this.terminologies;
     pass_ob['name'] = name;
