@@ -785,7 +785,7 @@ export class AppointmentComponent implements OnInit {
             'appmtDate': this.sel_checkindate,
             'service': {
                 'id': this.sel_ser,
-                'serviceType': this.sel_ser_det.serviceType
+                // 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
