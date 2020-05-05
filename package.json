@@ -36,6 +36,7 @@
     "@types/googlemaps": "^3.30.19",
     "angular-modal-gallery": "^5.2.1",
     "angular2-multiselect-dropdown": "^2.0.1",
+    "angularx-qrcode": "^1.6.4",
     "bootstrap": "^3.4.1",
     "core-js": "^2.6.5",
     "crypto-js": "^3.1.9-1",
@@ -52,7 +53,12 @@
     "ngx-scrollbar": "^2.3.0",
     "nl2br-pipe": "^1.2.3",
     "node-sass": "^4.13.1",
+<<<<<<< HEAD
     "rxjs": "^6.5.4",
+=======
+    "rxjs": "^6.5.1",
+    "rxjs-compat": "^6.5.1",
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
     "underscore": "^1.8.3",
     "zone.js": "~0.9.1"
   },

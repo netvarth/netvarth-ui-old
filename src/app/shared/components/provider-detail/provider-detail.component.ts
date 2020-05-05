@@ -377,7 +377,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   this.locationjson[i].fields['display_schedule'] = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
                 }
               }
-              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
+              if (this.businessjson.id) {
+                locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
+              }
             }
             this.getWaitingTime(locarr);
             this.api_loading = false;
@@ -551,7 +553,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
+              if (this.businessjson.id) {
+                locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
+              }
             }
             this.getWaitingTime(locarr);
             break;

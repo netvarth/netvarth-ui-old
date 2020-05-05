@@ -141,7 +141,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'uuid': null,
     'acceptPaymentBy': 'cash',
     'amount': 0,
-    'paynot': ''
+    'paymentNote': ''
   };
   selectedItems = [];
   bill_load_complete = 0;
@@ -1153,7 +1153,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     this.pay_data.acceptPaymentBy = mode;
     this.pay_data.amount = amount;
-    this.pay_data.paynot = paynot;
+    this.pay_data.paymentNote = paynot;
 
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(

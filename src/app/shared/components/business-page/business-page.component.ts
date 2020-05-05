@@ -16,7 +16,7 @@ import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.c
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { LoginComponent } from '../login/login.component';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
 @Component({
   selector: 'app-business-page',
@@ -132,6 +132,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   virtualsectionHeader = 'Click here to View More Details';
   isPlaceisSame = false;
   jdnDiscountType;
+  playstore = true;
+  appstore = true;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -197,6 +199,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   gender_length: any;
   api_loading = false;
   userType = '';
+  pageFound = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -215,6 +218,36 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
+    const isMobile = {
+      Android: function () {
+        return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+        return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+        return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+        return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+      }
+    };
+    if (isMobile.Android()) {
+      this.playstore = true;
+      this.appstore = false;
+    } else if (isMobile.iOS()) {
+      this.playstore = false;
+      this.appstore = true;
+    } else {
+      this.playstore = true;
+      this.appstore = true;
+    }
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
@@ -228,10 +261,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           id => {
             this.provider_id = id;
             this.gets3curl();
-            this.fetchClouddata();
           },
           error => {
-            this.routerobj.navigate(['/not-found']);
+            this.provider_id = customId;
+            this.gets3curl();
           }
         );
       });
@@ -289,19 +322,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   fetchClouddata() {
     this.locationjson = [];
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
     if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
@@ -314,7 +334,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         this.testuserQry = ' test_account:1 ';
       }
     }
-    // this.q_str = q_str;
     this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
     const searchpass_criterias = {
       'start': 0,
@@ -332,15 +351,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         if (this.testuserQry) {
           searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
         }
-        searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
         searchpass_criterias.q = this.q_str;
         searchpass_criterias.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criterias)
           .subscribe(res => {
             this.result_data = res;
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
-            // this.search_data = this.result_data.hits.hit;
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               if (this.userType === 'consumer') {
@@ -371,9 +388,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   this.locationjson[i].fields['display_schedule'] = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
                 }
               }
-              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
-              this.getWaitingTime(locarr);
+              if (this.businessjson.id) {
+                locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].fields.location_id1, 'locindx': i });
+              }
             }
+            this.getWaitingTime(locarr);
             this.api_loading = false;
           });
       });
@@ -390,6 +409,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
             this.branch_id = this.businessjson.branchId;
@@ -589,7 +609,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.jdnlength = Object.keys(this.jaldeediscountJson).length;
         }
       },
-        () => {
+        (error) => {
+          if (section === 'businessProfile') {
+            this.routerobj.navigate(['/not-found']);
+          }
           if (section === 'gallery') {
             this.galleryjson = [];
             if (this.bLogo !== '') {
@@ -909,13 +932,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           if (this.favprovs.length === 0) {
             this.handle_Fav('add');
           } else {
-              for (let i = 0; i < this.favprovs.length; i++) {
-                if (this.favprovs[i].id === this.provider_bussiness_id) {
-                  this.isInFav = true;
-                } else {
-                  this.handle_Fav('add');
-                }
+            for (let i = 0; i < this.favprovs.length; i++) {
+              if (this.favprovs[i].id === this.provider_bussiness_id) {
+                this.isInFav = true;
+              } else {
+                this.handle_Fav('add');
               }
+            }
           }
         }, error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -925,7 +948,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   handle_Fav(mod) {
     if (this.sharedFunctionobj.checkLogin()) {
       const accountid = this.provider_bussiness_id;
-      if (mod === 'add') {
+      if (mod === 'add' && !this.isInFav) {
         this.shared_services.addProvidertoFavourite(accountid)
           .subscribe(() => {
             this.isInFav = true;
@@ -974,6 +997,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     // this.current_provider = obj;
 
     this.changedate_req = chdatereq;
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.showCheckin(locid, locname, cdate, 'consumer');
     } else if (this.userType === '') {
@@ -994,8 +1018,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         is_test_account = false;
       }
     }
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '50%',
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+      width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: {
@@ -1012,12 +1036,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
+          this.getFavProviders();
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
           this.redirectToHistory();
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
         } else {
+          this.getFavProviders();
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
@@ -1297,27 +1323,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
 
   getDoctors() {
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
     if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
       }
-    }
-    if (!testUser) {
+       if (!testUser) {
       this.testuserQry = ' (not test_account:1) ';
     } else {
       this.testuserQry = ' test_account:1 ';
@@ -1331,17 +1343,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       'size': 10,
       'parser': 'structured', // 'q.parser'
       'options': '', // 'q.options'
-      'sort': '',
-      'distance': ''
+      'sort': ''
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
+        if (this.testuserQry) {
         searchpass_criteria.fq = '(and' + this.testuserQry + ')';
-        searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        }
         searchpass_criteria.q = this.q_str;
         searchpass_criteria.start = 0;
         searchpass_criteria.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criteria)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
             this.getDoctorListbyDept(this.search_data);

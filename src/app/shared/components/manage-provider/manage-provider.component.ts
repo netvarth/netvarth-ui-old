@@ -30,7 +30,6 @@ export class ManageProviderComponent implements OnInit {
                 this.router.navigate(['/provider/check-ins']);
 
         }, error => {
-            console.log(error);
         });
     }
 }

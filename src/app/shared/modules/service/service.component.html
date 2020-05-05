@@ -72,6 +72,10 @@
                         <span class="noti-it"
                             *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                 </div>
+                <div class="item">
+                    <span class="ttle">Live tracking </span>
+                    <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
+                </div>
             </div>
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
@@ -302,7 +306,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
-
+                <div class="form-group inline">
+                    <label class="col-form-label">Enable Live Track</label>
+                    <mat-slide-toggle class="example-margin" formControlName="livetrack"
+                        >
+                    </mat-slide-toggle>
+                </div>
                 <!-- </mat-expansion-panel>
 </mat-accordion> -->
             </div>

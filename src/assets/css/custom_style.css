@@ -8021,8 +8021,8 @@ hr.wide-separator-line {
   color: #999999;
 }
 
-.batch h6 {
-  font-weight: 500;
+.batch h5, .batch span {
+  font-weight: 600;
 }
 
 .batchname {
@@ -8582,4 +8582,88 @@ hr.wide-separator-line {
   /* width: 90px !important; */
   font-size: .75rem !important;
   text-align: center !important;
+}
+.lv-trk-prepayent {
+  text-align: center;
+  display: inline !important;
+}
+.lv-trkOff-successmsg {
+  color: green;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 0.78rem !important;
+}
+.batch-hint {
+  font-size: .75rem;
+  font-family: 'Roboto Slab', sans-serif;
+}
+.batch .ynw-common-form-nm .c-ot .item {
+  width: 25% !important;
+}
+.batch .ynw-common-form-nm .c-ot .editbt {
+  top: auto !important;
+  left: 50% !important;
+}
+@media (max-width: 990px) and (min-width: 768px) {
+  .batch .ynw-common-form-nm .c-ot .item {
+    width: 50% !important;
+  }
+  .batch .ynw-common-form-nm .c-ot .editbt {
+    left: auto !important;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .batch .ynw-common-form-nm .c-ot .item {
+    width: 100% !important;
+  }
+  .batch .ynw-common-form-nm .c-ot .editbt {
+    left: auto !important;
+  }
+}
+@media (max-width: 420px) {
+  .batch .batchedit .item {
+    width: 100% !important;
+  }
+}
+/* .cust-loginpge-color {
+  background: aliceblue !important;
+} */
+.joinotp .mat-dialog-content, .joinotp .mat-dialog-actions {padding-left: 0 !important;
+padding-right: 0 !important; padding-top: 0 !important;}
+.cust-loginpge-wdth {
+  width: 100% !important;
+}
+.cust-logpge-pwd-ip {
+  background: white !important;
+}
+.cust-logpge-txt-align {
+  text-align: center !important;
+}
+.cust-logpge-heading {
+  color: #3c8dbc !important;
+  text-align: center !important;
+  background: aliceblue !important;
+  /* padding: 20px 20px 10px!important;
+  font-size: 1rem !important; */
+}
+.cust-logpage-close {
+  font-size: small !important;
+  height: 39px !important;
+  /* right: 20px!important;
+  margin-top: -10px!important;
+  width: 24px!important;
+  color: black !important; */
+}
+.cust-logpg-submt {
+  width: 100% !important;
+  height: 38px !important;
+}
+.cust-logpg-pwd {
+  padding-right: 40% !important;
+}
+.cust-logpg-fgtpwd {
+  float: right;
+  margin-top: 5px;
+  font-size: small;
+  cursor: pointer;
 }

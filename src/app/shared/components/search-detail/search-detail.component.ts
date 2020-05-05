@@ -1627,6 +1627,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(origin?) {
+<<<<<<< HEAD
     const acc_loc_id = this.current_provider.id.split('-');
     const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
     const unique_id = this.current_provider.fields['unique_id'];
@@ -1637,6 +1638,19 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: unique_id,
         account_id: acc_loc_id[0]
+=======
+    this.checkindialogRef = this.dialog.open(CheckInComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: this.checkProvider(origin),
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
+        srchprovider: this.current_provider,
+        datechangereq: this.changedate_req,
+        checkin_type: 'ONLINE_CHECKIN'
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);

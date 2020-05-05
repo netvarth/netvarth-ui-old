@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Messages } from '../../../../../../shared/constants/project-messages';
+import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { Router, NavigationExtras } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { SharedServices } from '../../../../../../shared/services/shared-services';
-import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Router } from '@angular/router';
+import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { SharedServices } from '../../../../../shared/services/shared-services';
+import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
 
 @Component({
@@ -17,20 +17,35 @@ import * as moment from 'moment';
 })
 export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     loc_name;
+    loc_cap = Messages.LOCATION_CAP;
+    schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
+    no_service_cap = Messages.NO_SERVICE_CAP;
     new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
+    max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
+    no_queue_add = Messages.NO_QUEUE_ADDED;
     work_hours = Messages.SERVICE_TIME_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
+    queue_list: any = [];
+    query_executed = false;
     customer_label = '';
+    api_error = null;
+    api_success = null;
     locations;
     api_loading = true;
+    api_load_complete = 0;
     add_button = Messages.ADD_BUTTON;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
+    Selall = false;
     isAllServicesSelected = false;
     services_selected: any = [];
     services_list: any = [];
+    queue_lists = [];
+    Disqueue_lists = [];
+    Enabqueue_lists = [];
     servicelist = [];
     instantQForm: FormGroup;
+
     breadcrumbs = [
         {
             title: 'Settings',
@@ -55,12 +70,18 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     amOrPm;
     qstartamOrPm;
     qendamOrPm;
+
+
+    showedit = false;
     action = 'add';
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
+    qstart_time;
+    qend_time;
     location;
     locid;
     qId;
     now;
+
     instantQs: any = [];
     scheduledQs: any = [];
     disabledQs: any = [];
@@ -90,6 +111,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     todayQLoading: any = [];
     scheduleLoading: any = [];
     domain: any;
+    capacity = 10;
+    parllelLimit = 1;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -176,7 +199,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.action = 'edit';
             this.prepareInstantQForm(que);
         } else {
-            this.addEditProviderQueue('editFromList', que);
+            this.addEditProviderQueue('edit', que);
         }
     }
     /**
@@ -233,6 +256,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.qId = q.id;
         this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
         this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
+        this.capacity = q.capacity;
+        this.parllelLimit = q.parallelServing;
         const sttime = {
             hour: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
@@ -267,10 +292,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            const filter = {
-                'scope-eq': 'account'
-            };
-            this.provider_services.getProviderQueues(filter)
+            this.provider_services.getProviderQueues()
                 .subscribe(
                     (data) => {
                         let allQs: any = [];
@@ -492,7 +514,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      */
     getMode(mod) {
         let moreOptions = {};
-        moreOptions = { 'show_learnmore': true, 'scrollKey': 'q-manager->settings-queues', 'subKey': mod };
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
         return moreOptions;
     }
     /**
@@ -500,19 +522,22 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param queue queue object for getting queue id
      */
     goQueueDetail(queue) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'view' }
-        };
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'queues', queue.id]);
     }
     /**
      * For clearing api errors
      */
+    resetApiErrors() {
+        this.api_error = null;
+        this.api_success = null;
+    }
     /**
      * Method to initiate InstantQ Create/Update
      * @param instantQ instantQ Object
      */
     onSubmit(instantQ) {
+        this.resetApiErrors();
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
@@ -569,11 +594,11 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         instantQInput['capacity'] = instantQ.qcapacity;
         instantQInput['queueState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;
-        if (!this.shared_Functionsobj.checkIsInteger(instantQ.qcapacity)) {
-            const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
+        if (isNaN(instantQ.qcapacity)) {
+            const error = 'Please enter a numeric value for capacity';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        } else if (!this.shared_Functionsobj.checkIsInteger(instantQ.qserveonce)) {
-            const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
+        } else if (isNaN(instantQ.qserveonce)) {
+            const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else {
             if (this.action === 'edit') {
@@ -627,12 +652,9 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      */
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
         } else {
-            const navigationExtras: NavigationExtras = {
-                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
-            };
-            this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
+            this.addEditProviderQueue('add');
         }
     }
     /**
@@ -685,10 +707,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param queue queue object if edit
      */
     addEditProviderQueue(type, queue = null) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { action: type, activeQueues: this.provider_shared_functions.getActiveQueues() }
-        };
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
+        this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_list', queue, this.provider_shared_functions.getActiveQueues());
     }
     /**
      * Method to enable/disable queue status
@@ -756,6 +775,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     let server_date;
                     server_date = res;
                     this.createForm(server_date);
+                    this.api_load_complete = 1;
                     this.showInstantQFlag = true;
                     this.selectAllService();
                     if (queue) {
@@ -784,6 +804,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
 
     viewDashboard(queueObj, index, que) {
         this.getTodayCheckinCount(queueObj, index, que);
+        // if (!queueObj.instantQueue) {
         this.getfutureCheckinCount(queueObj, index, que);
         this.getTomorrowCheckinCount(queueObj, index, que);
         this.futureQcountCaption[index] = 'Checkins Count';
@@ -801,6 +822,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                 this.sqShowActiveQFutureCount[index] = false;
             }
         }
+        // }
         if (que === 'scheduleQ') {
             if (!this.sqShowTodayCount[index]) {
                 this.sqShowTodayCount[index] = true;

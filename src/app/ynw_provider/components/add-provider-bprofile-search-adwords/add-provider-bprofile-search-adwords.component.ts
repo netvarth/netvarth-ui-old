@@ -57,7 +57,6 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   }
 
   addAdword(post_data) {
-    console.log(post_data);
     this.disableButton = true;
     const adword = post_data.split(' ').join(projectConstants.ADWORDSPLIT);
     this.provider_services.addAdwords(adword)

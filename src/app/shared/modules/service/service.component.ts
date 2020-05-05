@@ -129,7 +129,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                         'description': this.service_data['description'] || this.serviceForm.get('description').value,
                                         'department': this.service_data['department'] || this.serviceForm.get('department').value,
-                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
+                                        'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                     });
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
@@ -148,7 +149,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
-                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
                                     } else {
                                         this.serviceForm.setValue({
@@ -163,7 +165,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                                 this.service_data['minPrePaymentAmount'] !== 0
                                             ) ? true : false,
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
-                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
                                     }
                                     this.convertTime(this.service_data['serviceDuration']);
@@ -384,7 +387,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
-                    notification: [false]
+                    notification: [false],
+                livetrack: [false]
                 });
             } else {
                 this.serviceForm = this.fb.group({
@@ -397,7 +401,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
-                    notification: [false]
+                    notification: [false],
+                livetrack: [false]
                 });
                 if (this.action === 'add') {
                     this.serviceForm.get('serviceType').setValue('physicalService');

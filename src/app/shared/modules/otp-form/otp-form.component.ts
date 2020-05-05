@@ -42,11 +42,13 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   otp_mobile = null;
   @Input() actionstarted;
   @Input() submitdata;
+  @Input() consumerlogin;
   @Input() type;
   @Input() resendemailotpsuccess;
   @Output() retonOtpSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
+  @Output() resendOTPEmail: EventEmitter<any> = new EventEmitter();
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -105,6 +107,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   resendOTPMobile() {
+    this.resendOTPEmail.emit(false);
     this.resetCounter(this.refreshTime);
     if (this.submitdata.userProfile !== undefined) {
       this.submitdata.userProfile.email = null;
@@ -117,6 +120,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setResendViaEmail() {
+    this.resendOTPEmail.emit(true);
     this.doshowOTPEmailContainer();
     this.resetApiErrors.emit();
     this.email_form = this.fb.group({
@@ -139,6 +143,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       this.resendOtp.emit(this.submitdata);
       this.resetCounter(this.refreshTime);
       this.checking_email_otpsuccess = true;
+      this.resendOTPEmail.emit(false);
     }
     this.setMessage('email', email_form.otp_email);
   }
@@ -147,7 +152,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (this.type === 'change_email') {
       this.setMessage('email', this.submitdata.email);
     } else {
-      this.setMessage('mobile', this.submitdata.phonenumber);
+      this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
     }
   }
 
@@ -167,6 +172,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   doshowOTPEmailContainer() {
     this.showOTPContainer = false;
     this.showOTPEmailContainer = true;
+    this.resendOTPEmail.emit(true);
   }
   doCancelEmailOTP() {
     this.doResetApiErrors();
@@ -174,5 +180,6 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     this.showOTPContainer = true;
     this.resetCounterVal = 0;
     this.otp_mobile = null;
+    this.resendOTPEmail.emit(false);
   }
 }

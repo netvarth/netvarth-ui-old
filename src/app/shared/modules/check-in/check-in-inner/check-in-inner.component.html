@@ -454,9 +454,9 @@
     <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1"
             style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
-    <mat-dialog-content>
+    <mat-dialog-content [ngClass]="{'lv-trk-prepayent': isPrepay}">
         <div>
-            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
+            <div [ngClass]="{'lv-trkOff-successmsg': isPrepay ,'successmsg' : !isPrepay}">Your check-in for {{activeWt.service.name}} is successful !!
             </div>
             <ul *ngIf="tracking" class="info-lst serviceadd-info">
                 <li>Live tracking not supported outside of India.
@@ -506,8 +506,7 @@
                         (click)="saveLiveTrackDetails()">Ok</button>
                     <app-common-innerloading-spinner *ngIf="track_loading"></app-common-innerloading-spinner>
                 </div>
-                <div *ngIf="sel_ser_det.isPrePayment"
-                    class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                <div *ngIf="sel_ser_det.isPrePayment" [ngClass]="{'mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv': !tracking , 'mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave': tracking}">
                     <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
                     <label>For prepayment</label>
                     <button type="button" [class.disabled]="track_loading && shareLoc"
@@ -520,6 +519,6 @@
         </div>
     </mat-dialog-content>
 </div>
-<!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-</app-form-success-display> -->
+</app-form-success-display>

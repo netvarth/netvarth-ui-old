@@ -11,6 +11,7 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
 @Component({
   selector: 'app-search-provider',
@@ -18,6 +19,7 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
   styleUrls: ['./search-provider.component.css'],
 })
 export class SearchProviderComponent implements OnInit, OnChanges {
+  userType: any;
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
@@ -323,7 +325,14 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
     this.changedate_req = chdatereq;
-    this.showCheckin('consumer');
+    this.userType = this.shared_functions.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      // this.showCheckin(locid, locname, cdate, 'consumer');
+      this.showCheckin('consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: '', current_provider: obj };
+      this.doLogin('consumer', passParam);
+    }
   }
 
   checkProvider(type) {
@@ -340,7 +349,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     //     is_provider: this.checkProvider(origin),
     //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
     //     srchprovider: this.current_provider,
-    //     datechangereq: this.changedate_req
+    //     datechangereq: this.changedate_req,
+     //   checkin_type: 'ONLINE_CHECKIN'
     //   }
     // });
     // this.checkindialogRef.afterClosed().subscribe(result => {
@@ -367,9 +377,14 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     if (obj) {
       const arr = obj.split('-');
       const providforCommunicate = arr[0];
+      if (this.shared_functions.checkLogin()) {
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
       if (ctype === 'consumer') {
-        this.showCommunicate(providforCommunicate, name);
+          this.showCommunicate(providforCommunicate, name);
+        }
+      } else { // show consumer login
+        const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+        this.doLogin('consumer', passParam);
       }
     }
   }

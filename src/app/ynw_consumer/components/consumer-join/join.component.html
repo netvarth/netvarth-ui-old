@@ -1,0 +1,132 @@
+<!-- join Section starts -->
+<form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
+onSubmit(loginForm.value)">
+    <div class="mat-dialog-title"
+        style="text-align: center;color: #3c8dbc !important;">{{heading}} <button
+            mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"><i class="fa fa-window-close"
+                aria-hidden="true"></i></button></div>
+    <!-- step 1 for mobile number entering  -->
+    <div *ngIf="step==1" class="cust-loginpge-color">
+        <div class="mat-dialog-content">
+            <div class="form-group">
+                <mat-form-field>
+                    <input type="text" matInput class="form-control" id="emailId" maxlength="10"
+                        placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
+                        (keyup)="handlekeyup($event)">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
+                    [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
+                </app-field-error-display>
+            </div>
+            <!-- Signin Password -->
+            <div class="form-group" *ngIf="phoneExists">
+                <mat-form-field>
+                    <input type="password" matInput class="form-control" id="password" placeholder="Password"
+                        formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
+                </mat-form-field>
+                <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
+                    errorMsg="Password is required">
+                </app-field-error-display>
+            </div>
+        </div>
+        <div class="mat-dialog-actions">
+            <button class="cust-logpg-submt" *ngIf="!phoneExists" type="submit" mat-button [disabled]="api_loading"
+                (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
+                <span *ngIf="!api_loading">Ok</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+            <button class="cust-logpg-submt" *ngIf="phoneExists" type="button" mat-button [disabled]="api_loading"
+                (click)="onSubmit(loginForm.value)">
+                <span *ngIf="!api_loading">Ok</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+    </div>
+
+    <!-- step 2 for forgot password -->
+    <div class="example-container" *ngIf="step==2">
+        <app-forgot-password (retonChangePassword)="onChangePassword($event)"
+            (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin]="consumerjoin"></app-forgot-password>
+    </div>
+
+
+    <!-- step 3 for otp -->
+    <div *ngIf="step==3" class="cust-loginpge-color">
+        <div class="mat-dialog-content">
+            <div class="form-group" *ngIf="!resendViaEmail">
+                <mat-form-field>
+                    <input type="text" matInput class="form-control" id="first_name" placeholder="First name"
+                        formControlName="first_name" (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
+            {
+              'required' : 'First name is required',
+              'pattern' : 'Only alphabets are allowed'
+            })">
+                </app-field-error-display>
+            </div>
+            <div class="form-group" *ngIf="!resendViaEmail">
+                <mat-form-field>
+                    <input type="text" matInput  class="form-control" id="last_name" placeholder="Last name"
+                        formControlName="last_name" autocomplete="off"(keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
+                    {
+                        'required' : 'Last name is required',
+                        'pattern' : 'Only alphabets are allowed'
+                    })">
+                </app-field-error-display>
+            </div>
+            <div class="example-container joinotp">
+                <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+                    (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+                    [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin" (resendOTPEmail)="resendOTPEmail($event)">
+                </app-otp-form>
+            </div>
+            <div class="">
+                <!-- <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="otpSend()">
+                    <span *ngIf="!api_loading">Signup</span>
+                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                    </app-common-innerloading-spinner>
+                </button> -->
+                <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener" [routerLink]="['/terms']"
+                        target="_blank">{{terms_cond_cap}}</a></span>
+            </div>
+            <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+            </app-field-error-display>
+        </div>
+        <!-- <div class="mat-dialog-actions">
+            <button class="cust-logpg-submt" type="submit" mat-button [disabled]="api_loading" (click)="showError()">
+                <span *ngIf="!api_loading">Login</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div> -->
+        <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display> -->
+    </div>
+    <!-- step 6 for signup password -->
+    <div class="example-container" *ngIf="step==6">
+        <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider" [consumerlogin]="consumerjoin">
+        </app-sp-form>
+    </div>
+    <!-- step 7 for password cancel option -->
+    <div class="example-container cust-loginpge-color" *ngIf="step==7">
+        <mat-dialog-content class="pwd_cancel_scr">
+            <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
+        </mat-dialog-content>
+        <mat-dialog-actions class="cust-logpge-txt-align">
+            <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+            <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
+        </mat-dialog-actions>
+    </div>
+</form>
+
+
+<!-- join section ends -->

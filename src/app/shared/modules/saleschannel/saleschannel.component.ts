@@ -19,7 +19,6 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
         private sharedfunctions: SharedFunctions) {
             this.subscription = this.sharedfunctions.getMessage().subscribe(
                 (message) => {
-                    console.log(message);
                     switch (message.ttype) {
                         case 'saleschannel':
                             this.dispObj = message.data;

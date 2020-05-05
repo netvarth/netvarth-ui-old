@@ -278,11 +278,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilterData = '';
   labelsCount: any = [];
   statusMultiCtrl: any = [];
+<<<<<<< HEAD
   carouselOne;
   views: any = [];
   selectedView: any;
   selQIds: any = [];
   allActiveQs: any[];
+=======
+  type: any;
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1438,6 +1442,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+<<<<<<< HEAD
 
   openActionsWindow(type, index, status?) {
     switch (type) {
@@ -1829,6 +1834,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       self.selected_location = null;
       self.provider_services.getProviderLocations()
+=======
+  checkinClicked(type, appttime) {
+    this.type = type;
+    if (this.isCheckinActive()) {
+      this.provider_services.getServicesList()
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
         .subscribe(
           (data: any) => {
             const locations = data;
@@ -1897,6 +1908,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           const pdata = { 'ttype': 'updateuserdetails' };
           this.shared_functions.sendMessage(pdata);
         },
+<<<<<<< HEAD
         () => {
         }
       );
@@ -1928,6 +1940,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         return -1;
       } else {
         return 0;
+=======
+        datechangereq: true,
+        apptTime: appttime,
+        checkin_type: this.type,
+        queue: this.selected_queue
+      }
+    });
+    this.ChkindialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.reloadActionSubheader.emit(result);
+        this.reloadAPIs();
+>>>>>>> refs/remotes/origin/1.2.4-SRCM
       }
     });
   }

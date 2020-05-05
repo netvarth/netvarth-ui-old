@@ -125,6 +125,29 @@ export class SharedServices {
     };
     return this.servicemeta.httpGet(url, '', pass_params);
   }
+  DocloudSearchWithoutDistance(url, params) {
+    let sort_prefix;
+    if (params.sort.trim() !== '') {
+      sort_prefix = params.sort;
+    } else {
+      sort_prefix = 'claimable asc, ynw_verified_level desc';
+    }
+    url = url + '/search';
+    // rebuilding the parameters to accomodate q.parser and q.options
+    const pass_params = {
+      'start': params.start,
+      // 'return': params.return,
+      'fq': params.fq,
+      'q': params.q,
+      'size': params.size,
+      'q.parser': params.parser, // 'q.parser'
+      'q.options': params.options, // 'q.options'
+      'sort': sort_prefix,
+      // 'q.sort': params.sort,
+      'return': '_all_fields'
+    };
+    return this.servicemeta.httpGet(url, '', pass_params);
+  }
   /* By Sony - Ends here */
   getProfile(id, origin?) {
     let path;
@@ -617,6 +640,10 @@ export class SharedServices {
   }
   getAppointmentByConsumerUUID(uuid, accountid) {
     const url = 'consumer/appointment/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+    consumerMobilenumCheck(mobile) {
+    const url = 'consumer/' + mobile + '/check';
     return this.servicemeta.httpGet(url);
   }
 }
