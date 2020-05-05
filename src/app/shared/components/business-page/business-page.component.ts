@@ -259,12 +259,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           id => {
             this.provider_id = id;
             this.gets3curl();
-            this.fetchClouddata();
           },
           error => {
             this.provider_id = customId;
             this.gets3curl();
-            this.fetchClouddata();
           }
         );
       });
@@ -322,19 +320,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   fetchClouddata() {
     this.locationjson = [];
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
     if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
@@ -347,7 +332,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         this.testuserQry = ' test_account:1 ';
       }
     }
-    // this.q_str = q_str;
     this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
     const searchpass_criterias = {
       'start': 0,
@@ -365,15 +349,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         if (this.testuserQry) {
           searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
         }
-        searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
         searchpass_criterias.q = this.q_str;
         searchpass_criterias.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criterias)
           .subscribe(res => {
             this.result_data = res;
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
-            // this.search_data = this.result_data.hits.hit;
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               if (this.userType === 'consumer') {
@@ -1362,30 +1344,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
 
   getDoctors() {
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
     if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
       }
-    }
-    if (!testUser) {
+       if (!testUser) {
       this.testuserQry = ' (not test_account:1) ';
     } else {
       this.testuserQry = ' test_account:1 ';
+    }
     }
     this.q_str = '(and ' + 'account_type:' + 1 + ' branch_id:' + this.branch_id + ')';
     const searchpass_criteria = {
@@ -1396,17 +1365,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       'size': 10,
       'parser': 'structured', // 'q.parser'
       'options': '', // 'q.options'
-      'sort': '',
-      'distance': ''
+      'sort': ''
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
+        if (this.testuserQry) {
         searchpass_criteria.fq = '(and' + this.testuserQry + ')';
-        searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        }
         searchpass_criteria.q = this.q_str;
         searchpass_criteria.start = 0;
         searchpass_criteria.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criteria)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
             this.getDoctorListbyDept(this.search_data);
