@@ -1255,7 +1255,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url, null, filter);
    }
    getSchedulesCount(filter?) {
-      const url = 'provider/apponintment/schedule/count';
+      const url = 'provider/appointment/schedule/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
    getApptlistMgr() {
@@ -1268,6 +1268,18 @@ export class ProviderServices {
    }
    setFutureAppointmentStatus(status) {
       const url = 'provider/settings/apptMgr/futureAppt/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   emailAppt(uuid) {
+      const url = 'provider/appointment/' + uuid + '/email';
+      return this.servicemeta.httpGet(url);
+   }
+   smsAppt(uuid) {
+      const url = 'provider/appointment/' + uuid + '/sms';
+      return this.servicemeta.httpGet(url);
+   }
+   setCheckinPresence(status) {
+      const url = 'provider/account/settings/waitlist/' + status;
       return this.servicemeta.httpPut(url);
    }
 }

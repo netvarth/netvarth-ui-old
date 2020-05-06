@@ -181,6 +181,7 @@ export class ProviderCheckinComponent implements OnInit {
     callingModes: any = [];
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    checkinType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -190,6 +191,10 @@ export class ProviderCheckinComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            console.log(qparams);
+            if (qparams.checkin_type) {
+                this.checkinType = qparams.checkin_type;
+            }
             if (qparams.ph) {
                 const filter: any = {
                     'phoneNo-eq': qparams.ph
@@ -768,7 +773,8 @@ export class ProviderCheckinComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
-            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'waitlistMode': this.checkinType
         };
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;

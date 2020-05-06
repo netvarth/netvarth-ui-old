@@ -133,6 +133,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   virtualCallingMode_status: any;
   virtualCallingMode_statusstr: string;
   schedules_count: any = 0;
+  waitlistStatus;
+  waitlistStatusStr;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -432,6 +434,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
         this.createappointment_status = data.appointment;
         this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
+        this.waitlistStatus = data.waitlist;
+        this.waitlistStatusStr = (this.waitlistStatus) ? 'On' : 'Off';
         this.donations_status = data.donationFundRaising;
         this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
         this.virtualCallingMode_status = data.virtualService;
@@ -872,6 +876,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.shared_functions.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getGlobalSettingsStatus();
+        }
+      );
+  }
+  handleCheckinPresence(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setCheckinPresence(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Check-in creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {

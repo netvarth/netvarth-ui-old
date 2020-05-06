@@ -1665,8 +1665,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
-  checkinClicked() {
-    this.router.navigate(['provider', 'check-ins', 'add']);
+  checkinClicked(source) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        checkin_type: source
+      }
+    };
+    this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
   }
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {

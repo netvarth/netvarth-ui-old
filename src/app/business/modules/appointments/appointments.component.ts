@@ -1599,7 +1599,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
-  apptClicked(time?) {
+  apptClicked(type, time?) {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
     } else {
@@ -1607,7 +1607,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
     }
   }
   searchCustomer(source, appttime) {
@@ -2242,5 +2242,27 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') {
       }
     });
+  }
+  smsAppt(source) {
+    const checkinlist = this.selectedCheckin[source];
+    this.provider_services.smsAppt(checkinlist.uid).subscribe(
+      () => {
+        this.shared_functions.openSnackBar('Appointment details sent successfully');
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  emailAppt(source) {
+    const checkinlist = this.selectedCheckin[source];
+    this.provider_services.emailAppt(checkinlist.uid).subscribe(
+      () => {
+        this.shared_functions.openSnackBar('Appointment details mailed successfully');
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    );
   }
 }

@@ -57,13 +57,21 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="apptClicked()"
+                  <a (click)="apptClicked('WALK_IN_CHECKIN')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
                     <span>
                       Appointment</span>
                     <!-- <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span> -->
+                  </a>
+                </li>
+                <li class="dropdown notifications-menu">
+                  <a (click)="apptClicked('PHONE_CHECKIN')"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                    data-toggle="dropdown">
+                    <i class="fa fa-mobile"></i>
+                    Phone in
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -328,7 +336,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                         [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
-                        (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
+                        (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_CHECKIN',slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
@@ -363,9 +371,9 @@
                               <i class="icon-note"></i>
                             </span>
                             <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                              class="pull-left cnote icon-btn1 pointer-cursor"
+                              class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                               (click)="showCallingModes(checkin.virtualService)">
-                              <i class="fa fa-phone"></i>
+                              <i class="fa fa-video-camera"></i>
                             </span>
                             <span data-title="Payment Status" class="payment" *ngIf="pos">
                               <ng-container *ngIf="checkin.paymentStatus">
@@ -575,6 +583,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsAppt('started')"></i> </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailAppt('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                   <div class="statuslink "
@@ -632,9 +644,9 @@
                                 <i class="icon-note"></i>
                               </span>
                               <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                                 (click)="showCallingModes(checkin.virtualService)">
-                                <i class="fa fa-phone"></i>
+                                <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
@@ -737,6 +749,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsAppt('new')"></i> </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailAppt('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1 && calculationmode=='NoCalc' && showToken"
@@ -765,7 +781,7 @@
                       <mat-chip-list>
                         <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                           [selected]="!isAvailableSlot(slot)" [class.pointer-cursor]="!isAvailableSlot(slot)"
-                          (click)="!isAvailableSlot(slot) && apptClicked(slot.time)">
+                          (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_CHECKIN',slot.time)">
                           {{slot.time}} </mat-chip>
                       </mat-chip-list>
                     </div>
@@ -821,9 +837,9 @@
                                   <i class="icon-note"></i>
                                 </span>
                                 <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                  class="pull-left cnote icon-btn1 pointer-cursor"
+                                  class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                                   (click)="showCallingModes(checkin.virtualService)">
-                                  <i class="fa fa-phone"></i>
+                                  <i class="fa fa-video-camera"></i>
                                 </span>
                                 <span data-title="Payment Status" class="payment" *ngIf="pos">
                                   <ng-container *ngIf="checkin.paymentStatus">
@@ -848,9 +864,9 @@
                                 <i class="icon-note"></i>
                               </span>
                               <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                                 (click)="showCallingModes(checkin.virtualService)">
-                                <i class="fa fa-phone"></i>
+                                <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
@@ -949,6 +965,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send via SMS'">
+                    <i class="fa fa-comment-o" (click)="smsAppt('completed')"></i> </div>
+                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send via Email'">
+                    <i class="fa fa-envelope-o" (click)="emailAppt('completed')"></i> </div>
                   <div class="statuslink " *ngIf="completedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>
@@ -1005,9 +1025,9 @@
                                 <i class="icon-note"></i>
                               </span>
                               <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                                 (click)="showCallingModes(checkin.virtualService)">
-                                <i class="fa fa-phone"></i>
+                                <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
@@ -1103,9 +1123,9 @@
                                 <i class="icon-note"></i>
                               </span>
                               <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor"
+                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
                                 (click)="showCallingModes(checkin.virtualService)">
-                                <i class="fa fa-phone"></i>
+                                <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">

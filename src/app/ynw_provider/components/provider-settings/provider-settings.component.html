@@ -145,6 +145,15 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
+                                <li><a>Accept Check-ins<span class="pull-right">
+                                            <mat-slide-toggle [(ngModel)]="waitlistStatus"
+                                                (change)="handleCheckinPresence($event)">
+                                            </mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="waitlistStatus">
+                                            {{waitlistStatusStr}}</p>
+                                    </a>
+                                </li>
                                 <li><a>Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="waitlist_status"
                                                 (change)="handle_waitliststatus($event)"></mat-slide-toggle>
@@ -210,21 +219,21 @@
                                     </a>
                                 </li>
                                 <li><a>Same Day Online Appointments <span class="pull-right">
-                                    <mat-slide-toggle [(ngModel)]="apptlist_status"
-                                        (change)="handle_apptliststatus($event)"></mat-slide-toggle>
-                                </span>
-                                <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p>
-                                <p class="settings_info">Set up same day appointment here</p>
-                            </a></li>
-                        <li><a>Future Appointments
-                                <span class="pull-right">
-                                    <mat-slide-toggle [(ngModel)]="futureDateApptlist"
-                                        (change)="handle_futureapptliststatus($event)"></mat-slide-toggle>
-                                </span>
-                                <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}}
-                                </p>
-                                <p class="settings_info">Set up future appointment here</p>
-                            </a></li>
+                                            <mat-slide-toggle [(ngModel)]="apptlist_status"
+                                                (change)="handle_apptliststatus($event)"></mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p>
+                                        <p class="settings_info">Set up same day appointment here</p>
+                                    </a></li>
+                                <li><a>Future Appointments
+                                        <span class="pull-right">
+                                            <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                                                (change)="handle_futureapptliststatus($event)"></mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}}
+                                        </p>
+                                        <p class="settings_info">Set up future appointment here</p>
+                                    </a></li>
                                 <li (click)="redirecTo('appservices')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{services_cap}} <span
                                                 class="pull-right badge bg-blue">{{service_count}}</span></span>

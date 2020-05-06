@@ -186,6 +186,7 @@ export class AppointmentComponent implements OnInit {
     callingModes: any = [];
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    apptType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -195,6 +196,9 @@ export class AppointmentComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.checkinType) {
+                this.apptType = qparams.checkinType;
+            }
             if (qparams.ph) {
                 const filter: any = {
                     'phoneNo-eq': qparams.ph
@@ -790,7 +794,8 @@ export class AppointmentComponent implements OnInit {
             },
             'consumerNote': this.consumerNote,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
-            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for))
+            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'waitlistMode': this.apptType
         };
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
