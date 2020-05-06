@@ -16,7 +16,6 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
-import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     imports: [
@@ -39,11 +38,10 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
     declarations: [
         SearchDetailComponent,
         ProviderDetailComponent,
-        JdnComponent,
         ConsumerWaitlistHistoryComponent
     ],
     entryComponents: [
-        JdnComponent
+       
     ]
 })
 

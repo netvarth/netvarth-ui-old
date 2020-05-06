@@ -14,7 +14,7 @@
                         <div class="top-sect">
                             <div class="new_style">
                                 <div class="tp-l">
-                                    <div class="tp1">
+                                    <div class="tp1 bus-pro">
                                         <div class="pro-img">
                                             <ng-container *ngIf="galleryjson.length > 0 && image_list_popup.length > 0">
                                                 <ng-container>
@@ -50,7 +50,7 @@
                                         (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
                                     <div class="tp2" *ngIf="businessjson">
                                         <!-- <div class="ynw-verified"></div> -->
-                                        <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10"
+                                        <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10 pointer-cursor"
                                                 *ngIf="jdnlength > 0" (click)="openJdn()" [matTooltip]="jdnTooltip"><img
                                                     height="35" width="35" src="./assets/images/JDN.png"></span></h3>
                                         <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
@@ -205,13 +205,13 @@
                                                 <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
                                                         class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                     </sup>
-                                                    <a style="margin-left: 20px;" rel="noopener" class="directions"
+                                                    <a style="margin-left: 20px;" rel="noopener" class="directions ft-smlr"
                                                         [href]="'https://www.google.com/maps/place/'+loc.fields.location1+'/@'+loc.fields.location1+',15z'"
                                                         target="_blank"
                                                         *ngIf="loc.fields.location1">{{get_directions_cap}}</a></h3>
-                                                <div *ngIf="!isPlaceisSame"> {{loc.fields.address1 | capitalizeFirst}}
+                                                <div *ngIf="!isPlaceisSame" class="ft-smlr"> {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}
                                                 </div>
-                                                <h3 *ngIf="isPlaceisSame">{{loc.fields.address1 | capitalizeFirst}}<sup
+                                                <h3 *ngIf="isPlaceisSame">{{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
                                                         class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                     </sup></h3>
                                             </div>

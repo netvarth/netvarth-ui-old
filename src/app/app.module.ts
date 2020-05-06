@@ -68,6 +68,7 @@ import { ProvidersignupComponent } from './shared/components/providersignup/prov
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
 import { WaitlistDetailsComponent } from './shared/components/waitlist-details/waitlist-details.component';
+import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
 
 
 
@@ -93,7 +94,8 @@ import { WaitlistDetailsComponent } from './shared/components/waitlist-details/w
     ConsumerJoinComponent,
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
-    WaitlistDetailsComponent
+    WaitlistDetailsComponent,
+    JdnComponent
     // PhomeComponent,
   ],
   entryComponents: [

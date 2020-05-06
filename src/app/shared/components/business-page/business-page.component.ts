@@ -17,6 +17,7 @@ import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
   selector: 'app-business-page',
@@ -902,6 +903,19 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
       this.doLogin('consumer', passParam);
     }
+  }
+  
+  openJdn() {
+    this.jdndialogRef = this.dialog.open(JdnComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
+      data: {
+        jdnList: this.jaldeediscountJson
+      }
+    });
+    this.jdndialogRef.afterClosed().subscribe(() => {
+    });
   }
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
