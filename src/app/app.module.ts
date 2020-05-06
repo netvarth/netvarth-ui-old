@@ -65,6 +65,7 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
+import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,7 +89,8 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     AdminLoginComponent,
     ConsumerJoinComponent,
     ConsumerPaymentmodeComponent,
-    ManageProviderComponent
+    ManageProviderComponent,
+    JdnComponent
     // PhomeComponent,
   ],
   entryComponents: [
@@ -103,7 +105,8 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     CouponsComponent,
     RequestForComponent,
     ConsumerPaymentmodeComponent,
-    ForceDialogComponent
+    ForceDialogComponent,
+    JdnComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

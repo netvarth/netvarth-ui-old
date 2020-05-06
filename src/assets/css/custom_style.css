@@ -6911,3 +6911,11 @@ padding-right: 0 !important; padding-top: 0 !important;}
   font-size: small;
   cursor: pointer;
 }
+@media only screen and (max-width: 575px) {
+.pro_details .c-outer .c-body .srlst.details .top-sect .tp-l .tp1.bus-pro{
+    width: 25% !important;
+}
+}
+.ft-smlr {
+  font-size: smaller !important;
+}
