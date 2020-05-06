@@ -80,6 +80,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   showTimePicker = false;
   availableSlots: any = [];
   availableSlotDetails: any = [];
+  callingModes = projectConstants.CALLING_MODES;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
