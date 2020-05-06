@@ -244,10 +244,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         data => {
           this.apptlist_details = data;
           console.log(data);
-          // this.apptlist_status = data['onlineCheckIns'] || false;
-          // this.futureDateApptlist = data['futureDateWaitlist'] || false;
-          // this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
-          // this.futurewaitlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+          this.apptlist_status = data['enableToday'] || false;
+          this.futureDateApptlist = data['futureAppt'] || false;
+          this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+          this.futurewaitlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
           // this.filterbydepartment = data['filterByDept'];
         });
   }

@@ -354,7 +354,7 @@
                                                                                                         </div>
                                                                                                 </h3>
                                                                                         </div>
-                                                                                        <!-- <div
+                                                                                        <div
                                                                                                 class="col-md-6 col-xs-12 no-padding">
                                                                                                 <div
                                                                                                         class="col-md-12 no-padding">
@@ -362,14 +362,14 @@
                                                                                                                 class="ttle">Same
                                                                                                                 day
                                                                                                                 Online
-                                                                                                                check-ins</label>
+                                                                                                                appointments</label>
                                                                                                         <mat-slide-toggle
                                                                                                                 class="example-margin"
-                                                                                                                [checked]="queue.onlineCheckIn"
-                                                                                                                (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                                                [checked]="queue.todayAppt"
+                                                                                                                (change)="changeScheduleSameDayOnlineStatus(queue, i, $event)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.todayAppt ? 'On' : 'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
                                                                                                 <div
@@ -377,18 +377,18 @@
                                                                                                         <label
                                                                                                                 class="ttle">Future
                                                                                                                 Online
-                                                                                                                check-ins</label>
+                                                                                                                appointments</label>
                                                                                                         <mat-slide-toggle
                                                                                                                 style="padding-left: 22px;"
                                                                                                                 class="example-margin"
-                                                                                                                [checked]="queue.futureWaitlist"
-                                                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                                                [checked]="queue.futureAppt"
+                                                                                                                (change)="changeScheduleFutureStatus(queue, i, $event)">
                                                                                                         </mat-slide-toggle>
                                                                                                         <p> <label
-                                                                                                                        class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>
+                                                                                                                        class="tstat">{{queue.futureAppt ? 'On' : 'Off'}}</label>
                                                                                                         </p>
                                                                                                 </div>
-                                                                                        </div> -->
+                                                                                        </div>
                                                                                 </div>
                                                                                 <div
                                                                                         class="col-md-1 col-xs-1 no-padding">

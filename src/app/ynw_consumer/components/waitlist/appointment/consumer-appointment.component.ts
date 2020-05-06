@@ -697,6 +697,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'phoneNumber' : this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for))
         };
         // if (this.apptTime) {

@@ -1282,4 +1282,12 @@ export class ProviderServices {
       const url = 'provider/account/settings/waitlist/' + status;
       return this.servicemeta.httpPut(url);
    }
+   changeSamedayAppointmentStatus(queId, status) {
+      const url = 'provider/appointment/schedule/todayAppt/' + status + '/' + queId;
+      return this.servicemeta.httpPatch(url);
+   }
+   changeFutureAppointmentStatus(queId, status) {
+      const url = 'provider/appointment/schedule/futureAppt/' + status + '/' + queId;
+      return this.servicemeta.httpPatch(url);
+   }
 }

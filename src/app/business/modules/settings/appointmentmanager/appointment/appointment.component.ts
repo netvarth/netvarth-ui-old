@@ -330,6 +330,8 @@ export class AppointmentComponent implements OnInit {
                         this.create_new = true;
                     } else {
                         this.customer_data = data[0];
+                        console.log(this.customer_data);
+                        this.consumerPhoneNo = this.customer_data.phoneNo;
                         this.getFamilyMembers();
                         this.initAppointment();
                     }
@@ -793,9 +795,10 @@ export class AppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'phoneNumber' : this.consumerPhoneNo,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
-            'waitlistMode': this.apptType
+            'appointmentMode': this.apptType
         };
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;

@@ -668,16 +668,16 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue object
      * @param event field checked status
      */
-    changeQSameDayOnlineStatus(qObj, index) {
+    changeScheduleSameDayOnlineStatus(qObj, index) {
         let chstatusmsg = '';
-        if (qObj.onlineCheckIn) {
+        if (qObj.todayAppt) {
             chstatusmsg = 'disabled';
         } else {
             chstatusmsg = 'enabled';
         }
-        this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
+        this.provider_services.changeSamedayAppointmentStatus(qObj.id, !qObj.todayAppt)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Same day online check-ins ' + chstatusmsg + ' successfully');
+                this.shared_Functionsobj.openSnackBar('Same day online appointments ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
@@ -690,16 +690,16 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue Object
      * @param event field checked status
      */
-    changeQFutureStatus(qObj, index) {
+    changeScheduleFutureStatus(qObj, index) {
         let chstatusmsg = '';
-        if (qObj.futureWaitlist) {
+        if (qObj.futureAppt) {
             chstatusmsg = 'disabled';
         } else {
             chstatusmsg = 'enabled';
         }
-        this.provider_services.changeFutureCheckinStatus(qObj.id, !qObj.futureWaitlist)
+        this.provider_services.changeFutureAppointmentStatus(qObj.id, !qObj.futureAppt)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Future Checkin ' + chstatusmsg + ' successfully');
+                this.shared_Functionsobj.openSnackBar('Future Appointment ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
