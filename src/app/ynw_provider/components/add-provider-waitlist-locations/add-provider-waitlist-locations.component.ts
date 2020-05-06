@@ -88,7 +88,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       this.getgeneralBusinessSchedules();
     }
     this.createForm();
-    this.elementRef.nativeElement.focus();
+    // this.elementRef.nativeElement.focus();
   }
 
   getgeneralBusinessSchedules() {
