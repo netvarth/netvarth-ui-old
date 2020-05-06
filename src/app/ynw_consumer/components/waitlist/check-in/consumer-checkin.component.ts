@@ -180,13 +180,22 @@ export class ConsumerCheckinComponent implements OnInit {
     notes = false;
     attachments = false;
     action: any = '';
-    breadcrumbs;
+    // breadcrumbs;
     breadcrumb_moreoptions: any = [];
     callingMode;
     virtualServiceArray;
     callingModes: any = [];
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    breadcrumbs = [
+        {
+          title: 'Dashboard',
+          url: '/consumer'
+        },
+        {
+          title: 'Checkin'
+        }
+      ]; 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -210,11 +219,11 @@ export class ConsumerCheckinComponent implements OnInit {
             });
     }
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'Checkin'
-            }
-        ];
+        // this.breadcrumbs = [
+        //     {
+        //         title: 'Checkin'
+        //     }
+        // ];
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
