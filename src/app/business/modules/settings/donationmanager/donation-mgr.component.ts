@@ -52,7 +52,7 @@ export class DonationMgrComponent implements OnInit {
     this.provider_services.setDonations(is_Donation)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getDonationStatus();
         },
         error => {

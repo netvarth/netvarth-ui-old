@@ -903,7 +903,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.setDonations(is_Donation)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Accept Donations' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
