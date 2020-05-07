@@ -249,7 +249,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.apptlist_status = data['enableToday'] || false;
           this.futureDateApptlist = data['futureAppt'] || false;
           this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
-          this.futurewaitlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+          this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
           // this.filterbydepartment = data['filterByDept'];
         });
   }

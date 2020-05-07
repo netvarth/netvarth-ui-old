@@ -795,7 +795,7 @@ export class AppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'phoneNumber' : this.consumerPhoneNo,
+            'phoneNumber': this.consumerPhoneNo,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
@@ -803,6 +803,15 @@ export class AppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
+        if (this.users.length > 0) {
+            if (this.users.length === 1) {
+                post_Data['provider'] = { id: this.users[0].id };
+            } else {
+                post_Data['provider'] = { id: this.selected_user.id };
+            }
+            // console.log(this.users)
+            // console.log(this.selected_user);
+        }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;
         }
@@ -1178,7 +1187,9 @@ export class AppointmentComponent implements OnInit {
                     for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
                         for (let userIndex = 0; userIndex < users.length; userIndex++) {
                             if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
-                                this.users.push(users[userIndex]);
+                                if (this.users.indexOf(users[userIndex]) === -1) {
+                                    this.users.push(users[userIndex]);
+                                }
                                 break;
                             }
                             if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {

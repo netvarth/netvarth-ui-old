@@ -190,13 +190,13 @@ export class ConsumerCheckinComponent implements OnInit {
     callingModesDisplayName = projectConstants.CALLING_MODES;
     breadcrumbs = [
         {
-          title: 'Dashboard',
-          url: '/consumer'
+            title: 'Dashboard',
+            url: '/consumer'
         },
         {
-          title: 'Checkin'
+            title: 'Checkin'
         }
-      ]; 
+    ];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -696,8 +696,8 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
-        if (this.selectedUser.firstName !== 'None') {
-            post_Data['provider'] = {'id': this.selectedUser.id};
+        if (this.selectedUser && this.selectedUser.firstName !== 'None') {
+            post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -1105,7 +1105,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
                         for (let userIndex = 0; userIndex < users.length; userIndex++) {
                             if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
-                                this.users.push(users[userIndex]);
+                                if (this.users.indexOf(users[userIndex]) === -1) {
+                                    this.users.push(users[userIndex]);
+                                }
                                 break;
                             }
                             if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {

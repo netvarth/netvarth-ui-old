@@ -790,8 +790,8 @@ export class ProviderCheckinComponent implements OnInit {
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'waitlistMode': this.checkinType
         };
-        if (this.selectedUser.firstName !== 'None') {
-            post_Data['provider'] = {'id': this.selectedUser.id};
+        if (this.selectedUser && this.selectedUser.firstName !== 'None') {
+            post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;
@@ -1162,7 +1162,9 @@ export class ProviderCheckinComponent implements OnInit {
                     for (let serviceIndex = 0; serviceIndex < this.servicesjson.length; serviceIndex++) {
                         for (let userIndex = 0; userIndex < users.length; userIndex++) {
                             if (this.servicesjson[serviceIndex].provider && this.servicesjson[serviceIndex].provider.id === users[userIndex].id) {
-                                this.users.push(users[userIndex]);
+                                if (this.users.indexOf(users[userIndex]) === -1) {
+                                    this.users.push(users[userIndex]);
+                                }
                                 break;
                             }
                             if (this.servicesjson[serviceIndex].department === this.selected_dept && !this.servicesjson[serviceIndex].provider) {
