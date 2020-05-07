@@ -1330,4 +1330,44 @@ export class ProviderServices {
       const url = 'provider/waitlist/statusBoard';
       return this.servicemeta.httpPost(url, input);
    }
+   updateDisplayboardAppointment(data) {
+      const url = 'provider/appointment/statusBoard';
+      return this.servicemeta.httpPut(url, data);
+   }
+   updateDisplayboardWaitlist(data) {
+      const url = 'provider/waitlist/statusBoard';
+      return this.servicemeta.httpPut(url, data);
+   }
+   uploadDisplayboardLogoAppointment(id, data) {
+      const url = 'provider/appointment/statusBoard/logo/' + id;
+      return this.servicemeta.httpPut(url, data);
+   }
+   uploadDisplayboardLogoWaitlist(id, data) {
+      const url = 'provider/waitlist/statusBoard/logo/' + id;
+      return this.servicemeta.httpPut(url, data);
+   }
+   getDisplayboardAppointment(id) {
+      const url = 'provider/appointment/statusBoard/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getDisplayboardWaitlist(id) {
+      const url = 'provider/waitlist/statusBoard/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   deleteDisplayboardAppointment(id) {
+      const url = 'provider/appointment/statusBoard/' + id;
+      return this.servicemeta.httpDelete(url);
+   }
+   deleteDisplayboardWaitlist(id) {
+      const url = 'provider/waitlist/statusBoard/' + id;
+      return this.servicemeta.httpDelete(url);
+   }
+   deleteDisplayboardQSetAppointment(id) {
+      const url = 'provider/appointment/statusBoard/' + id;
+      return this.servicemeta.httpDelete(url);
+   }
+   deleteDisplayboardQSetWaitlist(id) {
+      const url = 'provider/waitlist/statusBoard/' + id;
+      return this.servicemeta.httpDelete(url);
+   }
 }
