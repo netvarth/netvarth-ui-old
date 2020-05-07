@@ -330,7 +330,7 @@ export class DisplayboardsComponent implements OnInit {
                 'isContainer': true
             };
             console.log(post_data);
-            this.provider_services.createDisplayboard(post_data).subscribe(data => {
+            this.provider_services.createDisplayboardWaitlist(post_data).subscribe(data => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.onCancel();
                 this.getDisplayboardLayouts();

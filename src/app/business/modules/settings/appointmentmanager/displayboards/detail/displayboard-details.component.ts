@@ -328,7 +328,7 @@ export class DisplayboardDetailComponent implements OnInit {
                     'serviceRoom': this.serviceRoom,
                     'metric': this.metric,
                 };
-                this.provider_services.createDisplayboard(post_data).subscribe(data => {
+                this.provider_services.createDisplayboardAppointment(post_data).subscribe(data => {
                     this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                     this.editLayoutbyId(data);
                     this.actionparam = 'view';
