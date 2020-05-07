@@ -1637,7 +1637,7 @@ sup {
 }
 
 .signup-form .mat-input-element, .signup-form .mat-select, .ynw-common-form .mat-input-element, .ynw-common-form .mat-select, .ynw-common-form-nm .mat-input-element, .ynw-common-form-nm .mat-select, .login-form .mat-input-element, .login-form .mat-select {
-  padding: 15px 0px 0px 5px !important;
+  padding: 18px 0px 0px 5px !important;
 }
 
 .ynw-common-form-nm .mat-form-field-underline {
@@ -8674,4 +8674,13 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .ft-smlr {
   font-size: smaller !important;
+}
+
+.lbl-normal {
+  font-weight: normal !important;
+  color: #ccc !important;
+}
+
+.number-ip {
+  width: 120px !important;
 }

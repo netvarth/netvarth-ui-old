@@ -628,6 +628,10 @@ export class SharedServices {
     const url = 'consumer/donation/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getConsumerDonationServices(accountid) {
+    const url = 'consumer/donation/services?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   getWaitlistDetailsbyId(encId) {
     const url = 'consumer/waitlist/enc/' + encId;
     return this.servicemeta.httpGet(url);

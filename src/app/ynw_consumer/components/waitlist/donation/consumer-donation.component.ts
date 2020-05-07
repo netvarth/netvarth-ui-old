@@ -67,7 +67,7 @@ export class ConsumerDonationComponent implements OnInit {
     partysizejson: any = [];
     sel_loc;
     sel_ser;
-    sel_ser_det: any;
+    sel_ser_det: any = [];
     prepaymentAmount = 0;
     sel_que;
     search_obj;
@@ -214,50 +214,7 @@ export class ConsumerDonationComponent implements OnInit {
                 title: 'Donations'
             }
         ];
-        this.servicesjson = [
-            {
-                'id': 4301,
-                'name': 'Rajah Charity Fund',
-                'description': 'Rajah Charity Fund',
-                'serviceDuration': 1,
-                'notificationType': 'email',
-                'notification': true,
-                'isPrePayment': false,
-                'totalAmount': 0.0,
-                'bType': 'Waitlist',
-                'status': 'ACTIVE',
-                'taxable': false,
-                'department': 1026,
-                'serviceType': 'donationService',
-                'minDonationAmount': 1.0,
-                'maxDonationAmount': 10000.0,
-                'multiples': 1,
-                'virtualService': false,
-                'donationFundRaising': true,
-                'livetrack': false
-            }
-        ];
-        this.sel_ser_det = {
-                'id': 4301,
-                'name': 'Rajah Charity Fund',
-                'description': 'Rajah Charity Fund',
-                'serviceDuration': 1,
-                'notificationType': 'email',
-                'notification': true,
-                'isPrePayment': false,
-                'totalAmount': 0.0,
-                'bType': 'Waitlist',
-                'status': 'ACTIVE',
-                'taxable': false,
-                'department': 1026,
-                'serviceType': 'donationService',
-                'minDonationAmount': 1.0,
-                'maxDonationAmount': 10000.0,
-                'multiples': 1,
-                'virtualService': false,
-                'donationFundRaising': true,
-                'livetrack': false
-        };
+        this.getServicebyLocationId(this.sel_loc);
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
         // this.api_loading = false;
@@ -409,29 +366,8 @@ export class ConsumerDonationComponent implements OnInit {
                 break;
             }
         }
-        // this.sel_ser_det = [];
-        this.sel_ser_det = {
-            'id': 4301,
-            'name': 'Rajah Charity Fund',
-            'description': 'Rajah Charity Fund',
-            'serviceDuration': 1,
-            'notificationType': 'email',
-            'notification': true,
-            'isPrePayment': false,
-            'totalAmount': 0.0,
-            'bType': 'Waitlist',
-            'status': 'ACTIVE',
-            'taxable': false,
-            'department': 1026,
-            'serviceType': 'donationService',
-            'minDonationAmount': 1.0,
-            'maxDonationAmount': 10000.0,
-            'multiples': 1,
-            'virtualService': false,
-            'donationFundRaising': true,
-            'livetrack': false
-        };
-        this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+        this.sel_ser_det = [];
+        this.sel_ser_det = serv;
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -481,7 +417,6 @@ export class ConsumerDonationComponent implements OnInit {
         this.donate(paymentWay);
     }
     donate(paymentWay) {
-        alert('here');
         this.showEditView = false;
         console.log(this.businessjson);
         const post_Data = {
@@ -492,7 +427,7 @@ export class ConsumerDonationComponent implements OnInit {
                 'id': this.customer_data.id
             },
             'service': {
-                'id': this.sel_ser_det.id
+                'id': this.sel_ser
             },
             'location': {
                 'id': this.sel_loc
@@ -521,8 +456,8 @@ export class ConsumerDonationComponent implements OnInit {
                     'source': 'Desktop',
                     'purpose': 'donation'
                 };
-                // this.sharedFunctionobj.setitemonLocalStorage('uuid', this.data[0].uuid);
-                // this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
+                this.sharedFunctionobj.setitemonLocalStorage('uuid', data['uid']);
+                this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
                 this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_c');
                 this.shared_services.consumerPayment(payInfo)
                     .subscribe(pData => {
@@ -547,20 +482,6 @@ export class ConsumerDonationComponent implements OnInit {
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-
-
-        // const retData = data;
-
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { account_id: this.account_id }
-        // };
-        //   this.router.navigate(['consumer', 'donation', 'payment', retData], navigationExtras);
-        // },
-        // error => {
-        // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-        // this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        // this.api_loading = false;
-        // });
     }
     addEmail() {
         this.resetApiErrors();
@@ -799,25 +720,25 @@ export class ConsumerDonationComponent implements OnInit {
     clearerrorParty() {
         this.partyapi_error = '';
     }
-    // getServicebyLocationId(locid, pdate) {
-    //     this.api_loading1 = true;
-    //     this.resetApi();
-    //     this.shared_services.getServicesByLocationId(locid)
-    //         .subscribe(data => {
-    //             this.servicesjson = data;
-    //             this.serviceslist = data;
-    //             this.sel_ser_det = [];
-    //             if (this.servicesjson.length > 0) {
-    //                 this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-    //                 this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-    //             }
-    //             this.api_loading1 = false;
-    //         },
-    //             () => {
-    //                 this.api_loading1 = false;
-    //                 this.sel_ser = '';
-    //             });
-    // }
+    getServicebyLocationId(locid) {
+        this.api_loading1 = true;
+        this.resetApi();
+        this.shared_services.getConsumerDonationServices(this.account_id)
+            .subscribe(data => {
+                this.servicesjson = data;
+                this.serviceslist = data;
+                this.sel_ser_det = [];
+                if (this.servicesjson.length > 0) {
+                    this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                    this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                }
+                this.api_loading1 = false;
+            },
+                () => {
+                    this.api_loading1 = false;
+                    this.sel_ser = '';
+                });
+    }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
