@@ -78,7 +78,7 @@ export class GlobalSettingsComponent implements OnInit {
     ngOnInit() {
         if (this.headerResult) {
             this.onlyHeader = true;
-            this.provider_services.getDisplayboard(this.headerResult).subscribe(data => {
+            this.provider_services.getDisplayboardAppointment(this.headerResult).subscribe(data => {
                 this.displaybord_data = data;
             });
           }
@@ -155,7 +155,7 @@ export class GlobalSettingsComponent implements OnInit {
                 'hint': 'hint',
                 'properties': this.imgProperties
             };
-            this.provider_services.uploadDisplayboardLogo(this.displaybord_data.id, img_data).subscribe(data => {
+            this.provider_services.uploadDisplayboardLogoAppointment(this.displaybord_data.id, img_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
             },
@@ -174,7 +174,7 @@ export class GlobalSettingsComponent implements OnInit {
             'headerSettings': this.headerContent,
             'footerSettings': this.footerContent,
         };
-        this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+        this.provider_services.updateDisplayboardAppointment(post_data).subscribe(data => {
             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
         },

@@ -84,7 +84,7 @@ export class GlobalSettingsComponent implements OnInit {
     ngOnInit() {
         if (this.headerResult) {
             this.onlyHeader = true;
-            this.provider_services.getDisplayboard(this.headerResult).subscribe(data => {
+            this.provider_services.getDisplayboardWaitlist(this.headerResult).subscribe(data => {
                 this.displaybord_data = data;
             });
         }
@@ -157,7 +157,7 @@ export class GlobalSettingsComponent implements OnInit {
                 'hint': 'hint',
                 'properties': this.imgProperties
             };
-            this.provider_services.uploadDisplayboardLogo(this.displaybord_data.id, img_data).subscribe(data => {
+            this.provider_services.uploadDisplayboardLogoWaitlist(this.displaybord_data.id, img_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
             },
@@ -177,7 +177,7 @@ export class GlobalSettingsComponent implements OnInit {
             'footerSettings': this.footerSettings
         };
         console.log(JSON.stringify(post_data));
-        this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+        this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         },

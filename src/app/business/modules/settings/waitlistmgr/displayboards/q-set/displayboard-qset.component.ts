@@ -117,7 +117,7 @@ export class DisplayboardQSetComponent implements OnInit {
         this.idSelected.emit(actionObj);
     }
     deleteDisplayboardQSet(board) {
-        this.provider_services.deleteDisplayboardQSet(board.id).subscribe(
+        this.provider_services.deleteDisplayboardQSetWaitlist(board.id).subscribe(
             () => {
                 this.getDisplayboardQsets();
                 this.refresh = true;

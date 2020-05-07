@@ -188,7 +188,7 @@ export class DisplayboardsComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
 
-            this.provider_services.getDisplayboard(layout.id).subscribe((data: any) => {
+            this.provider_services.getDisplayboardWaitlist(layout.id).subscribe((data: any) => {
                 this.displayName = data.displayName;
                 this.serviceRoom = data.serviceRoom;
                 this.activeGroup = data;
@@ -273,7 +273,7 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     deleteDisplayboardLayout(layout) {
-        this.provider_services.deleteDisplayboard(layout.id).subscribe(
+        this.provider_services.deleteDisplayboardWaitlist(layout.id).subscribe(
             () => {
                 this.getDisplayboardLayouts();
             }
@@ -350,7 +350,7 @@ export class DisplayboardsComponent implements OnInit {
                     'containerData': sbDetails,
                     'isContainer': true
                     };
-                this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+                this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                     this.onCancel();
                     this.getDisplayboardLayouts();

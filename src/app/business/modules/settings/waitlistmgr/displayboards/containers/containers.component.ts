@@ -112,7 +112,7 @@ export class ContainersComponent implements OnInit {
         }
     }
     deleteDisplayboardContainer(layout) {
-        this.provider_services.deleteDisplayboard(layout.id).subscribe(
+        this.provider_services.deleteDisplayboardWaitlist(layout.id).subscribe(
             () => {
                 this.getDisplayboardContainers();
             }

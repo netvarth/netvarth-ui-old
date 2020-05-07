@@ -132,7 +132,7 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     deleteDisplayboardLayout(layout) {
-        this.provider_services.deleteDisplayboard(layout.id).subscribe(
+        this.provider_services.deleteDisplayboardAppointment(layout.id).subscribe(
             () => {
                 this.getDisplayboardLayouts();
             }

@@ -273,7 +273,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
-        this.provider_services.getDisplayboard(id).subscribe(data => {
+        this.provider_services.getDisplayboardAppointment(id).subscribe(data => {
             this.layoutData = data;
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
@@ -350,7 +350,7 @@ export class DisplayboardDetailComponent implements OnInit {
                     'serviceRoom': this.serviceRoom,
                     'metric': this.metric
                 };
-                this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+                this.provider_services.updateDisplayboardAppointment(post_data).subscribe(data => {
                     this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                     this.editLayoutbyId(this.layoutData.id);
                     this.actionparam = 'view';
