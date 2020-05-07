@@ -237,7 +237,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <mat-form-field>
                     <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         id="multiples" maxlength="10" (keypress)="isNumeric($event)"
-                        (keyup)="isvalid($event, 'multiples')" placeholder="Multiples" formControlName="multiples"
+                        (keyup)="isvalid($event, 'multiples')" placeholder="Multiples*" formControlName="multiples"
                         autocomplete="off">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'multiples')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'multiples',
