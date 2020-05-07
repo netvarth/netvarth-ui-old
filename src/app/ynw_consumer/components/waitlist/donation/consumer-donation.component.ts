@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -10,6 +10,8 @@ import { projectConstants } from '../../../../shared/constants/project-constants
 import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html'
@@ -65,7 +67,7 @@ export class ConsumerDonationComponent implements OnInit {
     partysizejson: any = [];
     sel_loc;
     sel_ser;
-    sel_ser_det: any = [];
+    sel_ser_det: any;
     prepaymentAmount = 0;
     sel_que;
     search_obj;
@@ -192,14 +194,14 @@ export class ConsumerDonationComponent implements OnInit {
         public router: Router,
         public route: ActivatedRoute,
         public provider_services: ProviderServices,
-        public datastorage: CommonDataStorageService) {
+        public datastorage: CommonDataStorageService,
+        @Inject(DOCUMENT) public document,
+        public _sanitizer: DomSanitizer) {
         this.route.queryParams.subscribe(
             params => {
-                this.sel_loc = params.loc_id;
-                if (params.qid) {
-                    this.sel_queue_id = params.qid;
-                }
-                this.change_date = params.cur;
+                console.log(params);
+                // tslint:disable-next-line:radix
+                this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
                 this.sel_checkindate = params.sel_date;
@@ -209,36 +211,60 @@ export class ConsumerDonationComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbs = [
             {
-                title: 'Donation'
+                title: 'Donations'
             }
         ];
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-        this.carouselOne = {
-            dots: false,
-            nav: true,
-            navContainer: '.checkin-nav',
-            navText: [
-                '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-                '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-            ],
-            autoplay: false,
-            // autoplayTimeout: 6000,
-            // autoplaySpeed: 1000,
-            // autoplayHoverPause: true,
-            mouseDrag: false,
-            touchDrag: true,
-            pullDrag: false,
-            loop: false,
-            responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
+        this.servicesjson = [
+            {
+                'id': 4301,
+                'name': 'Rajah Charity Fund',
+                'description': 'Rajah Charity Fund',
+                'serviceDuration': 1,
+                'notificationType': 'email',
+                'notification': true,
+                'isPrePayment': false,
+                'totalAmount': 0.0,
+                'bType': 'Waitlist',
+                'status': 'ACTIVE',
+                'taxable': false,
+                'department': 1026,
+                'serviceType': 'donationService',
+                'minDonationAmount': 1.0,
+                'maxDonationAmount': 10000.0,
+                'multiples': 1,
+                'virtualService': false,
+                'donationFundRaising': true,
+                'livetrack': false
+            }
+        ];
+        this.sel_ser_det = {
+                'id': 4301,
+                'name': 'Rajah Charity Fund',
+                'description': 'Rajah Charity Fund',
+                'serviceDuration': 1,
+                'notificationType': 'email',
+                'notification': true,
+                'isPrePayment': false,
+                'totalAmount': 0.0,
+                'bType': 'Waitlist',
+                'status': 'ACTIVE',
+                'taxable': false,
+                'department': 1026,
+                'serviceType': 'donationService',
+                'minDonationAmount': 1.0,
+                'maxDonationAmount': 10000.0,
+                'multiples': 1,
+                'virtualService': false,
+                'donationFundRaising': true,
+                'livetrack': false
         };
+        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
         // this.api_loading = false;
         if (activeUser) {
-            this.isfirstCheckinOffer = activeUser.firstCheckIn;
             this.customer_data = activeUser;
         }
         this.main_heading = this.checkinLabel; // 'Check-in';
-        this.get_token_cap = Messages.GET_TOKEN;
         this.maxsize = 1;
         this.step = 1;
         this.getProfile();
@@ -265,17 +291,12 @@ export class ConsumerDonationComponent implements OnInit {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-       // this.minDate = this.todaydate;
+        // this.minDate = this.todaydate;
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
-        this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date1 = new Date(dt1);
-        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date2 = new Date(dt2);
-        this.showfuturediv = false;
+        // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
     }
     createForm() {
@@ -284,25 +305,6 @@ export class ConsumerDonationComponent implements OnInit {
             Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
         });
-    }
-    isDepartmentHaveServices(serviceIds: any, servicesjson: any) {
-        let found = false;
-        for (let j = 0; j < servicesjson.length; j++) {
-            if (serviceIds.indexOf(servicesjson[j].id) !== -1) {
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-    setTerminologyLabels() {
-        this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
-        this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
-        if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
-            this.main_heading = this.get_token_cap;
-        } else {
-            this.main_heading = this.checkinLabel;
-        }
     }
     getWaitlistMgr() {
         const _this = this;
@@ -407,71 +409,35 @@ export class ConsumerDonationComponent implements OnInit {
                 break;
             }
         }
-        this.sel_ser_det = [];
+        // this.sel_ser_det = [];
         this.sel_ser_det = {
-            name: serv.name,
-            duration: serv.serviceDuration,
-            description: serv.description,
-            price: serv.totalAmount,
-            isPrePayment: serv.isPrePayment,
-            minPrePaymentAmount: serv.minPrePaymentAmount,
-            status: serv.status,
-            taxable: serv.taxable
+            'id': 4301,
+            'name': 'Rajah Charity Fund',
+            'description': 'Rajah Charity Fund',
+            'serviceDuration': 1,
+            'notificationType': 'email',
+            'notification': true,
+            'isPrePayment': false,
+            'totalAmount': 0.0,
+            'bType': 'Waitlist',
+            'status': 'ACTIVE',
+            'taxable': false,
+            'department': 1026,
+            'serviceType': 'donationService',
+            'minDonationAmount': 1.0,
+            'maxDonationAmount': 10000.0,
+            'multiples': 1,
+            'virtualService': false,
+            'donationFundRaising': true,
+            'livetrack': false
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
-    }
-    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
-        this.queueQryExecuted = false;
-        if (locid && servid) {
-            this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
-                .subscribe(data => {
-                    this.queuejson = data;
-                    this.queueQryExecuted = true;
-                    if (this.queuejson.length > 0) {
-                        let selindx = 0;
-                        for (let i = 0; i < this.queuejson.length; i++) {
-                            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
-                                selindx = i;
-                            }
-                        }
-                        this.sel_queue_id = this.queuejson[selindx].id;
-                        this.sel_queue_indx = selindx;
-                        // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-                        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-                        this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-                        this.sel_queue_name = this.queuejson[selindx].name;
-                        // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['eTime'] + ' ]';
-                        this.sel_queue_timecaption = this.queuejson[selindx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].apptSchedule.timeSlots[0]['eTime'];
-                        this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-                        this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-                        this.setTerminologyLabels();
-                        if (this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
-                            this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeDuration);
-                        }
-                    } else {
-                        this.sel_queue_indx = -1;
-                        this.sel_queue_id = 0;
-                        this.sel_queue_waitingmins = 0;
-                        this.sel_queue_servicetime = '';
-                        this.sel_queue_name = '';
-                        this.sel_queue_timecaption = '';
-                        this.sel_queue_personaahead = 0;
-                    }
-                });
-        }
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
         this.sel_ser = obj;
         this.setServiceDetails(obj);
-        this.queuejson = [];
-        this.sel_queue_id = 0;
-        this.sel_queue_waitingmins = 0;
-        this.sel_queue_servicetime = '';
-        this.sel_queue_personaahead = 0;
-        this.sel_queue_name = '';
         this.resetApi();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     showConfrmEmail(event) {
         if (event.key !== 'Enter') {
@@ -487,94 +453,11 @@ export class ConsumerDonationComponent implements OnInit {
         }
         return clr;
     }
-    isSelectedQueue(id) {
-        let clr = false;
-        if (id === this.sel_queue_id) {
-            clr = true;
-        } else {
-            clr = false;
-        }
-        return clr;
-    }
-    handleQueueSel(mod) {
-        this.resetApi();
-        if (mod === 'next') {
-            if ((this.queuejson.length - 1) > this.sel_queue_indx) {
-                this.sel_queue_indx = this.sel_queue_indx + 1;
-            }
-        } else if (mod === 'prev') {
-            if ((this.queuejson.length > 0) && (this.sel_queue_indx > 0)) {
-                this.sel_queue_indx = this.sel_queue_indx - 1;
-            }
-        }
-        if (this.sel_queue_indx !== -1) {
-            this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
-            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
-            this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
-            this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
-            // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'] + ' ]';
-            this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'];
-            this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-            // this.queueReloaded = true;
-            if (this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
-                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeDuration);
-            }
-        }
-    }
-
-    handleQueueSelection(queue, index) {
-        this.sel_queue_indx = index;
-        this.sel_queue_id = queue.id;
-        this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
-        this.sel_queue_servicetime = queue.serviceTime || '';
-        this.sel_queue_name = queue.name;
-        this.sel_queue_timecaption = queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime'];
-        this.sel_queue_personaahead = queue.queueSize;
-        // this.queueReloaded = true;
-        if (queue.timeDuration && queue.timeDuration !== 0) {
-            this.getAvailableTimeSlots(queue.apptSchedule.timeSlots[0]['sTime'], queue.apptSchedule.timeSlots[0]['eTime'], queue.timeDuration);
-        }
-    }
-    handleFuturetoggle() {
-        this.showfuturediv = !this.showfuturediv;
-    }
-    isCheckinenable() {
-        if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     revealChk() {
         this.revealphonenumber = !this.revealphonenumber;
     }
     handleConsumerNote(vale) {
         this.consumerNote = vale;
-    }
-    handleFutureDateChange(e) {
-        const tdate = e.targetElement.value;
-        const newdate = tdate.split('/').reverse().join('-');
-        const futrDte = new Date(newdate);
-        const obtmonth = (futrDte.getMonth() + 1);
-        let cmonth = '' + obtmonth;
-        if (obtmonth < 10) {
-            cmonth = '0' + obtmonth;
-        }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
-        this.sel_checkindate = seldate;
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
-        const datee2 = new Date(dte2);
-        // if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        //     this.isFuturedate = true;
-        // } else {
-        //     this.isFuturedate = false;
-        // }
-        this.handleFuturetoggle();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     handleServiceForWhom() {
         this.resetApi();
@@ -582,61 +465,102 @@ export class ConsumerDonationComponent implements OnInit {
         this.step = 3;
         this.main_heading = 'Family Members';
     }
-    handleCheckinClicked() {
+    // donateClicked() {
+
+    // }
+    payuPayment() {
         this.resetApi();
-        let error = '';
-        if (this.step === 1) {
-            if (this.partySizeRequired) {
-                this.clearerrorParty();
-                error = this.validatorPartysize(this.enterd_partySize);
-            }
-            if (error === '') {
-                this.saveCheckin();
-            } else {
-                this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                // this.api_error = error;
-            }
-        }
+        let paymentWay;
+        paymentWay = 'DC';
+        this.donate(paymentWay);
     }
-    saveCheckin() {
+    paytmPayment() {
+        this.resetApi();
+        let paymentWay;
+        paymentWay = 'PPI';
+        this.donate(paymentWay);
+    }
+    donate(paymentWay) {
+        alert('here');
         this.showEditView = false;
+        console.log(this.businessjson);
         const post_Data = {
-            'id': 0,
             'consumer': {
                 'id': this.customer_data.id
             },
+            'providerConsumer': {
+                'id': this.customer_data.id
+            },
             'service': {
-                'id': 7
+                'id': this.sel_ser_det.id
             },
             'location': {
-                'id': this.businessjson.baseLocation.id
+                'id': this.sel_loc
             },
             'date': this.todaydate,
             'donationAmount': this.donationAmount,
             'donor': {
                 'id': this.customer_data.id
-            },
-            'uid': this.businessjson.id
+            }
         };
+        console.log(this.api_error);
         if (this.api_error === null) {
-            this.addDonationConsumer(post_Data);
+            this.addDonationConsumer(post_Data, paymentWay);
         }
     }
-    addDonationConsumer(post_Data) {
+    addDonationConsumer(post_Data, paymentWay) {
         this.api_loading = true;
-        this.shared_services.addCustomerDonation(post_Data)
+        this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
-                const retData = data;
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { account_id: this.account_id }
+                const payInfo = {
+                    'amount': post_Data.donationAmount,
+                    'custId': this.customer_data.id,
+                    'paymentMode': paymentWay,
+                    'uuid': data['uid'],
+                    'accountId': this.account_id,
+                    'source': 'Desktop',
+                    'purpose': 'donation'
                 };
-              this.router.navigate(['consumer', 'donation', 'payment', retData], navigationExtras);
+                // this.sharedFunctionobj.setitemonLocalStorage('uuid', this.data[0].uuid);
+                // this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
+                this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_c');
+                this.shared_services.consumerPayment(payInfo)
+                    .subscribe(pData => {
+                        if (pData['response']) {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                if (paymentWay === 'DC') {
+                                    this.document.getElementById('payuform').submit();
+                                } else {
+                                    this.document.getElementById('paytmform').submit();
+                                }
+                            }, 2000);
+                        } else {
+                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                        }
+                    },
+                        error => {
+                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
             },
                 error => {
-                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.api_loading = false;
                 });
+
+
+        // const retData = data;
+
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { account_id: this.account_id }
+        // };
+        //   this.router.navigate(['consumer', 'donation', 'payment', retData], navigationExtras);
+        // },
+        // error => {
+        // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        // this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        // this.api_loading = false;
+        // });
     }
     addEmail() {
         this.resetApiErrors();
@@ -872,159 +796,32 @@ export class ConsumerDonationComponent implements OnInit {
             this.dispCustomerEmail = true;
         }
     }
-    calculateDate(days) {
-        this.resetApi();
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
-        const newdate = new Date(date);
-        newdate.setDate(newdate.getDate() + days);
-        const dd = newdate.getDate();
-        const mm = newdate.getMonth() + 1;
-        const y = newdate.getFullYear();
-        const ndate1 = y + '-' + mm + '-' + dd;
-        const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-        // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
-        const strtDt1 = this.todaydate + ' 00:00:00';
-        const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
-        const nDt = new Date(ndate);
-        if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
-            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-        const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
-    }
-    disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-        const seldate = new Date(seldate2);
-        const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
-        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-        const strtDt = new Date(strtDt2);
-        const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
-        if (startdate >= selecttdate) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    getPartysizeDetails(domain, subdomain) {
-        this.shared_services.getPartysizeDetails(domain, subdomain)
-            .subscribe(data => {
-                this.partysizejson = data;
-                this.partySize = false;
-                this.maxsize = 1;
-                if (this.partysizejson.partySize) {
-                    this.partySize = true;
-                    this.maxsize = (this.partysizejson.maxPartySize) ? this.partysizejson.maxPartySize : 1;
-                }
-                if (this.partySize && !this.partysizejson.partySizeForCalculation) { // check whether partysize box is to be displayed to the user
-                    this.partySizeRequired = true;
-                }
-                if (this.partysizejson.partySizeForCalculation) { // check whether multiple members are allowed to be selected
-                    this.multipleMembers_allowed = true;
-                }
-            },
-                () => {
-                });
-    }
-    checkPartySize(pVal) {
-        this.clearerrorParty();
-        const error = this.validatorPartysize(pVal);
-        if (error !== '') {
-            this.partyapi_error = error;
-        }
-    }
-    validatorPartysize(pVal) {
-        this.resetApi();
-        let errmsg = '';
-        const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
-        this.enterd_partySize = pVal;
-        if (!numbervalidator.test(pVal)) {
-            errmsg = 'Please enter a valid party size';
-        } else {
-            if (pVal > this.maxsize) {
-                errmsg = 'Sorry ... the maximum party size allowed is ' + this.maxsize;
-            }
-        }
-        return errmsg;
-    }
     clearerrorParty() {
         this.partyapi_error = '';
     }
-    getServicebyLocationId(locid, pdate) {
-        this.api_loading1 = true;
-        this.resetApi();
-        this.shared_services.getServicesByLocationId(locid)
-            .subscribe(data => {
-                this.servicesjson = data;
-                this.serviceslist = data;
-                this.sel_ser_det = [];
-                if (this.servicesjson.length > 0) {
-                    this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                    this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                    this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                }
-                this.api_loading1 = false;
-            },
-                () => {
-                    this.api_loading1 = false;
-                    this.sel_ser = '';
-                });
-    }
-    filesSelected(event) {
-        const input = event.target.files;
-        if (input) {
-            for (const file of input) {
-                if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
-                } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
-                } else {
-                    this.selectedMessage.files.push(file);
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.selectedMessage.base64.push(e.target['result']);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        }
-    }
-
-    deleteTempImage(index) {
-        this.selectedMessage.files.splice(index, 1);
-    }
-
+    // getServicebyLocationId(locid, pdate) {
+    //     this.api_loading1 = true;
+    //     this.resetApi();
+    //     this.shared_services.getServicesByLocationId(locid)
+    //         .subscribe(data => {
+    //             this.servicesjson = data;
+    //             this.serviceslist = data;
+    //             this.sel_ser_det = [];
+    //             if (this.servicesjson.length > 0) {
+    //                 this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+    //                 this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+    //             }
+    //             this.api_loading1 = false;
+    //         },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //                 this.sel_ser = '';
+    //             });
+    // }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
         dataToSend.append('message', this.consumerNote);
         const captions = {};
-        let i = 0;
-        if (this.selectedMessage) {
-            for (const pic of this.selectedMessage.files) {
-                dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
-                i++;
-            }
-        }
-        const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
-        dataToSend.append('captions', blobPropdata);
         this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
             .subscribe(
@@ -1034,45 +831,6 @@ export class ConsumerDonationComponent implements OnInit {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
                 }
             );
-    }
-    getDisplayboardCount() {
-        let layout_list: any = [];
-        this.provider_services.getDisplayboardsWaitlist()
-            .subscribe(
-                data => {
-                    layout_list = data;
-                    this.board_count = layout_list.length;
-                });
-    }
-    getAvailableTimeSlots(QStartTime, QEndTime, interval) {
-        this.shared_services.getTodaysAvailableTimeSlots(this.sel_checkindate, this.sel_queue_id, this.account_id)
-            .subscribe(
-                (data) => {
-                    this.slots = data;
-                    this.availableSlots = this.slots.availableSlots;
-                    for (let freslot of this.availableSlots) {
-                        if (freslot.noOfAvailbleSlots === '1') {
-                            this.freeSlots.push(freslot);
-                        }
-                    }
-                    //  if(this.apptTime === ''){
-                    this.apptTime = this.freeSlots[0].time;
-                    for (let list of this.waitlist_for) {
-                        list['apptTime'] = this.apptTime;
-                    }
-                    //  }
-                },
-                error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
-                }
-            );
-    }
-    timeSelected(slot) {
-        this.apptTime = slot;
-        for (let list of this.waitlist_for) {
-            list['apptTime'] = this.apptTime;
-        }
-        this.showEditView = false;
     }
     getProfile() {
         this.sharedFunctionobj.getProfile()
@@ -1128,29 +886,14 @@ export class ConsumerDonationComponent implements OnInit {
                 switch (section) {
                     case 'settings':
                         this.settingsjson = res;
-                        this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
-                        /*this.maxsize = this.settingsjson.maxPartySize;
-                        if (this.maxsize === undefined) {
-                        this.maxsize = 1;
-                        }*/
                         break;
                     case 'terminologies':
                         this.terminologiesjson = res;
                         this.datastorage.set('terminologies', this.terminologiesjson);
                         this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
-                        this.setTerminologyLabels();
                         break;
                     case 'businessProfile':
                         this.businessjson = res;
-                        this.domain = this.businessjson.serviceSector.domain;
-                        if (this.domain === 'foodJoints') {
-                            this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                            this.note_placeholder = 'Item No Item Name Item Quantity';
-                        } else {
-                            this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                            this.note_placeholder = '';
-                        }
-                        this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
                         break;
                     case 'coupon':
                         this.s3CouponsList = res;
@@ -1164,15 +907,9 @@ export class ConsumerDonationComponent implements OnInit {
                 }
             );
     }
-    toggleAttachment() {
-        this.attachments = !this.attachments;
-    }
     toggleNotes() {
         this.notes = !this.notes;
     }
-    // timeSelected(slot) {
-    //     this.apptTime = slot;
-    // }
     handleSideScreen(action) {
         this.showAction = true;
         this.action = action;

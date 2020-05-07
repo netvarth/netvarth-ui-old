@@ -9,34 +9,33 @@
                     <div class="lbl col-sm-12 col-md-7 col-lg-7">
                         <div class="mainouter checkin-page ">
                             <ng-container *ngIf="!api_loading1">
-                                <div class="servicefor-outer btborder">
-                                    <ul class="availer-ul">
-                                        <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
-                                            <li>
-                                                {{waitfor.firstName | capitalizeFirst}}
-                                                {{waitfor.lastName | capitalizeFirst}}
-                                            </li>
-                                        </ng-container>
-                                    </ul>
-                                    <div class="date-outer" *ngIf="partySizeRequired">
-                                        <div class="form-group party-size">
-                                            <label class="col-form-label">{{enter_party_size_cap}}</label>
-                                            <input class="partysize-input" type="text" matInput #partysize
-                                                [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()"
-                                                (blur)="checkPartySize(partysize.value)" maxlength="5" />
-                                            <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
-                                        </div>
+                                <div class="servicefor-outer date-outer col-md-12 col-sm-12 col-xs-12 no-padding">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                                        <span class="selected-date">Date: {{sel_day}}
+                                            {{todaydate | date: dateFormat}}
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12 mgn-up-20 no-padding">
+                                        <ul class="availer-ul">
+                                            <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
+                                                <li>
+                                                    {{waitfor.firstName | capitalizeFirst}}
+                                                    {{waitfor.lastName | capitalizeFirst}}
+                                                </li>
+                                            </ng-container>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="service-outer" *ngIf="servicesjson.length > 0">
+                                <div class="clearfix"></div>
+                                <div *ngIf="servicesjson.length > 0">
                                     <ng-container>
                                         <mat-form-field *ngIf="servicesjson.length == 1">
                                             <input matInput *ngFor="let serv of servicesjson" [readonly]="true"
                                                 placeholder="Service" value="{{serv.name | capitalizeFirst}}">
                                         </mat-form-field>
                                         <mat-form-field *ngIf="servicesjson.length > 1">
-                                            <mat-select placeholder="Select donation" [ngModel]="sel_ser"
-                                                #servsel (selectionChange)="handleServiceSel(servsel.value)">
+                                            <mat-select placeholder="Select donation" [ngModel]="sel_ser" #servsel
+                                                (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
                                                     {{serv.name | capitalizeFirst}}
                                                 </mat-option>
@@ -47,20 +46,6 @@
                                         </ng-container>
                                     </ng-container>
                                 </div>
-                                <div class="date-outer">
-                                    <div class="date-head">Date:</div>
-                                    <div class="date-body">
-                                        <span class="selected-date">{{sel_day}}
-                                            {{todaydate | date: dateFormat}}
-                                            </span>
-                                    </div>
-                                </div>
-                                <div class="date-outer" style="border-bottom: none;">
-                                    <div class="date-head">Amount:</div>
-                                    <div class="date-body" style="padding-left: 4%;">
-                                        <input [(ngModel)]="donationAmount" type="text">
-                                    </div>
-                                </div> 
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
@@ -102,25 +87,46 @@
                             </div>
 
                         </ng-container> -->
-                        <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
-
-                        <ng-container>
-                            <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
-                                    [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
-                                    [disabled]="api_loading">Confirm</button>
+                        <!-- <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div> -->
+                        <div class="mainouter checkin-page ">
+                            <div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <!-- <div class="date-head">Amount:</div> -->
+                                        <!-- <div class="date-body" ngInput style="padding-left: 4%;"> -->
+                                        <input class="form-control number-ip" matInput placeholder="Enter Amount"
+                                            [(ngModel)]="donationAmount" >
+                                        <!-- </div> -->
+                                    </mat-form-field>
+                                </div>
                             </div>
-                        </ng-container>
-                    </div>
-                    <div class="lbr col-sm-12 col-md-5 col-lg-5 mainouter">
-                        <div class="col-md-12  mgn-up-20 " *ngIf="showAction">
-                            
+                            <div class="mainouter checkin-page ">
+                                <div style="padding-bottom: 10px">Payment Options
+                                    <div>
+                                        <p class="settings_info" style="display: inline;">Choose your payment
+                                            options from here</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mainouter checkin-page ">
+                                <div class="col-md-12 cc-dc-nb no-padding mgn-bt-20" style="display: flex">
+                                    <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net
+                                        Banking/UPI</button>
+                                    <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
+                        <!-- <ng-container>
+                            <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
+                                    [class.confirmbtn]="step == 1" (click)="donateClicked()"
+                                    [disabled]="api_loading">Donate</button>
+                            </div>
+                        </ng-container> -->
                     </div>
-
                 </div>
             </div>
         </div>
         <div class="clearfix"></div>
+        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
     </div>
 </section>

@@ -15,13 +15,11 @@ import {
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
-import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { SignUpComponent } from '../signup/signup.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
-import { CheckInService } from '../../../business/modules/check-ins/check-in/check-in.service';
 
 @Component({
   selector: 'app-provider-detail',
@@ -1002,7 +1000,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
   }
-  donationClicked(locid, locname, cdate, chdatereq) {
+  payClicked(locid, locname, cdate, chdatereq) {
+    alert('j');
     this.showDonation(locid, locname, cdate, 'consumer');
   }
   showDonation(locid, locname, curdate, origin?) {

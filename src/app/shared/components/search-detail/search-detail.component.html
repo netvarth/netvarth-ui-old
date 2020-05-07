@@ -562,9 +562,98 @@
                                             *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
                                         {{for_cap}} <span>{{different_date}}</span></span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="bottom-sect">
+                            <div class="bt-l">
+                                <!-- <div class="wt-tme"
+                                    *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
+                                    <div class="o-now" *ngIf="search_result.fields['opennow']">{{open_now_cap}}
+                                    </div>
+                                    <div class="wt-tme notallowed">
+                                        <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">
+                                            {{search_result.fields['estimatedtime_det']['message']}}</ng-container>
+                                    </div>
+                                    <div
+                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
+                                        <div *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
+                                            <b>{{search_result.fields['estimatedtime_det']['personAhead']}} </b><span
+                                                class="people-ahead"
+                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
+                                            <span class="people-ahead"
+                                                *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
+                                        </div>
+                                        <div *ngIf="search_result.fields['estimatedtime_det']['personAhead'] === 0">
+                                            <div class="time-data">
+                                                {{search_result.fields['estimatedtime_det']['personAhead']}}
+                                                {{people_ahead}} </div>Be the first in line
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div style="flex-grow:1"></div>
+                            <div class="bottom-actions-root"
+                                *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
+                                <!-- <div class="checkin-est nrm"
+                                    *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                    <span class="est-time"
+                                        *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                    <span class="time-data"
+                                        *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
+                                    </span>
+                                </div> -->
+                                <!-- <ng-container
+                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                    <ng-container
+                                        *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
+                                        <div class="checkin-est" style="margin-bottom: 5px"
+                                            *ngIf="!search_result.fields['opennow']">
+                                            <span class="est-time">Next Available Time</span>
+                                            <span
+                                                class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-container> -->
+                                <!-- <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && (search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken']))">{{getTerminologyTerm('waitlist',
+                                    search_result.fields)}}</span>
+                                <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                <span class="checkin-btn disabled"
+                                    *ngIf="(search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])) && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
+                                    search_result.fields)}}</span>
+                                <span class="checkin-btn disabled"
+                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span> -->
+
+                                <!-- <div class="future-date-link checkin-future">
+                                    <span class="bt10" (click)="checkinClicked(search_result, true)"
+                                        *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
+                                        <span
+                                            *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                        <span
+                                            *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
+                                        {{for_cap}} <span>{{different_date}}</span></span>
+                                </div> -->
                                 <span class="checkin-btn"
                                     (click)="appointmentClicked(search_result, false)">Appointment</span>
                             </div>
+                        </div>
+                        <!-- *ngIf="search_result.donation_services" -->
+                        <div class="bottom-sect pdetail">
+                            <div class="bt-l">
+                                <div class="wt-tme">
+                                    <div class="donat-service">
+                                            <span class="sub-title-donate">Donation Services</span>
+                                            <!-- <ul>
+                                                <li *ngFor="let donationService of search_result.donation_services">{{donationService}}</li>
+                                            </ul> -->
+                                        </div>
+                                </div>
+                            </div>
+                            <div style="flex-grow:1"></div>
+                                    <div class="bottom-actions-root">
+                                        <span (click)="payClicked(search_result)" class="checkin-btn">Pay</span>
+                                    </div>
                         </div>
                         <!-- <div class="bottom-sect">
                             <div class="bt-l">

@@ -143,7 +143,7 @@
               <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Add Notifications
+                    <mat-panel-title class="block-level"> Add Check-in Notifications
                       <br> <span class="form-level-settings">Notify a {{customer_label}} via
                         SMS/Email/Notifications when a Check-in happens.</span>
                     </mat-panel-title>
@@ -169,6 +169,39 @@
                     </li>
                   </ul>
                   <button *ngIf="showButton['WAITLISTADD']" (click)="changeNotificationSettings('WAITLISTADD')" type="button"
+                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div class="clearfix"></div>
+              <mat-accordion class="acc-btn">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                    <mat-panel-title class="block-level"> Add Appointment Notifications
+                      <br> <span class="form-level-settings">Notify a {{customer_label}} via
+                        SMS/Email/Notifications when a Appointment happens.</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul class="notifications">
+                    <li>
+                      <span class="notification"> via SMS </span>
+                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.sms"
+                        (change)="showSubmit('APPOINTMENTADD')">
+                      </mat-slide-toggle>
+                    </li>
+                    <li>
+                      <span class="notification"> via Email</span>
+                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.email"
+                        (change)="showSubmit('APPOINTMENTADD')">
+                      </mat-slide-toggle>
+                    </li>
+                    <li>
+                      <span class="notification">Push notifications</span>
+                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.pushNotification"
+                        (change)="showSubmit('APPOINTMENTADD')">
+                      </mat-slide-toggle>
+                    </li>
+                  </ul>
+                  <button *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD')" type="button"
                     mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>

@@ -371,20 +371,20 @@
                                                     (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail" *ngIf="donation">
+                                        <div class="bottom-sect pdetail" *ngIf="businessjson.donation_services">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
-                                                            <span class="sub-title-donate">Donation</span>
+                                                            <span class="sub-title-donate">Donation Services</span>
                                                             <ul>
-                                                                <li *ngFor="let don of donation">{{don.name}}</li>
+                                                                <li *ngFor="let donationService of businessjson.donation_services">{{donationService}}</li>
                                                             </ul>
                                                         </div>
                                                 </div>
                                             </div>
                                             <div style="flex-grow:1"></div>
                                                     <div class="bottom-actions-root">
-                                                        <span (click)="donationClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)" class="checkin-btn">Pay</span>
+                                                        <span (click)="payClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)" class="checkin-btn">Pay</span>
                                                     </div>
                                         </div>
                                     </div>

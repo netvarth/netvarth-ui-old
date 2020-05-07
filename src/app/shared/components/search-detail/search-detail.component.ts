@@ -1581,7 +1581,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   doLogin(state, origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
+    console.log(passParam);
     const current_provider = passParam['current_provider'];
+    console.log(current_provider);
     let is_test_account = null;
     if (current_provider) {
       if (current_provider.test_account === '1') {
@@ -1686,6 +1688,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     return (type === 'consumer') ? 'false' : 'true';
   }
   providerDetClicked(obj) {
+    console.log(obj);
     if (obj && obj.fields.unique_id !== undefined) {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
@@ -1694,12 +1697,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
-        if (ctype === 'consumer') {
+        // if (ctype === 'consumer') {
           this.showProviderDetails(providforDetails, locId);
-        }
+        // }
       } else { // show consumer login
         const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
-        this.doLogin('consumer', passParam);
+        this.doLogin('', 'consumer', passParam);
       }
     }
   }
@@ -1748,7 +1751,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
       } else { // show consumer login
         const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj };
-        this.doLogin('consumer', passParam);
+        this.doLogin('', 'consumer', passParam);
       }
     }
   }
@@ -1957,5 +1960,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               });
             });
         });
+  }
+  payClicked(search_result) {
+    console.log(search_result);
+    const ids = search_result.id.split('-');
+    this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
+  }
+  showDonation(locid, curdate, origin, unique_id, accountId) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: unique_id,
+        account_id: accountId
+       }
+    };
+    this.routerobj.navigate(['consumer', 'donation'], navigationExtras);
   }
 }

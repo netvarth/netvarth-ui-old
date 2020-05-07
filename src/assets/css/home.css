@@ -417,7 +417,7 @@ section#features {
   padding: 0 28px !important;
   position: relative !important;
   top: 0 !important;
-  opacity: 0 !important;
+  /* opacity: 0 !important; */
 }
 
 .quick-question1 span {

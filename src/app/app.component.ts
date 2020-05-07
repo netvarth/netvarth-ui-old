@@ -15,20 +15,20 @@ export class AppComponent implements OnInit {
     private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-    const isProvider = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-    if (isProvider === 'true' && user) {
-      this.jadeeSseService.getServerSentEvent(base_url + 'provider/events').subscribe(
-        data => {
-          console.log(data);
-        }
-      );
-    } else {
-      this.jadeeSseService.getServerSentEvent(base_url + 'consumer/events').subscribe(
-        data => {
-          console.log(data);
-        }
-      );
-    }
+    // const isProvider = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+    // const user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    // if (isProvider === 'true' && user) {
+    //   this.jadeeSseService.getServerSentEvent(base_url + 'provider/events').subscribe(
+    //     data => {
+    //       console.log(data);
+    //     }
+    //   );
+    // } else {
+    //   this.jadeeSseService.getServerSentEvent(base_url + 'consumer/events').subscribe(
+    //     data => {
+    //       console.log(data);
+    //     }
+    //   );
+    // }
   }
 }

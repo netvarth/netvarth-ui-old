@@ -99,7 +99,6 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
     // PhomeComponent,
   ],
   entryComponents: [
-    
     SignUpComponent,
     LoginComponent,
     ConfirmBoxComponent,
@@ -110,7 +109,8 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
     CouponsComponent,
     RequestForComponent,
     ConsumerPaymentmodeComponent,
-    ForceDialogComponent
+    ForceDialogComponent,
+    JdnComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -156,7 +156,6 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,
       multi: true
-      
     },
     SharedServices,
     SharedFunctions,
