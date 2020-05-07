@@ -4891,72 +4891,134 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                          <!-- next -->
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]='showcheckin'>
-                            <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="handleScroll('check-ins', 'check-ins')">
-                                    Check-In
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-                                <ul class="ul-normal">
-                                    <li>A doctor can create and check-in a patient for service.</li>
-                                    <li>To search for a patient and to check whether he/she has already been registered
-                                        with
-                                        Jaldee, the doctor can use the patient's mobile number, his/her first name/last
-                                        name.
-                                    </li>
-                                    <li>In case, the patient's data does not exist in the Jaldee database, the doctor
-                                        can input
-                                        the
-                                        details of the patient and get him/her registered with Jaldee.com.</li>
-                                </ul>
-
-
-                                <div class="box-indent">
-                                    <ul class="ul-normal">
-                                        <li>In the check-in/get token window, first, select the service from the
-                                            drop-down menu
-                                            that
-                                            a patient wishes to avail. In case, the doctor has only one default service,
-                                            then
-                                            there
-                                            will be no drop-down menu.</li>
-                                        <li>Check-in/Get Token/Order window has a feature to add or change a family
-                                            member whom the
-                                            patient wishes to do a check-in for. Click “Add/Change Member“to add a new
-                                            member
-                                            with
-                                            the first name and the last name. In case the family member is already
-                                            added, it can
-                                            be
-                                            directly selected from the list of members.</li>
-                                        <li><strong>Multiple persons can be selected from Add/Change member to proceed
-                                                with a
-                                                single
-                                                check-in.</strong></li>
-                                        <li>If a patient has any note, the doctor can click <strong>“If you have a note,
-                                                Click
-                                                here
-                                                (+)�? to write the message in the textbox.</strong></li>
-                                        <li>With all this information the doctor can now proceed with the check-in
-                                            process of
-                                            the
-                                            walk-in patient by clicking on <strong>“Confirm Check-in“.</strong></li>
-                                        <li>Push message will be sent to the patient's mobile and an email notification
-                                            to the
-                                            registered email address regarding the information of check-in.</li>
-                                        <li>Future Check-in can be done in the same way as that of Check-in. The only
-                                            difference
-                                            between these check-ins is that the doctor needs to select a date of
-                                            check-ins in
-                                            the
-                                            Future Check-in.</li>
-                                    </ul>
+                         <mat-accordion>
+                            <mat-expansion-panel [expanded]='showcheckins'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="menu('check-ins')">
+                                       Checkins
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                    <span>A provider can create and check-in a customer for service.
+                                    </span>
                                 </div>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]='showcheckin && showcheckins'>
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                            class="accordion">
+                                                            <mat-panel-title class="accordion-title">
+                                                                <span class="helpcontent"
+                                                                    (click)="handleScroll('check-in', 'check-ins')">Checkin</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                               
+                                                <div class="helpcontent">
+                                                    <ul class="ul-normal">
+                                                        <li>A provider can create and check-in a customer for service.</li>
+                                                        <li>To search for a customer and to check whether he/she has already been registered
+                                                            with
+                                                            Jaldee, the provider can use the customer's mobile number, his/her first
+                                                            name/last
+                                                            name.
+                                                        </li>
+                                                        <li>In case, the customer's data does not exist in the Jaldee database, the provider
+                                                            can input
+                                                            the
+                                                            details of the customer and get him/her registered with Jaldee.com.</li>
+                                                    </ul>
+                    
+                    
+                                                    <div class="box-indent">
+                                                        <ul class="ul-normal">
+                                                            <li>In the check-in/get token window, first, select the service from the
+                                                                drop-down menu
+                                                                that
+                                                                a customer wishes to avail. In case, the provider has only one default
+                                                                service,
+                                                                then
+                                                                there
+                                                                will be no drop-down menu.</li>
+                                                            <li>Check-in/Get Token/Order window has a feature to add or change a family
+                                                                member whom the
+                                                                customer wishes to do a check-in for. Click “Add/Change Member“ to add a new
+                                                                member
+                                                                with
+                                                                the first name and the last name. In case the family member is already
+                                                                added, it can
+                                                                be
+                                                                directly selected from the list of members.</li>
+                                                            <li><strong>Multiple persons can be selected from Add/Change member to proceed
+                                                                    with a
+                                                                    single
+                                                                    check-in.</strong></li>
+                                                            <li>If a customer has any note, the provider can click <strong>“If you have a
+                                                                    note,
+                                                                    Click
+                                                                    here
+                                                                    (+)�? to write the message in the textbox.</strong></li>
+                                                            <li>With all this information the provider can now proceed with the check-in
+                                                                process of
+                                                                the
+                                                                walk-in customer by clicking on <strong>“Confirm Check-in�?.</strong></li>
+                                                            <li>Push message will be sent to the customer's mobile and an email notification
+                                                                to the
+                                                                registered email address regarding the information of check-in.</li>
+                                                            <li>Future Check-in can be done in the same way as that of Check-in. The only
+                                                                difference
+                                                                between these check-ins is that the provider needs to select a date of
+                                                                check-ins in
+                                                                the
+                                                                Future Check-in.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                       <mat-accordion>
+                                            <mat-expansion-panel [expanded]='showdelay && showcheckins'>
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion"> 
+                                                    <mat-panel-title class="accordion-title">
+                                                            <span class="helpcontent"
+                                                                (click)="handleScroll('adjustdelay', 'check-ins')">Adjustdelay</span>
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                                                    <span>Delay can be caused by any reason. This interferes with the smooth functioning of
+                                                        the
+                                                        business.Delay option helps the provider to set a delay to the current or an earliest
+                                                        working
+                                                        hour.</span>
+                                                    <ol class="ol-normal adjust-delay-num">
+                                                        <li>Select a working hour from the dashboard to adjust the delay.</li>
+                                                        <li>Click on the <strong>“Delay�?</strong> button. This opens a new window.
+                                                        </li>
+                                                        <li>Further, set the delayed time (in hours and minutes) in the
+                                                            <strong>Delay</strong>
+                                                            field.
+                                                        </li>
+                                                        <li>Delay cannot be greater than the available working hours.
+                                                        </li>
+                                                        <li>In case if the provider wants to inform the customer about the delay, click
+                                                            <strong>"Send
+                                                                Message�?.</strong> A default message will be sent to the customers informing
+                                                            that
+                                                            the
+                                                            wait time has been extended for some time along with the new estimated waiting
+                                                            time.
+                                                        </li>
+                                                        <li>The provider can also send a personalized message. Enter the message in the
+                                                            given
+                                                            text
+                                                            box.
+                                                        </li>
+                                                        <li>Click the <strong>“Save�?</strong> button to confirm the adjustments.</li>
+                                                    </ol>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
                         <mat-expansion-panel [expanded]='showdbdonations'>
@@ -6219,46 +6281,7 @@
     </mat-expansion-panel>
     </mat-accordion>
     <!-- next -->
-    <mat-accordion>
-        <mat-expansion-panel [expanded]='true'>
-            <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="handleScroll('adjustdelay', 'adjustdelay')">
-                    Add Delay
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="helpcontent">
-                <span>Delay can be caused by any reason. This interferes with the smooth functioning of
-                    the
-                    business.Delay option helps the doctor to set a delay to the current or an earliest
-                    working
-                    hour.</span>
-                <ol class="ol-normal adjust-delay-num">
-                    <li>Select a working hour from the dashboard to adjust the delay.</li>
-                    <li>Click on the <strong>“Delay�?</strong> button. This opens a new window.
-                    </li>
-                    <li>Further, set the delayed time (in hours and minutes) in the
-                        <strong>Delay</strong>
-                        field.
-                    </li>
-                    <li>Delay cannot be greater than the available working hours.
-                    </li>
-                    <li>In case if the doctor wants to inform the patient about the delay, click
-                        <strong>"Send
-                            Message�?.</strong> A default message will be sent to the patients informing
-                        that
-                        the
-                        wait time has been extended for some time along with the new estimated waiting
-                        time.
-                    </li>
-                    <li>The doctor can also send a personalized message. Enter the message in the given
-                        text
-                        box.
-                    </li>
-                    <li>Click the <strong>“Save�?</strong> button to confirm the adjustments.</li>
-                </ol>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+   
     <!-- next -->
     
     

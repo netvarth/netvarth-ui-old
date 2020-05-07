@@ -102,6 +102,8 @@ export class ReligiousComponent implements OnInit {
   showinbox = false;
   showhistory = false;
   showdbdonations = false;
+  showcheckins = false;
+  showdelay = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -356,9 +358,16 @@ export class ReligiousComponent implements OnInit {
       this.showdbappointments = true;
    }
     
-   if (parentContent === 'check-ins' && childContent === 'check-ins') {
-    this.showcheckin = true;
-  }  
+   if (parentContent === 'check-ins'){
+    this.showcheckins = true;
+    if (childContent === 'check-in') {
+      this.showcheckin = true;
+    }
+    if (childContent === 'adjustdelay') {
+      this.showdelay = true;
+    }
+
+}  
   if (parentContent === 'donations' && childContent === 'donations') {
     this.showdbdonations = true;
  }

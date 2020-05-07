@@ -100,7 +100,6 @@ export class PersonalCareComponent implements OnInit {
   showhistory = false;
   showdbdonations = false;
   showcheckins = false;
-  showphonein = false;
   showdelay = false;
   
   constructor(
@@ -363,9 +362,6 @@ export class PersonalCareComponent implements OnInit {
       this.showcheckins = true;
       if (childContent === 'check-in') {
         this.showcheckin = true;
-      }
-      if (childContent === 'phonein') {
-        this.showphonein = true;
       }
       if (childContent === 'adjustdelay') {
         this.showdelay = true;

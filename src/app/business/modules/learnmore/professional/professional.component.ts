@@ -101,6 +101,8 @@ export class ProfessionalCareComponent implements OnInit {
   showinbox = false;
   showhistory = false;
   showdbdonations = false;
+  showcheckins = false;
+  showdelay = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -357,9 +359,16 @@ export class ProfessionalCareComponent implements OnInit {
     this.showdbdonations = true;
  }
     
-   if (parentContent === 'check-ins' && childContent === 'check-ins') {
+ if (parentContent === 'check-ins'){
+  this.showcheckins = true;
+  if (childContent === 'check-in') {
     this.showcheckin = true;
-  }  
+  }
+  if (childContent === 'adjustdelay') {
+    this.showdelay = true;
+  }
+
+}  
 
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
