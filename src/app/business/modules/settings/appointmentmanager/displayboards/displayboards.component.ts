@@ -58,7 +58,7 @@ export class DisplayboardsComponent implements OnInit {
     getDisplayboardLayouts() {
         this.api_loading = true;
         this.layout_list = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardsAppointment()
             .subscribe(
                 (data: any) => {
                     const alldisplayBoards = data;

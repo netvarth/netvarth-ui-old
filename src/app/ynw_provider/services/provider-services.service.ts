@@ -1290,4 +1290,28 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/futureAppt/' + status + '/' + queId;
       return this.servicemeta.httpPatch(url);
    }
+   getDisplayboardQSetsAppointment() {
+      const url = 'provider/appointment/queueSet';
+      return this.servicemeta.httpGet(url);
+   }
+   getDisplayboardQSetsWaitlist() {
+      const url = 'provider/waitlist/queueSet';
+      return this.servicemeta.httpGet(url);
+   }
+   getDisplayboardsAppointment() {
+      const url = 'provider/appointment/statusBoard';
+      return this.servicemeta.httpGet(url);
+   }
+   getDisplayboardsWaitlist() {
+      const url = 'provider/waitlist/statusBoard';
+      return this.servicemeta.httpGet(url);
+   }
+   createDisplayboardQSetAppointment(input) {
+      const url = 'provider/appointment/queueSet';
+      return this.servicemeta.httpPost(url, input);
+   }
+   createDisplayboardQSetWaitlist(input) {
+      const url = 'provider/waitlist/queueSet';
+      return this.servicemeta.httpPost(url, input);
+   }
 }

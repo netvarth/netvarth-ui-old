@@ -418,7 +418,7 @@ export class DisplayboardDetailComponent implements OnInit {
     getDisplayboardQSets() {
         this.api_loading = true;
         this.qset_list = [];
-        this.provider_services.getDisplayboardQSets()
+        this.provider_services.getDisplayboardQSetsAppointment()
             .subscribe(
                 data => {
                     this.qset_list = data;
@@ -433,7 +433,7 @@ export class DisplayboardDetailComponent implements OnInit {
     getQboardlist() {
         this.api_loading = true;
         this.qboard_list = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardsAppointment()
             .subscribe(
                 data => {
                     this.qboard_list = data;

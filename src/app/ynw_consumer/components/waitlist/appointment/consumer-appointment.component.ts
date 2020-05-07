@@ -1252,7 +1252,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     getDisplayboardCount() {
         let layout_list: any = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardsAppointment()
             .subscribe(
                 data => {
                     layout_list = data;

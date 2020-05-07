@@ -290,7 +290,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'queueSetFor': this.statusBoardfor,
                 'sortBy': this.sortByFieldsList
             };
-            this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
+            this.provider_services.createDisplayboardQSetWaitlist(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });
                 const actionObj = {
                     source: this.source,
@@ -644,7 +644,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     getDisplayboardCount() {
         let layout_list: any = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardsWaitlist()
             .subscribe(
                 data => {
                     layout_list = data;

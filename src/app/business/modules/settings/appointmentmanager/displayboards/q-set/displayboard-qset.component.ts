@@ -64,7 +64,7 @@ export class DisplayboardQSetComponent implements OnInit {
     getDisplayboardQsets() {
         this.api_loading = true;
         this.board_list = [];
-        this.provider_services.getDisplayboardQSets()
+        this.provider_services.getDisplayboardQSetsAppointment()
             .subscribe(
                 data => {
                     this.board_list = data;

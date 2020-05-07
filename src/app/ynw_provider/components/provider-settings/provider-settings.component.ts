@@ -87,6 +87,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   item_list;
   item_count = 0;
   board_count = 0;
+  board_count_waitlist = 0;
   bProfile = null;
   multipeLocationAllowed = false;
   locName;
@@ -208,7 +209,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getPOSSettings();
     this.getGlobalSettingsStatus();
     this.getJaldeeIntegrationSettings();
-    this.getDisplayboardCount();
+    this.getDisplayboardCountAppointment();
+    this.getDisplayboardCountWaitlist();
     this.getBusinessConfiguration();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -675,19 +677,34 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.location_count = data;
         });
   }
-  getDisplayboardCount() {
-    this.provider_services.getDisplayboards()
+  getDisplayboardCountAppointment() {
+    this.provider_services.getDisplayboardsAppointment()
       .subscribe(
         (data: any) => {
-          const alldisplayBoards = data;
-          let count = 0;
-          alldisplayBoards.forEach(element => {
+          const allappontidisplayBoards = data;
+          let appo_count = 0;
+          allappontidisplayBoards.forEach(element => {
             if (element.container) {
             } else {
-              count++;
+              appo_count++;
             }
           });
-          this.board_count = count;
+          this.board_count = appo_count;
+        });
+  }
+  getDisplayboardCountWaitlist() {
+    this.provider_services.getDisplayboardsWaitlist()
+      .subscribe(
+        (data: any) => {
+          const allwaitlstdisplayBoards = data;
+          let wtlist_count = 0;
+          allwaitlstdisplayBoards.forEach(element => {
+            if (element.container) {
+            } else {
+              wtlist_count++;
+            }
+          });
+          this.board_count_waitlist = wtlist_count;
         });
   }
   getServiceCount() {

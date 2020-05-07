@@ -51,7 +51,7 @@ export class ContainersComponent implements OnInit {
     getDisplayboardContainers() {
         this.api_loading = true;
         this.layout_list = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardsAppointment()
             .subscribe(
                 (data: any) => {
                     const alldisplayBoards = data;
