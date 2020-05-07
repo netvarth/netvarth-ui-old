@@ -317,7 +317,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'queueSetFor': this.statusBoardfor,
                 'sortBy': this.sortByFieldsList
             };
-            this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
+            this.provider_services.updateDisplayboardQSetAppointment(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
                 const actionObj = {
                     source: this.source,
