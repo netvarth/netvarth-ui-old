@@ -110,7 +110,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'name')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'name',
     {
-      'required' : 'Please enter the service name.',
+      'required' : is_donation ? 'Please enter cause' : 'Please enter service name',
       'maxlength' : 'Name can contain only 100 characters'
     })">
                 </app-field-error-display>
@@ -126,7 +126,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'description')"
                     [errorMsg]="fed_service.getErrorMessage(serviceForm,'description',
     {
-      'required' : 'Please enter the service description.',
+      'required' : is_donation ? 'Please enter the cause description' : 'Please enter the service description',
       'maxlength' : 'Description can contain only 500 characters'
     })">
                 </app-field-error-display>
