@@ -1314,4 +1314,12 @@ export class ProviderServices {
       const url = 'provider/waitlist/queueSet';
       return this.servicemeta.httpPost(url, input);
    }
+   updateDisplayboardQSetAppointment(data) {
+      const url = 'provider/appointment/queueSet';
+      return this.servicemeta.httpPut(url, data);
+   }
+   updateDisplayboardQSetWaitlist(data) {
+      const url = 'provider/waitlist/queueSet';
+      return this.servicemeta.httpPut(url, data);
+   }
 }
