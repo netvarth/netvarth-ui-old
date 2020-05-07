@@ -7334,10 +7334,10 @@ label.filterHeaders {
   cursor: pointer;
   margin-left: 5px;
 }
-
+/* 
 .filterDatepicker .mat-icon-button .mat-button-wrapper>* {
   color: white !important;
-}
+} */
 
 .filterCheckboxborder .mat-checkbox-frame {
   border-color: #b8c7ce !important;

@@ -27,17 +27,18 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoJdn()">
-                        <h2>JDN</h2>
-                        <span class="form-level-settings">Adjust JDN settings here.<a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('jdn', $event)">Learn
+                    <span class="b-link" (click)="gotobranchsps()">
+                        <h2>Users</h2>
+                        <span class="form-level-settings">Create or manage users<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('branchsps', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
             </div>
+     
             <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLabels()">
@@ -81,12 +82,13 @@
                     </span>
                 </div>
             </div> -->
-            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+            <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotobranchsps()">
-                        <h2>Users</h2>
-                        <span class="form-level-settings">Create or manage users<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('branchsps', $event)">Learn
+                    <span class="b-link" (click)="gotoJdn()">
+                        <h2>JDN</h2>
+                        <span class="form-level-settings">Adjust JDN settings here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('jdn', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
