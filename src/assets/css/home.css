@@ -5327,7 +5327,7 @@ a.text-dark:hover, a.text-dark:focus {
 .banner_part {
   position: relative !important;
   overflow: hidden !important;
-  background-image: url(assets/images/home/banner_bg.jpg) !important;
+  /* background-image: url(assets/images/home/banner_bg.jpg) !important; */
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center;

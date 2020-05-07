@@ -614,6 +614,10 @@ gotoPricing() {
   this.router.navigate(['provider-home','jaldeepricing']);
  
 }
+gotocontactus () {
+
+  this.router.navigate(['provider-home','contactus']);
+}
 gotoproducts(){
   const navigationExtras: NavigationExtras = {
     queryParams: { type: 'products' }

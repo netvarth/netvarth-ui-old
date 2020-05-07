@@ -16,6 +16,9 @@ import { ProvidersignupComponent } from '../providersignup/providersignup.compon
 import { ProvidersignupModule } from '../providersignup/providersignup.module';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { ForgotPasswordModule } from '../forgot-password/forgot-password.module';
+import { ContactusModule } from './contactus/contactus.module';
+
+// import { ContactusComponent } from './contactus/contactus.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -31,11 +34,13 @@ import { ForgotPasswordModule } from '../forgot-password/forgot-password.module'
         ReactiveFormsModule,
         jaldeepricingModule,
         ProvidersignupModule,
-        ForgotPasswordModule
-        
+        ForgotPasswordModule,
+        ContactusModule
+       
     ],
     declarations: [
-        PhomeComponent
+        PhomeComponent,
+        // ContactusComponent
        ],
          entryComponents: [
             

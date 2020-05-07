@@ -14,6 +14,7 @@ const routes: Routes = [
       // { path: 'jaldeepricing', loadChildren: '../../../shared/components/phome/pricing/jaldeepricing.module#jaldeepricingModule' }
       { path: 'jaldeepricing', loadChildren: () => import('./pricing/jaldeepricing.module').then(m => m.jaldeepricingModule) },
       { path: 'providersignup', loadChildren: () => import('../providersignup/providersignup.module').then(m => m.ProvidersignupModule) },
+      { path: 'contactus', loadChildren: () => import('./contactus/contactus.module').then(m => m.ContactusModule) },
      
 ]}];
 

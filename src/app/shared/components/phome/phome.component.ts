@@ -3,7 +3,7 @@ import { SignUpComponent } from '../signup/signup.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
@@ -319,6 +319,15 @@ this.qParams = data;
   doSignuppage() {
     this.routerobj.navigate(['provider-home/providersignup']);
   }
+  gotoproducts(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: { type: 'products' }
+  };
+    this.router.navigate(['provider-home'], navigationExtras);
+  }
+  doLoginpage() {
+    this.routerobj.navigate(['provider-home/providerlogin']);
+  }
   // doForgotPassword() {
   //   const dialogRef = this.dialog.open(ForgotPasswordComponent, {
   //     width: '60%',
@@ -333,3 +342,4 @@ this.qParams = data;
   //   });
   // }
 }
+
