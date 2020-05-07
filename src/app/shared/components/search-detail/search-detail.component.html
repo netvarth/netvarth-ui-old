@@ -441,7 +441,7 @@
                             </div>
                             <div class="tp-r">
                                 <ul class="badges"
-                                    *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1 || search_result.fields.ynw_verified_level">
+                                    *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1 || search_result.fields.ynw_verified_level || search_result.fields.veterinaryemergencyservices_location1==1">
                                     <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'"
                                         [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1">
                                         <span class="icon-parking"></span></li>
@@ -451,7 +451,7 @@
                                         [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
                                     <li [matTooltip]="'Emergency Services'" *ngIf="search_result.fields.physiciansemergencyservices_location1==1 || 
                                         search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1==1 || 
-                                        search_result.fields.hosemergencyservices_location1==1">
+                                        search_result.fields.hosemergencyservices_location1==1 || search_result.fields.veterinaryemergencyservices_location1==1">
                                         <span class="icon-emergency"></span></li>
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'">
                                         <span class="icon-first-aid"></span></li>
