@@ -411,14 +411,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       (queues: any) => {
         const allActiveQs = [];
         for (let i = 0; i < queues.length; i++) {
-          // console.log(queues[i]);
           if (queues[i].queueState === 'ENABLED') {
             const queueActive = {};
             queueActive['id'] = queues[i].id;
             allActiveQs.push(queueActive);
           }
         }
-        console.log(allActiveQs);
         this.getViews().then(
           (data: any) => {
             this.views = data;
@@ -767,7 +765,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   }
   // }
   handleViewSel(view) {
-
     if (this.time_type === 1) {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     } else if (this.time_type === 2) {
@@ -776,7 +773,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     }
     this.selectedView = view;
-    console.log(this.selectedView);
     this.initView(this.selectedView);
     this.reloadAPIs();
     // let selqindx;
@@ -877,15 +873,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
-      console.log(qIds);
       const filter_new = {
-        // 4,
         'id-eq': qIds.toString()
       };
       this.selQIds = qIds;
       this.provider_services.getProviderQueues(filter_new).subscribe(
         (queues: any) => {
-          console.log(queues);
           this.queues = [];
           this.queues = queues;
           resolve();
@@ -900,7 +893,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     Mfilter[this.sortBy] = 'asc';
-    Mfilter['queue-eq'] = this.selQIds.toString();
+    if (this.selQIds && this.selQIds.length > 0) {
+      Mfilter['queue-eq'] = this.selQIds.toString();
+    }
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -926,9 +921,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.new_checkins_list = this.grouped_list['checkedIn'].slice();
           }
           if (this.grouped_list && this.grouped_list['arrived']) {
-            console.log(this.new_checkins_list);
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
-            console.log(this.new_checkins_list);
           }
           this.sortCheckins(this.new_checkins_list);
           if (this.filterapplied === true) {
@@ -973,7 +966,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              console.log(this.check_in_list);
               this.loading = false;
             },
             () => {
@@ -1204,7 +1196,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
-    console.log(this.selected_queue);
     const api_filter = {};
     if (this.time_type === 1) {
       // api_filter['queue-eq'] = this.selected_queue.id;
@@ -1753,10 +1744,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.selQIds.push(qId);
     }
-    console.log(this.selQIds);
-
     this.reloadAPIs();
-
     // this.getTodayCheckIn();
   }
   isNumeric(evt) {

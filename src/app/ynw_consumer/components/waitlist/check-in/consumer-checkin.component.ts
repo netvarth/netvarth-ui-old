@@ -186,6 +186,7 @@ export class ConsumerCheckinComponent implements OnInit {
     virtualServiceArray;
     callingModes: any = [];
     showInputSection: any = [];
+    selectedUser;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     breadcrumbs = [
         {
@@ -512,6 +513,7 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     handleUserSelection(user) {
+        this.selectedUser = user;
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -693,6 +695,9 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
+        }
+        if (this.selectedUser.firstName !== 'None') {
+            post_Data['provider'] = {'id': this.selectedUser.id};
         }
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });

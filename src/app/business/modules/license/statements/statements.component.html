@@ -134,7 +134,7 @@
                                     </tr>
                     
                     
-                                    <tr class="invoice-discount" >
+                                    <tr class="invoice-discount" *ngIf="invoice.balance !== 0">
                                         <td>Previous Balance </td>
                                         <td class="previousDue" style="text-align: end;" (click)="PreviousInvoiceReferenceNo(invoice.invoiceRefNumber);"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td>
                                         <!-- <td class="previousDue" style="text-align: end;">(+){{invoice.balance | currency:'INR':'symbol':'.2-2'}}</td> -->
