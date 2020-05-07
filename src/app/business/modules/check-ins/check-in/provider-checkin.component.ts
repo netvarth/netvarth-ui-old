@@ -182,6 +182,7 @@ export class ProviderCheckinComponent implements OnInit {
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
     checkinType;
+    selectedUser;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -256,6 +257,7 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     createNew() {
+        this.qParams['checkinType'] = this.checkinType;
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -776,6 +778,9 @@ export class ProviderCheckinComponent implements OnInit {
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'waitlistMode': this.checkinType
         };
+        if (this.selectedUser.firstName !== 'None') {
+            post_Data['provider'] = {'id': this.selectedUser.id};
+        }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;
         }
@@ -1219,6 +1224,7 @@ export class ProviderCheckinComponent implements OnInit {
         // }
     }
     handleUserSelection(user) {
+        this.selectedUser = user;
         this.queuejson = [];
         console.log(user);
         this.servicesjson = this.serviceslist;

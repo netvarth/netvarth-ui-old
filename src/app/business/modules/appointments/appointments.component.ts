@@ -2265,4 +2265,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
+  getVirtualServiceCount(virtualService) {
+    return Object.keys(virtualService).length;
+  }
 }

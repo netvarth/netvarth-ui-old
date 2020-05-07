@@ -370,9 +370,9 @@
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                               <i class="icon-note"></i>
                             </span>
-                            <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                              class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                              (click)="showCallingModes(checkin.virtualService)">
+                            <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                              [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                              style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                               <i class="fa fa-video-camera"></i>
                             </span>
                             <span data-title="Payment Status" class="payment" *ngIf="pos">
@@ -643,9 +643,9 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                                (click)="showCallingModes(checkin.virtualService)">
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                                 <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
@@ -836,9 +836,9 @@
                                   *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                   <i class="icon-note"></i>
                                 </span>
-                                <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                  class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                                  (click)="showCallingModes(checkin.virtualService)">
+                                <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                  [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                  style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                                   <i class="fa fa-video-camera"></i>
                                 </span>
                                 <span data-title="Payment Status" class="payment" *ngIf="pos">
@@ -863,9 +863,9 @@
                                 *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                                (click)="showCallingModes(checkin.virtualService)">
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                                 <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
@@ -1024,9 +1024,9 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                                (click)="showCallingModes(checkin.virtualService)">
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                                 <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
@@ -1122,9 +1122,9 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="checkin.virtualService" [matTooltip]="'calling modes'"
-                                class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
-                                (click)="showCallingModes(checkin.virtualService)">
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
                                 <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">

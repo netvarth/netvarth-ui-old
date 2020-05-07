@@ -60,6 +60,7 @@ export class CustomerDetailComponent implements OnInit {
     breadcrumbs; 
     // = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
+    checkin_type;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -81,6 +82,9 @@ export class CustomerDetailComponent implements OnInit {
             }
             if (qparams.email) {
                 this.phoneNo = qparams.email;
+            }
+            if (qparams.checkinType) {
+                this.checkin_type = qparams.checkinType;
             }
         });
     }
@@ -143,14 +147,17 @@ export class CustomerDetailComponent implements OnInit {
                     if (this.source === 'checkin') {
                         const navigationExtras: NavigationExtras = {
                             queryParams: {
-                                ph: form_data.mobile_number
+                                ph: form_data.mobile_number,
+                                checkin_type: this.checkin_type
                             }
                         };
+                        console.log(navigationExtras);
                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
                     } else if (this.source === 'appointment') {
                         const navigationExtras: NavigationExtras = {
                             queryParams: {
-                                ph: form_data.mobile_number
+                                ph: form_data.mobile_number,
+                                checkin_type: this.checkin_type
                             }
                         };
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);

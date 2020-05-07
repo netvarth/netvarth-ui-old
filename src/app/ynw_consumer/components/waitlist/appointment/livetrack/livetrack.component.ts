@@ -127,7 +127,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                     'longitude': _this.lat_lng.longitude
                 },
                 'travelMode': _this.travelMode,
-                'waitlistPhoneNumber': _this.activeWt.waitlistingFor[0].phoneNo,
+                'waitlistPhoneNumber': _this.activeWt.appmtFor[0].phoneNumber,
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };

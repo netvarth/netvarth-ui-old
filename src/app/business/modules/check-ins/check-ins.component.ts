@@ -1833,30 +1833,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       self.selected_location = null;
       self.provider_services.getProviderLocations().subscribe(
-          (data: any) => {
-            const locations = data;
-            self.locations = [];
-            for (const loc of locations) {
-              if (loc.status === 'ACTIVE') {
-                self.locations.push(loc);
-              }
+        (data: any) => {
+          const locations = data;
+          self.locations = [];
+          for (const loc of locations) {
+            if (loc.status === 'ACTIVE') {
+              self.locations.push(loc);
             }
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
-            if (cookie_location_id === '') {
-              if (self.locations[0]) {
-                self.changeLocation(self.locations[0]);
-              }
-            } else {
-              self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
-            }
-            resolve();
-          },
-          () => {
-            reject();
-          },
-          () => {
           }
-        );
+          const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+          if (cookie_location_id === '') {
+            if (self.locations[0]) {
+              self.changeLocation(self.locations[0]);
+            }
+          } else {
+            self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
+          }
+          resolve();
+        },
+        () => {
+          reject();
+        },
+        () => {
+        }
+      );
     },
     );
   }
@@ -2329,5 +2329,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') {
       }
     });
+  }
+  getVirtualServiceCount(virtualService) {
+    return Object.keys(virtualService).length;
   }
 }
