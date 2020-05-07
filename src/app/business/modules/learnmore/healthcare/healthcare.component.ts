@@ -104,6 +104,7 @@ export class HealthCareComponent implements OnInit {
   showcheckin = false;
   showinbox = false;
   showhistory = false;
+  showdbdonation = false;
   
   
   constructor(
@@ -375,7 +376,9 @@ export class HealthCareComponent implements OnInit {
    if (parentContent === 'check-ins' && childContent === 'check-ins') {
     this.showcheckin = true;
   }  
-
+  if (parentContent === 'donations' && childContent === 'donations') {
+    this.showdbdonation = true;
+ }
     if (parentContent === 'customer' && childContent === 'customer') {
         this.showcustomer = true;
     }

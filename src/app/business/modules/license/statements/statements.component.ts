@@ -181,6 +181,7 @@ export class StatementsComponent implements OnInit {
         title: 'Statements',
       });
       this.breadcrumbs = breadcrumbs;
+      
 
     }
 

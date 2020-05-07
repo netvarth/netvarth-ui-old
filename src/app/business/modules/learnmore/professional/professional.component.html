@@ -5234,6 +5234,18 @@
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                             <!-- next -->
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]='showdbdonations'>
+                                                    <mat-expansion-panel-header class="accordion">
+                                                        <mat-panel-title class="accordion-title" (click)="handleScroll('donations', 'donations')">
+                                                            Donations
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                    <div class="helpcontent">
+                                                       Manage your donations.
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>    
                     <!-- next -->
                     <mat-accordion>
                         <mat-expansion-panel [expanded]='showcustomer'>
@@ -6519,7 +6531,7 @@
     </mat-accordion>
     <!-- next -->
     <mat-accordion>
-        <mat-expansion-panel [expanded]='false'>
+        <mat-expansion-panel [expanded]='true'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="handleScroll('adjustdelay', 'adjustdelay')">
                     Add Delay

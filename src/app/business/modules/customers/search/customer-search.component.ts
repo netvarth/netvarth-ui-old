@@ -202,6 +202,8 @@ export class CustomerSearchComponent implements OnInit {
     }
     ngOnInit() {
         this.createForm();
+        const user = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
@@ -221,6 +223,11 @@ export class CustomerSearchComponent implements OnInit {
         // breadcrumbs.push(
         // );
         this.breadcrumbs = breadcrumbs;
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.router.navigate(['/provider/' + this.domain + '/customer']);
+        }
     }
     createForm() {
         this.searchForm = this.fb.group({

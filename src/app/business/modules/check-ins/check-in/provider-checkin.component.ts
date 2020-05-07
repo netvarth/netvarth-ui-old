@@ -211,6 +211,12 @@ export class ProviderCheckinComponent implements OnInit {
         });
     }
     ngOnInit() {
+    const user = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
+    this. breadcrumb_moreoptions = { 
+      'show_learnmore': true, 'scrollkey': 'check-ins->check-in',
+      'actions': [{'title': 'Help', 'type': 'learnmore'}]
+    };
         this.carouselOne = {
             dots: false,
             nav: true,
@@ -250,6 +256,12 @@ export class ProviderCheckinComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+    }
+    performActions(action)
+    {
+       if (action === 'learnmore') {
+       this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
+        }
     }
     createForm() {
         this.searchForm = this.fb.group({

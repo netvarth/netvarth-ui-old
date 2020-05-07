@@ -98,6 +98,10 @@ export class PersonalCareComponent implements OnInit {
   showcheckin = false;
   showinbox = false;
   showhistory = false;
+  showdbdonations = false;
+  showcheckins = false;
+  showphonein = false;
+  showdelay = false;
   
   constructor(
     private activated_route: ActivatedRoute,
@@ -351,9 +355,22 @@ export class PersonalCareComponent implements OnInit {
      if (parentContent === 'appointments' && childContent === 'appointments') {
       this.showdbappointments = true;
    }
+   if (parentContent === 'donations' && childContent === 'donations') {
+    this.showdbdonations = true;
+ }
     
-   if (parentContent === 'check-ins' && childContent === 'check-ins') {
-    this.showcheckin = true;
+   if (parentContent === 'check-ins'){
+      this.showcheckins = true;
+      if (childContent === 'check-in') {
+        this.showcheckin = true;
+      }
+      if (childContent === 'phonein') {
+        this.showphonein = true;
+      }
+      if (childContent === 'adjustdelay') {
+        this.showdelay = true;
+      }
+
   }  
 
   if (parentContent === 'inbox' && childContent === 'inbox') {

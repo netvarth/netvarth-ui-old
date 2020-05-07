@@ -31,7 +31,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
   save_btn = Messages.SAVE_BTN;
   queue_id = null;
   queue_data;
-  enablebatchStatus = false;
   display_schedule: any = [];
   breadcrumbs_init = [
     {
@@ -348,7 +347,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        enablebatchStatus: ['']
+      
         // timeSlot: [0],
       });
       // this.updateForm();
@@ -364,7 +363,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        enablebatchStatus: [false]
+        
         // timeSlot: [0]
       });
       this.provider_services.getQStartToken()
@@ -801,7 +800,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       this.batchStatus = event.checked;
      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
     });
-   
+  
    
   }
   addBatchName() {
@@ -817,7 +816,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
   editBatchnames() {
     this.showEditSection = true;
-  }
+   }
 
   changebatchStatus(event){
     const status = (event.checked) ? 'enabled' : 'disabled';

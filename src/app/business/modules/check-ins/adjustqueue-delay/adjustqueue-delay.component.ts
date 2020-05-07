@@ -7,6 +7,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-adjustqueue-delay',
   templateUrl: './adjustqueue-delay.component.html'
@@ -65,18 +66,23 @@ export class AdjustqueueDelayComponent implements OnInit {
   users = [];
   userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
   selected_user;
+  domain: any;
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
+    private route:Router,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
-    private sharedfunctionObj: SharedFunctions
+    private sharedfunctionObj: SharedFunctions,
+    private shared_functions: SharedFunctions
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
   ngOnInit() {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.breadcrumbs = [
       {
@@ -154,6 +160,12 @@ export class AdjustqueueDelayComponent implements OnInit {
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
+  }
+  performActions(actions){
+   if(actions === 'learnmore')
+   {
+     this.route.navigate( ['/provider/' + this.domain + '/check-ins->adjustdelay']);
+   }
   }
   setDescFocus() {
     this.isfocused = true;

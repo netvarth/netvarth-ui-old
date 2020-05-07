@@ -92,7 +92,7 @@ export class DonationsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/donations']);
         }
     }
     getDonationsList(from_oninit = false) {
