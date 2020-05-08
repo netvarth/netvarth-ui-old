@@ -19,7 +19,7 @@
                         <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
                         <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
                                 capitalizeFirst}}</h3>
-                        <div class="c-ot m0">
+                        <!-- <div class="c-ot m0">
                             <div class="item" *ngIf="isServiceBillable">
                                 <span class="ttle">{{est_duration_cap}}</span>
                                 <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
@@ -28,7 +28,7 @@
                                 <span class="ttle">{{price_cap}}</span>
                                 <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                             </div>
-                        </div>
+                        </div> -->
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
                                 <i class="icon-edit"></i>
