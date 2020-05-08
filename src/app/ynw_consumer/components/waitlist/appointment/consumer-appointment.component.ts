@@ -455,6 +455,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             name: serv.name,
             duration: serv.serviceDuration,
             description: serv.description,
+            livetrack: serv.livetrack,
             price: serv.totalAmount,
             isPrePayment: serv.isPrePayment,
             minPrePaymentAmount: serv.minPrePaymentAmount,
@@ -679,7 +680,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             }
         }
-        console.log(this.waitlist_for);
+        console.log( this.sel_ser_det);
         this.showEditView = false;
         this.virtualServiceArray = {};
         for (let i = 0; i < this.callingModes.length; i++) {
@@ -705,9 +706,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         // }
         if (this.users.length > 0) {
             if (this.users.length === 1) {
-                post_Data['provider'] = { id: this.users[0].id };
+                post_Data['provider'] = this.users[0].id;
             } else {
-                post_Data['provider'] = { id: this.selected_user.id };
+                post_Data['provider'] = this.selected_user.id;
             }
             // console.log(this.users)
             // console.log(this.selected_user);
@@ -759,8 +760,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
                 } else {
+                    if(this.sel_ser_det.livetrack){
                     this.router.navigate(['consumer', 'appointment', 'track', this.trackUuid], navigationExtras);
+                }else{
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                    this.router.navigate(['consumer']);
                 }
+            }
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

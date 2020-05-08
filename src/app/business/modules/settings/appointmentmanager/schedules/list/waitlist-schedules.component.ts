@@ -893,7 +893,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'paymentStatus-neq': 'prepaymentPending',
+                'apptStatus-neq': 'prepaymentpending',
                 'schedule-eq': queueid
             };
             no_filter = true;
@@ -943,7 +943,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'paymentStatus-neq': 'prepaymentPending',
+                'apptStatus-neq': 'prepaymentpending',
                 'schedule-eq': queueid,
                 'date-eq': tommorrow
             };

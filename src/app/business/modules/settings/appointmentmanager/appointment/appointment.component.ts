@@ -805,9 +805,9 @@ export class AppointmentComponent implements OnInit {
         // }
         if (this.users.length > 0) {
             if (this.users.length === 1) {
-                post_Data['provider'] = { id: this.users[0].id };
+                post_Data['provider'] = this.users[0].id;
             } else {
-                post_Data['provider'] = { id: this.selected_user.id };
+                post_Data['provider'] = this.selected_user.id;
             }
             // console.log(this.users)
             // console.log(this.selected_user);

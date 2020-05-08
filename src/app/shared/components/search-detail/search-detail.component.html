@@ -552,9 +552,9 @@
                             </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root"
-                                *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
-                                <span class="checkin-btn"
-                                    (click)="appointmentClicked(search_result, false)">Appointment</span>
+                            *ngIf="search_result.fields.today_appt == 1">
+                            <span class="checkin-btn"
+                            (click)="appointmentClicked(search_result, false)">Appointment</span>
                             </div>
                         </div>
                         <div class="bottom-sect pdetail" *ngIf="search_result.fields.donation_services 

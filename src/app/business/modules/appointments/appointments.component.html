@@ -57,7 +57,7 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="apptClicked('WALK_IN_CHECKIN')"
+                  <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
@@ -67,7 +67,7 @@
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="apptClicked('PHONE_CHECKIN')"
+                  <a (click)="apptClicked('PHONE_IN_APPOINTMENT')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-mobile"></i>
@@ -336,7 +336,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                         [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
-                        (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_CHECKIN',slot.time)">
+                        (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
@@ -781,7 +781,7 @@
                       <mat-chip-list>
                         <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                           [selected]="!isAvailableSlot(slot)" [class.pointer-cursor]="!isAvailableSlot(slot)"
-                          (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_CHECKIN',slot.time)">
+                          (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                           {{slot.time}} </mat-chip>
                       </mat-chip-list>
                     </div>
