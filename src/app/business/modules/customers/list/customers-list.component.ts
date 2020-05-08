@@ -54,7 +54,7 @@ export class CustomersListComponent implements OnInit {
     isCheckin;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     loadComplete = false;
-    minday = new Date(2015, 0, 1);
+    minday = new Date(1900, 0, 1);
     filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
     filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     tooltipcls = projectConstants.TOOLTIP_CLS;
@@ -122,7 +122,7 @@ export class CustomersListComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
         }
     }
-    getCustomersList(from_oninit = false) {
+    getCustomersList(from_oninit = true) {
         let filter = this.setFilterForApi();
         this.getCustomersListCount(filter)
             .then(
@@ -212,7 +212,7 @@ export class CustomersListComponent implements OnInit {
             api_filter['firstName-eq'] = this.filter.first_name;
         }
         if (this.filter.date != null) {
-            api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
+            api_filter['dob-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
         }
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
@@ -221,7 +221,7 @@ export class CustomersListComponent implements OnInit {
             const pattern = projectConstants.VALIDATOR_NUMBERONLY;
             const mval = pattern.test(this.filter.mobile);
             if (mval) {
-                api_filter['primaryMobileNo-eq'] = this.filter.mobile;
+                api_filter['phoneNo-eq'] = this.filter.mobile;
             } else {
                 this.filter.mobile = '';
             }
