@@ -1,11 +1,8 @@
 <app-header [headerTitle]="" [includedfrom]="'phome'" id="pro_home"></app-header>
-
-
 <section class="signup">
     <!-- <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()"> -->
     <div class="container1">
-
         <div *ngIf="active_step==0">
             <div class="signup-content">
                 <div class="signup-form">
@@ -25,9 +22,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                   'pattern' : 'Only numbers are allowed'
                                 })">
                             </app-field-error-display>
-
-
-
                         </div>
                         <div class="form-group">
                             <label for="Firstname"><i class="zmdi zmdi-email"></i></label>
@@ -57,7 +51,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <label for="Email"><i class="zmdi zmdi-email"></i></label>
                             <input type="text" name="Email" id="pass" placeholder="Email" />
                         </div> -->
-
                         <!-- <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
@@ -75,7 +68,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 (click)="showdomainstep()">
                         </div>
                     </form>
-
                 </div>
                 <div class="signup-image">
                     <figure><img src="../../../../assets/images/home/signup-image.jpg"></figure>
@@ -84,8 +76,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
             </div>
         </div>
     </div>
-
-
     <!-- step1 domain -->
     <div *ngIf="active_step==1">
         <section class="signup">
@@ -93,34 +83,29 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                 <div class="signup-content">
                     <div class="signup-form">
                         <h1 class="form-title">Select your domain </h1>
-                            <div>
-                                <ul *ngFor="let domain of business_domains">
-                                    <li [class.domainstyle]="domain.domain==selectedDomain.domain">
-                                        <!-- <img src="domainicons[domain.domain]" width="40" height="40" /> -->
-                                        <!-- <div class="pull-right subdom_img {{subdomainSettings[domain.value].iconClass}}"  >      
+                        <div>
+                            <ul *ngFor="let domain of business_domains">
+                                <li [class.domainstyle]="domain.domain==selectedDomain.domain"
+                                    (click)="domSelection(domain)">
+                                    <!-- <img src="domainicons[domain.domain]" width="40" height="40" /> -->
+                                    <!-- <div class="pull-right subdom_img {{subdomainSettings[domain.value].iconClass}}"  >      
                                         </div> -->
-                                        <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
-                                            *ngIf="domainSettings[domain.domain]">
-                                        </div>
-                                        <h3 (click)="domSelection(domain)">{{domain.displayName}}&nbsp; </h3>
-
-                                        <!-- <p>&nbsp;</p> -->
-                                    </li>
-
-                                </ul>
-                            </div>
-                            <div class="col-md-6 col-12 control">
-
+                                    <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
+                                        *ngIf="domainSettings[domain.domain]">
+                                    </div>
+                                    <h3>{{domain.displayName}}&nbsp; </h3>
+                                    <!-- <p>&nbsp;</p> -->
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 col-12 control">
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
                                     (click)="showregistersection()">
-                               <span><input type="submit" name="signup" id="signup" class="form-submit" value="Next"
-                                    (click)="showsubdomainstep()"></span> 
+                                <span><input type="submit" name="signup" id="signup" class="form-submit" value="Next"
+                                        (click)="showsubdomainstep()"></span>
                             </div>
-
-                            
                         </div>
-
                     </div>
                     <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/Domain-01.png" alt="sing up image"></figure>
@@ -129,7 +114,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                 </div>
             </div>
         </section>
-
     </div>
     <!-- step2 subdomain-->
     <div *ngIf="active_step==2">
@@ -137,21 +121,20 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
             <div class="container1">
                 <div class="signup-content">
                     <div class="signup-form">
-                    
-                            <h1 class="form-title">Select your subdomain </h1>
-                            <div>
-                                <ul *ngFor="let subdomain of subdomainlist">
-                                    <li [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain">
-                                        <!-- <img src="../../icons/doctor.png" width="40" height="41"> -->
-                                        <!-- <div class="subdom_img {{subdomainSettings[subdomain.subDomain].iconClass}}"
+                        <h1 class="form-title">Select your subdomain </h1>
+                        <div>
+                            <ul *ngFor="let subdomain of subdomainlist">
+                                <li [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain"
+                                    (click)="subdomSelection(subdomain)">
+                                    <!-- <img src="../../icons/doctor.png" width="40" height="41"> -->
+                                    <!-- <div class="subdom_img {{subdomainSettings[subdomain.subDomain].iconClass}}"
                                             *ngIf="subdomainSettings[subdomain.subDomain]">
                                         </div> -->
-                                        <h3 (click)="subdomSelection(subdomain)">{{subdomain.displayName}}&nbsp; </h3>
-                                        <p>&nbsp;</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        
+                                    <h3>{{subdomain.displayName}}&nbsp; </h3>
+                                    <p>&nbsp;</p>
+                                </li>
+                            </ul>
+                        </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Send Otp"
                                 (click)="onSubmit()">
@@ -164,30 +147,24 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                     <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
                         <a href="#" class="signup-image-link">I am already member</a>
-
                     </div>
                 </div>
             </div>
         </section>
     </div>
     <!-- step4 otp section -->
-
-
     <div *ngIf="active_step==3">
         <section class="signup">
             <div class="container1">
                 <div class="signup-content">
                     <div class="signup-form">
-                       
                         <div class="success"></div>
                         <form id="frm-mobile-verification">
                             <!-- <div class="form-row">
 		<label>OTP is sent to Your Mobile Number</label>		
 	</div> -->
-
                             <!-- <div class="form-row">
                                 <input type="number" id="mobileOtp" class="form-input" placeholder="Enter the OTP">  -->
-
                             <div class="example-container otpouter">
                                 <app-providerotp [type]="'signup'" [submitdata]="user_details"
                                     (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
@@ -195,16 +172,12 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     [resendemailotpsuccess]="resendemailotpsuccess">
                                 </app-providerotp>
                             </div>
-
-
                             <!-- <div class="form-group form-button">
                                 <input [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
                                 (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess"
                                     (click)="showhowteyHeard()"> -->
                             <!-- </div>  -->
                         </form>
-
-
                     </div>
                     <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
@@ -214,9 +187,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
             </div>
         </section>
     </div>
-
-
-
     <!-- step4 -->
     <div *ngIf="active_step==4">
         <section class="signup">
@@ -226,62 +196,52 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <h1 class="form-title"><strong>How did you hear us?</strong></h1>
                         <div>
                             <ul>
-                                <li [class.domainstyle]="hearus=='SalesReps'"   (click)="saleschannelselection('SalesReps')">
+                                <li [class.domainstyle]="hearus=='SalesReps'"
+                                    (click)="saleschannelselection('SalesReps')">
                                     <img src="../../../../assets/images/home/signup/sales.png" width="33" height="40" />
                                     <h3>Sales Reps</h3>
                                     <app-saleschannel (retfromSC)="onReferalSubmit($event)"
                                         (resetApiErrors)="resetApiErrors()">
                                     </app-saleschannel>
                                 </li>
-
                                 <li [class.domainstyle]="hearus=='Jaldee'" (click)="saleschannelselection('Jaldee')">
                                     <img src="../../../../assets/images/home/signup/jaldee.png" width="40"
                                         height="40" />
                                     <h3>Jaldee</h3>
-
                                 </li>
-
-                                <li [class.domainstyle]="hearus=='Facebook'" (click)="saleschannelselection('Facebook')">
+                                <li [class.domainstyle]="hearus=='Facebook'"
+                                    (click)="saleschannelselection('Facebook')">
                                     <img src="../../../../assets/images/home/signup/facebook-01.png" width="40"
                                         height="40" />
                                     <h3>Facebook</h3>
-
                                 </li>
-
-                                <li  [class.domainstyle]="hearus=='Friend'" (click)="saleschannelselection('Friend')">
+                                <li [class.domainstyle]="hearus=='Friend'" (click)="saleschannelselection('Friend')">
                                     <img src="../../../../assets/images/home/signup/Friend-01.png" width="40"
                                         height="40" />
                                     <h3>Friend</h3>
-
                                 </li>
-                                <li  [class.domainstyle]="hearus=='Google'" (click)="saleschannelselection('Google')">
+                                <li [class.domainstyle]="hearus=='Google'" (click)="saleschannelselection('Google')">
                                     <img src="../../../../assets/images/home/signup/Google.png" width="40"
                                         height="40" />
                                     <h3>Google</h3>
-
                                 </li>
-                                <li  [class.domainstyle]="hearus=='Twitter'" (click)="saleschannelselection('Twitter')">
+                                <li [class.domainstyle]="hearus=='Twitter'" (click)="saleschannelselection('Twitter')">
                                     <img src="../../../../assets/images/home/signup/Twitter.png" width="40"
                                         height="40" />
                                     <h3>Twitter</h3>
-
                                 </li>
-                                <li  [class.domainstyle]="hearus=='Other'" (click)="saleschannelselection('Other')">
+                                <li [class.domainstyle]="hearus=='Other'" (click)="saleschannelselection('Other')">
                                     <img src="../../../../assets/images/home/signup/Other-01.png" width="40"
                                         height="40" />
                                     <h3>Other</h3>
-
                                 </li>
                             </ul>
                         </div>
-
-
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Next"
                                 (click)="submitHearus()">
-
                         </div>
-                     </div>
+                    </div>
                     <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/signup/how.png" alt="sin up image" width="1800"
                                 height="1792">
@@ -300,7 +260,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                     <div class="signup-form">
                         <h1 class="form-title">Congratulations!</h1>
                         <h2 class="form-title">You have become a Jaldee partner.</h2>
-
                         <h3 class="form-title">Please set your password to Finish sign up process.</h3>
                         <form method="POST" [formGroup]="spForm" class="register-form" id="register-form">
                             <div class="form-group">
@@ -320,9 +279,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="join Jaldee"
                                     (click)="onPasswordSubmit()">
-
                             </div>
-
                         </form>
                         <!-- <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
     (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form> -->
@@ -332,12 +289,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <a href="#" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
-
             </div>
         </section>
     </div>
-
-
-
     <!-- </form>  -->
 </section>

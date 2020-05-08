@@ -325,7 +325,21 @@
                     </mat-select>
                   </mat-form-field>
                 </span>
-
+                <span class="inl-blk filtr">
+                  <a [class.button_filter]="filters['waitlistMode']" (click)="filterClicked('waitlistMode')"
+                    class="anchorbutton remMarginRight genMarginLeft" name="waitlistMode"><span>Waitlist mode</span></a>
+                  <mat-form-field *ngIf="filters['waitlistMode']">
+                    <mat-select [(value)]="filter.waitlistMode">
+                      <mat-option (click)="setFilterData('waitlistMode', 'all')" [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                      <mat-option *ngFor="let mode of waitlistModes" (click)="setFilterData('waitlistMode', mode.mode)"
+                        [value]="mode.mode">
+                        {{mode.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </span>
                 <span class="inl-blk filtr">
                   <a [class.button_filter]="filters['payment_status']" *ngIf="time_type == 3"
                     (click)="filterClicked('payment_status')" class="anchorbutton remMarginRight genMarginLeft"
@@ -342,6 +356,8 @@
                     </mat-select>
                   </mat-form-field>
                 </span>
+
+
                 <span class="date inl-blk filtr">
                   <a [class.button_filter]="filters['check_in_start_date']" *ngIf="time_type === 3"
                     (click)="filterClicked('check_in_start_date')" class="anchorbutton remMarginRight genMarginLeft"

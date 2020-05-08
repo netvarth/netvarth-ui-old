@@ -118,6 +118,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
+    appointmentMode: 'all',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
@@ -135,6 +136,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
+    appointmentMode: false,
     queue: false,
     service: false,
     waitlist_status: false,
@@ -330,6 +332,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
     { pk: 'Refund', value: 'Refund' }
+  ];
+  appointmentModes = [
+    { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in Appointment' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone Appointment' },
+    { mode: 'ONLINE_APPOINTMENT', value: 'Online Appointment' },
   ];
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -888,31 +895,31 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selQidsforHistory.length !== 0) {
         Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
       }
-      const promise = this.getHistoryAppointmentsCount(Mfilter);
-      promise.then(
-        result => {
-          this.pagination.totalCnt = result;
-          Mfilter = this.setPaginationFilter(Mfilter);
-          this.provider_services.getHistoryAppointments(Mfilter)
-            .subscribe(
-              data => {
-                this.new_checkins_list = [];
-                this.check_in_list = this.check_in_filtered_list = data;
-                if (this.filterapplied === true) {
-                  this.noFilter = false;
-                } else {
-                  this.noFilter = true;
-                }
-                this.loading = false;
-              },
-              () => {
-                this.load_waitlist = 1;
-              },
-              () => {
-                this.load_waitlist = 1;
-              });
-        }
-      );
+      // const promise = this.getHistoryAppointmentsCount(Mfilter);
+      // promise.then(
+      //   result => {
+      //     this.pagination.totalCnt = result;
+      Mfilter = this.setPaginationFilter(Mfilter);
+      this.provider_services.getHistoryAppointments(Mfilter)
+        .subscribe(
+          data => {
+            this.new_checkins_list = [];
+            this.check_in_list = this.check_in_filtered_list = data;
+            if (this.filterapplied === true) {
+              this.noFilter = false;
+            } else {
+              this.noFilter = true;
+            }
+            this.loading = false;
+          },
+          () => {
+            this.load_waitlist = 1;
+          },
+          () => {
+            this.load_waitlist = 1;
+          });
+      //   }
+      // );
     }
     );
   }
@@ -1188,6 +1195,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.statusMultiCtrl.length > 0) {
       api_filter['apptStatus-eq'] = this.statusMultiCtrl.join(',');
     }
+    if (this.filter.appointmentMode !== 'all') {
+      api_filter['appointmentMode-eq'] = this.filter.appointmentMode;
+    }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
@@ -1238,7 +1248,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
-      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date !== null
+      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {
@@ -1251,6 +1261,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
+      appointmentMode: false,
       queue: false,
       service: false,
       waitlist_status: false,
@@ -1265,6 +1276,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
+      appointmentMode: 'all',
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',

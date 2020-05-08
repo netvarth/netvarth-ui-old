@@ -120,6 +120,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
+    waitlistMode: 'all',
     payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
@@ -138,6 +139,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     service: false,
     waitlist_status: false,
     payment_status: false,
+    waitlistMode: false,
     check_in_start_date: false,
     check_in_end_date: false,
     location_id: false,
@@ -326,6 +328,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
     { pk: 'Refund', value: 'Refund' }
+  ];
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in Check-in' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone Check-in' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online Check-in' },
   ];
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -1217,6 +1224,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
+    if (this.filter.waitlistMode !== 'all') {
+      api_filter['waitlistMode-eq'] = this.filter.waitlistMode;
+    }
     // if (this.filter.waitlist_status !== 'all') {
     //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
     // }
@@ -1274,7 +1284,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
-      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
+      this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {
@@ -1291,6 +1301,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: false,
       waitlist_status: false,
       payment_status: false,
+      waitlistMode: false,
       check_in_start_date: false,
       check_in_end_date: false,
       location_id: false,
@@ -1305,6 +1316,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       service: 'all',
       waitlist_status: 'all',
       payment_status: 'all',
+      waitlistMode: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
       location_id: 'all',

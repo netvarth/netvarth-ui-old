@@ -281,6 +281,22 @@
                         </mat-select>
                       </mat-form-field>
                     </span>
+                    <span class="inl-blk filtr">
+                      <a [class.button_filter]="filters['appointmentMode']" (click)="filterClicked('appointmentMode')"
+                        class="anchorbutton remMarginRight genMarginLeft" name="appointmentMode"><span>Appointment
+                          mode</span></a>
+                      <mat-form-field *ngIf="filters['appointmentMode']">
+                        <mat-select [(value)]="filter.appointmentMode">
+                          <mat-option (click)="setFilterData('appointmentMode', 'all')" [value]="'all'">
+                            {{all_cap}}
+                          </mat-option>
+                          <mat-option *ngFor="let mode of appointmentModes"
+                            (click)="setFilterData('appointmentMode', mode.mode)" [value]="mode.mode">
+                            {{mode.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </span>
                     <span class="date inl-blk filtr">
                       <a [class.button_filter]="filters['check_in_start_date']" *ngIf="time_type === 3"
                         (click)="filterClicked('check_in_start_date')" class="anchorbutton remMarginRight genMarginLeft"
