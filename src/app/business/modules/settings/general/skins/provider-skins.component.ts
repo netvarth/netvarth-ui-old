@@ -20,7 +20,7 @@ export class ProviderSkinsComponent implements OnInit {
       title: Messages.GENERALSETTINGS
     },
     {
-      title: 'Skins'
+      title: 'Themes'
     }
   ];
   domain: any;
