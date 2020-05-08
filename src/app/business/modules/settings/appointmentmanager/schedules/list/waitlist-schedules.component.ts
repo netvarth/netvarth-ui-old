@@ -969,3 +969,4 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 }
+
