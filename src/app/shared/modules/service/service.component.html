@@ -236,7 +236,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group" *ngIf="is_donation">
                 <mat-form-field>
                     <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
-                        id="multiples" maxlength="10" (keypress)="isNumeric($event)"
+                        id="multiples" pattern="[0-9]+" maxlength="10" (keypress)="isNumeric($event)"
                         (keyup)="isvalid($event, 'multiples')" placeholder="Multiples*" formControlName="multiples"
                         autocomplete="off">
                 </mat-form-field>
