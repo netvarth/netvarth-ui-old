@@ -274,7 +274,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         return retfield;
     }
     performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->additional-info']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->additional-info']);
     }
     getFieldDetails(passedArray, fieldvalue, fieldname) {
         let retfield;

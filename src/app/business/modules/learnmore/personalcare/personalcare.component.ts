@@ -101,6 +101,8 @@ export class PersonalCareComponent implements OnInit {
   showdbdonations = false;
   showcheckins = false;
   showdelay = false;
+  showcorporate = false;
+  showserviceprovider = false;
   
   constructor(
     private activated_route: ActivatedRoute,
@@ -298,6 +300,12 @@ export class PersonalCareComponent implements OnInit {
       }
       if (childContent === 'saleschannel') {
         this.showsaleschannel = true;
+      }
+      if (childContent === 'corporate') {
+        this.showcorporate = true;
+      }
+      if (childContent === 'branchsps') {
+        this.showserviceprovider = true;
       }
     }
 
