@@ -118,7 +118,7 @@
                                         <p class="settings_info">Add or manage your labels here</p>
                                     </a>
                                 </li>
-                                <li>
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel">
                                     <a class="pointer-cursor" (click)="redirecTo('customview')">
                                         <span class="lnk setings">Custom Views</span>
                                         <p class="settings_info">Create or manage custom views</p>
