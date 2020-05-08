@@ -45,6 +45,8 @@ export class AppointmentmanagerComponent implements OnInit {
     ngOnInit() {
         this.getDomainSubdomainSettings();
         this.getOnlinePresence();
+        this.getServiceCount();
+        this.getSchedulesCount();
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     }

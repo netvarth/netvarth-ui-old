@@ -212,6 +212,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
     this.getBusinessConfiguration();
+    this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
@@ -724,6 +725,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getDiscounts() {
+    this.nodiscountError = true;
     this.provider_services.getProviderDiscounts()
       .subscribe(data => {
         this.discount_list = data;
@@ -759,6 +761,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getItems() {
+    this.noitemError = true;
     this.provider_services.getProviderItems()
       .subscribe(data => {
         this.item_list = data;
