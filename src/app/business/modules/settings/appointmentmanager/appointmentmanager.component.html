@@ -21,6 +21,38 @@
             </div>
 
             <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Same Day Online Appointments
+                            <mat-slide-toggle [(ngModel)]="apptlist_status"
+                                (change)="handle_apptliststatus($event)">
+                            </mat-slide-toggle>
+                            <div class="onoff">{{apptlist_statusstr}}</div>
+                            <div class="form-level-settings">Set up same day appointment here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
+                                More</a></div>
+                        </label>
+                   </div>
+                </div>
+            </div> 
+
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Future Appointments
+                            <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                                (change)="handle_futureapptliststatus($event)">
+                            </mat-slide-toggle>
+                            <div class="onoff">{{futureapptlist_statusstr}}</div>
+                            <div class="form-level-settings">Set up future appointment here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
+                                More</a></div>
+                        </label>
+                   </div>
+                </div>
+            </div> 
+
+            <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoservices()">
                         <h2>Services ({{service_count}})</h2>

@@ -31,6 +31,11 @@ export class AppointmentmanagerComponent implements OnInit {
     createappointment_statusstr: string;
     schedules_count: any = 0;
     service_count: any = 0;
+    apptlist_details;
+    apptlist_status = false;
+    futureDateApptlist = false;
+    apptlist_statusstr = 'Off';
+    futureapptlist_statusstr = 'off';
 
     constructor(
         private router: Router,
@@ -47,6 +52,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.getOnlinePresence();
         this.getServiceCount();
         this.getSchedulesCount();
+        this.getApptlistMgr();
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     }
@@ -98,12 +104,57 @@ export class AppointmentmanagerComponent implements OnInit {
                 }
             );
     }
+    
     getOnlinePresence() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.createappointment_status = data.appointment;
                 this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
             });
+    }
+    handle_apptliststatus(event) {
+        const is_check = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setAcceptOnlineAppointment(is_check)
+          .subscribe(
+            () => {
+              this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+              this.getApptlistMgr();
+              this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.getApptlistMgr();
+            }
+          );
+      }
+  
+      handle_futureapptliststatus(event) {
+        const is_check = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setFutureAppointmentStatus(is_check)
+          .subscribe(
+            () => {
+              this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+              this.getApptlistMgr();
+              this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
+      getApptlistMgr() {
+        this.provider_services.getApptlistMgr()
+        .subscribe(
+          data => {
+            this.apptlist_details = data;
+            console.log(data);
+            this.apptlist_status = data['enableToday'] || false;
+            this.futureDateApptlist = data['futureAppt'] || false;
+            this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+            this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+            // this.filterbydepartment = data['filterByDept'];
+          });
+       
     }
     getServiceCount() {
         const filter = { 'scope-eq': 'account' };
