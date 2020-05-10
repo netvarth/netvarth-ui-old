@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../../../shared/services/shared-services';
-import { Messages } from '../../../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { Messages } from '../../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 

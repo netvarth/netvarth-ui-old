@@ -76,7 +76,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-  loadcomplete = { waitlist: false, fav_provider: false, history: false };
+  loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false };
   tooltipcls = projectConstants.TOOLTIP_CLS;
   pagination: any = {
     startpageval: 1,
@@ -145,6 +145,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   status: Boolean;
   pollingSet: any = [];
   callingModesDisplayName = projectConstants.CALLING_MODES;
+  breadcrumbs;
+  donations: any = [];
+  rupee_symbol = '₹';
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -154,27 +157,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   // public carouselOne: NgxCarousel;
   public carouselOne;
+  public carouselDonations;
+  public carouselAppointments;
 
   ngOnInit() {
+    this.breadcrumbs = [
+      {
+          title: 'My Jaldee'
+      }
+  ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    // this.carouselOne = {
-    //   grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
-    //   slide: 3,
-    //   speed: 400,
-    //   // interval: 1000,
-    //   interval: {
-    //     timing: 1000
-    //   },
-    //   // velocity: 1000,
-    //   point: {
-    //     visible: false
-    //   },
-    //   load: 2,
-    //   touch: true,
-    //   loop: false,
-    //   easing: 'ease'
-    // };
     this.carouselOne = {
       dots: false,
       nav: true,
@@ -184,9 +177,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         '<i class="fa fa-angle-right" aria-hidden="true"></i>'
       ],
       autoplay: false,
-      // autoplayTimeout: 6000,
-      // autoplaySpeed: 1000,
-      // autoplayHoverPause: true,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      loop: false,
+      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
+    };
+    this.carouselDonations = {
+      dots: false,
+      nav: true,
+      navContainer: '.custom-don-nav',
+      navText: [
+        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+      ],
+      autoplay: false,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      loop: false,
+      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
+    };
+    this.carouselAppointments = {
+      dots: false,
+      nav: true,
+      navContainer: '.custom-appt-nav',
+      navText: [
+        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+      ],
+      autoplay: false,
       mouseDrag: true,
       touchDrag: true,
       pullDrag: true,
@@ -198,6 +218,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
+    this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -217,7 +238,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  paymentsClicked() {
+    this.router.navigate(['consumer', 'payments']);
+  }
   showcheckindetails(waitlist) {
     console.log(waitlist);
     const waitlistJSON = JSON.stringify(waitlist);
@@ -434,41 +457,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     mom_date.set('minute', sMinutes);
     return mom_date;
   }
-
-  getHistroy() {
-    this.loadcomplete.history = false;
-    const params = this.setPaginationFilter();
-    this.consumer_services.getWaitlistHistory(params)
-      .subscribe(
-        data => {
-          this.history = data;
-          this.loadcomplete.history = true;
-        },
-        error => {
-          this.loadcomplete.history = true;
-        }
-      );
-  }
-
-  getHistoryCount() {
-    const date = moment().format(projectConstants.POST_DATE_FORMAT);
-    this.consumer_services.getHistoryWaitlistCount()
-      .subscribe(
-        data => {
-          const counts: any = data;
-          this.pagination.totalCnt = data;
-          if (counts > 0) {
-            this.getHistroy();
-          } else {
-            this.loadcomplete.waitlist = true;
-          }
-        },
-        error => {
-          this.loadcomplete.waitlist = true;
-        }
-      );
-  }
-
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
     let k = 0;
@@ -723,7 +711,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
-    this.getHistroy();
+    // this.getHistroy();
   }
 
   setPaginationFilter() {
@@ -824,7 +812,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
+  gotoDonations () {
+    this.router.navigate(['consumer', 'donations']);
+  }
+  getDonations() {
+    const filter = {};
+    filter['date-eq'] =  moment(this.server_date).format('YYYY-MM-DD');
+    this.shared_services.getConsumerDonations(filter).subscribe(
+      (donations) => {
+        this.donations = donations;
+        this.loadcomplete.donations = true;
+      }
+    );
+  }
   showcheckInButton(provider) {
     if (provider.settings && provider.settings.onlineCheckIns) {
       return true;
@@ -1122,7 +1122,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
-  checkinHistoryClicked() {
+  gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
 }

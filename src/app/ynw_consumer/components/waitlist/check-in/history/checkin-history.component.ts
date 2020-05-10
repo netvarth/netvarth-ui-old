@@ -12,7 +12,7 @@ import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/m
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
-
+import * as moment from 'moment';
 
 
 
@@ -49,13 +49,16 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   no_prev_checkins_avail_cap = Messages.NO_PREV_CHECKINS_AVAIL_CAP;
   breadcrumbs = [
     {
-      title: 'Checkins',
+      title: 'My Jaldee',
       url: '/consumer'
     },
+    //  {
+    //   title: 'Checkins'
+    // },
     {
-      title: 'History'
+      title: 'Checkins History'
     }
-  ]; 
+  ];
   breadcrumb_moreoptions: any = [];
 
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
@@ -69,72 +72,41 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getHistoryCount(this.params);
-  }
-  ngOnDestroy() {
-    if (this.notedialogRef) {
-      this.notedialogRef.close();
-    }
-    if (this.billdialogRef) {
-      this.billdialogRef.close();
-    }
-    if (this.paydialogRef) {
-      this.paydialogRef.close();
-    }
-    if (this.ratedialogRef) {
-      this.ratedialogRef.close();
-    }
+    this.getHistoryCount();
   }
 
-  getHistroy(param) {
-    const params = this.setPaginationFilter(param);
-    this.consumer_checkin_history_service.getWaitlistHistory(params)
+  getHistroy() {
+    this.loadcomplete.history = false;
+    const params = this.setPaginationFilter();
+    this.consumer_services.getWaitlistHistory(params)
       .subscribe(
         data => {
           this.history = data;
           this.loadcomplete.history = true;
         },
-        () => {
+        error => {
           this.loadcomplete.history = true;
         }
       );
   }
 
-  getHistoryCount(params) {
-
-    this.consumer_checkin_history_service.getHistoryWaitlistCount(params)
+  getHistoryCount() {
+    this.consumer_services.getHistoryWaitlistCount()
       .subscribe(
         data => {
-          const count: any = data;
           this.pagination.totalCnt = data;
-          if (count > 0) {
-            this.getHistroy(params);
-          } else {
-            this.loadcomplete.history = true;
-          }
-        },
-        () => {
-          this.loadcomplete.history = true;
-        }
-      );
+          this.getHistroy();
+        });
   }
-
-
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
-    this.getHistroy(this.params);
+    // this.getHistroy(this.params);
   }
 
   setPaginationFilter(params = {}) {
     const api_filter = {};
-
-    // if (params['account-eq']) {
-    //   api_filter['account-eq'] = params['account-eq'];
-    // }
-
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     api_filter['count'] = this.pagination.perPage;
-
     return api_filter;
   }
 
@@ -216,7 +188,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     });
 
     this.paydialogRef.afterClosed().subscribe(() => {
-      this.getHistoryCount(this.params);
+      this.getHistoryCount();
     });
   }
 
@@ -244,7 +216,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
     this.ratedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-        this.getHistroy(this.params);
+        this.getHistroy();
       }
     });
   }

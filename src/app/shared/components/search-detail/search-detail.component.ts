@@ -1976,6 +1976,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         account_id: accountId
        }
     };
-    this.routerobj.navigate(['consumer', 'donation'], navigationExtras);
+    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
 }

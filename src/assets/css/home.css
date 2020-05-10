@@ -2270,14 +2270,15 @@ marquee p {
   text-decoration: none;
 }
 
-.custom-nav {
+.custom-nav, .custom-don-nav,.custom-appt-nav {
   position: absolute;
   top: 30%;
   left: 0;
   right: 0;
 }
 
-.custom-nav .owl-prev, .custom-nav .owl-next {
+.custom-nav .owl-prev, .custom-nav .owl-next, .custom-don-nav .owl-prev, .custom-don-nav .owl-next,
+.custom-appt-nav .owl-prev, .custom-appt-nav .owl-next {
   position: absolute;
   height: 100px;
   color: inherit;
@@ -2286,21 +2287,21 @@ marquee p {
   z-index: 100;
 }
 
-.custom-nav .owl-prev i {
+.custom-nav .owl-prev i, .custom-don-nav .owl-prev i,.custom-appt-nav .owl-prev i  {
   font-size: 2.5rem;
   color: #cecece;
 }
 
-.custom-nav .owl-next i {
+.custom-nav .owl-next i, .custom-don-nav .owl-next i,.custom-appt-nav .owl-next i {
   font-size: 2.5rem;
   color: #cecece;
 }
 
-.custom-nav .owl-prev {
+.custom-nav .owl-prev,  .custom-don-nav .owl-prev, .custom-appt-nav .owl-prev{
   left: 0;
 }
 
-.custom-nav .owl-next {
+.custom-nav .owl-next, .custom-don-nav .owl-next, .custom-appt-nav .owl-next  {
   right: 0;
 }
 

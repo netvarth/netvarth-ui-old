@@ -1014,7 +1014,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         account_id: this.provider_bussiness_id
        }
     };
-    this.routerobj.navigate(['consumer', 'donation'], navigationExtras);
+    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {

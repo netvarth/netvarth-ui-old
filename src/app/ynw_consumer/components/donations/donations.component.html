@@ -1,0 +1,46 @@
+<section class="container no-padding">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="container">
+        <div class="row bill-section">
+            <div class="c-outer bill-section-content">
+                <div class="c-body bill-wrapper">
+                    <div class="card history one section-four no-padding">
+
+                        <div class="list-outer">
+                            <div class="table-th">
+                                <div class="th one">{{date_cap}}</div>
+                                <div class="th two">Service</div>
+                                <div class="th three">{{amount_cap}}</div>
+                            </div>
+
+                            <div class="listing" *ngFor="let donation of donations; let i = index">
+                                <div class="wrap">
+                                    <div class="td one">
+                                        <span class="date">{{stringtoDate(donation.date,
+											'date')}}</span>
+                                    </div>
+                                    <div class="td two">
+                                        <span>{{donation.service.name  |
+                                            capitalizeFirst}}</span>
+                                    </div>
+                                    <div class="td three"> <span class="amt"></span> {{donation.donationAmount |
+											currency:'&#8377; ' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="search_paging" *ngIf="pagination.totalCnt >= pagination.perPage">
+                                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                                    (pagerclick)="handle_pageclick($event)" *ngIf="pagination.totalCnt != 0"
+                                    [curpage]="pagination.startpageval"></app-pager>
+                            </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

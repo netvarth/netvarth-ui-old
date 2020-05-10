@@ -411,6 +411,10 @@ export class SharedServices {
     const url = 'consumer/payment';
     return this.servicemeta.httpPost(url, data);
   }
+  getConsumerPayments() {
+    const url = 'consumer/payment';
+    return this.servicemeta.httpGet(url);
+  }
   providerPayment(data) {
     const url = 'provider/payment';
     return this.servicemeta.httpPost(url, data);
@@ -627,6 +631,10 @@ export class SharedServices {
   getDonationByConsumerUUID(uuid, accountid) {
     const url = 'consumer/donation/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
+  }
+  getConsumerDonations(params = null) {
+    const url = 'consumer/donation';
+    return this.servicemeta.httpGet(url, null, params);
   }
   getConsumerDonationServices(accountid) {
     const url = 'consumer/donation/services?account=' + accountid;

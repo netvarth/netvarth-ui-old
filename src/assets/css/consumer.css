@@ -5765,30 +5765,30 @@
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.add-fav:before {
-    content: "\26";
+    content: "\26" !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.add-fav:hover:before {
-    content: "\27";
-    color: #f24949;
+    content: "\27" !important;
+    color: #f24949 !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.cancel {
-    position: relative;
+    position: relative !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.cancel:before {
-    display: flex;
-    align-items: center;
-    height: 20px;
-    position: absolute;
+    display: flex !important;
+    align-items: center !important;;
+    height: 20px !important;
+    position: absolute !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.cancel:before {
-    content: "\69";
-    font-size: .65rem;
-    height: 18px;
-    position: relative;
+    content: "\69" !important;
+    font-size: .65rem !important;
+    height: 18px !important;
+    position: relative !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li:last-child {
@@ -5830,7 +5830,10 @@
     }
 }
 
-.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav  [class*='owl-'] {
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav  [class*='owl-'],
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-don-nav  [class*='owl-'],
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-appt-nav  [class*='owl-']
+ {
     background-color: transparent !important;
 }
 .consumer-dash .card.c-checkins .outer.banner button i {
@@ -5850,28 +5853,40 @@
     -webkit-transition: all 300ms;
     transition: all 300ms;
 }
-.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav .owl-prev {
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav .owl-prev,
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-don-nav .owl-prev,
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-appt-nav .owl-prev {
     width: 40px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: -5px !important;
 }
-.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav .owl-next {
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-nav .owl-next,
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-don-nav .owl-next,
+.consumer-dash .card.c-checkins .outer.banner .owl-theme .custom-appt-nav .owl-next {
     width: 40px !important;
     margin-right: 0px !important;
 }
 .consumer-dash .card.c-checkins .outer.banner .custom-nav .owl-prev i,
-.consumer-dash .card.c-checkins .outer.banner .custom-nav .owl-next i {
+.consumer-dash .card.c-checkins .outer.banner .custom-nav .owl-next i,
+.consumer-dash .card.c-checkins .outer.banner .custom-don-nav .owl-prev i,
+.consumer-dash .card.c-checkins .outer.banner .custom-don-nav .owl-next i,
+.consumer-dash .card.c-checkins .outer.banner .custom-appt-nav .owl-prev i,
+.consumer-dash .card.c-checkins .outer.banner .custom-appt-nav .owl-next i {
     font-size: 2.25rem;
     color: #fff;
 }
-.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-nav  .owl-next {
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-nav  .owl-next,
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-don-nav  .owl-next,
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-appt-nav  .owl-next  {
     /* right: -25px; */
     top: 50%;
     margin-top: -20px;
 }
 
-.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-nav  .owl-next :after {
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-nav  .owl-next :after,
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-don-nav  .owl-next :after,
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-appt-nav  .owl-next :after {
     position: absolute;
     content: "\67";
     color: #fff;
@@ -5880,13 +5895,17 @@
     font-family: "custom-ynw" !important;
 }
 
-.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-nav  owl-prev {
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-nav  owl-prev,
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-don-nav  owl-prev,
+.consumer-dash .card.c-checkins .outer.banner  button .owl-theme .custom-appt-nav  owl-prev {
     left: -25px;
     top: 50%;
     margin-top: -20px;
 }
 
-.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-nav  .owl-prev:after {
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-nav  .owl-prev:after,
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-don-nav  .owl-prev:after,
+.consumer-dash .card.c-checkins .outer.banner button .owl-theme .custom-appt-nav  .owl-prev:after {
     position: absolute;
     content: "\61";
     color: #fff;
@@ -5898,4 +5917,90 @@
 .consumer-dash .card.c-checkins .outer.banner owl-carousel button i:hover {
     background-color: #1873f2;
     color: #1873f2;
+}
+.consumer-dash {
+    padding: 0 !important;
+}
+.consumer-dash .card.c-checkins .outer.banner.donation owl-carousel .owl-stage-outer .owl-item {
+    min-height: 200px !important;
+}
+.history-tbl .table tbody tr td.td5 .controls li {
+    list-style: none !important;
+}
+.history-tbl .table tbody tr td.td5 .controls li span {
+    padding: 3px;
+    position: relative;
+    padding-left: 22px;
+    padding-right: 10px;
+    cursor: pointer;
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+    color: #222223;
+    display: flex;
+}
+.history-tbl .table tbody tr td.td5 .controls li span:before {
+    position: absolute;
+    content: "";
+    left: 2px;
+    top: 4px;
+    font-family: "custom-ynw" !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span:hover {
+    color: #00aef2;
+}
+.history-tbl .table tbody tr td.td5 .controls li span.checkin {
+    text-transform: uppercase;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    background: #00aef2;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
+    /* IE10+ */
+    background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2', GradientType=0);
+    /* IE6-9 */
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 600;
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span.message:before {
+    content: "\53";
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span.view-bill:before {
+    content: "\4f";
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span.rate-service:before {
+    content: "\3b";
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span.rate-service.rated:before {
+    content: "\3c";
+    color: #fda60d;
+}
+
+.history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
+    content: "\57";
 }

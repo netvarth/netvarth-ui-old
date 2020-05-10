@@ -1,17 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { SharedServices } from '../../../../shared/services/shared-services';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
-import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
-import * as moment from 'moment';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html'
@@ -206,6 +205,7 @@ export class ConsumerDonationComponent implements OnInit {
                 this.provider_id = params.unique_id;
                 this.sel_checkindate = params.sel_date;
                 this.hold_sel_checkindate = this.sel_checkindate;
+                this.action = params.action;
             });
     }
     ngOnInit() {

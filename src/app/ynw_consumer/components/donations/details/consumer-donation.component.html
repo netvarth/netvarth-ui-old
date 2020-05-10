@@ -49,54 +49,12 @@
                             </ng-container>
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
                         </div>
-                        <!-- <div class="col-md-12 mgn-up-20" *ngIf="consumerNote">
-                            <a class="notes pointer-cursor" (click)="toggleNotes()">Notes</a>
-                        </div>
-                        <ng-container *ngIf="consumerNote && notes" class="notes">
-                            <div class="row col-md-12" style="display: flex;">
-                                <div class="col-md-7">
-                                    <span class="ln-hgt-40">{{consumerNote}}</span>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <div class="col-md-12 mgn-up-20"
-                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                            <a class="attachment pointer-cursor" (click)="toggleAttachment()">Attachments</a>
-                        </div>
-                        <ng-container class="attachment"
-                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
-
-                            <div class="row col-md-12" style="display: flex;"
-                                *ngFor="let item of selectedMessage.files; let i = index">
-                                <div class="col-md-7">
-                                    <span class="ln-hgt-40">{{item.name}}</span>
-                                </div>
-                                <div class="col-md-5">
-                                    <span class="mbt comm-menu-imgs">
-                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu">
-                                            <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                                                <i class="icon-delete"></i>
-                                                <span>delete</span>
-                                            </button>
-                                        </mat-menu>
-                                    </span>
-                                </div>
-                            </div>
-
-                        </ng-container> -->
-                        <!-- <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div> -->
                         <div class="mainouter checkin-page ">
                             <div>
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <!-- <div class="date-head">Amount:</div> -->
-                                        <!-- <div class="date-body" ngInput style="padding-left: 4%;"> -->
                                         <input class="form-control number-ip" matInput placeholder="Enter Amount"
-                                            [(ngModel)]="donationAmount" >
-                                        <!-- </div> -->
+                                            [(ngModel)]="donationAmount" >                                      
                                     </mat-form-field>
                                 </div>
                             </div>

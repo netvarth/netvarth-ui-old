@@ -14,12 +14,26 @@
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
             <div class="sa">
                 <h2>Avoid Waiting in Queues</h2>
-                <span><button class="jn" (click)="checkinDetailsView()">Checkin</button></span>
                 <h5 style="color:white">Find Service Provider</h5>
                 <ng-container *ngIf="domain_obtained==true">
                     <app-search [showopennow]="0" [searchfields]="searchfields" [domainlistpassed]="domainlist_data"
                         [includedfrom]="'home'"></app-search>
                 </ng-container>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about_jlde" style="background:#f2f2f2;">
+    <div class="container">
+        <div class="row  col-md-12 col-xs-12 col-sm-12 no-padding-small">
+            <div class="col-md-12 col-xs-12 col-sm-12 text-center">
+                <div class="vc-column-innner-wrapper">
+                    <h2 class="section-title no-padding black-text">Know Your Status</h2>
+                </div>
+                You can know the status of your appointment or check-in status by clicking the following buttons 
+                <a (click)="checkinDetailsView()()" target="_self"
+                        class="inner-link button btn margin-top-30px highlight-button-dark btn-small">
+                        Click Here</a>
             </div>
         </div>
     </div>

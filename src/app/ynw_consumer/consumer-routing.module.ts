@@ -27,7 +27,8 @@ const routes: Routes = [
       { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule) },
       { path: 'checkindetails', component: CheckinDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'appointment', loadChildren: () => import('../ynw_consumer/components/waitlist/appointment/consumer-appointment.module').then(m => m.ConsumerAppointmentModule) },
-      { path: 'donation', loadChildren: () => import('../ynw_consumer/components/waitlist/donation/consumer-donation.module').then(m => m.ConsumerDonationModule) }
+      { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },
+      { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) }
 
     ]
   }
