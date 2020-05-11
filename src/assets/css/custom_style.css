@@ -8687,3 +8687,12 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .underline {
   text-decoration: underline !important;
 }
+.chk-section-wrap {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  /* margin-bottom: 5px; */
+  height: auto !important;
+}
+.start-endtime-wrap {
+  flex-wrap: wrap;
+}

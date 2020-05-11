@@ -33,13 +33,13 @@
                 <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">{{select_days_cap}}</i>
                 <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()"> {{select_days_cap}}</i>
             </div>
-            <section class="chk-section">
+            <section class="chk-section chk-section-wrap">
                 <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
                     <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}
                     </mat-checkbox>
                 </div>
             </section>
-            <div class="startendtime">
+            <div class="startendtime start-endtime-wrap">
                 <div class="starttimediv">
                     <label for="changeHourStep">{{start_time_cap}}</label>
                     <ngb-timepicker [(ngModel)]="dstart_time" meridian="true" #sch_start_time
