@@ -8694,5 +8694,5 @@ padding-right: 0 !important; padding-top: 0 !important;}
   height: auto !important;
 }
 .start-endtime-wrap {
-  flex-wrap: wrap;
+  flex-wrap: wrap !important;
 }
