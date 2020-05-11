@@ -7,7 +7,9 @@ const routes: Routes = [
   { path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule) },
   { path: 'queues', loadChildren: () => import('./queues/waitlist-queues.module').then(m => m.WaitlistQueuesModule) },
   { path: 'holidays', loadChildren: () => import('./usernonworkingday/usernonWorkingDay.module').then(m => m.NonWorkingDaymodule) },
-  { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationUserModule) }
+  { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationUserModule) },
+  { path: 'schedules', loadChildren: () => import('./schedules/waitlist-schedules.module').then(m => m.WaitlistuserSchedulesModule) },
+
 ];
 
 @NgModule({

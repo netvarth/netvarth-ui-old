@@ -159,7 +159,7 @@ export class ManageSettingsComponent implements OnInit {
   service_count: any;
   queues_count: any;
   // domain;
-
+  schedules_count;
 
   constructor(
     private router: Router,
@@ -176,6 +176,7 @@ export class ManageSettingsComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.getScheduleCount();
     this.getServiceCount();
     this.getQueuesCount();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
@@ -230,9 +231,21 @@ export class ManageSettingsComponent implements OnInit {
   Notifications() {
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'notifications'], this.userId);
   }
-
+  schedules() {
+    this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'schedules']);
+  }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+  }
+  getScheduleCount() {
+    // this.loading = true;
+    const filter = { 'provider-eq': this.userId };
+    this.provider_services.getSchedulesCount(filter)
+      .subscribe(
+        data => {
+          this.schedules_count = data;
+        });
+    // this.loading = false;
   }
 }

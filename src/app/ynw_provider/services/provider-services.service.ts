@@ -1370,4 +1370,7 @@ export class ProviderServices {
       const url = 'provider/waitlist/statusBoard/' + id;
       return this.servicemeta.httpDelete(url);
    }
+   getProviderUserSchedules(id) {
+      return this.servicemeta.httpGet('provider/appointment/schedule?provider-eq=' + id);
+   }
 }

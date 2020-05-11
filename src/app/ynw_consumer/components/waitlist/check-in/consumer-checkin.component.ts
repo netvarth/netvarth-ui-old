@@ -468,7 +468,8 @@ export class ConsumerCheckinComponent implements OnInit {
             taxable: serv.taxable,
             serviceType: serv.serviceType,
             virtualServiceType: serv.virtualServiceType,
-            virtualCallingModes: serv.virtualCallingModes
+            virtualCallingModes: serv.virtualCallingModes,
+            livetrack: serv.livetrack,
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
     }
