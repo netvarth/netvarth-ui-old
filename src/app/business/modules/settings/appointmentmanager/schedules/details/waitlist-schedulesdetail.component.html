@@ -178,7 +178,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="form-group" *ngIf="filterbyDept">
+                            <div class="form-group" *ngIf="filterbyDept">
                                 <label class="labelstyle">{{service_cap}}</label>
                                 <div class="schselectall">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectdept()">
@@ -200,8 +200,8 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         </div>
                                     </section>
                                 </div>
-                            </div> -->
-                            <div class="form-group">
+                            </div>
+                            <div class="form-group"  *ngIf="!filterbyDept">
                                 <label class="labelstyle">{{service_cap}}</label>
                                 <div class="schselectall ">
                                     <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">

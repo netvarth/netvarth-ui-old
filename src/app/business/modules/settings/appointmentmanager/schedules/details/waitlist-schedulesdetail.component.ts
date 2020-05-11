@@ -282,8 +282,44 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.provider_services.getProviderServices(filter)
       .subscribe(data => {
         this.services_list = data;
+        this.getDepartments();
       });
     this.api_loading1 = false;
+  }
+
+  getDepartments() {
+    this.departments = [];
+    this.api_loading1 = true;
+    this.provider_services.getDepartments()
+      .subscribe(
+        data => {
+          this.deptObj = data;
+          this.filterbyDept = this.deptObj.filterByDept;
+          this.departments = this.deptObj.departments;
+          for (let i = 0; i < this.services_list.length; i++) {
+            for (let j = 0; j < this.departments.length; j++) {
+              for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
+                  this.departments[j].serviceIds[k] = this.services_list[i].name;
+                }
+              }
+            }
+          }
+          for (let j = 0; j < this.departments.length; j++) {
+            for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+              // tslint:disable-next-line: radix
+              if (parseInt(this.departments[j].serviceIds[k])) {
+                delete this.departments[j].serviceIds[k];
+              }
+            }
+          }
+          this.api_loading1 = false;
+        },
+        error => {
+          this.api_loading1 = false;
+          // this.sharedfunctionObj.apiErrorAutoHide(this, error);
+        }
+      );
   }
     goBack() {
         // this.router.navigate(['provider', 'settings', 'miscellaneous',
@@ -389,7 +425,35 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         } else {
             this.Selall = false;
         }
-        for (let j = 0; j < this.queue_data.services.length; j++) {
+        if (this.filterbyDept) {
+            for (let j = 0; j < this.departments.length; j++) {
+              this.serviceSelection[this.departments[j].departmentName] = [];
+              for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                for (let i = 0; i < this.queue_data.services.length; i++) {
+                  if (this.queue_data.services[i].name === this.departments[j].serviceIds[k]) {
+                    this.departments[j].checked = true;
+                    this.SelService[j] = true;
+                    this.serviceSelection[this.departments[j].departmentName][k] = this.departments[j].serviceIds[k];
+                  }
+                }
+              }
+            }
+            let count = 0;
+            for (let j = 0; j < this.departments.length; j++) {
+              for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                for (let i = 0; i < this.serviceSelection[this.departments[j].departmentName].length; i++) {
+                  if (this.departments[j].serviceIds[j] !== this.serviceSelection[this.departments[j].departmentName][i]) {
+                    count++;
+                  }
+                }
+              }
+            }
+            if (count === 0) {
+              this.SelServcall = true;
+            }
+          }
+          else{          
+            for (let j = 0; j < this.queue_data.services.length; j++) {
             for (let k = 0; k < this.services_list.length; k++) {
             if (this.queue_data.services[j].id === this.services_list[k].id) {
                 this.services_list[k].checked = true;
@@ -400,6 +464,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         if (this.services_selected.length === this.services_list.length) {
             this.SelServcall = true;
         }
+        }   
         this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
         this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     }
