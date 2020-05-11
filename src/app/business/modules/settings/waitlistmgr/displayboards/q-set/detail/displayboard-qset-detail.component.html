@@ -120,7 +120,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments" noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
                                 (click)="departmentSelection(department, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
@@ -145,7 +145,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services" noEntriesFoundLabel="no matching service found"></ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="serviceSelection(service.id, 'SERVICE')">
                                 {{service.name | capitalizeFirst}}
@@ -168,7 +168,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues" noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, 'QUEUE')">
                                 {{schedule.name}}
@@ -218,7 +218,7 @@
                 </label>
                 <mat-form-field>
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels" noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
                         <mat-option *ngFor="let label of providerLabelsList" [value]="label" (click)="providerLabelSelection()">
                             {{label.displayName}}
                         </mat-option>
