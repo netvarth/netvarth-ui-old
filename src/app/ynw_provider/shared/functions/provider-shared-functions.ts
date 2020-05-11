@@ -243,10 +243,9 @@ export class ProviderSharedFuctions {
             switch (action) {
               case 'Arrived': status_msg = 'arrived'; break;
               case 'Started': status_msg = 'started'; break;
-              case 'Cancelled': status_msg = 'cancelled'; break;
               case 'Confirmed': status_msg = 'confirmed'; break;
               case 'Completed': status_msg = 'completed'; break;
-              case 'Rejected': status_msg = 'rejected'; break;
+              case 'Rejected': status_msg = 'cancelled'; break;
             }
             // const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
             this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);

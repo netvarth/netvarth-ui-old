@@ -521,7 +521,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    getPaymentDetail(uuid) {
-      const url = 'provider/payment/' + uuid;
+      const url = 'provider/payment/details/' + uuid;
       return this.servicemeta.httpGet(url);
    }
    getProviderWaitlistDetailById(uuid) {

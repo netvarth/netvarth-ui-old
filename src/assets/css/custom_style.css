@@ -2271,7 +2271,8 @@ sup {
   }
 }
 
-.content.comn-cls .lbr .card .c-history li.cancelled:before {
+.content.comn-cls .lbr .card .c-history li.cancelled:before,
+.content.comn-cls .lbr .card .appthistory .c-history li.Rejected:before {
   background: #f24949;
 }
 
@@ -8695,4 +8696,19 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .start-endtime-wrap {
   flex-wrap: wrap !important;
+}
+.content.comn-cls .lbr .card .appthistory .c-history li.Arrived:before {
+    background: #79e688;
+}
+
+.content.comn-cls .lbr .card .appthistory .c-history li.Started:before {
+    background: #4de2ff;
+}
+
+.content.comn-cls .lbr .card .appthistory .c-history li.Confirmed:before {
+    background: #5568ff;
+}
+
+.content.comn-cls .lbr .card .appthistory .c-history li.Completed:before {
+    background: #0edcb8;
 }

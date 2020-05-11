@@ -53,10 +53,10 @@
                                                                 <div>
                                                                     <label class="filterHeaders">{{acknow_status_cap}}</label>
                                                                         <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                                                              <mat-checkbox [value]="'true'"> {{acknowledged_cap}}</mat-checkbox>
+                                                                              <mat-checkbox [value]="'true'" [(ngModel)]="ackStatus" (change)="do_search(false, 'ackStatus')"> {{acknowledged_cap}}</mat-checkbox>
                                                                         </li>
                                                                         <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                                                                <mat-checkbox [value]="'true'"> {{not_acknowledged_cap}}</mat-checkbox>
+                                                                                <mat-checkbox [value]="'false'" [(ngModel)]="notAckStatus" (change)="do_search(false, 'notAckStatus')"> {{not_acknowledged_cap}}</mat-checkbox>
                                                                         </li>
                                                                 </div>
                                                                 <div>

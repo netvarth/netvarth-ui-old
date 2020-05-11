@@ -28,7 +28,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   alert_details: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  alertSelAck = '';
+  alertSelAck = [];
   alertSeldate = '';
   holdalertSelAck = '';
   holdalertSeldate = '';
@@ -54,6 +54,8 @@ export class ProviderSystemAlertComponent implements OnInit {
     // 'ack_status': false,
     'date': false
   };
+  ackStatus;
+  notAckStatus;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
@@ -66,10 +68,10 @@ export class ProviderSystemAlertComponent implements OnInit {
     // this.getAlertList();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.alertSelAck = ''; // default becuase maximise from footer alert panel
+    this.alertSelAck = []; // default becuase maximise from footer alert panel
     this.alertSeldate = '';
     this.alertStatus = 4;
-    this.holdalertSelAck = this.alertSelAck;
+    this.holdalertSelAck = this.alertSelAck.join(',');
     this.holdalertSeldate = this.alertSeldate;
     this.getAlertListTotalCnt('false', '');
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
@@ -85,7 +87,7 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alert_details = [];
         } else {
           this.alertStatus = 1;
-          this.getAlertList(this.alertSelAck, sdate);
+          this.getAlertList(this.alertSelAck.join(','), sdate);
         }
         this.api_loading = false;
       },
@@ -135,17 +137,38 @@ export class ProviderSystemAlertComponent implements OnInit {
       'date': false
     };
     this.alertSeldate = '';
-    this.alertSelAck = '';
+    this.alertSelAck = [];
     this.holdalertSeldate = null;
+    this.ackStatus = false;
+    this.notAckStatus = false;
   }
   goback() {
     this.locationobj.back();
   }
-  do_search(pagecall) {
+  do_search(pagecall, status?) {
     this.alertStatus = 1;
+    if (status === 'ackStatus') {
+      if (this.ackStatus === true) {
+        if (this.alertSelAck.indexOf('true') === -1) {
+          this.alertSelAck.push('true');
+        }
+      } else {
+        this.alertSelAck.splice(this.alertSelAck.indexOf('true'), 1);
+      }
+    }
+    if (status === 'notAckStatus') {
+      if (this.notAckStatus === true) {
+        if (this.alertSelAck.indexOf('false') === -1) {
+          this.alertSelAck.push('false');
+        }
+      } else {
+        this.alertSelAck.splice(this.alertSelAck.indexOf('false'), 1);
+      }
+    }
+    console.log(this.alertSelAck);
     if (pagecall === false) {
       this.startpageval = 1;
-      this.holdalertSelAck = this.alertSelAck;
+      this.holdalertSelAck = this.alertSelAck.join(',');
       this.holdalertSeldate = this.alertSeldate;
     }
     let seldate = '';
@@ -208,7 +231,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       if (value === 'date') {
         this.alertSeldate = null;
       } else if (value === 'ack_status') {
-        this.alertSelAck = '';
+        this.alertSelAck = [];
       }
       this.do_search(false);
     }

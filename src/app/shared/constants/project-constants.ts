@@ -403,7 +403,10 @@ export const projectConstants = {
     Started: 'Started',
     Arrived: 'Arrived',
     CheckedIn: 'Checked in',
-    Cancelled: 'Cancelled'
+    Cancelled: 'Cancelled',
+    Completed: 'Completed',
+    Rejected: 'Cancelled',
+    Confirmed: 'Confirmed'
   },
   INVOICE_STATUS_FILTER: [
     { displayName: 'Paid', value: 'Paid' },
@@ -413,8 +416,17 @@ export const projectConstants = {
     { displayName: 'RolledBack', value: 'RolledBack' },
     // { displayName: 'Obsolete', value: 'Obsolete' },
   ],
-
-
+  APPT_STATUSES_FILTER: [
+    { displayName: 'Checked in', value: 'Confirmed' },
+    { displayName: 'Arrived', value: 'Arrived' },
+    { displayName: 'Started', value: 'Started' },
+    { displayName: 'Completed', value: 'Completed' },
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+  ],
+  FUTURE_APPT_STATUSES_FILTER: [
+    { displayName: 'Checked in', value: 'Confirmed' },
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+  ],
   CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },

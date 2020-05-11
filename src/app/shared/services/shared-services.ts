@@ -339,10 +339,12 @@ export class SharedServices {
     let param = '';
     if (ackStatus === 'true') {
       param += 'ackStatus-eq=true';
-    } else {
+    } else if (ackStatus === 'false') {
       if (ackStatus === 'false') {
         param += 'ackStatus-eq=false';
       }
+    } else if (ackStatus === 'true,false') {
+      param += 'ackStatus-eq=false,true';
     }
     /*if (subcat !== '') {
       if (param !== '') {
@@ -654,7 +656,7 @@ export class SharedServices {
     const url = 'consumer/appointment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-    consumerMobilenumCheck(mobile) {
+  consumerMobilenumCheck(mobile) {
     const url = 'consumer/' + mobile + '/check';
     return this.servicemeta.httpGet(url);
   }
