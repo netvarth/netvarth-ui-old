@@ -17,14 +17,14 @@ export class CheckInHistoryServices {
     return this.servicemeta.httpGet('consumer/waitlist/history/count', null, params);
   }
 
-  getWaitlistBill(uuid) {
+  getWaitlistBill(params, uuid) {
     const path = 'consumer/bill/' + uuid;
-    return this.servicemeta.httpGet(path);
+    return this.servicemeta.httpGet(path, null, params);
   }
 
-  getPaymentDetail(uuid) {
-    const url = 'consumer/payment/' + uuid ;
-    return this.servicemeta.httpGet(url);
+  getPaymentDetail(params, uuid) {
+    const url = 'consumer/payment/details/' + uuid ;
+    return this.servicemeta.httpGet(url, null, params);
   }
 
 }

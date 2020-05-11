@@ -4,7 +4,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
-import { DomSanitizer } from '@angular/platform-browser';import { DOCUMENT } from "@angular/common";
+import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -13,7 +13,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './consumer-waitlist-view-bill.component.html'
 })
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
-  @ViewChild('itemservicesearch', {static: false}) item_service_search;
+  @ViewChild('itemservicesearch', { static: false }) item_service_search;
 
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
@@ -155,7 +155,10 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = true;
   }
   getWaitlistBill(checkin) {
-    this.consumer_checkin_history_service.getWaitlistBill(checkin.ynwUuid)
+    const params = {
+      account: checkin.providerAccount.id
+    };
+    this.consumer_checkin_history_service.getWaitlistBill(params, checkin.ynwUuid)
       .subscribe(
         data => {
           this.bill_data = data;
@@ -189,7 +192,10 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   getPrePaymentDetails() {
-    this.consumer_checkin_history_service.getPaymentDetail(this.checkin.ynwUuid)
+    const params = {
+      account: this.checkin.providerAccount.id
+    };
+    this.consumer_checkin_history_service.getPaymentDetail(params, this.checkin.ynwUuid)
       .subscribe(
         data => {
           this.pre_payment_log = data;

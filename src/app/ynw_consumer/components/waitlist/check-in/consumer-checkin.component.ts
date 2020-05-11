@@ -281,7 +281,7 @@ export class ConsumerCheckinComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         // this.minDate = this.sel_checkindate;
         this.minDate = this.todaydate;
         // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
@@ -672,6 +672,13 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     saveCheckin() {
+        if (this.waitlist_for.length !== 0) {
+            for (const list of this.waitlist_for) {
+                if (list.id === this.customer_data.id) {
+                    list['id'] = 0;
+                }
+            }
+        }
         this.virtualServiceArray = {};
         for (let i = 0; i < this.callingModes.length; i++) {
             if (this.callingModes[i] !== '') {
@@ -729,10 +736,14 @@ export class ConsumerCheckinComponent implements OnInit {
                 const navigationExtras: NavigationExtras = {
                     queryParams: { account_id: this.account_id }
                 };
+                console.log(this.sel_ser_det);
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
-                } else {
+                } else if (this.sel_ser_det.livetrack) {
                     this.router.navigate(['consumer', 'checkin', 'track', this.trackUuid], navigationExtras);
+                } else {
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC'));
+                    this.router.navigate(['consumer']);
                 }
             },
                 error => {

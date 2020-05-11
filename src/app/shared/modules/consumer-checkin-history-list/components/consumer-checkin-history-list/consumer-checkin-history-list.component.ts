@@ -147,8 +147,10 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   }
 
   getWaitlistBill(waitlist) {
-
-    this.consumer_checkin_history_service.getWaitlistBill(waitlist.ynwUuid)
+    const params = {
+      account: waitlist.providerAccount.id
+    };
+    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.ynwUuid)
       .subscribe(
         data => {
           const bill_data = data;

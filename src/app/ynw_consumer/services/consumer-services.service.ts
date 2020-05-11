@@ -83,9 +83,9 @@ export class ConsumerServices {
     return this.servicemeta.httpGet(path);
   }
 
-  getPaymentDetail(uuid) {
-    const url = 'consumer/payment/' + uuid ;
-    return this.servicemeta.httpGet(url);
+  getPaymentDetail(params, uuid) {
+    const url = 'consumer/payment/details/' + uuid ;
+    return this.servicemeta.httpGet(url, null, params);
   }
 
   getEstimatedWaitingTime(prov_arr) {
