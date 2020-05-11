@@ -177,10 +177,10 @@
         <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
-            <div class="c-history-outer">
+            <div class="appthistory">
               <ul class="c-history">
-                <li class="{{history.appointmentStatus}}" *ngFor="let history of waitlist_history">
-                  <div class="time">{{ history.time | date: dateTimeFormat }}</div>
+                <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
+                  <div class="time">{{history.time}}</div>
                   <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
