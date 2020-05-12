@@ -557,8 +557,7 @@
                             (click)="appointmentClicked(search_result, false)">Appointment</span>
                             </div>
                         </div>
-                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.donation_services 
-                        && search_result.fields.donation_services.length > 0">
+                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donation_services">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">
