@@ -112,7 +112,7 @@ body {
   -webkit-border-radius: 20px;
   -o-border-radius: 20px;
   -ms-border-radius: 20px;
-  background-image: url(../../../../assets/images/home/signup/password.png);
+  /* background-image: url(../../../../assets/images/home/signup/password.png); */
   background-repeat: no-repeat;
  }
 .display-flex {
@@ -321,6 +321,18 @@ input[type=checkbox]:not(old):checked + label > span:before {
 
 label {
   position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  color: #222; }
+
+  
+.otpsection label {
+  position: sticky;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -543,6 +555,10 @@ div {
   margin: 20px;
   max-width: 4000px;
   margin: 20px auto;
+}
+
+.otpsection {
+  padding-top: 30px !important;
 }
 
 ul {

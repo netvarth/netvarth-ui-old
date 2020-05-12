@@ -227,6 +227,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                     
                                    
                                 </form>
+                                <div class="otpsection">
                                 <div class="form-row">
                                     <label>OTP is sent to Your Mobile Number</label>		
                                 </div>
@@ -238,11 +239,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     
                                   </mat-form-field>
                                   
-                                  <!-- <div class="error"> -->
-                                  <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
+                                  <div class="error">
+                                  <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
                                     errorMsg="Please enter a valid OTP.">
-                                  </app-field-error-display> -->
-                                <!-- </div> -->
+                                  </app-field-error-display>
+                                </div>
                                 <mat-dialog-actions>
                                   <div class="resendouter" *ngIf="resetCounterVal==0">
                                     <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
@@ -260,11 +261,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <input type="submit" name="signup" id="signup" class="form-submit" value="join Jaldee"
                                         (click)="onPasswordSubmit()">
                                 </div>
-                            
+                            </div>
                        </div>
-                       <!-- <div class="signup-image">
-                        <figure><img src="../../../../assets/images/home/signup-image.jpg"></figure>
-                       </div> -->
+                       <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup/password.png"></figure>
+                       </div>
                         
                     </div>
                    
