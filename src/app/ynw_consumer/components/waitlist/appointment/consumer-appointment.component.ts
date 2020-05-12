@@ -1257,7 +1257,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+        this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
             dataToSend)
             .subscribe(
                 () => {

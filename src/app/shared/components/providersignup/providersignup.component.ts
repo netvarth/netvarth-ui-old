@@ -122,6 +122,8 @@ export class ProvidersignupComponent implements OnInit {
   cronHandle: Subscription;
   refreshTime = 30;
   otp_mobile = null;
+  providerPwd;
+  email;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
@@ -441,6 +443,8 @@ export class ProvidersignupComponent implements OnInit {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
           this.active_step = 3;
+          this.showOTPContainer = true;
+          this.showOTPEmailContainer = false;
           this.createpasswordform();
           this.resetCounter(this.refreshTime);
           this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -467,7 +471,7 @@ export class ProvidersignupComponent implements OnInit {
       this.shared_services.OtpSignUpProviderValidate(this.otp)
         .subscribe(
           () => {
-            this.active_step = 4;
+            // this.active_step = 4;
             this.actionstarted = false;
             // this.otp = submit_data.phone_otp;
             this.createForm();
@@ -495,6 +499,11 @@ export class ProvidersignupComponent implements OnInit {
   }
   submitHearus() {
     this.actionstarted = true;
+    const login_data = {
+      'countryCode': '+91',
+      'loginId': this.user_details.userProfile.primaryMobileNo,
+      'password': this.providerPwd
+    };
     this.resetApiErrors();
     if (this.hearus) {
       const post_data = {
@@ -506,10 +515,22 @@ export class ProvidersignupComponent implements OnInit {
       this.shared_services.saveReferralInfo(this.otp, post_data)
         .subscribe(
           () => {
-            
-            this.active_step = 5;
+            // this.active_step = 5;
             this.actionstarted = false;
             this.createForm();
+            if (this.ynw_credentials != null) {
+              this.shared_functions.doLogout().then(() => {
+                this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+                this.shared_functions.providerLogin(login_data);
+                const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              });
+            } else {
+              this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+              this.shared_functions.providerLogin(login_data);
+              const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            }
           },
           error => {
             this.actionstarted = false;
@@ -518,7 +539,20 @@ export class ProvidersignupComponent implements OnInit {
         );
     } else {
       this.createpasswordform();
-      this.active_step = 5;
+      // this.active_step = 5;
+      if (this.ynw_credentials != null) {
+        this.shared_functions.doLogout().then(() => {
+          this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+          this.shared_functions.providerLogin(login_data);
+          const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+        });
+      } else {
+        this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+        this.shared_functions.providerLogin(login_data);
+        const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
+        this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+      }
     }
   }
   onPasswordSubmit() {
@@ -530,25 +564,27 @@ export class ProvidersignupComponent implements OnInit {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
         .subscribe(
           () => {
+            this.active_step = 4;
             this.actionstarted = false;
-            const login_data = {
-              'countryCode': '+91',
-              'loginId': this.user_details.userProfile.primaryMobileNo,
-              'password': post_data.password
-            };
-            if (this.ynw_credentials != null) {
-              this.shared_functions.doLogout().then(() => {
-                this.shared_functions.setitemonLocalStorage('new_provider', 'true');
-                this.shared_functions.providerLogin(login_data);
-                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-              });
-            } else {
-              this.shared_functions.setitemonLocalStorage('new_provider', 'true');
-              this.shared_functions.providerLogin(login_data);
-              const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-            }
+            this.providerPwd = post_data.password;
+            // const login_data = {
+            //   'countryCode': '+91',
+            //   'loginId': this.user_details.userProfile.primaryMobileNo,
+            //   'password': post_data.password
+            // };
+            // if (this.ynw_credentials != null) {
+            //   this.shared_functions.doLogout().then(() => {
+            //     this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+            //     this.shared_functions.providerLogin(login_data);
+            //     const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+            //     this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            //   });
+            // } else {
+            //   this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+            //   this.shared_functions.providerLogin(login_data);
+            //   const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+            //   this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            // }
           },
           error => {
             this.actionstarted = false;
@@ -563,11 +599,12 @@ export class ProvidersignupComponent implements OnInit {
     this.api_success = null;
   }
   resendOtp(user_details) {
-    if (user_details.isAdmin) {
+    // if (user_details.isAdmin) {
+      console.log(user_details);
       this.signUpApiProvider(user_details);
-    } else {
-      this.signUpApiConsumer(user_details);
-    }
+    // } else {
+    //   this.signUpApiConsumer(user_details);
+    // }
   }
   clickedPackage(item) {
     // this.selectedpackage = e;
@@ -722,5 +759,19 @@ export class ProvidersignupComponent implements OnInit {
   doshowOTPEmailContainer() {
     this.showOTPContainer = false;
     this.showOTPEmailContainer = true;
+  }
+  resendViaEmail() {
+      this.user_details.userProfile.email = this.email;
+      this.resendOtp(this.user_details);
+      this.resetCounter(this.refreshTime);
+      this.checking_email_otpsuccess = true;
+    this.setMessage('email', this.email);
+  }
+  doCancelEmailOTP() {
+    this.resetApiErrors();
+    this.showOTPEmailContainer = false;
+    this.showOTPContainer = true;
+    this.resetCounterVal = 0;
+    this.otp_mobile = null;
   }
 }
