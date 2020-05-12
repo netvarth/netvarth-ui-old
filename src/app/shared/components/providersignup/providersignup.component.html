@@ -231,8 +231,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <label>OTP is sent to Your Mobile Number</label>		
                                 </div>
                                 <mat-form-field>
-                                    <input class="number-ip-sm" matInput placeholder="Enter OTP"
-                                    autocomplete="off" (keypress)="removSpecChar($event)"
+                                    <input class="number-ip-sm" matInput placeholder="Enter OTP" [(ngModel)]="otp"
+                                    autocomplete="off" (keypress)="removSpecChar($event)" 
                                       maxlength="5">
                                       
                                     

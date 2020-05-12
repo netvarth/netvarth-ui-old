@@ -454,37 +454,26 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  onOtpSubmit(submit_data) {
+  onOtpSubmit() {
     this.actionstarted = true;
     this.resetApiErrors();
-    if (this.is_provider === 'true') {
-      this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
+    return new Promise((resolve, reject) => {
+      this.shared_services.OtpSignUpProviderValidate(this.otp)
         .subscribe(
           () => {
             this.active_step = 4;
             this.actionstarted = false;
-            this.otp = submit_data.phone_otp;
+            // this.otp = submit_data.phone_otp;
             this.createForm();
+            resolve();
           },
           error => {
             this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
-    } else {
-      this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.otp = submit_data.phone_otp;
-            this.createForm();
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
-    }
+    });
   }
   skipHearus() {
     this.resetApiErrors();
@@ -529,37 +518,39 @@ export class ProvidersignupComponent implements OnInit {
   onPasswordSubmit() {
     this.actionstarted = true;
     this.resetApiErrors();
-    
-    const ob = this;
-    const post_data = { password: this.spForm.get('new_password').value };
-    this.shared_services.ProviderSetPassword(this.otp, post_data)
-      .subscribe(
-        () => {
-          this.actionstarted = false;
-          const login_data = {
-            'countryCode': '+91',
-            'loginId': this.user_details.userProfile.primaryMobileNo,
-            'password': post_data.password
-          };
-          if (this.ynw_credentials != null) {
-            this.shared_functions.doLogout().then(() => {
+    this.onOtpSubmit().then(data => {
+      const ob = this;
+      const post_data = { password: this.spForm.get('new_password').value };
+      this.shared_services.ProviderSetPassword(this.otp, post_data)
+        .subscribe(
+          () => {
+            this.actionstarted = false;
+            const login_data = {
+              'countryCode': '+91',
+              'loginId': this.user_details.userProfile.primaryMobileNo,
+              'password': post_data.password
+            };
+            if (this.ynw_credentials != null) {
+              this.shared_functions.doLogout().then(() => {
+                this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+                this.shared_functions.providerLogin(login_data);
+                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              });
+            } else {
               this.shared_functions.setitemonLocalStorage('new_provider', 'true');
               this.shared_functions.providerLogin(login_data);
               const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
               this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-            });
-          } else {
-            this.shared_functions.setitemonLocalStorage('new_provider', 'true');
-            this.shared_functions.providerLogin(login_data);
-            const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-            this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            }
+          },
+          error => {
+            this.actionstarted = false;
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
-        },
-        error => {
-          this.actionstarted = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-        }
-      );
+        );
+    });
+   
   }
   resetApiErrors() {
     this.api_error = null;
