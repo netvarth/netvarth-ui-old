@@ -9,6 +9,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providersignup',
@@ -54,6 +55,8 @@ export class ProvidersignupComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     enableSearchFilter: true,
     classes: 'myclass custom-class'
+    
+    
   };
   selectedDomain = null;
   selectedSubDomain = null;
@@ -93,6 +96,32 @@ export class ProvidersignupComponent implements OnInit {
   domainicons: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doci' },
   };
+ 
+  enter_otp_cap = Messages.ENTER_OTP_CAP;
+ 
+  resend_otp_to_cap = Messages.RESEND_OTP_TO_CAP;
+  email_id_cap = Messages.EMAIL_ID_CAP;
+  mobile_cap = Messages.CUSTOMER_MOBILE_CAP;
+  resend_otp_email = Messages.RESEND_OTP_EMAIL_CAP;
+  resend_otp_opt_active_cap = Messages.RESEND_OTP_OPT_ACTIVE_IN_CAP;
+  seconds_cap = Messages.SECONDS_CAP;
+  enter_email_cap = Messages.ENTER_EMAIL_CAP;
+  resend_btn_cap = Messages.RESEND_BTN;
+ 
+
+  otp_form: FormGroup;
+  email_form: FormGroup;
+  buttonclicked = false;
+  email_otp_req = false;
+  otp_email = null;
+  message;
+  showOTPContainer = true;
+  showOTPEmailContainer = false;
+  checking_email_otpsuccess = false;
+  resetCounterVal;
+  cronHandle: Subscription;
+  refreshTime = 30;
+  otp_mobile = null;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
@@ -140,7 +169,7 @@ export class ProvidersignupComponent implements OnInit {
           this.business_domains = data;
           this.selectedDomain = this.business_domains[0];
           this.selectedSubDomain = this.selectedDomain.subDomains[0];
-          this.subdomainlist = this.selectedDomain.subDomains;
+          // this.subdomainlist = this.selectedDomain.subDomains;
           this.getPackages();
           // this.setDomain(0);
         },
@@ -412,6 +441,8 @@ export class ProvidersignupComponent implements OnInit {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
           }
           this.active_step = 3;
+          this.createpasswordform();
+          
         },
         error => {
           this.actionstarted = false;
@@ -480,7 +511,7 @@ export class ProvidersignupComponent implements OnInit {
       this.shared_services.saveReferralInfo(this.otp, post_data)
         .subscribe(
           () => {
-            this.createpasswordform();
+            
             this.active_step = 5;
             this.actionstarted = false;
             this.createForm();
@@ -498,6 +529,7 @@ export class ProvidersignupComponent implements OnInit {
   onPasswordSubmit() {
     this.actionstarted = true;
     this.resetApiErrors();
+    
     const ob = this;
     const post_data = { password: this.spForm.get('new_password').value };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
@@ -646,8 +678,9 @@ export class ProvidersignupComponent implements OnInit {
   showotpsection() {
     this.active_step = 3;
   }
-  subdomSelection(subdomain) {
+  subdomSelection(subdomain,domain) {
     this.selectedSubDomain = subdomain;
+    this.selectedDomain = domain;
   }
   saleschannelselection(hearus) {
     this.hearus = hearus;
@@ -662,5 +695,35 @@ export class ProvidersignupComponent implements OnInit {
       confirm_password: ['', Validators.compose(
         [Validators.required])],
     });
+  }
+  removSpecChar(evt) {
+    return this.shared_functions.removSpecChar(evt);
+  }
+  resendOTPMobile() {
+    this.resetCounter(this.refreshTime);
+    if (this.user_details.userProfile !== undefined) {
+      this.user_details.userProfile.email = null;
+    }
+    // delete this.submitdata.userProfile.email;
+    this.resendOtp(this.user_details);
+   
+  }
+  resetCounter(val) {
+    this.resetCounterVal = val;
+  }
+  setResendViaEmail() {
+    this.doshowOTPEmailContainer();
+    this.resetApiErrors();
+    
+    if (this.user_details.userProfile && this.user_details.userProfile.email) {
+      // this.email_form.get('otp_email').setValue(this.user_details.userProfile.email);
+    }
+    this.email_otp_req = true;
+    this.showOTPEmailContainer = true;
+    this.showOTPContainer = false;
+  }
+  doshowOTPEmailContainer() {
+    this.showOTPContainer = false;
+    this.showOTPEmailContainer = true;
   }
 }
