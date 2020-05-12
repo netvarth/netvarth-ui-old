@@ -642,8 +642,12 @@ export class SharedServices {
     const url = 'consumer/donation/services?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-  getWaitlistDetailsbyId(encId) {
+  getCheckinbyEncId(encId) {
     const url = 'consumer/waitlist/enc/' + encId;
+    return this.servicemeta.httpGet(url);
+  }
+  getApptbyEncId(encId) {
+    const url = 'consumer/appointment/enc/' + encId;
     return this.servicemeta.httpGet(url);
   }
   getServicesforAppontmntByLocationId(locid) {

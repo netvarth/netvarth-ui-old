@@ -9,8 +9,8 @@ import { BusinessPageComponent } from './shared/components/business-page/busines
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
-import { WaitlistDetailsComponent } from './shared/components/waitlist-details/waitlist-details.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
+import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -42,7 +42,8 @@ const routes: Routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
-    { path: ':type/staus/:id', component: WaitlistDetailsComponent },
+    { path: ':type/status/:id', component: CheckYourStatusComponent },
+    // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
     // { path: '**', redirectTo: 'not-found' }
 ];

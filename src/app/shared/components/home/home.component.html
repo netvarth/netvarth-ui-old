@@ -30,10 +30,13 @@
                 <div class="vc-column-innner-wrapper">
                     <h2 class="section-title no-padding black-text">Know Your Status</h2>
                 </div>
-                You can know the status of your appointment or check-in status by clicking the following buttons 
-                <a (click)="checkinDetailsView()()" target="_self"
+                You can know the status of your Appointment or Check-in statuses by clicking the following buttons 
+                <a (click)="knowCheckinStatus()" target="_self"
+                        class="inner-link button btn margin-top-30px highlight-button-dark btn-small mgn-rt-10">
+                        Check Your Check-in Status</a>
+                        <a (click)="knowApptStatus()" target="_self"
                         class="inner-link button btn margin-top-30px highlight-button-dark btn-small">
-                        Click Here</a>
+                        Check Your Appointment Status</a>
             </div>
         </div>
     </div>

@@ -1259,7 +1259,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url, null, filter);
    }
    getApptlistMgr() {
-      const url = 'provider/settings/apptMgr/';
+      const url = 'provider/settings/apptMgr';
       return this.servicemeta.httpGet(url);
    }
    setAcceptOnlineAppointment(status) {

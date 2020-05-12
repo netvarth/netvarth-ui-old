@@ -1187,7 +1187,7 @@ sup {
   font-size: .75rem;
 }
 
-.consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext span {
+.consumer-dash .card.c-checkins .outer .banner .item .details .lt .lt0.payment .paytext span {
   color: darkorange !important;
 }
 
@@ -2224,7 +2224,7 @@ sup {
   clear: both;
 }
 
-.consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .location .icon-location:before {
+.consumer-dash .card.c-checkins .outer .banner  .item .header .lt .location .icon-location:before {
   color: #3c8dbc;
 }
 
@@ -6714,7 +6714,7 @@ li.separator.setsplit {
 
 .service {
   line-height: 15px;
-  font-size: smaller;
+  font-size: small;
 }
 
 .checkin-label {

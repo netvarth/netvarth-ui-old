@@ -64,11 +64,11 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
-import { ProvidersignupComponent } from './shared/components/providersignup/providersignup.component';
 import { ForgotPasswordModule } from './shared/components/forgot-password/forgot-password.module';
 import { SetPasswwordModule } from './shared/components/set-password-form/set-password-form.module';
-import { WaitlistDetailsComponent } from './shared/components/waitlist-details/waitlist-details.component';
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
+import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
+import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 
 
 
@@ -94,7 +94,7 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
     ConsumerJoinComponent,
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
-    WaitlistDetailsComponent,
+    CheckYourStatusComponent,
     JdnComponent
     // PhomeComponent,
   ],
@@ -114,6 +114,7 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
   ],
   imports: [
     CapitalizeFirstPipeModule,
+    BreadCrumbModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
