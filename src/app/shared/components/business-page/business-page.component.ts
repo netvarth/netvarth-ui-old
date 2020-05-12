@@ -201,6 +201,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   api_loading = false;
   userType = '';
   pageFound = false;
+  results_data;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -359,6 +360,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.result_data = res;
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
+            if (this.locationjson) {
+              for (const i in this.locationjson) {
+                this.results_data = this.locationjson[i];
+              }
+            }
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               if (this.userType === 'consumer') {
@@ -1056,6 +1062,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.redirectToHistory();
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
+        } else if (passParam['callback'] === 'donation') {
+          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else {
           this.getFavProviders();
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
@@ -1088,6 +1096,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.redirectToHistory();
         } else if (passParam['callback'] === 'fav') {
           this.getFavProviders(passParam['mod']);
+        } else if (passParam['callback'] === 'donation') {
+          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else {
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
@@ -1435,5 +1445,26 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
     this.claimdialogRef.afterClosed().subscribe(result => {
     });
+  }
+  payClicked(locid, locname, cdate, chdatereq) {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.showDonation(locid, locname, cdate, 'consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
+      this.doLogin('consumer', passParam);
+    }
+  }
+  showDonation(locid, locname, curdate, origin?) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
+       }
+    };
+    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
 }
