@@ -305,7 +305,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text"
-                                        placeholder="Time Slot (min)" formControlName="timeSlot"
+                                        placeholder="Time Slot (min) *" formControlName="timeSlot"
                                         autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
