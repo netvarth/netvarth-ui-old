@@ -82,45 +82,46 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
             <div class="container1">
                 <div class="signup-content">
                     <div class="signup-form1">
-                        
+
                         <div class="col-md-12">
                             <h1 class="form-title">Select your domain </h1>
-                           
-                            <div  class="col-md-6 no-padding "  *ngFor="let domain of business_domains">
-                               
-                                
-                                        <mat-accordion class="acc-btn">
-                                          <mat-expansion-panel>
-                                            <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                                              <mat-panel-title class="block-level"> 
+
+                            <div class="col-md-6 no-padding " *ngFor="let domain of business_domains">
+
+
+                                <mat-accordion class="acc-btn">
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
+                                            class="acc-header">
+                                            <mat-panel-title class="block-level">
                                                 <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
-                                                *ngIf="domainSettings[domain.domain]">
-                                            </div>
-                                            <h3>{{domain.displayName}}&nbsp; </h3>
-                                                  <!-- <h3>{{domain.displayName}}</h3> -->
-                                               
-                                              </mat-panel-title>
-                                            </mat-expansion-panel-header>
-                                            <div *ngIf="domain && domain.subDomains">
+                                                    *ngIf="domainSettings[domain.domain]">
+                                                </div>
+                                                <h3>{{domain.displayName}}&nbsp; </h3>
+                                                <!-- <h3>{{domain.displayName}}</h3> -->
+
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div *ngIf="domain && domain.subDomains">
                                             <ul *ngFor="let subdomain of domain.subDomains">
                                                 <li [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain"
                                                     (click)="subdomSelection(subdomain,domain)">
-                                                   
+
                                                     <h3>{{subdomain.displayName}}&nbsp; </h3>
                                                     <p>&nbsp;</p>
                                                 </li>
                                             </ul>
                                         </div>
-                                           
-                                          </mat-expansion-panel>
-                                        </mat-accordion>
+
+                                    </mat-expansion-panel>
+                                </mat-accordion>
 
                             </div>
-                           
+
 
                         </div>
                         <div class="clearfix"></div>
-                       
+
 
 
 
@@ -140,23 +141,23 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 </li>
                             </ul>
                         </div> -->
-                        
-                    <!-- </div> -->
-                    <!-- <div class="signup-image">
+
+                        <!-- </div> -->
+                        <!-- <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/Domain-01.png" alt="sing up image"></figure>
                         <a href="#" class="signup-image-link">I am already member</a>
                     </div> -->
-                    <div class="col-md-6 control">
-                        <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
-                                (click)="showregistersection()">
+                        <div class="col-md-6 control">
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submitback" value="Back"
+                                    (click)="showregistersection()">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Send Otp"
-                                (click)="onSubmit()">
+                                    (click)="onSubmit()">
+                            </div>
                         </div>
                     </div>
-                    </div>
                 </div>
-               
+
             </div>
         </section>
     </div>
@@ -209,96 +210,100 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 </div>
                                 <div class="form-group">
                                     <label for="re-enter"></label>
-                                    <input type="password" formControlName="confirm_password" name="passsword" id="password"
-                                        placeholder="Re-enter password*" />
+                                    <input type="password" formControlName="confirm_password" name="passsword"
+                                        id="password" placeholder="Re-enter password*" />
                                     <app-field-error-display [displayError]="true" errorMsg="{{api_error}}">
                                     </app-field-error-display>
                                 </div>
                                 <!-- <div class="success"></div>
                                 <form id="frm-mobile-verification"> -->
-                
-                                    <!-- <div class="example-container otpouter">
+
+                                <!-- <div class="example-container otpouter">
                                         <app-providerotp [type]="'signup'" [submitdata]="user_details"
                                             (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
                                             [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
                                             [resendemailotpsuccess]="resendemailotpsuccess">
                                         </app-providerotp>
                                     </div> -->
-                    
-                                   
-                                </form>
 
-                                <div *ngIf="showOTPContainer">
+
+                            </form>
+
+                            <div *ngIf="showOTPContainer">
                                 <div class="form-row">
-                                    <label>OTP is sent to Your Mobile Number</label>		
+                                    <label>OTP is sent to Your Mobile Number</label>
                                 </div>
                                 <mat-form-field>
                                     <input class="number-ip-sm" matInput placeholder="Enter OTP" [(ngModel)]="otp"
-                                    autocomplete="off" (keypress)="removSpecChar($event)" 
-                                      maxlength="5">
-                                      
-                                    
-                                  </mat-form-field>
-                                  
-                                  <!-- <div class="error"> -->
-                                  <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
+                                        autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
+
+
+                                </mat-form-field>
+
+                                <!-- <div class="error"> -->
+                                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
                                     errorMsg="Please enter a valid OTP.">
                                   </app-field-error-display> -->
                                 <!-- </div> -->
                                 <mat-dialog-actions>
-                                  <div class="resendouter" *ngIf="resetCounterVal==0">
-                                    <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
-                                        Email</ng-container></span>
-                                    <ul class="info-lst">
-                                      <span class="black">Having a problem with your phone? &nbsp;<span (click)="setResendViaEmail()"
-                                          mat-button>{{resend_otp_email}}</span></span>
-                                    </ul>
-                                  </div>
-                                  <div class="counter-outer" style="font-size: 0.90em" *ngIf="resetCounterVal>0">
-                                    {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
-                                  </div>
+                                    <div class="resendouter" *ngIf="resetCounterVal==0">
+                                        <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}}
+                                            <ng-container *ngIf="type=='change_email'">
+                                                Email</ng-container></span>
+                                        <ul class="info-lst">
+                                            <span class="black">Having a problem with your phone? &nbsp;<span
+                                                    (click)="setResendViaEmail()"
+                                                    mat-button>{{resend_otp_email}}</span></span>
+                                        </ul>
+                                    </div>
+                                    <div class="counter-outer" style="font-size: 0.90em" *ngIf="resetCounterVal>0">
+                                        {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span>
+                                        {{seconds_cap}}
+                                    </div>
                                 </mat-dialog-actions>
                                 <div class="form-group form-button">
-                                    <input type="submit" name="signup" id="signup" class="form-submit" value="join Jaldee"
-                                        (click)="onPasswordSubmit()">
+                                    <input type="submit" name="signup" id="signup" class="form-submit"
+                                        value="join Jaldee" (click)="onPasswordSubmit()">
                                 </div>
                             </div>
 
                             <ng-container *ngIf="showOTPEmailContainer">
                                 <div [ngClass]="{'cust-loginpge-color':consumerlogin}">
-                                  <!-- <h1> &nbsp;</h1> -->
-                                  <!-- <form [formGroup]="email_form" novalidate *ngIf="email_otp_req"
+                                    <!-- <h1> &nbsp;</h1> -->
+                                    <!-- <form [formGroup]="email_form" novalidate *ngIf="email_otp_req"
                                     (ngSubmit)="email_form.valid && resendViaEmail(email_form.value)" (keyup)="doResetApiErrors()"> -->
                                     <mat-dialog-content>
-                                      <div class="form-group pholder">
-                                        <mat-form-field>
-                                          <input type="email" matInput  [(ngModel)]="email"
-                                            placeholder="Enter your email id" autocomplete="off" />
-                                        </mat-form-field>
-                              
-                                        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
+                                        <div class="form-group pholder">
+                                            <mat-form-field>
+                                                <input type="email" matInput [(ngModel)]="email"
+                                                    placeholder="Enter your email id" autocomplete="off" />
+                                            </mat-form-field>
+
+                                            <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(email_form,'otp_email')"
                                           errorMsg="Please enter a valid email.">
                                         </app-field-error-display> -->
-                                      </div>
+                                        </div>
                                     </mat-dialog-content>
-                              
-                              
+
+
                                     <mat-dialog-actions>
-                                      <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                        <button type="button" class="cs-btn bt2" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
-                                        <button (click)="resendViaEmail()" mat-button class="cs-btn bt1">{{resend_btn_cap}}</button>
-                                      </div>
+                                        <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                            <button type="button" class="cs-btn bt2"
+                                                (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+                                            <button (click)="resendViaEmail()" mat-button
+                                                class="cs-btn bt1">{{resend_btn_cap}}</button>
+                                        </div>
                                     </mat-dialog-actions>
-                                  <!-- </form> -->
+                                    <!-- </form> -->
                                 </div>
-                              </ng-container>
-                       </div>
-                       <!-- <div class="signup-image">
+                            </ng-container>
+                        </div>
+                        <!-- <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/signup-image.jpg"></figure>
                        </div> -->
-                        
+
                     </div>
-                   
+
                 </div>
             </div>
         </section>
@@ -397,14 +402,14 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     (click)="onPasswordSubmit()">
                             </div>
                         </form> -->
-                        <!-- <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+        <!-- <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
     (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form> -->
-                    </div>
-                    <!-- <div class="signup-image">
+    </div>
+    <!-- <div class="signup-image">
                         <figure><img src="../../../../assets/images/home/signup-image.jpg" alt="sing up image"></figure>
                         <a href="#" class="signup-image-link">I am already member</a>
                     </div> -->
-                <!-- </div>
+    <!-- </div>
             </div>
         </section>
     </div> -->
