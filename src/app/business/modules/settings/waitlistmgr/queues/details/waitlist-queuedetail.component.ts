@@ -84,10 +84,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
   selected_location;
   selected_locationId;
   api_loading1 = true;
-  prefixName;
-  suffixName;
+  prefixName = '';
+  suffixName = '';
   batchStatus = false;
   showEditSection = false;
+  qprefixName = '';
+  qsuffixName = '';
+  qbatchStatus = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -236,6 +239,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.queue_data = data;
+          this.batchStatus = this.queue_data.batch;
           if (this.queue_data.batchPatternSettings) {
             this.prefixName = this.queue_data.batchPatternSettings.prefix;
             this.suffixName = this.queue_data.batchPatternSettings.suffix;
@@ -404,6 +408,16 @@ export class WaitlistQueueDetailComponent implements OnInit {
       tokennum: this.queue_data.tokenStarts || null
     });
     // this.amForm.get('qlocation').disable();
+    this.qbatchStatus = this.queue_data.batch;
+    if (this.queue_data.batchPatternSettings) {
+      this.qprefixName = this.queue_data.batchPatternSettings.prefix;
+      this.qsuffixName = this.queue_data.batchPatternSettings.suffix;
+    }
+    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
+      this.showEditSection = true;
+    } else {
+      this.showEditSection = false;
+    }
     this.selday_arr = [];
     // extracting the selected days
     for (let j = 0; j < this.queue_data.queueSchedule.repeatIntervals.length; j++) {
@@ -595,8 +609,14 @@ export class WaitlistQueueDetailComponent implements OnInit {
         },
         'services': selser,
         'tokenStarts': form_data.tokennum,
+        "batch": this.qbatchStatus,
+        "batchPatternSettings": {
+          "prefix": this.qprefixName,
+          "suffix": this.qsuffixName
+        }
         // 'timeInterval': form_data.timeSlot
       };
+      console.log(post_data);
       if (this.action === 'edit') {
         this.editProviderQueue(post_data);
       } else {
@@ -798,6 +818,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     const status = (event.checked) ? 'enabled' : 'disabled';
     this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
       this.batchStatus = event.checked;
+      this.getQueueDetail();
      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
     });
   
@@ -819,6 +840,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
    }
 
   changebatchStatus(event){
+    this.qbatchStatus = event.checked;
     const status = (event.checked) ? 'enabled' : 'disabled';
     if(status === 'enabled')
     {

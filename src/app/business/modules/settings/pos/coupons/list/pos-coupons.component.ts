@@ -61,6 +61,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   errorExist = false;
   active_user;
   domain;
+  couponError = '';
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   constructor(private provider_servicesobj: ProviderServices,
@@ -98,6 +99,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
       },
         error => {
           this.errorExist = true;
+          this.couponError = error.error;
           // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
