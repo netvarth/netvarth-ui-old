@@ -104,6 +104,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   doResetApiErrors() {
     // this.message = null;
     this.resetApiErrors.emit();
+    this.buttonclicked = false;
   }
 
   resendOTPMobile() {

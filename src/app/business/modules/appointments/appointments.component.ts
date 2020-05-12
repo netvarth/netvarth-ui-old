@@ -1197,9 +1197,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['gender-eq'] = this.filter.gender;
       }
     }
-    // if (this.selected_location && this.selected_location.id) {
-    //   api_filter['location-eq'] = this.selected_location.id;
-    // }
+    if (this.selected_location && this.selected_location.id) {
+      api_filter['location-eq'] = this.selected_location.id;
+    }
     return api_filter;
   }
   setPaginationFilter(api_filter) {
