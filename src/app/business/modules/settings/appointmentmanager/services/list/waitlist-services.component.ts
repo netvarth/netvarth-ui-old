@@ -36,6 +36,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     domain: any;
     trackStatus: string;
     serv_list;
+    liveTrackStatus: any;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -44,6 +45,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.liveTrackStatus = data.livetrack;
+            });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
