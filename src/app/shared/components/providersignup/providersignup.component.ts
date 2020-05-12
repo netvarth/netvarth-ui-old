@@ -9,7 +9,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { Subscription } from 'rxjs';
+import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providersignup',
@@ -442,7 +442,13 @@ export class ProvidersignupComponent implements OnInit {
           }
           this.active_step = 3;
           this.createpasswordform();
-          
+          this.resetCounter(this.refreshTime);
+          this.cronHandle = observableInterval(1000).subscribe(() => {
+            if (this.resetCounterVal > 0) {
+              this.resetCounterVal = this.resetCounterVal - 1;
+            }
+            // this.reloadAPIs();
+          });
         },
         error => {
           this.actionstarted = false;
