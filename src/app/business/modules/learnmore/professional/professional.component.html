@@ -414,20 +414,18 @@
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
                                                 (click)="handleScroll('basic-information','jaldeeonline')">Profile
-                                                Name and
-                                                Summary</span>
+                                                Name and Summary</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
                                         <h6 id="basic-information">Basic Information</h6>
-                                        <span>It displays the Basic information about a business given by the provider
-                                            at the time
-                                            of
-                                            initial profile setup. The provider is allowed to edit each section under
-                                            “Basic
-                                            Information“.</span>
-                                        <span>To increase the client acquisition fill this section with appropriate
+                                        <span>It displays the Basic information about a business given by the doctor
+                                            at
+                                            the time of
+                                            initial profile setup. The doctor is allowed to edit each section under
+                                            “Basic Information".</span>
+                                        <span>To increase the patient acquisition fill this section with appropriate
                                             details.</span>
                                         <ol class="ol-normal">
                                             <li>Click the edit button (pen symbol) to change the business name and
@@ -435,8 +433,7 @@
                                             <li>Click on the image to change the Profile picture and upload a new one.
                                             </li>
                                             <li>Images may include the photograph of your clinic, a photograph of the
-                                                provider, etc.
-                                            </li>
+                                                doctor, etc.</li>
                                         </ol>
 
 
@@ -444,92 +441,84 @@
                                             <section>
                                                 <div class="fweight">SEARCHABLE - YES <span
                                                         class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                            Searchable label indicates that clients can search for the
-                                                            provider
-                                                            using
+                                                            Searchable label indicates that patients can search for the
+                                                            doctor using
                                                             mentioned attributes.)</i></span></div>
                                                 <div class="fweight">VIEWABLE - YES <span
                                                         class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                            Viewable label indicates that clients can only view the
+                                                            Viewable label indicates that patients can only view the
                                                             attributes in
-                                                            providers profile in search results.)</i></span></div>
+                                                            doctors
+                                                            profile in search results.)</i></span></div>
                                             </section><br>
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="false">
-                                                    <mat-expansion-panel-header expandedHeight="48px"
-                                                        collapsedHeight="32px">
-                                                        <mat-panel-title>
-                                                            <span class="helpcontent"
-                                                                (click)="handleScroll('settings-locations','checkinmanager')">
-                                                                Location</span>
-                                                        </mat-panel-title>
-                                                    </mat-expansion-panel-header>
-                                                    <div class="helpcontent">
-                                                        <ul class="ul-normal abc">
+                                        </div>
+                                    </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                            <mat-expansion-panel [expanded]="showlocation && showprofilesearch">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                    class="accordion">
+                                                    <mat-panel-title class="accordion-title">
+                                                        <span class="helpcontent"
+                                                            (click)="handleScroll('location','jaldeeonline')">location</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+            
+                                                <div class="helpcontent">
+                                                     <ul class="ul-normal abc">
                                                             <li>The information related to the business’s location comes
                                                                 under this
                                                                 section.
                                                             </li>
-                                                            <li>Initially the location added to the provider profile
-                                                                during the
-                                                                initial
+                                                            <li>Initially the location added to the doctor profile
+                                                                during the initial
                                                                 profile set up, will be automatically set as the base
                                                                 location.</li>
-                                                            <li>The provider can edit the base location as well. To do
-                                                                so, click on
-                                                                the
-                                                                edit
-                                                                button.</li>
-                                                            <li>To add working hours to the location, a provider needs
-                                                                to go to
-                                                                <strong>“Locations“</strong> under <strong>"Check-In
-                                                                    Manager“</strong>.
+                                                            <li>The doctor can add multiple locations of the business.
+                                                                The link to add a
+                                                                new
+                                                                location is given here.</li>
+                                                            <li>If the business has multiple locations, then, only the
+                                                                base location is
+                                                                displayed here. The doctor can edit the base location
+                                                                as
+                                                                well. To do so,
+                                                                click on the edit button.</li>
+                                                            <li>To add working hours to the location, a doctor needs
+                                                                to
+                                                                go to
+                                                                <strong>“Locations"</strong> under <strong>“Check-In
+                                                                    Manager"</strong>.
                                                             </li>
                                                         </ul>
-                                                        <section>
-                                                            <div class="fweight">SEARCHABLE - YES <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Searchable label
-                                                                        indicates that clients can search for the
-                                                                        provider using
-                                                                        mentioned
-                                                                        attributes.)</i></span></div>
-                                                            <div class="fweight">VIEWABLE - YES <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Viewable label
-                                                                        indicates
-                                                                        that clients can only view the attributes in
-                                                                        providers
-                                                                        profile
-                                                                        in
-                                                                        search results.)</i></span></div>
-                                                        </section><br>
+                                                       
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
-                                                    <mat-expansion-panel-header expandedHeight="48px"
-                                                        collapsedHeight="32px">
-                                                        <mat-panel-title>
-                                                            <span class="helpcontent"> Location Amenities</span>
-                                                        </mat-panel-title>
-                                                    </mat-expansion-panel-header>
+                                                    <mat-expansion-panel [expanded]="showlocationAmenities && showprofilesearch">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                            class="accordion">
+                                                            <mat-panel-title class="accordion-title">
+                                                                <span class="helpcontent"
+                                                                    (click)="handleScroll('locationAmenities','jaldeeonline')">locationAmenities</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                    
                                                     <div class="helpcontent">
                                                         <ul class="ul-normal abc">
                                                             <li>Location amenities are resources, conveniences,
-                                                                facilities or
-                                                                benefits
-                                                                offered to the clients for their use.</li>
-                                                            <li>A provider can manage the location amenities here.
-                                                                Choose the
-                                                                available
-                                                                amenities from the list. The following table shows the
-                                                                location
-                                                                amenities
-                                                                for the <strong>Professional Consulting Sector</strong>.
+                                                                facilities or benefits offered to the
+                                                                patients for their use.</li>
+                                                            <li>A doctor can manage the location amenities here.
+                                                                Choose
+                                                                the available amenities from the
+                                                                list. The following table shows the location amenities
+                                                                for the <strong>Finance/Loan/Insurance Sector</strong>.
                                                             </li>
                                                         </ul>
+                                                    </div>
                                                         <br>
                                                         <div class="tscroll">
                                                             <tbody>
@@ -537,65 +526,45 @@
                                                                     <td class="td2">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="td2">Lawyers</td>
+                                                                    <td class="td2">Doctors</td>
                                                                     <td class="td3">
                                                                         <ul class="ul-normal">
                                                                             <li>24 hours</li>
+                                                                            <li>Emergency Services</li>
+                                                                            <li>Trauma Centre</li>
+                                                                            <li>First Aid</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="td2">Chartered Accountants</td>
+                                                                    <td class="td2">Dentists</td>
                                                                     <td class="td3">
                                                                         <ul class="ul-normal">
                                                                             <li>24 hours</li>
+                                                                            <li>Emergency Services</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="td2">Tax Consultants
+                                                                    <td class="td2">Alternate Medicine Practitioners
                                                                     </td>
                                                                     <td class="td3">
                                                                         <ul class="ul-normal">
                                                                             <li>24 hours</li>
+                                                                            <li>Emergency Services</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="td2">Civil Architects</td>
-                                                                    <td class="td3">
-                                                                        <ul class="ul-normal">
-                                                                            <li>24 hours</li>
-                                                                            <li>Parking</li>
-                                                                        </ul>
+                                                                    <td class="td2">Hospital
                                                                     </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="td2">Stockbroker</td>
                                                                     <td class="td3">
                                                                         <ul class="ul-normal">
                                                                             <li>24 hours</li>
-                                                                            <li>Parking</li>
-                                                                        </ul>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="td2">Auditor</td>
-                                                                    <td class="td3">
-                                                                        <ul class="ul-normal">
-                                                                            <li>24 hours</li>
-                                                                            <li>Parking</li>
-                                                                        </ul>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="td2">Geologist</td>
-                                                                    <td class="td3">
-                                                                        <ul class="ul-normal">
-                                                                            <li>24 hours</li>
+                                                                            <li>Emergency Services</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
@@ -605,77 +574,9 @@
                                                             </tr>
                                                             </tbody>
                                                         </div>
-                                                        <section>
-                                                            <div class="fweight">SEARCHABLE - YES <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Searchable label
-                                                                        indicates that clients can search for the
-                                                                        provider using
-                                                                        mentioned
-                                                                        attributes.)</i></span></div>
-                                                            <div class="fweight">VIEWABLE - YES <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Viewable label
-                                                                        indicates
-                                                                        that clients can only view the attributes in
-                                                                        provider
-                                                                        profile in
-                                                                        search results.)</i></span></div>
-                                                        </section><br>
-                                                    </div>
+                                                        
                                                 </mat-expansion-panel>
                                             </mat-accordion>
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="false">
-                                                    <mat-expansion-panel-header expandedHeight="48px"
-                                                        collapsedHeight="32px">
-                                                        <mat-panel-title>
-                                                            <span class="helpcontent"
-                                                                (click)="handleScroll('settings-time_windows','checkinmanager')">Working
-                                                                Hours</span>
-                                                        </mat-panel-title>
-                                                    </mat-expansion-panel-header>
-                                                    <div class="helpcontent">
-                                                        <span>Working hours of the base location are shown here. The
-                                                            provider can
-                                                            click
-                                                            here
-                                                            to redirect to the <strong>Queues</strong> page. Here
-                                                            provider
-                                                            can
-                                                            add or
-                                                            edit the working hours. The working hours for other business
-                                                            locations
-                                                            are
-                                                            also
-                                                            shown in this page.</span>
-                                                        <section>
-                                                            <div class="fweight">SEARCHABLE - NO <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Searchable label
-                                                                        indicates that clients can search for the
-                                                                        provider using
-                                                                        mentioned
-                                                                        attributes.)</i></span></div>
-                                                            <div class="fweight">VIEWABLE - YES <span
-                                                                    class="form-level-settings"><i>&nbsp;&nbsp;(The
-                                                                        Viewable label
-                                                                        indicates
-                                                                        that clients can only view the attributes in
-                                                                        providers
-                                                                        profile
-                                                                        in
-                                                                        search results.)</i></span></div>
-                                                        </section><br>
-                                                    </div>
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
-                                        </div>
-
-                                    </div>
-
-                                </mat-expansion-panel>
-                            </mat-accordion>
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showprofilesearch && showprivacysettings">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"

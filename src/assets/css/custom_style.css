@@ -1792,7 +1792,11 @@ sup {
     margin-top: 5px !important;
   }
 }
-
+@media only screen and (max-width: 640px) {
+   th, td, tr { 
+     font-size: .833rem !important;
+ }
+}
 .pwd_cancel_scr .mat-dialog-actions .bt2 {
   padding: 5px 10px !important
 }

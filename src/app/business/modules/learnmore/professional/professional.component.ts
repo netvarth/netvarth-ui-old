@@ -103,6 +103,8 @@ export class ProfessionalCareComponent implements OnInit {
   showdbdonations = false;
   showcheckins = false;
   showdelay = false;
+  showlocation = false;
+  showlocationAmenities = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -171,6 +173,12 @@ export class ProfessionalCareComponent implements OnInit {
       }
       if (childContent === 'basic-information') {
         this.showbasicinfrmtion = true;
+      }
+      if (childContent === 'location') {
+        this.showlocation = true;
+      }
+      if (childContent === 'locationAmenities') {
+        this.showlocationAmenities = true;
       }
       if (childContent === 'specializations') {
         this.showspecialization = true;

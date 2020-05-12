@@ -105,7 +105,8 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         } else if (serviceActionModel.action === 'edit') {
                             post_itemdata2.id = this.service_id;
                             this.updateService(post_itemdata2);
-                        } else if (serviceActionModel.action === 'changestatus') {
+                        }
+                         else if (serviceActionModel.action === 'changestatus') {
                             this.changeServiceStatus(post_itemdata2);
                         }
                     } else {

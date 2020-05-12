@@ -67,6 +67,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
   selected_user;
   domain: any;
+ 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -553,6 +554,10 @@ export class AdjustqueueDelayComponent implements OnInit {
     //     this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
     // }
   }
+  onCancel() {
+    this.route.navigate(['provider', 'check-ins']);
+    
+}
   resetApi() {
     this.api_error = null;
     this.api_success = null;
