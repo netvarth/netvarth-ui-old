@@ -203,6 +203,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   source;
   locationId;
   donation: any = [];
+  results_data;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -346,6 +347,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.result_data = res;
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
+            if (this.locationjson) {
+              for (const i in this.locationjson) {
+                this.results_data = this.locationjson[i];
+              }
+            }
             // this.search_data = this.result_data.hits.hit;
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
