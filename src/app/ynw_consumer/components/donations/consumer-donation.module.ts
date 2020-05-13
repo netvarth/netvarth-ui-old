@@ -12,11 +12,12 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerDonationsComponent } from './donations.component';
 import { ConsumerDonationComponent } from './details/consumer-donation.component';
+import { ConsumerDonationPaymentComponent } from './details/donation.component';
 
 @NgModule({
     declarations: [
         ConsumerDonationComponent,
-        // ConsumerDonationPaymentComponent,
+        ConsumerDonationPaymentComponent,
         ConsumerDonationsComponent
     ],
     imports: [

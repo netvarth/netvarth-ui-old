@@ -664,4 +664,16 @@ export class SharedServices {
     const url = 'consumer/' + mobile + '/check';
     return this.servicemeta.httpGet(url);
   }
+  updateAppointmentTravelMode(uid, id, data) {
+    const url = 'consumer/appointment/update/travelmode/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
+  addAppointmentLiveTrackDetails(uid, id, data) {
+    const url = 'consumer/appointment/saveMyLoc/' + uid + '?account=' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateAppointmentLiveTrackDetails(uid, id, data) {
+    const url = 'consumer/appointment/updateMyLoc/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

@@ -85,6 +85,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
     selected_locationId;
     api_loading1 = true;
     userId: any;
+    prefixName = '';
+    suffixName = '';
+    batchStatus = false;
+    showEditSection = false;
+    qprefixName = '';
+    qsuffixName = '';
+    qbatchStatus = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -248,6 +255,17 @@ export class WaitlistQueueDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    this.batchStatus = this.queue_data.batch;
+                    if (this.queue_data.batchPatternSettings) {
+                      this.prefixName = this.queue_data.batchPatternSettings.prefix;
+                      this.suffixName = this.queue_data.batchPatternSettings.suffix;
+                    }
+                    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
+                      this.showEditSection = true;
+                    } else {
+                      this.showEditSection = false;
+                    }
+                    
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
@@ -378,6 +396,16 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qserveonce: this.queue_data.parallelServing || null,
             // timeSlot: this.queue_data.timeInterval || 0
         });
+        this.qbatchStatus = this.queue_data.batch;
+    if (this.queue_data.batchPatternSettings) {
+      this.qprefixName = this.queue_data.batchPatternSettings.prefix;
+      this.qsuffixName = this.queue_data.batchPatternSettings.suffix;
+    }
+    if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
+      this.showEditSection = true;
+    } else {
+      this.showEditSection = false;
+    }
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
         // extracting the selected days
@@ -534,7 +562,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
                 'timeInterval': form_data.timeSlot,
-                'provider': this.userId
+                'provider': this.userId,
+                "batch": this.qbatchStatus,
+                "batchPatternSettings": {
+                  "prefix": this.qprefixName,
+                  "suffix": this.qsuffixName
+                }
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
@@ -733,4 +766,41 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
+
+    changeBatchStatus(event) {
+        const status = (event.checked) ? 'enabled' : 'disabled';
+        this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
+          this.batchStatus = event.checked;
+          this.getQueueDetail();
+         this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        });
+      
+       
+      }
+      addBatchName() {
+        const post_data = {
+          'prefix': this.prefixName,
+          'suffix': this.suffixName
+        };
+        this.provider_services.updateBatch(this.queue_id, post_data).subscribe(data => {
+          this.showEditSection = false;
+          this.getQueueDetail();
+          // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+        });
+      }
+      editBatchnames() {
+        this.showEditSection = true;
+       }
+    
+      changebatchStatus(event){
+        this.qbatchStatus = event.checked;
+        const status = (event.checked) ? 'enabled' : 'disabled';
+        if(status === 'enabled')
+        {
+          this.showEditSection = true;
+        }
+        else{
+          this.showEditSection = false;
+        }
+      } 
 }

@@ -72,16 +72,16 @@
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
                                             </div>
-                                            <!-- <div class="item">
-                                                <span class="ttle">Online check-ins</span> <span
-                                                    *ngIf="queue_data.onlineCheckIn">On</span><span
-                                                    *ngIf="!queue_data.onlineCheckIn">Off</span>
+                                            <div class="item">
+                                                <span class="ttle">Online Appointments</span> <span
+                                                    *ngIf="queue_data.todayAppt">On</span><span
+                                                    *ngIf="!queue_data.todayAppt">Off</span>
                                             </div>
-                                            <div class="item" *ngIf="!queue_data.instantQueue">
-                                                <span class="ttle">Future check-ins</span> <span
-                                                    *ngIf="queue_data.futureWaitlist">On</span><span
-                                                    *ngIf="!queue_data.futureWaitlist">Off</span>
-                                            </div> -->
+                                            <div class="item">
+                                                <span class="ttle">Future Appointments</span> <span
+                                                    *ngIf="queue_data.futureAppt">On</span><span
+                                                    *ngIf="!queue_data.futureAppt">Off</span>
+                                            </div>
                                         </div>
                                         <!-- <div class="c-ot row col-sm-12">
                                             <div class="item" style="display: flex;">
@@ -91,6 +91,57 @@
                                                 </mat-slide-toggle>
                                             </div>
                                         </div> -->
+                                        <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
+                                            <div class="mgn-up-10" style="display: flex;">
+                                                <h6> Batch mode </h6>
+                                                <mat-slide-toggle class="example-margin mgn-lt-10"
+                                                    [(ngModel)]="batchStatus" (change)="changeBatchStatus($event)">
+                                                </mat-slide-toggle>
+                                                <span class="greenc mgn-lt-5" *ngIf="batchStatus">
+                                                    Enabled  
+                                                </span>
+                                                <span class="disabled-text mgn-lt-5" *ngIf="!batchStatus">
+                                                    Disabled
+                                                </span>
+                                            </div>
+                                            <div class="mgn-up-10 ynw-common-form-nm" *ngIf="batchStatus">
+                                                <div class="c-ot" *ngIf="!showEditSection">
+                                                    <div class="item"
+                                                        *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
+                                                        <span class="ttle"> Prefix </span><span
+                                                            class="day">{{queue_data.batchName.prefix}}</span>
+                                                    </div>
+                                                    <div class="item"
+                                                        *ngIf="queue_data.batchName && queue_data.batchName.suffix && queue_data.batchName.suffix != ''">
+                                                        <span class="ttle"> Suffix </span><span
+                                                            class="day">{{queue_data.batchName.suffix}}</span>
+                                                    </div>
+                                                    <span class="editbt" (click)="editBatchnames()"></span>
+                                                </div>
+                                                <div *ngIf="showEditSection">
+                                                    <div class="item">
+                                                        <mat-form-field>
+                                                            <input
+                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                                matInput placeholder="Prefix" [(ngModel)]="prefixName"
+                                                                autocomplete="off">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="item">
+                                                        <mat-form-field>
+                                                            <input
+                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                                matInput placeholder="Suffix" [(ngModel)]="suffixName"
+                                                                autocomplete="off">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="mgn-up-20">
+                                                        <button class="btn bt3 btn-default" (click)="addBatchName()"
+                                                            type="button">ok</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -309,6 +360,48 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
+                            <div class="form-group" *ngIf="showAdvancedSettings"> 
+                                <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
+                                    <div class="mgn-up-10" style="display: flex;">
+                                        <h6> Batch mode </h6>
+                                            <mat-slide-toggle class="example-margin mgn-lt-10"
+                                                [ngModel]="sbatchStatus" (change)="changebatchStatus($event)" [ngModelOptions]="{standalone: true}">
+                                            </mat-slide-toggle>
+                                    </div>
+                                        <div *ngIf="showEditSection">
+                                            <div class="item">
+                                                <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Prefix" [(ngModel)]="sprefixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="item">
+                                                 <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="c-ot" *ngIf="!showEditSection">
+                                                <div class="item"
+                                                    *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
+                                                        <span class="ttle"> Prefix </span><span
+                                                        class="day">{{queue_data.batchName.prefix}}</span>
+                                                </div>
+                                                <div class="item"
+                                                    *ngIf="queue_data.batchName && queue_data.batchName.suffix && queue_data.batchName.suffix != ''">
+                                                    <span class="ttle"> Suffix </span><span
+                                                    class="day">{{queue_data.batchName.suffix}}</span>
+                                                </div>
+                                            </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+
+
                             <div class="col-md-12 no-padding" style="margin-top: 15px;display: inline-flex;">
                                 <button type="button" (click)="closeClick()" class="cs-btn bt2"
                                     [disabled]="disableButton">{{cancel_btn}}</button> &nbsp;

@@ -106,8 +106,8 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             const passdata = {
                 'travelMode': _this.travelMode
             };
-            _this.shared_services.updateTravelMode(_this.uuid, _this.accountId, passdata)
-                .subscribe(
+            _this.shared_services.updateAppointmentTravelMode(_this.uuid, _this.accountId, passdata)
+                .subscribe( 
                     data => {
                         resolve(data);
                     },
@@ -131,7 +131,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.addLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
+            _this.shared_services.addAppointmentLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -178,7 +178,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.updateLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
+            _this.shared_services.updateAppointmentLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);

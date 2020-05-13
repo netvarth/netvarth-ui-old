@@ -6,7 +6,7 @@ import { WaitlistuserSchedulesDetailComponent } from './details/waitlist-schedul
 import { WaitlistuserSchedulesRoutingModule } from './waitlist-schedules.routing.module';
 import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../../../shared/modules/common/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapitalizeFirstPipeModule } from '../../../../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../../../../shared/modules/form-message-display/form-message-display.module';
@@ -15,6 +15,7 @@ import { FormMessageDisplayModule } from '../../../../../../../shared/modules/fo
     imports: [
         CommonModule,
         BreadCrumbModule,
+        FormsModule,
         WaitlistuserSchedulesRoutingModule,
         LoadingSpinnerModule,
         MaterialModule,

@@ -8,7 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-consumer-donate-payment',
-    templateUrl: './payment.component.html'
+    templateUrl: './donation.component.html'
 })
 export class ConsumerDonationPaymentComponent implements OnInit {
     uuid: any;
