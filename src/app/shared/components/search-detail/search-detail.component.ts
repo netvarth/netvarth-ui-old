@@ -1894,28 +1894,25 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   //       });
   // }
   showServiceDetail(serv, busname) {
+    let servData;
     if (serv.serviceType === 'donationService') {
-      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-        disableClose: true,
-        data: {
-          bname: busname,
-          serdet: serv,
-          serv_type: 'donation'
-        }
-      });
+      servData = {
+        bname: busname,
+        serdet: serv,
+        serv_type: 'donation'
+      };
     } else {
-      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-        disableClose: true,
-        data: {
-          bname: busname,
-          serdet: serv
-        }
-      });
+      servData = {
+        bname: busname,
+        serdet: serv
+      };
     }
+    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
+      data: servData
+    });
     this.servicedialogRef.afterClosed().subscribe(result => {
       this.btn_clicked = false;
     });
