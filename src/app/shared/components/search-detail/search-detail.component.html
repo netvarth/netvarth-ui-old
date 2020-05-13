@@ -563,7 +563,7 @@
                                     <div class="donat-service">
                                         <span class="sub-title-donate">Donation Service(s)</span>
                                         <ul>
-                                            <li *ngFor="let donationService of search_result.fields.donation_services">
+                                            <li *ngFor="let donationService of search_result.fields.donation_services" (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'serviceClick')">
                                                 {{donationService}}</li>
                                         </ul>
                                     </div>

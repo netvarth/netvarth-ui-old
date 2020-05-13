@@ -21,9 +21,11 @@ export class ServiceDetailComponent implements OnInit {
   description_cap = Messages.DESCRIPTION_CAP;
   close_btn_cap = Messages.CLOSE_BTN;
   servc_detils = Messages.SERVCE_DETAILS;
+  donation_dtls = Messages.DONATION_DETAILS;
   service_duration = Messages.SERVICE_DURATION_CAP;
   api_error = null;
   api_success = null;
+  is_donation_serv = false;
   service;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -54,6 +56,9 @@ export class ServiceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.service = this.data.serdet;
+    if (this.data.serv_type) {
+      this.is_donation_serv = true;
+    }
     this.image_list_popup = [];
     if (this.service.hasOwnProperty('servicegallery')) {
       for (let i = 0; i < this.service.servicegallery.length; i++) {

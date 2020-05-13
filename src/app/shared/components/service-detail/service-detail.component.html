@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{data.bname | capitalizeFirst}} <span>{{servc_detils}}</span>
+<h1 class="mat-dialog-title">{{data.bname | capitalizeFirst}} <span *ngIf="!is_donation_serv">{{servc_detils}}</span> <span *ngIf="is_donation_serv">{{donation_dtls}}</span>
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -51,10 +51,31 @@
                     </span>
                 </div>
             </div>
-            <div class="outer5" *ngIf="data.serdet && data.serdet.serviceDuration">
+            <div class="outer5" *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
                 <div class="duration">
                     <span>{{service_duration}} : </span><span style="font-weight: bold">
                         {{data.serdet.serviceDuration}} mins
+                    </span>
+                </div>
+            </div>
+            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+                <div class="duration">
+                    <span>Min amount: </span><span style="font-weight: bold">
+                        {{data.serdet.minDonationAmount}}
+                    </span>
+                </div>
+            </div>
+            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+                <div class="duration">
+                    <span>Max amount : </span><span style="font-weight: bold">
+                        {{data.serdet.maxDonationAmount}}
+                    </span>
+                </div>
+            </div>
+            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+                <div class="duration">
+                    <span>Multiples : </span><span style="font-weight: bold">
+                        {{data.serdet.multiples}}
                     </span>
                 </div>
             </div>
