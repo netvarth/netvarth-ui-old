@@ -443,6 +443,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
         this.virtualCallingMode_status = data.virtualService;
         this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
+        this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
       });
   }
   handle_posStatus(event) {
