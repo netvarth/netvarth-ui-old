@@ -70,6 +70,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   server_date;
   trackMode: any = [];
   waitlists;
+  appointments: any = [];
   fav_providers: any = [];
   history;
   fav_providers_id_list = [];
@@ -218,6 +219,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
+    this.getAppointmentToday();
     this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
@@ -1124,5 +1126,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
+  }
+  getAppointmentToday(){
+    this.consumer_services.getAppointmentToday()
+      .subscribe(
+        data => {
+          this.appointments = data;
+          console.log("Appointments",this.appointments)
+          },
+        error => {
+        }
+      );
   }
 }

@@ -123,4 +123,8 @@ export class ConsumerServices {
     return this.servicemeta.httpPut(path);
   }
 
+  getAppointmentToday() {
+    const path = 'consumer/appointment/today';
+    return this.servicemeta.httpGet(path);
+  }
 }
