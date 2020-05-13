@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BreadCrumbModule } from '../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { WaitlistSchedulesComponent } from './list/waitlist-schedules.component';
 import { WaitlistSchedulesDetailComponent } from './details/waitlist-schedulesdetail.component';
@@ -18,6 +19,7 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
         WaitlistSchedulesRoutingModule,
         LoadingSpinnerModule,
         MaterialModule,
+        FormsModule,
         ReactiveFormsModule,
         NgbTimepickerModule,
         CapitalizeFirstPipeModule,

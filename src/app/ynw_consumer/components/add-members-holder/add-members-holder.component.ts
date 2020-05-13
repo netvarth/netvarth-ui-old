@@ -95,7 +95,6 @@ export class AddMembersHolderComponent implements OnInit {
     if (derror === '' && this.addmemberobj.dob === '') {
       derror = 'Please select the date of birth';
     }*/
-
     if (derror === '') {
       const post_data = {
         'userProfile': {
@@ -127,7 +126,7 @@ export class AddMembersHolderComponent implements OnInit {
               this.disableButton = false;
             });
       } else if (this.data.type === 'edit') {
-        post_data['user'] = this.data.member.user;
+        post_data.userProfile['id'] = this.data.member.user;
         this.shared_services.editMember(post_data)
           .subscribe(
             () => {

@@ -1373,4 +1373,12 @@ export class ProviderServices {
    getProviderUserSchedules(id) {
       return this.servicemeta.httpGet('provider/appointment/schedule?provider-eq=' + id);
    }
+   changeScheduleBatchStatus(queueId, status) {
+      const url = 'provider/appointment/schedules/batch/' + queueId + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   updateScheduleBatch(queueId, data) {
+      const url = 'provider/appointment/schedules/batch/pattern/' + queueId;
+      return this.servicemeta.httpPut(url, data);
+   }
 }

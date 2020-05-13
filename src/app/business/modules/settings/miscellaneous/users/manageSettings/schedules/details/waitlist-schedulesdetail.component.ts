@@ -85,6 +85,13 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     selected_locationId;
     api_loading1 = true;
     userId: any;
+    prefixName = '';
+    suffixName = '';
+    batchStatus = false;
+    showEditSection = false;
+    sprefixName = '';
+    ssuffixName = '';
+    sbatchStatus = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -248,6 +255,16 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    this.batchStatus = this.queue_data.batchEnable;
+                    if (this.queue_data.batchName) {
+                        this.prefixName = this.queue_data.batchName.prefix;
+                        this.suffixName = this.queue_data.batchName.suffix;
+                      }
+                      if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
+                        this.showEditSection = true;
+                      } else {
+                        this.showEditSection = false;
+                      }
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.apptSchedule) {
@@ -285,6 +302,40 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
       });
     this.api_loading1 = false;
   }
+//   getDepartments() {
+//     this.departments = [];
+//     this.api_loading1 = true;
+//     this.provider_services.getDepartments()
+//       .subscribe(
+//         data => {
+//           this.deptObj = data;
+//           this.filterbyDept = this.deptObj.filterByDept;
+//           this.departments = this.deptObj.departments;
+//           for (let i = 0; i < this.services_list.length; i++) {
+//             for (let j = 0; j < this.departments.length; j++) {
+//               for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+//                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
+//                   this.departments[j].serviceIds[k] = this.services_list[i].name;
+//                 }
+//               }
+//             }
+//           }
+//           for (let j = 0; j < this.departments.length; j++) {
+//             for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+//               // tslint:disable-next-line: radix
+//               if (parseInt(this.departments[j].serviceIds[k])) {
+//                 delete this.departments[j].serviceIds[k];
+//               }
+//             }
+//           }
+//           this.api_loading1 = false;
+//         },
+//         error => {
+//           this.api_loading1 = false;
+//           // this.sharedfunctionObj.apiErrorAutoHide(this, error);
+//         }
+//       );
+//   }
     goBack() {
         // this.router.navigate(['provider', 'settings', 'miscellaneous',
         //     'queues']);
@@ -378,6 +429,16 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             qserveonce: this.queue_data.parallelServing || null,
              timeSlot: this.queue_data.timeDuration || 0
         });
+        this.sbatchStatus = this.queue_data.batchEnable;
+        if (this.queue_data.batchName) {
+          this.sprefixName = this.queue_data.batchName.prefix;
+          this.ssuffixName = this.queue_data.batchName.suffix;
+        }
+        if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
+          this.showEditSection = true;
+        } else {
+          this.showEditSection = false;
+        }
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
         // extracting the selected days
@@ -534,7 +595,11 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
                 'provider': this.userId,
-                'batch':false
+                'batchEnable':this.sbatchStatus,
+                "batchName": {
+                    "prefix": this.sprefixName,
+                    "suffix": this.ssuffixName
+                  }
             }; 
             // schedulejson = {
             //     'recurringType': 'Weekly',
@@ -759,5 +824,43 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
+
+
+    addBatchName() {
+        const post_data = {
+          'prefix': this.prefixName,
+          'suffix': this.suffixName
+        };
+        this.provider_services.updateScheduleBatch(this.queue_id, post_data).subscribe(data => {
+          this.showEditSection = false;
+          this.getScheduleDetail();
+          // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+        });
+      }
+    editBatchnames() {
+        this.showEditSection = true;
+       }
+    changeBatchStatus(event) {
+        const status = (event.checked) ? 'enabled' : 'disabled';
+        this.provider_services.changeScheduleBatchStatus(this.queue_id, event.checked).subscribe(data => {
+          this.batchStatus = event.checked;
+          this.getScheduleDetail();
+         this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        });
+      
+       
+      }
+
+    changebatchStatus(event){
+        this.sbatchStatus = event.checked;
+        const status = (event.checked) ? 'enabled' : 'disabled';
+        if(status === 'enabled')
+        {
+          this.showEditSection = true;
+        }
+        else{
+          this.showEditSection = false;
+        }
+      } 
 }
 
