@@ -191,10 +191,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
     <!-- step4 otp section -->
     <div *ngIf="active_step==3">
         <section class="signup">
-            <div class="container2">
+            <div class="container1">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <div class="signup-form">
                             <h1 _ngcontent-qyo-c1="" class="form-title" style="
                             color: green;
                         ">Congratulations!</h1>
@@ -228,7 +227,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
 
 
                             </form>
-
+                           <div class="otpsection">
                             <div *ngIf="showOTPContainer">
                                 <div class="form-row">
                                     <label>OTP is sent to Your Mobile Number</label>
@@ -266,6 +265,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         value="join Jaldee" (click)="onPasswordSubmit()">
                                 </div>
                             </div>
+                        </div>
 
                             <ng-container *ngIf="showOTPEmailContainer">
                                 <div [ngClass]="{'cust-loginpge-color':consumerlogin}">
@@ -297,12 +297,13 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <!-- </form> -->
                                 </div>
                             </ng-container>
-                        </div>
-                        <!-- <div class="signup-image">
-                        <figure><img src="../../../../assets/images/home/signup-image.jpg"></figure>
-                       </div> -->
+                        
+                        
 
                     </div>
+                    <div class="signup-image">
+                        <figure><img src="../../../../assets/images/home/signup/password.png"></figure>
+                       </div>
 
                 </div>
             </div>

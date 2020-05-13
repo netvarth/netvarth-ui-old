@@ -340,7 +340,10 @@ label {
   -webkit-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
-  color: #222; }
+  color: #222; 
+  line-height: 0.1px;
+  border: black;
+}
 
 .label-has-error {
   top: 22%; }

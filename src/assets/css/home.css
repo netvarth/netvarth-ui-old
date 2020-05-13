@@ -6886,6 +6886,17 @@ margin-left: 70px;
      display: none;
 }
 }
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+  .banner_text_iner {
+     display: none;
+}
+}
+@media screen and (min-width: 0px) and (max-width: 1200px) {
+  .banner_text_iner {
+     
+     max-width:500px;
+}
+}
 @media screen and (min-width: 0px) and (max-width: 720px) {
   .container-login100 {
     
