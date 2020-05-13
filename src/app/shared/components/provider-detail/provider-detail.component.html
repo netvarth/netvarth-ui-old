@@ -367,8 +367,17 @@
                                                         *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
                                                     {{for_cap}}
                                                     <span>{{different_date_cap}}</span></span>
-                                                    <span class="checkin-btn"
-                                                    (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
+                                                    <!-- <span class="checkin-btn"
+                                                    (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
+                                            </div>
+                                        </div>
+                                        <div class="bottom-sect pdetail"  *ngIf="results_data.fields.today_appt == 1">
+                                            <div class="bt-l">
+                                            </div>
+                                            <div style="flex-grow:1"></div>
+                                            <div class="bottom-actions-root">
+                                            <span class="checkin-btn"
+                                            (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail" *ngIf="results_data.fields.donation_status == 1 && results_data.fields.donation_services">
