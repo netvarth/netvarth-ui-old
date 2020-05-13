@@ -1525,7 +1525,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
-    console.log(obj);
     this.changedate_req = chdatereq;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
@@ -1581,9 +1580,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   doLogin(state, origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
-    console.log(passParam);
     const current_provider = passParam['current_provider'];
-    console.log(current_provider);
     let is_test_account = null;
     if (current_provider) {
       if (current_provider.test_account === '1') {
@@ -1688,7 +1685,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     return (type === 'consumer') ? 'false' : 'true';
   }
   providerDetClicked(obj) {
-    console.log(obj);
     if (obj && obj.fields.unique_id !== undefined) {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
@@ -1898,15 +1894,28 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   //       });
   // }
   showServiceDetail(serv, busname) {
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: {
-        bname: busname,
-        serdet: serv
-      }
-    });
+    if (serv.serviceType === 'donationService') {
+      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        disableClose: true,
+        data: {
+          bname: busname,
+          serdet: serv,
+          serv_type: 'donation'
+        }
+      });
+    } else {
+      this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        disableClose: true,
+        data: {
+          bname: busname,
+          serdet: serv
+        }
+      });
+    }
     this.servicedialogRef.afterClosed().subscribe(result => {
       this.btn_clicked = false;
     });
@@ -1962,7 +1971,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         });
   }
   payClicked(search_result) {
-    console.log(search_result);
     const ids = search_result.id.split('-');
     this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
   }
