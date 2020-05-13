@@ -467,8 +467,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'services': {
             this.servicesjson = res;
             for (const serv of this.servicesjson) {
-              if ( serv.serviceType === 'donationService') {
-                  this.donation.push(serv);
+              if (serv.serviceType === 'donationService') {
+                this.donation.push(serv);
               }
             }
             for (let i = 0; i < this.servicesjson.length; i++) {
@@ -599,7 +599,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'jaldeediscount':
             this.jaldeediscountJson = res;
-           this.jdnlength = Object.keys(this.jaldeediscountJson).length;
+            this.jdnlength = Object.keys(this.jaldeediscountJson).length;
         }
       },
         () => {
@@ -985,7 +985,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id
-       }
+      }
     };
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   }
@@ -1002,7 +1002,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id
-       }
+      }
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
   }
@@ -1018,7 +1018,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id
-       }
+      }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
@@ -1154,20 +1154,30 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   showServiceDetail(serv, busname) {
     let service;
+    let servData;
     if (!this.showDepartments) {
       const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
       service = serviceDetails[0];
     } else {
       service = serv;
     }
+    if (service.serviceType === 'donationService') {
+      servData = {
+        bname: busname,
+        serdet: service,
+        serv_type: 'donation'
+      };
+    } else {
+      servData = {
+        bname: busname,
+        serdet: service
+      };
+    }
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
-      data: {
-        bname: busname,
-        serdet: service
-      }
+      data: servData
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
     });
