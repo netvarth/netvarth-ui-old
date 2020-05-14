@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   iswiz = false; // is cur page is wizard
   isCheckin;
   customer_label = '';
+  appointment;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -91,6 +92,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.jsonlist = message.target;
         //   this.popular_search(this.jsonlist);
         //   break;
+        case 'apptStatus':
+          this.appointment = message.apptStatus;
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });
@@ -162,6 +166,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();
+    this.getGlobalSettings();
   }
 
   ngOnDestroy() {
@@ -176,5 +181,15 @@ export class MenuComponent implements OnInit, OnDestroy {
       },
         () => {
         });
+  }
+
+  getGlobalSettings() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.appointment = data.appointment;
+      });
+  }
+  showError() {
+    this.shared_functions.openSnackBar('showError', { 'panelClass': 'snackbarerror'});
   }
 }

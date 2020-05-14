@@ -123,7 +123,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
-    this.bname = this.checkin.provider['businessName'];
+    this.bname = this.checkin.providerAccount['businessName'];
     if (this.bill_data.hasOwnProperty('billId')) {
       this.billnumber = this.bill_data.billId;
     }
@@ -210,7 +210,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    */
   getPaymentModes() {
     this.paytmEnabled = false;
-    this.sharedServices.getPaymentModesofProvider(this.checkin.provider.id)
+    this.sharedServices.getPaymentModesofProvider(this.checkin.providerAccount.id)
       .subscribe(
         data => {
           this.payment_options = data;
@@ -241,7 +241,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'DC';
-    this.pay_data.accountId = this.checkin.provider.id;
+    this.pay_data.accountId = this.checkin.providerAccount.id;
     this.pay_data.purpose = 'billPayment';
     this.resetApiError();
     if (this.pay_data.uuid != null &&
@@ -269,7 +269,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'PPI';
-    this.pay_data.accountId = this.checkin.provider.id;
+    this.pay_data.accountId = this.checkin.providerAccount.id;
     this.pay_data.purpose = 'billPayment';
     this.resetApiError();
     if (this.pay_data.uuid != null &&
@@ -326,7 +326,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    */
   applyAction(action, uuid) {
     return new Promise((resolve, reject) => {
-      this.sharedServices.applyCoupon(action, uuid, this.checkin.provider.id).subscribe
+      this.sharedServices.applyCoupon(action, uuid, this.checkin.providerAccount.id).subscribe
         (billInfo => {
           this.bill_data = billInfo;
           this.getWaitlistBill(this.checkin);
@@ -351,7 +351,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     const printWindow = window.open('', '', params);
     let bill_html = '';
     bill_html += '<table width="100%">';
-    bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.provider['businessName'] + '</td></tr>';
+    bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.providerAccount['businessName'] + '</td></tr>';
     bill_html += '	<tr><td style="border-bottom:1px solid #ddd;">';
     bill_html += '<table width="100%">';
     bill_html += '	<tr style="line-height:20px">';
@@ -573,7 +573,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.sharedfunctionObj.getS3Url()
       .then(
         s3Url => {
-          this.sharedServices.getbusinessprofiledetails_json(this.checkin.provider.uniqueId, s3Url, 'coupon', UTCstring)
+          this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
             .subscribe(res => {
               this.couponList = res;
             });

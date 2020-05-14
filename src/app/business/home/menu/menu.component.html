@@ -84,7 +84,12 @@
         <!-- </ul> -->
       <!-- </li> -->
       <li class="treeview">
-        <a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+        <a *ngIf="appointment" class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+        routerLinkActive="active-lnk">
+          <i class="fa fa-calendar"></i>
+          <span> Appointments</span>
+        </a>
+        <a *ngIf="!appointment" class="pointer-cursor" (click)="showError();closeMenu()"
         routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>

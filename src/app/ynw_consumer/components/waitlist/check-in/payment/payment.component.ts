@@ -45,7 +45,7 @@ export class ConsumerPaymentComponent implements OnInit {
         this.breadcrumbs = [
             {
                 title: 'Checkin',
-                url: ''
+                url: 'consumer'
             },
             {
                 title: 'Payment'
@@ -84,6 +84,7 @@ export class ConsumerPaymentComponent implements OnInit {
                 this.router.navigate(['consumer', 'checkin', 'track']);
               } else {
                 this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+                this.router.navigate(['consumer']);
               }
             },
             error => {
