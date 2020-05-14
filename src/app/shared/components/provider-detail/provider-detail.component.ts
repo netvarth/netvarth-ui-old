@@ -204,6 +204,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   locationId;
   donation: any = [];
   results_data;
+  donationData: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -408,6 +409,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
+            this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
+            .subscribe((data) => {
+              this.donationData = data;
+            });
             if (this.businessjson.claimStatus === 'Claimed') {
               this.getProviderDepart(this.provider_bussiness_id);
             }

@@ -386,7 +386,7 @@
                                                     <div class="donat-service">
                                                             <span class="sub-title-donate">Donation Services</span>
                                                             <ul>
-                                                                <li *ngFor="let donationService of results_data.fields.donation_services" (click)="showServiceDetail(donationService, businessjson.businessName)">{{donationService}}</li>
+                                                                <li *ngFor="let donationService of donationData" (click)="showServiceDetail(donationService, businessjson.businessName)">{{donationService.name}}</li>
                                                             </ul>
                                                         </div>
                                                 </div>
