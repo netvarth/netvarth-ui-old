@@ -1161,7 +1161,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     } else {
       service = serv;
     }
-    if (service.serviceType === 'donationService') {
+    if (service.serviceType && service.serviceType === 'donationService') {
       servData = {
         bname: busname,
         serdet: service,
