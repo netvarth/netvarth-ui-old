@@ -664,6 +664,10 @@ export class SharedServices {
     const url = 'consumer/' + mobile + '/check';
     return this.servicemeta.httpGet(url);
   }
+  isProviderAccountExists(mobile) {
+    const url = 'provider/' + mobile + '/check';
+    return this.servicemeta.httpGet(url);
+  }
   updateAppointmentTravelMode(uid, id, data) {
     const url = 'consumer/appointment/update/travelmode/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);

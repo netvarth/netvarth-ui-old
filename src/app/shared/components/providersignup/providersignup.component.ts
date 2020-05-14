@@ -9,7 +9,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { interval as observableInterval, Observable, Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providersignup',
@@ -522,57 +522,75 @@ export class ProvidersignupComponent implements OnInit {
     this.active_step = 1;
 
   }
+  checkAccountExists() {
+    const mobile = this.signupForm.get('phonenumber').value;
+    return new Promise((resolve, reject) => {
+      this.shared_services.isProviderAccountExists(mobile).subscribe(
+        (accountExists) => {
+          resolve(accountExists);
+        });
+    });
+  }
   registerClicked() {
     this.resetApiErrors();
     this.user_details = {};
-    let userProfile = {
-      countryCode: '+91',
-      primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
-      firstName: null,
-      lastName: null
-    };
-    if (this.data.moreOptions.isCreateProv) {
-      userProfile = {
-        countryCode: '+91',
-        primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
-        firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
-        lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
-      };
-    } else {
-      userProfile = {
-        countryCode: '+91',
-        primaryMobileNo: this.signupForm.get('phonenumber').value || null,
-        firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
-        lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
-        // licensePackage: this.signupForm.get('package_id').value || null,
-      };
-    }
-    // const fname = userProfile.firstName.trim();
-    // const lname = userProfile.lastName.trim();
-    // if (fname === '') {
-    //   this.shared_functions.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
-    //   if (document.getElementById('first_name')) {
-    //     document.getElementById('first_name').focus();
-    //   }
-    //   return;
-    // }
-    // if (lname === '') {
-    //   this.shared_functions.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
-    //   if (document.getElementById('last_name')) {
-    //     document.getElementById('last_name').focus();
-    //   }
-    //   return;
-    // }
-    this.user_details['userProfile'] = userProfile;
-    console.log(this.user_details);
-    this.active_step = 1;
+    this.checkAccountExists().then(
+      (accountExists) => {
+        if (accountExists) {
+          this.shared_functions.openSnackBar('Alert! The mobile number you have entered is already registered with Jaldee. Try again with different number.', { 'panelClass': 'snackbarerror' });
+          return;
+        } else {
+          let userProfile = {
+            countryCode: '+91',
+            primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+            firstName: null,
+            lastName: null
+          };
+          if (this.data.moreOptions.isCreateProv) {
+            userProfile = {
+              countryCode: '+91',
+              primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
+              firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
+              lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
+            };
+          } else {
+            userProfile = {
+              countryCode: '+91',
+              primaryMobileNo: this.signupForm.get('phonenumber').value || null,
+              firstName: this.toCamelCase(this.signupForm.get('first_name').value) || null,
+              lastName: this.toCamelCase(this.signupForm.get('last_name').value) || null,
+              // licensePackage: this.signupForm.get('package_id').value || null,
+            };
+          }
+          // const fname = userProfile.firstName.trim();
+          // const lname = userProfile.lastName.trim();
+          // if (fname === '') {
+          //   this.shared_functions.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
+          //   if (document.getElementById('first_name')) {
+          //     document.getElementById('first_name').focus();
+          //   }
+          //   return;
+          // }
+          // if (lname === '') {
+          //   this.shared_functions.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
+          //   if (document.getElementById('last_name')) {
+          //     document.getElementById('last_name').focus();
+          //   }
+          //   return;
+          // }
+          this.user_details['userProfile'] = userProfile;
+          console.log(this.user_details);
+          this.active_step = 1;
+        }
+      }
+    );
   }
   // showsubdomainstep() {
   //   this.active_step = 2;
   // }
-  showotpsection() {
-    this.active_step = 4;
-  }
+  // showotpsection() {
+  //   this.active_step = 4;
+  // }
   subdomSelection(subdomain, domain) {
     this.selectedSubDomain = subdomain;
     this.selectedDomain = domain;
