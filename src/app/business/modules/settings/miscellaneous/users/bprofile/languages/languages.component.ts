@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
-import { ProviderDataStorageService } from '../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -41,7 +40,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
         private activated_route: ActivatedRoute,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
@@ -54,24 +52,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-            title: 'Online Profile',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
-        });
-        breadcrumbs.push({
-            title: 'Languages Known'
-        });
-        this.breadcrumbs = breadcrumbs;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
         this.getSpokenLanguages();
@@ -111,6 +94,27 @@ export class LanguagesComponent implements OnInit, OnDestroy {
             this.langdialogRef.close();
         }
     }
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                });
+                breadcrumbs.push({
+                    title: 'Online Profile',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+                });
+                breadcrumbs.push({
+                    title: 'Languages Known'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -145,7 +149,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         } else {
             holdsellang = [];
         }
-
         const bprof = holdsellang;
         const lang = this.languages_arr;
         this.langdialogRef = this.dialog.open(AddProviderUserBprofileSpokenLanguagesComponent, {

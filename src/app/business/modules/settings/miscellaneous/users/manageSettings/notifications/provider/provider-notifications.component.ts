@@ -72,28 +72,34 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.activatedRoot.params.subscribe(params => {
       this.userId = + params.id;
+      this.getUser();
     });
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.userId,
-      url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-    });
-    breadcrumbs.push({
-      title: 'Settings',
-      url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-    });
-    breadcrumbs.push({
-      title: 'Notifications',
-      url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/notifications'
-    });
-    breadcrumbs.push({
-      title: 'Provider'
-    });
-    this.breadcrumbs = breadcrumbs;
     this.getNotificationList();
+  }
+  getUser() {
+    this.provider_services.getUser(this.userId)
+      .subscribe((data: any) => {
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+          title: data.firstName,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+        });
+        breadcrumbs.push({
+          title: 'Settings',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+        });
+        breadcrumbs.push({
+          title: 'Notifications',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/notifications'
+        });
+        breadcrumbs.push({
+          title: 'Provider'
+        });
+        this.breadcrumbs = breadcrumbs;
+      });
   }
   getNotificationList() {
     this.provider_services.getUserNotificationList(this.userId)
@@ -133,7 +139,6 @@ export class ProviderNotificationUserComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
-
           if (notifyList.pushMessage) {
             this.cheknpush = notifyList.pushMessage;
             this.SelchkinNotify = true;

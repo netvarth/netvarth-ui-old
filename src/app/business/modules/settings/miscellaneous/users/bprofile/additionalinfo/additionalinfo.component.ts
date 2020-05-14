@@ -82,22 +82,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         this.domain = user.sector;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-            title: 'Online Profile',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
-        });
-        breadcrumbs.push({
-            title: 'Additional Info'
-        });
-        this.breadcrumbs = breadcrumbs;
         this.bProfile['domain'] = this.domain;
         this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -114,6 +98,22 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
                 this.subDomainId = data.subdomain;
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                });
+                breadcrumbs.push({
+                    title: 'Online Profile',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+                });
+                breadcrumbs.push({
+                    title: 'Additional Info'
+                });
+                this.breadcrumbs = breadcrumbs;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
