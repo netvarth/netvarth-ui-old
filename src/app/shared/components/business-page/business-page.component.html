@@ -1,8 +1,11 @@
 <app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
     [source]="'business'">
 </app-header>
-<div class="buy-theme" *ngIf="playstore"><a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee" target="_blank"><span>DOWNLOAD ON GOOLGE PLAY</span></a></div>
-<div class="quick-question" *ngIf="appstore"><a href="https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1" target="_blank"><span>DOWNLOAD ON APP STORE</span></a></div>
+<div class="buy-theme" *ngIf="playstore"><a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
+        target="_blank"><span>DOWNLOAD ON GOOLGE PLAY</span></a></div>
+<div class="quick-question" *ngIf="appstore"><a
+        href="https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1" target="_blank"><span>DOWNLOAD ON APP
+            STORE</span></a></div>
 <section class="content pro_details">
     <div class="container">
         <div class="row">
@@ -50,9 +53,8 @@
                                         <!-- <div class="ynw-verified"></div> -->
                                         <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10 pointer-cursor
                                             
-                                            "
-                                            *ngIf="jdnlength > 0" (click)="openJdn()" [matTooltip]="jdnTooltip"><img
-                                                height="35" width="35" src="./assets/images/JDN.png"></span></h3>
+                                            " *ngIf="jdnlength > 0" (click)="openJdn()" [matTooltip]="jdnTooltip"><img
+                                                    height="35" width="35" src="./assets/images/JDN.png"></span></h3>
                                         <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
                                             | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
                                             capitalizeFirst}})</span>
@@ -204,13 +206,16 @@
                                                 <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
                                                         class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                     </sup>
-                                                    <a style="margin-left: 20px;" rel="noopener" class="directions ft-smlr"
+                                                    <a style="margin-left: 20px;" rel="noopener"
+                                                        class="directions ft-smlr"
                                                         [href]="'https://www.google.com/maps/place/'+loc.fields.location1+'/@'+loc.fields.location1+',15z'"
                                                         target="_blank"
                                                         *ngIf="loc.fields.location1">{{get_directions_cap}}</a></h3>
-                                                <div *ngIf="!isPlaceisSame" class="ft-smlr"> {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}
+                                                <div *ngIf="!isPlaceisSame" class="ft-smlr">
+                                                    {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}
                                                 </div>
-                                                <h3 *ngIf="isPlaceisSame">{{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
+                                                <h3 *ngIf="isPlaceisSame">
+                                                    {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
                                                         class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                     </sup></h3>
                                             </div>
@@ -368,21 +373,42 @@
                                                     <span>{{different_date_cap}}</span></span>
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail" *ngIf="results_data.fields.donation_status == 1 && results_data.fields.donation_services">
+                                        <div class="bottom-sect pdetail">
+                                            <div class="bt-l"></div>
+                                            <div class="bottom-actions-root">
+                                                <div style="flex-grow:1"></div>
+                                                <span class="checkin-btn disabled"
+                                                    *ngIf="results_data.fields.today_appt != 1 ">Appointment</span>
+                                                <span class="checkin-btn" *ngIf="results_data.fields.today_appt == 1 "
+                                                    (click)="appointmentClicked(loc,loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
+                                                <span class="checkin-future pdetailbt10"
+                                                    *ngIf="loc.fields.hasOwnProperty('future_appt') && loc.fields.future_appt == 1"
+                                                    (click)="appointmentClicked(loc, loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                                    <span>Appointment</span>
+                                                    {{for_cap}}
+                                                    <span>{{different_date_cap}}</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-sect pdetail"
+                                            *ngIf="results_data.fields.donation_status == 1 && results_data.fields.donation_services">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
-                                                            <span class="sub-title-donate">Donation Services</span>
-                                                            <ul>
-                                                                <li *ngFor="let donationService of results_data.fields.donation_services">{{donationService}}</li>
-                                                            </ul>
-                                                        </div>
+                                                        <span class="sub-title-donate">Donation Services</span>
+                                                        <ul>
+                                                            <li
+                                                                *ngFor="let donationService of results_data.fields.donation_services">
+                                                                {{donationService}}</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div style="flex-grow:1"></div>
-                                                    <div class="bottom-actions-root">
-                                                        <span (click)="payClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)" class="checkin-btn">Pay</span>
-                                                    </div>
+                                            <div class="bottom-actions-root">
+                                                <span
+                                                    (click)="payClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                                    class="checkin-btn">Pay</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </mat-expansion-panel>

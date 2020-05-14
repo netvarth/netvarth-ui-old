@@ -1026,7 +1026,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  appointmentClicked(obj, locid, locname, cdate, chdatereq) {
+    console.log("jor");
+    this.changedate_req = chdatereq;
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.showAppointment(locid, locname, cdate, 'consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: '', current_provider: obj };
+      this.doLogin('consumer', passParam);
+    }
+  }
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1116,6 +1126,18 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
+  }
+  showAppointment(locid, locname, curdate, origin?) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
+      }
+    };
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
