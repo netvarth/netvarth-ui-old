@@ -1291,11 +1291,11 @@ export class ProviderServices {
       return this.servicemeta.httpPatch(url);
    }
    getDisplayboardQSetsAppointment() {
-      const url = 'provider/appointment/queueSet';
+      const url = 'provider/appointment/statusBoard/queueSet';
       return this.servicemeta.httpGet(url);
    }
    getDisplayboardQSetsWaitlist() {
-      const url = 'provider/waitlist/queueSet';
+      const url = 'provider/waitlist/statusBoard/queueSet';
       return this.servicemeta.httpGet(url);
    }
    getDisplayboardsAppointment() {
@@ -1307,19 +1307,19 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    createDisplayboardQSetAppointment(input) {
-      const url = 'provider/appointment/queueSet';
+      const url = 'provider/appointment/statusBoard/queueSet';
       return this.servicemeta.httpPost(url, input);
    }
    createDisplayboardQSetWaitlist(input) {
-      const url = 'provider/waitlist/queueSet';
+      const url = 'provider/waitlist/statusBoard/queueSet';
       return this.servicemeta.httpPost(url, input);
    }
    updateDisplayboardQSetAppointment(data) {
-      const url = 'provider/appointment/queueSet';
+      const url = 'provider/appointment/statusBoard/queueSet';
       return this.servicemeta.httpPut(url, data);
    }
    updateDisplayboardQSetWaitlist(data) {
-      const url = 'provider/waitlist/queueSet';
+      const url = 'provider/waitlist/statusBoard/queueSet';
       return this.servicemeta.httpPut(url, data);
    }
    createDisplayboardAppointment(input) {
