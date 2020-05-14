@@ -56,6 +56,10 @@ export class PhomeComponent implements OnInit {
     jaldee_health: 'assets/images/home/HealthCare.jpg',
     jaldee_kiosk: 'assets/images/home/jaldee_kiosk.svg',
 
+    jaldee_qMgr: '',
+    jaldee_appDesktop: 'assets/images/home/available-app.png',
+    jaldee_playstore: 'assets/images/home/app_btn1.png',
+    jaldee_appstore: 'assets/images/home/app_btn2.png'
   };
   phOrem_error = '';
   qParams;
@@ -71,51 +75,51 @@ export class PhomeComponent implements OnInit {
     private _scrollToService: ScrollToService,
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
-    private activateRoute:  ActivatedRoute
-    ) {
-this.activateRoute.queryParams.subscribe(data => {
-console.log(data);
-this.qParams = data;
-  this.handleScroll(this.qParams.type);
+    private activateRoute: ActivatedRoute
+  ) {
+    this.activateRoute.queryParams.subscribe(data => {
+      console.log(data);
+      this.qParams = data;
+      this.handleScroll(this.qParams.type);
 
-})
-     }
-     doForgotPassword() {
-      this.resetApiErrors();
-      this.api_loading = false;
-      
-      
-        const dialogRef = this.dialog.open(ForgotPasswordComponent, {
-          width: '50%',
-          panelClass: ['loginmainclass', 'popup-class'],
-          disableClose: true,
-          data: {
-            type: origin,
-            is_provider: 'true'
-          }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result === 'showsignupfromlogin') {
-            this.doSignup(origin);
-          }
-        });
-      
+    })
+  }
+  doForgotPassword() {
+    this.resetApiErrors();
+    this.api_loading = false;
 
-     }
-     cancelForgotPassword() {
-      this.step = 1;
-    }
+
+    const dialogRef = this.dialog.open(ForgotPasswordComponent, {
+      width: '50%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: 'true'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'showsignupfromlogin') {
+        this.doSignup(origin);
+      }
+    });
+
+
+  }
+  cancelForgotPassword() {
+    this.step = 1;
+  }
   ngOnInit() {
-    
-      if (this.qParams.type){
-        this.handleScroll(this.qParams.type);
 
-      }
-      else {
-        this.handleScroll('pro_home');
+    if (this.qParams.type) {
+      this.handleScroll(this.qParams.type);
 
-      }
-      this.carouselOne = {
+    }
+    else {
+      this.handleScroll('pro_home');
+
+    }
+    this.carouselOne = {
       dots: false,
       autoplay: true,
       autoplayTimeout: 6000,
@@ -128,7 +132,7 @@ this.qParams = data;
       responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
     };
     this.createForm();
-     this.api_loading = false;
+    this.api_loading = false;
 
     this.carouselPricing = {
       dots: false,
@@ -209,15 +213,15 @@ this.qParams = data;
     switch (name) {
       case 'public_search': {
         if (this.showMore['public_search']) {
-          this.showMore['public_search'] = ! this.showMore['public_search'];
+          this.showMore['public_search'] = !this.showMore['public_search'];
         } else {
-          this.showMore['public_search'] = ! this.showMore['public_search'];
+          this.showMore['public_search'] = !this.showMore['public_search'];
         }
 
       }
     }
   }
-  
+
   onSubmit(data) {
     const pN = data.emailId.trim();
     const pW = data.password.trim();
@@ -247,25 +251,25 @@ this.qParams = data;
     };
     this.shared_functions.removeitemfromSessionStorage('tabId');
     // this.api_loading = true;
-     
-      post_data.mUniqueId = localStorage.getItem('mUniqueId');
-      this.shared_functions.clearSessionStorage();
-      this.shared_functions.providerLogin(post_data)
-        .then(
-          () => {
-            const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-            this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-            // this.dialogRef.close();
-           
-          },
-          error => {
-            // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-            this.shared_functions.openSnackBar(error,{'panelClass':'snackbarerror'})
-            this.api_loading = false;
-          }
-        );
-    
-    
+
+    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    this.shared_functions.clearSessionStorage();
+    this.shared_functions.providerLogin(post_data)
+      .then(
+        () => {
+          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
+          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          // this.dialogRef.close();
+
+        },
+        error => {
+          // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          this.api_loading = false;
+        }
+      );
+
+
   }
 
   createForm() {
@@ -275,7 +279,7 @@ this.qParams = data;
       //   Validators.maxLength(10),
       //   Validators.minLength(10),
       //   Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-        emailId: ['', Validators.compose([Validators.required])],
+      emailId: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])]
     });
   }
@@ -315,14 +319,16 @@ this.qParams = data;
   onChangePassword() {
     this.step = 1;
   }
-
+  // checkAccountExists () {
+  //   if
+  // }
   doSignuppage() {
     this.routerobj.navigate(['provider-home/providersignup']);
   }
-  gotoproducts(){
+  gotoproducts() {
     const navigationExtras: NavigationExtras = {
       queryParams: { type: 'products' }
-  };
+    };
     this.router.navigate(['provider-home'], navigationExtras);
   }
   doLoginpage() {

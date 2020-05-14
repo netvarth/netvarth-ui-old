@@ -47,7 +47,7 @@ input[type=radio] {
   -ms-appearance: radio !important; }
 
 img {
-  max-width: 100%;
+  max-width: 75%;
   height: auto; }
 
 figure {
@@ -154,14 +154,14 @@ body {
 margin-top: 70px; }
 
 .signup-content {
-  padding: 75px 0; }
+  padding: 25px 0; }
 
 .signup-form, .signup-image, .signin-form, .signin-image {
   width: 75%;
   overflow: hidden; }
 
 .signup-image {
-  margin: 0 55px; }
+  margin: 0 25px; }
 
 .form-title {
   margin-bottom: 33px; }
@@ -555,25 +555,23 @@ list-type-ulli, .socials {
 
 
 div {
-  margin: 20px;
+  /* margin: 20px; */
   max-width: 4000px;
-  margin: 20px auto;
+  margin: 5px auto;
 }
 
-.otpsection {
+/* .otpsection {
   padding-top: 30px !important;
-}
+} */
 
 ul {
   display: block;
   padding: 0;
   margin: 2px 0 0 2px ;
-  border-bottom: 1px solid #ccc;
   display: table;
   border-collapse: collapse;
   width: 100%;
   max-width: 4000px;
-  margin: 20px auto;
 }
 
 h3 {
@@ -590,14 +588,15 @@ li p {
   font: 200 12px/1.5 Georgia, Times New Roman, serif;
 }
 
-li {
+/* li {
   list-style-type: none;
   float: left;
   margin-right: 15px;
   width: 233px;
   display: block;
   width: 100%;
-}
+  padding: 10px;
+} */
 
 li:hover {
   background: #eee;
@@ -618,8 +617,8 @@ li:hover {
   color: #222; }
 
 .signup-form {
-  margin-left: 75px;
-  margin-right: 75px;
+  margin-left: 25px;
+  margin-right: 25px;
   padding-left: 34px; }
 
 .register-form {
@@ -897,63 +896,130 @@ input[type=checkbox]:not(old):checked + label > span:before {
 
 .healthcare_icon {
   content:    url(../../../../assets/images/home/signup/doctor.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .personalCare_icon {
   content:    url(../../../../assets/images/home/signup/personalcare.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
-
+.acc-doms h6 {
+  padding-left: 40px;
+  padding-top: 10px;
+}
 .food_icon {
   content:    url(../../../../assets/images/home/signup/Resturant.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .professionalConsulting_icon {
   content:    url(../../../../assets/images/home/signup/professional.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .vastuAstrology_icon {
   content:    url(../../../../assets/images/home/signup/astrolgy.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .religiousPriests_icon {
   content:    url(../../../../assets/images/home/signup/priests.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .finance_icon {
   content:    url(../../../../assets/images/home/signup/financial.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .veterinary_icon {
   content:    url(../../../../assets/images/home/signup/veterinarian-01.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .retailstores_icon {
   content:    url(../../../../assets/images/home/signup/shopping.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
 }
 .other_icon {
   content:    url(../../../../assets/images/home/signup/support.png);
-  width: 40px !important;
-  height:40px !important;
+  width: 25px !important;
+  height:25px !important;
   float: left;
   align-items: center;
 }
+.active .acc-header {
+  background: #1da0f2 !important;
+
+}
+/* .acc-header {background: #eee !important;} */
+.active .acc-header h6{
+  color: #fff !important;
+}
+.otpsection .resendouter {
+  margin-top: 0 !important;
+}
+.otpsection .resendouter .info-lst .black {
+  font-size: 0.75rem !important;
+  margin-left: 20px !important;
+}
+.otpsection .counter-outer {
+  font-size: .75rem !important;
+} 
+.otpsection .counter-outer  .counter {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+  }
+  .otpsection .form-group {
+    margin-bottom: 5px; }
+    .otpsection .resendouter span {
+      display: table;
+      margin-bottom: 8px;
+      color: #00aef2;
+      font-size: .75rem;
+      cursor: pointer;
+  }
+
+  .otpemailsection .mat-input-element {
+    padding: 18px 0px 0px 5px !important;
+  }
+  .acc-subdoms ul, .acc-subdoms ul li {
+    width: 100%;
+  }
+  .acc-subdoms ul li {
+    padding:15px;
+    list-style: none;
+  }
+  .hearus-p ul li {
+    min-height: 50px !important;
+    width: 100% !important;
+  }
+  .hearus-p ul, .hearus-p ul li {
+    display: block !important;
+    padding:15px !important;
+  }
+  .hearus-p ul li.active {
+    background: #1da0f2 !important;
+  }
+  .hearus-p ul li.active h6 {
+    color: #fff !important;
+  }
+  .hearus-p .sc-frm input[type="text"] {
+    height: 40px !important;
+  }
+   .hearus-p ul, .hearus-p ul li h6 {
+    padding-top : 5px !important;
+  } 
+   li.subdomainstyle, li.subdomainstyle i {color: #fff !important;}
+   li.subdomainstyle:hover, li.subdomainstyle:hover i {color: #000000 !important;}

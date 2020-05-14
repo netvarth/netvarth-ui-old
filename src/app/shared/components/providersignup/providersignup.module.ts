@@ -12,9 +12,7 @@ import { ProviderotpComponent } from '../providerotp/providerotp.component';
 import { ProviderOtpModule } from '../providerotp/providerotp.module';
 import { SalesChannelModule } from '../../modules/saleschannel/saleschannel.module';
 @NgModule({
-   
     imports: [
-       
        CommonModule,
        FormsModule,
        HeaderModule,
@@ -25,7 +23,6 @@ import { SalesChannelModule } from '../../modules/saleschannel/saleschannel.modu
        FormMessageDisplayModule,
        ProviderOtpModule,
        SalesChannelModule
-
     ],
     declarations: [
         ProvidersignupComponent
