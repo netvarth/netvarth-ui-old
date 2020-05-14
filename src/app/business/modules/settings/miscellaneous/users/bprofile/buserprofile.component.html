@@ -36,6 +36,13 @@
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                 </div>
+                                <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.profileId">
+                                    <h2>Profile ID</h2>
+                                    <span class="status">{{bProfile.profileId}} </span>
+                                    <p class="form-level-settings">Know your unique ID here<a class="learnmore-pointer"
+                                            id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
+                                            More</a></p>
+                                </div>
                             </div>
                             <div class="card p0 w-dta active">
                                 <mat-accordion>
