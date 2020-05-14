@@ -9,7 +9,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providersignup',
@@ -257,10 +257,10 @@ export class ProvidersignupComponent implements OnInit {
     }
   }
   resetValidation(control_names) {
-      control_names.map(control_name => {
-        this.signupForm.get(control_name).setValidators(Validators.required);
-        this.signupForm.get(control_name).updateValueAndValidity();
-      });
+    control_names.map(control_name => {
+      this.signupForm.get(control_name).setValidators(Validators.required);
+      this.signupForm.get(control_name).updateValueAndValidity();
+    });
   }
   onItemSelect() {
     // this.license_description = this.license_packages[item.value];
@@ -302,11 +302,11 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  subDomainSelected () {
+  subDomainSelected() {
     if (this.selectedDomain && this.selectedSubDomain) {
       this.user_details['sector'] = this.selectedDomain.domain;
       this.user_details['subSector'] = this.selectedSubDomain.subDomain;
-      this.user_details['licPkgId'] =  9;
+      this.user_details['licPkgId'] = 9;
       this.active_step = 2;
     } else {
       this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
@@ -382,35 +382,35 @@ export class ProvidersignupComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
-    if (this.hearus) {
-      const post_data = {
-        'hearBy': this.hearus,
-      };
-      if (this.hearus === 'SalesReps') {
-        post_data['scCode'] = this.scCode;
-      }
-      this.shared_services.saveReferralInfo(this.otp, post_data).subscribe(
-        () => {
-          this.actionstarted = false;
-          resolve();
-        },
-        error => {
-          this.actionstarted = false;
-          reject(error);
+      if (this.hearus) {
+        const post_data = {
+          'hearBy': this.hearus,
+        };
+        if (this.hearus === 'SalesReps') {
+          post_data['scCode'] = this.scCode;
         }
-      );
-    } else {
-      resolve();
-    }
+        this.shared_services.saveReferralInfo(this.otp, post_data).subscribe(
+          () => {
+            this.actionstarted = false;
+            resolve();
+          },
+          error => {
+            this.actionstarted = false;
+            reject(error);
+          }
+        );
+      } else {
+        resolve();
+      }
     });
   }
   onPasswordSubmit() {
     this.actionstarted = true;
     this.resetApiErrors();
     this.onOtpSubmit().then(data => {
-        this.saveReferralInfo().then(
-          () => {
-            this.setPassword();
+      this.saveReferralInfo().then(
+        () => {
+          this.setPassword();
         },
         (error) => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -423,8 +423,8 @@ export class ProvidersignupComponent implements OnInit {
   }
   resendOtp(user_details) {
     // if (user_details.isAdmin) {
-      console.log(user_details);
-      this.signUpApiProvider(user_details);
+    console.log(user_details);
+    this.signUpApiProvider(user_details);
     // } else {
     //   this.signUpApiConsumer(user_details);
     // }
@@ -522,7 +522,7 @@ export class ProvidersignupComponent implements OnInit {
     this.active_step = 1;
 
   }
-  registerClicked () {
+  registerClicked() {
     this.resetApiErrors();
     this.user_details = {};
     let userProfile = {
@@ -609,7 +609,6 @@ export class ProvidersignupComponent implements OnInit {
   setResendViaEmail() {
     this.doshowOTPEmailContainer();
     this.resetApiErrors();
-    
     if (this.user_details.userProfile && this.user_details.userProfile.email) {
       // this.email_form.get('otp_email').setValue(this.user_details.userProfile.email);
     }
@@ -622,10 +621,10 @@ export class ProvidersignupComponent implements OnInit {
     this.showOTPEmailContainer = true;
   }
   resendViaEmail() {
-      this.user_details.userProfile.email = this.email;
-      this.resendOtp(this.user_details);
-      this.resetCounter(this.refreshTime);
-      this.checking_email_otpsuccess = true;
+    this.user_details.userProfile.email = this.email;
+    this.resendOtp(this.user_details);
+    this.resetCounter(this.refreshTime);
+    this.checking_email_otpsuccess = true;
     this.setMessage('email', this.email);
   }
   doCancelEmailOTP() {

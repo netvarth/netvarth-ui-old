@@ -264,12 +264,10 @@ export class PhomeComponent implements OnInit {
         },
         error => {
           // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
         }
       );
-
-
   }
 
   createForm() {
