@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../shared/constants/project-constants';
@@ -217,6 +217,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   licenseMetrics: any = [];
   parkingType: any;
   park_type: any;
+  @ViewChild('logofile', { static: false }) myInputVariable: ElementRef;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -731,6 +732,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
+        this.myInputVariable.nativeElement.value = '';
       },
         () => {
 

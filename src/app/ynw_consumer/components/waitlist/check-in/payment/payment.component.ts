@@ -75,27 +75,27 @@ export class ConsumerPaymentComponent implements OnInit {
         this.shared_functions.removeitemfromLocalStorage('acid');
         this.shared_functions.removeitemfromLocalStorage('uuid');
         this.shared_services.getPaymentStatus('consumer', pid)
-          .subscribe(
-            data => {
-              this.status = data;
-              this.status = this.status.toLowerCase();
-              if (this.status === 'success') {
-                this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
-                this.router.navigate(['consumer', 'checkin', 'track']);
-              } else {
-                this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
-                this.router.navigate(['consumer']);
-              }
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
+            .subscribe(
+                data => {
+                    this.status = data;
+                    this.status = this.status.toLowerCase();
+                    if (this.status === 'success') {
+                        this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
+                        this.router.navigate(['consumer', 'checkin', 'track']);
+                    } else {
+                        this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+                        this.router.navigate(['consumer']);
+                    }
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
         /*this.user_type = 'consumer';
         this.loading = 0;
         this.status = 'Success'; // Success // 'Failed' // 'NoResult'
         this.status = this.status.toLowerCase();*/
-      }
+    }
     payuPayment() {
         console.log('payupayment');
         let paymentWay;

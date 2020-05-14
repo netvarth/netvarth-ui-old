@@ -54,7 +54,7 @@ export class EditProfileComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-
+  loading = false;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -85,9 +85,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   getProfile(typ) {
+    this.loading = true;
+
     this.shared_functions.getProfile()
       .then(
         data => {
+          this.loading = false;
           if (typ === 'consumer') {
             this.editProfileForm.setValue({
               first_name: data['userProfile']['firstName'] || null,
@@ -110,7 +113,10 @@ export class EditProfileComponent implements OnInit {
             this.phonenoHolder = data['basicInfo']['mobile'] || '';
           }
         },
-        error => { this.api_error = this.shared_functions.getProjectErrorMesssages(error); }
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.loading = false;
+        }
       );
   }
   onSubmit(sub_data) {
@@ -124,15 +130,15 @@ export class EditProfileComponent implements OnInit {
     const curuserdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (sub_data.email) {
       const stat = this.validateEmail(sub_data.email);
-        if (!stat) {
+      if (!stat) {
         this.emailerror = 'Please enter a valid email.';
       }
     }
     if (sub_data.email1) {
       const stat1 = this.validateEmail(sub_data.email1);
-        if (!stat1) {
-          this.email1error = 'Please enter a valid email.';
-        }
+      if (!stat1) {
+        this.email1error = 'Please enter a valid email.';
+      }
     }
     if (sub_data.first_name.trim() === '') {
       this.fnameerror = 'First name is required';
@@ -196,10 +202,10 @@ export class EditProfileComponent implements OnInit {
     const emailField = mail;
     const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if (reg.test(emailField) === false) {
-        return false;
+      return false;
     }
     return true;
-}
+  }
 
   resetApiErrors() {
     this.api_error = null;

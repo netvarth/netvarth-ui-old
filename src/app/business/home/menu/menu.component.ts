@@ -190,6 +190,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       });
   }
   showError() {
-    this.shared_functions.openSnackBar('showError', { 'panelClass': 'snackbarerror'});
+    this.shared_functions.openSnackBar('Appointment is disabled in your settings', { 'panelClass': 'snackbarerror' });
   }
 }

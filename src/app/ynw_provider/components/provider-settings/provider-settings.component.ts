@@ -443,7 +443,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
         this.virtualCallingMode_status = data.virtualService;
         this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
-        this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
       });
   }
   handle_posStatus(event) {
@@ -452,6 +451,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
       this.shared_functions.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getPOSSettings();
+      this.getItems();
+      this.getDiscounts();
     }, (error) => {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       this.getPOSSettings();

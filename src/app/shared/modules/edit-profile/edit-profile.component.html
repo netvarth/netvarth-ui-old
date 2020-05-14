@@ -6,7 +6,8 @@
         <div class="related-links">
             <div class="outer-card">
                 <div class="card">
-                    <form [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
+                    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                    <form *ngIf="!loading" [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
                     onSubmit(editProfileForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                         <div class="innercard">
                             <div class="leftcard">

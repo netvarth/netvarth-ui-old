@@ -100,7 +100,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
-    // this.getHistroy(this.params);
+    this.getHistroy();
   }
 
   setPaginationFilter(params = {}) {
@@ -154,7 +154,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
 
   viewBill(checkin, bill_data) {
     if (!this.billdialogRef) {
-      bill_data['passedProvname'] = checkin['provider']['businessName'];
+      bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '50%',
         // panelClass: ['commonpopupmainclass', 'billpopup'],
