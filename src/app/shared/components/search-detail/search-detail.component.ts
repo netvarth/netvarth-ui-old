@@ -169,6 +169,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   showServices = false;
   departServiceList: any = [];
   selectedDepartment;
+  deptDonation;
 
   constructor(private routerobj: Router,
     private location: Location,
@@ -834,6 +835,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
+                this.deptDonation = this.search_data.hits.hit[i].fields;
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
                 const addres = this.search_data.hits.hit[i].fields['address1'];
@@ -1536,7 +1538,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   appointmentClicked(obj, chdatereq) {
     this.current_provider = obj;
-    console.log(obj);
     this.changedate_req = chdatereq;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
@@ -1847,10 +1848,21 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let servicesList: any = [];
               servicesList = services;
               if (origin === 'serviceClick') {
-                for (let i = 0; i < servicesList.length; i++) {
-                  if (servicesList[i].name === name) {
-                    selected_service = servicesList[i];
-                    break;
+                if (this.deptDonation.departments) {
+                  for (let i = 0; i < servicesList.length; i++) {
+                    for (let j = 0; j < servicesList[i].services.length; j++) {
+                      if (servicesList[i].services[j].name === name) {
+                        selected_service = servicesList[i].services[j];
+                        break;
+                      }
+                    }
+                  }
+                } else {
+                  for (let i = 0; i < servicesList.length; i++) {
+                    if (servicesList[i].name === name) {
+                      selected_service = servicesList[i];
+                      break;
+                    }
                   }
                 }
               }
