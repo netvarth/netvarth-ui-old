@@ -1027,13 +1027,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   appointmentClicked(obj, locid, locname, cdate, chdatereq) {
-    console.log("jor");
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.showAppointment(locid, locname, cdate, 'consumer');
     } else if (this.userType === '') {
-      const passParam = { callback: '', current_provider: obj };
+      const passParam = { callback: 'appointment', current_provider: obj };
       this.doLogin('consumer', passParam);
     }
   }
@@ -1074,6 +1073,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+        } else if (passParam['callback'] === 'appointment') {
+          this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         } else {
           this.getFavProviders();
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
@@ -1108,6 +1109,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+        }  else if (passParam['callback'] === 'appointment') {
+          this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         } else {
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
