@@ -13,12 +13,14 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.component';
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
+import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';
 
 @NgModule({
     declarations: [
         ConsumerAppointmentComponent,
         ConsumerAppointmentPaymentComponent,
-        ConsumerAppointmentLiveTrackComponent
+        ConsumerAppointmentLiveTrackComponent,
+        ConsumerAppointmentHistoryComponent
     ],
     imports: [
         FormMessageDisplayModule,
