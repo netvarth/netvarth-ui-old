@@ -169,7 +169,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   showServices = false;
   departServiceList: any = [];
   selectedDepartment;
-  deptDonation;
 
   constructor(private routerobj: Router,
     private location: Location,
@@ -835,7 +834,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
-                this.deptDonation = this.search_data.hits.hit[i].fields;
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
                 const addres = this.search_data.hits.hit[i].fields['address1'];
@@ -1695,7 +1693,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         // if (ctype === 'consumer') {
-          this.showProviderDetails(providforDetails, locId);
+        this.showProviderDetails(providforDetails, locId);
         // }
       } else { // show consumer login
         const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
@@ -1848,17 +1846,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let servicesList: any = [];
               servicesList = services;
               if (origin === 'serviceClick') {
-                if (this.deptDonation.departments) {
-                  for (let i = 0; i < servicesList.length; i++) {
+                for (let i = 0; i < servicesList.length; i++) {
+                  if (servicesList[i].departmentId) {
                     for (let j = 0; j < servicesList[i].services.length; j++) {
                       if (servicesList[i].services[j].name === name) {
                         selected_service = servicesList[i].services[j];
                         break;
                       }
                     }
-                  }
-                } else {
-                  for (let i = 0; i < servicesList.length; i++) {
+                  } else {
                     if (servicesList[i].name === name) {
                       selected_service = servicesList[i];
                       break;
@@ -1991,7 +1987,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: unique_id,
         account_id: accountId
-       }
+      }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
