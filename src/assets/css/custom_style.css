@@ -8715,3 +8715,18 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .content.comn-cls .lbr .card .appthistory .c-history li.Completed:before {
     background: #0edcb8;
 }
+
+.bprof-custId {
+  padding: 20px;
+  border: 1px solid #00aef2;
+  border-radius: 5px;
+  background-clip: padding-box;
+  transition: all 300ms;
+}
+.bprof-custId h2 {
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  display: flex;
+  align-items: center;
+  color: #3c8dbc
+}
