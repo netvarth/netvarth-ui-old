@@ -186,7 +186,7 @@
                                             </div>
                                         </mat-chip-list>
                                     </div>
-                                    <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+                                    <!-- <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                                         <div class="waitlist-button-outer">
                                             <div class="showDetOuter" *ngIf="queuejson.length > 0">
                                                 <div class="showDetService">
@@ -228,7 +228,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div>
                                     <ng-container *ngIf="queuejson.length > 0">
@@ -245,7 +245,7 @@
                                             *ngIf="freeSlots.length>0 && showEditView">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
                                             <mat-chip-list class="appt-in-chip">
-                                                <mat-chip *ngFor="let slot of freeSlots"
+                                                <mat-chip  *ngFor="let slot of freeSlots"
                                                     [selected]="slot.time === apptTime"
                                                     (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
                                             </mat-chip-list>

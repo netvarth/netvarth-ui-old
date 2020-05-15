@@ -57,10 +57,12 @@ export class CustomerDetailComponent implements OnInit {
     //         title: 'Add'
     //     }
     // ];
-    breadcrumbs; 
+    breadcrumbs;
     // = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
     checkin_type;
+    customidFormat;
+    loading = false;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -90,7 +92,8 @@ export class CustomerDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.createForm();
+        this.loading = true;
+        this.getGlobalSettingsStatus();
         this.breadcrumbs = [{
             title: this.shared_functions.firstToUpper(this.customer_label) + 's',
             url: 'provider/customers'
@@ -100,17 +103,41 @@ export class CustomerDetailComponent implements OnInit {
         }
         ];
     }
+
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.customidFormat = data.jaldeeIdFormat;
+                this.createForm();
+            });
+    }
     createForm() {
-        this.amForm = this.fb.group({
-            mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
-            Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-            first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-            last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-            email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
-            dob: [''],
-            gender: [''],
-            address: ['']
-        });
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+            this.amForm = this.fb.group({
+                customer_id: ['', Validators.compose([Validators.required])],
+                mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                dob: [''],
+                gender: [''],
+                address: ['']
+            });
+            this.loading = false;
+        } else {
+            this.amForm = this.fb.group({
+                mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                dob: [''],
+                gender: [''],
+                address: ['']
+            });
+            this.loading = false;
+        }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
         }
@@ -136,6 +163,9 @@ export class CustomerDetailComponent implements OnInit {
         if (form_data.email_id && form_data.email_id !== '') {
             post_data['email'] = form_data.email_id;
         }
+        if (form_data.customer_id) {
+            post_data['jaldeeId'] = form_data.customer_id;
+        }
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
@@ -143,7 +173,6 @@ export class CustomerDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                     const qParams = {};
                     qParams['pid'] = data;
-                    console.log(post_data);
                     if (this.source === 'checkin') {
                         const navigationExtras: NavigationExtras = {
                             queryParams: {
@@ -151,7 +180,6 @@ export class CustomerDetailComponent implements OnInit {
                                 checkin_type: this.checkin_type
                             }
                         };
-                        console.log(navigationExtras);
                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
                     } else if (this.source === 'appointment') {
                         const navigationExtras: NavigationExtras = {
@@ -163,8 +191,8 @@ export class CustomerDetailComponent implements OnInit {
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
                     } else {
                         const navigationExtras: NavigationExtras = {
-                            queryParams:  {
-                                phoneNo : this.phoneNo
+                            queryParams: {
+                                phoneNo: this.phoneNo
                             }
                         };
                         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
