@@ -292,6 +292,7 @@ export class ProviderSharedFuctions {
   }
 
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
+    console.log(waitlist);
     const uuids = [];
     let type;
     let ynwUuid;
@@ -300,7 +301,11 @@ export class ProviderSharedFuctions {
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
-        uuids.push(watlst.ynwUuid);
+        if (appt) {
+        uuids.push(watlst.uid);
+        } else {
+          uuids.push(watlst.ynwUuid);
+        }
       }
     } else {
       type = 'single';

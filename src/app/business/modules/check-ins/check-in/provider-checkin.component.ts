@@ -279,7 +279,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.selectedMode = type;
     }
     findCustomer(form_data, event) {
-        console.log(event.key);
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
@@ -289,7 +288,6 @@ export class ProviderCheckinComponent implements OnInit {
         let mode = 'id';
         this.form_data = null;
         this.create_new = false;
-        console.log(form_data);
         let post_data = {};
         const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.search_input);
@@ -320,13 +318,12 @@ export class ProviderCheckinComponent implements OnInit {
                     'email-eq': form_data.search_input
                 };
                 break;
-            case 'customer_id':
+            case 'id':
                 post_data = {
                     'id-eq': form_data.search_input
                 };
                 break;
         }
-        console.log(post_data);
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {

@@ -383,6 +383,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.time_type === 2) {
         this.getFutureAppointments();
       }
+      // this.getCounts();
     });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
@@ -580,13 +581,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   changeLocation(location) {
     this.selected_location = location;
     this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location.id);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
+    this.appt_list = this.check_in_filtered_list = [];
+    this.getCounts();
+  }
+  getCounts() {
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.history_waitlist_count = 0;
-    this.appt_list = this.check_in_filtered_list = [];
     this.getFutureAppointmentsCount()
       .then(
         (result) => {
@@ -594,6 +598,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
     this.getHistoryAppointmentsCount()
+      .then(
+        (result) => {
+          this.history_waitlist_count = result;
+        }
+      );
+    this.getTodayAppointmentsCount()
       .then(
         (result) => {
           this.history_waitlist_count = result;
@@ -608,11 +618,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureAppointmentsCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter && this.selected_location && this.selected_location.id) {
-      Mfilter = {
-        'location-eq': this.selected_location.id,
-        'schedule-eq': this.selQId
-      };
+    const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
+    if (!Mfilter) {
+      Mfilter = {};
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (queueid) {
+        Mfilter['schedule-eq'] = queueid;
+      }
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -627,11 +641,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryAppointmentsCount(Mfilter = null) {
+    const queueid = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
     let no_filter = false;
-    if (!Mfilter && this.selected_location && this.selected_location.id) {
-      Mfilter = {
-        'location-eq': this.selected_location.id
-      };
+    if (!Mfilter) {
+      Mfilter = {};
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (queueid && queueid.length > 0) {
+        Mfilter['schedule-eq'] = queueid.toString();
+      }
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -646,16 +665,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getTodayAppointmentsCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('pdq');
+    const queueid = this.shared_functions.getitemFromGroupStorage('appt_selQ');
     let no_filter = false;
     if (!Mfilter) {
-      Mfilter = {
-        'location-eq': this.selected_location.id,
-        'apptStatus-neq': 'prepaymentPending',
-        'schedule-eq': queueid
-      };
+      Mfilter = {};
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (queueid) {
+        Mfilter['schedule-eq'] = queueid;
+      }
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
       no_filter = true;
     }
+    console.log(Mfilter);
     return new Promise((resolve) => {
       this.provider_services.getTodayAppointmentsCount(Mfilter)
         .subscribe(
@@ -736,6 +759,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.queues = queue;
       this.load_waitlist = 0;
       const Mfilter = this.setFilterForApi();
+      if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
+        this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+      } else {
+        this.selQId = this.queues[0].id;
+      }
+      const selQ = this.queues.filter(q => q.id === this.selQId);
+      if (selQ.length === 0 && this.queues.length > 0) {
+        this.selQId = this.queues[0].id;
+        this.servicesCount = this.queues[0].services.length;
+        this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      }
       if (this.selQId) {
         Mfilter['schedule-eq'] = this.selQId;
       }
@@ -807,8 +841,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const date = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
     this.getQs(date).then(queues => {
       this.queues = queues;
-      if (!this.selQId) {
+      // if (!this.selQId) {
+      if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
         this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
+      } else {
+        this.selQId = this.queues[0].id;
       }
       const selQ = this.queues.filter(q => q.id === this.selQId);
       if (selQ.length === 0 && this.queues.length > 0) {
@@ -1279,6 +1316,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addConsumerInboxMessage(source, waitlst?) {
+    console.log(this.newApptforMsg);
     let waitlist = [];
     if (source === 'new') {
       waitlist = this.newApptforMsg;
@@ -1747,10 +1785,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   changeSelectedLocation(location) {
     this.selected_location = location;
+    this.getCounts();
     if (this.selected_location) {
       this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location.id);
   }
   routeLoadIndicator(e) {
     this.apiloading = e;
@@ -2041,7 +2080,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode') {
         this.filter[type] = 'all';
       } else if (type === 'appt_status') {
         this.statusMultiCtrl = [];
@@ -2083,6 +2122,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   selectNewAppt(slot, index, waitlist) {
     this.newApptforMsg = [];
+    console.log(this.apptSelected);
     if (this.apptSelected[slot][index]) {
       delete this.apptSelected[slot][index];
       this.apptSelection--;
@@ -2090,6 +2130,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.apptSelected[slot][index] = true;
       this.apptSelection++;
     }
+    console.log(this.apptSelection);
     if (this.apptSelection === 1) {
       this.selectedAppt['new'] = waitlist;
       if (this.selectedAppt['new'].jaldeeWaitlistDistanceTime && this.selectedAppt['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedAppt['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedAppt['new'].jaldeeStartTimeType === 'AFTERSTART')) {
@@ -2099,13 +2140,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.labels(this.selectedAppt['new']);
     }
-    for (let i = 0; i < this.apptSelected[slot].length; i++) {
-      if (this.apptSelected[slot][i]) {
-        if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
-          this.newApptforMsg.push(this.timeSlotAppts[slot][i]);
+    console.log(this.apptSelected[slot]);
+    Object.keys(this.apptSelected).forEach(slot => {
+      // console.log(slot);
+      // console.log(this.apptSelected[slot]);
+      for (let i = 0; i < this.apptSelected[slot].length; i++) {
+        if (this.apptSelected[slot][i]) {
+          if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
+            this.newApptforMsg.push(this.timeSlotAppts[slot][i]);
+          }
         }
       }
-    }
+    });
+    // for (let i = 0; i < this.apptSelected[slot].length; i++) {
+    //   if (this.apptSelected[slot][i]) {
+    //     if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
+    //       this.newApptforMsg.push(this.timeSlotAppts[slot][i]);
+    //     }
+    //   }
+    // }
   }
 
   selectCompletedAppt(index) {

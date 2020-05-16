@@ -272,7 +272,6 @@ export class CustomerSearchComponent implements OnInit {
         }
         this.form_data = null;
         this.create_new = false;
-        console.log(form_data);
         let post_data = {};
         const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.search_input);
@@ -307,13 +306,12 @@ export class CustomerSearchComponent implements OnInit {
                     'email-eq': form_data.search_input
                 };
                 break;
-            case 'customer_id':
+            case 'id':
                 post_data = {
                     'id-eq': form_data.search_input
                 };
                 break;
         }
-        console.log(post_data);
         this.foundCustomer = false;
         this.provider_services.getCustomer(post_data)
             .subscribe(
@@ -324,7 +322,6 @@ export class CustomerSearchComponent implements OnInit {
                         this.searchClicked = true;
                     } else {
                         this.foundCustomer = true;
-                        console.log(data[0]);
                         this.customer_data = data[0];
                         this.customerPhone = this.customer_data.phoneNo;
                         this.searchClicked = true;

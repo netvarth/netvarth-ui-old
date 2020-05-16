@@ -196,6 +196,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     });
     this.breadcrumbs = breadcrumbs;
     this.getUser();
+    this.getUserPublicSearch();
     // calling method to create the form
     // setTimeout(() => {
     //   this.createForm();
@@ -251,6 +252,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       .then(
         data => {
           this.bProfile = data;
+          if (this.bProfile.logo) {
+            this.blogo = this.bProfile.logo;
+            const cnow = new Date();
+            const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+            this.cacheavoider = dd;
+          }
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
           } else {
@@ -368,9 +375,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         () => {
           this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_CREATED');
           this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-          // setTimeout(() => {
-          //     this.dialogRef.close('reloadlist');
-          // }, projectConstants.TIMEOUT_DELAY);
           this.showProfile = false;
           // this.profileview = true;
           this.getBusinessProfile();
@@ -390,9 +394,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         () => {
           this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
           this.sharedfunctionobj.openSnackBar(this.api_success, { 'panelclass': 'snackbarerror' });
-          // setTimeout(() => {
-          //     this.dialogRef.close('reloadlist');
-          // }, projectConstants.TIMEOUT_DELAY);
           this.showProfile = false;
           // this.profileview = true;
           this.getBusinessProfile();
@@ -409,24 +410,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.disableButton = false;
     // this.profileview = false;
     this.createForm();
-    // this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   autoFocus: true,
-    //   data: {
-    //     type: 'edit',
-    //     bprofile: this.bProfile,
-    //     userId: this.userId
-    //   }
-    // });
-    // this.primarydialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     if (result === 'reloadlist') {
-    //       this.getBusinessProfile();
-    //     }
-    //   }
-    // });
   }
   cancel() {
     this.showProfile = false;
@@ -472,33 +455,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         }
       }
     }
-  }
-  // get the logo url for the provider
-  getProviderLogo() {
-    // this.provider_services.getProviderLogo()
-    this.provider_services.getUserBussinessProfile(this.userId)
-      .subscribe(
-        data => {
-          this.blogo = data;
-          const cnow = new Date();
-          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
-          this.cacheavoider = dd;
-          let logo = '';
-          if (this.blogo[0]) {
-            logo = this.blogo[0].url;
-          } else {
-            logo = '';
-          }
-          //  const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-          // calling function which saves the business related details to show in the header
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp('', '', '', logo);
-          const pdata = { 'ttype': 'updateuserdetails' };
-          this.sharedfunctionobj.sendMessage(pdata);
-        },
-        () => {
-
-        }
-      );
   }
   // Upload logo
   uploadLogo(passdata) {
