@@ -28,7 +28,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   isCheckin;
   customer_label = '';
   appointment;
-  constructor(
+  donationstatus;
+ constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
     private router: Router,
@@ -95,6 +96,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'apptStatus':
           this.appointment = message.apptStatus;
           break;
+       
       }
       this.getBusinessdetFromLocalstorage();
     });
@@ -167,6 +169,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();
     this.getGlobalSettings();
+    this.getglobalSettings();
   }
 
   ngOnDestroy() {
@@ -192,4 +195,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   showError() {
     this.shared_functions.openSnackBar('Appointment is disabled in your settings', { 'panelClass': 'snackbarerror' });
   }
+  getglobalSettings(){
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.donationstatus = data.donationFundRaising;
+        });
+    }
+ 
 }

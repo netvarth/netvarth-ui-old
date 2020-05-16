@@ -99,8 +99,8 @@
           <span> Check-ins</span>
         </a>
       </li>
-      <li class="treeview">
-        <a class="pointer-cursor" routerLink="donations" (click)="closeMenu()" routerLinkActive="active-lnk">
+      <li class="treeview" >
+        <a *ngIf="donationstatus" class="pointer-cursor"  routerLink="donations" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-stack fa-inr"></i>
           <span>Donations</span>
         </a>
