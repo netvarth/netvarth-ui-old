@@ -903,53 +903,55 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type === 2) {
       date = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
     }
-    this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(data => {
-      this.availableSlotDetails = data;
-      const checkins = [];
-      for (let i = 0; i < this.appt_list.length; i++) {
-        if (this.appt_list[i].apptStatus === 'Arrived' || this.appt_list[i].apptStatus === 'Confirmed') {
-          checkins.push(this.appt_list[i]);
-        }
-      }
-      this.timeSlotAppts = this.shared_functions.groupBy(checkins, 'appmtTime');
-      if (Object.keys(this.timeSlotAppts).length > 0) {
-        const slots = [];
-        Object.keys(this.timeSlotAppts).forEach(key => {
-          for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
-            if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
-              if (this.unAvailableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
-                this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
-              }
-              if (this.availableSlotDetails.availableSlots[i].time === key) {
-                slots.push(this.availableSlotDetails.availableSlots[i]);
-              }
-            }
+    if (this.selQId && date) {
+      this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(data => {
+        this.availableSlotDetails = data;
+        const checkins = [];
+        for (let i = 0; i < this.appt_list.length; i++) {
+          if (this.appt_list[i].apptStatus === 'Arrived' || this.appt_list[i].apptStatus === 'Confirmed') {
+            checkins.push(this.appt_list[i]);
           }
-          this.apptSelected[key] = [];
-          if (this.newApptforMsg.length > 0) {
-            for (let i = 0; i < this.newApptforMsg.length; i++) {
-              for (let j = 0; j < this.timeSlotAppts[key].length; j++) {
-                if (this.newApptforMsg[i].uid === this.timeSlotAppts[key][j].uid) {
-                  this.apptSelected[key][j] = true;
+        }
+        this.timeSlotAppts = this.shared_functions.groupBy(checkins, 'appmtTime');
+        if (Object.keys(this.timeSlotAppts).length > 0) {
+          const slots = [];
+          Object.keys(this.timeSlotAppts).forEach(key => {
+            for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
+              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
+                if (this.unAvailableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
+                  this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+                }
+                if (this.availableSlotDetails.availableSlots[i].time === key) {
+                  slots.push(this.availableSlotDetails.availableSlots[i]);
                 }
               }
             }
-          }
-        });
-        this.unAvailableSlots = this.unAvailableSlots.filter(x => !slots.includes(x));
-      } else {
-        if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
-          for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
-            if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
-              this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+            this.apptSelected[key] = [];
+            if (this.newApptforMsg.length > 0) {
+              for (let i = 0; i < this.newApptforMsg.length; i++) {
+                for (let j = 0; j < this.timeSlotAppts[key].length; j++) {
+                  if (this.newApptforMsg[i].uid === this.timeSlotAppts[key][j].uid) {
+                    this.apptSelected[key][j] = true;
+                  }
+                }
+              }
+            }
+          });
+          this.unAvailableSlots = this.unAvailableSlots.filter(x => !slots.includes(x));
+        } else {
+          if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
+            for (let i = 0; i < this.availableSlotDetails.availableSlots.length; i++) {
+              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
+                this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
+              }
             }
           }
         }
-      }
-      if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
-        this.availableSlotDetails.availableSlots = this.availableSlotDetails.availableSlots.filter(x => !this.unAvailableSlots.includes(x));
-      }
-    });
+        if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
+          this.availableSlotDetails.availableSlots = this.availableSlotDetails.availableSlots.filter(x => !this.unAvailableSlots.includes(x));
+        }
+      });
+    }
   }
 
   setTimeType(time_type) {

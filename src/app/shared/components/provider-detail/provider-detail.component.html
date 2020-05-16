@@ -371,14 +371,15 @@
                                                     (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail"  *ngIf="results_data.fields.today_appt == 1">
-                                            <div class="bt-l">
-                                            </div>
-                                            <div style="flex-grow:1"></div>    
-                                            <div class="bottom-actions-root">
-                                            <span class="checkin-btn"
-                                            (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
-                                            </div>
+                                        <div class="bottom-sect pdetail"> 
+                                            <div class="bt-l"> </div> 
+                                                 <div style="flex-grow:1"></div>
+                                                        <div class="bottom-actions-root">
+                                                        <span class="checkin-btn disabled" *ngIf="loc.fields.today_appt != 1">Appointment</span> 
+                                                        <span class="checkin-btn" *ngIf="loc.fields.today_appt == 1" (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span> 
+                                                        <span class="bt10" *ngIf="loc.fields.future_appt == 1" (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], true)" >{{do_you_want_to_cap}} <span> Appointment </span>{{for_cap}} <span>{{different_date_cap}}</span>
+                                                </span> 
+                                            </div> 
                                         </div>
                                         <div class="bottom-sect pdetail" *ngIf="results_data.fields.donation_status == 1 && results_data.fields.donation_services">
                                             <div class="bt-l">

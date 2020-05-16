@@ -88,6 +88,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_basicplus = Messages.VERIFIED_LEVEL_BASICPLUS;
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
+  jaldee_acc_url = Messages.JALDEE_URL;
   path = window.location.host;
 
   checked = false;
@@ -242,6 +243,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
+    this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -892,6 +894,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Link copied to clipboard');
   }
   qrCodegenerateOnlineID(valuetogenerate) {
     this.qr_value = this.path + '/#' + valuetogenerate;

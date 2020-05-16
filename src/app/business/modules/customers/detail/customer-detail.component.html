@@ -8,7 +8,8 @@
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-9 col-lg-9">
-                            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+                            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                            <form *ngIf="!loading" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="form-group mobile-field" *ngIf="source !== 'newCustomer'">
                                     <mat-form-field>
@@ -30,6 +31,20 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             'maxlength' : 'Enter a 10 digit mobile number',
             'pattern' : 'Only numbers are allowed'
           })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group"
+                                    *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" matInput id="customer_id"
+                                            placeholder="Customer id *" formControlName="customer_id" autocomplete="off"
+                                            (blur)="onFieldBlur('customer_id')">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'customer_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'customer_id',
+    {
+      'required' : 'Please enter Customer id'
+    })">
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">

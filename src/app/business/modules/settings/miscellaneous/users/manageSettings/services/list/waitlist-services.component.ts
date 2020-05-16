@@ -52,25 +52,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-            title: 'Settings',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-            title: 'Services'
-        });
-        this.breadcrumbs = breadcrumbs;
         this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
@@ -88,15 +73,33 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
     }
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Services'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     getServices() {
         this.api_loading = true;
         this.provider_services.getUserServicesList(this.userId)
             .subscribe(
                 data => {
-                    console.log(data);
                     this.service_list = data;
-
-
                     this.api_loading = false;
                 },
                 error => {

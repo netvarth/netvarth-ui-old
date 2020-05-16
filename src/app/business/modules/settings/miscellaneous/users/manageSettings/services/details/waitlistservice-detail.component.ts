@@ -56,31 +56,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             (params) => {
                 this.service_id = params.sid;
                 this.userId = params.id;
-                console.log(params.id);
-                console.log(this.service_id);
                 this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-                if (this.service_id === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.userId,
-                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                    });
-                    breadcrumbs.push({
-                        title: 'Settings',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-                    });
-                    breadcrumbs.push({
-                        title: 'Services',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                }
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -96,6 +72,30 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.getUserDetails(this.userId).then(
             (userInfo) => {
                 this.userDetails = userInfo;
+                this.breadcrumbs.push(
+                    {
+                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                        title: this.userDetails.firstName
+                    },
+                    {
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
+                        title: 'Settings'
+                    },
+                    {
+                        title: 'Services',
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
+                    }
+                );
+                if (this.service_id === 'add') {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                }
                 this.initServiceParams();
             });
         this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -214,18 +214,6 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: this.userId,
-                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                    });
-                    breadcrumbs.push({
-                        title: 'Settings',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-                    });
-                    breadcrumbs.push({
-                        title: 'Services',
-                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/services'
-                    });
-                    breadcrumbs.push({
                         title: this.serviceParams['service'].name
                     });
                     this.breadcrumbs = breadcrumbs;
@@ -249,7 +237,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         this.getTaxpercentage().then(
                             () => {
                                 this.serviceParams['userId'] = this.userId;
-                                this.serviceParams ['deptId'] = this.userDetails.deptId;
+                                this.serviceParams['deptId'] = this.userDetails.deptId;
                                 if (this.service_id === 'add') {
                                     this.service_id = null;
                                     this.api_loading = false;

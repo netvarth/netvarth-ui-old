@@ -104,32 +104,19 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         this.activated_route.params.subscribe(params => {
             this.queue_id = params.sid;
             this.userId = params.id;
-            this.breadcrumbs.push(
-                {
-                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-                    title: this.userId
-                },
-                {
-                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
-                    title: 'Settings'
-                },
-                {
-                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/schedules',
-                    title: 'Schedules'
+            this.activated_route.queryParams.subscribe(qparams => {
+                this.params = qparams;
+                if (this.params.action === 'editFromList') {
+                    this.action = 'edit';
+                } else {
+                    this.action = qparams.action;
                 }
-            );
-        });
-        this.activated_route.queryParams.subscribe(qparams => {
-            this.params = qparams;
-            if (this.params.action === 'editFromList') {
-                this.action = 'edit';
-            } else {
-                this.action = qparams.action;
-            }
+            });
         });
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.getUser();
         this.getWaitlistMgr();
         this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -141,17 +128,38 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 this.getScheduleDetail();
             } else {
                 this.action = this.queue_id;
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                    breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: 'Add'
-                });
-                this.breadcrumbs = breadcrumbs;
                 this.createForm();
             }
         }, 100);
+    }
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                this.breadcrumbs.push(
+                    {
+                        url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                        title: data.firstName
+                    },
+                    {
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings',
+                        title: 'Settings'
+                    },
+                    {
+                        url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/schedules',
+                        title: 'Schedules'
+                    }
+                );
+                if (this.action === 'add') {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                }
+            });
     }
     getWaitlistMgr() {
         this.api_loading = true;
@@ -259,12 +267,12 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     if (this.queue_data.batchName) {
                         this.prefixName = this.queue_data.batchName.prefix;
                         this.suffixName = this.queue_data.batchName.suffix;
-                      }
-                      if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
+                    }
+                    if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
                         this.showEditSection = true;
-                      } else {
+                    } else {
                         this.showEditSection = false;
-                      }
+                    }
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.apptSchedule) {
@@ -278,7 +286,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: this.queue_data.id
+                        title: this.queue_data.name
                     });
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
@@ -293,49 +301,49 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             );
     }
     // get the list of services
-  getProviderServices() {
-    this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
-    this.provider_services.getProviderServices(filter)
-      .subscribe(data => {
-        this.services_list = data;
-      });
-    this.api_loading1 = false;
-  }
-//   getDepartments() {
-//     this.departments = [];
-//     this.api_loading1 = true;
-//     this.provider_services.getDepartments()
-//       .subscribe(
-//         data => {
-//           this.deptObj = data;
-//           this.filterbyDept = this.deptObj.filterByDept;
-//           this.departments = this.deptObj.departments;
-//           for (let i = 0; i < this.services_list.length; i++) {
-//             for (let j = 0; j < this.departments.length; j++) {
-//               for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-//                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
-//                   this.departments[j].serviceIds[k] = this.services_list[i].name;
-//                 }
-//               }
-//             }
-//           }
-//           for (let j = 0; j < this.departments.length; j++) {
-//             for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-//               // tslint:disable-next-line: radix
-//               if (parseInt(this.departments[j].serviceIds[k])) {
-//                 delete this.departments[j].serviceIds[k];
-//               }
-//             }
-//           }
-//           this.api_loading1 = false;
-//         },
-//         error => {
-//           this.api_loading1 = false;
-//           // this.sharedfunctionObj.apiErrorAutoHide(this, error);
-//         }
-//       );
-//   }
+    getProviderServices() {
+        this.api_loading1 = true;
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
+        this.provider_services.getProviderServices(filter)
+            .subscribe(data => {
+                this.services_list = data;
+            });
+        this.api_loading1 = false;
+    }
+    //   getDepartments() {
+    //     this.departments = [];
+    //     this.api_loading1 = true;
+    //     this.provider_services.getDepartments()
+    //       .subscribe(
+    //         data => {
+    //           this.deptObj = data;
+    //           this.filterbyDept = this.deptObj.filterByDept;
+    //           this.departments = this.deptObj.departments;
+    //           for (let i = 0; i < this.services_list.length; i++) {
+    //             for (let j = 0; j < this.departments.length; j++) {
+    //               for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+    //                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
+    //                   this.departments[j].serviceIds[k] = this.services_list[i].name;
+    //                 }
+    //               }
+    //             }
+    //           }
+    //           for (let j = 0; j < this.departments.length; j++) {
+    //             for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+    //               // tslint:disable-next-line: radix
+    //               if (parseInt(this.departments[j].serviceIds[k])) {
+    //                 delete this.departments[j].serviceIds[k];
+    //               }
+    //             }
+    //           }
+    //           this.api_loading1 = false;
+    //         },
+    //         error => {
+    //           this.api_loading1 = false;
+    //           // this.sharedfunctionObj.apiErrorAutoHide(this, error);
+    //         }
+    //       );
+    //   }
     goBack() {
         // this.router.navigate(['provider', 'settings', 'miscellaneous',
         //     'queues']);
@@ -377,9 +385,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-              //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                 timeSlot: ['', Validators.compose([Validators.required])],
+                timeSlot: ['', Validators.compose([Validators.required])],
             });
             this.updateForm();
         } else {
@@ -388,10 +396,10 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-               // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
-                 timeSlot: ['', Validators.compose([Validators.required])]
+                timeSlot: ['', Validators.compose([Validators.required])]
             });
             this.provider_services.getQStartToken()
                 .subscribe(
@@ -405,7 +413,6 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     }
 
     updateForm() {
-        console.log(this.queue_data);
         const sttime = {
             hour: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
@@ -425,19 +432,19 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             // qlocation: this.queue_data.location.id || null,
             qstarttime: sttime || null,
             qendtime: edtime || null,
-           // qcapacity: this.queue_data.capacity || null,
+            // qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
-             timeSlot: this.queue_data.timeDuration || 0
+            timeSlot: this.queue_data.timeDuration || 0
         });
         this.sbatchStatus = this.queue_data.batchEnable;
         if (this.queue_data.batchName) {
-          this.sprefixName = this.queue_data.batchName.prefix;
-          this.ssuffixName = this.queue_data.batchName.suffix;
+            this.sprefixName = this.queue_data.batchName.prefix;
+            this.ssuffixName = this.queue_data.batchName.suffix;
         }
         if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-          this.showEditSection = true;
+            this.showEditSection = true;
         } else {
-          this.showEditSection = false;
+            this.showEditSection = false;
         }
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
@@ -453,10 +460,10 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         }
         for (let j = 0; j < this.queue_data.services.length; j++) {
             for (let k = 0; k < this.services_list.length; k++) {
-            if (this.queue_data.services[j].id === this.services_list[k].id) {
-                this.services_list[k].checked = true;
-                this.services_selected.push(this.queue_data.services[j].id);
-            }
+                if (this.queue_data.services[j].id === this.services_list[k].id) {
+                    this.services_list[k].checked = true;
+                    this.services_selected.push(this.queue_data.services[j].id);
+                }
             }
         }
         if (this.services_selected.length === this.services_list.length) {
@@ -589,18 +596,18 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 'apptSchedule': schedulejson,
                 'apptState': 'ENABLED',
                 'parallelServing': form_data.qserveonce,
-               // 'capacity': form_data.qcapacity,
+                // 'capacity': form_data.qcapacity,
                 'location': this.selected_locationId,
                 'services': selser,
-               // 'tokenStarts': form_data.tokennum,
+                // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
                 'provider': this.userId,
-                'batchEnable':this.sbatchStatus,
-                "batchName": {
-                    "prefix": this.sprefixName,
-                    "suffix": this.ssuffixName
-                  }
-            }; 
+                'batchEnable': this.sbatchStatus,
+                'batchName': {
+                    'prefix': this.sprefixName,
+                    'suffix': this.ssuffixName
+                }
+            };
             // schedulejson = {
             //     'recurringType': 'Weekly',
             //     'repeatIntervals': daystr,
@@ -695,123 +702,123 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         const wkdaystemp = this.weekdays;
         this.weekdays = [];
         for (let ii = 1; ii <= 7; ii++) {
-          this.handleDaychecbox(ii);
+            this.handleDaychecbox(ii);
         }
         this.weekdays = wkdaystemp;
-      }
-      handleselectnone() {
+    }
+    handleselectnone() {
         this.Selall = false;
         this.selday_arr = [];
         const wkdaystemp = this.weekdays;
         this.weekdays = [];
         this.weekdays = wkdaystemp;
-      }
-      selectAllService() {
+    }
+    selectAllService() {
         for (let i = 0; i < this.services_list.length; i++) {
-          this.services_list[i].checked = true;
+            this.services_list[i].checked = true;
         }
         this.SelServcall = true;
-      }
-      deselectAllService() {
+    }
+    deselectAllService() {
         for (let i = 0; i < this.services_list.length; i++) {
-          delete this.services_list[i].checked;
+            delete this.services_list[i].checked;
         }
         this.SelServcall = false;
-      }
-      // checks whether a given value is there in the given array
-      check_existsinArray(arr, val) {
+    }
+    // checks whether a given value is there in the given array
+    check_existsinArray(arr, val) {
         let ret = -1;
         for (let i = 0; i < arr.length; i++) {
-          if (arr[i] === val) {
-            ret = i;
-          }
+            if (arr[i] === val) {
+                ret = i;
+            }
         }
         return ret;
-      }
-      serviceunderdept(index, deptName, deptIndex, serviceid) {
+    }
+    serviceunderdept(index, deptName, deptIndex, serviceid) {
         if (this.serviceSelection[deptName][index]) {
-          delete this.serviceSelection[deptName][index];
+            delete this.serviceSelection[deptName][index];
         } else {
-          this.serviceSelection[deptName][index] = serviceid;
+            this.serviceSelection[deptName][index] = serviceid;
         }
         let count = 0;
         for (let i = 0; i < this.serviceSelection[deptName].length; i++) {
-          if (!this.serviceSelection[deptName][i]) {
-            this.SelServcall = false;
-            count++;
-          }
+            if (!this.serviceSelection[deptName][i]) {
+                this.SelServcall = false;
+                count++;
+            }
         }
         if (count === this.serviceSelection[deptName].length) {
-          this.departments[deptIndex].checked = false;
-          this.SelService[deptIndex] = false;
+            this.departments[deptIndex].checked = false;
+            this.SelService[deptIndex] = false;
         }
         if (count === 0) {
-          this.SelServcall = true;
+            this.SelServcall = true;
         }
-      }
-      selectdept() {
+    }
+    selectdept() {
         for (let i = 0; i < this.departments.length; i++) {
-          this.serviceSelection[this.departments[i].departmentName] = [];
-          this.departments[i].checked = true;
-          this.SelService[i] = true;
-          for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-            this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
-          }
+            this.serviceSelection[this.departments[i].departmentName] = [];
+            this.departments[i].checked = true;
+            this.SelService[i] = true;
+            for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+                this.serviceSelection[this.departments[i].departmentName][j] = this.departments[i].serviceIds[j];
+            }
         }
         this.SelServcall = true;
-      }
-      deselectdept() {
+    }
+    deselectdept() {
         for (let i = 0; i < this.departments.length; i++) {
-          this.SelService[i] = false;
-          delete this.departments[i].checked;
+            this.SelService[i] = false;
+            delete this.departments[i].checked;
         }
         this.SelServcall = false;
-      }
-      selectdeprtservice(index, event, deptName) {
+    }
+    selectdeprtservice(index, event, deptName) {
         this.serviceSelection[deptName] = [];
         for (let i = 0; i < this.departments.length; i++) {
-          if (event.checked) {
-            this.departments[index].checked = true;
-            this.SelService[index] = true;
-            if (this.departments[i].departmentName === deptName) {
-              for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
-                this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
-              }
+            if (event.checked) {
+                this.departments[index].checked = true;
+                this.SelService[index] = true;
+                if (this.departments[i].departmentName === deptName) {
+                    for (let j = 0; j < this.departments[i].serviceIds.length; j++) {
+                        this.serviceSelection[deptName][j] = this.departments[i].serviceIds[j];
+                    }
+                }
+            } else {
+                this.departments[index].checked = false;
+                this.SelService[index] = false;
+                this.SelServcall = false;
             }
-          } else {
-            this.departments[index].checked = false;
-            this.SelService[index] = false;
-            this.SelServcall = false;
-          }
         }
         let count = 0;
         for (let i = 0; i < this.departments.length; i++) {
-          if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
-            for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
-              if (this.serviceSelection[this.departments[i].departmentName][j]) {
-                count = i;
-              }
+            if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
+                for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
+                    if (this.serviceSelection[this.departments[i].departmentName][j]) {
+                        count = i;
+                    }
+                }
             }
-          }
         }
         if (count === this.departments.length) {
-          this.SelServcall = false;
+            this.SelServcall = false;
         }
-      }
-      handleServicechecbox(index) {
+    }
+    handleServicechecbox(index) {
         this.SelServcall = true;
         if (this.services_list[index].checked) {
-          delete this.services_list[index].checked;
+            delete this.services_list[index].checked;
         } else {
-          this.services_list[index].checked = true;
+            this.services_list[index].checked = true;
         }
         for (let i = 0; i < this.services_list.length; i++) {
-          if (!this.services_list[i].checked) {
-            this.SelServcall = false;
-            break;
-          }
+            if (!this.services_list[i].checked) {
+                this.SelServcall = false;
+                break;
+            }
         }
-      }
+    }
 
     changeTimeslotStatus(ev) {
         const status = (ev.checked) ? 'Enable' : 'Disable';
@@ -825,42 +832,37 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             });
     }
 
-
     addBatchName() {
         const post_data = {
-          'prefix': this.prefixName,
-          'suffix': this.suffixName
+            'prefix': this.prefixName,
+            'suffix': this.suffixName
         };
         this.provider_services.updateScheduleBatch(this.queue_id, post_data).subscribe(data => {
-          this.showEditSection = false;
-          this.getScheduleDetail();
-          // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+            this.showEditSection = false;
+            this.getScheduleDetail();
+            // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
         });
-      }
+    }
     editBatchnames() {
         this.showEditSection = true;
-       }
+    }
     changeBatchStatus(event) {
         const status = (event.checked) ? 'enabled' : 'disabled';
         this.provider_services.changeScheduleBatchStatus(this.queue_id, event.checked).subscribe(data => {
-          this.batchStatus = event.checked;
-          this.getScheduleDetail();
-         this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+            this.batchStatus = event.checked;
+            this.getScheduleDetail();
+            this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         });
-      
-       
-      }
+    }
 
-    changebatchStatus(event){
+    changebatchStatus(event) {
         this.sbatchStatus = event.checked;
         const status = (event.checked) ? 'enabled' : 'disabled';
-        if(status === 'enabled')
-        {
-          this.showEditSection = true;
+        if (status === 'enabled') {
+            this.showEditSection = true;
+        } else {
+            this.showEditSection = false;
         }
-        else{
-          this.showEditSection = false;
-        }
-      } 
+    }
 }
 

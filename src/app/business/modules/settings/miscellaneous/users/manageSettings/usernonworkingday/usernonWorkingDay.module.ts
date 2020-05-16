@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BreadCrumbModule } from '../../../../../../../shared/modules/breadcrumb/breadcrumb.module';
-import { FormMessageDisplayModule } from '../../../../../../../shared/modules/form-message-display/form-message-display.module'
+import { FormMessageDisplayModule } from '../../../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { MaterialModule } from '../../../../../../../shared/modules/common/material.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { usernonWorkingDaylistcomponent } from './usernonWorkingDaylist/usernonWorkingDaylist.component';
-import { usernonWorkingDaydetailscomponent } from './usernonWorkingDaydetails/usernonWorkingDaydetails.component';
-import { usernonWorkingDayroutingmodule } from './usernonWorkingDay.routing.module';
+import { UsernonWorkingDaydetailsComponent } from './usernonWorkingDaydetails/usernonWorkingDaydetails.component';
+import { UsernonWorkingDaylistComponent } from './usernonWorkingDaylist/usernonWorkingDaylist.component';
+import { UsernonWorkingDayroutingModule } from './usernonWorkingDay.routing.module';
 
 @NgModule({
     imports: [
-        usernonWorkingDayroutingmodule,
+        UsernonWorkingDayroutingModule,
         BreadCrumbModule,
         NgbTimepickerModule,
         FormMessageDisplayModule,
@@ -23,10 +23,10 @@ import { usernonWorkingDayroutingmodule } from './usernonWorkingDay.routing.modu
         MaterialModule
     ],
     declarations: [
-        usernonWorkingDaylistcomponent,
-        usernonWorkingDaydetailscomponent
+        UsernonWorkingDaydetailsComponent,
+        UsernonWorkingDaylistComponent
     ],
-    exports: [usernonWorkingDaylistcomponent]
+    exports: [UsernonWorkingDaylistComponent]
 })
 
 export class NonWorkingDaymodule { }

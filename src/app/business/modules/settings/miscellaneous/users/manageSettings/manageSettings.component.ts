@@ -176,6 +176,7 @@ export class ManageSettingsComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.getUser();
     this.getScheduleCount();
     this.getServiceCount();
     this.getQueuesCount();
@@ -186,18 +187,24 @@ export class ManageSettingsComponent implements OnInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.userId,
-      url: '/provider/settings/miscellaneous/users/' + this.userId,
-    });
-    breadcrumbs.push({
-      title: 'Settings'
-    });
-    this.breadcrumbs = breadcrumbs;
+  }
+
+  getUser() {
+    this.provider_services.getUser(this.userId)
+      .subscribe((data: any) => {
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+          title: data.firstName,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+        });
+        breadcrumbs.push({
+          title: 'Settings'
+        });
+        this.breadcrumbs = breadcrumbs;
+      });
   }
   getServiceCount() {
     // this.loading = true;

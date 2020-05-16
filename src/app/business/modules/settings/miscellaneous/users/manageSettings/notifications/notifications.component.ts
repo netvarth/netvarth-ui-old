@@ -57,6 +57,7 @@ export class NotificationsUserComponent implements OnInit {
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
         });
+        this.getUser();
         this.getSMSglobalSettings();
         this.getSMSCredits();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
@@ -65,23 +66,27 @@ export class NotificationsUserComponent implements OnInit {
         this.frm_providr_notification_cap = Messages.FRM_LEVEL_PROVIDER_NOTIFICATION_MSG.replace('[customer]', this.customer_label);
         this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-            title: 'Settings',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-            title: 'Notifications'
-        });
-        this.breadcrumbs = breadcrumbs;
-
+    }
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Notifications'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
     }
     // gotoConsumer() {
     //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'notifications', 'consumer']);

@@ -91,18 +91,24 @@ export class BranchUserDetailComponent implements OnInit {
     ) {
         this.activated_route.queryParams.subscribe(data => {
             this.actionparam = data;
-
         }
         );
-
     }
     ngOnInit() {
         this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
             this.getUserData();
+        } else {
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: 'Add'
+            });
+            this.breadcrumbs = breadcrumbs;
         }
-
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (bConfig && bConfig.bdata) {
@@ -116,7 +122,6 @@ export class BranchUserDetailComponent implements OnInit {
                     break;
                 }
             }
-            console.log(this.subDomains);
             this.userForm.get('selectedSubDomain').setValue(this.subDomains[0].id);
         } else {
             this.shared_services.bussinessDomains()
@@ -148,7 +153,7 @@ export class BranchUserDetailComponent implements OnInit {
             state: [],
             city: []
         });
-       
+
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
         this.getWaitlistMgr();
     }
@@ -168,7 +173,7 @@ export class BranchUserDetailComponent implements OnInit {
                             breadcrumbs.push(e);
                         });
                         breadcrumbs.push({
-                            title: this.user_data.id
+                            title: this.user_data.firstName
                         });
                         this.breadcrumbs = breadcrumbs;
                     }
@@ -181,7 +186,6 @@ export class BranchUserDetailComponent implements OnInit {
     updateForm() {
         if (this.user_data.userType === 'PROVIDER') {
             this.showPrvdrFields = true;
-
         }
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
@@ -199,9 +203,6 @@ export class BranchUserDetailComponent implements OnInit {
             'city': this.user_data.city || null
         });
 
-    }
-    onItemSelect(subdomain) {
-        // console.log(subdomain);
     }
     onUserSelect(event) {
         if (event.value === 'PROVIDER') {
@@ -238,7 +239,6 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
             return;
         }
-
         const post_data1 = {
             'firstName': input.first_name.trim() || null,
             'lastName': input.last_name.trim() || null,
@@ -256,7 +256,6 @@ export class BranchUserDetailComponent implements OnInit {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['subdomain'] = input.selectedSubDomain;
         }
-
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
@@ -350,7 +349,6 @@ export class BranchUserDetailComponent implements OnInit {
                         this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentId);
                     }
                     this.deptLength = this.departments.length;
-                    console.log(this.deptLength);
                     this.api_loading = false;
                 },
                 error => {

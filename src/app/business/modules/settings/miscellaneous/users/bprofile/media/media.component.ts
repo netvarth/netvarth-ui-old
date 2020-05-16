@@ -93,31 +93,15 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-            title: 'Online Profile',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
-        });
-        breadcrumbs.push({
-            title: 'Social Media'
-        });
-        this.breadcrumbs = breadcrumbs;
         // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
         // this.getGalleryImages();
         this.getBusinessProfile();
-
     }
 
     learnmore_clicked(mod, e) {
@@ -132,7 +116,27 @@ export class MediaComponent implements OnInit, OnDestroy {
             this.delgaldialogRef.close();
         }
     }
-
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                });
+                breadcrumbs.push({
+                    title: 'Online Profile',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+                });
+                breadcrumbs.push({
+                    title: 'Social Media'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     getBusinessProfile() {
         this.showaddsocialmedia = false;
         this.bProfile = [];
@@ -202,7 +206,6 @@ export class MediaComponent implements OnInit, OnDestroy {
         return false;
     }
     handleSocialmedia(key) {
-        console.log(key);
         this.socialdialogRef = this.dialog.open(ProviderUserBprofileSearchSocialMediaComponent, {
             width: '50%',
             // panelClass: 'socialmediamainclass',
@@ -233,7 +236,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         const submit_data = {
             'socialMedia': post_data
         };
-        this.provider_services.updateUserSocialMediaLinks(submit_data,this.userId)
+        this.provider_services.updateUserSocialMediaLinks(submit_data, this.userId)
             .subscribe(
                 () => {
                     this.getBusinessProfile();

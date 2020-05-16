@@ -116,25 +116,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-            title: 'Settings',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-            title: 'Queues'
-        });
-        this.breadcrumbs = breadcrumbs;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
@@ -153,6 +138,27 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     /**
     *Method executes when try to edit start time
     */
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Queues'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     editStartTime() {
         this.sTimeEditable = true;
         let sttime;
@@ -300,14 +306,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.provider_services.getUserProviderQueues(this.userId)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
-                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -361,7 +365,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
-                        console.log(error);
                         reject(error);
                     });
         });
@@ -758,7 +761,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
-                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {

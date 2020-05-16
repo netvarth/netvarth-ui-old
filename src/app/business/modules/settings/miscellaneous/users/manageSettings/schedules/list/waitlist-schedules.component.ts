@@ -36,17 +36,17 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
-        
+
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
-          },
-        
+        },
+
         {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-      
-          }
+
+        }
 
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -108,33 +108,18 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private activatedRoot: ActivatedRoute,
-        private fb: FormBuilder) { 
-            this.activatedRoot.params.subscribe(params => {
-                this.userId = params.id;
-            }
-            );
+        private fb: FormBuilder) {
+        this.activatedRoot.params.subscribe(params => {
+            this.userId = params.id;
         }
+        );
+    }
 
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-        });
-        breadcrumbs.push({
-            title: 'Settings',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-        });
-        breadcrumbs.push({
-            title: 'Schedules'
-        });
-        this.breadcrumbs = breadcrumbs;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
@@ -153,6 +138,27 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     /**
     *Method executes when try to edit start time
     */
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Schedules'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     editStartTime() {
         this.sTimeEditable = true;
         let sttime;
@@ -300,14 +306,12 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
             this.provider_services.getProviderUserSchedules(this.userId)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
-                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -361,7 +365,6 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
-                        console.log(error);
                         reject(error);
                     });
         });
@@ -716,7 +719,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings','schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'schedules', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
@@ -757,7 +760,6 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
-                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {
@@ -772,7 +774,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                             this.api_loading = false;
                         }
                     );
-                 });
+                });
     }
     /**
      * Method to set values for instant Queue creation
@@ -927,7 +929,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
-        const dd = today.getDate() ;
+        const dd = today.getDate();
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
         let cmon;

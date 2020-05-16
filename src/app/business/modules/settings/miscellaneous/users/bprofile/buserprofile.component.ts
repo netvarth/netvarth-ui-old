@@ -4,12 +4,9 @@ import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-galler
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
@@ -24,12 +21,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
-
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   click_here_cap = Messages.CLICK_HERE_CAP;
   sorry_cap = Messages.SORRY_CAP;
-
   your_proflie_cap = Messages.BPROFILE_PROFILE_CAP;
   disabled_Cap = Messages.BPROFILE_DISABLED_CAP;
   not_visible_cap = Messages.BPROFILE_ONLINE_VISIBLE_CAP;
@@ -50,7 +45,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   name_summary_cap = Messages.BPROFILE_BUSINESS_NAME_CAP;
   profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
   add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
-
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
   delete_pic = Messages.BPROFILE_DELETE_PICTURE_CAP;
@@ -70,14 +64,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   frm_public_search_cap = '';
   frm_public_searchh_cap = '';
   frm_public_search_off_cap = '';
-
   checked = false;
   bProfile = null;
   serviceSector = null;
   public_search = false;
   error_msg = '';
-
-
   reqFields: any = {
     name: false,
     location: false,
@@ -95,14 +86,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
-
-
   tooltipcls = projectConstants.TOOLTIP_CLS;
   breadcrumb_moreoptions: any = [];
-
   normal_profile_active = 1;  // [1 - loading]  [2 - no info] [3 - info available]
   normal_basicinfo_show = 1;
-
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
@@ -157,8 +144,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   domain;
   userId: any;
   showProfile = false;
-
-
   select_subdomain_cap;
   profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
   business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
@@ -177,12 +162,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   user_arr;
   normal_search_active = false;
 
-
   constructor(private provider_services: ProviderServices,
     private sharedfunctionobj: SharedFunctions,
-    private provider_shared_functions: ProviderSharedFuctions,
-    private sanitizer: DomSanitizer, private fb: FormBuilder,
-    private dialog: MatDialog,
+    private fb: FormBuilder,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     private activated_route: ActivatedRoute,
@@ -212,30 +194,19 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
     });
-    breadcrumbs.push({
-      title: this.userId,
-      url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-    });
-    breadcrumbs.push({
-      title: 'Online Profile'
-    });
     this.breadcrumbs = breadcrumbs;
     this.getUser();
     // calling method to create the form
     // setTimeout(() => {
     //   this.createForm();
     // }, 500);
-
-
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
-
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
       this.primarydialogRef.close();
     }
-
   }
   getBusinessConfiguration() {
     this.shared_services.bussinessDomains()
@@ -280,17 +251,15 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       .then(
         data => {
           this.bProfile = data;
-          console.log(this.bProfile);
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
           } else {
             this.normal_profile_active = 2;
           }
           // check whether normal business profile section can be displayed
-
           if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
             || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
-           // this.getProviderLogo();
+            // this.getProviderLogo();
             this.normal_basicinfo_show = 3;
           } else {
             this.normal_basicinfo_show = 2;
@@ -300,7 +269,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           this.normal_basicinfo_show = 2;
         }
       );
-
   }
   getBussinessProfileApi() {
     const _this = this;
@@ -308,7 +276,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
-            console.log(data);
             resolve(data);
           },
           () => {
@@ -324,16 +291,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       bdesc: [{ value: '' }]
     };
     this.amForm = this.fb.group(this.formfields);
-    console.log(this.bProfile);
-    // this.prov_curstatus = this.bProfile.status;
     if (this.bProfile) {
-      console.log(this.bProfile);
       this.updateForm();
     }
-
   }
   onItemSelect(a) {
-
   }
   updateForm() {
     this.amForm.setValue({
@@ -350,7 +312,19 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.provider_services.getUser(this.userId)
       .subscribe(data => {
         this.user_arr = data;
-        console.log(this.user_arr.subdomain);
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+          title: this.user_arr.firstName,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+        });
+        breadcrumbs.push({
+          title: 'Online Profile'
+        });
+
+        this.breadcrumbs = breadcrumbs;
       });
   }
 
@@ -409,7 +383,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       );
   }
 
-
   updatePrimaryFields(pdata) {
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
@@ -436,7 +409,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.disableButton = false;
     // this.profileview = false;
     this.createForm();
-
     // this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
     //   width: '50%',
     //   panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -476,7 +448,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           reader.onload = (e) => {
             this.item_pic.base64 = e.target['result'];
           };
-          console.log(this.user_arr);
           reader.readAsDataURL(fileobj);
           if (this.user_arr.status === 'ACTIVE' || this.user_arr.status === 'INACTIVE') { // case now in bprofile edit page
             // generating the data to be submitted to change the logo
@@ -487,7 +458,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
             };
             const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
             submit_data.append('properties', blobPropdata);
-            console.log(submit_data);
             this.uploadLogo(submit_data);
           }
         } else {
@@ -509,7 +479,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.provider_services.getUserBussinessProfile(this.userId)
       .subscribe(
         data => {
-          console.log(this.userId);
           this.blogo = data;
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
@@ -547,7 +516,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
             || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-
           const pdata = { 'ttype': 'updateuserdetails' };
           this.sharedfunctionobj.sendMessage(pdata);
           /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
@@ -587,7 +555,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
           || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
-
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedfunctionobj.sendMessage(pdata);
       },
@@ -611,5 +578,4 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   galerySocialmedia() {
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
   }
-
 }

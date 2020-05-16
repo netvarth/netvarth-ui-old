@@ -3,8 +3,6 @@ import { Messages } from '../../../../../../../shared/constants/project-messages
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
-import { ProviderDataStorageService } from '../../../../../../../ynw_provider/services/provider-datastorage.service';
-import { AddProviderBprofileSpecializationsComponent } from '../../../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
@@ -47,7 +45,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     userId: any;
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private activated_route: ActivatedRoute,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
@@ -67,30 +64,12 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userId,
-            url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
-        });
-        breadcrumbs.push({
-            title: 'Online Profile',
-            url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
-        });
-        breadcrumbs.push({
-            title: 'Specialization'
-        });
-        this.breadcrumbs = breadcrumbs;
         this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     // learnmore_clicked(parent, child) {}
     performActions() {
-
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->specializations']);
-
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
@@ -101,20 +80,33 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.provider_services.getUser(this.userId)
             .subscribe((data: any) => {
                 this.username = data.firstName;
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: this.username,
+                    url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId,
+                });
+                breadcrumbs.push({
+                    title: 'Online Profile',
+                    url: '/provider/settings/miscellaneous/users/' + this.userId + '/bprofile',
+                });
+                breadcrumbs.push({
+                    title: 'Specialization'
+                });
+                this.breadcrumbs = breadcrumbs;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
                             if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                                console.log(this.subDomain);
                                 this.initSpecializations();
                             }
                         }
                     }
                 }
             });
-
-
     }
 
     initSpecializations() {
@@ -123,8 +115,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
             .then(
                 data => {
                     this.bProfile = data;
-                    console.log(this.domain);
-                    console.log(this.subDomain);
                     this.getSpecializations(this.domain, this.subDomain);
                     if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
@@ -135,7 +125,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     } else {
                         this.normal_specilization_show = 2;
                     }
-
                 },
                 () => {
                     this.normal_specilization_show = 2;
@@ -146,7 +135,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.provider_services.getSpecializations(domain, subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
-                console.log(this.specialization_arr);
             });
     }
     getSpecializationName(n) {
@@ -168,7 +156,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                         reject();
                     }
                 );
-
         });
     }
     handleSpecialization() {
@@ -178,7 +165,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         } else {
             holdselspec = [];
         }
-
         const bprof = holdselspec;
         const special = this.specialization_arr;
         this.specialdialogRef = this.dialog.open(UserSpecializationComponent, {

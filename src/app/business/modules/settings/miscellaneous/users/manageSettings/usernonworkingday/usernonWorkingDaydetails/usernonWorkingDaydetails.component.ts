@@ -13,7 +13,7 @@ import * as moment from 'moment';
   templateUrl: './usernonWorkingDaydetails.component.html'
 })
 
-export class usernonWorkingDaydetailscomponent implements OnInit {
+export class UsernonWorkingDaydetailsComponent implements OnInit {
 
   non_working_day_cap = Messages.NON_WORK_DAY_HI_CAP;
   non_working_day_or_hr_cap = Messages.NON_WORK_DAY_OR_HR_CAP;
@@ -80,7 +80,6 @@ export class usernonWorkingDaydetailscomponent implements OnInit {
       this.activated_route.params.subscribe(
         (params) => {
           this.holiday_id = params.sid;
-          console.log(this.holiday_id);
           this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
           if (this.holiday_id) {
             if (this.holiday_id === 'add') {
@@ -101,7 +100,6 @@ export class usernonWorkingDaydetailscomponent implements OnInit {
                   this.getholiday(this.holiday_id).then(
                     (item) => {
                       this.holiday = item;
-                      console.log(this.holiday);
                       //  this.halyday_name = this.holiday.name;
                       if (this.action === 'edit') {
                         this.createForm();
@@ -114,34 +112,41 @@ export class usernonWorkingDaydetailscomponent implements OnInit {
             this.api_loading = false;
           }
         }
-      )
+      );
     }
 
   }
 
+  getUser() {
+    this.provider_services.getUser(this.userId)
+      .subscribe((data: any) => {
+
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+          title: data.firstName,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+        });
+        breadcrumbs.push({
+          title: 'Settings',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+        });
+
+        breadcrumbs.push({
+          title: 'Non Working Day/Hour',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/holidays'
+        });
+
+        // breadcrumbs.push({
+        //     title: 'Add'
+        // });
+        this.breadcrumbs = breadcrumbs;
+      });
+  }
   ngOnInit() {
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.userId,
-      url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-    });
-    breadcrumbs.push({
-      title: 'Settings',
-      url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-    });
-
-    breadcrumbs.push({
-      title: 'Non Working Day/Hour',
-      url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings/holidays'
-    });
-
-    // breadcrumbs.push({
-    //     title: 'Add'
-    // });
-    this.breadcrumbs = breadcrumbs;
+    this.getUser();
   }
 
   createForm() {
@@ -175,7 +180,6 @@ export class usernonWorkingDaydetailscomponent implements OnInit {
   }
 
   getholiday(holidayid) {
-    console.log(holidayid);
     const _this = this;
     return new Promise(function (resolve, reject) {
       // _this.provider_services.getProviderNonworkingdays(holidayid)

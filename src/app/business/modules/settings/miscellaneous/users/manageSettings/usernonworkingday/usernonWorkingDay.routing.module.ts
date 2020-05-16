@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { usernonWorkingDaylistcomponent } from './usernonWorkingDaylist/usernonWorkingDaylist.component';
-import { usernonWorkingDaydetailscomponent } from './usernonWorkingDaydetails/usernonWorkingDaydetails.component';
+import { UsernonWorkingDaylistComponent } from './usernonWorkingDaylist/usernonWorkingDaylist.component';
+import { UsernonWorkingDaydetailsComponent } from './usernonWorkingDaydetails/usernonWorkingDaydetails.component';
 
 const routes: Routes = [
-    { path: '', component:usernonWorkingDaylistcomponent },
-    { path: ':sid', component:usernonWorkingDaydetailscomponent },
+    { path: '', component: UsernonWorkingDaylistComponent },
+    { path: ':sid', component: UsernonWorkingDaydetailsComponent },
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
 
-export class usernonWorkingDayroutingmodule {}
+export class UsernonWorkingDayroutingModule { }

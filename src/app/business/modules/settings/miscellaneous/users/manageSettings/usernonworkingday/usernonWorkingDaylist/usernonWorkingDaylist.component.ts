@@ -13,7 +13,7 @@ import { ProviderServices } from '../../../../../../../../ynw_provider/services/
   templateUrl: './usernonWorkingDaylist.component.html'
 
 })
-export class usernonWorkingDaylistcomponent implements OnInit, OnDestroy {
+export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
 
   non_working_cap = Messages.NON_WORK_DAY_HI_CAP;
   add_cap = Messages.ADD_BTN;
@@ -63,31 +63,13 @@ export class usernonWorkingDaylistcomponent implements OnInit, OnDestroy {
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
-      console.log(this.userId);
     }
     );
-
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
   ngOnInit() {
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.userId,
-      url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
-    });
-    breadcrumbs.push({
-      title: 'Settings',
-      url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
-    });
-    breadcrumbs.push({
-      title: 'Non Working Day/Hour '
-    });
-    this.breadcrumbs = breadcrumbs;
-
+    this.getUser();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -96,6 +78,27 @@ export class usernonWorkingDaylistcomponent implements OnInit, OnDestroy {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
 
+  getUser() {
+    this.provider_servicesobj.getUser(this.userId)
+      .subscribe((data: any) => {
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+          title: data.firstName,
+          url: '/provider/settings/miscellaneous/users/add?type=edit&val=' + this.userId
+        });
+        breadcrumbs.push({
+          title: 'Settings',
+          url: '/provider/settings/miscellaneous/users/' + this.userId + '/settings'
+        });
+        breadcrumbs.push({
+          title: 'Non Working Day/Hour '
+        });
+        this.breadcrumbs = breadcrumbs;
+      });
+  }
   ngOnDestroy() {
     if (this.addholdialogRef) {
       this.addholdialogRef.close();
@@ -116,7 +119,6 @@ export class usernonWorkingDaylistcomponent implements OnInit, OnDestroy {
     // this.provider_servicesobj.getProviderNonworkingdays()
     this.provider_servicesobj.getUserProviderNonworkingdays(this.userId)
       .subscribe(data => {
-        console.log(data);
         this.nonworking_list = data;
         this.query_executed = true;
         this.isAvailableNow();
@@ -134,7 +136,6 @@ export class usernonWorkingDaylistcomponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit' }
     };
-    console.log(navigationExtras);
     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'holidays', holiday.id], navigationExtras);
   }
 
