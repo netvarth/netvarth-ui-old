@@ -262,7 +262,9 @@ export class DepartmentDetailComponent implements OnInit {
                             for (let i = 0; i < this.servicesjson.length; i++) {
                                 for (let j = 0; j < this.dept_services.length; j++) {
                                     if (this.dept_services[j] === this.servicesjson[i].id) {
-                                        newserviceArray.push(this.servicesjson[i]);
+                                        if (this.servicesjson[i].serviceType !== 'donationService') {
+                                            newserviceArray.push(this.servicesjson[i]);
+                                        }
                                     }
                                 }
                             }
