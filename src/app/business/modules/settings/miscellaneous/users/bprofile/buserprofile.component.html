@@ -36,13 +36,13 @@
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                 </div>
-                                <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.profileId">
+                                <!-- <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.profileId">
                                     <h2>Profile ID</h2>
                                     <p class="form-level-settings">Know your unique ID here<a class="learnmore-pointer"
                                             id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
                                             More</a></p>
                                     <span class="status">{{bProfile.profileId}} </span>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="card p0 w-dta active">
                                 <mat-accordion>
@@ -149,6 +149,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="bprof-custId">
+                        <h2>Jaldee IDs</h2>
+                        <div class="pubs card adwds customBus w-dta">
+                            <h3>Jaldee Pass Code</h3>
+                            <p class="form-level-settings">Jaldee pass code hints<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
+                                More</a></p>
+                        <div class="col-md-6">
+                            <div class="cd-t no-padding">
+                                <div class="sblinks custId-flex">
+                                    <input [ngClass]="{'buser-font-sz': !show_passcode, 'buser-font-f-sz': show_passcode}" class="buser-font-sz" [type]="show_passcode ? 'bProfile.profileId' : 'password'" value="{{bProfile.profileId}}" [readonly]="true">
+                                    <i *ngIf="!show_passcode" (click)="showPasscode()" class="material-icons coupon-outer custId-cursor" style="color: #29b6f6;">visibility_off</i>
+                                    <i *ngIf="show_passcode" (click)="showPasscode()" class="material-icons coupon-outer custId-cursor" style="color: #29b6f6;">visibility</i>
+                                    </div>
+                                    </div>
+                        </div>
+                        </div>
+                        </span>
+                        </div>
             </div>
             <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
                 <div class="card p0">

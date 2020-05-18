@@ -219,6 +219,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   parkingType: any;
   park_type: any;
   @ViewChild('logofile', { static: false }) myInputVariable: ElementRef;
+  show_passcode = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -924,6 +925,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
     WindowPrt.focus();
     WindowPrt.print();
     WindowPrt.close();
+  }
+  showPasscode() {
+    this.show_passcode = !this.show_passcode;
   }
   gotoMedia() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);

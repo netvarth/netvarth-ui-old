@@ -8791,3 +8791,17 @@ padding-right: 0 !important; padding-top: 0 !important;}
     padding-top: 0px;
   }
 }
+.buser-font-sz {
+  border: none;
+  font-size: 30px;
+  max-width: 100px;
+}
+.buser-font-f-sz {
+  border: none;
+  font-size: 20px;
+  max-width: 100px;
+  padding-top: 8px;
+}
+.custId-qr {
+  font-size: larger;
+}

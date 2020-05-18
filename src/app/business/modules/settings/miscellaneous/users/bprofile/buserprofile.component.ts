@@ -86,6 +86,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
+  show_passcode = false;
   tooltipcls = projectConstants.TOOLTIP_CLS;
   breadcrumb_moreoptions: any = [];
   normal_profile_active = 1;  // [1 - loading]  [2 - no info] [3 - info available]
@@ -517,6 +518,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         () => {
 
         });
+  }
+  showPasscode() {
+    this.show_passcode = !this.show_passcode;
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
