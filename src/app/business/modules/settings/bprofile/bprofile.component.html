@@ -367,15 +367,14 @@
                     <span class="bprof-custId">
                         <h2>Provider IDs</h2>
                         <div class="pubs card adwds customBus w-dta">
-                            <h3 style="font-weight: 500;font-size: larger;color: #29b6f6;">Custom ID
-                            </h3>
+                            <h3>Custom ID</h3>
                             <p class="form-level-settings">{{custm_id}}<a class="learnmore-pointer" id="customer-help"
                                     (click)="learnmore_clicked('custom-id', $event)">Learn
                                     More</a></p>
                             <div class="no-dta" *ngIf="normal_customid_show==2 && showCustomId">
                                 <span class="cs-btn bt3" (click)="editCustomId()">{{add_it_cap}}</span>
                             </div>
-                            <div style="display: contents;" *ngIf="normal_customid_show==2 && !showCustomId">
+                            <div class="duration" *ngIf="normal_customid_show==2 && !showCustomId">
                                 You are not allowed to do this operation. Please upgrade license package
                             </div>
 
@@ -386,15 +385,14 @@
                                             <li>
                                                 <span class="custid" rel="noopener"
                                                     target="_blank">{{path}}/#{{bProfile.customId}}</span>
-                                                    <span style="font-size: large;padding-left: 40px;" class="custid"><i
-                                                            class="fa fa-copy"
+                                                    <span class="custid custId-icon"><i
+                                                            class="fa fa-copy custId-cursor"
                                                             (click)="copyInputMessage(bProfile.customId)"
-                                                            style="cursor: pointer;" [matTooltip]="'Copy link'"></i>
+                                                             [matTooltip]="'Copy link'"></i>
                                                     </span>
-                                                    <span style="font-size: large;padding-left: 40px;" class="custid">
-                                                        <i class="fa fa-qrcode"
+                                                    <span class="custid custId-icon">
+                                                        <i class="fa fa-qrcode custId-cursor"
                                                             (click)="qrCodegenerateCustID(bProfile.customId)"
-                                                            style="cursor: pointer;"
                                                             [matTooltip]="'Generate QR code'"></i>
                                                     </span>
                                                     <span class="custid" style="padding-left: 40px;">
@@ -421,17 +419,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style"
-                                        *ngIf="editMode==1 || editMode==0" style="display: flex;">
-                                        <div class="form-group" style="display: flex;">
-                                            <mat-form-field style="width: 140px;">
+                                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex"
+                                        *ngIf="editMode==1 || editMode==0">
+                                        <div class="form-group custId-flex">
+                                            <mat-form-field class="custId-ip-wdth">
                                                 <input matInput type="text" minlength="4" maxlength="25"
                                                     class="form-control" autocomplete="off" value="www.jaldee.com/#"
                                                     [readonly]="true" style="color: #a5a2a2;">
                                             </mat-form-field>
                                             <mat-form-field>
                                                 <input matInput type="text" minlength="4" maxlength="25"
-                                                    class="form-control" id="customid" formControlName="customid"
+                                                    class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
                                                     autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display
@@ -445,11 +443,10 @@
                                                                     })">
                                             </app-field-error-display>
                                         </div>
-                                        <div class="form-group"
-                                            style="display: flex;padding-left: 30px;padding-top: 20px;">
-                                            <button (click)="cancelCusUpdt()" class="cs-btn bt2">Cancel</button>
+                                        <div class="form-group custId-btns">
+                                            <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
                                             <button (click)="add_updateCustomId(customForm.value)" mat-button
-                                                [disabled]="!customForm.valid" class="cs-btn bt1 custmIdOk">Ok</button>
+                                                [disabled]="!customForm.valid" class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
                                         </div>
                                     </form>
                                 </div>
@@ -459,14 +456,14 @@
                                     <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
                                     </ngx-qrcode>
                                 </div>
-                                <div style="padding-top: 90px;">
+                                <div class="custId-prnt">
                                     <button (click)="printQr('print-section')">Print</button>&nbsp;&nbsp;&nbsp;
                                 <button (click)="closeCustomQR()">close</button>
                                 </div>
                             </div>
                         </div>
                         <div class="pubs card adwds customBus w-dta">
-                            <h3 style="font-weight: 500;font-size: larger;color: #29b6f6;">Jaldee account URL</h3>
+                            <h3>Jaldee account URL</h3>
                             <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
                                     More</a></p>
@@ -477,16 +474,14 @@
                                             <li>
                                                 <span class="custid" rel="noopener"
                                                     target="_blank">{{bProfile.uniqueId}} </span>
-                                                <span style="padding-left: 140px;">
-                                                    <span style="font-size: large;padding-left: 40px;" class="custid">
-                                                        <i class="fa fa-copy"
-                                                            (click)="copyInputMessage(bProfile.uniqueId)"
-                                                            style="cursor: pointer;" [matTooltip]="'Copy link'"></i>
+                                                <span class="custId-cpy">
+                                                    <span class="custid custId-icon">
+                                                        <i class="fa fa-copy custId-cursor"
+                                                            (click)="copyInputMessage(bProfile.uniqueId)"[matTooltip]="'Copy link'"></i>
                                                     </span>
-                                                    <span style="font-size: large;padding-left: 40px;" class="custid">
-                                                        <i class="fa fa-qrcode"
+                                                    <span class="custid custId-icon">
+                                                        <i class="fa fa-qrcode custId-cursor"
                                                             (click)="qrCodegenerateOnlineID(bProfile.uniqueId)"
-                                                            style="cursor: pointer;"
                                                             [matTooltip]="'Generate QR code'"></i>
                                                     </span>
                                                 </span>
@@ -501,14 +496,14 @@
                                     <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
                                     </ngx-qrcode>
                                 </div>
-                                <div style="padding-top: 90px;">
+                                <div class="custId-prnt">
                                     <button (click)="printQr('print-section')">Print</button> &nbsp;&nbsp;&nbsp;
                                 <button (click)="closeOnlineQR()">close</button>
                                 </div>
                             </div>
                         </div>
                         <div class="pubs card adwds customBus w-dta">
-                            <h3 style="font-weight: 500;font-size: larger;color: #29b6f6;">Profile ID</h3>
+                            <h3>Profile ID</h3>
                             <p class="form-level-settings">Manage profile ID<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
                                     More</a></p>

@@ -8735,3 +8735,40 @@ padding-right: 0 !important; padding-top: 0 !important;}
   align-items: center;
   color: #3c8dbc
 }
+.bprof-custId .w-dta h3 {
+  font-weight: 500;
+  font-size: larger;
+  color: #29b6f6;
+}
+.custId-icon {
+  font-size: large;
+  padding-left: 40px;
+}
+.custId-cursor {
+  cursor: pointer;
+}
+.custId-flex {
+  display: flex;
+}
+.custId-ip-wdth {
+  width: 140px !important;
+}
+.custId-ip-max-wdth {
+  max-width: 150px !important;
+}
+.custId-btns {
+  display: flex;
+  padding-left: 20px;
+  padding-top: 25px;
+}
+.custId-btn-bt2 {
+  width:90px;
+  height: 35px;
+  padding:1px !important;
+}
+.custId-prnt {
+  padding-top: 90px;
+}
+.custId-cpy {
+  padding-left: 140px;
+}
