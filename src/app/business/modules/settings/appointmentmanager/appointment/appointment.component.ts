@@ -362,7 +362,7 @@ export class AppointmentComponent implements OnInit {
 
         const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
         console.log(loc);
-        this.sel_loc = loc.id;
+        this.sel_loc = loc;
 
         this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
         console.log(this.sel_checkindate);

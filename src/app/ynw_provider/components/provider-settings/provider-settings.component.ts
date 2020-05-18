@@ -257,7 +257,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   handle_jaldeeWalkinConsumer(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     const data = {
-      'walkinConsumer': event.checked
+      'walkinConsumerBecomesJdCons': event.checked
     };
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
@@ -383,7 +383,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
         this.onlinepresence_status = data.onlinePresence;
-        this.walkinConsumer_status = data.walkinConsumer;
+        this.walkinConsumer_status = data.walkinConsumerBecomesJdCons;
         this.jaldeeintegration_status = data.onlinePresence;
         this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';

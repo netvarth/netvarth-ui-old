@@ -788,33 +788,34 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   checkClose() {
-    this.isAvailableNow();
-    let show_incomplete = false;
-    const bname = (this.wizard_data_holder.name) ? this.wizard_data_holder.name.trim() : '';
-    const lat = (this.wizard_data_holder.lat) ? this.wizard_data_holder.lat : '';
-    const lon = (this.wizard_data_holder.lon) ? this.wizard_data_holder.lon : '';
-    const lname = (this.wizard_data_holder.location) ? this.wizard_data_holder.location.trim() : '';
-    const sch = this.schedule_arr.length;
-    if (bname === '') {
-      show_incomplete = true;
-    }
-    if (lat === '') {
-      show_incomplete = true;
-    }
-    if (lon === '') {
-      show_incomplete = true;
-    }
-    if (lname === '') {
-      show_incomplete = true;
-    }
-    if (sch === 0 || sch === '') {
-      show_incomplete = true;
-    }
-    if (show_incomplete) { // if incomplete data is there then show the incomplete page
-      this.active_step = 7;
-    } else { // if sufficient data is there, then show the bprofile
-      this.redirecttoProfile();
-    }
+    // this.isAvailableNow();
+    // let show_incomplete = false;
+    // const bname = (this.wizard_data_holder.name) ? this.wizard_data_holder.name.trim() : '';
+    // const lat = (this.wizard_data_holder.lat) ? this.wizard_data_holder.lat : '';
+    // const lon = (this.wizard_data_holder.lon) ? this.wizard_data_holder.lon : '';
+    // const lname = (this.wizard_data_holder.location) ? this.wizard_data_holder.location.trim() : '';
+    // const sch = this.schedule_arr.length;
+    // if (bname === '') {
+    //   show_incomplete = true;
+    // }
+    // if (lat === '') {
+    //   show_incomplete = true;
+    // }
+    // if (lon === '') {
+    //   show_incomplete = true;
+    // }
+    // if (lname === '') {
+    //   show_incomplete = true;
+    // }
+    // if (sch === 0 || sch === '') {
+    //   show_incomplete = true;
+    // }
+    // if (show_incomplete) { // if incomplete data is there then show the incomplete page
+    //   this.active_step = 7;
+    // } else { // if sufficient data is there, then show the bprofile
+    //   this.redirecttoProfile();
+    // }
+    this.redirecttoProfile();
   }
   resetErrors() {
     this.error_Exists = false;

@@ -120,7 +120,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
+                                placeholderLabel="Search departments"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
                                 (click)="departmentSelection(department.departmentId, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
@@ -145,7 +146,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
+                                placeholderLabel="Search services"></ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="serviceSelection(service.id, 'SERVICE')">
                                 {{service.name | capitalizeFirst}}
@@ -168,7 +170,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues">
+                            </ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, 'SCHEDULE')">
                                 {{schedule.name}}
@@ -218,14 +221,15 @@
                 </label>
                 <mat-form-field>
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"></ngx-mat-select-search>
-                        <mat-option *ngFor="let label of providerLabelsList" [value]="label" (click)="providerLabelSelection()">
+                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels">
+                        </ngx-mat-select-search>
+                        <mat-option *ngFor="let label of providerLabelsList" [value]="label"
+                            (click)="providerLabelSelection()">
                             {{label.displayName}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div class="mgn-up-20 mgn-lt-20 form-group"
-                    *ngIf="labelMultiCtrl.length > 0">
+                <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
                     <label class="col-form-label">
                         Selected Labels:
                     </label>
@@ -234,8 +238,9 @@
                             {{label.displayName}}
                         </li>
                         <mat-form-field class="col-md-6 no-padding">
-                            <mat-select placeholder="Select value">
-                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue" (click)="providerLabelSelection(value.value, label.label)">
+                            <mat-select placeholder="Select value" [(value)]="label.selectedValue">
+                                <mat-option *ngFor="let value of label.valueSet" [value]="value.value"
+                                    (click)="providerLabelSelection(value.value, label.label)">
                                     {{value.shortValue}}
                                 </mat-option>
                             </mat-select>
@@ -303,12 +308,6 @@
                 <li>To change the QBoard fields order, drag and drop.
                 </li>
             </ul>
-            <!-- <div cdkDropList class="field-list mgn-lt-20 mgn-rt-20" (cdkDropListDropped)="drop($event)"
-                *ngIf="labelsList.length > 0">
-                <div class="QBfield-box" *ngFor="let field of labelsList" cdkDrag>{{field.displayName}}</div>
-            </div> -->
-
-
             <div class="field-list mgn-lt-20 mgn-rt-20 col-md-5 no-padding" *ngIf="labelsList.length > 0" cdkDropList
                 (cdkDropListDropped)="drop($event)">
                 <div class="example-box QBfield-box" cdkDragBoundary=".field-list"

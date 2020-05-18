@@ -239,8 +239,8 @@
                             {{label.displayName}}
                         </li>
                         <mat-form-field class="col-md-6 no-padding">
-                            <mat-select placeholder="Select value">
-                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue"
+                            <mat-select placeholder="Select value" [(value)]="label.selectedValue">
+                                <mat-option *ngFor="let value of label.valueSet" [value]="value.value"
                                     (click)="providerLabelSelection(value.value, label.label)">
                                     {{value.shortValue}}
                                 </mat-option>
@@ -309,12 +309,6 @@
                 <li>To change the QBoard fields order, drag and drop.
                 </li>
             </ul>
-            <!-- <div cdkDropList class="field-list mgn-lt-20 mgn-rt-20" (cdkDropListDropped)="drop($event)"
-                *ngIf="labelsList.length > 0">
-                <div class="QBfield-box" *ngFor="let field of labelsList" cdkDrag>{{field.displayName}}</div>
-            </div> -->
-
-
             <div class="field-list mgn-lt-20 mgn-rt-20 col-md-5 no-padding" *ngIf="labelsList.length > 0" cdkDropList
                 (cdkDropListDropped)="drop($event)">
                 <div class="example-box QBfield-box" cdkDragBoundary=".field-list"
