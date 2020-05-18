@@ -311,7 +311,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'services': serviceIds,
             'queues': qIds,
             'labels': this.labelList,
-            'wlStatus': this.selectedWtlstList.toString()
+            'wlStatus': this.selectedWtlstList
         };
         if (this.actionparam === 'add') {
             const post_data = {

@@ -204,7 +204,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     getDisplaydashboardbyId(id) {
         this.getLabels();
-        this.provider_services.getDisplayboardQSetbyId(id).subscribe(data => {
+        this.provider_services.getApptDisplayboardQSetbyId(id).subscribe(data => {
             this.displayBoardData = data;
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
@@ -310,7 +310,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'departments': departmentIds,
             'services': serviceIds,
             'labels': this.labelList,
-            'apptStatus': this.selectedWtlstList.toString(),
+            'apptStatus': this.selectedWtlstList,
             'apptSchedule': qIds
         };
         if (this.actionparam === 'add') {
@@ -321,7 +321,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'queueSetFor': this.statusBoardfor,
                 'sortBy': this.sortByFieldsList,
                 'qBoardConditions': this.qboardConditions
-
             };
             this.provider_services.createDisplayboardQSetAppointment(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });

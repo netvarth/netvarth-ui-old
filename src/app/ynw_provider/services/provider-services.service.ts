@@ -750,6 +750,10 @@ export class ProviderServices {
       const url = 'provider/waitlist/statusBoard/queueSet/' + id;
       return this.servicemeta.httpGet(url);
    }
+   getApptDisplayboardQSetbyId(id) {
+      const url = 'provider/appointment/statusBoard/queueSet/' + id;
+      return this.servicemeta.httpGet(url);
+   }
    updateDisplayboardQSet(data) {
       const url = 'provider/statusBoard';
       return this.servicemeta.httpPut(url, data);
