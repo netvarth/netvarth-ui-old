@@ -51,6 +51,7 @@ export class DepartmentDetailComponent implements OnInit {
     deptObj: ArrayBuffer;
     departments: any;
     dept_default = false;
+    serviceArray;
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -223,7 +224,13 @@ export class DepartmentDetailComponent implements OnInit {
         this.srvcArry = [];
         // this.srvcArry = this.services_all.filter(item1 =>
         //     !this.defaultdepartmentservice.some(item2 => (item2.id === item1.id)))
-        this.srvcArry = this.defaultdepartmentservice;
+     ///   this.srvcArry = this.defaultdepartmentservice;
+        this.serviceArray = this.defaultdepartmentservice;
+        for (const serv of this.serviceArray) {
+            if (serv.serviceType !== 'donationService') {
+                this.srvcArry.push(serv);
+            }
+        }
         // this.showAllServices = true;
     }
     addnewClick() {
