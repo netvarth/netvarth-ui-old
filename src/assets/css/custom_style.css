@@ -8772,3 +8772,18 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .custId-cpy {
   padding-left: 140px;
 }
+.custId-flex-form {
+  display: flex;
+}
+@media only screen and (max-width: 575px) {
+  .custId-flex-form {
+    display: grid;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .custId-btns {
+    display: flex;
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+}
