@@ -17,7 +17,7 @@ import * as moment from 'moment';
 })
 export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     loc_name;
-    new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
+    new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
     customer_label = '';

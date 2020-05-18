@@ -8591,6 +8591,10 @@ hr.wide-separator-line {
   border-radius: .5px !important;
   margin: 10px !important;
   border: 1px solid black !important;
+  background-color: white !important;
+  }
+  .appt-in-chip .mat-chip-selected.mat-primary {
+  background-color: #29b6f6 !important;
   }
 .lv-trk-prepayent {
   text-align: center;

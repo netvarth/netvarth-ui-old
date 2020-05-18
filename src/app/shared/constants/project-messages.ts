@@ -63,8 +63,8 @@ export const Messages = {
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
   'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
   // profie
-  'Profile_Created' : 'Profile created successfully',
-   'UserProfileID'  : 'Enter Provider linkProfileId',
+  'Profile_Created': 'Profile created successfully',
+  'UserProfileID': 'Enter Provider linkProfileId',
   // Business Profile
   'BPROFILE_CREATED': 'Business Profile created successfully',
   'BPROFILE_EMAILDET': 'Please enter the email id and email label',
@@ -1261,7 +1261,7 @@ export const Messages = {
   'CHECK_DET_NO_PVT_NOTES_FOUND_CAP': 'No private notes found',
   'CHECK_DET_HISTORY_CAP': 'History',
   'CHECK_DET_NO_HISTORY_FOUND_CAP': 'No history found',
-   'CHK_DET_BNAME': 'checkin',
+  'CHK_DET_BNAME': 'checkin',
   // App-ynw_provider-components-provider-waitlist-checkin-detail
   'Q_DET_LOCATION_CAP': 'Location',
   'Q_DET_SERVICE_CAP': 'Service',
@@ -1475,5 +1475,6 @@ export const Messages = {
 
   'GENERALSETTINGS': 'General',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
-  'DONATE_SUCC': 'Donated successfully'
+  'DONATE_SUCC': 'Donated successfully',
+  'SCHEDULENAME_CAP': 'Title for Schedule *'
 };

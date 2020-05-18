@@ -323,7 +323,7 @@
                                                 <mat-expansion-panel-header>
                                                         <mat-panel-title><i
                                                                         class="q-recur">&nbsp;&nbsp;&nbsp;</i>Scheduled
-                                                                Queues ({{scheduledQs.length}})</mat-panel-title>
+                                                                Schedules ({{scheduledQs.length}})</mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="row q-time queuelist m0"
                                                         *ngFor="let queue of scheduledQs; index as i">
@@ -461,7 +461,7 @@
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <div class="card" *ngIf="scheduledQs.length==0">No Scheduled Queues
+                                                <div class="card" *ngIf="scheduledQs.length==0">No Scheduled Schedules
                                                 </div>
                                         </mat-expansion-panel>
                                 </mat-accordion>
@@ -470,7 +470,7 @@
                                 <mat-accordion class="no-padding">
                                         <mat-expansion-panel [expanded]="false">
                                                 <mat-expansion-panel-header>
-                                                        <mat-panel-title>Disabled Queues ({{disabledQs.length}})
+                                                        <mat-panel-title>Disabled Schedules ({{disabledQs.length}})
                                                         </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="row q-time queuelist  m0" *ngFor="let queue of disabledQs">
@@ -523,7 +523,7 @@
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <div class="card" *ngIf="disabledQs.length==0">No Disabled Queues</div>
+                                                <div class="card" *ngIf="disabledQs.length==0">No Disabled Schedules</div>
                                         </mat-expansion-panel>
                                 </mat-accordion>
                         </div>

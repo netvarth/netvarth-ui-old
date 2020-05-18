@@ -25,7 +25,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     select_All = Messages.SELECT_ALL;
     start_time_cap = Messages.START_TIME_CAP;
     end_time_cap = Messages.END_TIME_CAP;
-    service_time_window_name = Messages.SERVICE_TIME_WINDOW_CAP;
+    service_time_window_name = Messages.SCHEDULENAME_CAP;
     existing_schedules = Messages.EXISTING_SCHEDULES_CAP;
     cancel_btn = Messages.CANCEL_BTN;
     save_btn = Messages.SAVE_BTN;
@@ -151,7 +151,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                 this.breadcrumbs = breadcrumbs;
                 this.createForm();
             }
-        }, 100);
+        }, 500);
     }
     getWaitlistMgr() {
         this.api_loading = true;
@@ -295,7 +295,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     // get the list of services
   getProviderServices() {
     this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE' };
+    const filter = {'status-eq': 'ACTIVE', 'scope-eq': 'account', 'serviceType-neq': 'donationService'};
     this.provider_services.getProviderServices(filter)
       .subscribe(data => {
         this.services_list = data;
@@ -311,7 +311,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.deptObj = data;
+          console.log(this.deptObj);
           this.filterbyDept = this.deptObj.filterByDept;
+          console.log(this.filterbyDept);
           this.departments = this.deptObj.departments;
           for (let i = 0; i < this.services_list.length; i++) {
             for (let j = 0; j < this.departments.length; j++) {
@@ -453,6 +455,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         } else {
             this.Selall = false;
         }
+        console.log(this.filterbyDept);
         if (this.filterbyDept) {
             for (let j = 0; j < this.departments.length; j++) {
               this.serviceSelection[this.departments[j].departmentName] = [];

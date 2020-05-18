@@ -17,7 +17,7 @@ import * as moment from 'moment';
 })
 export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     loc_name;
-    new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
+    new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
     customer_label = '';
@@ -36,17 +36,17 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
-        
+
         {
             url: '/provider/settings/appointmentmanager',
             title: 'Appointmentmanager'
-          },
-        
+        },
+
         {
             url: '/provider/settings/appointmentmanager/schedules',
             title: 'Schedules'
-      
-          }
+
+        }
 
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -108,12 +108,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private activatedRoot: ActivatedRoute,
-        private fb: FormBuilder) { 
-            this.activatedRoot.params.subscribe(params => {
-                this.userId = params.id;
-            }
-            );
+        private fb: FormBuilder) {
+        this.activatedRoot.params.subscribe(params => {
+            this.userId = params.id;
         }
+        );
+    }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -367,7 +367,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
     getServices() {
-        const params = { 'status': 'ACTIVE' };
+        const params = { 'status-eq': 'ACTIVE' };
         return new Promise((resolve, reject) => {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
@@ -533,7 +533,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager','schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
     }
     /**
      * For clearing api errors
@@ -716,7 +716,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager','schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
@@ -772,7 +772,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                             this.api_loading = false;
                         }
                     );
-                 });
+                });
     }
     /**
      * Method to set values for instant Queue creation
@@ -927,7 +927,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
-        const dd = today.getDate() ;
+        const dd = today.getDate();
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
         let cmon;

@@ -25,7 +25,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     select_All = Messages.SELECT_ALL;
     start_time_cap = Messages.START_TIME_CAP;
     end_time_cap = Messages.END_TIME_CAP;
-    service_time_window_name = Messages.SERVICE_TIME_WINDOW_CAP;
+    service_time_window_name = Messages.SCHEDULENAME_CAP;
     existing_schedules = Messages.EXISTING_SCHEDULES_CAP;
     cancel_btn = Messages.CANCEL_BTN;
     save_btn = Messages.SAVE_BTN;

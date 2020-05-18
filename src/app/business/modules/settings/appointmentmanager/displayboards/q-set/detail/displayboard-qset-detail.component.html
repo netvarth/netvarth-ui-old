@@ -100,8 +100,8 @@
                             (change)="categorySelection('SERVICE')">
                             {{service_caption}}
                         </mat-radio-button>
-                        <mat-radio-button class="mgright50" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
-                            (change)="categorySelection('QUEUE')">
+                        <mat-radio-button class="mgright50" [value]="'SCHEDULE'" *ngIf="display_schedule.length > 0"
+                            (change)="categorySelection('SCHEDULE')">
                             {{queue_cap}}
                         </mat-radio-button>
                     </mat-radio-group>
@@ -114,7 +114,7 @@
         <div class="clearfix"></div>
 
         <div class="step2 mgn-up-20" *ngIf="step ===2">
-            <div class="form-group col-md-12" *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
+            <div class="form-group col-md-12" *ngIf="selectedCategory !== 'SCHEDULE' && selectedCategory !== 'SERVICE'">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Department</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -122,7 +122,7 @@
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
                             <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
-                                (click)="departmentSelection(department, 'DEPARTMENT')">
+                                (click)="departmentSelection(department.departmentId, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -139,7 +139,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-group col-md-12" *ngIf="selectedCategory !== 'QUEUE'">
+            <div class="form-group col-md-12" *ngIf="selectedCategory !== 'SCHEDULE'">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Services</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -170,7 +170,7 @@
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"></ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
-                                (click)="queueSelection(schedule.id, 'QUEUE')">
+                                (click)="queueSelection(schedule.id, 'SCHEDULE')">
                                 {{schedule.name}}
                                 [{{schedule.displayQ.dstr | capitalizeFirst}} - {{schedule.displayQ.time}}]
                             </mat-option>
@@ -235,7 +235,7 @@
                         </li>
                         <mat-form-field class="col-md-6 no-padding">
                             <mat-select placeholder="Select value">
-                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue">
+                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue" (click)="providerLabelSelection(value.value, label.label)">
                                     {{value.shortValue}}
                                 </mat-option>
                             </mat-select>

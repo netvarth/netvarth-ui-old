@@ -319,7 +319,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // get the list of services
   getProviderServices() {
     this.api_loading1 = true;
-    const params = { 'status': 'ACTIVE' };
+    const params = { 'status-eq': 'ACTIVE' };
     this.provider_services.getServicesList(params)
       .subscribe(data => {
         this.services_list = data;

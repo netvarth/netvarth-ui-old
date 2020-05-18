@@ -120,9 +120,11 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments" noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
+                                placeholderLabel="Search departments"
+                                noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
-                                (click)="departmentSelection(department, 'DEPARTMENT')">
+                                (click)="departmentSelection(department.departmentId, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -145,7 +147,9 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services" noEntriesFoundLabel="no matching service found"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
+                                placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
+                            </ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="serviceSelection(service.id, 'SERVICE')">
                                 {{service.name | capitalizeFirst}}
@@ -168,7 +172,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues" noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
+                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
+                                noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, 'QUEUE')">
                                 {{schedule.name}}
@@ -218,14 +223,14 @@
                 </label>
                 <mat-form-field>
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels" noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
-                        <mat-option *ngFor="let label of providerLabelsList" [value]="label" (click)="providerLabelSelection()">
+                        <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
+                            noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
+                        <mat-option *ngFor="let label of providerLabelsList" [value]="label">
                             {{label.displayName}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div class="mgn-up-20 mgn-lt-20 form-group"
-                    *ngIf="labelMultiCtrl.length > 0">
+                <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
                     <label class="col-form-label">
                         Selected Labels:
                     </label>
@@ -235,7 +240,8 @@
                         </li>
                         <mat-form-field class="col-md-6 no-padding">
                             <mat-select placeholder="Select value">
-                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue">
+                                <mat-option *ngFor="let value of label.valueSet" [value]="value.shortValue"
+                                    (click)="providerLabelSelection(value.value, label.label)">
                                     {{value.shortValue}}
                                 </mat-option>
                             </mat-select>

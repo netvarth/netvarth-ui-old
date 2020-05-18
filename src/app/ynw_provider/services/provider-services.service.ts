@@ -275,15 +275,15 @@ export class ProviderServices {
       const url = 'provider/settings/waitlistMgr/department/' + status;
       return this.servicemeta.httpPut(url);
    }
-   getServicesList(params?) {
-      let stat = '';
-      if (params !== undefined) {
-         if (params['status'] !== undefined && params['status'] !== '') {
-            stat = '?status-eq=' + params['status'];
-         }
-      }
-      const url = 'provider/services/' + stat;
-      return this.servicemeta.httpGet(url);
+   getServicesList(filter?) {
+      // let stat = '';
+      // if (params !== undefined) {
+      //    if (params['status'] !== undefined && params['status'] !== '') {
+      //       stat = '?status-eq=' + params['status'];
+      //    }
+      // }
+      const url = 'provider/services';
+      return this.servicemeta.httpGet(url, null, filter);
    }
 
    getProviderServices(filter?) {
@@ -747,7 +747,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    getDisplayboardQSetbyId(id) {
-      const url = 'provider/statusBoard/' + id;
+      const url = 'provider/waitlist/statusBoard/queueSet/' + id;
       return this.servicemeta.httpGet(url);
    }
    updateDisplayboardQSet(data) {
@@ -1363,11 +1363,11 @@ export class ProviderServices {
       return this.servicemeta.httpDelete(url);
    }
    deleteDisplayboardQSetAppointment(id) {
-      const url = 'provider/appointment/statusBoard/' + id;
+      const url = 'provider/appointment/statusBoard/queueSet/' + id;
       return this.servicemeta.httpDelete(url);
    }
    deleteDisplayboardQSetWaitlist(id) {
-      const url = 'provider/waitlist/statusBoard/' + id;
+      const url = 'provider/waitlist/statusBoard/queueSet/' + id;
       return this.servicemeta.httpDelete(url);
    }
    getProviderUserSchedules(id) {

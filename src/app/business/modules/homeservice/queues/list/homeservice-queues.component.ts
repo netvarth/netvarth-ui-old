@@ -349,7 +349,7 @@ export class HomeserviceQueuesComponent implements OnInit, OnDestroy {
         });
     }
     getServices() {
-        const params = { 'status': 'ACTIVE' };
+        const params = { 'status-eq': 'ACTIVE' };
         return new Promise((resolve, reject) => {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
