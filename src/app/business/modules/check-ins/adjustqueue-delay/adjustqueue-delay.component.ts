@@ -67,12 +67,13 @@ export class AdjustqueueDelayComponent implements OnInit {
   userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
   selected_user;
   domain: any;
- 
+  qdata_list;
+
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private route:Router,
+    private route: Router,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
@@ -162,11 +163,10 @@ export class AdjustqueueDelayComponent implements OnInit {
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
   }
-  performActions(actions){
-   if(actions === 'learnmore')
-   {
-     this.route.navigate( ['/provider/' + this.domain + '/check-ins->adjustdelay']);
-   }
+  performActions(actions) {
+    if (actions === 'learnmore') {
+      this.route.navigate(['/provider/' + this.domain + '/check-ins->adjustdelay']);
+    }
   }
   setDescFocus() {
     this.isfocused = true;
@@ -494,6 +494,18 @@ export class AdjustqueueDelayComponent implements OnInit {
         .subscribe(data => {
           this.queuejson = data;
           console.log(this.queuejson);
+          if (this.queuejson.length === 1) {
+            for (let i = 0; i < this.queuejson.length; i++) {
+              const Mfilter = this.setFilterForApi(this.queuejson[i].id);
+              Mfilter[this.sortBy] = 'asc';
+              this.provider_services.getTodayWaitlist(Mfilter)
+                .subscribe(
+                  qdata => {
+                    this.qdata_list = qdata;
+                    this.setCounts(this.qdata_list);
+                  });
+            }
+          }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
             for (let i = 0; i < this.queuejson.length; i++) {
@@ -556,8 +568,8 @@ export class AdjustqueueDelayComponent implements OnInit {
   }
   onCancel() {
     this.route.navigate(['provider', 'check-ins']);
-    
-}
+
+  }
   resetApi() {
     this.api_error = null;
     this.api_success = null;
