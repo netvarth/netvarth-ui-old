@@ -246,6 +246,20 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.selectedSortField = key;
                 this.sortByField(key);
             });
+
+            for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
+                        if (this.displayBoardData.fieldList[i].defaultValue) {
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                        }
+                        this.defaultLabels[j].checked = true;
+                        this.labelSelection(j, 'edit');
+                    }
+                }
+            }
         });
     }
     editStatusBoard(id) {
@@ -326,7 +340,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
                 'queueSetFor': this.statusBoardfor,
-                'sortBy': this.sortByFieldsList
+                'sortBy': this.sortByFieldsList,
+                'qBoardConditions': this.qboardConditions
             };
             this.provider_services.updateDisplayboardQSetWaitlist(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
