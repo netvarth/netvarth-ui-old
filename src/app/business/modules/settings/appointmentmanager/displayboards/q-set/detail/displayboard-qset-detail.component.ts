@@ -206,8 +206,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
             this.selectedWtlstList = this.displayBoardData.qBoardConditions.apptStatus;
-            console.log(this.providerLabels);
-            console.log(this.displayBoardData.qBoardConditions.labels);
             Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
                 for (let i = 0; i < this.providerLabels.length; i++) {
                     if (this.providerLabels[i].label === key) {
@@ -243,9 +241,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
             }
-            console.log(this.labelMultiCtrl);
             this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
-            console.log(this.selectedCategory);
             Object.keys(this.displayBoardData.sortBy).forEach(key => {
                 this.selectedSortField = key;
                 this.sortByField(key);
