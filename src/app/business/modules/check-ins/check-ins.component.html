@@ -108,7 +108,8 @@
                   <a (click)="checkinClicked('PHONE_CHECKIN')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
-                    <i class="fa fa-mobile"></i>
+                    <!-- <i class="fa fa-mobile"></i> -->
+                    <i class="fa fa-phone" aria-hidden="true"></i>
                     Phone in
                   </a>
                 </li>
@@ -502,6 +503,8 @@
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                               [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                             </span>
+                            <span class="fa fa-phone phone-in-icon " *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
+                            </span> 
                             <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                               <i class="icon-note"></i>
@@ -1093,8 +1096,7 @@
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                               </span> 
-                              <span class="material-icons phone-in-icon " *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
-                             call
+                              <span class="fa fa-phone phone-in-icon " *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
                             </span>    
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="checkin.waitlistStatus == 'arrived'"></span>
