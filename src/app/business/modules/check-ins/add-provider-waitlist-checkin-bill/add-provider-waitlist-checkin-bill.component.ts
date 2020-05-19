@@ -1258,7 +1258,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const printWindow = window.open('', '', params);
     let bill_html = '';
     bill_html += '<table width="100%">';
-    bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.provider['businessName'] + '</td></tr>';
+    bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.providerAccount['businessName'] + '</td></tr>';
     bill_html += '	<tr><td style="border-bottom:1px solid #ddd;">';
     bill_html += '<table width="100%">';
     bill_html += '	<tr style="line-height:20px">';
