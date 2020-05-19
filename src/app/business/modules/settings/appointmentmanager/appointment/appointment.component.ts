@@ -818,6 +818,7 @@ export class AppointmentComponent implements OnInit {
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+            return;
         }
         // if (this.partySizeRequired) {
         //     this.holdenterd_partySize = this.enterd_partySize;
@@ -851,7 +852,7 @@ export class AppointmentComponent implements OnInit {
                     this.trackUuid = retData[key];
                     console.log(this.trackUuid);
                 });
-                if (this.selectedMessage.files.length > 0) {
+                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
                 // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {

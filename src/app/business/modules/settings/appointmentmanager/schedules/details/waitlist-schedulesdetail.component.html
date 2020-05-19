@@ -285,6 +285,13 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
             })">
                                 </app-field-error-display>
                             </div>
+                            <div class="form-group" >
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="100000" type="text"
+                                        placeholder="Time Slot (min)" formControlName="timeSlot"
+                                        autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                </mat-form-field>
+                            </div>
                             <!-- <div class="form-group col-md-6 mgn-up-10" *ngIf="params.source !== 'location_detail'">
                                     <div *ngIf="action!='edit' && action != 'editFromList'">
                                         <mat-form-field *ngIf="loc_list.length > 1">
@@ -354,13 +361,13 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings">
+                            <!-- <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text"
                                         placeholder="Time Slot (min)" formControlName="timeSlot"
                                         autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
-                            </div>
+                            </div> -->
 
                             <div class="form-group" *ngIf="showAdvancedSettings"> 
                                 <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">

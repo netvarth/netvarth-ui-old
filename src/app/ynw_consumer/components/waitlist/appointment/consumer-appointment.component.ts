@@ -719,6 +719,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
             // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+            return;
         }
         // if (this.partySizeRequired) {
         //     this.holdenterd_partySize = this.enterd_partySize;
@@ -748,7 +749,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     retUUID = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.selectedMessage.files.length > 0) {
+                if (this.selectedMessage.files.length > 0 ||this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUUID);
                 }
                 // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
@@ -1183,6 +1184,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                                 }
                             }
                             this.servicesjson = newserviceArray;
+                        }
+                        if (this.servicesjson.length > 0) {
+                            this.sel_ser = this.servicesjson[0].id;
+                            this.setServiceDetails(this.sel_ser);
+                            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                        } else {
+                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
                         }
                     }
                 });
