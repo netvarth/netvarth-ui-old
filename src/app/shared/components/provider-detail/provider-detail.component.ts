@@ -205,6 +205,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   donation: any = [];
   results_data;
   donationData: any;
+  allservices;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -410,9 +411,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
-            .subscribe((data) => {
-              this.donationData = data;
-            });
+              .subscribe((data) => {
+                this.donationData = data;
+              });
             if (this.businessjson.claimStatus === 'Claimed') {
               this.getProviderDepart(this.provider_bussiness_id);
             }
@@ -803,7 +804,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // this.services = servicesByDept;
     // this.deptlist = this.groubedByTeam[dept.departmentName];
     const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
-    this.services = service[0].services;
+    this.services = [];
+    this.allservices = service[0].services;
+    for (let i = 0; i < this.allservices.length; i++) {
+      if (this.allservices[i].serviceType !== 'donationService') {
+        if (this.services.indexOf(this.allservices[i]) === -1) {
+          this.services.push(this.allservices[i]);
+        }
+      }
+    }
     this.deptlist = this.groubedByTeam[dept];
     this.selectedDepartment = service[0];
     // if (this.deptlist) {

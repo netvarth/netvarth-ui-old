@@ -386,7 +386,10 @@
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
                                                             <span class="sub-title-donate">Donation Services</span>
-                                                            <ul>
+                                                            <ul *ngIf="!showDepartments">
+                                                                <li *ngFor="let donationService of donationData" (click)="showServiceDetail(donationService.name, businessjson.businessName)">{{donationService.name}}</li>
+                                                            </ul>
+                                                            <ul *ngIf="showDepartments">
                                                                 <li *ngFor="let donationService of donationData" (click)="showServiceDetail(donationService, businessjson.businessName)">{{donationService.name}}</li>
                                                             </ul>
                                                         </div>
