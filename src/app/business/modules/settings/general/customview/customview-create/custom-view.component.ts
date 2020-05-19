@@ -55,6 +55,7 @@ export class CustomViewComponent implements OnInit {
             title: 'Custom View'
         }
     ];
+    provider_label;
 
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
@@ -65,6 +66,7 @@ export class CustomViewComponent implements OnInit {
             this.getDepartments();
             this.getAccountQs();
             this.getAccountServices();
+            this.provider_label = this.shared_functions.getTerminologyTerm('provider');
             if (this.viewId) {
                 this.getView(this.viewId);
             } else {

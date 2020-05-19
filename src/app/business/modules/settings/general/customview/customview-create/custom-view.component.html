@@ -44,11 +44,11 @@
                 </div>
                 <div class="form-group col-md-12">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                    Doctors</label>
+                    {{provider_label || capitalizeFirst}}</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
-                      <mat-select placeholder="Doctors" [(ngModel)]="selectedUsers" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search Doctors">
+                      <mat-select placeholder="{{provider_label}}s" [(ngModel)]="selectedUsers" [multiple]="true">
+                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search {{provider_label}}s">
                         </ngx-mat-select-search>
                         <mat-option *ngFor=" let doctor of users_list" [value]="doctor"
                           (click)="userSelection(doctor.id)">

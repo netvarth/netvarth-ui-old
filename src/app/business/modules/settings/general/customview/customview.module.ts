@@ -10,12 +10,15 @@ import { CustomViewComponent } from './customview-create/custom-view.component';
 import { CustomViewListComponent } from './customview-list/custom-view-list.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CustomViewRoutingModule } from './customview.routing.module';
+import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
+
 
 @NgModule({
     imports: [
         BreadCrumbModule,
         NgbTimepickerModule,
         FormMessageDisplayModule,
+        CapitalizeFirstPipeModule,
         CommonModule,
         ReactiveFormsModule,
         LoadingSpinnerModule,
