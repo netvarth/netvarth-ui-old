@@ -123,7 +123,7 @@
                             <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
                                 placeholderLabel="Search departments"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
-                                (click)="departmentSelection(department.departmentId, 'DEPARTMENT')">
+                                (click)="setDeptIds(department.departmentId, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -149,7 +149,7 @@
                             <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
                                 placeholderLabel="Search services"></ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
-                                (click)="serviceSelection(service.id, 'SERVICE')">
+                                (click)="setServiceIds(service.id, 'SERVICE')">
                                 {{service.name | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
