@@ -8805,3 +8805,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .custId-qr {
   font-size: larger;
 }
+.phone-in-icon {
+  font-size: large !important;
+  line-height: 50px;
+}

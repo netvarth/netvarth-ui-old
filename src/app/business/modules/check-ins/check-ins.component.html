@@ -1092,7 +1092,10 @@
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
-                              </span>
+                              </span> 
+                              <span class="material-icons phone-in-icon " *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
+                             call
+                            </span>    
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="checkin.waitlistStatus == 'arrived'"></span>
                               <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
