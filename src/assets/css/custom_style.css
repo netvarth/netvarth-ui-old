@@ -7341,7 +7341,7 @@ label.filterHeaders {
 }
 
 .filterDatepicker .mat-icon-button .mat-button-wrapper>* {
-  color: white !important;
+  color: white important;
 }
 
 .filterCheckboxborder .mat-checkbox-frame {
