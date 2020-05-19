@@ -55,6 +55,7 @@ export class CustomersListComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     loadComplete = false;
     minday = new Date(1900, 0, 1);
+    maxday = new Date();
     filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
     filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     tooltipcls = projectConstants.TOOLTIP_CLS;

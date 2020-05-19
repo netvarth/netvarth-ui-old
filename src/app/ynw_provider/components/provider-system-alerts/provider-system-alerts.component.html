@@ -62,11 +62,11 @@
                                                                 <div>
                                                                     <label class="filterHeaders">Filter By Date</label>
                                                                     <li class="filterli filterDatepicker">
-                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertSeldate" [min]="minday"
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertSeldate" [min]="minday" [max]="maxDate"
                                                                         [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date">
                                                                         <mat-datepicker-toggle matSuffix [for]="picker">
                                                                         </mat-datepicker-toggle>
-                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                        <mat-datepicker #picker></mat-datepicker> 
                                                                     </li>
                                                                 </div>
                 

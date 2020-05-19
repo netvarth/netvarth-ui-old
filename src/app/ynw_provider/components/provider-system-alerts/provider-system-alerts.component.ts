@@ -47,7 +47,8 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
   ];
   tday = new Date();
-  minday = new Date(2015, 0, 1);
+  minday = new Date(1900, 0, 1);
+  maxDate = new Date();
   isCheckin;
   breadcrumb_moreoptions: any = [];
   filters: any = {
@@ -92,7 +93,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         this.api_loading = false;
       },
         () => {
-          this.api_loading = false;
+          this.api_loading = false; 
         });
   }
   getAlertList(ackStatus, sdate) {
