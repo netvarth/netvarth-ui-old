@@ -278,7 +278,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: this.queue_data.id
+                        title: this.queue_data.name
                     });
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
