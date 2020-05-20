@@ -246,7 +246,7 @@ export class AppointmentComponent implements OnInit {
         this.breadcrumbs = [
             {
                 title: 'Appointments',
-                url: 'provider/check-ins'
+                url: 'provider/appointments'
             },
             {
                 title: 'Appointment'
@@ -1348,8 +1348,8 @@ export class AppointmentComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
-            dataToSend)
+       // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
+       this.shared_services.addProviderAppointmentNote(uuid,dataToSend)
             .subscribe(
                 () => {
                 },

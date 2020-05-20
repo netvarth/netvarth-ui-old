@@ -63,7 +63,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     multipeLocationAllowed = false;
     step = 1;
     selectedWtlstList: any = [];
-    waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
+    waitlistStatuses = [
+        { displayName: 'Checked in', value: 'checkedIn' },
+        { displayName: 'Arrived', value: 'arrived' },
+        { displayName: 'Started', value: 'started' },
+        { displayName: 'Completed', value: 'done' }];
     providerLabelsCount;
     qMultiCtrl: any = [];
     deptMultiCtrl: any = [];

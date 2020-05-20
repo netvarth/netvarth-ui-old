@@ -267,8 +267,12 @@ export class ProviderCheckinComponent implements OnInit {
             search_input: ['', Validators.compose([Validators.required])]
         });
     }
-    createNew() {
+    createNew(type?) {
+        if (type === 'new') {
+            this.qParams['noMobile'] = false;
+        }
         this.qParams['checkinType'] = this.checkinType;
+        console.log(this.qParams);
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 

@@ -11,7 +11,7 @@
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                             <form *ngIf="!loading" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
-                                <div class="form-group mobile-field" *ngIf="source !== 'newCustomer'">
+                                <div class="form-group mobile-field" *ngIf="haveMobile">
                                     <mat-form-field>
                                         <div class="input-group">
                                             <div class="input-group-prepend mob-prefix">

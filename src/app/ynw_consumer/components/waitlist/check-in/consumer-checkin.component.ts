@@ -1151,6 +1151,13 @@ export class ConsumerCheckinComponent implements OnInit {
                             }
                             this.servicesjson = newserviceArray;
                         }
+                        if (this.servicesjson.length > 0) {
+                            this.sel_ser = this.servicesjson[0].id;
+                            this.setServiceDetails(this.sel_ser);
+                            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                        } else {
+                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+                        }
                     }
                 });
             // }

@@ -1293,7 +1293,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.availableSlots = this.slots.availableSlots;
                     console.log(this.availableSlots);
                     for (const freslot of this.availableSlots) {
-                        if (freslot.noOfAvailbleSlots === '1') {
+                        if (freslot.noOfAvailbleSlots !== '0') {
                             this.freeSlots.push(freslot);
                         }
                     }

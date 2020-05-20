@@ -83,8 +83,6 @@ export class StatementsComponent implements OnInit {
   discountDetailsTxt = 'Show discount details';
   // activated_route: any;
   apiloading = false;
-
-
   breadcrumbs_init = [
     {
       title: 'License & Invoice',
@@ -102,7 +100,6 @@ export class StatementsComponent implements OnInit {
   mergestatement: any;
 
   constructor(
-    private provider_servicesobj: ProviderServices,
     public dialogRef: MatDialogRef<StatementsComponent>,
     private dialog: MatDialog,
     private router: Router,
@@ -111,7 +108,6 @@ export class StatementsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
-    public sharedfunctionObj: SharedFunctions,
     public shared_functions: SharedFunctions,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
@@ -119,29 +115,22 @@ export class StatementsComponent implements OnInit {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.data = qParams;
-        console.log(this.data);
         this.temp = this.data.source;
-        console.log(this.temp);
-
       });
     if (this.data.data1 === 'invo-statement NotPaid') {
       const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
         breadcrumbs.push(e);
       });
-
-
       breadcrumbs.push({
         title: 'Invoice / Statement',
         url: '/provider/license/invoicestatus'
       });
       this.breadcrumbs = breadcrumbs;
-
       breadcrumbs.push({
         title: 'Payment Details'
       });
       this.breadcrumbs = breadcrumbs;
-
     } else if (this.data.data2 === 'invo-statement Paid') {
       const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
@@ -152,7 +141,6 @@ export class StatementsComponent implements OnInit {
         url: '/provider/license/invoicestatus'
       });
       this.breadcrumbs = breadcrumbs;
-
       breadcrumbs.push({
         title: 'Statements'
       });
@@ -167,7 +155,6 @@ export class StatementsComponent implements OnInit {
         url: '/provider/license/payment/history'
       });
       this.breadcrumbs = breadcrumbs;
-
       breadcrumbs.push({
         title: 'Payment Details'
       });
@@ -181,35 +168,18 @@ export class StatementsComponent implements OnInit {
         title: 'Statements',
       });
       this.breadcrumbs = breadcrumbs;
-      
-
     }
-
-    // this.invoice = data.invoice || null;
-    // this.source = data.source || 'payment-history';
-    // this.payMentShow = data.payMent;
-
     this.invoice = this.data.invoice || null;
-    // console.log(this.invoice);
-    // console.log(JSON.parse(this.invoice));
-
-
     const invoiceJson = JSON.parse(this.invoice);
-
     this.source = this.data.source || 'payment-history';
     this.payMentShow = this.data.payMent;
-
     this.pay_data.amount = invoiceJson.amount;
-    // this.pay_data.amount = this.invoice.null;
-
     this.pay_data.uuid = invoiceJson.ynwUuid;
-    // console.log(this.pay_data.uuid);
     this.pay_data.refno = invoiceJson.invoiceRefNumber;
-    console.log(this.pay_data.refno);
   }
 
   ngOnInit() {
-    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.sharedFunctionobj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -217,9 +187,7 @@ export class StatementsComponent implements OnInit {
     this.loading = true;
     this.payment_status = this.invoice.licensePaymentStatus || null;
     this.getgst();
-
     this.invoiceDetail();
-
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
       this.payment_loading = true;
       this.getPaymentModes();
@@ -230,19 +198,14 @@ export class StatementsComponent implements OnInit {
     } else {
       // this.dialogRef.close();
     }
-
     this.loading = false;
   }
-
 
   invoiceDetail() {
     this.provider_services.getInvoice(this.pay_data.uuid)
       .subscribe(
         data => {
           this.invoice = data;
-
-          console.log(this.invoice)
-          //  console.log(this.invoice.periodFrom)
           if (this.invoice.creditDebitJson) {
             this.credt_debtJson = JSON.parse(this.invoice.creditDebitJson);
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
@@ -255,14 +218,12 @@ export class StatementsComponent implements OnInit {
             });
           }
           if (this.invoice.mergedStatements) {
-
             this.checkPreviousStatements(this.invoice.mergedStatements);
           }
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-
       );
   }
 
@@ -292,16 +253,15 @@ export class StatementsComponent implements OnInit {
         this.checkPreviousStatements(object.mergedStatements);
       });
     }
+  }
 
-  }
-  togglePreviousDue() {
-    this.showPreviousDue = !this.showPreviousDue;
-  }
   PreviousInvoiceReferenceNo(invoicerefno) {
     this.showPreviousDue = !this.showPreviousDue;
-    this.provider_services.getMergestatement(invoicerefno).subscribe(data => {
-      this.mergeinvoicerefno = data;
-    });
+    if (this.showPreviousDue) {
+      this.provider_services.getMergestatement(invoicerefno).subscribe(data => {
+        this.mergeinvoicerefno = data;
+      });
+    }
   }
   previousRefstmt(mergeinvoicerefno) {
     console.log(mergeinvoicerefno);
@@ -310,13 +270,10 @@ export class StatementsComponent implements OnInit {
     console.log(stmt);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-
         InvoiceRefNo: mergeinvoicerefno
-
       }
     };
     this.router.navigate(['provider', 'license', 'viewstatement'], navigationExtras);
-
   }
 
   toggleDiscountDetails() {
@@ -352,12 +309,10 @@ export class StatementsComponent implements OnInit {
         });
   }
   getPaymentDetails() {
-    // this.provider_services.getPaymentDetail(this.invoice.ynwUuid)
     this.provider_services.getPaymentDetail(this.pay_data.uuid)
       .subscribe(
         data => {
           this.payment_detail = data;
-          // this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -373,13 +328,11 @@ export class StatementsComponent implements OnInit {
   }
 
   makePayment() {
-    // this.dialogRef.close();
     this.disablebutton = true;
     this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0) {
       this.payment_loading = true;
-
       const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

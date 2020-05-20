@@ -20,7 +20,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   name_cap = Messages.CHECK_DET_NAME_CAP;
   date_cap = Messages.CHECK_DET_DATE_CAP;
   location_cap = Messages.CHECK_DET_LOCATION_CAP;
-  waitlist_for_cap = Messages.CHECK_DET_WAITLIST_FOR_CAP;
+  waitlist_for_cap = 'Appointment for';
   service_cap = Messages.CHECK_DET_SERVICE_CAP;
   queue_cap = Messages.CHECK_DET_QUEUE_CAP;
   pay_status_cap = Messages.CHECK_DET_PAY_STATUS_CAP;
@@ -65,7 +65,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   today = new Date();
   customer_label = '';
   provider_label = '';
-  checkin_label = '';
+  checkin_label = 'Appointment';
   checkin_upper = '';
   timeCaption = Messages.CHECKIN_TIME_CAPTION;
   minCaption = Messages.EST_WAIT_TIME_CAPTION;
@@ -94,8 +94,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     });
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
-    this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
-    this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
+   // this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
+   // this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
