@@ -114,7 +114,10 @@ export class JDNComponent implements OnInit {
             };
         } else {
             const discountPer = +this.discType;
-            const len = this.jdnmaxDiscounttext.split('.').length;
+            let len;
+            if (typeof this.jdnmaxDiscounttext === 'string') {
+                len = this.jdnmaxDiscounttext.split('.').length;
+              }
             if (len > 2) {
                 this.shared_functions.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
                 this.jdnerr = true;
@@ -169,7 +172,10 @@ export class JDNComponent implements OnInit {
             };
         } else {
             const discountPer = +this.discType;
-            const len = this.jdnmaxDiscounttext.split('.').length;
+            let len;
+            if (typeof this.jdnmaxDiscounttext === 'string') {
+                len = this.jdnmaxDiscounttext.split('.').length;
+              }
             if (len > 2) {
                 this.shared_functions.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
                 this.jdnerr = true;

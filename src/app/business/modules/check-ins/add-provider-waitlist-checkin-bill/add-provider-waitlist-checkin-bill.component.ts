@@ -1112,7 +1112,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   initPayment(mode, amount, paynot) {
-    const len = amount.split('.').length;
+    let len;
+    if (typeof amount === 'string') {
+      len = amount.split('.').length;
+    }
       if (len > 2) {
         this.sharedfunctionObj.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
       } else {
