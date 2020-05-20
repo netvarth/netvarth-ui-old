@@ -1112,7 +1112,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   initPayment(mode, amount, paynot) {
-    let status = 0;
+    const len = amount.split('.').length;
+      if (len > 2) {
+        this.sharedfunctionObj.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
+      } else {
+        let status = 0;
     const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1134,9 +1138,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.makePayment(mode, amount, paynot, status);
       }
     });
-
-
-
+      }
   }
   showPayment() {
     this.amountpay = this.bill_data.amountDue;
