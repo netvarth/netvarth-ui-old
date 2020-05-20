@@ -175,6 +175,9 @@ export class CustomersListComponent implements OnInit {
         this.filter.page = pg;
         this.doSearch();
     }
+    isNumeric(evt) {
+        return this.shared_functions.isNumeric(evt);
+    }
     doSearch() {
         this.getCustomersList();
         if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {

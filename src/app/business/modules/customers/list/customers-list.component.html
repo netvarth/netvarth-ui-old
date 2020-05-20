@@ -76,7 +76,7 @@
               <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
-                    (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox"
+                    (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox"
                     placeholder="Phone Number">
                 </li>
               </div>
