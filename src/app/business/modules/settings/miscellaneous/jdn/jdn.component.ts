@@ -47,6 +47,7 @@ export class JDNComponent implements OnInit {
     rupee_symbol = '₹';
     breadcrumb_moreoptions: any = [];
     btn_msg = '';
+    jdnerr = false;
     constructor(
         private shared_services: SharedServices,
         private routerobj: Router,
@@ -113,14 +114,22 @@ export class JDNComponent implements OnInit {
             };
         } else {
             const discountPer = +this.discType;
-            post_data = {
-                'displayNote': this.jdndisplayNote || '',
-                'discPercentage': discountPer,
-                'discMax': this.jdnmaxDiscounttext,
-                'status': 'ENABLED'
-            };
+            const len = this.jdnmaxDiscounttext.split('.').length;
+            if (len > 2) {
+                this.shared_functions.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
+                this.jdnerr = true;
+            } else {
+                this.jdnerr = false;
+                post_data = {
+                    'displayNote': this.jdndisplayNote || '',
+                    'discPercentage': discountPer,
+                    'discMax': this.jdnmaxDiscounttext,
+                    'status': 'ENABLED'
+                };
+            }
         }
-        this.shared_services.addJdn(post_data)
+        if (!this.jdnerr) {
+            this.shared_services.addJdn(post_data)
             .subscribe(
                 (data) => {
                     this.btn_msg = Messages.UNSUBSCRIBE;
@@ -131,6 +140,7 @@ export class JDNComponent implements OnInit {
                     this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+        }
     }
 
     radioChange(event) {
@@ -159,14 +169,22 @@ export class JDNComponent implements OnInit {
             };
         } else {
             const discountPer = +this.discType;
-            put_data = {
-                'displayNote': this.jdndisplayNote || '',
-                'discPercentage': discountPer,
-                'discMax': this.jdnmaxDiscounttext,
-                'status': 'ENABLED'
-            };
+            const len = this.jdnmaxDiscounttext.split('.').length;
+            if (len > 2) {
+                this.shared_functions.openSnackBar('Please enter valid JDN amount', { 'panelClass': 'snackbarerror' });
+                this.jdnerr = true;
+            } else {
+                this.jdnerr = false;
+                put_data = {
+                    'displayNote': this.jdndisplayNote || '',
+                    'discPercentage': discountPer,
+                    'discMax': this.jdnmaxDiscounttext,
+                    'status': 'ENABLED'
+                };
+            }
         }
-        this.shared_services.updateJdn(put_data)
+        if (!this.jdnerr) {
+            this.shared_services.updateJdn(put_data)
             .subscribe(
                 (data) => {
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelclass': 'snackbarerror' });
@@ -177,6 +195,7 @@ export class JDNComponent implements OnInit {
                     this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+        }
     }
     disableJDN() {
         this.resetApiErrors();
