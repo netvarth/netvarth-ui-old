@@ -82,7 +82,7 @@ export class PhomeComponent implements OnInit {
       this.qParams = data;
       this.handleScroll(this.qParams.type);
 
-    })
+    });
   }
   doForgotPassword() {
     this.resetApiErrors();
@@ -114,8 +114,7 @@ export class PhomeComponent implements OnInit {
     if (this.qParams.type) {
       this.handleScroll(this.qParams.type);
 
-    }
-    else {
+    } else {
       this.handleScroll('pro_home');
 
     }

@@ -293,10 +293,12 @@ export class DisplayboardDetailComponent implements OnInit {
             const layoutPosition = this.layoutData.layout.split('_');
             this.boardRows = layoutPosition[0];
             this.boardCols = layoutPosition[1];
-            this.layoutData.metric.forEach(element => {
-                this.boardSelectedItems[element.position] = element.sbId;
-                this.metricSelected[element.position] = element.sbId;
-            });
+            if (this.layoutData.metric) {
+                this.layoutData.metric.forEach(element => {
+                    this.boardSelectedItems[element.position] = element.sbId;
+                    this.metricSelected[element.position] = element.sbId;
+                });
+            }
         });
     }
     handleLayoutMetric(selectedItem, position) {
@@ -310,56 +312,60 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     onSubmit() {
         // if (!this.qboardSelected) {
-            this.metric = [];
-            let name = '';
-            if (this.displayName) {
-                name = this.displayName.trim().replace(/ /g, '_');
+        this.metric = [];
+        let name = '';
+        if (this.displayName) {
+            name = this.displayName.trim().replace(/ /g, '_');
+        }
+        for (let i = 0; i < this.boardRows; i++) {
+            for (let j = 0; j < this.boardCols; j++) {
+                this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
             }
-            for (let i = 0; i < this.boardRows; i++) {
-                for (let j = 0; j < this.boardCols; j++) {
-                    this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
-                }
+        }
+        if (this.actionparam === 'add') {
+            const post_data = {
+                'name': name,
+                'layout': this.layout.value,
+                'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom,
+                'metric': this.metric,
+            };
+            this.provider_services.createDisplayboardWaitlist(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                this.editLayoutbyId(data);
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+            // }
+        }
+        if (this.actionparam === 'edit') {
+            const post_data = {
+                'id': this.layoutData.id,
+                'name': name,
+                'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom
+            };
+            if (this.layoutData.isContainer) {
+                post_data['isContainer'] = this.layoutData.isContainer;
+            } else {
+                post_data['metric'] = this.metric;
+                post_data['layout'] = this.layout.value;
             }
-            if (this.actionparam === 'add') {
-                const post_data = {
-                    'name': name,
-                    'layout': this.layout.value,
-                    'displayName': this.displayName,
-                    'serviceRoom': this.serviceRoom,
-                    'metric': this.metric,
-                };
-                this.provider_services.createDisplayboardWaitlist(post_data).subscribe(data => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-                    this.editLayoutbyId(data);
-                    this.actionparam = 'view';
-                },
-                    error => {
-                        this.api_loading = false;
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-                // } else {
-                //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-                // }
-            }
-            if (this.actionparam === 'edit') {
-                const post_data = {
-                    'id': this.layoutData.id,
-                    'name': name,
-                    'layout': this.layout.value,
-                    'displayName': this.displayName,
-                    'serviceRoom': this.serviceRoom,
-                    'metric': this.metric
-                };
-                this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                    this.editLayoutbyId(this.layoutData.id);
-                    this.actionparam = 'view';
-                },
-                    error => {
-                        this.api_loading = false;
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-            }
+            this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.editLayoutbyId(this.layoutData.id);
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
         // } else {
         //     let name = '';
         //     if (this.displayName) {

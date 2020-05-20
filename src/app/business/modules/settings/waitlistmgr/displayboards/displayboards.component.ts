@@ -60,14 +60,12 @@ export class DisplayboardsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions
     ) { }
-
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'q-manager->settings-q-boards', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-        // this.getDisplayboardContainers();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         this.accountId = this.shared_functions.getitemFromGroupStorage('accountId');
@@ -91,8 +89,6 @@ export class DisplayboardsComponent implements OnInit {
                             this.qBoardsActive.push(element);
                         }
                     });
-                    // this.container_count = count;
-                    // this.layout_list = data;
                     this.api_loading = false;
                 },
                 error => {
@@ -113,6 +109,7 @@ export class DisplayboardsComponent implements OnInit {
 
     addDisplayboardGroup() {
         this.action = 'addToGroup';
+        this.qBoardsSelected = [];
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
             breadcrumbs.push(e);
@@ -131,12 +128,13 @@ export class DisplayboardsComponent implements OnInit {
                 }
             }
         }
-        console.log(this.qBoardsSelected);
-        // const qSet = {
-        //     'qBoards': this.qBoardsSelected
-        // }
-        // this.qBoardGroupService.initQBoardParams(qSet);
-        // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'group']);
+        this.qBoardsNotSelected = this.qBoardsActive.slice();
+        if (this.qBoardsSelected.length === this.qBoardsActive.length) {
+            this.hideAddToGroup = true;
+        }
+        this.qBoardsSelected.forEach(sb => {
+             this.qBoardsNotSelected = this.removeByAttr( this.qBoardsNotSelected, 'id', sb.sbId);
+         });
     }
 
     listContainers() {
@@ -189,10 +187,12 @@ export class DisplayboardsComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
 
             this.provider_services.getDisplayboardWaitlist(layout.id).subscribe((data: any) => {
+                console.log(data);
                 this.displayName = data.displayName;
                 this.serviceRoom = data.serviceRoom;
                 this.activeGroup = data;
                 this.qBoardsSelected = [];
+                console.log(this.qBoardsActive);
                 this.qBoardsNotSelected = this.qBoardsActive.slice();
                 this.hideAddToGroup = false;
                 if (data.containerData.length === this.qBoardsActive.length) {
@@ -200,7 +200,6 @@ export class DisplayboardsComponent implements OnInit {
                 }
                 console.log(this.qBoardsNotSelected);
                 data.containerData.forEach(sb => {
-                   // const tmpQBNotSelected = this.qBoardsNotSelected.slice();
                     const qBoard = {};
                     qBoard['id'] = sb.sbId;
                     const qboard = this.getQBoard(sb.sbId);
@@ -290,7 +289,6 @@ export class DisplayboardsComponent implements OnInit {
         return layoutActive;
     }
     qBoardClicked(index) {
-        // this.completedWaitlistforMsg = [];
         if (this.qBoardsSelectedIndex[index]) {
             delete this.qBoardsSelectedIndex[index];
             this.qBoardSelectCount--;
@@ -301,7 +299,6 @@ export class DisplayboardsComponent implements OnInit {
         console.log(this.qBoardsSelectedIndex);
     }
     onCancel() {
-        this.qBoardsSelected = [];
         this.breadcrumbs = this.breadcrumbs_init;
         this.activeGroup = null;
         this.action = 'list';
@@ -360,6 +357,5 @@ export class DisplayboardsComponent implements OnInit {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
             }
-        
     }
 }

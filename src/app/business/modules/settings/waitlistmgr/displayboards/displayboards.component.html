@@ -18,10 +18,10 @@
                                 <div class="col-md-12 no-padding">
                                     <ul class="nav jd-custom-nav chkn-dash">
                                         <li class="dropdown notifications-menu pull-right" style="display: flex;"
-                                            *ngIf="qBoardSelectCount > 0">
+                                        [class.disabled]="qBoardSelectCount == 0">
                                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                                (click)="addDisplayboardGroup()"
-                                                class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
+                                                [class.pointer-cursor]="(qBoardSelectCount > 0)" class="dropdown-toggle navbar-item-color bold ">
                                                 <span>
                                                     <i class="fa fa-plus"></i> New Group
                                                 </span>
@@ -47,43 +47,88 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 no-padding" *ngIf="layout_list.length!==0">
-                                    <div class="col-md-12 mt5 pt5 pb5 dboard"
+                                    <div class="table-responsive">
+                                        <table class="table tbl-qboard">
+                                            <!-- <thead class="qBoardselected-table">
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Refresh Interval</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead> -->
+                                            <tbody>
+                                                <tr *ngFor="let layout of layout_list, let i=index"
+                                                    [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]">
+                                                    <td class="centeralign">
+                                                        <input type="checkbox" class="ckbx" [disabled]="layout.isContainer" [checked]="qBoardsSelectedIndex[i]"
+                                                        (click)="!layout.isContainer && qBoardClicked(i)" [value]="layout.id"/>
+                                                        <!-- <mat-checkbox class="pt10" >
+                                                        </mat-checkbox> -->
+                                                    </td>
+                                                    <td>
+                                                        <h3 
+                                                            class="pointer-cursor pt10 pull-left">
+                                                            <i *ngIf="layout.isContainer"
+                                                                class="fa fa-object-group"></i>&nbsp;
+                                                            <span
+                                                                (click)="goDisplayboardLayoutDetails(layout, 'layout')">{{layout.displayName | capitalizeFirst}}
+                                                                <!-- <span
+                                                                    *ngIf="!layout.container" class="layout_name"> (Id -
+                                                                    {{layout.id}})</span> -->
+                                                            </span></h3>
+                                                    </td>
+                                                    <td class="pull-right">
+                                                        <span class="">
+                                                            <button type="button" mat-icon-button
+                                                                [matMenuTriggerFor]="appMenu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                        </span>
+                                                        <mat-menu #appMenu="matMenu">
+                                                            <button mat-menu-item
+                                                                (click)="ViewDisplayboardLayout(layout)"><i
+                                                                    class="fa fa-eye" aria-hidden="true"></i>
+                                                                View
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="editDisplayboardLayout(layout)">
+                                                                <i class="icon-edit"></i>
+                                                                Edit
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="deleteDisplayboardLayout(layout)">
+                                                                <i class="icon-delete"></i>
+                                                                Delete
+                                                            </button>
+                                                            <button mat-menu-item>
+                                                                <i class="fa fa-folder-open"></i>
+                                                                <a class="pointer-cursor" target="_blank"
+                                                                    style="color: black; font-weight: 400;"
+                                                                    routerLink="/displayboard/{{layout.id}}"> Open
+                                                                </a> </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <!-- <div class="col-md-12 mt5 pt5 pb5 dboard"
                                         *ngFor="let layout of layout_list, let i=index" [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]"
                                         >
                                         <div class="copy">
-                                            <span class="mbt">
-                                                <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                                    <mat-icon>more_vert</mat-icon>
-                                                </button>
-                                            </span>
-                                            <h3 (click)="!layout.isContainer && qBoardClicked(i)"
-                                                class="pointer-cursor mt5">
-                                                <i *ngIf="layout.isContainer" class="fa fa-object-group"></i>&nbsp;
-                                                <span (click)="goDisplayboardLayoutDetails(layout, 'layout')">{{layout.displayName | capitalizeFirst}}<span *ngIf="!layout.container"
-                                                    class="layout_name"> (Id - {{layout.id}})</span>
-                                                </span></h3>
-                                            <mat-menu #appMenu="matMenu">
-                                                <button mat-menu-item (click)="ViewDisplayboardLayout(layout)"><i
-                                                        class="fa fa-eye" aria-hidden="true"></i>
-                                                    View
-                                                </button>
-                                                <button mat-menu-item (click)="editDisplayboardLayout(layout)">
-                                                    <i class="icon-edit"></i>
-                                                    Edit
-                                                </button>
-                                                <button mat-menu-item (click)="deleteDisplayboardLayout(layout)">
-                                                    <i class="icon-delete"></i>
-                                                    Delete
-                                                </button>
-                                                <button mat-menu-item>
-                                                    <i class="fa fa-folder-open"></i>
-                                                    <a class="pointer-cursor" target="_blank"
-                                                        style="color: black; font-weight: 400;"
-                                                        routerLink="/displayboard/{{layout.id}}"> Open
-                                                    </a> </button>
-                                            </mat-menu>
+                                            <div class="col-md-1 col-xs-1 col-sm-1">
+                                               
+                                            </div>
+                                            <div class="col-md-9 col-xs-9 col-sm-9 no-padding">
+                                                
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 col-sm-2 no-padding pull-right">
+                                                
+                                            </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <!-- For Adding QBoards to a Group -->
@@ -128,14 +173,17 @@
                                                             </td>
                                                             <td class="action">
                                                                 <!-- <i class="icon-edit" (click)></i> &nbsp; -->
-                                                                <i class="icon-delete" (click)="removeFromGroup(qboard)"></i>
+                                                                <i class="icon-delete"
+                                                                    (click)="removeFromGroup(qboard)"></i>
                                                             </td>
                                                         </tr>
-                                                        <tr *ngIf="!enableAddGroup && !hideAddToGroup"> 
-                                                            <td colspan="3" align="center" >
+                                                        <tr *ngIf="!enableAddGroup && !hideAddToGroup">
+                                                            <td colspan="3" align="center">
                                                                 <mat-panel-description class="acc-plus-btn">
-                                                                    <button mat-icon-button (click)="enableAddToGroup()">
-                                                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}</mat-icon>
+                                                                    <button mat-icon-button
+                                                                        (click)="enableAddToGroup()">
+                                                                        <mat-icon style="color: #00aef2">
+                                                                            {{add_circle_outline}}</mat-icon>
                                                                     </button>
                                                                 </mat-panel-description>
                                                                 <!-- <i class="fa fa-plus-circle blue pointer-cursor" (click)="enableAddToGroup()"></i> -->
@@ -143,21 +191,26 @@
                                                         </tr>
                                                         <tr *ngIf="enableAddGroup">
                                                             <td class="qgrp_wb">
-                                                                <mat-select placeholder="Select QBoard" [(ngModel)]="sel_QBoard"
-                                                                [ngModelOptions]="{standalone: true}">
-                                                                <mat-option *ngFor="let board of qBoardsNotSelected" [value]="board">
-                                                                {{board.displayName | capitalizeFirst}}
-                                                                </mat-option>
-                                                            </mat-select>
+                                                                <mat-select placeholder="Select QBoard"
+                                                                    [(ngModel)]="sel_QBoard"
+                                                                    [ngModelOptions]="{standalone: true}">
+                                                                    <mat-option *ngFor="let board of qBoardsNotSelected"
+                                                                        [value]="board">
+                                                                        {{board.displayName | capitalizeFirst}}
+                                                                    </mat-option>
+                                                                </mat-select>
                                                             </td>
-                                                            <td colspan="2"><input type="text" class="form-control number-ip-sm pull-left"
-                                                                [(ngModel)]="refreshInterval"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                autocomplete="off">
-                                                                <button (click)="addToQBoardGroup(sel_QBoard, refreshInterval )" type="button"
-                                                                class="cs-btn bt3 mt3 ml5">Add</button>   
+                                                            <td colspan="2"><input type="text"
+                                                                    class="form-control number-ip-sm pull-left"
+                                                                    [(ngModel)]="refreshInterval"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    autocomplete="off">
+                                                                <button
+                                                                    (click)="addToQBoardGroup(sel_QBoard, refreshInterval )"
+                                                                    type="button"
+                                                                    class="cs-btn bt3 mt3 ml5">Add</button>
                                                                 <button (click)="cancelAddToQBoardGroup()" type="button"
-                                                                class="cs-btn bt3 mt3 ml5">Cancel</button></td>                                                              
+                                                                    class="cs-btn bt3 mt3 ml5">Cancel</button></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

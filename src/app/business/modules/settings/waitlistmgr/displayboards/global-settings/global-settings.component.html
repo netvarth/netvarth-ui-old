@@ -1,6 +1,16 @@
 <section>
     <!-- Header section -->
-    <div *ngIf="onlyHeader" class="content w-manager settings comn-cls lic-page">
+    <div *ngIf="api_loading" class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-paddig-small">
+            <div class="row">
+                <div class="card">
+                    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="onlyHeader && !api_loading" class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
                 <div class="card">
@@ -34,7 +44,9 @@
                                                 <span class="overlay-icon" (click)="fileInput.click()">
                                                     change
                                                 </span>
-                                                <img (click)="fileInput.click()" *ngIf="success_error"
+                                                <img (click)="fileInput.click()" *ngIf="qboardLogo!=''"
+                                                    [src]="qboardLogo" class="glbl-seting-img">
+                                                <img (click)="fileInput.click()" *ngIf="qboardLogo=='' && success_error"
                                                     [src]="item_pic.base64" class="glbl-seting-img">
 
                                             </a>
@@ -48,17 +60,28 @@
                                 <div class="lbl col-sm-12 col-md-8 col-lg-8 ynw-common-form-nm">
                                     <div class="glbl-tbl-div">
                                         <table class="glbl-seting-tbl">
-                                            <tr><td>Width</td><td><input type="text" [(ngModel)]="width">&nbsp;&nbsp;px</td></tr>
-                                            <tr><td>Height</td><td><input type="text" [(ngModel)]="height">&nbsp;&nbsp;px</td></tr>
-                                            <tr><td>Position</td>
+                                            <tr>
+                                                <td>Width</td>
+                                                <td><input type="text" [(ngModel)]="width" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Height</td>
+                                                <td><input type="text" [(ngModel)]="height" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Position</td>
                                                 <td>
-                                                    <mat-form-field>
-                                                        <select matNativeControl id="mySelectId"
-                                                            (change)="selectChangeHandler($event)">
-                                                            <option value="none" sselected>None</option>
-                                                            <option value="right">Right</option>
-                                                            <option value="left">Left</option>
-                                                        </select>
+                                                        <mat-form-field class="example-full-width">
+                                                            <!-- <input type="text" #jcoupon matInput [(ngModel)]="jCoupon"> -->
+                                                            <mat-select
+                                                                [(ngModel)]="position"
+                                                                [ngModelOptions]="{standalone: true}">                                                                
+                                                                <mat-option
+                                                                    *ngFor="let positionObj of position_values; let i = index"
+                                                                    [value]="positionObj.value">
+                                                                    {{ positionObj.displayName }}
+                                                                </mat-option>
+                                                            </mat-select>                                                        
                                                     </mat-form-field>
                                                 </td>
                                             </tr>
@@ -72,7 +95,7 @@
                             </div>
                             <div class="glbl-seting-disp-div">
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8">
-                                    <div class="glbl-seting-heder-div" [innerHTML]="headerSettings.title1"></div>
+                                    <!-- <div class="glbl-seting-heder-div" [innerHTML]="headerSettings.title1"></div> -->
                                 </div>
                                 <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                                     <div class="no-paddig-small glbl-seting-editor">
@@ -82,9 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                       
-                       
+                        </div> 
                         <!-- Preview Section -->
                         <div *ngIf="is_preview" class="lbr col-sm-12 col-md-4 col-lg-4 glbl-seting-editor">
                             <div style="text-align: end; cursor: pointer;" (click)="previewCancel()">
@@ -102,15 +123,13 @@
                                 <div style="font-size: smaller;" [innerHTML]="footerSettings.title1"></div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-        </div>&nbsp;&nbsp;&nbsp;
+        </div>
     </div>
     <!-- Footer section -->
-    <div *ngIf="onlyHeader"
+    <div *ngIf="onlyHeader && !api_loading"
         [ngClass]="{'glbl-seting-hiden': is_hidden, 'content w-manager settings comn-cls lic-page': !is_hidden}">
         <div class="col-md-12 no-paddig-small">
             <div class="row">
@@ -118,11 +137,12 @@
                     <h6 class="glbl-seting-h6">Footer Settings</h6>
                     <div class="glbl-seting-f-div">
                         <div class="lbr col-sm-12 col-md-8 col-lg-8">
-                            <div class="glbl-seting-heder-div" [innerHTML]="footerSettings.title1"></div>
+                            <!-- <div class="glbl-seting-heder-div" [innerHTML]="footerSettings.title1"></div> -->
                         </div>
                         <div class="lbr col-sm-12 col-md-8 col-lg-8" style="padding: 1%;">
                             <div class="no-paddig-small glbl-seting-editor">
-                                <ckeditor [editor]="Editor" (ready)="onReady($event)" [(ngModel)]="footerSettings.title1">
+                                <ckeditor [editor]="Editor" (ready)="onReady($event)"
+                                    [(ngModel)]="footerSettings.title1">
                                 </ckeditor>
                             </div>
                         </div>
@@ -135,5 +155,4 @@
             </div>
         </div>
     </div>
-
 </section>

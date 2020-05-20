@@ -51,9 +51,14 @@ export class GlobalSettingsComponent implements OnInit {
     ];
     largeImage: string;
     position: string;
+    position_values = [
+        { value: 'NONE', displayName: 'None' },
+        { value: 'LEFT', displayName: 'Left' },
+        { value: 'RIGHT', displayName: 'Right' }
+    ];
     onlyHeader = false;
     onlyFooter = false;
-    displaybord_data;
+    displayboard_data;
     api_loading: boolean;
     success_error: any;
     error_list: any[];
@@ -63,7 +68,9 @@ export class GlobalSettingsComponent implements OnInit {
         base64: null
     };
     selitem_pic = '';
+    qboardLogo = '';
     imgProperties;
+    imageChanged = false;
     constructor(
         private router: Router,
         private provider_services: ProviderServices,
@@ -82,10 +89,30 @@ export class GlobalSettingsComponent implements OnInit {
         const data = editor.getData();
     }
     ngOnInit() {
+        this.api_loading = true;
+        this.qboardLogo = '';
         if (this.headerResult) {
             this.onlyHeader = true;
             this.provider_services.getDisplayboardWaitlist(this.headerResult).subscribe(data => {
-                this.displaybord_data = data;
+                this.displayboard_data = data;
+                console.log(this.displayboard_data);
+                if (this.displayboard_data['headerSettings']) {
+                    this.headerSettings['title1'] = this.displayboard_data['headerSettings']['title1'];
+                }
+                if (this.displayboard_data['headerSettings']) {
+                    this.footerSettings['title1'] = this.displayboard_data['footerSettings']['title1'];
+                }
+                if (this.displayboard_data.logoSettings) {
+                    if (this.displayboard_data.logoSettings.logo) {
+                        this.is_image = true;
+                        const logoObj = JSON.parse(this.displayboard_data.logoSettings.logo);
+                        this.qboardLogo = logoObj['url'];
+                    }
+                    this.position = this.displayboard_data.logoSettings['position'];
+                    this.width = this.displayboard_data.logoSettings['width'];
+                    this.height = this.displayboard_data.logoSettings['height'];
+                }
+                this.api_loading = false;
             });
         }
     }
@@ -101,8 +128,10 @@ export class GlobalSettingsComponent implements OnInit {
 
     imageSelect(input) {
         this.success_error = null;
+        this.qboardLogo = '';
         this.error_list = [];
         this.error_msg = '';
+        this.imageChanged = false;
         if (input.files && input.files[0]) {
             for (const file of input.files) {
                 this.success_error = this.shared_Functionsobj.imageValidation(file);
@@ -117,14 +146,7 @@ export class GlobalSettingsComponent implements OnInit {
                         this.is_image = true;
                     };
                     reader.readAsDataURL(fileobj);
-                    const submit_data: FormData = new FormData();
-                    submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-                    const propertiesDet = {
-                        'caption': 'Logo'
-                    };
-                    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-                    submit_data.append('properties', blobPropdata);
-                    this.imgProperties = submit_data;
+                    this.imageChanged = true;
                 } else {
                     this.error_list.push(this.success_error);
                     if (this.error_list[0].type) {
@@ -149,37 +171,63 @@ export class GlobalSettingsComponent implements OnInit {
         this.is_hidden = true;
     }
     onUpload() {
-        if (this.is_image) {
-            const img_data = {
-                'width': this.width,
-                'height': this.height,
-                'position': 'LEFT',
-                'hint': 'hint',
-                'properties': this.imgProperties
-            };
-            this.provider_services.uploadDisplayboardLogoWaitlist(this.displaybord_data.id, img_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-        }
+        this.api_loading = true;
         const post_data = {
-            'id': this.displaybord_data.id,
-            'name': this.displaybord_data.name,
-            'layout': this.displaybord_data.layout,
-            'displayName': this.displaybord_data.displayName,
-            'serviceRoom': this.displaybord_data.serviceRoom,
-            'metric': this.displaybord_data.metric,
+            'id': this.displayboard_data.id,
+            'name': this.displayboard_data.name,
+            'displayName': this.displayboard_data.displayName,
+            'serviceRoom': this.displayboard_data.serviceRoom,
             'headerSettings': this.headerSettings,
             'footerSettings': this.footerSettings
         };
+        if (this.displayboard_data.isContainer) {
+            post_data['isContainer'] = this.displayboard_data.isContainer;
+        } else {
+            post_data['metric'] = this.displayboard_data.metric;
+            post_data['layout'] = this.displayboard_data.layout;
+        }
         console.log(JSON.stringify(post_data));
+        const propertiesDet = {
+            'caption': 'Logo',
+            'width': this.width,
+            'height': this.height,
+            'position': this.position,
+        };
         this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
-            this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+            if (this.is_image) {
+                const submit_data: FormData = new FormData();
+                if (this.selitem_pic) {
+                    submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                    submit_data.append('properties', blobPropdata);
+                    this.imgProperties = submit_data;
+                    this.provider_services.uploadDisplayboardLogoWaitlist(this.displayboard_data.id, this.imgProperties).subscribe(() => {
+                        this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                        this.api_loading = false;
+                        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+                    },
+                        error => {
+                            this.api_loading = false;
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                } else if (this.qboardLogo !== '') {
+                    this.provider_services.uploadDisplayboardWlLogoProps(this.displayboard_data.id, propertiesDet).subscribe(() => {
+                        this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                        this.api_loading = false;
+                        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+                    },
+                        error => {
+                            this.api_loading = false;
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                }
+                console.log(propertiesDet);
+
+            } else {
+                this.api_loading = false;
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+            }
         },
             error => {
                 this.api_loading = false;

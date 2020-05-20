@@ -6562,7 +6562,7 @@ li.separator.setsplit {
 .selected-waitlist,  .selected-customer {
   background: #d8e2f1 !important;
 }
-.dboard.selected-qboard {
+.dboard.selected-qboard, tr.selected-qboard {
   background: #d8e2f1 !important;
 }
 .statuslink {
@@ -7341,7 +7341,7 @@ label.filterHeaders {
 }
 
 .filterDatepicker .mat-icon-button .mat-button-wrapper>* {
-  color: white important;
+  color: white !important;
 }
 
 .filterCheckboxborder .mat-checkbox-frame {
@@ -8808,4 +8808,15 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .phone-in-icon {
   font-size: large !important;
   line-height: 30px;
+}
+.tbl-qboard .mat-checkbox label, .tbl-qboard h3 {
+  padding-top: 8px !important;
+}
+ .table.tbl-qboard>tbody>tr>td {
+  padding: 5px !important;
+}
+.tbl-qboard .ckbx {
+  margin-top: 10px;
+  width: 18px;
+  height: 18px;
 }

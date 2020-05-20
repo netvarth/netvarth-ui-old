@@ -61,7 +61,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         window.location.reload();
       }
       const phone_number = ynw_user.loginId;
-      const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
+      // const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
+      const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
       const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
       const post_data = {
         'countryCode': '+91',
@@ -145,12 +146,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              // this.router.navigate(['']);
-              return this._ifSessionExpired().pipe(
-                switchMap(() => {
-                  return next.handle(this.updateHeader(req, url));
-                })
-              );
+              this.shared_functions.doLogout();
+              // return this._ifSessionExpired().pipe(
+              //   switchMap(() => {
+              //     return next.handle(this.updateHeader(req, url));
+              //   })
+              // );
+              return EMPTY;
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);

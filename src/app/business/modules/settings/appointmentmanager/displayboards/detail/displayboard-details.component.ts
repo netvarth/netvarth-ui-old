@@ -37,29 +37,6 @@ export class DisplayboardDetailComponent implements OnInit {
 
     /** control for the MatSelect filter keyword multi-selection */
     public qBoardFilterMultictrl: FormControl = new FormControl();
-
-    /** list of banks */
-    //   private banks: Bank[] = [
-    //     {name: 'Bank A (Switzerland)', id: 'A'},
-    //     {name: 'Bank B (Switzerland)', id: 'B'},
-    //     {name: 'Bank C (France)', id: 'C'},
-    //     {name: 'Bank D (France)', id: 'D'},
-    //     {name: 'Bank E (France)', id: 'E'},
-    //     {name: 'Bank F (Italy)', id: 'F'},
-    //     {name: 'Bank G (Italy)', id: 'G'},
-    //     {name: 'Bank H (Italy)', id: 'H'},
-    //     {name: 'Bank I (Italy)', id: 'I'},
-    //     {name: 'Bank J (Italy)', id: 'J'},
-    //     {name: 'Bank K (Italy)', id: 'K'},
-    //     {name: 'Bank L (Germany)', id: 'L'},
-    //     {name: 'Bank M (Germany)', id: 'M'},
-    //     {name: 'Bank N (Germany)', id: 'N'},
-    //     {name: 'Bank O (Germany)', id: 'O'},
-    //     {name: 'Bank P (Germany)', id: 'P'},
-    //     {name: 'Bank Q (Germany)', id: 'Q'},
-    //     {name: 'Bank R (Germany)', id: 'R'}
-    //   ]
-
     /** list of banks filtered by search keyword */
     public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
@@ -221,8 +198,6 @@ export class DisplayboardDetailComponent implements OnInit {
             // tslint:disable-next-line:no-shadowed-variable
             startWith(''), map(value => this._filter(value))
         );
-
-
         this.getDisplayboardQSets();
         this.qBoardFilterMultictrl.valueChanges
             .pipe(takeUntil(this._onDestroy))
@@ -293,10 +268,12 @@ export class DisplayboardDetailComponent implements OnInit {
             const layoutPosition = this.layoutData.layout.split('_');
             this.boardRows = layoutPosition[0];
             this.boardCols = layoutPosition[1];
-            this.layoutData.metric.forEach(element => {
-                this.boardSelectedItems[element.position] = element.sbId;
-                this.metricSelected[element.position] = element.sbId;
-            });
+            if (this.layoutData.metric) {
+                this.layoutData.metric.forEach(element => {
+                    this.boardSelectedItems[element.position] = element.sbId;
+                    this.metricSelected[element.position] = element.sbId;
+                });
+            }
         });
     }
     handleLayoutMetric(selectedItem, position) {
@@ -315,11 +292,14 @@ export class DisplayboardDetailComponent implements OnInit {
             if (this.displayName) {
                 name = this.displayName.trim().replace(/ /g, '_');
             }
-            for (let i = 0; i < this.boardRows; i++) {
-                for (let j = 0; j < this.boardCols; j++) {
-                    this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
+            if (!this.layoutData.isContainer) {
+                for (let i = 0; i < this.boardRows; i++) {
+                    for (let j = 0; j < this.boardCols; j++) {
+                        this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
+                    }
                 }
             }
+
             if (this.actionparam === 'add') {
                 const post_data = {
                     'name': name,

@@ -1344,10 +1344,18 @@ export class ProviderServices {
    }
    uploadDisplayboardLogoAppointment(id, data) {
       const url = 'provider/appointment/statusBoard/logo/' + id;
-      return this.servicemeta.httpPut(url, data);
+      return this.servicemeta.httpPost(url, data);
    }
    uploadDisplayboardLogoWaitlist(id, data) {
       const url = 'provider/waitlist/statusBoard/logo/' + id;
+      return this.servicemeta.httpPost(url, data);
+   }
+   uploadDisplayboardWlLogoProps(id, data) {
+      const url = 'provider/waitlist/statusBoard/logo/' + id;
+      return this.servicemeta.httpPut(url, data);
+   }
+   uploadDisplayboardApptLogoProps(id, data) {
+      const url = 'provider/appointment/statusBoard/logo/' + id;
       return this.servicemeta.httpPut(url, data);
    }
    getDisplayboardAppointment(id) {
