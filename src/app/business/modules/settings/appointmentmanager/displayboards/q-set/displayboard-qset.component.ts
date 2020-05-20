@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { Messages } from '../../../../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-displayboard-qset',
+    selector: 'app-displayboard-qset-appt',
     templateUrl: './displayboard-qset.component.html'
 })
 export class DisplayboardQSetComponent implements OnInit {

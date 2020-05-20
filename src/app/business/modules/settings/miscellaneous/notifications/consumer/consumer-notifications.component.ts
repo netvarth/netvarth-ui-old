@@ -55,14 +55,17 @@ export class ConsumerNotificationsComponent implements OnInit {
   notificationList: any = [];
   okCheckinStatus = false;
   okCancelStatus = false;
-  earlyNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
-  prefinalNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
-  finalNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
+  earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
+  earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: '' };
+  prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
+  prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
+  finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY': false, 'PREFINAL': false, 'FINAL': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
   consumerNotification;
   notification_statusstr: string;
 
@@ -141,21 +144,30 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   setNotifications(notificationList: any) {
     notificationList.forEach(notificationObj => {
-      if (notificationObj['eventType'] === 'EARLY') {
-        this.cSettings['EARLY'] = true;
-        this.earlyNotificatonSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'PREFINAL') {
-        this.prefinalNotificationSettings = notificationObj;
-        this.cSettings['PREFINAL'] = true;
-      } else if (notificationObj['eventType'] === 'FINAL') {
-        this.cSettings['FINAL'] = true;
-        this.finalNotificationSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'WAITLISTADD') {
+      if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'CHECKIN') {
+        this.cSettings['EARLY_WL'] = true;
+        this.earlyWLNotificatonSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'CHECKIN') {
+        this.prefinalWLNotificationSettings = notificationObj;
+        this.cSettings['PREFINAL_WL'] = true;
+      } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'CHECKIN') {
+        this.cSettings['FINAL_WL'] = true;
+        this.finalWLNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'WAITLISTADD' && notificationObj['resourceType'] === 'CHECKIN') {
         this.cSettings ['WAITLISTADD'] = true;
         this.wlAddNotificationSettings = notificationObj;
-      } else if (notificationObj['eventType'] === 'APPOINTMENTADD') {
+      } else if (notificationObj['eventType'] === 'APPOINTMENTADD' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings ['APPOINTMENTADD'] = true;
         this.apptAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings ['EARLY_APPT'] = true;
+        this.earlyAPPTNotificatonSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings ['PREFINAL_APPT'] = true;
+        this.prefinalAPPTNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
+        this.cSettings ['FINAL_APPT'] = true;
+        this.finalAPPTNotificationSettings = notificationObj;
       }
     });
   }
@@ -170,16 +182,22 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   changeNotificationSettings(type) {
     let activeInput;
-    if (type === 'EARLY') {
-      activeInput = this.earlyNotificatonSettings;
-    } else if (type === 'PREFINAL') {
-      activeInput = this.prefinalNotificationSettings;
-    } else if (type === 'FINAL') {
-      activeInput = this.finalNotificationSettings;
+    if (type === 'EARLY_WL') {
+      activeInput = this.earlyWLNotificatonSettings;
+    } else if (type === 'PREFINAL_WL') {
+      activeInput = this.prefinalWLNotificationSettings;
+    } else if (type === 'FINAL_WL') {
+      activeInput = this.finalWLNotificationSettings;
     } else if (type === 'WAITLISTADD') {
       activeInput = this.wlAddNotificationSettings;
     } else if (type === 'APPOINTMENTADD') {
       activeInput = this.apptAddNotificationSettings;
+    } else if (type === 'EARLY_APPT') {
+      activeInput = this.earlyAPPTNotificatonSettings;
+    } else if (type === 'PREFINAL_APPT') {
+      activeInput = this.prefinalAPPTNotificationSettings;
+    } else if (type === 'FINAL_APPT') {
+      activeInput = this.finalAPPTNotificationSettings;
     }
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(

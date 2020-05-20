@@ -152,7 +152,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               //     return next.handle(this.updateHeader(req, url));
               //   })
               // );
-              return EMPTY;
+              // return EMPTY;
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);

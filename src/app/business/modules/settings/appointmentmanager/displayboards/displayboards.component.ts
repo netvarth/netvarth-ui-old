@@ -186,7 +186,7 @@ export class DisplayboardsComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
 
-            this.provider_services.getDisplayboardWaitlist(layout.id).subscribe((data: any) => {
+            this.provider_services.getDisplayboardAppointment(layout.id).subscribe((data: any) => {
                 console.log(data);
                 this.displayName = data.displayName;
                 this.serviceRoom = data.serviceRoom;

@@ -3,19 +3,174 @@
 </section>
 <section>
     <div class="content loc-list displyboard">
+        <div *ngIf="!headerSetting && !footerSetting" class="col-md-12 no-padding">
+            <div class="card p0">
+                <div class="copy locd">
+                    <div class="lbl col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <ul class="nav jd-custom-nav stat-brd" *ngIf="showMode == 'DBOARD' && qset_list.length!=0">
+                            <li class="dropdown notifications-menu pull-right">
+                                <a class="title link" (click)="qSetListClicked()">QBoard queries</a>
+                            </li>
+                        </ul>
+                        <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="showMode == 'DBOARD'">
+                            <div *ngIf="actionparam === 'add'" class="create-dept">
+                                <ul class="info-lst serviceadd-info">
+                                    <li>To create a QBoard, You need to purchase a 'QBoard'
+                                        add-on from the License section. <a class="pointlist"
+                                            routerLink="/provider/license/addons">Go to addons</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <form *ngIf="actionparam !== 'view'"
+                                class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                <ng-container>
+                                    <div class="form-group col-md-6">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="displayName"
+                                                placeholder="Display Name for QBoard *" [(ngModel)]="displayName"
+                                                [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="serviceRoom"
+                                                placeholder="Enter the service room" [(ngModel)]="serviceRoom"
+                                                [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                </ng-container>
+                                <div *ngIf="!qboardSelected">
+                                    <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                        <mat-form-field>
+                                            <mat-select placeholder="Choose the QBoard layout" id="layout"
+                                                (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <mat-option *ngFor="let layout of boardLayouts" [value]="layout">
+                                                    {{ layout.displayName }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="card no-padding mgn-up-20" *ngIf="qset_list.length>0">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div *ngFor="let row of createRange(boardRows)">
+                                                        <div *ngFor="let col of createRange(boardCols)"
+                                                            class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
+                                                            <mat-form-field>
+                                                                <mat-select placeholder="Choose QBoard query"
+                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
+                                                                    <mat-option [value]="qset.id"
+                                                                        *ngFor="let qset of qset_list">
+                                                                        {{qset.displayName |
+                                                                        capitalizeFirst}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="cl1" *ngIf="actionparam === 'view'">
+                                <span class="editbt" *ngIf="!layoutData.isContainer" (click)="editlayout(layoutData.id)"></span>
+                                <div class="ot-it">
+                                    <h3>{{layoutData.displayName | capitalizeFirst}}</h3>
+                                    <div class="c-ot m0" *ngIf="!layoutData.isContainer">
+                                        <div class="item desfont" *ngIf="layoutData.layout">
+                                            <span class="ttle">Layout</span>
+                                            <span>{{(getLayout(layoutData.layout)).displayName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20"
+                                *ngIf="actionparam !== 'view' && !qboardSelected ">
+                                <form novalidate (keyup)="resetApiErrors()"
+                                    class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                    <ng-container>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding no-qset"
+                                            *ngIf="qset_list.length==0">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-12 card qset_add"> To create a QBoard, set
+                                                        the QBoard query <span class="cs-btn bt3"
+                                                            (click)="addQSet()">Set Now </span>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 actiondiv labelsave mgn-up-20"
+                                            *ngIf="qset_list.length >0">
+                                            <button (click)="onCancel()" type="button"
+                                                class="cs-btn bt2">{{cancel_btn}}</button>
+                                            &nbsp;
+                                            <button (click)="onSubmit()" type="button"
+                                                class="cs-btn bt1">{{button_title}}</button>
+                                        </div>
+                                    </ng-container>
+                                </form>
+                            </div>
+                        </div>
+                        <!--Q Selection criteria starts here-->
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
+                            <app-displayboard-qset-appt (idSelected)="qSetSelected($event)" [source]="source">
+                            </app-displayboard-qset-appt>
+                        </div>
+                        <div class="col-md-12 co-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSET'">
+                            <app-displayboard-qset-detail-appt [action]="qsetAction" [qsetId]="qsetId" [source]="source"
+                                (idSelected)="qSetSelected($event)">
+                            </app-displayboard-qset-detail-appt>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Header and Footer Settings  -->
+        <div *ngIf="!headerSetting && !footerSetting" class="content w-manager settings comn-cls lic-page no-padding">
+            <div class="col-md-12 no-padding" (click)="headerClick()">
+                <div *ngIf="actionparam === 'view'">
+                    <div class="card p0">
+                        <span class="b-link">
+                            <h6 class="disp-bord-heder">
+                                Header and Footer Settings
+                            </h6>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="headerSetting" class="col-md-12 col-sm-12 col-xs-12 no-padding">
+            <app-global-settings-appt [headerResult]="layoutData.id"></app-global-settings-appt>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+
+<!-- 
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list displyboard">
         <div *ngIf="!headerSetting && !footerSetting" class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-md-12 col-xs-12 col-sm-12 no-padding">
                             <ul class="nav jd-custom-nav stat-brd" *ngIf="showMode == 'DBOARD' && qset_list.length!=0">
-                                <!-- <li class="dropdown notifications-menu pull-right" (click)="addQSet()">
-                                    <mat-panel-description class="acc-plus-btn">
-                                        <button mat-icon-button>
-                                            <mat-icon>{{add_circle_outline}}</mat-icon>
-                                        </button>
-                                    </mat-panel-description>
-                                </li> -->
                                 <li class="dropdown notifications-menu pull-right">
                                     <a class="title link" (click)="qSetListClicked()">QBoard queries</a>
                                 </li>
@@ -60,7 +215,6 @@
                                                 autocomplete="off">
                                         </mat-form-field>
                                     </div>
-                                    <!-- qboard adding -->
                                     <div *ngIf="!qboardSelected">
                                         <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                             <mat-form-field>
@@ -100,9 +254,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- qbord adding ends -->
                                 </form>
-
                                 <div *ngIf="qboardSelected">
                                     <div class="lbl col-md-12  no-padding">
                                         <div class="cl1" *ngIf="actionparam === 'view'">
@@ -208,10 +360,6 @@
                                     <div class="ot-it">
                                         <h3>{{layoutData.displayName | capitalizeFirst}}</h3>
                                         <div class="c-ot m0">
-                                            <!-- <div class="item desfont" *ngIf="layoutData.displayName">
-                                            <span class="ttle">Display Name</span>
-                                            <span>{{layoutData.displayName | capitalizeFirst}}</span>
-                                        </div> -->
                                             <div class="item desfont" *ngIf="layoutData.layout">
                                                 <span class="ttle">Layout</span>
                                                 <span>{{(getLayout(layoutData.layout)).displayName}}</span>
@@ -249,25 +397,6 @@
                                     </form>
                                 </div>
                             </div>
-                           
-
-
-                            <!-- <div class="col-xs-12 col-sm-12 col-md-12" *ngIf="showMode = 'QSETS'">
-
-                            </div> -->
-                            <!-- <ul class="nav jd-custom-nav stat-brd">
-                                    <li class="dropdown notifications-menu pull-left">
-                                        <div class="title">Queue-Selection Criteria</div>
-                                    </li>
-                                    <li class="dropdown notifications-menu pull-left" (click)="addQSet()">
-                                        <mat-panel-description class="acc-plus-btn">
-                                            <button mat-icon-button>
-                                                <mat-icon>{{add_circle_outline}}</mat-icon>
-                                            </button>
-                                        </mat-panel-description>
-                                    </li>
-                                </ul> -->
-                            <!--Q Selection criteria starts here-->
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
                                 <app-displayboard-qset (idSelected)="qSetSelected($event)" [source]="source">
                                 </app-displayboard-qset>
@@ -283,7 +412,6 @@
                 </div>
             </div>
         </div>
-         <!-- Header and Footer Settings  -->
          <div *ngIf="!headerSetting && !footerSetting" class="content w-manager settings comn-cls lic-page">
              <div class="col-md-12 no-padding-small" (click)="headerClick()">
                 <div *ngIf="actionparam === 'view'" class="row">
@@ -302,4 +430,4 @@
          </div>
          <div class="clearfix"></div>
     </div>
-</section>
+</section> -->

@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-    selector: 'app-displayboard-qset-detail',
+    selector: 'app-displayboard-qset-detail-appt',
     templateUrl: './displayboard-qset-detail.component.html'
 })
 export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
