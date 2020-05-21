@@ -13,7 +13,9 @@
                             <table class="table" *ngIf="history && history.length > 0">
                                 <thead>
                                     <tr>
+                                        
                                         <th class="th1">{{service_provider_cap}}</th>
+                                        <th> Service for</th>
                                         <th class="th6">{{service_cap}}</th>
                                         <th class="th2">{{location_cap}}</th>
                                         <!-- <th class="th3">Date/Time</th> -->
@@ -29,6 +31,8 @@
                                             <span
                                                 class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                         </td>
+                                        <td data-title="Servicefor">
+                                                {{his_wait.waitlistingFor[0].firstName || '' | capitalizeFirst}} {{his_wait.waitlistingFor[0].lastName || '' | capitalizeFirst}}</td>
                                         <td data-title="Service" class="td6">
                                             {{his_wait.service.name || '' | capitalizeFirst}}</td>
                                         <td data-title="Location" class="td2">

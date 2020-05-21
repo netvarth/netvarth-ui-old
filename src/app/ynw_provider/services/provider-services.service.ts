@@ -607,6 +607,10 @@ export class ProviderServices {
       const url = 'provider/customers';
       return this.servicemeta.httpPost(url, data);
    }
+   updateProviderCustomer(data) {
+      const url = 'provider/customers';
+      return this.servicemeta.httpPut(url, data);
+   }
    getIdTerminologies(domain, subDomain) {
       const url = 'ynwConf/terminologies/' + domain + '/' + subDomain;
       return this.servicemeta.httpGet(url);

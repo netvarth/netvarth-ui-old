@@ -283,4 +283,12 @@ export class CustomersListComponent implements OnInit {
                 () => { }
             );
     }
+
+editCustomer(customer) {
+    const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'edit' }
+    };
+    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+}
+
 }
