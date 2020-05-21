@@ -1397,4 +1397,8 @@ export class ProviderServices {
       const url = 'provider/appointment/schedules/batch/pattern/' + queueId;
       return this.servicemeta.httpPut(url, data);
    }
+   setApptCallStatus(uuid, status) {
+      const url = 'provider/appointment/callingStatus/' + uuid + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
 }

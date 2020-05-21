@@ -509,7 +509,7 @@ export const projectConstants = {
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',
   KEY: 'JALDEESOFT',
-  STATUS_BOARD: [
+  WAITLIST_STATUS_BOARD: [
     {
       'name': 'token',
       'displayname': 'Token',
@@ -532,13 +532,6 @@ export const projectConstants = {
       'order': 3,
     },
     {
-      'name': 'appointmentTime',
-      'displayname': 'Appointment Time',
-      'label': false,
-      'checked': false,
-      'order': 4,
-    },
-    {
       'name': 'appxWaitingTime',
       'displayname': 'Waiting Time',
       'label': false,
@@ -555,6 +548,50 @@ export const projectConstants = {
     {
       'name': 'queue',
       'displayname': 'Queue',
+      'label': false,
+      'checked': false,
+      'order': 7,
+    },
+    {
+      'name': 'calling',
+      'displayname': 'Calling',
+      'label': false,
+      'checked': false,
+      'order': 8,
+    }
+  ],
+  APPT_STATUS_BOARD: [
+    {
+      'name': 'waitlistingFor',
+      'displayname': 'Customer',
+      'label': false,
+      'checked': false,
+      'order': 2,
+    },
+    {
+      'name': 'primaryMobileNo',
+      'displayname': 'Mobile',
+      'label': false,
+      'checked': false,
+      'order': 3,
+    },
+    {
+      'name': 'appointmentTime',
+      'displayname': 'Appointment Time',
+      'label': false,
+      'checked': false,
+      'order': 4,
+    },
+    {
+      'name': 'service',
+      'displayname': 'Service',
+      'label': false,
+      'checked': false,
+      'order': 6,
+    },
+    {
+      'name': 'queue',
+      'displayname': 'Schedule',
       'label': false,
       'checked': false,
       'order': 7,
