@@ -174,7 +174,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 [ngClass]="{'glbl-preview':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
                 *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_tool}">
-                    <mat-label>Select tools {{tool_name}}</mat-label>
+                    <mat-label>Select tools</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
                         name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">

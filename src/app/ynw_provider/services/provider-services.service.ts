@@ -1401,4 +1401,8 @@ export class ProviderServices {
       const url = 'provider/appointment/callingStatus/' + uuid + '/' + status;
       return this.servicemeta.httpPut(url);
    }
+   getvirtualServiceInstructions() {
+      const url = 'provider/ynwConf/virtualServiceInstructions';
+      return this.servicemeta.httpGet(url);
+   }
 }
