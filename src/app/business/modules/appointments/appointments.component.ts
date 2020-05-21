@@ -606,7 +606,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getTodayAppointmentsCount()
       .then(
         (result) => {
-          this.history_waitlist_count = result;
+          this.today_waitlist_count = result;
         }
       );
   }
@@ -678,7 +678,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Mfilter['apptStatus-neq'] = 'prepaymentPending';
       no_filter = true;
     }
-    console.log(Mfilter);
     return new Promise((resolve) => {
       this.provider_services.getTodayAppointmentsCount(Mfilter)
         .subscribe(
@@ -1316,7 +1315,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addConsumerInboxMessage(source, waitlst?) {
-    console.log(this.newApptforMsg);
     let waitlist = [];
     if (source === 'new') {
       waitlist = this.newApptforMsg;
@@ -2123,7 +2121,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   selectNewAppt(slot, index, waitlist) {
     this.newApptforMsg = [];
-    console.log(this.apptSelected);
     if (this.apptSelected[slot][index]) {
       delete this.apptSelected[slot][index];
       this.apptSelection--;
@@ -2131,7 +2128,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.apptSelected[slot][index] = true;
       this.apptSelection++;
     }
-    console.log(this.apptSelection);
     if (this.apptSelection === 1) {
       this.selectedAppt['new'] = waitlist;
       if (this.selectedAppt['new'].jaldeeWaitlistDistanceTime && this.selectedAppt['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedAppt['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedAppt['new'].jaldeeStartTimeType === 'AFTERSTART')) {
@@ -2141,10 +2137,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.labels(this.selectedAppt['new']);
     }
-    console.log(this.apptSelected[slot]);
     Object.keys(this.apptSelected).forEach(slot => {
-      // console.log(slot);
-      // console.log(this.apptSelected[slot]);
       for (let i = 0; i < this.apptSelected[slot].length; i++) {
         if (this.apptSelected[slot][i]) {
           if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
@@ -2153,13 +2146,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
-    // for (let i = 0; i < this.apptSelected[slot].length; i++) {
-    //   if (this.apptSelected[slot][i]) {
-    //     if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
-    //       this.newApptforMsg.push(this.timeSlotAppts[slot][i]);
-    //     }
-    //   }
-    // }
   }
 
   selectCompletedAppt(index) {

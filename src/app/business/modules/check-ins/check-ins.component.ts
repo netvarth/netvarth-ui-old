@@ -414,35 +414,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
-    this.getQs().then(
-      (queues: any) => {
-        const allActiveQs = [];
-        for (let i = 0; i < queues.length; i++) {
-          if (queues[i].queueState === 'ENABLED') {
-            const queueActive = {};
-            queueActive['id'] = queues[i].id;
-            allActiveQs.push(queueActive);
-          }
-        }
-        this.getViews().then(
-          (data: any) => {
-            this.views = data;
-            const tempView = {};
-            tempView['name'] = 'Default';
-            tempView['id'] = 0;
-            tempView['customViewConditions'] = {};
-            tempView['customViewConditions'].queues = allActiveQs;
-            this.views.push(tempView);
-            this.selectedView = tempView;
-            // if (this.views.length > 1) {
-            //   this.selectedView = this.views[0];
-            // console.log(this.selectedView);
-            // alert('helo');
-            this.initView(this.selectedView);
-          }
-        );
-      }
-    );
+
     this.getPos();
     this.getServiceList();
     this.getLabel();
@@ -503,17 +475,102 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }
         });
+        this.getQs().then(
+          (queues: any) => {
+            const allActiveQs = [];
+            for (let i = 0; i < queues.length; i++) {
+              if (queues[i].queueState === 'ENABLED') {
+                const queueActive = {};
+                queueActive['id'] = queues[i].id;
+                allActiveQs.push(queueActive);
+              }
+            }
+            this.getViews().then(
+              (data: any) => {
+                this.views = data;
+                const tempView = {};
+                tempView['name'] = 'Default';
+                tempView['id'] = 0;
+                tempView['customViewConditions'] = {};
+                tempView['customViewConditions'].queues = allActiveQs;
+                this.views.push(tempView);
+                const selected_view = this.shared_functions.getitemFromGroupStorage('selectedView');
+                if (selected_view) {
+                  const viewFilter = this.views.filter(view => view.id === selected_view.id);
+                  if (viewFilter.length !== 0) {
+                    this.selectedView = this.shared_functions.getitemFromGroupStorage('selectedView');
+                  } else {
+                    this.selectedView = tempView;
+                    this.shared_functions.setitemToGroupStorage('selectedView', this.selectedView);
+                  }
+                } else {
+                  this.selectedView = tempView;
+                  this.shared_functions.setitemToGroupStorage('selectedView', this.selectedView);
+                }
+                this.initView(this.selectedView);
+              }
+            );
+          }
+        );
       }
     );
   }
   getQs() {
+    this.loading = true;
     const _this = this;
-    return new Promise((resolve, reject) => {
-      _this.provider_services.getProviderQueues().subscribe(
-        (queues: any) => {
-          resolve(queues);
-        });
-    });
+    if (this.time_type === 1) {
+      const date = this.dateformat.transformTofilterDate(this.server_date);
+      return new Promise((resolve, reject) => {
+        if (this.selected_location && this.selected_location.id && date) {
+          _this.provider_services.getProviderLocationQueuesByDate(this.selected_location.id, date).subscribe(
+            (queues: any) => {
+              const qs = [];
+              if (this.selectedView && this.selectedView.name !== 'Default') {
+                for (let i = 0; i < queues.length; i++) {
+                  for (let j = 0; j < this.selectedView.customViewConditions.queues.length; j++) {
+                    if (queues[i].queueState === 'ENABLED' && queues[i].id === this.selectedView.customViewConditions.queues[j].id) {
+                      qs.push(queues[i]);
+                    }
+                  }
+                }
+              } else {
+                for (let i = 0; i < queues.length; i++) {
+                  if (queues[i].queueState === 'ENABLED') {
+                    qs.push(queues[i]);
+                  }
+                }
+              }
+              this.loading = false;
+              resolve(qs);
+            });
+        }
+      });
+
+    } else {
+      return new Promise((resolve, reject) => {
+        _this.provider_services.getProviderQueues().subscribe(
+          (queues: any) => {
+            const qs = [];
+            if (this.selectedView && this.selectedView.name !== 'Default') {
+              for (let i = 0; i < queues.length; i++) {
+                for (let j = 0; j < this.selectedView.customViewConditions.queues.length; j++) {
+                  if (queues[i].queueState === 'ENABLED' && queues[i].id === this.selectedView.customViewConditions.queues[j].id) {
+                    qs.push(queues[i]);
+                  }
+                }
+              }
+            } else {
+              for (let i = 0; i < queues.length; i++) {
+                if (queues[i].queueState === 'ENABLED') {
+                  qs.push(queues[i]);
+                }
+              }
+            }
+            this.loading = false;
+            resolve(qs);
+          });
+      });
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -722,11 +779,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
+    this.check_in_list = this.check_in_filtered_list = [];
+    this.getCounts();
+  }
+
+  getCounts() {
+    console.log(this.selQIds);
+    console.log(this.shared_functions.getitemFromGroupStorage('selQ'));
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.history_waitlist_count = 0;
-    this.check_in_list = this.check_in_filtered_list = [];
-    // this.getQueueList();
     this.getFutureCheckinCount()
       .then(
         (result) => {
@@ -737,6 +799,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .then(
         (result) => {
           this.history_waitlist_count = result;
+        }
+      );
+    this.getTodayCheckinCount()
+      .then(
+        (result) => {
+          this.today_waitlist_count = result;
         }
       );
   }
@@ -780,6 +848,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemonLocalStorage('t_slv', view);
     }
     this.selectedView = view;
+    this.shared_functions.setitemToGroupStorage('selectedView', this.selectedView);
     this.initView(this.selectedView);
     this.reloadAPIs();
     // let selqindx;
@@ -797,12 +866,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureCheckinCount(Mfilter = null) {
     // const queueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
+    let qids;
+    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+      qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    } else {
+      qids = this.selQIds;
+    }
     let no_filter = false;
-    if (!Mfilter && this.selected_location && this.selected_location.id) {
-      Mfilter = {
-        'location-eq': this.selected_location.id,
-        'queue-eq': this.selQIds.toString()
-      };
+    if (!Mfilter) {
+      Mfilter = {};
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (qids && qids.length > 0) {
+        Mfilter['queue-eq'] = qids.toString();
+      }
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -819,10 +897,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryCheckinCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter && this.selected_location && this.selected_location.id) {
-      Mfilter = {
-        'location-eq': this.selected_location.id
-      };
+    let qids;
+    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+      qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    } else {
+      qids = this.selQIds;
+    }
+    if (!Mfilter) {
+      Mfilter = {};
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (qids && qids.length > 0) {
+        Mfilter['queue-eq'] = qids.toString();
+      }
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -838,14 +926,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getTodayCheckinCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('pdq');
+    let qids;
+    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+      qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    } else {
+      qids = this.selQIds;
+    }
     let no_filter = false;
     if (!Mfilter) {
+      Mfilter = {};
       Mfilter = {
-        'location-eq': this.selected_location.id,
-        'waitlistStatus-neq': 'prepaymentPending',
-        'queue-eq': queueid
+        'waitlistStatus-neq': 'prepaymentPending'
       };
+      if (this.selected_location && this.selected_location.id) {
+        Mfilter['location-eq'] = this.selected_location.id;
+      }
+      if (qids && qids.length > 0) {
+        Mfilter['queue-eq'] = qids.toString();
+      }
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -880,139 +978,162 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
-      const filter_new = {
-        'id-eq': qIds.toString()
-      };
+      let filter_new;
+      if (qIds.length > 0) {
+        filter_new = {
+          'id-eq': qIds.toString()
+        };
+      }
       this.selQIds = qIds;
-      this.provider_services.getProviderQueues(filter_new).subscribe(
-        (queues: any) => {
-          this.queues = [];
-          this.queues = queues;
-          resolve();
-          this.load_queue = 1;
-        }
-      );
+      console.log(this.selQIds);
+      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      this.getCounts();
+      this.queues = [];
+      this.getQs().then(queues => {
+        this.queues = queues;
+        resolve();
+        this.load_queue = 1;
+      });
+      // this.provider_services.getProviderQueues(filter_new).subscribe(
+      //   (queues: any) => {
+      //     this.queues = [];
+      //     this.queues = queues;
+      //     resolve();
+      //     this.load_queue = 1;
+      //   }
+      // );
     });
   }
 
   getTodayCheckIn() {
     this.loading = true;
-    this.load_waitlist = 0;
-    const Mfilter = this.setFilterForApi();
-    Mfilter[this.sortBy] = 'asc';
-    if (this.selQIds && this.selQIds.length > 0) {
-      Mfilter['queue-eq'] = this.selQIds.toString();
-    }
-    this.resetPaginationData();
-    this.pagination.startpageval = 1;
-    this.pagination.totalCnt = 0; // no need of pagination in today
-    this.provider_services.getTodayWaitlist(Mfilter)
-      .subscribe(
-        data => {
-          this.new_checkins_list = [];
-          this.started_checkins_list = [];
-          this.completed_checkins_list = [];
-          this.cancelled_checkins_list = [];
-          this.check_in_list = data;
-          this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
-          if (this.grouped_list && this.grouped_list['started']) {
-            this.started_checkins_list = this.grouped_list['started'].slice();
-          }
-          if (this.grouped_list && this.grouped_list['done']) {
-            this.completed_checkins_list = this.grouped_list['done'].slice();
-          }
-          if (this.grouped_list && this.grouped_list['cancelled']) {
-            this.cancelled_checkins_list = this.grouped_list['cancelled'].slice();
-          }
-          if (this.grouped_list && this.grouped_list['checkedIn']) {
-            this.new_checkins_list = this.grouped_list['checkedIn'].slice();
-          }
-          if (this.grouped_list && this.grouped_list['arrived']) {
-            Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
-          }
-          this.sortCheckins(this.new_checkins_list);
-          if (this.filterapplied === true) {
-            this.noFilter = false;
-          } else {
-            this.noFilter = true;
-          }
-          this.setCounts(this.check_in_list);
-          if (this.status_type) {
-            this.changeStatusType(this.status_type);
-          } else {
-            this.changeStatusType('all');
-          }
-          this.loading = false;
-        },
-        () => {
-          this.load_waitlist = 1;
-        },
-        () => {
-          this.load_waitlist = 1;
-        });
-
+    this.queues = [];
+    this.getQs().then(queue => {
+      this.queues = queue;
+      this.load_waitlist = 0;
+      const Mfilter = this.setFilterForApi();
+      Mfilter[this.sortBy] = 'asc';
+      if (this.selQIds && this.selQIds.length > 0) {
+        Mfilter['queue-eq'] = this.selQIds.toString();
+      }
+      this.resetPaginationData();
+      this.pagination.startpageval = 1;
+      this.pagination.totalCnt = 0; // no need of pagination in today
+      this.provider_services.getTodayWaitlist(Mfilter)
+        .subscribe(
+          data => {
+            this.new_checkins_list = [];
+            this.started_checkins_list = [];
+            this.completed_checkins_list = [];
+            this.cancelled_checkins_list = [];
+            this.check_in_list = data;
+            this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
+            if (this.grouped_list && this.grouped_list['started']) {
+              this.started_checkins_list = this.grouped_list['started'].slice();
+            }
+            if (this.grouped_list && this.grouped_list['done']) {
+              this.completed_checkins_list = this.grouped_list['done'].slice();
+            }
+            if (this.grouped_list && this.grouped_list['cancelled']) {
+              this.cancelled_checkins_list = this.grouped_list['cancelled'].slice();
+            }
+            if (this.grouped_list && this.grouped_list['checkedIn']) {
+              this.new_checkins_list = this.grouped_list['checkedIn'].slice();
+            }
+            if (this.grouped_list && this.grouped_list['arrived']) {
+              Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
+            }
+            this.sortCheckins(this.new_checkins_list);
+            if (this.filterapplied === true) {
+              this.noFilter = false;
+            } else {
+              this.noFilter = true;
+            }
+            this.setCounts(this.check_in_list);
+            if (this.status_type) {
+              this.changeStatusType(this.status_type);
+            } else {
+              this.changeStatusType('all');
+            }
+            this.loading = false;
+          },
+          () => {
+            this.load_waitlist = 1;
+          },
+          () => {
+            this.load_waitlist = 1;
+          });
+    });
   }
   getFutureCheckIn() {
     this.load_waitlist = 0;
-    let Mfilter = this.setFilterForApi();
-    Mfilter['queue-eq'] = this.selQIds.toString();
-    const promise = this.getFutureCheckinCount(Mfilter);
-    promise.then(
-      result => {
-        // if (this.selected_queue.appointment === 'Disable') {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
-        // }
-        this.provider_services.getFutureWaitlist(Mfilter)
-          .subscribe(
-            data => {
-              this.new_checkins_list = [];
-              this.check_in_list = this.check_in_filtered_list = data;
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.loading = false;
-            },
-            () => {
-              this.load_waitlist = 1;
-            },
-            () => {
-              this.load_waitlist = 1;
-            });
-      });
+    this.queues = [];
+    this.getQs().then(queue => {
+      this.queues = queue;
+      let Mfilter = this.setFilterForApi();
+      Mfilter['queue-eq'] = this.selQIds.toString();
+      const promise = this.getFutureCheckinCount(Mfilter);
+      promise.then(
+        result => {
+          // if (this.selected_queue.appointment === 'Disable') {
+          this.pagination.totalCnt = result;
+          Mfilter = this.setPaginationFilter(Mfilter);
+          // }
+          this.provider_services.getFutureWaitlist(Mfilter)
+            .subscribe(
+              data => {
+                this.new_checkins_list = [];
+                this.check_in_list = this.check_in_filtered_list = data;
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+                this.loading = false;
+              },
+              () => {
+                this.load_waitlist = 1;
+              },
+              () => {
+                this.load_waitlist = 1;
+              });
+        });
+    });
   }
   getHistoryCheckIn() {
     this.loading = true;
     this.load_waitlist = 0;
-    let Mfilter = this.setFilterForApi();
-    Mfilter['queue-eq'] = this.selQIds.toString();
-    const promise = this.getHistoryCheckinCount(Mfilter);
-    promise.then(
-      result => {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
-        this.provider_services.getHistroryWaitlist(Mfilter)
-          .subscribe(
-            data => {
-              this.new_checkins_list = [];
-              this.check_in_list = this.check_in_filtered_list = data;
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-            },
-            () => {
-              this.load_waitlist = 1;
-            },
-            () => {
-              this.load_waitlist = 1;
-            });
-        this.loading = false;
-      }
-    );
+    this.queues = [];
+    this.getQs().then(queue => {
+      this.queues = queue;
+      let Mfilter = this.setFilterForApi();
+      Mfilter['queue-eq'] = this.selQIds.toString();
+      const promise = this.getHistoryCheckinCount(Mfilter);
+      promise.then(
+        result => {
+          this.pagination.totalCnt = result;
+          Mfilter = this.setPaginationFilter(Mfilter);
+          this.provider_services.getHistroryWaitlist(Mfilter)
+            .subscribe(
+              data => {
+                this.new_checkins_list = [];
+                this.check_in_list = this.check_in_filtered_list = data;
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
+                }
+              },
+              () => {
+                this.load_waitlist = 1;
+              },
+              () => {
+                this.load_waitlist = 1;
+              });
+          this.loading = false;
+        }
+      );
+    });
   }
   setTimeType(time_type) {
     this.statusMultiCtrl = [];
@@ -1816,6 +1937,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   changeSelectedLocation(location) {
     this.selected_location = location;
+    this.getCounts();
     if (this.selected_location) {
       this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
