@@ -1134,7 +1134,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
-        sel_date: curdate,
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id

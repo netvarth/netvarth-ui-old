@@ -381,12 +381,12 @@
                                                     *ngIf="results_data.fields.today_appt != 1 ">Appointment</span>
                                                 <span class="checkin-btn" *ngIf="results_data.fields.today_appt == 1 "
                                                     (click)="appointmentClicked(loc,loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
-                                                <span class="checkin-future pdetailbt10"
+                                                <!-- <span class="checkin-future pdetailbt10"
                                                     *ngIf="loc.fields.hasOwnProperty('future_appt') && loc.fields.future_appt == 1"
                                                     (click)="appointmentClicked(loc, loc.fields.location_id1, loc.fields.place1, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                     <span>Appointment</span>
                                                     {{for_cap}}
-                                                    <span>{{different_date_cap}}</span></span>
+                                                    <span>{{different_date_cap}}</span></span> -->
                                             </div>
                                         </div>
                                         <!-- <div class="bottom-sect pdetail"

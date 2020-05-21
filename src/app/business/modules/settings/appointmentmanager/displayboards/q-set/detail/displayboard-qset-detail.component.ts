@@ -74,13 +74,19 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     deptMultiCtrl: any = [];
     servMultiCtrl: any = [];
     labelMultiCtrl: any = [];
+    userMultiCtrl: any = [];
     deptMultiFilterCtrl: FormControl = new FormControl();
+    userMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
     qMultiFilterCtrl: FormControl = new FormControl();
     labelMultiFilterCtrl: FormControl = new FormControl();
     onDestroy = new Subject<void>();
     qboardConditions: any = [];
     labelList = new Object();
+    users: any = [];
+    userList: any = [];
+    userIds: any = [];
+    serviceScheduleCount;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -94,6 +100,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterDeptbySearch();
+            });
+        this.userMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterUserbySearch();
             });
         this.serviceMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
@@ -125,6 +136,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.id = this.qsetId;
         this.actionparam = this.action;
         this.getDepartments();
+        this.getUsers();
         this.getProviderServices();
         this.getProviderQueues();
         this.getLabels();
@@ -153,6 +165,19 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             search = search.toLowerCase();
         }
         this.departmentList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
+    }
+    filterUserbySearch() {
+        if (!this.users) {
+            return;
+        }
+        let search = this.userMultiFilterCtrl.value;
+        if (!search) {
+            this.userList = this.users.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.userList = this.users.filter(user => user.firstName.toLowerCase().indexOf(search) > -1);
     }
     filterServicebySearch() {
         if (!this.services_list) {
@@ -202,6 +227,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelList = {};
         this.selectedWtlstList = [];
         this.deptIds = [];
+        this.userIds = [];
         this.serviceIds = [];
         this.qIds = [];
     }
@@ -210,31 +236,39 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.displayBoardData = data;
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
-            this.selectedWtlstList = this.displayBoardData.qBoardConditions.apptStatus;
             this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
-            Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
-                for (let i = 0; i < this.providerLabels.length; i++) {
-                    if (this.providerLabels[i].label === key) {
-                        this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
-                        this.labelMultiCtrl.push(this.providerLabels[i]);
-                        this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
-                    }
+            if (this.displayBoardData.qBoardConditions) {
+                if (this.displayBoardData.qBoardConditions.apptStatus) {
+                    this.selectedWtlstList = this.displayBoardData.qBoardConditions.apptStatus;
                 }
-            });
-            if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
-                for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
-                    for (let i = 0; i < this.departments.length; i++) {
-                        if (this.displayBoardData.qBoardConditions.departments[j].departmentId === this.departments[i].departmentId) {
-                            this.deptMultiCtrl.push(this.departments[i]);
-                            this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                if (this.displayBoardData.qBoardConditions.labels) {
+                    Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
+                        for (let i = 0; i < this.providerLabels.length; i++) {
+                            if (this.providerLabels[i].label === key) {
+                                this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
+                                this.labelMultiCtrl.push(this.providerLabels[i]);
+                                this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
+                            }
+                        }
+                    });
+                }
+                if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
+                    for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
+                        for (let i = 0; i < this.departments.length; i++) {
+                            if (this.displayBoardData.qBoardConditions.departments[j].departmentId === this.departments[i].departmentId) {
+                                this.deptMultiCtrl.push(this.departments[i]);
+                                this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                            }
+                        }
+                        if (j < this.displayBoardData.qBoardConditions.departments.length) {
+                            this.departmentSelection();
+                            this.getUsers();
+                            this.getProviderServices();
                         }
                     }
-                    if (j < this.displayBoardData.qBoardConditions.departments.length) {
-                        this.departmentSelection();
-                    }
+                } else {
+                    this.departmentSelection();
                 }
-            } else {
-                this.departmentSelection();
             }
             Object.keys(this.displayBoardData.sortBy).forEach(key => {
                 this.selectedSortField = key;
@@ -299,6 +333,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             };
             departmentIds.push(ids);
         }
+
+        const userIds = [];
+        for (const id of this.userIds) {
+            const ids = {
+                'id': id
+            };
+            userIds.push(ids);
+        }
+
         const serviceIds = [];
         for (const id of this.serviceIds) {
             const ids = {
@@ -318,7 +361,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'services': serviceIds,
             'apptSchedule': qIds,
             'labels': this.labelList,
-            'apptStatus': this.selectedWtlstList
+            'apptStatus': this.selectedWtlstList,
+            'providers': userIds
         };
         if (this.actionparam === 'add') {
             const post_data = {
@@ -397,6 +441,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     getProviderServices() {
         return new Promise((resolve) => {
             const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
+            if (this.userIds && this.userIds.length > 0) {
+                params['provider-eq'] = this.userIds.toString();
+            }
+            if (this.deptIds && this.deptIds.length > 0) {
+                params['department-eq'] = this.deptIds.toString();
+            }
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
@@ -433,11 +483,24 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 );
         });
     }
+    getUsers() {
+        const filter = { 'userType-eq': 'PROVIDER' };
+        if (this.deptIds && this.deptIds.length > 0) {
+            filter['departmentId-eq'] = this.deptIds.toString();
+        }
+        this.provider_services.getUsers(filter).subscribe(data => {
+            this.users = this.userList = data;
+        });
+    }
     getProviderQueues() {
         return new Promise((resolve) => {
             const activeQueues: any = [];
             let queue_list: any = [];
-            this.provider_services.getProviderSchedules()
+            const params = {};
+            if (this.userIds && this.userIds.length > 0) {
+                params['provider-eq'] = this.userIds.toString();
+            }
+            this.provider_services.getProviderSchedules(params)
                 .subscribe(data => {
                     this.display_schedule = data;
                     this.display_scheduleList = this.display_schedule;
@@ -523,11 +586,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     categorySelection(value) {
         this.selectedCategory = value;
         this.deptIds = [];
+        this.userIds = [];
         this.serviceIds = [];
         this.qIds = [];
         this.departmentList = this.departments;
         this.deptMultiCtrl = [];
         this.departmentSelection();
+        this.userSelection();
         this.serviceSelection();
     }
     saveLabels(index) {
@@ -553,6 +618,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
             }
+            console.log(this.display_scheduleList);
+            if (this.display_scheduleList.length === 0) {
+this.serviceScheduleCount = this.display_scheduleList.length;
+            }
         } else {
             this.display_scheduleList = this.display_schedule;
         }
@@ -574,24 +643,35 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         } else {
             this.serviceIds.splice(index, 1);
         }
+        this.serviceSelection();
     }
     departmentSelection() {
         this.servMultiCtrl = [];
         this.qMultiCtrl = [];
-        this.servicesList = [];
-        if (this.deptMultiCtrl && this.deptMultiCtrl.length > 0) {
-            for (let i = 0; i < this.deptMultiCtrl.length; i++) {
-                for (let j = 0; j < this.deptMultiCtrl[i].serviceIds.length; j++) {
-                    for (let k = 0; k < this.services_list.length; k++) {
-                        if (this.services_list[k].id === this.deptMultiCtrl[i].serviceIds[j] && this.servicesList.indexOf(this.services_list[k]) === -1) {
-                            this.servicesList.push(this.services_list[k]);
-                        }
+
+        if (this.actionparam === 'edit' && this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
+            for (let j = 0; j < this.displayBoardData.qBoardConditions.providers.length; j++) {
+                for (let i = 0; i < this.users.length; i++) {
+                    if (this.displayBoardData.qBoardConditions.providers[j].id === this.users[i].id) {
+                        this.userMultiCtrl.push(this.users[i]);
+                        this.userIds.push(this.displayBoardData.qBoardConditions.providers[j].id);
                     }
+                }
+                if (j < this.displayBoardData.qBoardConditions.providers.length) {
+                    this.userSelection();
+
+                    this.getProviderServices();
+                    this.getProviderQueues();
                 }
             }
         } else {
-            this.servicesList = this.services_list;
+            this.userSelection();
         }
+
+
+
+    }
+    userSelection() {
         if (this.actionparam === 'edit' && this.displayBoardData.qBoardConditions.services && this.displayBoardData.qBoardConditions.services.length > 0) {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.services.length; j++) {
                 for (let i = 0; i < this.services_list.length; i++) {
@@ -615,6 +695,19 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         } else {
             this.deptIds.splice(index, 1);
         }
+        this.getUsers();
+        this.getProviderServices();
+    }
+
+    setUsersIds(userId) {
+        const index = this.userIds.indexOf(userId);
+        if (index === -1) {
+            this.userIds.push(userId);
+        } else {
+            this.userIds.splice(index, 1);
+        }
+        this.getProviderServices();
+        this.getProviderQueues();
     }
     queueSelection(queue, ev) {
         const index = this.qIds.indexOf(queue);

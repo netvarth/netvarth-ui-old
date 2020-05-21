@@ -77,60 +77,60 @@ export class CustomerDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private _location: Location,
         private router: Router) {
-             this.activated_route.params.subscribe(
+        this.activated_route.params.subscribe(
             (params) => {
-            this.customerId = params.id;
-            this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-            if (this.customerId) {
-                if (this.customerId === 'add') {
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: 'Add'
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                    this.action = 'add';
-                    this.createForm();
-                } else {
-                    this.activated_route.queryParams.subscribe(
-                        (qParams) => {
-                            this.action = qParams.action;
-                            this.getCustomers(this.customerId).then(
-                                (customer) => {
-                                    this.customer = customer;
-                                    console.log("Customer", this.customer);
-                                    this.customerName = this.customer[0].firstName;
-                                    if (this.action === 'edit') {
-                                        const breadcrumbs = [];
-                                        this.breadcrumbs_init.map((e) => {
-                                            breadcrumbs.push(e);
-                                        });
-                                        breadcrumbs.push({
-                                            title: this.customerName
-                                        });
-                                        this.breadcrumbs = breadcrumbs;
-                                        this.createForm();
-                                    } else if (this.action === 'view') {
-                                        const breadcrumbs = [];
-                                        this.breadcrumbs_init.map((e) => {
-                                            breadcrumbs.push(e);
-                                        });
-                                        breadcrumbs.push({
-                                            title: this.customerName
-                                        });
-                                        this.breadcrumbs = breadcrumbs;
+                this.customerId = params.id;
+                this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+                if (this.customerId) {
+                    if (this.customerId === 'add') {
+                        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: 'Add'
+                        });
+                        this.breadcrumbs = breadcrumbs;
+                        this.action = 'add';
+                        this.createForm();
+                    } else {
+                        this.activated_route.queryParams.subscribe(
+                            (qParams) => {
+                                this.action = qParams.action;
+                                this.getCustomers(this.customerId).then(
+                                    (customer) => {
+                                        this.customer = customer;
+                                        console.log("Customer", this.customer);
+                                        this.customerName = this.customer[0].firstName;
+                                        if (this.action === 'edit') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.customerName
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
+                                            this.createForm();
+                                        } else if (this.action === 'view') {
+                                            const breadcrumbs = [];
+                                            this.breadcrumbs_init.map((e) => {
+                                                breadcrumbs.push(e);
+                                            });
+                                            breadcrumbs.push({
+                                                title: this.customerName
+                                            });
+                                            this.breadcrumbs = breadcrumbs;
+                                        }
                                     }
-                                }
-                            );
-                        }
-                    );
+                                );
+                            }
+                        );
+                    }
+                    this.api_loading = false;
                 }
-                this.api_loading = false;
             }
-        }
-    );
+        );
 
         // this.search_data = this.data.search_data;
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -150,15 +150,15 @@ export class CustomerDetailComponent implements OnInit {
             }
         });
     }
-    getCustomers(customerId){
+    getCustomers(customerId) {
         const _this = this;
-        const filter = {'id-eq' : customerId}
+        const filter = { 'id-eq': customerId }
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderCustomers(filter)
                 .subscribe(
                     data => {
                         resolve(data);
-                        
+
                     },
                     () => {
                         reject();
@@ -216,7 +216,7 @@ export class CustomerDetailComponent implements OnInit {
             this.loading = false;
         }
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-        this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);
@@ -225,132 +225,133 @@ export class CustomerDetailComponent implements OnInit {
             this.amForm.get('email_id').setValue(this.email);
         }
     }
-        updateForm() {
+    updateForm() {
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
-            'email_id' : this.customer[0].emailId || null,
+            'email_id': this.customer[0].emailId || null,
             'dob': this.customer[0].dob || null,
             'gender': this.customer[0].gender || null,
             'mobile_number': this.customer[0].phoneNo || null,
             'address': this.customer[0].address || null,
         });
-        }
+    }
     onSubmit(form_data) {
         this.disableButton = true;
         if (this.action === 'add') {
-        const post_data = {
-            //   'userProfile': {
-            'firstName': form_data.first_name,
-            'lastName': form_data.last_name,
-            'dob': form_data.dob,
-            'gender': form_data.gender,
-            'phoneNo': form_data.mobile_number,
-            'address': form_data.address,
-            //   }
-        };
-        if (form_data.mobile_number) {
-            post_data['countryCode'] = '+91';
-        }
-        if (form_data.email_id && form_data.email_id !== '') {
-            post_data['email'] = form_data.email_id;
-        }
-        if (form_data.customer_id) {
-            post_data['jaldeeId'] = form_data.customer_id;
-        }
-        this.provider_services.createProviderCustomer(post_data)
-            .subscribe(
-                data => {
-                    this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                    this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
-                    const qParams = {};
-                    qParams['pid'] = data;
-                    if (this.source === 'checkin') {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                ph: form_data.mobile_number,
-                                checkin_type: this.checkin_type
-                            }
-                        };
-                        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-                    } else if (this.source === 'appointment') {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                ph: form_data.mobile_number,
-                                checkin_type: this.checkin_type
-                            }
-                        };
-                        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-                    } else {
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                phoneNo: this.phoneNo
-                            }
-                        };
-                        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-                    }
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.disableButton = false;
-                });
+            const post_data = {
+                //   'userProfile': {
+                'firstName': form_data.first_name,
+                'lastName': form_data.last_name,
+                'dob': form_data.dob,
+                'gender': form_data.gender,
+                'phoneNo': form_data.mobile_number,
+                'address': form_data.address,
+                //   }
+            };
+            if (form_data.mobile_number) {
+                post_data['countryCode'] = '+91';
             }
-            else if (this.action === 'edit') {
-                const post_data = {
-                    //   'userProfile': {
-                    'firstName': form_data.first_name,
-                    'lastName': form_data.last_name,
-                    'dob': form_data.dob,
-                    'gender': form_data.gender,
-                    'phoneNo': form_data.mobile_number,
-                    'address': form_data.address,
-                    //   }
-                };if (form_data.mobile_number) {
-                    post_data['countryCode'] = '+91';
-                }
-                if (form_data.email_id && form_data.email_id !== '') {
-                    post_data['email'] = form_data.email_id;
-                }
-                if (form_data.customer_id) {
-                    post_data['jaldeeId'] = form_data.customer_id;
-                }
-                this.provider_services.updateProviderCustomer(post_data)
-                    .subscribe(
-                        data => {
-                            this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                            this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
-                            const qParams = {};
-                            qParams['pid'] = data;
-                            if (this.source === 'checkin') {
-                                const navigationExtras: NavigationExtras = {
-                                    queryParams: {
-                                        ph: form_data.mobile_number,
-                                        checkin_type: this.checkin_type
-                                    }
-                                };
-                                this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-                            } else if (this.source === 'appointment') {
-                                const navigationExtras: NavigationExtras = {
-                                    queryParams: {
-                                        ph: form_data.mobile_number,
-                                        checkin_type: this.checkin_type
-                                    }
-                                };
-                                this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-                            } else {
-                                const navigationExtras: NavigationExtras = {
-                                    queryParams: {
-                                        phoneNo: this.phoneNo
-                                    }
-                                };
-                                this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-                            }
-                        },
-                        error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
-            
+            if (form_data.email_id && form_data.email_id !== '') {
+                post_data['email'] = form_data.email_id;
             }
+            if (form_data.customer_id) {
+                post_data['jaldeeId'] = form_data.customer_id;
+            }
+            this.provider_services.createProviderCustomer(post_data)
+                .subscribe(
+                    data => {
+                        this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                        const qParams = {};
+                        qParams['pid'] = data;
+                        if (this.source === 'checkin') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type
+                                }
+                            };
+                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                        } else if (this.source === 'appointment') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type
+                                }
+                            };
+                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                        } else {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    phoneNo: this.phoneNo
+                                }
+                            };
+                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                        }
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.disableButton = false;
+                    });
+        }
+        else if (this.action === 'edit') {
+            const post_data = {
+                //   'userProfile': {
+                'id': this.customerId,
+                'firstName': form_data.first_name,
+                'lastName': form_data.last_name,
+                'dob': form_data.dob,
+                'gender': form_data.gender,
+                'phoneNo': form_data.mobile_number,
+                'address': form_data.address,
+                //   }
+            }; if (form_data.mobile_number) {
+                post_data['countryCode'] = '+91';
+            }
+            if (form_data.email_id && form_data.email_id !== '') {
+                post_data['email'] = form_data.email_id;
+            }
+            if (form_data.customer_id) {
+                post_data['jaldeeId'] = form_data.customer_id;
+            }
+            this.provider_services.updateProviderCustomer(post_data)
+                .subscribe(
+                    data => {
+                        this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                        const qParams = {};
+                        qParams['pid'] = data;
+                        if (this.source === 'checkin') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type
+                                }
+                            };
+                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                        } else if (this.source === 'appointment') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type
+                                }
+                            };
+                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                        } else {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    phoneNo: this.phoneNo
+                                }
+                            };
+                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                        }
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+
+        }
 
     }
     onCancel() {

@@ -141,6 +141,36 @@
                     </ul>
                 </div>
             </div>
+            <div class="form-group col-md-12 mgn-bt-20"
+            *ngIf="selectedCategory !== 'SCHEDULE' && selectedCategory !== 'SERVICE'">
+            <label class="col-form-label" style="margin-left: 20px">Choose
+                Users</label>
+            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                <mat-form-field *ngIf="users.length > 0">
+                    <mat-select [(ngModel)]="userMultiCtrl" placeholder="Users" [multiple]="true">
+                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search users"
+                            noEntriesFoundLabel="no matching user found"></ngx-mat-select-search>
+                        <mat-option *ngFor="let user of userList" [value]="user"
+                            (click)="setUsersIds(user.id, 'PROVIDER')">
+                            {{user.firstName}} {{user.lastName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="mgn-lt-5 disabled-text" *ngIf="users.length === 0">
+                    No users
+                </div>
+            </div>
+            <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="userMultiCtrl.length > 0">
+                <p>
+                    Selected Users:
+                </p>
+                <ul *ngFor="let user of userMultiCtrl">
+                    <li>
+                        {{user.firstName}} {{user.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
             <div class="form-group col-md-12" *ngIf="selectedCategory !== 'QUEUE'">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Services</label>

@@ -495,47 +495,14 @@ export class AdjustqueueDelayComponent implements OnInit {
           this.queuejson = data;
           console.log(this.queuejson);
           if (this.queuejson.length === 1) {
-            for (let i = 0; i < this.queuejson.length; i++) {
-              const Mfilter = this.setFilterForApi(this.queuejson[i].id);
-              Mfilter[this.sortBy] = 'asc';
-              this.provider_services.getTodayWaitlist(Mfilter)
-                .subscribe(
-                  qdata => {
-                    this.qdata_list = qdata;
-                    this.setCounts(this.qdata_list);
-                  });
-            }
-          }
+              this.getTodayCheckIn(this.queuejson[0].id);
+        }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
-            for (let i = 0; i < this.queuejson.length; i++) {
               this.amForm.get('queueControl').setValue(this.queuejson[0].id);
-            }
-
+              this.getTodayCheckIn(this.queuejson[0].id);
           }
-          //     this.sel_queue_id = this.queuejson[selindx].id;
-          //     this.sel_queue_indx = selindx;
-          //     // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-          //     this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-          //     this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-          //     this.sel_queue_name = this.queuejson[selindx].name;
-          //     // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-          //     // this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
-          //     this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-          //     this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-          //     this.setTerminologyLabels();
-          //     if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-          //         this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
-          //     }
-          // } else {
-          //     this.sel_queue_indx = -1;
-          //     this.sel_queue_id = 0;
-          //     this.sel_queue_waitingmins = 0;
-          //     this.sel_queue_servicetime = '';
-          //     this.sel_queue_name = '';
-          //     this.sel_queue_timecaption = '';
-          //     this.sel_queue_personaahead = 0;
-          // }
+         
         });
     }
   }

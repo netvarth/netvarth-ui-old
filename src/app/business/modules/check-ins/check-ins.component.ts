@@ -784,8 +784,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getCounts() {
-    console.log(this.selQIds);
-    console.log(this.shared_functions.getitemFromGroupStorage('selQ'));
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.history_waitlist_count = 0;
@@ -985,7 +983,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         };
       }
       this.selQIds = qIds;
-      console.log(this.selQIds);
       this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
       this.getCounts();
       this.queues = [];
