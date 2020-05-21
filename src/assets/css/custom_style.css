@@ -8820,3 +8820,6 @@ padding-right: 0 !important; padding-top: 0 !important;}
   width: 18px;
   height: 18px;
 }
+.mat-select-callmode{
+  width:50% !important;
+}
