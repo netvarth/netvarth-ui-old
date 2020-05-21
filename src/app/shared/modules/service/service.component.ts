@@ -88,6 +88,22 @@ export class ServiceComponent implements OnInit, OnDestroy {
     is_donation = false;
     userId: any;
     departmentId: any;
+    teleCallingModes = {
+        'callingMode': '',
+        'status': 'ACTIVE',
+        'value': null,
+        'instructions': null
+    };
+    vcallmodes;
+    modeselected = false;
+    selctd_tool: any;
+    is_tool = false;
+    tool_id = '';
+    is_virtual_enable = false;
+    telemodes: any = [];
+    tool_name: any;
+    tools_ids: any;
+    tool_instruct: any;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -168,6 +184,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
                                         });
+                                        if (this.service_data.serviceType === 'virtualService') {
+                                            this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
+                                            this.tool_id = this.service_data.virtualCallingModes[0].value;
+                                            this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
+                                        }
                                     }
                                     this.convertTime(this.service_data['serviceDuration']);
                                     this.changePrepayment();
@@ -223,11 +244,19 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.is_physical = 1;
         } else {
             this.is_virtual_serv = false;
+            this.is_tool = false;
             this.is_physical = 2;
         }
     }
     selectServiceTypeHandler(event) {
         this.serv_mode = event;
+        this.modeselected = true;
+        this.getVirtualCallingModesList();
+    }
+    selectToolTypeHandler(event) {
+        this.getVirtualCallingModesList();
+        this.selctd_tool = event;
+        this.is_tool = true;
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {
@@ -246,6 +275,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.end_service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.end_cause_notify_cap = Messages.DONATION_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
+        this.getGlobalSettings();
+        this.getVirtualCallingModesList();
+
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -282,6 +314,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
+        if (form_data.serviceType === 'virtualService') {
+            this.teleCallingModes = {
+                'callingMode': this.tool_name,
+                'value': this.tool_id,
+                'status': 'ACTIVE',
+                'instructions': this.tool_instruct
+            };
+        }
         if (this.is_donation) {
             if (!this.subdomainsettings.serviceBillable) {
                 form_data.bType = 'Waitlist';
@@ -317,10 +357,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.serviceDuration = duration;
             }
             if (this.departmentId) {
-                form_data ['department'] = this.departmentId;
+                form_data['department'] = this.departmentId;
             }
             form_data['serviceType'] = this.serv_type;
             form_data['virtualServiceType'] = this.serv_mode;
+            if (form_data.serviceType === 'virtualService') {
+                form_data['virtualCallingModes'] = [this.teleCallingModes];
+            }
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
@@ -388,7 +431,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [false],
-                livetrack: [false]
+                    livetrack: [false]
                 });
             } else {
                 this.serviceForm = this.fb.group({
@@ -402,8 +445,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                     taxable: [false],
                     notification: [false],
-                livetrack: [false]
+                    livetrack: [false]
                 });
+
                 if (this.action === 'add') {
                     this.serviceForm.get('serviceType').setValue('physicalService');
                 }
@@ -457,5 +501,33 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.sharedFunctons.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
+    }
+    getVirtualCallingModesList() {
+        this.provider_services.getVirtualCallingModes().subscribe(
+            (data: any) => {
+                this.telemodes = [];
+                this.vcallmodes = data.virtualCallingModes;
+                for (let i = 0; i < this.vcallmodes.length; i++) {
+                    if (this.vcallmodes[i].status === 'ACTIVE') {
+                        this.telemodes.push(this.vcallmodes[i]);
+                    }
+                }
+                for (let i = 0; i < this.telemodes.length; i++) {
+                    if (this.selctd_tool === this.telemodes[i].callingMode) {
+                        this.tool_id = this.telemodes[i].value;
+                        break;
+                    } else {
+                        this.tool_id = '';
+                    }
+                }
+            });
+    }
+    getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                if (data.virtualService === true) {
+                    this.is_virtual_enable = true;
+                }
+            });
     }
 }

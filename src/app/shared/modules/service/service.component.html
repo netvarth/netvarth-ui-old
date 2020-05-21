@@ -51,7 +51,8 @@
             </div>
             <div class="c-ot m0" *ngIf="is_donation">
                 <div class="item" style="width: 70%;">
-                    <span *ngIf="service_data.serviceType === 'donationService' && service_data.notification === true">{{end_cause_notify_cap}}:
+                    <span
+                        *ngIf="service_data.serviceType === 'donationService' && service_data.notification === true">{{end_cause_notify_cap}}:
                         <span class="noti-it"
                             *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
                         <span class="noti-it"
@@ -145,10 +146,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
                 <mat-form-field class="example-full-width"
                     [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
-                    <mat-select formControlName="serviceType" placeholder="Category" #virtual
+                    <mat-select formControlName="serviceType" placeholder="Type" #virtual
                         (selectionChange)="selectServiceHandler(virtual.value)">
-                        <mat-option *ngIf="!is_donation" [value]="'virtualService'">
-                            Virtual Service
+                        <mat-option *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'">
+                            Tele Service
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
                             Physical Service
@@ -167,6 +168,34 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             Video
                         </mat-option>
                     </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form-group"
+                [ngClass]="{'glbl-preview':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
+                *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
+                <mat-form-field class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_tool}">
+                    <mat-label>Select tools {{tool_name}}</mat-label>
+                    <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
+                        name="toolname" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
+                            {{mode.callingMode}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field
+                    *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
+                    class="example-full-width mat-select-virtualservice">
+                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
+                        [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+            <div class="form-group"
+                *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
+                <mat-form-field class="example-full-width">
+                    <textarea matInput class="form-control" id="tooldescription"
+                        placeholder="Enter instructions to your consumer" (keyup)="setCharCount($event)"
+                        (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
+                        [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
@@ -204,9 +233,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div class="form-group glbl-preview" *ngIf="subdomainsettings.serviceBillable && is_donation">
                 <div>
                     <mat-form-field>
-                        <input min="0" matInput type="text" class="form-control number-ip-sm"
-                            id="minprice" maxlength="10" (keypress)="isNumeric($event)"
-                            (keyup)="isvalid($event, 'minDonationAmount')"
+                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"
+                            maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
                             placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount"
                             autocomplete="off">
                     </mat-form-field>
@@ -219,9 +247,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </div>
                 <div>
                     <mat-form-field>
-                        <input min="0"  matInput type="text" class="form-control number-ip-sm"
-                            id="maxprice" maxlength="10" (keypress)="isNumeric($event)"
-                            (keyup)="isvalid($event, 'maxDonationAmount')"
+                        <input min="0" matInput type="text" class="form-control number-ip-sm" id="maxprice"
+                            maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
                             placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount"
                             autocomplete="off">
                     </mat-form-field>
@@ -254,10 +281,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </mat-slide-toggle>
                 </div>
                 <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
-                        formControlName="notificationType">
-                        <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
-                        <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
-                    </mat-radio-group>
+                    formControlName="notificationType">
+                    <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
+                    <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
+                </mat-radio-group>
             </div>
             <a class="learnmore-pointer" (click)="advancedClick()" *ngIf="!is_donation"> Advanced settings</a>
             <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings && !is_donation">
@@ -308,8 +335,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
                 <div class="form-group inline">
                     <label class="col-form-label">Enable Live Track</label>
-                    <mat-slide-toggle class="example-margin" formControlName="livetrack"
-                        >
+                    <mat-slide-toggle class="example-margin" formControlName="livetrack">
                     </mat-slide-toggle>
                 </div>
                 <!-- </mat-expansion-panel>
