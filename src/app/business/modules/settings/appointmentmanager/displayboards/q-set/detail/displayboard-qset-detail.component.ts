@@ -50,7 +50,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     boardDisplayname;
     providerLabels: any = [];
     providerLabelsList: any = [];
-    labelfromConstants = projectConstants.STATUS_BOARD;
+    labelfromConstants = projectConstants.APPT_STATUS_BOARD;
     submit_btn;
     id;
     filterByDept = false;

@@ -375,6 +375,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.server_date) {
       this.getTomorrowDate();
     }
+    this.getDisplayboardCount();
     this.showstatus['new'] = true;
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       if (this.time_type === 1) {
@@ -750,7 +751,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     });
   }
-
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    let displayboards: any = [];
+    this.provider_services.getDisplayboardsAppointment()
+      .subscribe(
+        data => {
+          displayboards = data;
+          layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
+          this.board_count = layout_list.length;
+        });
+  }
   getTodayAppointments() {
     this.loading = true;
     this.getQs().then(queue => {
@@ -1595,9 +1606,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('sortBy', this.sortBy);
     this.getTodayAppointments();
   }
-  callingWaitlist(checkin) {
+  callingAppt(checkin) {
     const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
-    this.provider_services.setCallStatus(checkin.uid, status).subscribe(
+    this.provider_services.setApptCallStatus(checkin.uid, status).subscribe(
       () => {
         this.loadApiSwitch('reloadAPIs');
       });

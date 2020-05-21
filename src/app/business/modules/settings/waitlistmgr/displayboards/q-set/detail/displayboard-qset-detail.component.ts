@@ -50,7 +50,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     boardDisplayname;
     providerLabels: any = [];
     providerLabelsList: any = [];
-    labelfromConstants = projectConstants.STATUS_BOARD;
+    labelfromConstants = projectConstants.WAITLIST_STATUS_BOARD;
     submit_btn;
     id;
     filterByDept = false;
@@ -73,7 +73,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     deptMultiCtrl: any = [];
     servMultiCtrl: any = [];
     labelMultiCtrl: any = [];
-     userMultiCtrl: any = [];
+    userMultiCtrl: any = [];
     deptMultiFilterCtrl: FormControl = new FormControl();
     userMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
@@ -100,7 +100,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             .subscribe(() => {
                 this.filterDeptbySearch();
             });
-                    this.userMultiFilterCtrl.valueChanges
+        this.userMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterUserbySearch();
@@ -165,7 +165,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
         this.departmentList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
     }
-        filterUserbySearch() {
+    filterUserbySearch() {
         if (!this.users) {
             return;
         }
@@ -226,7 +226,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelList = {};
         this.selectedWtlstList = [];
         this.deptIds = [];
-         this.userIds = [];
+        this.userIds = [];
         this.serviceIds = [];
         this.qIds = [];
     }
@@ -256,8 +256,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                     if (j < this.displayBoardData.qBoardConditions.departments.length) {
                         this.departmentSelection();
-                         this.getUsers();
-                            this.getProviderServices();
+                        this.getUsers();
+                        this.getProviderServices();
                     }
                 }
             } else {
@@ -326,15 +326,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             };
             departmentIds.push(ids);
         }
-        
-           const userIds = [];
+
+        const userIds = [];
         for (const id of this.userIds) {
             const ids = {
                 'id': id
             };
             userIds.push(ids);
         }
-        
+
         const serviceIds = [];
         for (const id of this.serviceIds) {
             const ids = {
@@ -434,7 +434,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     getProviderServices() {
         return new Promise((resolve) => {
             const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
-                if (this.userIds && this.userIds.length > 0) {
+            if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }
             if (this.deptIds && this.deptIds.length > 0) {
@@ -476,7 +476,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 );
         });
     }
-        getUsers() {
+    getUsers() {
         const filter = { 'userType-eq': 'PROVIDER' };
         if (this.deptIds && this.deptIds.length > 0) {
             filter['departmentId-eq'] = this.deptIds.toString();
@@ -489,7 +489,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         return new Promise((resolve) => {
             const activeQueues: any = [];
             let queue_list: any = [];
-             const params = {};
+            const params = {};
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }
@@ -611,9 +611,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
             }
-             console.log(this.display_scheduleList);
+            console.log(this.display_scheduleList);
             if (this.display_scheduleList.length === 0) {
-this.serviceScheduleCount = this.display_scheduleList.length;
+                this.serviceScheduleCount = this.display_scheduleList.length;
             }
         } else {
             this.display_scheduleList = this.display_schedule;
@@ -638,7 +638,7 @@ this.serviceScheduleCount = this.display_scheduleList.length;
         }
         this.serviceSelection();
     }
-   departmentSelection() {
+    departmentSelection() {
         this.servMultiCtrl = [];
         this.qMultiCtrl = [];
 

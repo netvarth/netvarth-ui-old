@@ -900,13 +900,13 @@
                           </div>
                           <div class="col-md-5 col-xs-5 p0 info-box-icon-right ">
                             <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0"
-                              (click)="callingWaitlist(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                              (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                               <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
-                                *ngIf="!small_device_display && appt.callingStatus">Stop
+                                *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
                                 Calling</span>
                               <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
                               <span *ngIf="!small_device_display && !appt.callingStatus">
-                                Call</span>
+                                 &nbsp;Call</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Arrived')"

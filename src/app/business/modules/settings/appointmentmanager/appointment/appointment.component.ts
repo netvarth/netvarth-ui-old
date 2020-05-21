@@ -263,7 +263,10 @@ export class AppointmentComponent implements OnInit {
             search_input: ['', Validators.compose([Validators.required])]
         });
     }
-    createNew() {
+    createNew(type?) {
+        if (type === 'new') {
+            this.qParams['noMobile'] = false;
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -315,7 +318,7 @@ export class AppointmentComponent implements OnInit {
                     'email-eq': form_data.search_input
                 };
                 break;
-            case 'customer_id':
+            case 'id':
                 post_data = {
                     'id-eq': form_data.search_input
                 };
@@ -1348,8 +1351,8 @@ export class AppointmentComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-       // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
-       this.shared_services.addProviderAppointmentNote(uuid,dataToSend)
+        // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
+        this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1389,8 +1392,7 @@ export class AppointmentComponent implements OnInit {
                         }
                     } else {
                         for (const q of this.queuejson) {
-                            console.log(q.id);
-                            if (q.id == this.comingSchduleId) {
+                            if (q.id === this.comingSchduleId) {
                                 console.log('scheduleid' + q.id);
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {

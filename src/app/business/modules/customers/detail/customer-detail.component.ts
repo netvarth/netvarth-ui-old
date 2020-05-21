@@ -100,7 +100,6 @@ export class CustomerDetailComponent implements OnInit {
                                 this.getCustomers(this.customerId).then(
                                     (customer) => {
                                         this.customer = customer;
-                                        console.log("Customer", this.customer);
                                         this.customerName = this.customer[0].firstName;
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
@@ -152,7 +151,7 @@ export class CustomerDetailComponent implements OnInit {
     }
     getCustomers(customerId) {
         const _this = this;
-        const filter = { 'id-eq': customerId }
+        const filter = { 'id-eq': customerId };
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderCustomers(filter)
                 .subscribe(
@@ -294,8 +293,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     });
-        }
-        else if (this.action === 'edit') {
+        } else if (this.action === 'edit') {
             const post_data = {
                 //   'userProfile': {
                 'id': this.customerId,

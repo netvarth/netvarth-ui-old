@@ -384,7 +384,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.server_date) {
       this.getTomorrowDate();
     }
-
+    this.getDisplayboardCount();
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
     } else {
@@ -514,6 +514,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
       }
     );
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    let displayboards: any = [];
+    this.provider_services.getDisplayboardsWaitlist()
+      .subscribe(
+        data => {
+          displayboards = data;
+          layout_list = displayboards.filter(displayboard => !displayboard.isContainer);
+          this.board_count = layout_list.length;
+        });
   }
   getQs() {
     this.loading = true;
