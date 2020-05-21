@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -63,6 +63,7 @@ export class CustomerDetailComponent implements OnInit {
     checkin_type;
     customidFormat;
     loading = false;
+    haveMobile = true;
     customerId;
     customer;
     customerName;
@@ -144,6 +145,9 @@ export class CustomerDetailComponent implements OnInit {
             if (qparams.checkinType) {
                 this.checkin_type = qparams.checkinType;
             }
+            if (qparams.noMobile) {
+                this.haveMobile = false;
+            }
         });
     }
     getCustomers(customerId){
@@ -184,11 +188,9 @@ export class CustomerDetailComponent implements OnInit {
             });
     }
     createForm() {
-        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+        console.log(this.haveMobile);
+        if (!this.haveMobile) {
             this.amForm = this.fb.group({
-                customer_id: ['', Validators.compose([Validators.required])],
-                mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
-                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
@@ -213,14 +215,17 @@ export class CustomerDetailComponent implements OnInit {
             }
             this.loading = false;
         }
-        // if (this.phoneNo) {
-        //     this.amForm.get('mobile_number').setValue(this.phoneNo);
-        // }
-        // if (this.email) {
-        //     this.amForm.get('email_id').setValue(this.email);
-        // }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+        this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+        }
+        if (this.phoneNo) {
+            this.amForm.get('mobile_number').setValue(this.phoneNo);
+        }
+        if (this.email) {
+            this.amForm.get('email_id').setValue(this.email);
+        }
     }
-    updateForm() {
+        updateForm() {
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -230,7 +235,7 @@ export class CustomerDetailComponent implements OnInit {
             'mobile_number': this.customer[0].phoneNo || null,
             'address': this.customer[0].address || null,
         });
-    }
+        }
     onSubmit(form_data) {
         this.disableButton = true;
         if (this.action === 'add') {
@@ -287,6 +292,7 @@ export class CustomerDetailComponent implements OnInit {
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disableButton = false;
                 });
             }
             else if (this.action === 'edit') {
@@ -347,8 +353,6 @@ export class CustomerDetailComponent implements OnInit {
             }
 
     }
-    
-        
     onCancel() {
         this._location.back();
     }
