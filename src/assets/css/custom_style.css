@@ -8820,6 +8820,20 @@ padding-right: 0 !important; padding-top: 0 !important;}
   width: 18px;
   height: 18px;
 }
+.table.tbl-qboard {
+  margin-bottom: 0 !important;
+}
+.display-layout.qbrd-disp {
+  margin-left: 0px !important;
+}
+.display-content .branch-sp .logo {overflow: hidden !important;}
+.branch-sp {max-height: 150px !important;}
+.board-box {border: 1px solid #eee !important;overflow: scroll !important;}
+
+.qset-name th {text-align: center !important;}
+@media only screen and (max-width: 575px) {
+  .qset-name th {font-size: 1rem !important;}
+}
 .mat-select-callmode{
   width:50% !important;
 }

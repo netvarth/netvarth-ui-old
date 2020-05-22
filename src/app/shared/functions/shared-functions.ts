@@ -632,6 +632,30 @@ export class SharedFunctions {
       }
     });
   }
+  confirmOPSearchChangeStatus(ob, stat) {
+    let msg = '';
+    if (stat) {
+      msg = 'If you "Turn off" Online Presence, Your profile will not be visible online at Jaldee.com.';
+      // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
+    } else {
+      msg = '"Turn On" the Online Presence?';
+    }
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': msg,
+        'heading': 'Online Presence'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        ob.handle_jaldeeOnlinePresence();
+      }
+    });
+  }
   confirmLogoImageDelete(ob, file) {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',

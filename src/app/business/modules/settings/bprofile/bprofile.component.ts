@@ -220,6 +220,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   park_type: any;
   @ViewChild('logofile', { static: false }) myInputVariable: ElementRef;
   show_passcode = false;
+  onlinepresence_status = false;
+  onlinepresence_statusstr = '';
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -264,6 +266,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     // this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
     this.getPublicSearch();
     // this.getBusinessProfile();
+    this.getJaldeeIntegrationSettings();
     this.getBusinessConfiguration();
     this.getProviderLocations();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
@@ -350,6 +353,13 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.handle_searchstatus();
     }
   }
+  confirm_opsearchStatus () {
+    if (this.onlinepresence_status) {
+      this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
+    } else {
+      this.handle_jaldeeOnlinePresence();
+    }
+  }
   handle_searchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
@@ -359,7 +369,44 @@ export class BProfileComponent implements OnInit, OnDestroy {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-
+  getJaldeeIntegrationSettings() {
+    this.provider_services.getJaldeeIntegrationSettings().subscribe(
+        (data: any) => {
+            this.onlinepresence_status = data.onlinePresence;
+            // this.walkinConsumer_status = data.walkinConsumer;
+            // this.jaldeeintegration_status = data.onlinePresence;
+            // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
+            this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+            // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
+        }
+    );
+}
+  handle_jaldeeOnlinePresence() {
+    const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
+    const data = {
+        'onlinePresence': !this.onlinepresence_status
+    };
+    this.provider_services.setJaldeeIntegration(data)
+        .subscribe(
+            () => {
+                this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                this.getJaldeeIntegrationSettings();
+            },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.getJaldeeIntegrationSettings();
+            }
+        );
+}
+  handle_opsearchstatus() {
+    const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
+    this.provider_services.updatePublicSearch(changeTostatus)
+      .subscribe(() => {
+        this.getPublicSearch();
+      }, error => {
+        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
   getBusinessProfile() {
     this.bProfile = [];
     this.getBussinessProfileApi()
@@ -926,6 +973,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   showPasscode() {
     this.show_passcode = !this.show_passcode;
+  }
+  gotoJaldeeIntegration () {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
   gotoMedia() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
