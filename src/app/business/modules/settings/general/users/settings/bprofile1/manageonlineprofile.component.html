@@ -1,0 +1,121 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-padding-small">
+                <div class="w-dta">
+                        <div class="row">
+                            <div class="copy one col-xs-12 col-sm-12 no-padding">
+                                <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card" *ngIf="normal_profile_active==1">
+                                        <div class="pubs">
+                                            <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
+                                        </div>
+                                    </div>
+                                    <div class="card p0 w-dta active">
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel-header class="min100">
+                                                    <mat-panel-title class="block-level">
+                                                        {{profile_summary_cap}} <i
+                                                            *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                                            class="req-flds-cap">*required fields missing</i>
+                                                        <p class="form-level-settings">{{frm_profile_name_cap}}<a
+                                                                class="learnmore-pointer" id="customer-help"
+                                                                (click)="learnmore_clicked('basic-information', $event)">Learn
+                                                                More</a></p>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="cd-t">
+                                                    <div class="warning" *ngIf="normal_basicinfo_show==1">
+                                                        <app-innerloading-spinner spinnerParams="loadingParams">
+                                                        </app-innerloading-spinner>
+                                                    </div>
+                                                    <div class="basic-i" *ngIf="normal_basicinfo_show==2">
+                                                        <div class="warning">
+                                                            <i data-icon="m"></i>
+                                                            <p><span>{{have_not_add_cap}}<b>{{name_cap}} &
+                                                                        {{description_cap}}.</b>
+                                                                </span> </p>
+                                                            <span class="cs-btn bt3"
+                                                                (click)="showBPrimary()">{{add_it_cap}}</span>
+                                                            <p class="smlft">* {{to_turn_search}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="normal_basicinfo_show==3">
+                                                        <div class="basic-i">
+                                                            <span class="editbt" (click)="showBPrimary()"></span>
+                                                            <div class="bi-l" *ngIf="blogo">
+                                                                <div class="pro-pic" [class.yes]="profimg_exists">
+                                                                    <div class="pro-pic-img"><img [src]="showimg()" alt=""
+                                                                            *ngIf="blogo[0] && blogo[0].url"></div>
+                                                                    <input #logofile type="file" accept="image/*"
+                                                                        style="display:none;"
+                                                                        (change)="imageSelect(logofile,$event)">
+                                                                    <div class="add"><span
+                                                                            (click)="logofile.click()">{{add_cap}} <br />
+                                                                            {{profile_pic_cap}}</span></div>
+                                                                    <div class="change">
+                                                                        <span class="change-pic"
+                                                                            (click)="logofile.click()">{{change_cap}}
+                                                                            <br /> {{pic_cap}}</span>
+                                                                        <span class="del-pic"
+                                                                            (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bi-r">
+                                                                <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
+                                                                <p class="profile-des-p"
+                                                                    [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc
+                                                                                | capitalizeFirst}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="specializations()">
+                        <h2>Specializations</h2>
+                        <span class="form-level-settings"> Mention your specializations here.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="additionalInfo()">
+                        <h2>Additional Info</h2>
+                        <span class="form-level-settings">Add more details to your online profile.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="languagesKnown()">
+                        <h2>Languages Known</h2>
+                        <span class="form-level-settings">Add languages you know, to increase visibility.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="galerySocialmedia()">
+                        <h2>Gallery & Social Media</h2>
+                        <span class="form-level-settings">Add catchy images and social media platforms.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

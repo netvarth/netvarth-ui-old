@@ -1,23 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Messages } from '../../../../../../shared/constants/project-messages';
+import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { SharedServices } from '../../../../../../shared/services/shared-services';
-import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { SharedServices } from '../../../../../../../../shared/services/shared-services';
+import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
 
 @Component({
     selector: 'app-userwaitlist-queues',
-    templateUrl: './waitlist-schedules.component.html',
-    styleUrls: ['./waitlist-schedules.component.css']
+    templateUrl: './waitlist-queues.component.html',
+    styleUrls: ['./waitlist-queues.component.css']
 })
-export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
+export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     loc_name;
-    new_serv_cap = Messages.ADD_SCHEDULE_CAP;
+    new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
     customer_label = '';
@@ -36,18 +36,14 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
-
         {
-            url: '/provider/settings/appointmentmanager',
-            title: 'Appointmentmanager'
+            title: Messages.GENERALSETTINGS,
+            url: '/provider/settings/general'
         },
-
         {
-            url: '/provider/settings/appointmentmanager/schedules',
-            title: 'Schedules'
-
+            url: '/provider/settings/general/users',
+            title: 'Users'
         }
-
     ];
     breadcrumbs = this.breadcrumbs_init;
     queuedialogRef;
@@ -86,11 +82,11 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     sqShowActiveQFutureCount: any = [];
     sqShowActiveQTodayCount: any = [];
     TodayCheckinsCount: any = [];
-    futureAppointmentsCount: any = [];
-    tomorrowAppointmentCount: any = [];
-    sqTodayAppointmentsCount: any = [];
-    sqFutureAppointmentsCount: any = [];
-    sqTomorrowAppointmentsCount: any = [];
+    FutureCheckinsCount: any = [];
+    TomorrowCheckinsCount: any = [];
+    sqTodayCheckinsCount: any = [];
+    sqFutureCheckinsCount: any = [];
+    sqTomorrowCheckinsCount: any = [];
     todayQcountCaption: any = [];
     futureQcountCaption: any = [];
     todayQLoading: any = [];
@@ -116,25 +112,10 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        // const breadcrumbs = [];
-        // this.breadcrumbs_init.map((e) => {
-        //     breadcrumbs.push(e);
-        // });
-        // breadcrumbs.push({
-        //     title: this.userId,
-        //     url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-        // });
-        // breadcrumbs.push({
-        //     title: 'Settings',
-        //     url: '/provider/settings/general/users/' + this.userId + '/settings'
-        // });
-        // breadcrumbs.push({
-        //     title: 'Queues'
-        // });
-        // this.breadcrumbs = breadcrumbs;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
@@ -153,6 +134,27 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     /**
     *Method executes when try to edit start time
     */
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/general/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Queues'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     editStartTime() {
         this.sTimeEditable = true;
         let sttime;
@@ -261,18 +263,18 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      */
     updateForm(q) {
         this.qId = q.id;
-        this.fromDateCaption = q.apptSchedule.timeSlots[0].sTime;
-        this.toDateCaption = q.apptSchedule.timeSlots[0].eTime;
+        this.fromDateCaption = q.queueSchedule.timeSlots[0].sTime;
+        this.toDateCaption = q.queueSchedule.timeSlots[0].eTime;
         const sttime = {
-            hour: parseInt(moment(q.apptSchedule.timeSlots[0].sTime,
+            hour: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(q.apptSchedule.timeSlots[0].sTime,
+            minute: parseInt(moment(q.queueSchedule.timeSlots[0].sTime,
                 ['h:mm A']).format('mm'), 10)
         };
         const edtime = {
-            hour: parseInt(moment(q.apptSchedule.timeSlots[0].eTime,
+            hour: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
                 ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(q.apptSchedule.timeSlots[0].eTime,
+            minute: parseInt(moment(q.queueSchedule.timeSlots[0].eTime,
                 ['h:mm A']).format('mm'), 10)
         };
         this.instantQForm.setValue({
@@ -297,17 +299,15 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getProviderSchedules()
+            this.provider_services.getUserProviderQueues(this.userId)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
-                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -330,28 +330,28 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                         for (let ii = 0; ii < allQs.length; ii++) {
                             let schedule_arr = [];
                             // extracting the schedule intervals
-                            if (allQs[ii].apptSchedule) {
-                                schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].apptSchedule);
+                            if (allQs[ii].queueSchedule) {
+                                schedule_arr = this.shared_Functionsobj.queueSheduleLoop(allQs[ii].queueSchedule);
                             }
                             let display_schedule = [];
                             display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
                             allQs[ii]['displayschedule'] = display_schedule;
                             // replace instancequeue with new flag
-                            if (allQs[ii].isAvailableToday && allQs[ii].apptState === 'ENABLED') {
+                            if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
                                 this.todaysQs.push(allQs[ii]);
                             }
-                            if (!allQs[ii].instantQueue && allQs[ii].apptState === 'ENABLED') {
+                            if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);
                             }
-                            if (allQs[ii].apptState === 'DISABLED') {
+                            if (allQs[ii].queueState === 'DISABLED') {
                                 this.disabledQs.push(allQs[ii]);
                             }
-                            if (allQs[ii].apptState === 'ENABLED') {
+                            if (allQs[ii].queueState === 'ENABLED') {
                                 activeQs.push(allQs[ii]);
                             }
                         }
                         for (let ii = 0; ii < this.disabledQs.length; ii++) {
-                            if (!this.disabledQs[ii].instantQueue || (this.disabledQs[ii].instantQueue && this.disabledQs[ii].apptSchedule.startDate === todayDate)) {
+                            if (!this.disabledQs[ii].instantQueue || (this.disabledQs[ii].instantQueue && this.disabledQs[ii].queueSchedule.startDate === todayDate)) {
                                 this.disabledQs[ii].showDisableBtn = true;
                             } else {
                                 this.disabledQs[ii].showDisableBtn = false;
@@ -361,15 +361,15 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
-                        console.log(error);
                         reject(error);
                     });
         });
     }
     getServices() {
-        const params = { 'status-eq': 'ACTIVE' };
+        // const params = { 'status': 'ACTIVE' };
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
         return new Promise((resolve, reject) => {
-            this.provider_services.getServicesList(params)
+            this.provider_services.getProviderServices(filter)
                 .subscribe(data => {
                     this.services_list = data;
                     resolve();
@@ -533,7 +533,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', queue.id], navigationExtras);
     }
     /**
      * For clearing api errors
@@ -591,13 +591,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         }
         instantQInput['location'] = this.locid;
         instantQInput['services'] = services;
-        instantQInput['apptSchedule'] = instantScheduleJson;
+        instantQInput['queueSchedule'] = instantScheduleJson;
         instantQInput['name'] = (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
         instantQInput['onlineCheckin'] = true;
         instantQInput['futureWaitlist'] = false;
         instantQInput['parallelServing'] = instantQ.qserveonce;
         instantQInput['capacity'] = instantQ.qcapacity;
-        instantQInput['apptState'] = 'ENABLED';
+        instantQInput['queueState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;
         instantQInput['provider'] = this.userId;
         if (isNaN(instantQ.qcapacity)) {
@@ -658,9 +658,9 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      */
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
         } else {
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', 'add']);
+            this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', 'add']);
         }
     }
     /**
@@ -668,16 +668,16 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue object
      * @param event field checked status
      */
-    changeScheduleSameDayOnlineStatus(qObj, index) {
+    changeQSameDayOnlineStatus(qObj, index) {
         let chstatusmsg = '';
-        if (qObj.todayAppt) {
+        if (qObj.onlineCheckIn) {
             chstatusmsg = 'disabled';
         } else {
             chstatusmsg = 'enabled';
         }
-        this.provider_services.changeSamedayAppointmentStatus(qObj.id, !qObj.todayAppt)
+        this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Same day online appointments ' + chstatusmsg + ' successfully');
+                this.shared_Functionsobj.openSnackBar('Same day online check-ins ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
@@ -690,16 +690,16 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      * @param qObj queue Object
      * @param event field checked status
      */
-    changeScheduleFutureStatus(qObj, index) {
+    changeQFutureStatus(qObj, index) {
         let chstatusmsg = '';
-        if (qObj.futureAppt) {
+        if (qObj.futureWaitlist) {
             chstatusmsg = 'disabled';
         } else {
             chstatusmsg = 'enabled';
         }
-        this.provider_services.changeFutureAppointmentStatus(qObj.id, !qObj.futureAppt)
+        this.provider_services.changeFutureCheckinStatus(qObj.id, !qObj.futureWaitlist)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Future Appointment ' + chstatusmsg + ' successfully');
+                this.shared_Functionsobj.openSnackBar('Future Checkin ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
@@ -716,26 +716,26 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
      * @param obj queue object
      */
-    changeProviderScheduleStatus(obj) {
+    changeProviderQueueStatus(obj) {
         let chgstatus = '';
         let chstatusmsg = '';
 
-        if (obj.apptState === 'ENABLED') {
-            chgstatus = 'DISABLED';
+        if (obj.queueState === 'ENABLED') {
+            chgstatus = 'disable';
             chstatusmsg = 'disabled';
         } else {
-            chgstatus = 'ENABLED';
+            chgstatus = 'enable';
             chstatusmsg = 'enabled';
         }
         let msg = this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
         msg = msg.replace('[status]', chstatusmsg);
-        this.provider_services.changeProviderScheduleStatus(obj.id, chgstatus)
+        this.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
             .subscribe(() => {
                 this.shared_Functionsobj.openSnackBar(msg);
                 this.initializeQs();
@@ -757,7 +757,6 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
-                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {
@@ -812,9 +811,9 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
 
     viewDashboard(queueObj, index, que) {
-        this.getTodayAppointmentCount(queueObj, index, que);
-        this.getfutureAppointmentCount(queueObj, index, que);
-        this.getTomorrowAppointmentCount(queueObj, index, que);
+        this.getTodayCheckinCount(queueObj, index, que);
+        this.getfutureCheckinCount(queueObj, index, que);
+        this.getTomorrowCheckinCount(queueObj, index, que);
         this.futureQcountCaption[index] = 'Checkins Count';
         this.todayQcountCaption[index] = 'Checkins Count';
         if (que === 'scheduleQ') {
@@ -845,7 +844,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         }
     }
 
-    getfutureAppointmentCount(queue, index, origin) {
+    getfutureCheckinCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -857,21 +856,21 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'schedule-eq': queueid
+                'queue-eq': queueid
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getAppointmentWaitlistFutureCount(Mfilter)
+            this.provider_services.getWaitlistFutureCount(Mfilter)
                 .subscribe(
                     data => {
                         resolve(data);
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqFutureAppointmentsCount[index] = data;
+                                this.sqFutureCheckinsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
-                                this.futureAppointmentsCount[index] = data;
+                                this.FutureCheckinsCount[index] = data;
                                 this.todayQLoading[index] = false;
                             }
                         }
@@ -881,7 +880,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 
-    getTodayAppointmentCount(queue, index, origin) {
+    getTodayCheckinCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -893,18 +892,18 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'apptStatus-neq': 'prepaymentpending',
-                'schedule-eq': queueid
+                'waitlistStatus-neq': 'prepaymentPending',
+                'queue-eq': queueid
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getAppointmentwaitlistTodayCount(Mfilter)
+            this.provider_services.getwaitlistTodayCount(Mfilter)
                 .subscribe(
                     data => {
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqTodayAppointmentsCount[index] = data;
+                                this.sqTodayCheckinsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
                                 this.TodayCheckinsCount[index] = data;
@@ -918,7 +917,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 
-    getTomorrowAppointmentCount(queue, index, origin) {
+    getTomorrowCheckinCount(queue, index, origin) {
         if (origin === 'scheduleQ') {
             this.scheduleLoading[index] = true;
         } else {
@@ -927,7 +926,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
-        const dd = today.getDate();
+        const dd = today.getDate() + 1;
         const mm = today.getMonth() + 1;
         const yyyy = today.getFullYear();
         let cmon;
@@ -943,22 +942,22 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'apptStatus-neq': 'prepaymentpending',
-                'schedule-eq': queueid,
+                'waitlistStatus-neq': 'prepaymentPending',
+                'queue-eq': queueid,
                 'date-eq': tommorrow
             };
             no_filter = true;
         }
         return new Promise((resolve) => {
-            this.provider_services.getAppointmentWaitlistFutureCount(Mfilter)
+            this.provider_services.getWaitlistFutureCount(Mfilter)
                 .subscribe(
                     data => {
                         if (no_filter) {
                             if (origin === 'scheduleQ') {
-                                this.sqTomorrowAppointmentsCount[index] = data;
+                                this.sqTomorrowCheckinsCount[index] = data;
                                 this.scheduleLoading[index] = false;
                             } else {
-                                this.tomorrowAppointmentCount[index] = data;
+                                this.TomorrowCheckinsCount[index] = data;
                                 this.todayQLoading[index] = false;
                             }
                         }
@@ -969,4 +968,3 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         });
     }
 }
-

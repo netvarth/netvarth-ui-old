@@ -1,0 +1,37 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                    <div class="card pos">
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                            <!-- <label>Jaldee.com Online Presence
+                                <span class="ctrl">
+                                    <mat-slide-toggle [(ngModel)]="onlinepresence_status" (change)="handle_jaldeeOnlinePresence($event)">
+                                    </mat-slide-toggle>
+                                </span>
+                                <div class="onoff">{{onlinepresence_statusstr}}</div>
+                            </label>
+                            <p class="settings_info">If true, the provider is available in Jaldee search, he can publish online queues etc. if false he is not available in search.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('onlinepresence', $event)">Learn
+                                More</a></p>  -->
+
+                                <label>Integrate walk-ins with jaldee.com
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="walkinConsumer_status" (change)="handle_jaldeeWalkinConsumer($event)">
+                                        </mat-slide-toggle>
+                                    </span>
+                                    <div class="onoff">{{walkinConsumer_statusstr}}</div>
+                                </label>
+                                <p class="settings_info">Add customer details to jaldee.com.<a class="learnmore-pointer"
+                                    id="customer-help" (click)="learnmore_clicked('jaldee-app-integration', $event)">Learn
+                                    More</a></p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

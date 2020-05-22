@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Messages } from '../../../../../../shared/constants/project-messages';
+import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
-import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { SharedServices } from '../../../../../../shared/services/shared-services';
-import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { SharedServices } from '../../../../../../../../shared/services/shared-services';
+import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
 
 @Component({
-    selector: 'app-userwaitlist-queues',
+    selector: 'app-userwaitlist-schedules',
     templateUrl: './waitlist-schedules.component.html',
     styleUrls: ['./waitlist-schedules.component.css']
 })
-export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
+export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     loc_name;
     new_serv_cap = Messages.ADD_SCHEDULE_CAP;
     work_hours = Messages.SERVICE_TIME_CAP;
@@ -36,16 +36,13 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
-
         {
-            url: '/provider/settings/appointmentmanager',
-            title: 'Appointmentmanager'
+            title: Messages.GENERALSETTINGS,
+            url: '/provider/settings/general'
         },
-
         {
-            url: '/provider/settings/appointmentmanager/schedules',
-            title: 'Schedules'
-
+            url: '/provider/settings/general/users',
+            title: 'Users'
         }
 
     ];
@@ -116,25 +113,10 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        // const breadcrumbs = [];
-        // this.breadcrumbs_init.map((e) => {
-        //     breadcrumbs.push(e);
-        // });
-        // breadcrumbs.push({
-        //     title: this.userId,
-        //     url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
-        // });
-        // breadcrumbs.push({
-        //     title: 'Settings',
-        //     url: '/provider/settings/general/users/' + this.userId + '/settings'
-        // });
-        // breadcrumbs.push({
-        //     title: 'Queues'
-        // });
-        // this.breadcrumbs = breadcrumbs;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
@@ -153,6 +135,27 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     /**
     *Method executes when try to edit start time
     */
+    getUser() {
+        this.provider_services.getUser(this.userId)
+            .subscribe((data: any) => {
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: data.firstName,
+                    url: '/provider/settings/general/users/add?type=edit&val=' + this.userId
+                });
+                breadcrumbs.push({
+                    title: 'Settings',
+                    url: '/provider/settings/general/users/' + this.userId + '/settings'
+                });
+                breadcrumbs.push({
+                    title: 'Schedules'
+                });
+                this.breadcrumbs = breadcrumbs;
+            });
+    }
     editStartTime() {
         this.sTimeEditable = true;
         let sttime;
@@ -297,17 +300,15 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getProviderSchedules()
+            this.provider_services.getProviderUserSchedules(this.userId)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
-                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -361,13 +362,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
-                        console.log(error);
                         reject(error);
                     });
         });
     }
     getServices() {
-        const params = { 'status-eq': 'ACTIVE' };
+        const params = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
         return new Promise((resolve, reject) => {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
@@ -533,7 +533,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'view' }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules', queue.id], navigationExtras);
     }
     /**
      * For clearing api errors
@@ -660,7 +660,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
         } else {
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', 'add']);
+            this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules', 'add']);
         }
     }
     /**
@@ -716,7 +716,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: type }
         };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules', queue.id], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules', queue.id], navigationExtras);
     }
     /**
      * Method to enable/disable queue status
@@ -757,7 +757,6 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
-                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {

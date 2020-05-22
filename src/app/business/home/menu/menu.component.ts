@@ -118,7 +118,10 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
   }
-
+  userClicked () {
+    this.closeMenu();
+    this.router.navigate(['provider/settings/general/users']);
+  }
   dashboardClicked() {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 767) {

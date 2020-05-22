@@ -11,6 +11,7 @@ const routes: Routes = [
     { path: 'labels', loadChildren: () => import('../../settings/general/labels/labels.module').then(m => m.LabelsModule)},
     { path: 'skins', loadChildren: () => import('../../settings/general/skins/provider-skins.module').then(m => m.ProviderSkinsModule) },
     { path: 'customview', loadChildren: () => import('../../settings/general/customview/customview.module').then(m => m.CustomViewModule)},
+    { path: 'users', loadChildren: () => import('../../settings/general/users/users.module').then(m => m.UsersModule) },
     {path: 'departments', component: DepartmentsComponent },
     {path: 'department/:id', component: DepartmentDetailComponent },
 ];

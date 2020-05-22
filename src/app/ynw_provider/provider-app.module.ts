@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeAppComponent } from '../shared/components/home-app/home-app.component';
 import { OtpFormAppComponent } from '../shared/modules/otp-form-app/otp-form-app.component';
 import { SetPasswordAppComponent } from '../shared/components/set-password-app/set-password-app.component';
@@ -14,6 +14,7 @@ import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { LoadingSpinnerModule } from './components/loading-spinner/loading-spinner.module';
 import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-note.component';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     FormMessageDisplayModule,
     FooterModule,
     FormsModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    DateRangePickerModule
 ],
   declarations: [
     HomeAppComponent,
@@ -33,7 +35,7 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     ForgotPasswordAppComponent,
     JcCouponNoteComponent
   ],
-  exports: [],
+  exports: [DateRangePickerModule],
   entryComponents: [
     HomeAppComponent,
     OtpFormAppComponent,
@@ -41,6 +43,7 @@ import { JcCouponNoteComponent } from './components/jc-Coupon-note/jc-Coupon-not
     ForgotPasswordAppComponent,
     JcCouponNoteComponent
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers : [
     SharedServices,
     SharedFunctions

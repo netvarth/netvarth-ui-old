@@ -1,7 +1,7 @@
 import { catchError ,  switchMap ,  retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable ,  Subject ,  throwError, EMPTY } from 'rxjs';
+import { Observable ,  Subject ,  throwError, EMPTY, empty } from 'rxjs';
 import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
@@ -146,13 +146,20 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              this.shared_functions.doLogout();
+              const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
+               this.shared_functions.doLogout().then (
+                 () => {
+                   this.router.navigate(['/']);
+                 }
+               );
+              // return EMPTY;
               // return this._ifSessionExpired().pipe(
               //   switchMap(() => {
               //     return next.handle(this.updateHeader(req, url));
               //   })
               // );
-              // return EMPTY;
+               return EMPTY;
+              // return throwError(error);
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);

@@ -47,7 +47,7 @@ export class MiscellaneousComponent implements OnInit {
     //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'customview']);
     // }
     gotobranchsps() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     gotocorporate() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);

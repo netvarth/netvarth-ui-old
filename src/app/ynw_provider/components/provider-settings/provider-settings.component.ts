@@ -505,6 +505,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'media':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
         break;
+      case 'integration':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
+        break;
       case 'locations':
         this.routerobj.navigate(['provider', 'settings', 'general', 'locations']);
         break;
@@ -595,9 +598,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'video':
         this.routerobj.navigate(['provider', 'settings', 'comm', 'video']);
         break;
-      case 'integration':
-        this.routerobj.navigate(['provider', 'settings', 'jaldee-integration']);
-        break;
       case 'jdn':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
         break;
@@ -606,17 +606,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'displayboards':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
-        // if (this.statusboardStatus) {
-        //   this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
-        // } else {
-        //   this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
-        // }
         break;
       case 'skins':
         this.routerobj.navigate(['provider', 'settings', 'general', 'skins']);
         break;
       case 'users':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
         break;
       case 'customview':
         this.routerobj.navigate(['provider', 'settings', 'general', 'customview']);

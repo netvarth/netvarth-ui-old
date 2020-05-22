@@ -16,7 +16,8 @@ const routes: Routes = [
     ]},
     {
         path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)
-    }
+    },
+    { path: 'jaldee-integration', loadChildren: () => import('./integration/integration-settings.module').then(m => m.IntegrationSettingsModule) }
 ];
 
 @NgModule({
