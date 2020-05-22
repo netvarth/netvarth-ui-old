@@ -28,6 +28,7 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { AddProviderSchedulesModule } from '../add-provider-schedule/add-provider-schedule.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentModule } from '../../shared/modules/department/department.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -48,7 +49,8 @@ import { DepartmentModule } from '../../shared/modules/department/department.mod
         PagerModule,
         AddProviderSchedulesModule,
         NgbTimepickerModule,
-        DepartmentModule
+        DepartmentModule,
+        NgxQRCodeModule
     ],
     declarations: [
         ProviderSettingsComponent,
