@@ -26,7 +26,7 @@
                 </div>
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class=" ttle">Service Type</span>
-                    <span *ngIf="service_data.serviceType==='virtualService'">Virtual</span>
+                    <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
                     <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
@@ -34,6 +34,17 @@
                     <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
+            </div>
+            <div class="c-ot" *ngIf="service_data.virtualServiceType">
+                <div class="item">
+                    <span class=" ttle">Tool</span>
+                    <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
+                </div>
+                <div class="item">
+                    <span class=" ttle">Tool ID</span>
+                    <span>{{service_data.virtualCallingModes[0].value}}</span>
+                </div>
+                
             </div>
             <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.minDonationAmount">
