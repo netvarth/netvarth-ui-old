@@ -39,6 +39,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     domainList: any = [];
     subDomain;
     userId: any;
+    is_virtual_enbl = true;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -62,6 +63,12 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
             { 'title': 'Help', 'type': 'learnmore' }]
         };
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                if (!data.virtualService) {
+                    this.is_virtual_enbl = false;
+                }
+            });
     }
 
     ngOnDestroy() {
