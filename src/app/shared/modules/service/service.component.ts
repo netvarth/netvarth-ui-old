@@ -535,6 +535,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.telemodes.push(this.vcallmodes[i]);
                     }
                 }
+                if (this.telemodes.length === 0) {
+                    this.is_virtual_enable = false;
+                }
                 for (let i = 0; i < this.telemodes.length; i++) {
                     if (this.selctd_tool === this.telemodes[i].callingMode) {
                         this.tool_id = this.telemodes[i].value;
