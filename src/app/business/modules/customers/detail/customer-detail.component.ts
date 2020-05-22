@@ -45,6 +45,13 @@ export class CustomerDetailComponent implements OnInit {
     lastName: any;
     dob: any;
     action;
+    form_data = null;
+    create_new = false;
+    qParams = {};
+    foundCustomer = false;
+    searchClicked = false;
+    customer_data: any = [];
+    customerPhone: any;
     breadcrumbs_init = [
         // {
         //     title: 'Check-ins',
@@ -187,6 +194,7 @@ export class CustomerDetailComponent implements OnInit {
             });
     }
     createForm() {
+        
         console.log(this.haveMobile);
         if (!this.haveMobile) {
             this.amForm = this.fb.group({
@@ -317,7 +325,7 @@ export class CustomerDetailComponent implements OnInit {
                 .subscribe(
                     data => {
                         this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.shared_functions.openSnackBar("Updated Successfully");
                         const qParams = {};
                         qParams['pid'] = data;
                         if (this.source === 'checkin') {
@@ -342,7 +350,7 @@ export class CustomerDetailComponent implements OnInit {
                                     phoneNo: this.phoneNo
                                 }
                             };
-                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                            this.router.navigate(['provider', 'customers'], navigationExtras);
                         }
                     },
                     error => {
@@ -371,5 +379,73 @@ export class CustomerDetailComponent implements OnInit {
     }
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
+    }
+    searchCustomer(form_data, mod?) {
+        let mode = 'id';
+        if (mod) {
+            mode = mod;
+        }
+        this.form_data = null;
+        this.create_new = false;
+        let post_data = {};
+        const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
+        const isEmail = emailPattern.test(form_data.mobile_number);
+        if (isEmail) {
+            mode = 'email';
+        } else {
+            const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+            const isNumber = phonepattern.test(form_data.mobile_number);
+            const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+            const isCount10 = phonecntpattern.test(form_data.mobile_number);
+            if (isNumber && isCount10) {
+                mode = 'phone';
+            } else {
+                mode = 'id';
+            }
+        }
+        // if (this.appt) {
+        //     this.qParams['source'] = 'appointment';
+        // } else {
+        //     this.qParams['source'] = 'checkin';
+        // }
+        switch (mode) {
+            case 'phone':
+                post_data = {
+                    'phoneNo-eq': form_data.mobile_number
+                };
+                this.qParams['phone'] = form_data.mobile_number;
+                break;
+            case 'email':
+                this.qParams['phone'] = form_data.mobile_number;
+                post_data = {
+                    'email-eq': form_data.mobile_number
+                };
+                break;
+            case 'id':
+                post_data = {
+                    'id-eq': form_data.mobile_number
+                };
+                break;
+        }
+        this.foundCustomer = false;
+        this.provider_services.getCustomer(post_data)
+
+            .subscribe(
+                (data: any) => {
+                    if (data.length === 0) {
+                        this.form_data = data;
+                        this.create_new = true;
+                        this.searchClicked = true;
+                    } else {
+                        this.foundCustomer = true;
+                        this.customer_data = data[0];
+                        this.customerPhone = this.customer_data.phoneNo;
+                        this.searchClicked = true;
+                    }
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
     }
 }

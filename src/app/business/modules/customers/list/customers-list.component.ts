@@ -245,7 +245,7 @@ export class CustomersListComponent implements OnInit {
                 source: 'clist'
             }
         };
-        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+        this.router.navigate(['provider', 'customers', 'add'], navigationExtras);
     }
     showFilterSidebar() {
         this.filter_sidebar = true;

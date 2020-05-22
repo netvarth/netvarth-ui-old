@@ -132,14 +132,14 @@
                     </button>
                 </span>
 
-              <div class="col-md-3 col-sm-7 mt5">
+              <div class="col-md-2 col-sm-7 mt5">
                 {{customer.firstName}} {{customer.lastName}}
               </div>
               <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.phoneNo.length === 10">
                 <span><i class="fa fa-mobile"></i>{{customer.phoneNo}}</span></div>
-              <div class="col-md-3 col-sm-7 mt5"><span *ngIf="customer.email"><i
+              <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.email"><i
                     class="fa fa-envelope"></i>{{customer.email}}</span></div>
-              <div class="col-md-2 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
+              <div class="col-md-1 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
                   {{customer.lastVisitedDate | date: dateFormat }}</span></div>
 
                   <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.jaldeeId">
