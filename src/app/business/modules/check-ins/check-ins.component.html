@@ -42,7 +42,7 @@
                     </mat-select>
                   </mat-form-field>
                 </li> -->
-                <li class="dropdown messages-menu loc-lst queue-menu">
+                <li class="dropdown messages-menu loc-lst queue-menu" *ngIf="account_type=='BRANCH'">
                   <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">

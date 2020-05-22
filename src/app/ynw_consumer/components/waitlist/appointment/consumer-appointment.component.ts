@@ -189,6 +189,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     callingModes: any = [];
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    showApptTime = false ;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1293,16 +1294,20 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.availableSlots = this.slots.availableSlots;
                     console.log(this.availableSlots);
                     for (const freslot of this.availableSlots) {
-                        if (freslot.noOfAvailbleSlots !== '0') {
+                        if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                             this.freeSlots.push(freslot);
                         }
                     }
-                    //  if(this.apptTime === ''){
+                      if(this.freeSlots.length > 0){
+                         this.showApptTime = true ;
                     this.apptTime = this.freeSlots[0].time;
                     for (const list of this.waitlist_for) {
                         list['apptTime'] = this.apptTime;
                     }
-                    //  }
+                      }
+                      else {
+                        this.showApptTime = false;
+                      }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

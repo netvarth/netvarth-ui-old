@@ -155,7 +155,7 @@
                                     </a>
                                 </li>
                                 <li><a>Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                            <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
                                                 (change)="handle_waitliststatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p>
@@ -163,7 +163,7 @@
                                     </a></li>
                                 <li><a>Future {{checkin_label |capitalizeFirst}}s
                                         <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist" [disabled]="!waitlistStatus"
                                                 (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
@@ -219,7 +219,7 @@
                                     </a>
                                 </li>
                                 <li><a>Same Day Online Appointments <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="apptlist_status"
+                                            <mat-slide-toggle [(ngModel)]="apptlist_status" [disabled]="!createappointment_status"
                                                 (change)="handle_apptliststatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p>
@@ -227,7 +227,7 @@
                                     </a></li>
                                 <li><a>Future Appointments
                                         <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                                            <mat-slide-toggle [(ngModel)]="futureDateApptlist" [disabled]="!createappointment_status"
                                                 (change)="handle_futureapptliststatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}}

@@ -618,8 +618,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     } else {
       if (this.blogo[0]) {
         this.profimg_exists = true;
-        const today = new Date();
-        // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
         logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);

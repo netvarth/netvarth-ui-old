@@ -286,6 +286,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selQIds: any = [];
   allActiveQs: any[];
   type: any;
+  account_type;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -406,6 +407,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.account_type = this.active_user.accountType;
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = {

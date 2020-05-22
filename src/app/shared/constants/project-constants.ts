@@ -170,6 +170,7 @@ export const projectConstants = {
     'dentistemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'altemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
     'emergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' }, // dynamic
+    'hosemergencyservices': { 'icon': 'emergency.png', 'class': 'icon-emergency' },
     'traumacentre': { 'icon': 'trauma.png', 'class': 'icon-trauma' }, // dynamic
     'firstaid': { 'icon': 'noimage.png', 'class': 'icon-first-aid' }, // dynamic
     '24hour': { 'icon': 'noimage.png', 'class': 'icon-open-time' },

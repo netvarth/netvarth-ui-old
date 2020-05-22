@@ -239,10 +239,11 @@
 
                                         </div>
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
-                                            <div class="ttle mgn-bt-10">Appointment Time</div>
+                                           <div *ngIf="showApptTime"> <div class="ttle mgn-bt-10">Appointment Time</div>
                                             <span class="label-bold">{{apptTime}} </span>
                                             <span style="margin-left: 30px" class="editbt"
-                                                (click)="editClicked()"></span>
+                                                (click)="editClicked()"></span></div>
+                                            <div  *ngIf="!showApptTime">TimeSlots are not available </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
@@ -301,7 +302,7 @@
                         <ng-container *ngIf="this.checkinLabel && queuejson.length > 0">
                             <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
                                     [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
-                                    [disabled]="api_loading">{{showCheckinButtonCaption()}}</button>
+                                    [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>
                                 <div class="disable-msg">{{checkindisablemsg}}</div>
                             </div>
                         </ng-container>

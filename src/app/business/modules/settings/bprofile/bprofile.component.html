@@ -366,7 +366,7 @@
                 <div class="card p0">
                     <span class="bprof-custId">
                         <h2>Jaldee IDs</h2>
-                        <div class="pubs card adwds customBus w-dta">
+                        <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.customId">
                             <h3>Custom ID</h3>
                             <p class="form-level-settings">{{custm_id}}<a class="learnmore-pointer" id="customer-help"
                                     (click)="learnmore_clicked('custom-id', $event)">Learn
@@ -385,41 +385,39 @@
                                             <li>
                                                 <span class="custid" rel="noopener"
                                                     target="_blank">{{path}}/#{{bProfile.customId}}</span>
-                                                    <span class="custid custId-icon"><i
-                                                            class="fa fa-copy custId-cursor"
-                                                            (click)="copyInputMessage(bProfile.customId)"
-                                                             [matTooltip]="'Copy link'"></i>
-                                                    </span>
-                                                    <span class="custid custId-icon">
-                                                        <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                            (click)="qrCodegenerateCustID(bProfile.customId)"
-                                                            [matTooltip]="'Generate QR code'"></i>
-                                                    </span>
-                                                    <span class="custid" style="padding-left: 40px;">
-                                                        <button type="button" mat-icon-button
-                                                            [matMenuTriggerFor]="menu">
-                                                            <mat-icon>more_vert</mat-icon>
+                                                <span class="custid custId-icon"><i class="fa fa-copy custId-cursor"
+                                                        (click)="copyInputMessage(bProfile.customId)"
+                                                        [matTooltip]="'Copy link'"></i>
+                                                </span>
+                                                <span class="custid custId-icon">
+                                                    <i class="fa fa-qrcode custId-cursor custId-qr"
+                                                        (click)="qrCodegenerateCustID(bProfile.customId)"
+                                                        [matTooltip]="'Generate QR code'"></i>
+                                                </span>
+                                                <span class="custid" style="padding-left: 40px;">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" (click)="editCustomId(bProfile.customId)"
+                                                            mat-menu-item>
+                                                            <i class="icon-edit"></i>
+                                                            <span>{{edit_cap}}</span>
                                                         </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button"
-                                                                (click)="editCustomId(bProfile.customId)" mat-menu-item>
-                                                                <i class="icon-edit"></i>
-                                                                <span>{{edit_cap}}</span>
-                                                            </button>
-                                                            <button type="button"
-                                                                (click)="deleteCustomId(bProfile.customId)"
-                                                                mat-menu-item>
-                                                                <i class="icon-delete"></i>
-                                                                <span>{{delete_btn}}</span>
-                                                            </button>
-                                                        </mat-menu>
-                                                    </span>
+                                                        <button type="button"
+                                                            (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
+                                                            <i class="icon-delete"></i>
+                                                            <span>{{delete_btn}}</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form"
+                                    <form [formGroup]="customForm"
+                                        class="ynw-common-form-nm change-mob-style custId-flex-form"
                                         *ngIf="editMode==1 || editMode==0">
                                         <div class="form-group custId-flex">
                                             <mat-form-field class="custId-ip-wdth">
@@ -429,8 +427,8 @@
                                             </mat-form-field>
                                             <mat-form-field>
                                                 <input matInput type="text" minlength="4" maxlength="25"
-                                                    class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
-                                                    autocomplete="off">
+                                                    class="form-control custId-ip-max-wdth" id="customid"
+                                                    formControlName="customid" autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display
                                                 [displayError]="fed_service.isFieldValid(customForm,'customid')"
@@ -444,25 +442,28 @@
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group custId-btns">
-                                            <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
+                                            <button (click)="cancelCusUpdt()"
+                                                class="cs-btn bt2 custId-btn-bt2">Cancel</button>
                                             <button (click)="add_updateCustomId(customForm.value)" mat-button
-                                                [disabled]="!customForm.valid" class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                                                [disabled]="!customForm.valid"
+                                                class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="col-md-6" *ngIf="qr_code_cId" style="display: flex;">
                                 <div>
-                                    <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+                                    <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
+                                        [qrc-value]="qr_value">
                                     </ngx-qrcode>
                                 </div>
                                 <div class="custId-prnt">
                                     <button (click)="printQr('print-section')">Print</button>&nbsp;&nbsp;&nbsp;
-                                <button (click)="closeCustomQR()">close</button>
+                                    <button (click)="closeCustomQR()">close</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="pubs card adwds customBus w-dta">
+                        <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.uniqueId">
                             <h3>Jaldee account URL</h3>
                             <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
@@ -477,7 +478,8 @@
                                                 <span>
                                                     <span class="custid custId-icon">
                                                         <i class="fa fa-copy custId-cursor"
-                                                            (click)="copyInputMessage(bProfile.uniqueId)"[matTooltip]="'Copy link'"></i>
+                                                            (click)="copyInputMessage(bProfile.uniqueId)"
+                                                            [matTooltip]="'Copy link'"></i>
                                                     </span>
                                                     <span class="custid custId-icon">
                                                         <i class="fa fa-qrcode custId-cursor custId-qr"
@@ -493,29 +495,38 @@
                             </div>
                             <div class="col-md-6" *ngIf="qr_code_oId" style="display: flex;">
                                 <div>
-                                    <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+                                    <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
+                                        [qrc-value]="qr_value">
                                     </ngx-qrcode>
                                 </div>
                                 <div class="custId-prnt">
                                     <button (click)="printQr('print-section')">Print</button> &nbsp;&nbsp;&nbsp;
-                                <button (click)="closeOnlineQR()">close</button>
+                                    <button (click)="closeOnlineQR()">close</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="pubs card adwds customBus w-dta">
+                       <!-- <div class="pubs card adwds customBus w-dta" *ngIf="bProfile && bProfile.profileId">
                             <h3>Jaldee Pass Code</h3>
-                            <p class="form-level-settings">Passcode hints<a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('online-id', $event)">Learn
+                            <p class="form-level-settings">Passcode hints<a class="learnmore-pointer" id="customer-help"
+                                    (click)="learnmore_clicked('online-id', $event)">Learn
                                     More</a></p>
-                                    <div class="col-md-6">
-                                        <div class="cd-t no-padding">
-                                            <div class="sblinks custId-flex">
-                                                <input [ngClass]="{'buser-font-sz': !show_passcode, 'buser-font-f-sz': show_passcode}" class="buser-font-sz" [type]="show_passcode ? 'bProfile.profileId' : 'password'" value="{{bProfile.profileId}}" [readonly]="true">
-                                                <i *ngIf="!show_passcode" (click)="showPasscode()" class="material-icons coupon-outer custId-cursor" style="color: #29b6f6;">visibility_off</i>
-                                                <i *ngIf="show_passcode" (click)="showPasscode()" class="material-icons coupon-outer custId-cursor" style="color: #29b6f6;">visibility</i>
-                                                </div>
-                                                </div>
-                                    </div>        
+                            <div class="col-md-6">
+                                <div class="cd-t no-padding">
+                                    <div class="sblinks custId-flex">
+                                        <input
+                                            [ngClass]="{'buser-font-sz': !show_passcode, 'buser-font-f-sz': show_passcode}"
+                                            class="buser-font-sz"
+                                            [type]="show_passcode ? 'bProfile.profileId' : 'password'"
+                                            value="{{bProfile.profileId}}" [readonly]="true">
+                                        <i *ngIf="!show_passcode" (click)="showPasscode()"
+                                            class="material-icons coupon-outer custId-cursor"
+                                            style="color: #29b6f6;">visibility_off</i>
+                                        <i *ngIf="show_passcode" (click)="showPasscode()"
+                                            class="material-icons coupon-outer custId-cursor"
+                                            style="color: #29b6f6;">visibility</i>
+                                    </div>
+                                </div>
+                            </div>
                         </div> -->
                     </span>
                 </div>

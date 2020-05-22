@@ -67,11 +67,11 @@
                                                     time</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
                                             </div> -->
-                                            <div class="item"
+                                            <!-- <div class="item"
                                                 *ngIf="queue_data.calculationMode==='NoCalc' && queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
-                                            </div>
+                                            </div> -->
                                             <div class="item">
                                                 <span class="ttle">Online Appointments</span> <span
                                                     *ngIf="queue_data.todayAppt">On</span><span
@@ -353,14 +353,14 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group"
+                            <!-- <div class="form-group"
                                 *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
-                            </div>
+                            </div> -->
                             <!-- <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text"

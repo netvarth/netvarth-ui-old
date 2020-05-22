@@ -279,7 +279,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   availableSlotDetails: any = [];
   selQidsforHistory: any = [];
   servicesCount;
-
+  account_type;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -387,6 +387,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.getCounts();
     });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
