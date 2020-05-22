@@ -136,6 +136,8 @@ export const Messages = {
   'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
   'NEW_DONATION_TOOLTIP': 'Please add this cause to the relevant Queues by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
+  'SELECT_TELE_MODE': 'Please select the mode',
+  'SELECT_TELE_TOOL': 'Please select the tool',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
 

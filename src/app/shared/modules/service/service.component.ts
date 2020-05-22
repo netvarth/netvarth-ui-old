@@ -98,7 +98,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     modeselected = false;
     selctd_tool: any;
     is_tool = false;
-    tool_id = '';
+    tool_id;
     is_virtual_enable = false;
     telemodes: any = [];
     tool_name: any;
@@ -378,7 +378,19 @@ export class ServiceComponent implements OnInit, OnDestroy {
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
-            this.servicesService.actionPerformed(serviceActionModel);
+            if (form_data.serviceType === 'virtualService') {
+                if (!form_data.virtualServiceType) {
+                    this.sharedFunctons.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
+                } else {
+                    if (!form_data.virtualCallingModes[0].callingMode) {
+                        this.sharedFunctons.openSnackBar(Messages.SELECT_TELE_TOOL, { 'panelClass': 'snackbarerror' });
+                    } else {
+                        this.servicesService.actionPerformed(serviceActionModel);
+                    }
+                }
+            } else {
+                this.servicesService.actionPerformed(serviceActionModel);
+            }
         }
     }
     onCancel() {
