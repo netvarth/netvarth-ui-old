@@ -37,6 +37,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     trackStatus: string;
     serv_list;
     liveTrackStatus: any;
+    is_virtual_enbl = true;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -48,6 +49,9 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.liveTrackStatus = data.livetrack;
+                if (!data.virtualService) {
+                    this.is_virtual_enbl = false;
+                }
             });
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;

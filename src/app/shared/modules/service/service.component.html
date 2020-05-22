@@ -149,7 +149,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-select formControlName="serviceType" placeholder="Type" #virtual
                         (selectionChange)="selectServiceHandler(virtual.value)">
                         <mat-option *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'">
-                            Tele Service
+                            Teleservice
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
                             Physical Service
