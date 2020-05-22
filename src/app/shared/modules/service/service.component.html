@@ -1,6 +1,6 @@
 <div class="col-md-12" *ngIf="showService">
     <div class="cl1" *ngIf="action=='show'">
-        <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>
+        <span class="editbt" [class.serv-disabled-icn]="!is_virtual_enable && service.serviceType === 'virtualService'" (click)="(is_virtual_enable || service.serviceType !== 'virtualService') && editService()" *ngIf="service_data.status=='ACTIVE'" [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Virtual Calling Mode in settings' : ''"></span>
         <div class="ot-it">
             <h4>{{service_data.name | capitalizeFirst}}</h4>
             <div class="it-des">

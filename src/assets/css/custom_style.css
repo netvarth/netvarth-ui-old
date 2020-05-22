@@ -8823,3 +8823,8 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .mat-select-callmode{
   width:50% !important;
 }
+.serv-disabled-icn {
+  background: #e6e6e6 !important;
+  cursor: not-allowed !important;
+  color: black !important;
+}
