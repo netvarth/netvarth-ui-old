@@ -246,6 +246,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             this.is_virtual_serv = false;
             this.is_tool = false;
+            this.modeselected = false;
             this.is_physical = 2;
         }
     }
