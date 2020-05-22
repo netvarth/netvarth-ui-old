@@ -372,7 +372,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data['department'] = this.departmentId;
             }
         //    form_data['serviceType'] = form_data.serviceType;
-            form_data['virtualServiceType'] = this.serv_mode;
+          //  form_data['virtualServiceType'] = this.serv_mode;
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
