@@ -499,11 +499,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       this.profimg_exists = true;
       return this.item_pic.base64;
     } else {
-      if (this.blogo[0]) {
+      if (this.blogo) {
         this.profimg_exists = true;
         const today = new Date();
         // logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + tday : '';
-        logourl = (this.blogo[0].url) ? this.blogo[0].url + '?' + this.cacheavoider : '';
+        logourl = (this.blogo.url) ? this.blogo.url + '?' + this.cacheavoider : '';
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
