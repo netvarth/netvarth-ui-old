@@ -189,7 +189,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     callingModes: any = [];
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
-    showApptTime = false ;
+    showApptTime = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -681,7 +681,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             }
         }
-        console.log( this.sel_ser_det);
+        console.log(this.sel_ser_det);
         this.showEditView = false;
         this.virtualServiceArray = {};
         for (let i = 0; i < this.callingModes.length; i++) {
@@ -705,14 +705,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
-        if (this.users.length > 0) {
-            if (this.users.length === 1) {
-                post_Data['provider'] = this.users[0].id;
-            } else {
-                post_Data['provider'] = this.selected_user.id;
-            }
-            // console.log(this.users)
-            // console.log(this.selected_user);
+        if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
+            post_Data['provider'] = { 'id': this.selected_user.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;
@@ -750,7 +744,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     retUUID = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.selectedMessage.files.length > 0 ||this.consumerNote !== '') {
+                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUUID);
                 }
                 // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
@@ -762,13 +756,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
                 } else {
-                    if(this.sel_ser_det.livetrack){
-                    this.router.navigate(['consumer', 'appointment', 'track', this.trackUuid], navigationExtras);
-                }else{
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
-                    this.router.navigate(['consumer']);
+                    if (this.sel_ser_det.livetrack) {
+                        this.router.navigate(['consumer', 'appointment', 'track', this.trackUuid], navigationExtras);
+                    } else {
+                        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                        this.router.navigate(['consumer']);
+                    }
                 }
-            }
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1298,16 +1292,16 @@ export class ConsumerAppointmentComponent implements OnInit {
                             this.freeSlots.push(freslot);
                         }
                     }
-                      if(this.freeSlots.length > 0){
-                         this.showApptTime = true ;
-                    this.apptTime = this.freeSlots[0].time;
-                    for (const list of this.waitlist_for) {
-                        list['apptTime'] = this.apptTime;
+                    if (this.freeSlots.length > 0) {
+                        this.showApptTime = true;
+                        this.apptTime = this.freeSlots[0].time;
+                        for (const list of this.waitlist_for) {
+                            list['apptTime'] = this.apptTime;
+                        }
                     }
-                      }
-                      else {
+                    else {
                         this.showApptTime = false;
-                      }
+                    }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

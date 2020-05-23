@@ -1641,16 +1641,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
-      checkin_html += '<div style="width:500px;">';
-      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;">';
+      checkin_html += '<div style="width:65%;">';
+      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;margin-top:10px">';
+      checkin_html += '<div style="margin-top:82px">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '</div>';
       if (checkinlist.token) {
-        checkin_html += '<div style="padding-top:30px;margin-top:50px">#' + checkinlist.token + '</div>';
+        checkin_html += '<div style="margin-top:10px">Token# ' + checkinlist.token + '</div>';
       }
-      if (!checkinlist.token) {
-        checkin_html += '<div style="padding-top:30px;margin-top:50px">' + this.getAppxTime(checkinlist) + '</div>';
-      }
-      checkin_html += '<div style="padding-top:30px;">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '</div>';
-      checkin_html += '<div>' + checkinlist.checkInTime + '</div>';
       checkin_html += '</div>';
       checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
       checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
@@ -1674,7 +1670,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '</div>';
       if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
         checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">Doctor: </span>';
+        checkin_html += '<span style="color: #999999">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ': </span>';
         checkin_html += '<span>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName;
         checkin_html += '</span></div>';
       }
@@ -1682,17 +1678,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<span style="color: #999999">Queue: </span>';
       checkin_html += '<span>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']';
       checkin_html += '</span></div>';
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Check-in Id: </span>';
-      checkin_html += '<span>' + this.qr_value;
-      checkin_html += '</span></div>';
+      // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      // checkin_html += '<span style="color: #999999">Check-in Id: </span>';
+      // checkin_html += '<span>' + this.qr_value;
+      // checkin_html += '</span></div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
-      checkin_html += '<div>';
+      checkin_html += '<div style="margin-top:65px;width:35%">';
       checkin_html += '<div style="text-align:right;width:150px;height:150px">';
       checkin_html += printContent.innerHTML;
       checkin_html += '</div>';
-      checkin_html += '<div>Scan to know your status</div>';
+      checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
       printWindow.document.write('<html><head><title></title>');

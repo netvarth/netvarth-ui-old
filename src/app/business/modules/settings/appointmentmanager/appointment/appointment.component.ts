@@ -807,14 +807,10 @@ export class AppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
-        if (this.users.length > 0) {
-            if (this.users.length === 1) {
-                post_Data['provider'] = this.users[0].id;
-            } else {
-                post_Data['provider'] = this.selected_user.id;
+        if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
+            if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
+                post_Data['provider'] = { 'id': this.selected_user.id };
             }
-            // console.log(this.users)
-            // console.log(this.selected_user);
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;

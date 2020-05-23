@@ -1450,7 +1450,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   qrCodegeneration(valuetogenerate) {
     this.qr_value = this.path + '/#/wl/status/' + valuetogenerate.appointmentEncId;
-    console.log(this.qr_value);
     this.showQR = true;
   }
   printAppt(source) {
@@ -1466,10 +1465,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
-      checkin_html += '<div style="width:500px;">';
+      checkin_html += '<div style="width:65%;">';
       checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;">';
-      checkin_html += '<div style="padding-top:30px;text-align:center;margin-top:50px">' + apptlist.appmtTime + '</div>';
-      checkin_html += '<div style="padding-top:30px;">' + this.dateformat.transformToDIsplayFormat(apptlist.appmtDate) + '</div>';
+      checkin_html += '<div style="margin-top:90px">' + this.dateformat.transformToDIsplayFormat(apptlist.appmtDate) + '</div>';
+      checkin_html += '<div style="margin-top:10px">' + apptlist.appmtTime + '</div>';
       checkin_html += '</div>';
       checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
       checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
@@ -1493,7 +1492,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '</div>';
       if (apptlist.provider && apptlist.provider.firstName && apptlist.provider.lastName) {
         checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">Doctor: </span>';
+        checkin_html += '<span style="color: #999999">' + this.provider_label + ': </span>';
         checkin_html += '<span>' + apptlist.provider.firstName.charAt(0).toUpperCase() + apptlist.provider.firstName.substring(1) + ' ' + apptlist.provider.lastName;
         checkin_html += '</span></div>';
       }
@@ -1501,19 +1500,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<span style="color: #999999">Schedule: </span>';
       checkin_html += '<span>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']';
       checkin_html += '</span></div>';
-
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Appointment Id: </span>';
-      checkin_html += '<span>' + this.qr_value;
-      checkin_html += '</span></div>';
-
+      // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      // checkin_html += '<span style="color: #999999">Appointment Id: </span>';
+      // checkin_html += '<span>' + this.qr_value;
+      // checkin_html += '</span></div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
-      checkin_html += '<div>';
+      checkin_html += '<div style="margin-top:65px;width:35%">';
       checkin_html += '<div style="text-align:right;width:150px;height:150px">';
       checkin_html += printContent.innerHTML;
       checkin_html += '</div>';
-      checkin_html += '<div>Scan to know your status</div>';
+      checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
       printWindow.document.write('<html><head><title></title>');

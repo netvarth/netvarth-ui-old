@@ -21,9 +21,18 @@
 											<div class="section-one">
 												<h3>{{bname | capitalizeFirst}}</h3>
 												<div class="details" *ngIf="bill_load_complete==1">
-													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
+													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="!source">
 														<span class="dynamic"
 															*ngFor="let user of checkin.waitlistingFor">
+															{{user.firstName | capitalizeFirst}}
+															{{user.lastName | capitalizeFirst}}
+														</span>
+														<span class="dynamic fl-right">{{billdate}}
+															{{billtime}}</span>
+													</div>
+													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
+														<span class="dynamic"
+															*ngFor="let user of checkin.appmtFor">
 															{{user.firstName | capitalizeFirst}}
 															{{user.lastName | capitalizeFirst}}
 														</span>
