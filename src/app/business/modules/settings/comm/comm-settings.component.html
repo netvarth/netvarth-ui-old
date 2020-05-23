@@ -4,30 +4,43 @@
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
-                <div class="row">
-                        <div class="card pos">
-                            <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
-                                <label>Virtual Calling Mode
-                                    <span class="ctrl">
-                                        <mat-slide-toggle [(ngModel)]="virtualCallingMode_status" (change)="handle_virtualCallingModeStatus($event)">
-                                        </mat-slide-toggle>
-                                    </span>                                    
-                                    <div class="onoff">{{virtualCallingMode_statusstr}}</div>
-                                </label>
-                                <p class="form-level-settings">Please select and set the preferable way of calling your
-                                    customer.<a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
-                                    More</a></p>
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                        <label>Virtual Calling Mode
+                            <span class="ctrl">
+                                <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                                    (change)="handle_virtualCallingModeStatus($event)">
+                                </mat-slide-toggle>&nbsp;{{virtualCallingMode_statusstr}}
+                            </span>
+                            <!-- <div class="onoff">{{virtualCallingMode_statusstr}}</div> -->
+                        </label>
+                        <p class="form-level-settings">Please select and set the preferable way of calling your
+                            customer.<a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
+                                More</a></p>
                     </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoVideoSettings()">
                         <h2>Video Call</h2>
-                        <span class="form-level-settings">Configure your video call preferences here. <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('videocall-settings', $event)">Learn
-                                More</a></span> 
+                        <span class="form-level-settings">Configure your video call preferences here. <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('videocall-settings', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoNotifications()">
+                        <h2>Notifications</h2>
+                        <span class="form-level-settings"> {{cust_domain_name}} and {{provider_domain_name}}
+                            notification settings<a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('notifications', $event)">Learn
+                                More</a></span>
                     </span>
                 </div>
             </div>

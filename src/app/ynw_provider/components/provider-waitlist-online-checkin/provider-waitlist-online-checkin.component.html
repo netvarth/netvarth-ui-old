@@ -57,7 +57,7 @@
       <label>Select services by department
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
           [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
-        </mat-slide-toggle>
+        </mat-slide-toggle>&nbsp;{{deptstatusstr}}
       </label>
     </div>
   </div>

@@ -8,9 +8,9 @@
       <div class="card p0 w-dta">
         <header class="main-header dash chkin">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
-            <div class="navbar-custom-menu ">
-              <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu loc-lst queue-menu">
+            <div class="navbar-custom-menu width100pc">
+              <ul class="nav navbar-nav width100pc">
+                <li class="dropdown messages-menu loc-lst queue-menu pull-right">
                   <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selected_location" style="padding-top: 12px !important;">
@@ -42,8 +42,8 @@
                     </mat-select>
                   </mat-form-field>
                 </li> -->
-                <li class="dropdown messages-menu loc-lst queue-menu" *ngIf="account_type=='BRANCH'">
-                  <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+                <li class="pl5 dropdown messages-menu view-lst queue-menu tok-db" *ngIf="account_type=='BRANCH'">
+                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
                     <span *ngIf="!small_device_display">

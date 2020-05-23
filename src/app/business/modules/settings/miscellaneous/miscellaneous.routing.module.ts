@@ -27,8 +27,7 @@ const routes: Routes = [
     // { path: 'users', loadChildren: () => import('../general/users/users.module').then(m => m.UsersModule) },
     // { path: 'customview', loadChildren: () => import('../settings/general/customview/customview.module').then(m => m.CustomViewmodule) },
 
-    { path: 'corporate', loadChildren: () => import('./corporate/corporate.module').then(m => m.CorporateModule) },
-    { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)}
+    { path: 'corporate', loadChildren: () => import('./corporate/corporate.module').then(m => m.CorporateModule) }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

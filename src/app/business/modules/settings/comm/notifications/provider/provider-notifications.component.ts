@@ -19,12 +19,12 @@ export class ProviderNotificationsComponent implements OnInit {
       title: 'Settings'
     },
     {
-      url: '/provider/settings/miscellaneous',
-      title: 'Miscellaneous'
-    },
+      title: 'Comm.',
+      url: '/provider/settings/comm',
+  },
     {
       title: 'Notifications',
-      url: '/provider/settings/miscellaneous/notifications',
+      url: '/provider/settings/comm/notifications',
     },
     {
       title: 'Provider'
@@ -86,7 +86,7 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
   setNotificationList(notificationList: any): any {
@@ -423,7 +423,7 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);

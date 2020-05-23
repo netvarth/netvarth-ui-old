@@ -16,8 +16,8 @@
                                 <label>Accept Check-Ins &nbsp;&nbsp;
                                     <mat-slide-toggle [(ngModel)]="waitlist_status"
                                         (change)="handleCheckinPresence($event)">
-                                    </mat-slide-toggle>
-                                    <div class="onoff">{{waitlist_statusstr}}</div>
+                                    </mat-slide-toggle>&nbsp;{{waitlist_statusstr}}
+                                    <!-- <div class="onoff">{{waitlist_statusstr}}</div> -->
                                 </label>
                                 <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
                                         id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn

@@ -68,11 +68,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   waitlist_status = false;
   futureDateWaitlist = false;
   waitlist_statusstr = 'Off';
-  futurewaitlist_statusstr = 'off';
+  futurewaitlist_statusstr = 'Off';
   apptlist_status = false;
   futureDateApptlist = false;
   apptlist_statusstr = 'Off';
-  futureapptlist_statusstr = 'off';
+  futureapptlist_statusstr = 'Off';
   search_status = false;
   search_statusstr = 'Off';
   payment_settings: any = [];
@@ -538,7 +538,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'general', 'holidays']);
         break;
       case 'notifications':
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
+        this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
         break;
       case 'saleschannel':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);

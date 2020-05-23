@@ -9,8 +9,8 @@
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Donations
                             <mat-slide-toggle [(ngModel)]="donations_status" (change)="handle_Donations($event)">
-                            </mat-slide-toggle>
-                            <div class="onoff">{{donations_statusstr}}</div>
+                            </mat-slide-toggle>&nbsp;{{donations_statusstr}}
+                            <!-- <div class="onoff">{{donations_statusstr}}</div> -->
                         </label>
                         <div class="form-level-settings"> Create causes here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-donations', $event)">Learn

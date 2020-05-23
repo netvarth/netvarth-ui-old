@@ -4836,36 +4836,44 @@ i.notavail {
 
 @media only screen and (min-width: 769px) {
   .set-block-ul {
-    min-height: 610px !important;
+    /* min-height: 610px !important; */
+    min-height: 530px !important;
   }
   .set-block-1 {
-    min-height: 620px !important;
+    /* min-height: 620px !important; */
+    min-height: 530px !important;
   }
   .set-block-2 {
-    min-height: 525px !important;
+    /* min-height: 525px !important; */
+    min-height: 530px !important;
   }
   .set-block-3 {
-    min-height: 525px !important;
+    /* min-height: 525px !important; */
+    min-height: 530px !important;
   }
   .set-block-4 {
-    min-height: 440px !important;
+    min-height: 530px !important;
+    /* min-height: 440px !important; */
   }
 
 }
 @media only screen and (min-width: 1200px) {
   .set-block {
-    min-height: 610px !important;
+    /* min-height: 610px !important; */
+    min-height: 530px !important;
   }
   .set-block-2 {
-    min-height: 620px !important;
+    /* min-height: 620px !important; */
+    min-height: 530px !important;
   }
   .set-block-3 {
-    min-height: 440px !important;
+    /* min-height: 440px !important; */
+    min-height: 530px !important;
   }
 }
 @media only screen and (min-width: 769px) and (max-width: 1200px){
   .set-block {
-    min-height: 610px !important;
+    min-height: 530px !important;
   }
 }
 .input-group {
@@ -5756,7 +5764,7 @@ li.separator.setsplit {
   border-color: #2e6da4;
 }
 
-.dropdown.messages-menu.loc-lst.open .dropdown-menu {
+.dropdown.messages-menu.view-lst.open .dropdown-menu {
   left: 0 !important;
 }
 
@@ -8842,36 +8850,21 @@ padding-right: 0 !important; padding-top: 0 !important;}
   cursor: not-allowed !important;
   color: black !important;
 }
-.whtsap-ic {
-  color: green;
+.tok-db i.fa-eye {
+  color: #3c8dbc !important;
+  margin-top: 20px !important;
 }
-.skype-ic {
-  color: #29b6f6;
+.width100pc {
+  width: 100% !important;
 }
-.call-icon {
-  position: absolute;
-  padding-top: 10px;
+.pl5 {
+  padding-left:5px !important;
 }
-.mgn-up-6 {
-  margin-top: 6px !important;
+.widget-user-2 .widget-user-header, .widget-user-2 .widget-user-header {
+  padding:10px !important;
 }
-.call-mode-ip {
-  border-bottom: 1px solid;
-  padding: 0px;
-  text-align: center;
-  border-bottom-color: #a2b9c3;
-}
-.dashqr .qrcode img{
-  width: 0px !important;
-  height: 0px !important;
-}
-.cal-mod-instrct {
-  font-size: .70rem !important;
-  font-family: 'Roboto Slab', sans-serif !important;
-  padding-bottom: 10px;
-  font-style: italic;
-}
-.cal-mod-edt {
-  padding-left: 30px;
-  padding-top: 5px;
+.settings_info {margin-bottom: 0px !important;}
+
+.set-block-1 li a {
+  padding : 8px 10px 8px 10px !important;
 }

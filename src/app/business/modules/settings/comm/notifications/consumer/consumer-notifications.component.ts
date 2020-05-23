@@ -20,12 +20,12 @@ export class ConsumerNotificationsComponent implements OnInit {
       title: 'Settings'
     },
     {
-      url: '/provider/settings/miscellaneous',
-      title: 'Miscellaneous'
-    },
+      title: 'Comm.',
+      url: '/provider/settings/comm',
+  },
     {
       title: 'Notifications',
-      url: '/provider/settings/miscellaneous/notifications',
+      url: '/provider/settings/comm/notifications',
     },
     {
       title: 'Consumer'
@@ -174,7 +174,7 @@ export class ConsumerNotificationsComponent implements OnInit {
 
   performActions(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
   showSubmit(type) {

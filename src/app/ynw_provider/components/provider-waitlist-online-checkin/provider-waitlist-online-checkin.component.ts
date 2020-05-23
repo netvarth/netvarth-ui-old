@@ -44,6 +44,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   message;
   account_type;
   is_data_chnge: any;
+  deptstatusstr = 'Off';
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions,
@@ -142,6 +143,7 @@ this.account_type = user.accountType;
       .subscribe(
         data => {
           this.waitlist_manager = data;
+          this.deptstatusstr = this.waitlist_manager['filterByDept'] ? 'On' : 'Off';
           this.reset_waitlist_manager = data;
           this.setValue(this.waitlist_manager);
           this.provider_datastorage.set('waitlistManage', data);

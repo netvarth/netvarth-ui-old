@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "W4D3AT38TY.com.nv.ynw",
+        "paths": [ "*" ]
+      },
+
+	{
+            "appID": "9WMA78D8M5.com.nv.ynw",
+            "paths": [ "*" ]
+         }
+    ]
+  }
+}

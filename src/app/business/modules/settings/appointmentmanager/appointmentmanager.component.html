@@ -10,8 +10,8 @@
                         <label>Accept Appointments
                             <mat-slide-toggle [(ngModel)]="createappointment_status"
                                 (change)="handle_appointmentPresence($event)">
-                            </mat-slide-toggle>
-                            <div class="onoff">{{createappointment_statusstr}}</div>
+                            </mat-slide-toggle> &nbsp;{{createappointment_statusstr}}
+                            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
                         </label>
                         <div class="form-level-settings"> Enable "Accept Appointments" here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
@@ -26,8 +26,8 @@
                         <label>Same Day Online Appointments
                             <mat-slide-toggle [(ngModel)]="apptlist_status"
                                 (change)="handle_apptliststatus($event)">
-                            </mat-slide-toggle>
-                            <div class="onoff">{{apptlist_statusstr}}</div>
+                            </mat-slide-toggle>&nbsp;{{apptlist_statusstr}}
+                            <!-- <div class="onoff">{{apptlist_statusstr}}</div> -->
                             <div class="form-level-settings">Set up same day appointment here<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
                                 More</a></div>
@@ -42,8 +42,8 @@
                         <label>Future Appointments
                             <mat-slide-toggle [(ngModel)]="futureDateApptlist"
                                 (change)="handle_futureapptliststatus($event)">
-                            </mat-slide-toggle>
-                            <div class="onoff">{{futureapptlist_statusstr}}</div>
+                            </mat-slide-toggle>&nbsp;{{futureapptlist_statusstr}}
+                            <!-- <div class="onoff">{{futureapptlist_statusstr}}</div> -->
                             <div class="form-level-settings">Set up future appointment here<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
                                 More</a></div>

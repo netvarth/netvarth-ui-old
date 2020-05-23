@@ -2090,8 +2090,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getServiceList() {
-    const filter = { 'serviceType-neq': 'donationService' };
-    this.provider_services.getServicesList(filter)
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {
           this.services = data;

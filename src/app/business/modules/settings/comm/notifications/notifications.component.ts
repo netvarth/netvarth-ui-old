@@ -16,8 +16,8 @@ export class NotificationsComponent implements OnInit {
             title: 'Settings'
         },
         {
-            title: 'Miscellaneous',
-            url: '/provider/settings/miscellaneous',
+            title: 'Comm.',
+            url: '/provider/settings/comm',
         },
         {
             title: 'Notifications'
@@ -61,10 +61,10 @@ export class NotificationsComponent implements OnInit {
 
     }
     gotoConsumer() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications', 'consumer']);
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
     }
     gotoProvider() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications', 'provider']);
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider']);
     }
     getSMSCredits() {
         this.provider_services.getSMSCredits().subscribe(data => {
@@ -91,11 +91,11 @@ export class NotificationsComponent implements OnInit {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
     }
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
         }
     }
 }

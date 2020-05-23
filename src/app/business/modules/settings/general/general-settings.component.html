@@ -48,6 +48,16 @@
                     </span>
                 </div>
             </div>
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoUsers()">
+                        <h2>Users</h2>
+                        <span class="form-level-settings">Create or manage users<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('users', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span (click)="gotoNonworkingDays()" class="b-link">

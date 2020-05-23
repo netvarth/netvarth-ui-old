@@ -9,8 +9,8 @@
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Billing/POS
                             <mat-slide-toggle [(ngModel)]="pos_status" (change)="handle_posStatus($event)">
-                            </mat-slide-toggle>
-                            <div class="onoff">{{pos_statusstr}}</div>
+                            </mat-slide-toggle>&nbsp;{{pos_statusstr}}
+                            <!-- <div class="onoff">{{pos_statusstr}}</div> -->
                         </label>
                         <div class="form-level-settings"> Create items, discounts and coupons here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn

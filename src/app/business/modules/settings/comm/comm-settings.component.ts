@@ -10,14 +10,14 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     'templateUrl': './comm-settings.component.html'
 })
 export class CommSettingsComponent implements OnInit {
-    domain:any;
+    domain: any;
     breadcrumbs = [
         {
             title: 'Settings',
             url: '/provider/settings'
         },
         {
-            title: 'Comm'
+            title: 'Comm.'
         }
     ];
     virtualCallingMode_status: any;
@@ -30,23 +30,26 @@ export class CommSettingsComponent implements OnInit {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.getGlobalSettingsStatus(); 
+        this.getGlobalSettingsStatus();
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(
-          (data: any) => {
-            this.virtualCallingMode_status = data.virtualService;
-            this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
-          });
-      }
+            (data: any) => {
+                this.virtualCallingMode_status = data.virtualService;
+                this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
+            });
+    }
+    gotoNotifications() {
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications']);
+    }
     gotoVideoSettings() {
         this.router.navigate(['provider', 'settings', 'comm', 'video']);
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-     this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
-      } 
-      handle_virtualCallingModeStatus(event) {
+        this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+    }
+    handle_virtualCallingModeStatus(event) {
         const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
             .subscribe(
@@ -59,5 +62,5 @@ export class CommSettingsComponent implements OnInit {
                     this.getGlobalSettingsStatus();
                 }
             );
-      }
+    }
 }

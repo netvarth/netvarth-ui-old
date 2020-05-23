@@ -6,7 +6,8 @@ import { VideoSettingsComponent } from './video/video-settings.component';
 
 const routes: Routes = [
     {path: '', component: CommSettingsComponent},
-    {path: 'video', component: VideoSettingsComponent}
+    {path: 'video', component: VideoSettingsComponent},
+    { path: 'notifications', loadChildren: () => import('../comm/notifications/notifications.module').then(m => m.NotificationsModule)}
 ];
 
 @NgModule({

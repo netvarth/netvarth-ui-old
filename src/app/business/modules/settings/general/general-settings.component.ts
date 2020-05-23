@@ -63,6 +63,9 @@ export class GeneralSettingsComponent implements OnInit {
     goDepartments() {
         this.router.navigate(['provider', 'settings', 'general', 'departments']);
     }
+    gotoUsers () {
+        this.router.navigate(['provider', 'settings', 'general', 'users']);
+    }
     gotoNonworkingDays() {
         this.router.navigate(['provider', 'settings', 'general', 'holidays']);
     }
