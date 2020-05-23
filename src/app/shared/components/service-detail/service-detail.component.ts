@@ -27,6 +27,10 @@ export class ServiceDetailComponent implements OnInit {
   api_success = null;
   is_donation_serv = false;
   service;
+  minutes:any;
+  min=0;
+  hour=0;
+  HHMM:any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -56,6 +60,23 @@ export class ServiceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.service = this.data.serdet;
+    this.minutes = this.data.serdet.serviceDuration;
+    if(this.minutes)
+    {
+      this.min = this.minutes % 60;
+      this.hour = (this.minutes-this.min) / 60;
+      if(this.hour > 0 && this.min > 0){
+      this.HHMM = this.hour + "Hrs" +" "+this.min +"Mins" ;}
+      else if(this.hour === 0)
+      {
+        this.HHMM = this.min + "Mins"; 
+      }
+      else if(this.min === 0)
+      {
+        this.HHMM = this.hour + "Hr";
+      }
+    }
+   
     if (this.data.serv_type) {
       this.is_donation_serv = true;
     }

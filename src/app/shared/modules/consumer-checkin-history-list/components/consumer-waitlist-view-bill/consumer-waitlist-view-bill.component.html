@@ -13,8 +13,8 @@
                 </button>
             </div>
             <div id="receipt" class="receipt">
-                <div class="bill-header" *ngIf="!showPaidlist">
-                    <div class="section-one">
+                <div class="bill-header" style="padding-top: 40px;"  *ngIf="!showPaidlist">
+                    <div class="section-one" >
                         <h3>{{bname | capitalizeFirst}}</h3>
                         <div class="details">
                             <span class="columns" *ngFor="let user of checkin.waitlistingFor">
@@ -106,12 +106,12 @@
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
                                             <div class="name">JDN</div>
-                                            <div class="price" style="flex-basis: 30% !important">(-){{bill_data.jdn.discount |
+                                            <div class="price" style="flex-basis:50% !important">(-){{bill_data.jdn.discount |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div> 
                                     <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
-                                        <div class="discount-row two-col">
+                                        <div class="discount-row two-col" >
                                             <div class="name">
                                                 {{discount.name}}
                                             </div>
@@ -134,7 +134,7 @@
                                             <div class="name">
                                                 {{jcoupon.key}}
                                             </div>
-                                            <div class="price" style="display: flex">
+                                            <div class="price" style="flex-basis: 30% !important">
                                                 <span>(-)</span>
                                                 <span (click)="showJCCouponNote(jcoupon)"
                                                     [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
@@ -163,8 +163,8 @@
                                         <div class="price">{{bill_data.netRate |
                                             currency:'&#8377; '}}</div>
                                     </div>
-                                    <div class="c-row two section-two" *ngIf="bill_data.totalAmountPaid > 0">
-                                        <div class="discount-row two-col">
+                                    <div class="c-row two section-two"   *ngIf="bill_data.totalAmountPaid > 0">
+                                        <div class="discount-row two-col" >
                                             <div class="name">
                                                 Amount Paid
                                             </div>
