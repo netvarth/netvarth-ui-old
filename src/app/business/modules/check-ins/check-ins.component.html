@@ -1028,8 +1028,7 @@
                     <i class="fa fa-envelope-o" (click)="emailCheckin('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
-                  <div class="statuslink " *ngIf="waitlistSelection===1 && calculationmode=='NoCalc' && showToken"
-                    [matTooltip]="'Print'">
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Print'">
                     <i class="fa fa-print" (click)="printCheckin('new')"></i> </div>
                   <div class="statuslink "
                     *ngIf="waitlistSelection===1 && pos && selectedCheckin['new'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['new'].parentUuid"
@@ -1453,6 +1452,10 @@
       </div>
     </div>
     <div class="clearfix"></div>
+    <div class="dashqr" *ngIf="showQR">
+      <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value" style="width: 10px;">
+      </ngx-qrcode>
+    </div>
   </div>
 </section>
 <div *ngIf="apiloading" style="margin-top: 100px">

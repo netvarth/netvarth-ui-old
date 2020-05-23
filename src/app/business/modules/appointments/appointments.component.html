@@ -374,15 +374,16 @@
                           <div class="col-md-3 col-xs-3 p0"
                             *ngIf="appt.apptStatus === 'Cancelled' || appt.apptStatus === 'Rejected'">
                             <span class="info-box-text" style="font-size: smaller;">
-                              Cancelled
+                              {{appt.apptStatus}}
                             </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="appt.apptBy == 'CONSUMER'"
                               [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                             </span>
-                            <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
-                            </span> 
+                            <span class="fa fa-phone phone-in-icon "
+                              *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                            </span>
                             <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
                               *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                               <i class="icon-note"></i>
@@ -431,13 +432,13 @@
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Rejected')"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reject appointment'"
                           *ngIf="(appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')">
-                          <i class="fa fa-trash-o"></i> <span> {{cancel_cap}} </span>
+                          <i class="fa fa-trash-o"></i> <span> Reject </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Confirmed')"
                           *ngIf="appt.apptStatus == 'Cancelled' || appt.apptStatus == 'Rejected'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to Confirmed'">
                           <i class="fa fa-undo" aria-hidden="true"></i>
                           <span>Confirmed </span>
                         </a>
@@ -467,7 +468,7 @@
                         [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                       </span>
                       <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
-                      </span> 
+                      </span>
                     </div>
                     <div class="info-box-content">
                       <div class="col-md-12 p0">
@@ -540,9 +541,9 @@
                       <i class="fa icon-note" style="font-size: smaller;"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Cancel ' + checkin_label" (click)="changeWaitlistStatus(appt, 'Rejected')"
+                      [matTooltip]="'Reject appointment'" (click)="changeWaitlistStatus(appt, 'Rejected')"
                       *ngIf="appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived'">
-                      <i class="fa fa-trash-o"></i> <span> {{cancel_cap}}</span>
+                      <i class="fa fa-trash-o"></i> <span> Reject</span>
                     </a>
                     <a class="btn-more pointer-cursor" (click)="openActionsWindow('history', i)">
                       <i class="fa fa-angle-up black"></i>
@@ -613,7 +614,7 @@
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedApptSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('started')"></i> </div>
-                  <div class="statuslink " *ngIf="startedApptSelection===1" [matTooltip]="'Cancel'">
+                  <div class="statuslink " *ngIf="startedApptSelection===1" [matTooltip]="'Reject'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('started', 'Rejected')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="started_appt_list.length === 0 &&
@@ -687,7 +688,7 @@
                             </a>
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Confirmed')"
                               *ngIf="appt.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Change status to ' + checkin_label">
+                              [matTooltip]="'Change status to Confirmed'">
                               <i class="fa fa-undo" aria-hidden="true"></i>
                               <span *ngIf="!small_device_display"> Confirmed </span>
                             </a>
@@ -710,7 +711,7 @@
                         </a>
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Confirmed')"
                           *ngIf="appt.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Change status to ' + checkin_label">
+                          [matTooltip]="'Change status to Confirmed'">
                           <i class="fa fa-undo" aria-hidden="true"></i>
                           <span>Confirmed </span>
                         </a>
@@ -773,9 +774,8 @@
                     <i class="fa fa-envelope-o" (click)="emailAppt('new')"></i> </div>
                   <div class="statuslink " *ngIf="apptSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
-                  <div class="statuslink " *ngIf="apptSelection===1 && calculationmode=='NoCalc' && showToken"
-                    [matTooltip]="'Print'">
-                    <i class="fa fa-print" (click)="printCheckin('new')"></i> </div>
+                  <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Print'">
+                    <i class="fa fa-print" (click)="printAppt('new')"></i> </div>
                   <div class="statuslink "
                     *ngIf="apptSelection===1 && pos && selectedAppt['new'].apptStatus != 'prepaymentPending' && !selectedAppt['new'].parentUuid"
                     [matTooltip]="'Bill'">
@@ -786,7 +786,7 @@
                     (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
                     <i class="fa fa-location-arrow"></i>
                   </div>
-                  <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Cancel'">
+                  <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Reject'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'Rejected')"></i> </div>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -906,7 +906,7 @@
                                 Calling</span>
                               <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
                               <span *ngIf="!small_device_display && !appt.callingStatus">
-                                 &nbsp;Call</span>
+                                &nbsp;Call</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Arrived')"
@@ -916,14 +916,15 @@
                                 *ngIf="!small_device_display">Arrived </span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
-                              (click)="changeWaitlistStatus(appt, 'Started')" *ngIf="!section_new[i] && appt.apptStatus == 'Arrived'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                              (click)="changeWaitlistStatus(appt, 'Started')"
+                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived'" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Confirmed')"
                               *ngIf="appt.billStatus != 'Settled' && appt.apptStatus == 'Arrived'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to Confirmed'">
                               <i class="fa fa-undo" aria-hidden="true"></i>
                               <span *ngIf="!small_device_display"> Confirmed</span>
                             </a>
@@ -1077,7 +1078,7 @@
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
                   <div class="statuses col-md-12 col-xs-12 col-sm-12" [class.status-width]="cancelledApptSelection!=1">
-                    <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span>
+                    <span (click)="waitlistStatusClick('cancelled')"> Rejected/Cancelled </span>
                     <!-- <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.Cancelled)">(0)</span> -->
                     <!-- <span *ngIf="grouped_list && grouped_list.Cancelled">({{grouped_list.Cancelled.length}})</span> -->
@@ -1158,7 +1159,7 @@
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Confirmed')"
                               *ngIf="appt.billStatus != 'Settled' && !section_cancel[i]" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Change status to ' + checkin_label">
+                              [matTooltip]="'Change status to Confirmed'">
                               <i class="fa fa-undo" aria-hidden="true"></i>
                               <span *ngIf="!small_device_display"> Confirmed </span>
                             </a>
@@ -1177,7 +1178,7 @@
                       <div class="col-md-12 col-xs-12 p0">
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(appt, 'Confirmed')"
                           *ngIf="appt.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Change status to ' + checkin_label">
+                          [matTooltip]="'Change status to Confirmed'">
                           <i class="fa fa-undo" aria-hidden="true"></i>
                           <span> Confirmed </span>
                         </a>
@@ -1202,6 +1203,10 @@
     </div>
   </div>
   <div class="clearfix"></div>
+  <div class="dashqr" *ngIf="showQR">
+    <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+    </ngx-qrcode>
+  </div>
 </section>
 
 <div *ngIf="apiloading" style="margin-top: 100px">

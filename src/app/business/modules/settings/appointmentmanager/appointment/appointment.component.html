@@ -28,6 +28,11 @@
                             <div class="col-md-12 no-padding" *ngIf="create_new">
                                 <hr class="wide-separator-line" />
                             </div>
+                            <div class="clearfix"></div>
+                            <div class="mgn-bt-20">
+                                Don't have a mobile number? <a class="more_less" (click)="createNew('new')"> Click
+                                    here.</a>
+                            </div>
                             <div class="create_new mgn-bt-20" *ngIf="create_new">
                                 <span>Sorry, We were not able to find the record in our {{customer_label}}s list.</span>
                                 <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}}
@@ -245,19 +250,20 @@
                                             *ngIf="freeSlots.length>0 && showEditView">
                                             <div class="ttle mgn-bt-10">Select Appointment Time</div>
                                             <mat-chip-list class="appt-in-chip">
-                                                <mat-chip  *ngFor="let slot of freeSlots"
+                                                <mat-chip *ngFor="let slot of freeSlots"
                                                     [selected]="slot.time === apptTime"
                                                     (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
                                             </mat-chip-list>
 
                                         </div>
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
-                                            <div *ngIf="showApptTime"><div class="ttle mgn-bt-10">Appointment Time</div>
-                                            <span class="label-bold">{{apptTime}} </span>
-                                            <span style="margin-left: 30px" class="editbt"
-                                                (click)="editClicked()"></span>
+                                            <div *ngIf="showApptTime">
+                                                <div class="ttle mgn-bt-10">Appointment Time</div>
+                                                <span class="label-bold">{{apptTime}} </span>
+                                                <span style="margin-left: 30px" class="editbt"
+                                                    (click)="editClicked()"></span>
                                             </div>
-                                            <div  *ngIf="!showApptTime">TimeSlots are not available </div>
+                                            <div *ngIf="!showApptTime">TimeSlots are not available </div>
                                         </div>
 
 
@@ -479,11 +485,9 @@
                                 <span> Attach
                                     File</span>
                                 <!-- </button> -->
-
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -25,6 +25,7 @@ import { AddProviderWaitlistCheckInProviderNoteModule } from './add-provider-wai
 import { LocateCustomerModule } from './locate-customer/locate-customer.module';
 import { ProviderWaitlistCheckInConsumerNoteModule } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
 import { CallingModesModule } from './calling-modes/calling-modes.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 // import { DateRangePickerJComponent } from '../../../shared/components/date-range/date-range-picker.component';
 
 
@@ -49,7 +50,8 @@ import { CallingModesModule } from './calling-modes/calling-modes.module';
         AddProviderWaitlistCheckInProviderNoteModule,
         LocateCustomerModule,
         ProviderWaitlistCheckInConsumerNoteModule,
-        CallingModesModule
+        CallingModesModule,
+        NgxQRCodeModule
     ],
     declarations: [
         CheckInsComponent,

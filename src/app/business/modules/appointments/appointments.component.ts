@@ -280,6 +280,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selQidsforHistory: any = [];
   servicesCount;
   account_type;
+  qr_value;
+  path = window.location.host;
+  showQR = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -937,7 +940,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   isAvailableSlot(slot) {
-    if (slot.noOfAvailbleSlots === '0') {
+    if (slot.noOfAvailbleSlots === '0' || !slot.active) {
       return true;
     }
     return false;
@@ -1445,37 +1448,82 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  printCheckin(source) {
+  qrCodegeneration(valuetogenerate) {
+    this.qr_value = this.path + '/#/wl/status/' + valuetogenerate.appointmentEncId;
+    console.log(this.qr_value);
+    this.showQR = true;
+  }
+  printAppt(source) {
     const apptlist = this.selectedAppt[source];
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    let checkin_html = '';
-    checkin_html += '<div style="width:400px; height:100px; border:1px solid #ddd; ">';
-    checkin_html += '<div style="float: left; width:100px; height:100px;font-size:1.5rem;background: #eee;">';
-    checkin_html += '<div style="padding-top:30px;text-align:center">#' + apptlist.token + '</div>';
-    checkin_html += '</div>';
-    checkin_html += '<div style="float:left;height:100px;font-weight:500">';
-    checkin_html += '<div style="padding-top:5px;padding-left:5px">';
-    checkin_html += apptlist.appmtFor[0].firstName + ' ' + apptlist.appmtFor[0].lastName;
-    checkin_html += '</div>';
-    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-    checkin_html += this.bname + ' / ' + apptlist.service.name;
-    checkin_html += '</div>';
-    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-    checkin_html += apptlist.date + ' ' + apptlist.appmtTime;
-    checkin_html += '</div>';
-    checkin_html += '</div>';
-    checkin_html += '</div>';
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(checkin_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.print();
+    this.qrCodegeneration(apptlist);
+    setTimeout(() => {
+      const printContent = document.getElementById('print-section');
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
+      let checkin_html = '';
+      checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
+      checkin_html += '<div style="width:500px;">';
+      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;">';
+      checkin_html += '<div style="padding-top:30px;text-align:center;margin-top:50px">' + apptlist.appmtTime + '</div>';
+      checkin_html += '<div style="padding-top:30px;">' + this.dateformat.transformToDIsplayFormat(apptlist.appmtDate) + '</div>';
+      checkin_html += '</div>';
+      checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
+      checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
+      checkin_html += this.bname.charAt(0).toUpperCase() + this.bname.substring(1);
+      checkin_html += '<div style="clear:both;font-weight:500;font-size:0.95rem;padding:0px;margin:0px">';
+      checkin_html += apptlist.location.place;
+      checkin_html += '</div>';
+      checkin_html += '</h2>';
+      checkin_html += '<div style="padding-top:5px;padding-left:5px">';
+      checkin_html += apptlist.appmtFor[0].firstName + ' ' + apptlist.appmtFor[0].lastName;
+      checkin_html += '</div>';
+      if (apptlist.service && apptlist.service.deptName) {
+        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+        checkin_html += '<span style="color: #999999">Department: </span>';
+        checkin_html += '<span>' + apptlist.service.deptName + '</span>';
+        checkin_html += '</div>';
+      }
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Service: </span>';
+      checkin_html += '<span>' + apptlist.service.name + '</span>';
+      checkin_html += '</div>';
+      if (apptlist.provider && apptlist.provider.firstName && apptlist.provider.lastName) {
+        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+        checkin_html += '<span style="color: #999999">Doctor: </span>';
+        checkin_html += '<span>' + apptlist.provider.firstName.charAt(0).toUpperCase() + apptlist.provider.firstName.substring(1) + ' ' + apptlist.provider.lastName;
+        checkin_html += '</span></div>';
+      }
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Schedule: </span>';
+      checkin_html += '<span>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']';
+      checkin_html += '</span></div>';
+
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Appointment Id: </span>';
+      checkin_html += '<span>' + this.qr_value;
+      checkin_html += '</span></div>';
+
+      checkin_html += '</div>';
+      checkin_html += '</div>';
+      checkin_html += '<div>';
+      checkin_html += '<div style="text-align:right;width:150px;height:150px">';
+      checkin_html += printContent.innerHTML;
+      checkin_html += '</div>';
+      checkin_html += '<div>Scan to know your status</div>';
+      checkin_html += '</div>';
+      checkin_html += '</div>';
+      printWindow.document.write('<html><head><title></title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(checkin_html);
+      printWindow.document.write('</body></html>');
+      this.showQR = false;
+      printWindow.moveTo(0, 0);
+      printWindow.print();
+    });
   }
 
   printHistoryCheckin() {
@@ -1559,7 +1607,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locateCustomer(source) {
     const waitlistData = this.selectedAppt[source];
-    this.provider_services.getCustomerTrackStatus(waitlistData.uid).subscribe(data => {
+    this.provider_services.getCustomerTrackStatusforAppointment(waitlistData.uid).subscribe(data => {
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
@@ -2142,7 +2190,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.apptSelection === 1) {
       this.selectedAppt['new'] = waitlist;
-      if (this.selectedAppt['new'].jaldeeWaitlistDistanceTime && this.selectedAppt['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedAppt['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedAppt['new'].jaldeeStartTimeType === 'AFTERSTART')) {
+      if (this.selectedAppt['new'].jaldeeApptDistanceTime && this.selectedAppt['new'].jaldeeApptDistanceTime.jaldeeDistanceTime && (this.selectedAppt['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedAppt['new'].jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
         this.consumerTrackstatus = false;

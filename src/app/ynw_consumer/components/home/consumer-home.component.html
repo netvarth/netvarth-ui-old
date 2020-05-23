@@ -241,7 +241,7 @@
                                     <div class="started-label" *ngIf="appointment.apptStatus == 'Started'">
                                         {{status_started_cap}}
                                     </div>
-                                    <div class="done-label" *ngIf="appointment.apptStatus == 'done'">
+                                    <div class="done-label" *ngIf="appointment.apptStatus == 'Completed'">
                                         {{status_done_cap}}
                                     </div>
                                 </div>
@@ -283,10 +283,10 @@
                                                 *ngIf="appointment.estimated_date_type == 'string'">{{appointment.estimated_date}}
                                             </span>
                                             <span
-                                                *ngIf="appointment.calculationMode != 'NoCalc'">,{{appointment.estimated_time}}</span></span>
+                                                *ngIf="appointment.calculationMode != 'NoCalc'">{{appointment.estimated_time}}</span></span>
                                         <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
                                     </div>
-                                    <div class="lt0" *ngIf="appointment.waitlistStatus == 'cancelled'">
+                                    <div class="lt0" *ngIf="appointment.apptStatus == 'Cancelled'">
                                         <div class="lt0">
                                             {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
                                                 | date: dateFormatSp }},
@@ -300,33 +300,33 @@
                                     </div>
                                 </ng-container>
                                 <div class="lt0"
-                                    *ngIf="appointment.waitlistStatus != 'cancelled' && appointment.calculationMode == 'NoCalc' && appointment.token">
+                                    *ngIf="appointment.apptStatus != 'cancelled' && appointment.calculationMode == 'NoCalc' && appointment.token">
                                     <span *ngIf="appointment.personsAhead === 0"> {{first_person}}</span>
                                     <span *ngIf="appointment.personsAhead === 1"> <span
                                             class="forwhom">{{appointment.personsAhead}}</span>{{one_person_ahead}} </span>
                                     <span *ngIf="appointment.personsAhead > 1"> <span
                                             class="forwhom">{{appointment.personsAhead}}</span>{{people_ahead}} </span>
                                 </div>
-                                <div class="lt0" *ngIf="appointment.token">
+                                <!-- <div class="lt0" *ngIf="appointment.token">
                                     {{token_no}} <span class="token">{{appointment.token}} </span>
-                                </div>
+                                </div> -->
                                 <div class="lt0" *ngIf="appointment.partySize && appointment.partySize > 1">
                                     {{party_size}} <span class="persons">{{appointment.partySize}}</span>
                                 </div>
                                 <div class="lt0 payment"
-                                    *ngIf="!appointment.parentUuid && appointment.waitlistStatus=='prepaymentPending'">
+                                    *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
                                     <span class="paytext">{{checkindisablemsg}} {{appointment.counter}}
                                         {{checkindisablemsg1}}</span>
                                 </div>
                                 <div class="lt0 payment"
-                                    *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.waitlistStatus != 'cancelled'">
+                                    *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled'">
                                     <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{appointment.amountDue}}
                                         </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(appointment)">Pay</a></span>
                                 </div>
-                                <div *ngIf="appointment.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
+                                <div *ngIf="appointment.apptStatus=='Confirmed'|| 'prepaymentPending'">
                                     <div class="lt0"
-                                        *ngIf="appointment.jaldeeWaitlistDistanceTime && appointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && appointment.waitlistStatus === 'checkedIn' && !appointment.future">
+                                        *ngIf="appointment.jaldeeApptDistanceTime && appointment.jaldeeApptDistanceTime.jaldeeDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                         <div>
                                             <span *ngIf="appointment.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable
                                                     live tracking </label></span>
@@ -334,19 +334,19 @@
                                                 class="form-level-settings">Automatic Live tracking is enabled</p>
                                             <span *ngIf="appointment.jaldeeStartTimeType == 'ONEHOUR'">
                                                 <label
-                                                    *ngIf="appointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
+                                                    *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
                                                     am driving </label>
                                                 <label
-                                                    *ngIf="appointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">I
+                                                    *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">I
                                                     am walking </label>
                                             </span>
                                             <span class="" *ngIf="!changemode[i]">
-                                                <i *ngIf="appointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
+                                                <i *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
                                                     class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
-                                                <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
+                                                <!-- <i *ngIf="waitlist.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
                                                 <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                     style="width: 15px;height:15px;"
-                                                    *ngIf="appointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
+                                                    *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
                                                 <i class="fa fa-pencil link mgn-lt-10 "
                                                     (click)="changemode[i] = !changemode[i]"></i>
                                             </span>
@@ -377,28 +377,28 @@
                                 <ul class="controls">
                                     <li *ngIf="appointment.billViewStatus == 'Show'">
                                         <span class="view-bill"
-                                            *ngIf="!(appointment.amountDue>0) && appointment.waitlistStatus != 'cancelled'"
+                                            *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled'"
                                             (click)="viewBill(appointment)">Receipt</span>
                                         <span class="view-bill"
-                                            *ngIf="appointment.waitlistStatus === 'cancelled' && appointment.paymentStatus !== 'NotPaid'"
+                                            *ngIf="appointment.apptStatus === 'Cancelled' && appointment.paymentStatus !== 'NotPaid'"
                                             (click)="viewBill(appointment)">Receipt</span>
                                         <span class="view-bill"
-                                            *ngIf="appointment.amountDue>0 && appointment.waitlistStatus != 'cancelled'"
+                                            *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled'"
                                             (click)="viewBill(appointment)">Bill</span>
                                     </li>
                                     <li (click)="makeFailedPayment(appointment)"
-                                        *ngIf="!appointment.parentUuid && appointment.waitlistStatus=='prepaymentPending'">
+                                        *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
                                         <span class="payment">{{make_pay_cap}}</span>
                                     </li>
                                     <li (click)="addWaitlistMessage(appointment)">
                                         <span class="message">{{send_msg_cap}}</span>
                                     </li>
                                     <li class="cancelCheckinBtn"
-                                        *ngIf="appointment.waitlistStatus == 'checkedIn' || appointment.waitlistStatus == 'arrived' || appointment.waitlistStatus=='prepaymentPending'">
+                                        *ngIf="appointment.apptStatus == 'Confirmed' || appointment.apptStatus == 'Arrived' || appointment.apptStatus=='prepaymentPending'">
                                         <span class="cancel"
                                             (click)="doCancelWaitlist(appointment)">{{cancel_checkin_cap}}</span>
                                     </li>
-                                    <li *ngIf="appointment.waitlistStatus == 'done'">
+                                    <li *ngIf="appointment.apptStatus == 'Completed'">
                                         <span class="rate-service" [class.rated]="isRated(appointment)"
                                             (click)="rateService(appointment)">{{rate_visit}}</span>
                                     </li>

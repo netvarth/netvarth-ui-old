@@ -187,7 +187,7 @@ export class AppointmentComponent implements OnInit {
     showInputSection: any = [];
     callingModesDisplayName = projectConstants.CALLING_MODES;
     apptType;
-    showApptTime = false ;
+    showApptTime = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -264,7 +264,10 @@ export class AppointmentComponent implements OnInit {
             search_input: ['', Validators.compose([Validators.required])]
         });
     }
-    createNew() {
+    createNew(type?) {
+        if (type === 'new') {
+            this.qParams['noMobile'] = false;
+        }
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -1349,8 +1352,8 @@ export class AppointmentComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-       // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
-       this.shared_services.addProviderAppointmentNote(uuid,dataToSend)
+        // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
+        this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1383,18 +1386,18 @@ export class AppointmentComponent implements OnInit {
                     }
                     console.log(this.freeSlots);
                     console.log(this.comingSchduleId);
-                    if(this.freeSlots.length > 0){
-                        this.showApptTime = true ;
-                    if (this.comingSchduleId === '') {
-                        this.apptTime = this.freeSlots[0].time;
-                        for (const list of this.waitlist_for) {
-                            list['apptTime'] = this.apptTime;
-                        }
-                    } else {
-                        console.log(this.queuejson[this.sel_queue_indx].id);
-                        
+                    if (this.freeSlots.length > 0) {
+                        this.showApptTime = true;
+                        if (this.comingSchduleId === '') {
+                            this.apptTime = this.freeSlots[0].time;
+                            for (const list of this.waitlist_for) {
+                                list['apptTime'] = this.apptTime;
+                            }
+                        } else {
+                            console.log(this.queuejson[this.sel_queue_indx].id);
+
                             if (this.queuejson[this.sel_queue_indx].id == this.comingSchduleId) {
-                                console.log('scheduleid' );
+                                console.log('scheduleid');
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
@@ -1407,13 +1410,14 @@ export class AppointmentComponent implements OnInit {
                                 }
                             }
 
-                      
-                        console.log(this.apptTime);
-                        this.comingSchduleId = '';
-                    } }
+
+                            console.log(this.apptTime);
+                            this.comingSchduleId = '';
+                        }
+                    }
                     else {
                         this.showApptTime = false;
-                      }
+                    }
                 },
                 error => {
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);

@@ -1405,4 +1405,8 @@ export class ProviderServices {
       const url = 'provider/ynwConf/virtualServiceInstructions';
       return this.servicemeta.httpGet(url);
    }
+   getCustomerTrackStatusforAppointment(uuid) {
+      const url = 'provider/appointment/live/locate/distance/time/' + uuid;
+      return this.servicemeta.httpPost(url);
+   }
 }

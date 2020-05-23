@@ -287,6 +287,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   allActiveQs: any[];
   type: any;
   account_type;
+  qr_value;
+  path = window.location.host;
+  showQR = false;
+  printContent;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1620,42 +1624,86 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
+  qrCodegeneration(valuetogenerate) {
+    this.qr_value = this.path + '/#/wl/status/' + valuetogenerate.checkinEncId;
+    this.showQR = true;
+  }
   printCheckin(source) {
     const checkinlist = this.selectedCheckin[source];
-
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    let checkin_html = '';
-    checkin_html += '<div style="width:400px; height:100px; border:1px solid #ddd; ">';
-    checkin_html += '<div style="float: left; width:100px; height:100px;font-size:1.5rem;background: #eee;">';
-    checkin_html += '<div style="padding-top:30px;text-align:center">#' + checkinlist.token + '</div>';
-    checkin_html += '</div>';
-    checkin_html += '<div style="float:left;height:100px;font-weight:500">';
-    checkin_html += '<div style="padding-top:5px;padding-left:5px">';
-    checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
-    checkin_html += '</div>';
-    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-    checkin_html += this.bname + ' / ' + checkinlist.service.name;
-    checkin_html += '</div>';
-    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-    checkin_html += checkinlist.date + ' ' + checkinlist.checkInTime;
-    checkin_html += '</div>';
-    checkin_html += '</div>';
-    checkin_html += '</div>';
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(checkin_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    // printWindow.document.close();
-    printWindow.print();
-    // printWindow.close();
+    this.qrCodegeneration(checkinlist);
+    setTimeout(() => {
+      const printContent = document.getElementById('print-section');
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
+      let checkin_html = '';
+      checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
+      checkin_html += '<div style="width:500px;">';
+      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;">';
+      if (checkinlist.token) {
+        checkin_html += '<div style="padding-top:30px;margin-top:50px">#' + checkinlist.token + '</div>';
+      }
+      if (!checkinlist.token) {
+        checkin_html += '<div style="padding-top:30px;margin-top:50px">' + this.getAppxTime(checkinlist) + '</div>';
+      }
+      checkin_html += '<div style="padding-top:30px;">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '</div>';
+      checkin_html += '<div>' + checkinlist.checkInTime + '</div>';
+      checkin_html += '</div>';
+      checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
+      checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
+      checkin_html += this.bname.charAt(0).toUpperCase() + this.bname.substring(1);
+      checkin_html += '<div style="clear:both;font-weight:500;font-size:0.95rem;padding:0px;margin:0px">';
+      checkin_html += checkinlist.queue.location.place;
+      checkin_html += '</div>';
+      checkin_html += '</h2>';
+      checkin_html += '<div style="padding-top:5px;padding-left:5px">';
+      checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
+      checkin_html += '</div>';
+      if (checkinlist.service && checkinlist.service.deptName) {
+        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+        checkin_html += '<span style="color: #999999">Department: </span>';
+        checkin_html += '<span>' + checkinlist.service.deptName + '</span>';
+        checkin_html += '</div>';
+      }
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Service: </span>';
+      checkin_html += '<span>' + checkinlist.service.name + '</span>';
+      checkin_html += '</div>';
+      if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
+        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+        checkin_html += '<span style="color: #999999">Doctor: </span>';
+        checkin_html += '<span>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName;
+        checkin_html += '</span></div>';
+      }
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Queue: </span>';
+      checkin_html += '<span>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']';
+      checkin_html += '</span></div>';
+      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      checkin_html += '<span style="color: #999999">Check-in Id: </span>';
+      checkin_html += '<span>' + this.qr_value;
+      checkin_html += '</span></div>';
+      checkin_html += '</div>';
+      checkin_html += '</div>';
+      checkin_html += '<div>';
+      checkin_html += '<div style="text-align:right;width:150px;height:150px">';
+      checkin_html += printContent.innerHTML;
+      checkin_html += '</div>';
+      checkin_html += '<div>Scan to know your status</div>';
+      checkin_html += '</div>';
+      checkin_html += '</div>';
+      printWindow.document.write('<html><head><title></title>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(checkin_html);
+      printWindow.document.write('</body></html>');
+      // this.showQR = false;
+      printWindow.moveTo(0, 0);
+      printWindow.print();
+    });
   }
-
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
     const promise = this.getHistoryCheckinCount(Mfilter);
