@@ -8842,3 +8842,21 @@ padding-right: 0 !important; padding-top: 0 !important;}
   cursor: not-allowed !important;
   color: black !important;
 }
+.whtsap-ic {
+  color: green;
+}
+.skype-ic {
+  color: #29b6f6;
+}
+.call-icon {
+  position: absolute;
+  padding-top: 10px;
+}
+.mgn-up-6 {
+  margin-top: 6px !important;
+}
+.call-mode-ip {
+  border-bottom: 1px solid;
+  padding: 0px;
+  text-align: center;
+}

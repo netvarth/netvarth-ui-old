@@ -196,7 +196,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <mat-form-field
                     *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
                     class="example-full-width mat-select-virtualservice">
-                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
+                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{selctd_tool}} ID" 
                         [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
@@ -204,7 +204,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="example-full-width">
                     <textarea matInput class="form-control" id="tooldescription"
-                        placeholder="Enter instructions to your consumer" (keyup)="setCharCount($event)"
+                        placeholder="Enter instructions to your {{customer_label}}" (keyup)="setCharCount($event)"
                         (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>

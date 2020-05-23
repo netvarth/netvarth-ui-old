@@ -239,6 +239,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceHandler(event) {
+        this.serviceForm.get('virtualServiceType').setValue('');
         this.serv_type = event;
         if (event === 'virtualService') {
             this.is_virtual_serv = true;
