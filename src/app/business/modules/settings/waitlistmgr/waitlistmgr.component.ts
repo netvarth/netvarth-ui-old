@@ -56,6 +56,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     statusboardStatus = false;
     licenseMetadata: any = [];
     account_type;
+    waitlist_status: boolean;
+    waitlist_statusstr: string;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -85,6 +87,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.getBusinessProfile();
         this.getWaitlistMgr();
+        this.getGlobalSettingsStatus();
         // this.getLocationCount();
         this.getQueuesCount();
         this.getServiceCount();
@@ -122,6 +125,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.waitlist_manager = data;
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
@@ -151,6 +155,13 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.prevcheckstatus = (this.online_checkin) ? false : true;
         this.online_checkin = event.checked;
         this.setAcceptOnlineCheckin(is_check);
+    }
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.waitlist_status = data['waitlist'];
+                this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
+            });
     }
     setAcceptOnlineCheckin(is_check) {
         this.provider_services.setAcceptOnlineCheckin(is_check)
@@ -284,6 +295,20 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    handleCheckinPresence(event) {
+        const is_check = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setCheckinPresence(is_check)
+          .subscribe(
+            () => {
+              this.shared_functions.openSnackBar('Accept Check-Ins ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+              this.getGlobalSettingsStatus();
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.getGlobalSettingsStatus();
+            }
+          );
+      }
     // getDepartmentsCount() {
     //     this.loading = true;
     //     this.provider_services.getDepartmentCount()

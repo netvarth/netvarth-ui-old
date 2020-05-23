@@ -13,6 +13,17 @@
                     <div class="copy">
                         <div class="row">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                                <label>Accept Check-Ins &nbsp;&nbsp;
+                                    <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                        (change)="handleCheckinPresence($event)">
+                                    </mat-slide-toggle>
+                                    <div class="onoff">{{waitlist_statusstr}}</div>
+                                </label>
+                                <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
+                                        id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
+                                        More</a></div>                                
+                            </div>
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20">
                                 <label>Online Check-Ins</label>
                             </div>
                             <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"

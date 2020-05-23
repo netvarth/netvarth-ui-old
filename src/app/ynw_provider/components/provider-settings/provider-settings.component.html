@@ -17,15 +17,27 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
                                 <li class="form-level-settings"><a>{{frm_profile_cap}}</a></li>
-                                <li><a>{{public_search_cap}} 
+                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
+                                    >{{public_search_cap}}</span>
                                         <span class="pull-right">
                                             {{search_statusstr}}
                                             <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> -->
-                                        </span>
-                                        <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
-                                        <p class="settings_info">{{frm_search_cap}}</p>
+                                        </span><p class="settings_info">{{frm_search_cap}}</p>
+                                        <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->                                        
+                                    </a>
+                                    </li>
+                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
+                                    >Jaldee.com Online Presence </span>
+                                        <span class="pull-right">
+                                            {{onlinepresence_statusstr}}
+                                            <!-- <mat-slide-toggle [(ngModel)]="search_status"
+                                                (change)="handle_searchstatus()">
+                                            </mat-slide-toggle> -->
+                                        </span><p class="settings_info">If true, the provider is available in Jaldee search, he
+                                            can publish online queues etc. if false he is not available in search.</p>
+                                        <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->                                        
                                     </a></li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
                                             style="display: flex;">Online
@@ -153,13 +165,14 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
                                 <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
-                                <li><a>Accept Check-ins<span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="waitlistStatus"
+                                <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span class="lnk setings">Accept Check-ins</span><span class="pull-right">
+                                            <!-- <mat-slide-toggle [(ngModel)]="waitlistStatus"
                                                 (change)="handleCheckinPresence($event)">
-                                            </mat-slide-toggle>
+                                            </mat-slide-toggle> -->
+                                            {{waitlistStatusStr}}
                                         </span>
-                                        <p class="sts" [class.active]="waitlistStatus">
-                                            {{waitlistStatusStr}}</p>
+                                        <!-- <p class="sts" [class.active]="waitlistStatus">
+                                            {{waitlistStatusStr}}</p> -->
                                     </a>
                                 </li>
                                 <li><a>Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
@@ -212,13 +225,14 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
                                 <li class="form-level-settings"><a>{{frm_appointment_cap}}</a></li>
-                                <li><a>Accept Appointments<span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="createappointment_status"
+                                <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span class="lnk setings">Accept Appointments</span><span class="pull-right">
+                                            <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
                                                 (change)="handle_appointmentPresence($event)">
-                                            </mat-slide-toggle>
+                                            </mat-slide-toggle> -->
+                                            {{createappointment_statusstr}}
                                         </span>
-                                        <p class="sts" [class.active]="createappointment_status">
-                                            {{createappointment_statusstr}}</p>
+                                        <!-- <p class="sts" [class.active]="createappointment_status">
+                                            {{createappointment_statusstr}}</p> -->
                                         <!-- <p class="settings_info" *ngIf="createappointment_status">Jaldee Online Presence
                     hints.</p>
                     <p class="settings_info" *ngIf="!createappointment_status">Jaldee Online Presence
@@ -442,13 +456,13 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked  set-block-4">
                                 <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
-                                <li><a>Accept Donations<span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="donations_status"
+                                <li (click)="redirecTo('donationmanager')"><a class="pointer-cursor"><span class="lnk setings">Accept Donations</span><span class="pull-right">
+                                            <!-- <mat-slide-toggle [(ngModel)]="donations_status"
                                                 (change)="handle_Donations($event)">
-                                            </mat-slide-toggle>
+                                            </mat-slide-toggle> --> {{donations_statusstr}}
                                         </span>
-                                        <p class="sts" [class.active]="donations_status">
-                                            {{donations_statusstr}}</p>
+                                        <!-- <p class="sts" [class.active]="donations_status">
+                                            {{donations_statusstr}}</p> -->
                                         <p class="settings_info" *ngIf="donations_status">Accept Donations hints.</p>
                                         <p class="settings_info" *ngIf="!donations_status">Accept Donations hints
                                         </p>
