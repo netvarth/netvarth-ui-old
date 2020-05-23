@@ -8859,6 +8859,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
   border-bottom: 1px solid;
   padding: 0px;
   text-align: center;
+  border-bottom-color: #a2b9c3;
 }
 .dashqr .qrcode img{
   width: 0px !important;
