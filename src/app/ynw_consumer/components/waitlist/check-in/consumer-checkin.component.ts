@@ -185,7 +185,7 @@ export class ConsumerCheckinComponent implements OnInit {
     callingMode;
     virtualServiceArray;
     callingModes: any = [];
-    showInputSection: any = [];
+    showInputSection = false;
     selectedUser;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     breadcrumbs = [
@@ -197,6 +197,7 @@ export class ConsumerCheckinComponent implements OnInit {
             title: 'Checkin'
         }
     ];
+    wtsapmode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -453,6 +454,12 @@ export class ConsumerCheckinComponent implements OnInit {
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
+                if (serv.virtualCallingModes) {
+                    if (serv.virtualCallingModes[0].callingMode === 'WHATSAPP') {
+                        this.callingModes = this.customer_data.primaryPhoneNumber;
+                        this.wtsapmode = this.customer_data.primaryPhoneNumber;
+                    }
+                }
                 break;
             }
         }
@@ -535,7 +542,7 @@ export class ConsumerCheckinComponent implements OnInit {
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
         this.callingModes = [];
-        this.showInputSection = [];
+        this.showInputSection = false;
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -681,11 +688,11 @@ export class ConsumerCheckinComponent implements OnInit {
             }
         }
         this.virtualServiceArray = {};
-        for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes[i] !== '') {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+        // for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
             }
-        }
+        // }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -737,7 +744,6 @@ export class ConsumerCheckinComponent implements OnInit {
                 const navigationExtras: NavigationExtras = {
                     queryParams: { account_id: this.account_id }
                 };
-                console.log(this.sel_ser_det);
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
                 } else if (this.sel_ser_det.livetrack) {
@@ -1411,18 +1417,18 @@ export class ConsumerCheckinComponent implements OnInit {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
     }
-    addCallingmode(index) {
-        this.showInputSection[index] = false;
+    addCallingmode() {
+        this.showInputSection = true;
     }
-    handleModeSel(index, ev) {
-        if (ev.checked) {
-            this.showInputSection[index] = true;
-        } else {
-            this.showInputSection[index] = false;
-            this.callingModes[index] = '';
-        }
-    }
-    editCallingmodes(index) {
-        this.showInputSection[index] = true;
+    // handleModeSel(index, ev) {
+    //     if (ev.checked) {
+    //         this.showInputSection = true;
+    //     } else {
+    //         this.showInputSection = false;
+    //         this.callingModes = '';
+    //     }
+    // }
+    editCallingmodes() {
+        this.showInputSection = false;
     }
 }
