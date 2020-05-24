@@ -187,9 +187,10 @@ export class ConsumerAppointmentComponent implements OnInit {
     callingMode;
     virtualServiceArray;
     callingModes: any = [];
-    showInputSection: any = [];
+    showInputSection = false;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     showApptTime = false;
+    wtsapmode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -448,6 +449,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
+                if (serv.virtualCallingModes) {
+                    if (serv.virtualCallingModes[0].callingMode === 'WHATSAPP') {
+                        this.callingModes = this.customer_data.primaryPhoneNumber;
+                        this.wtsapmode = this.customer_data.primaryPhoneNumber;
+                    }
+                }
                 break;
             }
         }
@@ -533,7 +540,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
         this.callingModes = [];
-        this.showInputSection = [];
+        this.showInputSection = false;
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -684,11 +691,13 @@ export class ConsumerAppointmentComponent implements OnInit {
         console.log(this.sel_ser_det);
         this.showEditView = false;
         this.virtualServiceArray = {};
-        for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes[i] !== '') {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+        // for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes !== '') {
+                if (this.sel_ser_det.serviceType === 'virtualService') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    }
             }
-        }
+        // }
         const post_Data = {
             'schedule': {
                 'id': this.sel_queue_id
@@ -1472,18 +1481,18 @@ export class ConsumerAppointmentComponent implements OnInit {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
     }
-    addCallingmode(index) {
-        this.showInputSection[index] = false;
+    addCallingmode() {
+        this.showInputSection = true;
     }
-    handleModeSel(index, ev) {
-        if (ev.checked) {
-            this.showInputSection[index] = true;
-        } else {
-            this.showInputSection[index] = false;
-            this.callingModes[index] = '';
-        }
-    }
-    editCallingmodes(index) {
-        this.showInputSection[index] = true;
+    // handleModeSel(index, ev) {
+    //     if (ev.checked) {
+    //         this.showInputSection[index] = true;
+    //     } else {
+    //         this.showInputSection[index] = false;
+    //         this.callingModes[index] = '';
+    //     }
+    // }
+    editCallingmodes() {
+        this.showInputSection = false;
     }
 }
