@@ -42,7 +42,7 @@
                             </button>
                             <button [class.disabled]="!liveTrackStatus" mat-menu-item
                                 (click)="liveTrackStatus && changeLiveTrackStatus(service)"
-                                *ngIf="service.status=='ACTIVE'">
+                                *ngIf="service.status=='ACTIVE' && service.serviceType !== 'virtualService'">
                                 <i *ngIf="service.livetrack == false && liveTrackStatus"
                                     class="material-icons">gps_fixed</i>
                                 <i *ngIf="service.livetrack == true && liveTrackStatus"
