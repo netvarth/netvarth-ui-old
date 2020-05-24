@@ -32,7 +32,9 @@ export class VideoSettingsComponent implements OnInit {
         WHATSAPP: { value: 'WHATSAPP', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
         HANGOUTS: { value: 'HANGOUTS', displayName: 'Hangouts', placeHolder: 'Hangouts ID', titleHelp: 'Configure Hangouts Settings', actualValue: '', enabled: false },
         BOTIM: { value: 'BOTIM', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
-        IMO: { value: 'IMO', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false }
+        IMO: { value: 'IMO', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
+        ZOOM: { value: 'ZOOM', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
+        VIBER: { value: 'VIBER', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
     };
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
@@ -140,6 +142,7 @@ export class VideoSettingsComponent implements OnInit {
         const postdata = {
             'virtualCallingModes': virtualCallingModes
         };
+        console.log(postdata)
         this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
                 this.shared_functions.openSnackBar('Virtual calling modes added successfully', { 'panelclass': 'snackbarerror' });
