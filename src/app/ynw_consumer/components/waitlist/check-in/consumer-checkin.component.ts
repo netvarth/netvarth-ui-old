@@ -690,7 +690,9 @@ export class ConsumerCheckinComponent implements OnInit {
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
             if (this.callingModes !== '') {
+                if (this.sel_ser_det.serviceType === 'virtualService') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                }
             }
         // }
         const post_Data = {

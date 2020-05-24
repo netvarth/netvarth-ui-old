@@ -8894,3 +8894,33 @@ padding-right: 0 !important; padding-top: 0 !important;}
   background-color: #3c8dbc;
   color: #fff !important;
 }
+
+.whtsap-ic {
+  color: green;
+}
+.skype-ic {
+  color: #29b6f6;
+}
+.call-icon {
+  position: absolute;
+  padding-top: 10px;
+}
+.mgn-up-6 {
+  margin-top: 6px !important;
+}
+.call-mode-ip {
+  border-bottom: 1px solid;
+  padding: 0px;
+  text-align: center;
+  border-bottom-color: #a2b9c3;
+}
+.cal-mod-instrct {
+  font-size: .70rem !important;
+  font-family: 'Roboto Slab', sans-serif !important;
+  padding-bottom: 10px;
+  font-style: italic;
+}
+.cal-mod-edt {
+  padding-left: 30px;
+  padding-top: 5px;
+}
