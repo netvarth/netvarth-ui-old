@@ -165,6 +165,52 @@
             </div>
           </nav>
         </header>
+
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="queues.length > 0">
+          <div class="col-md-12 col-xs-12 col-sm-12 no-padding pcheckin-owl">
+
+            <!-- <div class="col-lg-10 col-md-10 col-sm-9 col-xs-8 no-padding ov-hid"> -->
+            <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
+              <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
+                <button class="item buttonCk" [ngClass]="{active: isQueueSelected(queue.id)?true:false}" (click)="viewQClicked(queue.id)" *ngFor="let queue of queues;let i = index">
+                  <!-- <mat-chip > -->
+                  <!-- <input type="checkbox" [checked]="isQueueSelected(queue.id)" />-->
+                  {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                </button>
+                <!-- </mat-chip> -->
+              </owl-carousel>
+              <div class="owl-theme">
+                <div class="owl-controls">
+                  <div class="checkins-nav owl-nav"></div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+            <!-- <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 no-padding">
+              <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
+                <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
+                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                    <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Close filter window'"></i>
+                    <i class="icon-filter-one" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                      *ngIf="!open_filter"></i>
+                  </a>
+                </span>
+                <span class="btn-primary-n pull-right clr-fltr" (click)="clearFilter()" *ngIf="filterapplied === true">
+                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                    <i class="pointer" [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png"
+                        alt="" /> &nbsp;</i>
+                  </a>
+                </span>
+                <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
+                  <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
+                </span>
+              </div>
+            </div> -->
+          </div>
+        </div>
         <div class="head">
           <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="selected_location">
             <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
@@ -401,56 +447,6 @@
                   class="genMarginLeft genTextHeight btn_black qo_bt">
               </div>
             </div>
-          </div>
-        </div>
-        <div class="head" *ngIf="queues.length > 0">
-          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-
-            <!-- <div class="col-lg-10 col-md-10 col-sm-9 col-xs-8 no-padding ov-hid"> -->
-            <mat-chip-list class="pcheckin-owl">
-              <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
-                <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
-
-                  <mat-chip class="item" (click)="viewQClicked(queue.id)" [selected]="isQueueSelected(queue.id)"
-                    *ngFor="let queue of queues;let i = index">
-                    <!-- <span class="item" *ngFor="let queue of queues;let i = index"
-                  (click)="selectedQueue(queue, i);"> -->
-                    <input type="checkbox" [checked]="isQueueSelected(queue.id)" /><span class="break-inside: avoid">
-                      {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
-                    </span>
-                  </mat-chip>
-                </owl-carousel>
-                <div class="owl-theme">
-                  <div class="owl-controls">
-                    <div class="checkins-nav owl-nav"></div>
-                  </div>
-                </div>
-              </div>
-            </mat-chip-list>
-            <!-- </div> -->
-            <!-- <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 no-padding">
-              <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
-                <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Close filter window'"></i>
-                    <i class="icon-filter-one" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                      *ngIf="!open_filter"></i>
-                  </a>
-                </span>
-                <span class="btn-primary-n pull-right clr-fltr" (click)="clearFilter()" *ngIf="filterapplied === true">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="pointer" [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png"
-                        alt="" /> &nbsp;</i>
-                  </a>
-                </span>
-                <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
-                  [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
-                  <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
-                </span>
-              </div>
-            </div> -->
           </div>
         </div>
         <div class="dash-list">

@@ -7872,13 +7872,17 @@ hr.wide-separator-line {
 } */
 
 .checkin-nav .owl-prev i, .checkins-nav .owl-prev i {
-  font-size: 2rem;
+  /* font-size: 2rem; */
   color: #000;
 }
 
 .checkin-nav .owl-next i, .checkins-nav .owl-next i {
-  font-size: 2rem;
+  /* font-size: 2rem; */
   color: #000;
+}
+owl-carousel .bt3.active {
+  background-color: #3c8dbc !important;
+  color: #fff !important;
 }
 
 .checkin-nav .owl-prev, .checkins-nav .owl-prev {
@@ -8867,4 +8871,26 @@ padding-right: 0 !important; padding-top: 0 !important;}
 
 .set-block-1 li a {
   padding : 8px 10px 8px 10px !important;
+}
+
+.buttonCk {
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #000;
+  background-color: #ddd;
+  box-shadow: 0 9px #ddd;
+}
+
+/* .buttonCk:hover {background-color: #3c8dbc} */
+.buttonCk:active {
+  background-color: #3c8dbc;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.buttonCk.active {
+  background-color: #3c8dbc;
+  color: #fff !important;
 }

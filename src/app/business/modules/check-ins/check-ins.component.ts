@@ -358,27 +358,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         touchDrag: true,
         pullDrag: false,
         loop: false,
-        autoWidth: false,
+        autoWidth: true,
         // margin: 10,
-        responsiveClass: true,
-        responsiveBaseElement: '.checkins-owl',
-        responsive: {
-          0: {
-            items: 1
-          },
-          479: {
-            items: 3
-          },
-          768: {
-            items: 4
-          },
-          979: {
-            items: 4
-          },
-          1200: {
-            items: 5
-          }
-        }
+        // responsiveClass: true,
+        // responsiveBaseElement: '.checkins-owl',
+        // responsive: {
+        //   0: {
+        //     items: 1
+        //   },
+        //   479: {
+        //     items: 3
+        //   },
+        //   768: {
+        //     items: 4
+        //   },
+        //   979: {
+        //     items: 4
+        //   },
+        //   1200: {
+        //     items: 5
+        //   }
+        // }
       };
     });
   }
@@ -881,20 +881,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureCheckinCount(Mfilter = null) {
     // const queueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
-    let qids;
-    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
-      qids = this.shared_functions.getitemFromGroupStorage('selQ');
-    } else {
-      qids = this.selQIds;
-    }
+    // let qids;
+    // if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+    //   qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    // } else {
+    //   qids = this.selQIds;
+    // }
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (qids && qids.length > 0) {
-        Mfilter['queue-eq'] = qids.toString();
+      // if (qids && qids.length > 0) {
+      //   Mfilter['queue-eq'] = qids.toString();
+      // }
+      if (this.selQIds.length > 0) {
+        Mfilter['queue-eq'] = this.selQIds.toString();
       }
       no_filter = true;
     }
@@ -912,19 +915,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryCheckinCount(Mfilter = null) {
     let no_filter = false;
-    let qids;
-    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
-      qids = this.shared_functions.getitemFromGroupStorage('selQ');
-    } else {
-      qids = this.selQIds;
-    }
+    // let qids;
+    // if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+    //   qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    // } else {
+    //   qids = this.selQIds;
+    // }
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (qids && qids.length > 0) {
-        Mfilter['queue-eq'] = qids.toString();
+      // if (qids && qids.length > 0) {
+      //   Mfilter['queue-eq'] = qids.toString();
+      // }
+      if (this.selQIds.length > 0) {
+        Mfilter['queue-eq'] = this.selQIds.toString();
       }
       no_filter = true;
     }
@@ -942,11 +948,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getTodayCheckinCount(Mfilter = null) {
     let qids;
-    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
-      qids = this.shared_functions.getitemFromGroupStorage('selQ');
-    } else {
-      qids = this.selQIds;
-    }
+    // if (this.shared_functions.getitemFromGroupStorage('selQ')) {
+    //   qids = this.shared_functions.getitemFromGroupStorage('selQ');
+    // } else {
+    //   qids = this.selQIds;
+    // }
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
@@ -956,8 +962,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (qids && qids.length > 0) {
-        Mfilter['queue-eq'] = qids.toString();
+      // if (qids && qids.length > 0) {
+      //   Mfilter['queue-eq'] = qids.toString();
+      // }
+      if (this.selQIds.length > 0) {
+        Mfilter['queue-eq'] = this.selQIds.toString();
       }
       no_filter = true;
     }
@@ -1021,9 +1030,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getTodayCheckIn() {
     this.loading = true;
-    this.queues = [];
-    this.getQs().then(queue => {
-      this.queues = queue;
+    // this.queues = [];
+    // this.getQs().then(queue => {
+    //   this.queues = queue;
       this.load_waitlist = 0;
       const Mfilter = this.setFilterForApi();
       Mfilter[this.sortBy] = 'asc';
@@ -1077,13 +1086,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           () => {
             this.load_waitlist = 1;
           });
-    });
+    // });
   }
   getFutureCheckIn() {
     this.load_waitlist = 0;
-    this.queues = [];
-    this.getQs().then(queue => {
-      this.queues = queue;
+    // this.queues = [];
+    // this.getQs().then(queue => {
+    //   this.queues = queue;
       let Mfilter = this.setFilterForApi();
       Mfilter['queue-eq'] = this.selQIds.toString();
       const promise = this.getFutureCheckinCount(Mfilter);
@@ -1112,14 +1121,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.load_waitlist = 1;
               });
         });
-    });
+    // });
   }
   getHistoryCheckIn() {
     this.loading = true;
     this.load_waitlist = 0;
-    this.queues = [];
-    this.getQs().then(queue => {
-      this.queues = queue;
+    // this.queues = [];
+    // this.getQs().then(queue => {
+    //   this.queues = queue;
       let Mfilter = this.setFilterForApi();
       Mfilter['queue-eq'] = this.selQIds.toString();
       const promise = this.getHistoryCheckinCount(Mfilter);
@@ -1147,7 +1156,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.loading = false;
         }
       );
-    });
+    // });
   }
   setTimeType(time_type) {
     this.statusMultiCtrl = [];
@@ -1245,6 +1254,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.edit_location = 1;
   }
   reloadAPIs() {
+    this.getCounts();
     // this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
   }
