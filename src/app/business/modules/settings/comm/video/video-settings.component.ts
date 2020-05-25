@@ -28,13 +28,13 @@ export class VideoSettingsComponent implements OnInit {
     domain: any;
 
     videoModes = {
-        SKYPE: { value: 'SKYPE', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
-        WHATSAPP: { value: 'WHATSAPP', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
-        HANGOUTS: { value: 'HANGOUTS', displayName: 'Hangouts', placeHolder: 'Hangouts ID', titleHelp: 'Configure Hangouts Settings', actualValue: '', enabled: false },
-        BOTIM: { value: 'BOTIM', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
-        IMO: { value: 'IMO', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
-        ZOOM: { value: 'ZOOM', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
-        VIBER: { value: 'VIBER', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
+        Skype: { value: 'Skype', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
+        WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
+        Hangouts: { value: 'Hangouts', displayName: 'Hangouts', placeHolder: 'Hangouts ID', titleHelp: 'Configure Hangouts Settings', actualValue: '', enabled: false },
+        Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
+        Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
+        Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
+        Viber: { value: 'Viber', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
     };
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
@@ -73,7 +73,6 @@ export class VideoSettingsComponent implements OnInit {
             (data: any) => {
                 this.virtualCallModesList = data.virtualCallingModes;
                 this.virtualCallModesList.forEach(mode => {
-                    console.log(mode);
                     this.videoModes[mode.callingMode].actualValue = mode.value;
                     if (mode.status && mode.status === 'ACTIVE') {
                         this.videoModes[mode.callingMode].enabled = true;
@@ -82,7 +81,6 @@ export class VideoSettingsComponent implements OnInit {
                     }
                 });
                 this.api_loading = false;
-                console.log(this.virtualCallModesList);
             },
             (error: any) => {
                 this.api_loading = false;
@@ -101,8 +99,6 @@ export class VideoSettingsComponent implements OnInit {
     }
     updateVideoSettings(resultMode, callingMode) {
         const virtualCallingModes = [];
-        console.log(resultMode);
-        console.log(callingMode);
 
         // Object.keys(this.videoModes).forEach(key => {
 
@@ -138,11 +134,9 @@ export class VideoSettingsComponent implements OnInit {
             };
             virtualCallingModes.push(mode);
         }
-        console.log(virtualCallingModes);
         const postdata = {
             'virtualCallingModes': virtualCallingModes
         };
-        console.log(postdata)
         this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
                 this.shared_functions.openSnackBar('Virtual calling modes added successfully', { 'panelclass': 'snackbarerror' });
