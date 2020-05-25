@@ -28,6 +28,11 @@
                                 <span class="ttle">{{price_cap}}</span>
                                 <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                             </div>
+                            <div class="item">
+                                <span class="ttle">Service Type</span>
+                                <span *ngIf="service.serviceType==='virtualService'">Teleservice</span>
+                                <span *ngIf="service.serviceType!=='virtualService'">Physical Service</span>
+                            </div>
                         </div>
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
