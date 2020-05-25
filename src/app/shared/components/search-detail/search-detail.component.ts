@@ -1668,7 +1668,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
   showAppointment(origin?) {
     const acc_loc_id = this.current_provider.id.split('-');
-    //const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
+    // const seldate = this.current_provider.fields['estimatedtime_det']['cdate'];
     const unique_id = this.current_provider.fields['unique_id'];
     const navigationExtras: NavigationExtras = {
       queryParams: {
