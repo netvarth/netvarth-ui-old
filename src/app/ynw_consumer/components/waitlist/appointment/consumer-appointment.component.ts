@@ -191,6 +191,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     callingModesDisplayName = projectConstants.CALLING_MODES;
     showApptTime = false;
     wtsapmode: any;
+    tele_srv_stat: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -210,6 +211,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.provider_id = params.unique_id;
                 this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
                 this.hold_sel_checkindate = this.sel_checkindate;
+                this.tele_srv_stat = params.tel_serv_stat;
             });
     }
     ngOnInit() {
@@ -1216,7 +1218,17 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.resetApi();
         this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
-                this.servicesjson = data;
+                //this.servicesjson = data;
+                if (this.tele_srv_stat === '1') {
+                    this.servicesjson = data;
+                } else {
+                    this.servicesjson = [];
+                    for (const i in data) {
+                        if (data[i].serviceType !== 'virtualService') {
+                            this.servicesjson.push(data[i]);
+                        }
+                    }
+                }
                 this.serviceslist = data;
                 this.sel_ser_det = [];
                 if (this.servicesjson.length > 0) {
