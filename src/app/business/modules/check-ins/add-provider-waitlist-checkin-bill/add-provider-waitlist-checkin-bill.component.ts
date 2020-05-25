@@ -454,7 +454,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         (data: any) => {
           this.all_services = data;
           for (const ser of data) {
-            if (ser.status === 'ACTIVE') {
+            if (ser.status === 'ACTIVE' && ser.serviceType !==	'donationService') {
               this.services.push(ser);
             }
           }
