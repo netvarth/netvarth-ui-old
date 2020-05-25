@@ -468,19 +468,40 @@ export class SharedServices {
     }
     return url;
   }
-  deleteWaitlist(id, params) {
-    return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+  deleteWaitlist(id, params,type) {
+    if(type == 'checkin'){
+      return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+    }
+    else if(type == 'appointment'){
+      return this.servicemeta.httpPut('consumer/appointment/cancel' + id);
+    }
+    
   }
-  getConsumerRateService(params) {
-    const path = 'consumer/waitlist/rating';
+  getConsumerRateService(params,type) {
+    let path;
+    if(type == 'checkin'){
+     path = 'consumer/waitlist/rating';
+    }else if (type == 'appointment'){
+      path = 'consumer/appointment/rating';
+    }
     return this.servicemeta.httpGet(path, null, params);
   }
-  postConsumerRateService(params, data) {
-    const path = 'consumer/waitlist/rating';
+  postConsumerRateService(params, data,type) {
+    let path;
+    if(type == 'checkin'){
+     path = 'consumer/waitlist/rating';
+    }else if (type == 'appointment'){
+      path = 'consumer/appointment/rating';
+    }
     return this.servicemeta.httpPost(path, data, null, params);
   }
-  updateConsumerRateService(params, data) {
-    const path = 'consumer/waitlist/rating';
+  updateConsumerRateService(params, data,type) {
+    let path;
+    if(type == 'checkin'){
+     path = 'consumer/waitlist/rating';
+    }else if (type == 'appointment'){
+      path = 'consumer/appointment/rating';
+    }
     return this.servicemeta.httpPut(path, data, null, params);
   }
   getUpgradableLicensePackages() {
@@ -679,5 +700,13 @@ export class SharedServices {
   updateAppointmentLiveTrackDetails(uid, id, data) {
     const url = 'consumer/appointment/updateMyLoc/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);
+  }
+  startApptLiveTrack(uid, id) {
+    const url = 'consumer/appointment/start/mytracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  stopApptLiveTrack(uid, id) {
+    const url = 'consumer/appointment/stop/mytracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpDelete(url);
   }
 }

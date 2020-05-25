@@ -1132,7 +1132,7 @@ export class SharedFunctions {
     return retstr;
   }
 
-  doCancelWaitlist(waitlist, cthis?) {
+  doCancelWaitlist(waitlist,type, cthis?) {
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -1147,7 +1147,7 @@ export class SharedFunctions {
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.cancelWaitlist(waitlist.ynwUuid, waitlist.providerAccount.id)
+          this.cancelWaitlist(waitlist.ynwUuid, waitlist.providerAccount.id,type)
             .then(
               data => {
                 resolve(data);
@@ -1162,12 +1162,12 @@ export class SharedFunctions {
       });
     });
   }
-  cancelWaitlist(id, provider_id) {
+  cancelWaitlist(id, provider_id,type) {
     return new Promise((resolve, reject) => {
       const params = {
         'account': provider_id
       };
-      this.shared_service.deleteWaitlist(id, params)
+      this.shared_service.deleteWaitlist(id, params,type)
         .subscribe(
           data => {
             resolve('reloadlist');

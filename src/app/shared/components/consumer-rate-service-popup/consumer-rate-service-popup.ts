@@ -19,6 +19,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   waitlist = null;
   newrating = true;
   load_complete = false;
+  type;
   rate_your_visit = Messages.RATE_YOU_VISIT;
   rate_cap = Messages.RATING_CAP;
   message_cap = Messages.MESSAGE_CAP;
@@ -33,7 +34,8 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
 
   ) {
-    this.waitlist = data;
+    this.waitlist = data.detail;
+    this.type = data.isFrom;
   }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
       'uId-eq': this.waitlist.ynwUuid
     };
 
-    this.shared_services.getConsumerRateService(params)
+    this.shared_services.getConsumerRateService(params,this.type)
       .subscribe(
         data => {
           if (data[0]) {
@@ -88,7 +90,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   addRateService(params, post_data) {
 
-    this.shared_services.postConsumerRateService(params, post_data)
+    this.shared_services.postConsumerRateService(params, post_data,this.type)
       .subscribe(
         () => {
           this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
@@ -103,7 +105,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   updateRateService(params, post_data) {
 
-    this.shared_services.updateConsumerRateService(params, post_data)
+    this.shared_services.updateConsumerRateService(params, post_data,this.type)
       .subscribe(
         () => {
           this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
