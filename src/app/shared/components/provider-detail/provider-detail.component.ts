@@ -998,7 +998,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         sel_date: curdate,
         cur: this.changedate_req,
         unique_id: this.provider_id,
-        account_id: this.provider_bussiness_id
+        account_id: this.provider_bussiness_id,
+        tel_serv_stat: this.locationjson[0].fields.virtual_service_status
       }
     };
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
