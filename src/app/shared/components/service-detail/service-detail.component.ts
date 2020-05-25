@@ -66,13 +66,13 @@ export class ServiceDetailComponent implements OnInit {
       this.min = this.minutes % 60;
       this.hour = (this.minutes-this.min) / 60;
       if(this.hour > 0 && this.min > 0){
-      if(this.hour > 1){
-        this.HHMM = this.hour + "Hrs" +" "+this.min +"Mins" ;
+        if(this.hour > 1){
+          this.HHMM = this.hour + "Hrs" +" "+this.min +"Mins" ;
+        }
+        else{
+          this.HHMM = this.hour + "Hr" +" "+this.min +"Mins" ;
+        }
       }
-      else{
-        this.HHMM = this.hour + "Hr" +" "+this.min +"Mins" ;
-      }
-    }
       else if(this.hour === 0)
       {
         this.HHMM = this.min + "Mins"; 
@@ -80,13 +80,15 @@ export class ServiceDetailComponent implements OnInit {
       else if(this.min === 0)
       {
         if(this.hour > 1)
-        {this.HHMM = this.hour + "Hrs";}
+        {
+          this.HHMM = this.hour + "Hrs";
+        }
         else
         {
           this.HHMM = this.hour + "Hr";
         }
       }
-    }
+    }    
    
     if (this.data.serv_type) {
       this.is_donation_serv = true;
