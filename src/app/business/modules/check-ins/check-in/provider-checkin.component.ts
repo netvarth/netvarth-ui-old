@@ -191,15 +191,20 @@ export class ProviderCheckinComponent implements OnInit {
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
+        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
-            console.log(qparams);
             if (qparams.checkin_type) {
                 this.checkinType = qparams.checkin_type;
             }
-            if (qparams.ph) {
-                const filter: any = {
-                    'phoneNo-eq': qparams.ph
-                };
+            if (qparams.ph || qparams.haveMobile) {
+                const filter = {};
+                if (qparams.ph) {
+                    filter['phoneNo-eq'] = qparams.ph;
+                }
+                if (qparams.haveMobile && qparams.haveMobile === 'false') {
+                    filter['id-eq'] = qparams.id;
+                }
+                this.api_loading1 = true;
                 this.provider_services.getProviderCustomers(filter).subscribe(
                     (data) => {
                         this.customer_data = data[0];
@@ -240,7 +245,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.createForm();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.get_token_cap = Messages.GET_TOKEN;
         this.breadcrumbs = [
             {
@@ -272,10 +276,9 @@ export class ProviderCheckinComponent implements OnInit {
             this.qParams['noMobile'] = false;
         }
         this.qParams['checkinType'] = this.checkinType;
-        console.log(this.qParams);
+        this.qParams['source'] = 'checkin';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
-
         };
         this.router.navigate(['/provider/customers/add'], navigationExtras);
     }

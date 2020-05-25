@@ -194,8 +194,6 @@ export class CustomerDetailComponent implements OnInit {
             });
     }
     createForm() {
-        
-        console.log(this.haveMobile);
         if (!this.haveMobile) {
             this.amForm = this.fb.group({
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -276,7 +274,9 @@ export class CustomerDetailComponent implements OnInit {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
+                                    checkin_type: this.checkin_type,
+                                    haveMobile: this.haveMobile,
+                                    id: data
                                 }
                             };
                             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
@@ -284,7 +284,9 @@ export class CustomerDetailComponent implements OnInit {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
+                                    checkin_type: this.checkin_type,
+                                    haveMobile: this.haveMobile,
+                                    id: data
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
@@ -325,7 +327,7 @@ export class CustomerDetailComponent implements OnInit {
                 .subscribe(
                     data => {
                         this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.shared_functions.openSnackBar("Updated Successfully");
+                        this.shared_functions.openSnackBar('Updated Successfully');
                         const qParams = {};
                         qParams['pid'] = data;
                         if (this.source === 'checkin') {

@@ -479,8 +479,7 @@
                               {{checkin.waitlistingFor[0].firstName}}
                               {{checkin.waitlistingFor[0].lastName}}
                             </span>
-                            <span class="info-box-text service"
-                              *ngIf="selected_queue && selected_queue.services.length>1">
+                            <span class="info-box-text service">
                               {{checkin.service.name}}
                             </span>
                           </div>
@@ -594,8 +593,7 @@
                             {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
                             {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
                           </span>
-                          <span class="info-box-text service"
-                            *ngIf="selected_queue && selected_queue.services.length>1">
+                          <span class="info-box-text service">
                             {{timeSlotCheckins[slot][0].service.name}}
                           </span>
                         </div>
@@ -866,8 +864,7 @@
                                 {{checkin.waitlistingFor[0].firstName}}
                                 {{checkin.waitlistingFor[0].lastName}}
                               </span>
-                              <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                              <span class="info-box-text service">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
@@ -1266,8 +1263,7 @@
                                 {{checkin.waitlistingFor[0].firstName}}
                                 {{checkin.waitlistingFor[0].lastName}}
                               </span>
-                              <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                              <span class="info-box-text service">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"
@@ -1363,8 +1359,7 @@
                                 {{checkin.waitlistingFor[0].firstName}}
                                 {{checkin.waitlistingFor[0].lastName}}
                               </span>
-                              <span class="info-box-text service"
-                                *ngIf="selected_queue && selected_queue.services.length>1">
+                              <span class="info-box-text service">
                                 {{checkin.service.name}}
                               </span>
                               <span class="checkin-label" *ngFor="let label of checkin.label | keyvalue"

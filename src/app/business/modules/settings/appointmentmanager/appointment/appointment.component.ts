@@ -196,14 +196,19 @@ export class AppointmentComponent implements OnInit {
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
+        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
             }
-            if (qparams.ph) {
-                const filter: any = {
-                    'phoneNo-eq': qparams.ph
-                };
+            if (qparams.ph || qparams.haveMobile) {
+                const filter = {};
+                if (qparams.ph) {
+                    filter['phoneNo-eq'] = qparams.ph;
+                }
+                if (qparams.haveMobile && qparams.haveMobile === 'false') {
+                    filter['id-eq'] = qparams.id;
+                }
                 this.provider_services.getProviderCustomers(filter).subscribe(
                     (data) => {
                         this.customer_data = data[0];
@@ -242,7 +247,6 @@ export class AppointmentComponent implements OnInit {
         this.createForm();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.get_token_cap = Messages.GET_TOKEN;
         this.breadcrumbs = [
             {
@@ -268,6 +272,8 @@ export class AppointmentComponent implements OnInit {
         if (type === 'new') {
             this.qParams['noMobile'] = false;
         }
+        this.qParams['checkinType'] = this.apptType;
+        this.qParams['source'] = 'appointment';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
 
@@ -305,7 +311,7 @@ export class AppointmentComponent implements OnInit {
                 mode = 'id';
             }
         }
-        this.qParams['source'] = 'checkin';
+        this.qParams['source'] = 'appointment';
         switch (mode) {
             case 'phone':
                 post_data = {
@@ -1392,14 +1398,14 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             console.log(this.queuejson[this.sel_queue_indx].id);
 
-                            if (this.queuejson[this.sel_queue_indx].id == this.comingSchduleId) {
+                            if (this.queuejson[this.sel_queue_indx].id === this.comingSchduleId) {
                                 console.log('scheduleid');
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
                                 }
                             } else {
-                                console.log("in else");
+                                console.log('in else');
                                 this.apptTime = this.freeSlots[0].time;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
@@ -1410,8 +1416,7 @@ export class AppointmentComponent implements OnInit {
                             console.log(this.apptTime);
                             this.comingSchduleId = '';
                         }
-                    }
-                    else {
+                    } else {
                         this.showApptTime = false;
                     }
                 },
