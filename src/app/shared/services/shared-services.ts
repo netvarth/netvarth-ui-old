@@ -468,38 +468,36 @@ export class SharedServices {
     }
     return url;
   }
-  deleteWaitlist(id, params,type) {
-    if(type == 'checkin'){
+  deleteWaitlist(id, params, type) {
+    if (type === 'checkin') {
       return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+    } else if (type === 'appointment') {
+      return this.servicemeta.httpPut('consumer/appointment/cancel/' + id);
     }
-    else if(type == 'appointment'){
-      return this.servicemeta.httpPut('consumer/appointment/cancel' + id);
-    }
-    
   }
-  getConsumerRateService(params,type) {
+  getConsumerRateService(params, type) {
     let path;
-    if(type == 'checkin'){
-     path = 'consumer/waitlist/rating';
-    }else if (type == 'appointment'){
+    if (type === 'checkin') {
+      path = 'consumer/waitlist/rating';
+    } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     }
     return this.servicemeta.httpGet(path, null, params);
   }
-  postConsumerRateService(params, data,type) {
+  postConsumerRateService(params, data, type) {
     let path;
-    if(type == 'checkin'){
-     path = 'consumer/waitlist/rating';
-    }else if (type == 'appointment'){
+    if (type === 'checkin') {
+      path = 'consumer/waitlist/rating';
+    } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
   }
-  updateConsumerRateService(params, data,type) {
+  updateConsumerRateService(params, data, type) {
     let path;
-    if(type == 'checkin'){
-     path = 'consumer/waitlist/rating';
-    }else if (type == 'appointment'){
+    if (type === 'checkin') {
+      path = 'consumer/waitlist/rating';
+    } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     }
     return this.servicemeta.httpPut(path, data, null, params);

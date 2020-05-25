@@ -164,9 +164,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.breadcrumbs = [
       {
-        title: 'My Jaldee'
+          title: 'My Jaldee'
       }
-    ];
+  ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -605,16 +605,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  doCancelWaitlist(waitlist, type) {
-    if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
-      return false;
-    }
-    this.shared_functions.doCancelWaitlist(waitlist, type, this)
+  doCancelWaitlist(waitlist,type) {
+    console.log(waitlist);
+    // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
+    //   return false;
+    // }
+    console.log(type);
+    this.shared_functions.doCancelWaitlist(waitlist,type, this)
       .then(
         data => {
-          if (data === 'reloadlist' && type === 'checkin') {
+          if (data === 'reloadlist' && type == 'checkin') {
             this.getWaitlist();
-          } else if (data === 'reloadlist' && type === 'appointment') {
+          }
+          else if(data === 'reloadlist' && type == 'appointment'){
             this.getAppointmentToday();
           }
         },
@@ -683,12 +686,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return fav;
   }
 
-  addWaitlistMessage(waitlist) {
+  addWaitlistMessage(waitlist,type?) {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
-    pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
+    if(type == 'appt'){
+      pass_ob['appt'] = type;
+      pass_ob['uuid'] = waitlist.uid;
+    }else{
+      pass_ob['uuid'] = waitlist.ynwUuid;
+    }
     this.addNote(pass_ob);
   }
 
@@ -817,12 +825,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  gotoDonations() {
+  gotoDonations () {
     this.router.navigate(['consumer', 'donations']);
   }
   getDonations() {
     const filter = {};
-    filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
+    filter['date-eq'] =  moment(this.server_date).format('YYYY-MM-DD');
     this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
@@ -873,14 +881,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewBill(checkin) {
+  viewBill(checkin,type) {
     if (!this.billdialogRef) {
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '40%',
         panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
         disableClose: true,
         data: {
-          checkin: checkin
+          checkin: checkin,
+          isFrom: type
         }
       });
       this.billdialogRef.afterClosed().subscribe(result => {
@@ -891,21 +900,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  rateService(waitlist, type) {
+  rateService(waitlist,type) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
       data: {
-        'detail': waitlist,
-        'isFrom': type
+        'detail':waitlist,
+        'isFrom':type
       }
     });
     this.ratedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist' && type === 'checkin') {
+      if (result === 'reloadlist' && type =='checkin') {
         this.getWaitlist();
-      } else if (result === 'reloadlist' && type === 'appointment') {
+      }
+     else if (result === 'reloadlist' && type =='appointment') {
         this.getAppointmentToday();
       }
     });
@@ -979,7 +989,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: { account_id: waitlist.providerAccount.id }
     };
-    this.router.navigate(['consumer', 'appointment', 'payment', waitlist.ynwUuid], navigationExtras);
+    this.router.navigate(['consumer', 'appointment', 'payment', waitlist.uid], navigationExtras);
   }
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {
@@ -1181,16 +1191,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
-  gotoApptmentHistory() {
+  gotoApptmentHistory(){
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
-  getAppointmentToday() {
+  getAppointmentToday(){
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
           this.appointments = data;
-          console.log('Appointments', this.appointments);
-        },
+          console.log("Appointments",this.appointments)
+          },
         error => {
         }
       );

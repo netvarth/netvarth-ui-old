@@ -87,6 +87,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   billNoteExists = false;
   showBillNotes = false;
   paytmEnabled = false;
+  type;
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
@@ -98,7 +99,13 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     @Inject(DOCUMENT) public document
   ) {
     this.checkin = this.data.checkin || null;
-    this.uuid = this.checkin.ynwUuid;
+    this.type = this.data.isFrom;
+    if(this.type == 'checkin'){
+      this.uuid = this.checkin.ynwUuid;
+    }else if(this.type == 'appointment'){
+      this.uuid = this.checkin.uid;
+    }
+    
     if (!this.checkin) {
       setTimeout(() => {
         this.dialogRef.close('error');
@@ -158,7 +165,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     const params = {
       account: checkin.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, checkin.ynwUuid)
+    this.consumer_checkin_history_service.getWaitlistBill(params, this.uuid)
       .subscribe(
         data => {
           this.bill_data = data;
@@ -195,7 +202,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     const params = {
       account: this.checkin.providerAccount.id
     };
-    this.consumer_checkin_history_service.getPaymentDetail(params, this.checkin.ynwUuid)
+    this.consumer_checkin_history_service.getPaymentDetail(params, this.uuid)
       .subscribe(
         data => {
           this.pre_payment_log = data;
@@ -238,7 +245,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    * Perform PayU Payment
    */
   payuPayment() {
-    this.pay_data.uuid = this.checkin.ynwUuid;
+    this.pay_data.uuid = this.uuid;
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'DC';
     this.pay_data.accountId = this.checkin.providerAccount.id;
@@ -266,7 +273,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     }
   }
   paytmPayment() {
-    this.pay_data.uuid = this.checkin.ynwUuid;
+    this.pay_data.uuid = this.uuid;
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'PPI';
     this.pay_data.accountId = this.checkin.providerAccount.id;

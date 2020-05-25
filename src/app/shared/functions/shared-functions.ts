@@ -1147,7 +1147,13 @@ export class SharedFunctions {
 
       cthis.canceldialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.cancelWaitlist(waitlist.ynwUuid, waitlist.providerAccount.id,type)
+          let id;
+          if(type == 'checkin'){
+            id=waitlist.ynwUuid;
+          }else if(type == 'appointment'){
+            id = waitlist.uid;
+          }
+          this.cancelWaitlist(id, waitlist.providerAccount.id,type)
             .then(
               data => {
                 resolve(data);

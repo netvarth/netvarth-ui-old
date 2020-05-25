@@ -25,7 +25,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   message_cap = Messages.MESSAGE_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   rate_btn_cap = Messages.RATE_BTN_CAP;
-
+  uuid;
   constructor(
     public dialogRef: MatDialogRef<ConsumerRateServicePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,6 +36,11 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   ) {
     this.waitlist = data.detail;
     this.type = data.isFrom;
+    if(this.type == 'checkin'){
+      this.uuid = this.waitlist.ynwUuid;
+    }else if(this.type == 'appointment'){
+      this.uuid = this.waitlist.uid;
+    }
   }
 
   ngOnInit() {
@@ -45,7 +50,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   getRateByUser() {
     const params = {
       account: this.waitlist.providerAccount.id,
-      'uId-eq': this.waitlist.ynwUuid
+      'uId-eq': this.uuid
     };
 
     this.shared_services.getConsumerRateService(params,this.type)
@@ -76,7 +81,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     };
 
     const post_data = {
-      'uuid': this.waitlist.ynwUuid,
+      'uuid': this.uuid,
       'stars': this.rate_value,
       'feedback': this.message
     };
