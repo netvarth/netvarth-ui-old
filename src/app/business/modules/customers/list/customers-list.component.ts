@@ -239,7 +239,7 @@ export class CustomersListComponent implements OnInit {
             this.doSearch();
         }
     }
-    searchCustomer() {
+    createCustomer() {
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 source: 'clist'
@@ -284,11 +284,18 @@ export class CustomersListComponent implements OnInit {
             );
     }
 
-editCustomer(customer) {
-    const navigationExtras: NavigationExtras = {
-        queryParams: { action: 'edit' }
-    };
-    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
-}
-
+    editCustomer(customer) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    }
+    searchCustomer() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                source: 'clist'
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    }
 }

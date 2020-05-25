@@ -448,4 +448,12 @@ export class CustomerDetailComponent implements OnInit {
                 }
             );
     }
+    findCustomer() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                source: 'clist'
+            }
+        };
+        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    }
 }
