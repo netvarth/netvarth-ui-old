@@ -164,9 +164,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.breadcrumbs = [
       {
-          title: 'My Jaldee'
+        title: 'My Jaldee'
       }
-  ];
+    ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -605,17 +605,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  doCancelWaitlist(waitlist,type) {
+  doCancelWaitlist(waitlist, type) {
     if (!waitlist.ynwUuid || !waitlist.providerAccount.id) {
       return false;
     }
-    this.shared_functions.doCancelWaitlist(waitlist,type, this)
+    this.shared_functions.doCancelWaitlist(waitlist, type, this)
       .then(
         data => {
-          if (data === 'reloadlist' && type == 'checkin') {
+          if (data === 'reloadlist' && type === 'checkin') {
             this.getWaitlist();
-          }
-          else if(data === 'reloadlist' && type == 'appointment'){
+          } else if (data === 'reloadlist' && type === 'appointment') {
             this.getAppointmentToday();
           }
         },
@@ -818,12 +817,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  gotoDonations () {
+  gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
   getDonations() {
     const filter = {};
-    filter['date-eq'] =  moment(this.server_date).format('YYYY-MM-DD');
+    filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
     this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
@@ -892,22 +891,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  rateService(waitlist,type) {
+  rateService(waitlist, type) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
       data: {
-        'detail':waitlist,
-        'isFrom':type
+        'detail': waitlist,
+        'isFrom': type
       }
     });
     this.ratedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist' && type =='checkin') {
+      if (result === 'reloadlist' && type === 'checkin') {
         this.getWaitlist();
-      }
-     else if (result === 'reloadlist' && type =='appointment') {
+      } else if (result === 'reloadlist' && type === 'appointment') {
         this.getAppointmentToday();
       }
     });
@@ -1183,16 +1181,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
-  gotoApptmentHistory(){
+  gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
-  getAppointmentToday(){
+  getAppointmentToday() {
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
           this.appointments = data;
-          console.log("Appointments",this.appointments)
-          },
+          console.log('Appointments', this.appointments);
+        },
         error => {
         }
       );

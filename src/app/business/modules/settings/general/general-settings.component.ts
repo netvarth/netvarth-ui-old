@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     'selector': 'app-general-settings',
@@ -39,9 +41,14 @@ export class GeneralSettingsComponent implements OnInit {
     isCorp = false;
     isMultilevel = false;
     domain;
+    filterByDept = false;
+    removeitemdialogRef;
+    message;
+    deptstatusstr = 'Off';
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
+        private dialog: MatDialog,
         private shared_functions: SharedFunctions) {
 
     }
@@ -63,7 +70,7 @@ export class GeneralSettingsComponent implements OnInit {
     goDepartments() {
         this.router.navigate(['provider', 'settings', 'general', 'departments']);
     }
-    gotoUsers () {
+    gotoUsers() {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     gotoNonworkingDays() {
@@ -81,7 +88,7 @@ export class GeneralSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
-      }
+    }
     getLocationCount() {
         this.loading = true;
         this.provider_services.getLocationCount()
@@ -97,6 +104,7 @@ export class GeneralSettingsComponent implements OnInit {
             .subscribe(
                 data => {
                     this.filterbydepartment = data['filterByDept'];
+                    this.deptstatusstr = data['filterByDept'] ? 'On' : 'Off';
                 });
         this.loading = false;
     }
@@ -175,5 +183,35 @@ export class GeneralSettingsComponent implements OnInit {
                 this.livetrack_status = data.livetrack;
                 this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
             });
+    }
+    doRemoveservice() {
+        if (this.filterByDept) {
+            this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
+        } else {
+            this.message = 'Assigned services are removed from the departments';
+        }
+        this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': this.message
+            }
+        });
+        this.removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const status = (this.filterByDept === true) ? 'Enable' : 'Disable';
+                this.provider_services.setDeptWaitlistMgr(status)
+                    .subscribe(
+                        () => {
+                            this.getWaitlistMgr();
+                        },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            } else {
+                this.filterByDept = (this.filterByDept === true) ? false : true;
+            }
+        });
     }
 }

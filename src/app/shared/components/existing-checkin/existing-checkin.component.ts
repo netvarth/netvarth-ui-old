@@ -153,7 +153,7 @@ export class ExistingCheckinComponent implements OnInit {
             this.changeOccured = true;
             // this.api_success = Messages.CHECKIN_CANCELLED;
             this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', this.checkinLabel);
-            this.api_success =  this.api_success.replace('[cancelled]', this.cancelledlabel);
+            this.api_success = this.api_success.replace('[cancelled]', this.cancelledlabel);
             setTimeout(() => {
               this.api_success = null;
               this.api_error = null;

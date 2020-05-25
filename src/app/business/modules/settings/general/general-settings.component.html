@@ -16,10 +16,19 @@
                             <p class="sts" [class.active]="livetrack_status"></p>
                             <div class="onoff">{{livetrack_statusstr}}</div>
                         </label>
-                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints. <a class="learnmore-pointer" id="customer-help"
-                            (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
-                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints <a class="learnmore-pointer" id="customer-help"
-                            (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
+                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints. <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
+                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
+                    </div>
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                        <label>Select services by department &nbsp;&nbsp;
+                            <mat-slide-toggle class="example-margin" [checked]="filterbydepartment"
+                                [labelPosition]="'before'" [(ngModel)]="filterByDept" (change)="doRemoveservice()">
+                            </mat-slide-toggle>&nbsp;{{{deptstatusstr}}
+                        </label>                           
                     </div>
                 </div>
                 <!-- <div class="card p0" *ngIf="loading">
@@ -38,7 +47,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row" *ngIf="filterbydepartment && account_type!='BRANCH_SP'">
+            <div class="row" *ngIf="account_type!='BRANCH_SP'">
                 <div class="card p0">
                     <span class="b-link" (click)="goDepartments()">
                         <h2>Departments ({{departmentCount}})</h2>
@@ -74,9 +83,8 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLabels()">
                         <h2>Custom fields / Labels</h2>
-                        <span class="form-level-settings">Add or manage your labels here.<a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('labels', $event)">Learn
+                        <span class="form-level-settings">Add or manage your labels here.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('labels', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -95,7 +103,8 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotocustomview()">
                         <h2>Custom Views</h2>
-                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('customview', $event)">Learn
+                        <span class="form-level-settings">Create or manage custom views<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('customview', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

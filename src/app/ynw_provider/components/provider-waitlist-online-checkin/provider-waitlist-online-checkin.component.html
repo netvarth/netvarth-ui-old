@@ -17,7 +17,8 @@
             <mat-radio-button value="Fixed"></mat-radio-button>
             <label for="">{{fixed_cap}}</label>
             <input type="number" min="0" (keyup)="isValid(form['trnArndTime'])" class="form-control"
-              [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'" (keydown)="is_data_chnge=1">
+              [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'"
+              (keydown)="is_data_chnge=1">
             <span class='mins' *ngIf="form['calculationMode'] == 'Fixed'"> {{mins_cap}}</span>
           </div>
         </div>
@@ -37,29 +38,28 @@
         </div>
       </mat-radio-group>
     </div>
-    
+
   </div>
-<div *ngIf="formChange == 1 || is_data_chnge==1">
-  <button type="button" mat-button (click)="cancelChange()"
-    class="cs-btn bt2">{{cancel_btn}}</button>
-  <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
-    [disabled]="form.calculationMode == 'Fixed' && (form.trnArndTime == null || !form.trnArndTime)">{{save_btn}}</button>
+  <div *ngIf="formChange == 1 || is_data_chnge==1">
+    <button type="button" mat-button (click)="cancelChange()" class="cs-btn bt2">{{cancel_btn}}</button>
+    <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
+      [disabled]="form.calculationMode == 'Fixed' && (form.trnArndTime == null || !form.trnArndTime)">{{save_btn}}</button>
   </div>
   <div class="row" *ngIf="account_type!='BRANCH_SP'">
-      <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 " style ="margin-bottom: 10px">
+    <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 " style ="margin-bottom: 10px">
           <label>Send notifications to {{customer_label}}
           <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['sendNotification']"
               [labelPosition]="'before'" [(ngModel)]="form['sendNotification']" (change)="OnSubmit()">
             </mat-slide-toggle>
           </label>
         </div> -->
-    <div class="lbl col-sm-12 col-md-12 col-lg-12 ">
+    <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 ">
       <label>Select services by department
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
           [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
         </mat-slide-toggle>&nbsp;{{deptstatusstr}}
       </label>
-    </div>
+    </div> -->
   </div>
 </div>
 

@@ -695,6 +695,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
         // }
+        console.log(this.consumerNote);
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
