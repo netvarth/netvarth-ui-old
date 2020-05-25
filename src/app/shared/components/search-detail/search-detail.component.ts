@@ -968,6 +968,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];

@@ -22,14 +22,22 @@ export class CommSettingsComponent implements OnInit {
     ];
     virtualCallingMode_status: any;
     virtualCallingMode_statusstr: string;
+    customer_label = '';
+    provider_label = '';
+    cust_domain_name = '';
+    provider_domain_name = '';
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+        this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.getGlobalSettingsStatus();
     }
     getGlobalSettingsStatus() {

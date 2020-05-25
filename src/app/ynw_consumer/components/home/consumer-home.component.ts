@@ -164,9 +164,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.breadcrumbs = [
       {
-          title: 'My Jaldee'
+        title: 'My Jaldee'
       }
-  ];
+    ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -550,6 +550,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.fav_providers[index]['locations'][locindx]['isCheckinAllowed'] = waitlisttime_arr[i]['isCheckinAllowed'];
               this.fav_providers[index]['locations'][locindx]['personAhead'] = waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
               this.fav_providers[index]['locations'][locindx]['calculationMode'] = waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.fav_providers[index]['locations'][locindx]['waitlist'] = waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.fav_providers[index]['locations'][locindx]['showToken'] = waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.fav_providers[index]['locations'][locindx]['onlineCheckIn'] = waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.fav_providers[index]['locations'][locindx]['isAvailableToday'] = waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
@@ -814,12 +815,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  gotoDonations () {
+  gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
   getDonations() {
     const filter = {};
-    filter['date-eq'] =  moment(this.server_date).format('YYYY-MM-DD');
+    filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
     this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
@@ -1127,16 +1128,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
-  gotoApptmentHistory(){
+  gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
-  getAppointmentToday(){
+  getAppointmentToday() {
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
           this.appointments = data;
-          console.log("Appointments",this.appointments)
-          },
+          console.log("Appointments", this.appointments)
+        },
         error => {
         }
       );

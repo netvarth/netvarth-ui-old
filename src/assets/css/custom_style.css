@@ -4280,15 +4280,15 @@ i.notavail {
 
 .font-open-now {
   display: none;
-  font-size: xx-small;
-  color: #22d21e !important;
+  /* font-size: xx-small; */
+  color: #00cc96 !important;
 }
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) { */
   .font-open-now {
     display: inline;
   }
-}
+/* } */
 
 @media only screen and (max-width: 575px) {
   header .lgo img {
