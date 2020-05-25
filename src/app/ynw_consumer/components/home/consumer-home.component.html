@@ -101,6 +101,12 @@
                                 <div class="lt0" *ngIf="waitlist.token">
                                     {{token_no}} <span class="token">{{waitlist.token}} </span>
                                 </div>
+                                 <!-- <div class="lt0" *ngIf="!waitlist.batchName && waitlist.token">
+                                    {{token_no}} <span class="token">{{waitlist.token}} </span>
+                                </div>
+                                <div class="lt0" *ngIf="waitlist.batchName" style="font-size: 0.9rem;">
+                                    Batch <span class="token">{{waitlist.batchName}} </span>
+                                </div> -->
                                 <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
                                     {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                 </div>
