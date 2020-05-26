@@ -103,6 +103,21 @@ export class ConsumerServices {
     return this.servicemeta.httpGet(path);
   }
 
+  getApptTime(prov_arr) {
+    let str = '';
+    for (let i = 0; i < prov_arr.length; i++) {
+      if (str !== '') {
+        str += '%2C'; // comma
+      }
+      str += prov_arr[i];
+    }
+    if (str === '') {
+      return null;
+    }
+    const path = 'provider/appointment/schedule/nextAvailableSchedule/' + str;
+    return this.servicemeta.httpGet(path);
+  }
+
   getConsumerRateService(params) {
     const path = 'consumer/waitlist/rating' ;
     return this.servicemeta.httpGet(path, null , params);

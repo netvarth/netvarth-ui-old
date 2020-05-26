@@ -149,6 +149,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   breadcrumbs;
   donations: any = [];
   rupee_symbol = '₹';
+  appttime_arr: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -502,8 +503,29 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       i++;
     }
     this.getWaitingTime(locarr, k);
+    this.getApptTime(locarr, k);
   }
 
+  getApptTime(provids_locid, index) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.consumer_services.getApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data; 
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+          this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+          }
+        });
+      }
+    }
   getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];

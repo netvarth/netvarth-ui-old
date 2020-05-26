@@ -206,6 +206,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   results_data;
   donationData: any;
   allservices;
+  appttime_arr: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -388,6 +389,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               }
             }
             this.getWaitingTime(locarr);
+            this.getApptTime(locarr);
             this.api_loading = false;
           });
       });
@@ -568,6 +570,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               }
             }
             this.getWaitingTime(locarr);
+            this.getApptTime(locarr);
             break;
           }
           case 'terminologies': {
@@ -1042,6 +1045,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       return true;
     }
   }
+
+  getApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+            this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+          }
+        });
+    }
+  }
+
   // Some of functions copied to Consumer Home also.
   private getWaitingTime(provids_locid) {
     if (provids_locid.length > 0) {

@@ -547,13 +547,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bottom-sect ">
+                        <div class="bottom-sect" *ngIf="search_result.fields['apptAllowed']">
                             <div class="bt-l"> </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root">
-                                <span class="checkin-btn disabled"
-                                    *ngIf="search_result.fields.today_appt != 1">Appointment</span>
-                                <span class="checkin-btn" *ngIf="search_result.fields.today_appt == 1"
+                                <!-- <span class="checkin-btn disabled"
+                                    *ngIf="search_result.fields.today_appt != 1">Appointment</span> -->
+                                <span class="checkin-btn"
                                     (click)="appointmentClicked(search_result, false)">Appointment</span>
 
                                 <!-- <div class="future-date-link checkin-future"> <span class="bt10" *ngIf="search_result.fields.future_appt == 1" (click)="appointmentClicked(search_result, true)" >{{do_you_want_to_cap}} <span>Appointment </span>{{for_cap}} <span>{{different_date}}</span>

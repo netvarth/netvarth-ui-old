@@ -669,7 +669,7 @@
                                             </span>{{for_cap}}
                                             <span>{{different_date_cap}}</span>
                                         </span>
-                                        <span class="cs-btn chk-btn"
+                                        <span class="cs-btn chk-btn" *ngIf="loc['apptAllowed']"
                                             (click)="goAppointment(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')">
                                             Appointment</span>
                                     </div>

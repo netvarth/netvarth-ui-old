@@ -179,15 +179,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   jCouponsList: any = [];
   makPaydialogRef;
   qty = '';
-  breadcrumbs = [
-    {
-      title: 'Check-ins',
-      url: '/provider/check-ins'
-    },
-    {
-      title: 'Bill'
-    }
-  ];
+  breadcrumbs = [];
   showPayWorkBench = false;
   amountpay;
   paymentOnline = false;
@@ -225,8 +217,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       console.log(qparams.source);
       this.source = qparams.source;
       if (this.source) {
+        this.breadcrumbs = [
+          {
+            title: 'Appointments',
+            url: '/provider/appointments'
+          },
+          {
+            title: 'Bill'
+          }
+        ];
         this.getApptDetails();
       } else {
+        this.breadcrumbs = [
+          {
+            title: 'Check-ins',
+            url: '/provider/check-ins'
+          },
+          {
+            title: 'Bill'
+          }
+        ];
         this.getCheckinDetails();
       }
     });
@@ -454,7 +464,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         (data: any) => {
           this.all_services = data;
           for (const ser of data) {
-            if (ser.status === 'ACTIVE' && ser.serviceType !==	'donationService') {
+            if (ser.status === 'ACTIVE' && ser.serviceType !== 'donationService') {
               this.services.push(ser);
             }
           }
@@ -1116,32 +1126,32 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (typeof amount === 'string') {
       len = amount.split('.').length;
     }
-      if (len > 2) {
-        this.sharedfunctionObj.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
-      } else {
-        let status = 0;
-    const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'Proceed with payment ?',
-        'heading': 'Confirm',
-        'type': 'yes/no',
-        'status': this.checkin.waitlistStatus
-      }
-    });
-    canceldialogRef.afterClosed().subscribe(result => {
-      // alert(result);
-      status = result;
-      if (status === 1) {
-        this.makePayment(mode, amount, paynot);
-      }
-      if (status === 2) {
-        this.makePayment(mode, amount, paynot, status);
-      }
-    });
-      }
+    if (len > 2) {
+      this.sharedfunctionObj.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
+    } else {
+      let status = 0;
+      const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Proceed with payment ?',
+          'heading': 'Confirm',
+          'type': 'yes/no',
+          'status': this.checkin.waitlistStatus
+        }
+      });
+      canceldialogRef.afterClosed().subscribe(result => {
+        // alert(result);
+        status = result;
+        if (status === 1) {
+          this.makePayment(mode, amount, paynot);
+        }
+        if (status === 2) {
+          this.makePayment(mode, amount, paynot, status);
+        }
+      });
+    }
   }
   showPayment() {
     this.amountpay = this.bill_data.amountDue;

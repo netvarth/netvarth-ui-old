@@ -31,10 +31,12 @@
                                             <label *ngIf="!edit">
                                                 <input type="text" maxlength="10"
                                                     style="width: 85px; border-bottom: 1px solid; font-size:.75rem"
-                                                    placeholder="Contact number" class=" emailPrepay" [(ngModel)]="selected_phone" />
-                                                <span (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
-                                                <app-field-error-display [displayError]="true" *ngIf="phoneerror != null"
-                                                    errorMsg={{phoneerror}}>
+                                                    placeholder="Contact number" class=" emailPrepay"
+                                                    [(ngModel)]="selected_phone" />
+                                                <span (click)="addPhone()"
+                                                    style="color: #00aef2; padding-left:5px">Ok</span>
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                 </app-field-error-display>
                                             </label>
                                         </div>
@@ -124,17 +126,18 @@
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <i *ngIf="mode.callingMode === 'SKYPE'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i>
-                                                    <input *ngIf="!showInputSection" class="form-control emailPrepay call-mode-ip" placeholder=""
+                                                    <input *ngIf="!showInputSection"
+                                                        class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
                                                     <div class="input-group-append mgn-up-6"
                                                         style="padding-left: 10px;">
-                                                        <button *ngIf="!showInputSection"
-                                                            class="btn bt3 btn-default" (click)="addCallingmode(i)"
-                                                            type="button">Add</button>
+                                                        <button *ngIf="!showInputSection" class="btn bt3 btn-default"
+                                                            (click)="addCallingmode(i)" type="button">Add</button>
                                                     </div>
                                                     <div class="mgn-bt-10 cal-mod-edt" *ngIf="showInputSection">
                                                         {{callingModes}}
-                                                        <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                        <span class="editbt mgn-lt-20"
+                                                            (click)="editCallingmodes(i)"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,11 +249,13 @@
 
                                         </div>
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
-                                           <div *ngIf="showApptTime"> <div class="ttle mgn-bt-10">Appointment Time</div>
-                                            <span class="label-bold">{{apptTime}} </span>
-                                            <span style="margin-left: 30px" class="editbt"
-                                                (click)="editClicked()"></span></div>
-                                            <div  *ngIf="!showApptTime">TimeSlots are not available </div>
+                                            <div *ngIf="showApptTime">
+                                                <div class="ttle mgn-bt-10">Appointment Time</div>
+                                                <span class="label-bold">{{apptTime}} </span>
+                                                <span style="margin-left: 30px" class="editbt"
+                                                    (click)="editClicked()"></span>
+                                            </div>
+                                            <div *ngIf="!showApptTime">TimeSlots are not available </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <app-common-innerloading-spinner *ngIf="api_loading">
@@ -321,11 +326,12 @@
                                     <ng-container *ngIf="action==='members'">
                                         <div class="member-outer">
                                             <div class="member-head">
-                                                {{select_the_cap}} <ng-container *ngIf="!multipleMembers_allowed">
+                                                {{select_the_cap}} {{member_cap}}
+                                                <!-- <ng-container *ngIf="!multipleMembers_allowed">
                                                     {{member_cap}}
                                                 </ng-container>
                                                 <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}
-                                                </ng-container>
+                                                </ng-container> -->
                                                 {{for_whom_the_cap}}
                                                 <span
                                                     *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']">
@@ -341,7 +347,7 @@
                                                     *ngIf="!showCreateMember">
                                                     {{add_member_cap}}</div>
                                                 <ul class="member-ul">
-                                                    <ng-container *ngIf="multipleMembers_allowed">
+                                                    <!-- <ng-container *ngIf="multipleMembers_allowed">
                                                         <li *ngFor="let memb of familymembers">
                                                             <mat-checkbox
                                                                 (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
@@ -350,8 +356,8 @@
                                                                 {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
                                                             </mat-checkbox>
                                                         </li>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="!multipleMembers_allowed">
+                                                    </ng-container> -->
+                                                    <ng-container>
                                                         <mat-radio-group>
                                                             <li *ngFor="let memb of familymembers">
                                                                 <mat-radio-button

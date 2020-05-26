@@ -169,7 +169,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   showServices = false;
   departServiceList: any = [];
   selectedDepartment;
-
+  appttime_arr: any = [];
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -889,6 +889,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
               }
               this.getWaitingTime(this.result_providdet);
+              this.getApptTime(this.result_providdet);
               this.search_result_count = this.search_data.hits.found || 0;
               if (this.search_data.hits.found === 0) {
                 this.nosearch_results = true;
@@ -924,6 +925,27 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       return km.toFixed(2) + ' km';
     }
   }
+  getApptTime(provids) {
+    if (provids.length > 0) {
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+        post_provids.push(provids[i].provid);
+      }
+      if (post_provids.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getApptTime(post_provids)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let srchindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            srchindx = provids[i].searchindx;
+            this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+          }
+        });
+    }
+    }
+
   private getWaitingTime(provids) {
     if (provids.length > 0) {
       const post_provids: any = [];
