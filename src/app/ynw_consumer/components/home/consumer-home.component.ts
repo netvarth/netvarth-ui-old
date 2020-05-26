@@ -155,6 +155,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   breadcrumbs;
   donations: any = [];
   rupee_symbol = '₹';
+  appttime_arr: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
