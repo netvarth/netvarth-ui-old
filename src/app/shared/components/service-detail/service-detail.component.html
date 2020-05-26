@@ -60,14 +60,20 @@
             </div>
             <div class="outer5" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
-                    <span>Min amount: </span><span style="font-weight: bold">
+                    <span>Min amount: </span><span *ngIf="data.serdet.minValue" style="font-weight: bold">
+                        {{data.serdet.minValue}}
+                    </span>
+                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold">
                         {{data.serdet.minDonationAmount}}
                     </span>
                 </div>
             </div>
             <div class="outer5" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
-                    <span>Max amount : </span><span style="font-weight: bold">
+                    <span>Max amount : </span><span *ngIf="data.serdet.maxValue" style="font-weight: bold">
+                        {{data.serdet.maxValue}}
+                    </span>
+                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold">
                         {{data.serdet.maxDonationAmount}}
                     </span>
                 </div>

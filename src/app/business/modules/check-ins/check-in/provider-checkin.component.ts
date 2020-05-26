@@ -327,7 +327,7 @@ export class ProviderCheckinComponent implements OnInit {
                 break;
             case 'id':
                 post_data = {
-                    'id-eq': form_data.search_input
+                    'jaldeeId-eq': form_data.search_input
                 };
                 break;
         }

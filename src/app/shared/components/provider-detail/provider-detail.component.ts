@@ -366,6 +366,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               } else {
                 this.isPlaceisSame = false;
               }
+              try {
+                this.locationjson[i].fields.serviceList = JSON.parse(this.locationjson[i].fields.services);
+              } catch (e) {
+              }
               if (this.locationjson[i].fields.business_hours1) {
                 schedule_arr = [];
                 const business_hours = JSON.parse(this.locationjson[i].fields.business_hours1[0]);
@@ -1193,15 +1197,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  showServiceDetail(serv, busname) {
+  showServiceDetail(serv, busname, type) {
     let service;
     let servData;
+    if (type === 'servicedetails') {
+      service = serv;
+    } else {
     if (!this.showDepartments) {
       const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
       service = serviceDetails[0];
     } else {
       service = serv;
     }
+  }
     if (service.serviceType && service.serviceType === 'donationService') {
       servData = {
         bname: busname,

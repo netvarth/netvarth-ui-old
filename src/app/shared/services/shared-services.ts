@@ -707,4 +707,12 @@ export class SharedServices {
     const url = 'consumer/appointment/stop/mytracking/' + uid + '?account=' + id;
     return this.servicemeta.httpDelete(url);
   }
+  statusOfApptLiveTrack(uid, id) {
+    const path = 'consumer/appointment/status/mytracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpGet(path);
+  }
+  updateApptLatLong(uid, id, data) {
+    const url = 'consumer/appointment/update/latlong/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
 }

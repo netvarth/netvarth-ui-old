@@ -294,7 +294,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
+      if (this.data.appt) {
+      this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
         dataToSend)
         .subscribe(
           () => {
@@ -307,6 +308,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
         );
+        }else{
+          this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
+            dataToSend)
+            .subscribe(
+              () => {
+                this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              }
+            );
+        }
     }
   }
   providerToConsumerNoteAdd(post_data) {

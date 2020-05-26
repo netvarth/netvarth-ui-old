@@ -54,6 +54,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   open_now_cap = Messages.OPEN_NOW_CAP;
   checkindisablemsg = Messages.DASHBOARD_PREPAY_MSG;
   checkindisablemsg1 = Messages.DASHBOARD_PREPAY_MSG1;
+  appointmentdisablemsg = Messages.DASHBOARD_PREPAY_MSG2;
   do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
   for_cap = Messages.FOR_CAP;
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
@@ -69,6 +70,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   not_allowed_cap = Messages.NOT_ALLOWED_CAP;
   server_date;
   trackMode: any = [];
+  trackModeAppt: any = [];
   waitlists;
   appointments: any = [];
   fav_providers: any = [];
@@ -77,7 +79,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-  loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false };
+  loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false ,appointment: false};
   tooltipcls = projectConstants.TOOLTIP_CLS;
   pagination: any = {
     startpageval: 1,
@@ -97,6 +99,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   countercronHandle: Subscription;
   tracksubscription: Subscription;
   cronHandleTrack: Subscription;
+  cronHandleApptTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
   refreshTimeForTracking = 600000;
@@ -136,6 +139,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   travelTime: any;
   timeUnit: any;
   changemode: any = [];
+  changemodeAppt: any = [];
   lat_lng = {
     latitude: 0,
     longitude: 0
@@ -143,13 +147,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   driving: boolean;
   walking: boolean;
   statusOfTrack: any = [];
+  statusOfApptTrack: any = [];
   status: Boolean;
   pollingSet: any = [];
+  pollingApptSet: any = [];
   callingModesDisplayName = projectConstants.CALLING_MODES;
   breadcrumbs;
   donations: any = [];
   rupee_symbol = '₹';
-  appttime_arr: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -220,7 +225,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
-    this.getAppointmentToday();
+    this.getApptlist();
+   // this.getAppointmentToday();
     this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
@@ -231,6 +237,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
     this.cronHandleTrack = observableInterval(this.refreshTime * 2000).subscribe(x => {
       this.liveTrackPolling();
+    });
+    this.cronHandleApptTrack = observableInterval(this.refreshTime * 2000).subscribe(x => {
+      this.liveTrackApptPolling();
     });
 
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
@@ -304,6 +313,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     if (this.cronHandleTrack) {
       this.cronHandleTrack.unsubscribe();
+    }
+    if (this.cronHandleApptTrack) {
+      this.cronHandleApptTrack.unsubscribe();
     }
   }
   setSystemDate() {
@@ -427,6 +439,106 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.time = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
       appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
+      time1 = time[2].trim();
+      t2 = time1.slice(2);
+      appx_ret.cancelled_time = t2;
+      appx_ret.cancelled_caption = 'Cancelled on ';
+    }
+    return appx_ret;
+  }
+
+  getApptlist(){
+    this.pollingApptSet = [];
+    this.loadcomplete.appointment = false;
+    const params = {
+    };
+    this.consumer_services.getApptlist(params)
+      .subscribe(
+        data => {
+          this.appointments = data;
+          console.log(this.appointments);
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          let i = 0;
+          let retval;
+          for (const appointment of this.appointments) {
+            this.trackModeAppt[i] = false;
+            this.changemodeAppt[i] = false;
+            const waitlist_date = new Date(appointment.appmtDate);
+            today.setHours(0, 0, 0, 0);
+            waitlist_date.setHours(0, 0, 0, 0);
+            this.appointments[i].future = false;
+            retval = this.getApptAppxTime(appointment);
+            if (today.valueOf() < waitlist_date.valueOf()) {
+              this.appointments[i].future = true;
+              this.appointments[i].estimated_time = retval.time;
+              this.appointments[i].estimated_timeslot = retval.timeslot;
+              this.appointments[i].estimated_caption = retval.caption;
+              this.appointments[i].estimated_date = retval.date;
+              this.appointments[i].estimated_date_type = retval.date_type;
+              this.appointments[i].estimated_autocounter = retval.autoreq;
+            } else {
+              if (appointment.jaldeeApptDistanceTime && appointment.apptStatus === 'Confirmed') {
+                this.statusOfApptLiveTrack(appointment, i);
+                this.pollingApptSet.push(appointment);
+              }
+              this.appointments[i].estimated_time = retval.time;
+              this.appointments[i].estimated_timeslot = retval.timeslot;
+              this.appointments[i].estimated_caption = retval.caption;
+              this.appointments[i].estimated_date = retval.date;
+              this.appointments[i].estimated_date_type = retval.date_type;
+              this.appointments[i].estimated_autocounter = retval.autoreq;;
+            }
+            this.appointments[i].cancelled_caption = retval.cancelled_caption;
+            this.appointments[i].cancelled_date = retval.cancelled_date;
+            this.appointments[i].cancelled_time = retval.cancelled_time;
+            // if (appointment.apptStatus === 'prepaymentPending') {
+            //   this.appointments[i].counter = this.prepaymentCounter(appointment);
+            // }
+            i++;
+          }
+          this.loadcomplete.appointment = true;
+        },
+        error => {
+          this.loadcomplete.appointment = true;
+        }
+      );
+  }
+
+  getApptAppxTime(appointment) {
+    console.log(appointment);
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '',  'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
+    if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
+      
+        appx_ret.caption = 'Appointment for'; // 'Check-In Time';
+        
+          appx_ret.time = appointment.appmtTime;
+       
+        const waitlist_date = new Date(appointment.appmtDate);
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const today = new Date(todaydt);
+        today.setHours(0, 0, 0, 0);
+        waitlist_date.setHours(0, 0, 0, 0);
+        if (today.valueOf() < waitlist_date.valueOf()) {
+          appx_ret.date = appointment.appmtDate;
+          appx_ret.date_type = 'date';
+          appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
+        } else {
+          appx_ret.date = 'Today';
+          appx_ret.date_type = 'string';
+          appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
+        }
+     
+    } else {
+      console.log("in else");
+      let time = [];
+      let time1 = [];
+      let t2;
+      appx_ret.caption = 'Appointment for';
+      appx_ret.date = appointment.appmtDate;
+      appx_ret.time = appointment.appmtTime;
+      appx_ret.cancelled_date = moment(appointment.statusUpdatedTime, 'YYYY-MM-DD').format();
+      time = appointment.statusUpdatedTime.split('-');
       time1 = time[2].trim();
       t2 = time1.slice(2);
       appx_ret.cancelled_time = t2;
@@ -640,7 +752,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.getWaitlist();
           }
           else if(data === 'reloadlist' && type == 'appointment'){
-            this.getAppointmentToday();
+            this.getApptlist();
           }
         },
         error => {
@@ -731,6 +843,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   addNote(pass_ob) {
+    console.log(pass_ob);
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -938,7 +1051,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getWaitlist();
       }
      else if (result === 'reloadlist' && type =='appointment') {
-        this.getAppointmentToday();
+        this.getApptlist();
       }
     });
   }
@@ -1047,8 +1160,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.shared_services.updateAppointmentTravelMode(uid, id, passdata)
       .subscribe(data => {
-        this.changemode[i] = false;
-        this.getAppointmentToday();
+        this.changemodeAppt[i] = false;
+        this.getApptlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1063,6 +1176,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.statusOfTrack[i] = data;
         waitlist.trackStatus = data;
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+
+  statusOfApptLiveTrack(appointment, i) {
+    this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
+      .subscribe(data => {
+        this.statusOfApptTrack[i] = data;
+        appointment.trackStatus = data;
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1123,7 +1247,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   startApptTracking(uid, id, i) {
     this.shared_services.startApptLiveTrack(uid, id)
       .subscribe(data => {
-        this.getAppointmentToday();
+        this.getApptlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1132,7 +1256,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopApptTracking(uid, id, i) {
     this.shared_services.stopApptLiveTrack(uid, id)
       .subscribe(data => {
-        this.getAppointmentToday();
+        this.getApptlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1175,6 +1299,47 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               } else {
                 if (waitlist.trackStatus) {
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
+                    .subscribe(data => { },
+                      error => {
+                        _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      });
+                }
+              }
+            }
+          }
+        },
+        () => {
+
+        });
+    }
+  }
+
+  liveTrackApptPolling() {
+    const _this = this;
+    if (_this.pollingApptSet && _this.pollingApptSet.length > 0) {
+      _this.setSystemDate().then(
+        () => {
+          for (const apptlist of _this.pollingApptSet) {
+            if (apptlist.jaldeeApptDistanceTime) {
+              let pollingDtTim = '';
+              let pollingDateTime = '';
+              if (apptlist.jaldeeStartTimeType !== 'AFTERSTART') {
+                pollingDtTim = apptlist.date + ' ' + apptlist.jaldeeApptDistanceTime.pollingTime;
+                pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
+                const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
+                // console.log('pollingDateTime' + pollingDateTime);
+                // console.log('serverDateTime' + serverDateTime);
+                if (serverDateTime >= pollingDateTime) {
+                  _this.getCurrentLocation();
+                  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
+                    .subscribe(data => { },
+                      error => {
+                        _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      });
+                }
+              } else {
+                if (apptlist.trackStatus) {
+                  _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
                         _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

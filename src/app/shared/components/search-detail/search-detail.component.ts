@@ -835,6 +835,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
+                try {
+                  if (this.search_data.hits.hit[i].fields.services) {
+                  this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
+                  }
+                  if (this.search_data.hits.hit[i].fields.donation_services) {
+                  this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
+                  }
+                } catch (e) {
+                }
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
                 const addres = this.search_data.hits.hit[i].fields['address1'];
                 const place = this.search_data.hits.hit[i].fields['place1'];
@@ -1867,7 +1876,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             .subscribe(services => {
               let servicesList: any = [];
               servicesList = services;
-              if (origin === 'serviceClick') {
+              if (origin === 'donationList' || origin === 'serviceListClick') {
+                selected_service = name;
+              }
+              if (origin === 'serviceClick' || origin === 'donation') {
                 for (let i = 0; i < servicesList.length; i++) {
                   if (servicesList[i].departmentId) {
                     for (let j = 0; j < servicesList[i].services.length; j++) {
@@ -1899,6 +1911,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               } else {
                 this.btn_clicked = false;
               }
+            },
+            error => {
+              this.btn_clicked = false;
             });
         });
   }

@@ -281,7 +281,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   servicesCount;
   account_type;
   qr_value;
-  path = window.location.host;
+  path = projectConstants.PATH;
   showQR = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,

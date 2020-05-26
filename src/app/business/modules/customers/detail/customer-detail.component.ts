@@ -425,7 +425,7 @@ export class CustomerDetailComponent implements OnInit {
                 break;
             case 'id':
                 post_data = {
-                    'id-eq': form_data.mobile_number
+                    'jaldeeId-eq': form_data.mobile_number
                 };
                 break;
         }

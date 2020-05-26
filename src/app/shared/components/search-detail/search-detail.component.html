@@ -412,7 +412,16 @@
                                             </ul>
                                         </div>
                                         <div class="services"
-                                            *ngIf="!search_result.fields.departments && search_result.fields.services">
+                                            *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
+                                            <ul>
+                                                <li *ngFor="let serv of search_result.fields.serviceList"
+                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
+                                                    | capitalizeFirst}}</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="services"
+                                            *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.services"
                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
@@ -475,7 +484,7 @@
                                         aria-hidden="true"></i></span>
                             </div>
                         </div>
-                        <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']['waitlist']">
+                        <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist']">
                             <div class="bt-l">
                                 <div class="wt-tme"
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
@@ -547,7 +556,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bottom-sect" *ngIf="search_result.fields['apptAllowed']">
+                        <div class="bottom-sect">
                             <div class="bt-l"> </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root">
@@ -566,10 +575,15 @@
                                 <div class="wt-tme">
                                     <div class="donat-service">
                                         <span class="sub-title-donate">Donation Service(s)</span>
-                                        <ul>
+                                        <ul *ngIf="!search_result.fields.donationServices">
                                             <li *ngFor="let donationService of search_result.fields.donation_services"
-                                                (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'serviceClick')">
+                                                (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donation')">
                                                 {{donationService}}</li>
+                                        </ul>
+                                        <ul *ngIf="search_result.fields.donationServices">
+                                            <li *ngFor="let donationService of search_result.fields.donationServices"
+                                                (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
+                                                {{donationService.name}}</li>
                                         </ul>
                                     </div>
                                 </div>

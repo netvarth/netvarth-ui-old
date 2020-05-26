@@ -325,9 +325,9 @@ export class AppointmentComponent implements OnInit {
                     'email-eq': form_data.search_input
                 };
                 break;
-            case 'customer_id':
+            case 'id':
                 post_data = {
-                    'id-eq': form_data.search_input
+                    'jaldeeId-eq': form_data.search_input
                 };
                 break;
         }

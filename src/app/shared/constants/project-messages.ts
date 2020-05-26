@@ -214,6 +214,7 @@ export const Messages = {
   'Manage_Privacy': 'Manage privacy changed successfully',
   'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in',
   'DASHBOARD_PREPAY_MSG1': 'minutes to complete your check-in',
+  'DASHBOARD_PREPAY_MSG2': 'minutes to complete your appointment',
 
   // Dynamic Field
   'YEAR_MONTH_VALID': 'Future date not allowed',

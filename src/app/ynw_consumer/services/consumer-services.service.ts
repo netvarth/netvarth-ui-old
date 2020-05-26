@@ -16,7 +16,10 @@ export class ConsumerServices {
       return this.servicemeta.httpGet('consumer/waitlist', null, params);
       // set no_redirect_path in interceptor to avoid redirect on 401
   }
-
+  getApptlist(params) {
+    return this.servicemeta.httpGet('consumer/appointment', null, params);
+    // set no_redirect_path in interceptor to avoid redirect on 401
+}
   getWaitlistHistory(params) {
     return this.servicemeta.httpGet('consumer/waitlist/history', null, params);
     // set no_redirect_path in interceptor to avoid redirect on 401
