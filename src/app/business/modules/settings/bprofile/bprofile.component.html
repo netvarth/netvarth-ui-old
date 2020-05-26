@@ -359,7 +359,7 @@
                                         <ul class="sbl">
                                             <li>
                                                 <span class="custid" rel="noopener"
-                                                    target="_blank">{{path}}/#{{bProfile.customId}}</span>
+                                                    target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
                                                     <span class="custid custId-icon"><i
                                                             class="fa fa-copy custId-cursor"
                                                             (click)="copyInputMessage(bProfile.customId)"
@@ -448,8 +448,8 @@
                                         <ul class="sbl" >
                                             <li>
                                                 <span class="custid" rel="noopener"
-                                                    target="_blank">{{path}}/#{{bProfile.uniqueId}} </span>
-                                                <span>
+                                                    target="_blank">{{wndw_path}}{{bProfile.uniqueId}} </span>
+                                                <span style="display: flex;">
                                                     <span class="custid custId-icon">
                                                         <i class="fa fa-copy custId-cursor"
                                                             (click)="copyInputMessage(bProfile.uniqueId)"[matTooltip]="'Copy link'"></i>

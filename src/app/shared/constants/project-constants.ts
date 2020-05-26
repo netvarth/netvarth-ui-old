@@ -626,5 +626,7 @@ export const projectConstants = {
     SKYPE: 'Skype',
     BOTIM: 'Botim',
     IMO: 'Imo'
-  }
+  },
+  PATH: window.location.host + '/jaldee/#'
+
 };

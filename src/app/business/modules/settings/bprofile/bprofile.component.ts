@@ -89,7 +89,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
-  path = window.location.host;
+ // path = window.location.host + ;
+  wndw_path = projectConstants.PATH;
 
   checked = false;
   bProfile = null;
@@ -928,7 +929,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   // }
 
   copyInputMessage(valuetocopy) {
-    const path = this.path + '/#' + valuetocopy;
+    const path = projectConstants.PATH + valuetocopy;
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -943,11 +944,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
   qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
   }
   qrCodegenerateCustID(valuetogenerate) {
-    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_cId = true;
   }
   closeOnlineQR() {
