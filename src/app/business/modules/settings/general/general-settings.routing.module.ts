@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: 'skins', loadChildren: () => import('../../settings/general/skins/provider-skins.module').then(m => m.ProviderSkinsModule) },
     { path: 'customview', loadChildren: () => import('../../settings/general/customview/customview.module').then(m => m.CustomViewModule)},
     { path: 'users', loadChildren: () => import('../../settings/general/users/users.module').then(m => m.UsersModule) },
+    { path: 'livetrack', loadChildren: () => import('../../settings/general/livetrack/livetrack-settings.module').then(m => m.LiveTrackSettingsModule) },
     {path: 'departments', component: DepartmentsComponent },
     {path: 'department/:id', component: DepartmentDetailComponent },
 ];

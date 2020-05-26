@@ -33,8 +33,8 @@ export class GeneralSettingsComponent implements OnInit {
     locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
-    livetrack_status: any;
-    livetrack_statusstr: string;
+    // livetrack_status: any;
+    // livetrack_statusstr: string;
     account_type;
     accountType: any;
     filterbydepartment = false;
@@ -58,7 +58,7 @@ export class GeneralSettingsComponent implements OnInit {
         this.account_type = user.accountType;
         // this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.getWaitlistMgr();
-        this.getLiveTrackStatus();
+        // this.getLiveTrackStatus();
         this.getLocationCount();
         this.getDepartmentsCount();
         this.getDomainSubdomainSettings();
@@ -70,7 +70,7 @@ export class GeneralSettingsComponent implements OnInit {
     goDepartments() {
         this.router.navigate(['provider', 'settings', 'general', 'departments']);
     }
-    gotoUsers() {
+    gotoUsers () {
         this.router.navigate(['provider', 'settings', 'general', 'users']);
     }
     gotoNonworkingDays() {
@@ -78,6 +78,9 @@ export class GeneralSettingsComponent implements OnInit {
     }
     gotothemes() {
         this.router.navigate(['provider', 'settings', 'general', 'skins']);
+    }
+    gotoLiveTrack () {
+        this.router.navigate(['provider', 'settings', 'general', 'livetrack']);
     }
     gotocustomview() {
         this.router.navigate(['provider', 'settings', 'general', 'customview']);
@@ -163,27 +166,27 @@ export class GeneralSettingsComponent implements OnInit {
                 });
         this.loading = false;
     }
-    handle_liveTracking(event) {
-        const is_livetrack = (event.checked) ? 'Enable' : 'Disable';
-        this.provider_services.setLivetrack(is_livetrack)
-            .subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
-                    this.getLiveTrackStatus();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getLiveTrackStatus();
-                }
-            );
-    }
-    getLiveTrackStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
-            (data: any) => {
-                this.livetrack_status = data.livetrack;
-                this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
-            });
-    }
+    // handle_liveTracking(event) {
+    //     const is_livetrack = (event.checked) ? 'Enable' : 'Disable';
+    //     this.provider_services.setLivetrack(is_livetrack)
+    //         .subscribe(
+    //             () => {
+    //                 this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+    //                 this.getLiveTrackStatus();
+    //             },
+    //             error => {
+    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.getLiveTrackStatus();
+    //             }
+    //         );
+    // }
+    // getLiveTrackStatus() {
+    //     this.provider_services.getGlobalSettings().subscribe(
+    //         (data: any) => {
+    //             this.livetrack_status = data.livetrack;
+    //             this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
+    //         });
+    // }
     doRemoveservice() {
         if (this.filterByDept) {
             this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';

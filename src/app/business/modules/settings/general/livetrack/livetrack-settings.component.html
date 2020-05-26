@@ -1,0 +1,26 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Live Tracking
+                            <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
+                            </mat-slide-toggle>
+                             &nbsp;{{livetrack_statusstr}}
+                        </label>                        
+                        <div class="form-level-settings" *ngIf="livetrack_status"> Enable "Live Track" here.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
+                                More</a></div>
+                        <!-- <div class="form-level-settings" *ngIf="!livetrack_status"> Enable "Accept Appointments" here.<a class="learnmore-pointer"
+                            id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
+                                    More</a></div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

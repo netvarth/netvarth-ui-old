@@ -6,23 +6,7 @@
     <div class="content w-manager">
         <div class="col-md-12 no-padding-small">
             <div class="row">
-                <div class="card pos">
-                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
-                        <label>Live Tracking
-                            <span class="ctrl">
-                                <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
-                                </mat-slide-toggle>
-                            </span>
-                            <p class="sts" [class.active]="livetrack_status"></p>
-                            <div class="onoff">{{livetrack_statusstr}}</div>
-                        </label>
-                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints. <a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
-                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints <a
-                                class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('livetracking', $event)">Learn More</a></p>
-                    </div>
+                <div class="card p0">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
                         <label>Select services by department
                             <span class="ctrl">
@@ -39,6 +23,16 @@
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div> -->
             </div>
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="gotoLiveTrack()" class="b-link">
+                        <h2>Live Tracking</h2>
+                        <!-- <span class="form-level-settings"><a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('locations', $event)">Learn
+                                More</a></span> -->
+                    </span>
+                </div>
+              </div>
             <div class="row">
                 <div class="card p0">
                     <span (click)="goLocation()" class="b-link">
