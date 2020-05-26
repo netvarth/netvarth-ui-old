@@ -52,21 +52,20 @@
                                             <tbody>
                                                 <tr *ngFor="let layout of layout_list, let i=index"
                                                     [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]">
-                                                    <td class="centeralign">
-                                                        <input type="checkbox" class="ckbx" [disabled]="layout.isContainer" [checked]="qBoardsSelectedIndex[i]"
-                                                        (click)="!layout.isContainer && qBoardClicked(i)" [value]="layout.id"/>                                                        
-                                                    </td>
-                                                    <td>
-                                                        <h3 
-                                                            class="pointer-cursor pt10 pull-left">
-                                                            <i *ngIf="layout.isContainer"
-                                                                class="fa fa-object-group"></i>&nbsp;
-                                                            <span
-                                                                (click)="goDisplayboardLayoutDetails(layout, 'layout')">{{layout.displayName | capitalizeFirst}}
+                                                    <!-- <td class="centeralign">
+                                                                                                             
+                                                    </td> -->
+                                                    <td><input type="checkbox" class="ckbx pull-left" [disabled]="layout.isContainer" [checked]="qBoardsSelectedIndex[i]"
+                                                        (click)="!layout.isContainer && qBoardClicked(i)" [value]="layout.id"/>
+                                                            <div
+                                                                (click)="goDisplayboardLayoutDetails(layout, 'layout')" class="pull-left mgn-lt-10"> <h3 
+                                                                class="pointer-cursor pt10 pull-left">
+                                                                <i *ngIf="layout.isContainer"
+                                                                    class="fa fa-object-group"></i>&nbsp;{{layout.displayName | capitalizeFirst}}
                                                                 <!-- <span
                                                                     *ngIf="!layout.container" class="layout_name"> (Id -
                                                                     {{layout.id}})</span> -->
-                                                            </span></h3>
+                                                            </h3></div>
                                                     </td>
                                                     <td class="pull-right">
                                                         <span class="">

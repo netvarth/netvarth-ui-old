@@ -132,7 +132,7 @@
             (click)="selectcustomers(i)">
             <div class="col-md-12 col-sm-12 col-xs-12 no-padding-small" [class.selected-customer]="customerSelected[i]">
 
-              <span class="mbt">
+              <span class="">
                 <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
@@ -141,15 +141,15 @@
               <div class="col-md-2 col-sm-7 mt5">
                 {{customer.firstName}} {{customer.lastName}}
               </div>
-              <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.phoneNo.length === 10">
-                <span><i class="fa fa-mobile"></i>{{customer.phoneNo}}</span></div>
+              <div class="col-md-2 col-sm-5 mt5" >
+                <span *ngIf="customer.phoneNo.length === 10"><i class="fa fa-mobile"></i>{{customer.phoneNo}}</span></div>
               <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.email"><i
                     class="fa fa-envelope"></i>{{customer.email}}</span></div>
               <div class="col-md-1 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
                   {{customer.lastVisitedDate | date: dateFormat }}</span></div>
 
-              <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.jaldeeId">
-                <span>Jaldee Id: {{customer.jaldeeId}}</span></div>
+              <div class="col-md-2 col-sm-5 mt5" >
+                <span *ngIf="customer.jaldeeId">Jaldee Id: {{customer.jaldeeId}}</span></div>
               <mat-menu #appMenu="matMenu">
                 <button mat-menu-item (click)="editCustomer(customer)">
                   Edit
