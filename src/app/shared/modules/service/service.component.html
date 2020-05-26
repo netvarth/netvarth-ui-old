@@ -189,6 +189,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
                         name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
+                            <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic tool-pading" aria-hidden="true"></i>
+                            <i *ngIf="mode.callingMode === 'Skype'" class="fa fa-skype skype-ic tool-pading" aria-hidden="true"></i>
                             {{mode.callingMode}}
                         </mat-option>
                     </mat-select>
