@@ -99,10 +99,11 @@
                                                     {{mode.instructions}}
                                                 </div>
                                                 <div class="input-section mgn-bt-15 desfont">
-                                                    <i *ngIf="mode.callingMode === 'WHATSAPP'"
+                                                    <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
-                                                    <i *ngIf="mode.callingMode === 'SKYPE'"
-                                                        class="fa fa-skype fa-lg skype-ic call-icon"></i>
+                                                    <!-- <i *ngIf="mode.callingMode === 'SKYPE'"
+                                                        class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
+                                                        <img *ngIf="mode.callingMode === 'Zoom'" src="https://img.icons8.com/color/14/000000/zoom.png"/>
                                                     <input *ngIf="!showInputSection" class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
                                                     <div class="input-group-append mgn-up-6"

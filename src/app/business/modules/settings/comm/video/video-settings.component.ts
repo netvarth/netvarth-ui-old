@@ -28,12 +28,12 @@ export class VideoSettingsComponent implements OnInit {
     domain: any;
 
     videoModes = {
-        Skype: { value: 'Skype', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
-        WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false }
+        // Skype: { value: 'Skype', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
+        WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
         // Hangouts: { value: 'Hangouts', displayName: 'Hangouts', placeHolder: 'Hangouts ID', titleHelp: 'Configure Hangouts Settings', actualValue: '', enabled: false },
         // Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         // Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
-        // Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
+        Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
         // Viber: { value: 'Viber', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
     };
     breadcrumb_moreoptions: any = [];
