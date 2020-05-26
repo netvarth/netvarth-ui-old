@@ -17,7 +17,7 @@ export class CustomViewListComponent implements OnInit {
   customViewList: any = [];
   removeitemdialogRef;
   breadcrumb_moreoptions: any = [];
-  domain:any;
+  domain: any;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -30,7 +30,7 @@ export class CustomViewListComponent implements OnInit {
     {
       title: 'Custom Views'
     }
-  ]; 
+  ];
 
   constructor(private _formBuilder: FormBuilder,
     private router: Router,
@@ -46,22 +46,23 @@ export class CustomViewListComponent implements OnInit {
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'general->customview', 'classname': 'b-service',
       'actions': [
-      { 'title': 'Help', 'type': 'learnmore' }]
-  };
+        { 'title': 'Help', 'type': 'learnmore' }]
+    };
     this.getCustomViewList();
   }
   performActions(action) {
     if (action === 'learnmore') {
       this.router.navigate(['/provider/' + this.domain + '/general->customview']);
-    } 
+    }
   }
 
   getCustomViewList() {
+    this.customViewList = [];
+    this.api_loading = true;
     this.provider_services.getCustomViewList().subscribe(
       (data: any) => {
         this.customViewList = data;
         this.api_loading = false;
-        console.log(this.customViewList);
       },
       (error: any) => {
         this.api_loading = false;
@@ -84,13 +85,16 @@ export class CustomViewListComponent implements OnInit {
     });
   }
   deleteItem(id) {
+    this.api_loading = true;
     this.provider_services.deleteCustomView(id)
       .subscribe(
         () => {
           this.getCustomViewList();
+          this.api_loading = false;
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
         }
       );
   }

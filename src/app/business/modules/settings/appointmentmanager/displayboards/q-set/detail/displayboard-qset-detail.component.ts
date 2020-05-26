@@ -127,8 +127,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.locName = loc_details.place;
         }
         if (this.actionparam === 'add') {
-            this.selectedSortField = 'sort_token';
-            this.sortByField('sort_token');
+            this.selectedSortField = 'sort_appointmentTime';
+            this.sortByField('sort_appointmentTime');
         }
     }
     ngOnChanges() {
@@ -620,7 +620,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             }
             console.log(this.display_scheduleList);
             if (this.display_scheduleList.length === 0) {
-this.serviceScheduleCount = this.display_scheduleList.length;
+                this.serviceScheduleCount = this.display_scheduleList.length;
             }
         } else {
             this.display_scheduleList = this.display_schedule;

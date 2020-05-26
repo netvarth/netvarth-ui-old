@@ -12,7 +12,6 @@
                     <tr>
                         <th *ngIf="!batchEnabled && tokenenabled">{{token_no}}</th>
                         <th *ngIf="batchEnabled">Batch</th>
-                        <th *ngIf="tokenenabled">{{token_no}}</th>
                         <th>{{service_cap}}</th>
                         <th>{{for_cap}}</th>
                         <th>{{scheduled_on_cap}}</th>
@@ -21,8 +20,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let chkin of loc">
-                        <td class="chk-service" data-title="Batch" *ngIf="!chkin.batchName && chkin.token">{{chkin.token}}</td>
-                        <td class="chk-service" data-title="Service" *ngIf="chkin.batchName">{{chkin.batchName}}</td>
+                        <td class="chk-service" data-title="Token" *ngIf="!chkin.batchName && chkin.token">{{chkin.token}}</td>
+                        <td class="chk-service" data-title="Batch" *ngIf="chkin.batchName">{{chkin.batchName}}</td>
                         <td class="chk-service" data-title="Service">{{chkin.service.name | capitalizeFirst}}</td>
                         <td class="chk-service" data-title="For">
                             {{getWaitlistingFor(chkin.waitlistingFor) | capitalizeFirst}}</td>

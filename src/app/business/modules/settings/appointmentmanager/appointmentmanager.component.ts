@@ -104,57 +104,58 @@ export class AppointmentmanagerComponent implements OnInit {
                 }
             );
     }
-    
+
     getOnlinePresence() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.createappointment_status = data.appointment;
                 this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
+                this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
             });
     }
     handle_apptliststatus(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setAcceptOnlineAppointment(is_check)
-          .subscribe(
-            () => {
-              this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-              this.getApptlistMgr();
-              this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              this.getApptlistMgr();
-            }
-          );
-      }
-  
-      handle_futureapptliststatus(event) {
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getApptlistMgr();
+                    this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getApptlistMgr();
+                }
+            );
+    }
+
+    handle_futureapptliststatus(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setFutureAppointmentStatus(is_check)
-          .subscribe(
-            () => {
-              this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-              this.getApptlistMgr();
-              this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
-      }
-      getApptlistMgr() {
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getApptlistMgr();
+                    this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    }
+    getApptlistMgr() {
         this.provider_services.getApptlistMgr()
-        .subscribe(
-          data => {
-            this.apptlist_details = data;
-            console.log(data);
-            this.apptlist_status = data['enableToday'] || false;
-            this.futureDateApptlist = data['futureAppt'] || false;
-            this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
-            this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
-            // this.filterbydepartment = data['filterByDept'];
-          });
-       
+            .subscribe(
+                data => {
+                    this.apptlist_details = data;
+                    console.log(data);
+                    this.apptlist_status = data['enableToday'] || false;
+                    this.futureDateApptlist = data['futureAppt'] || false;
+                    this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+                    this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+                    // this.filterbydepartment = data['filterByDept'];
+                });
+
     }
     getServiceCount() {
         const filter = { 'scope-eq': 'account', 'serviceType-neq': 'donationService' };

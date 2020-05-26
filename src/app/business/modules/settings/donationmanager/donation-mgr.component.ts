@@ -66,6 +66,7 @@ export class DonationMgrComponent implements OnInit {
       (data: any) => {
         this.donations_status = data.donationFundRaising;
         this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';
+        this.shared_functions.sendMessage({ 'ttype': 'donationStatus', donationStatus: this.donations_status });
       });
   }
 
