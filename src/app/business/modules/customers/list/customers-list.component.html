@@ -41,15 +41,9 @@
               </a>
             </li>
             <li class="dropdown notifications-menu">
-              <a (click)="createCustomer()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                data-toggle="dropdown">
-                <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
-              </a>
-            </li>
-            <li class="dropdown notifications-menu">
               <a (click)="searchCustomer()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                 data-toggle="dropdown">
-                <i class="fa fa-user"></i> Find {{customer_label | capitalizeFirst}}
+                <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
               </a>
             </li>
           </ul>
@@ -149,7 +143,7 @@
                   {{customer.lastVisitedDate | date: dateFormat }}</span></div>
 
               <div class="col-md-2 col-sm-5 mt5" >
-                <span *ngIf="customer.jaldeeId">Jaldee Id: {{customer.jaldeeId}}</span></div>
+                <span *ngIf="customer.jaldeeId">{{customer_label | capitalizeFirst}} Id: {{customer.jaldeeId}}</span></div>
               <mat-menu #appMenu="matMenu">
                 <button mat-menu-item (click)="editCustomer(customer)">
                   Edit

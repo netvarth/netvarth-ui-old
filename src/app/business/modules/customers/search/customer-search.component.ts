@@ -8,7 +8,9 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import * as moment from 'moment';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Location } from '@angular/common';
+
 
 @Component({
     selector: 'app-customer-search',
@@ -124,6 +126,19 @@ export class CustomerSearchComponent implements OnInit {
     nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
     checkinCaption = Messages.CHECKIN_TIME_CAPTION;
     checkinsCaption = Messages.CHECKINS_TIME_CAPTION;
+   
+    mobile_cap = Messages.MOBILE_CAP;
+    f_name_cap = Messages.F_NAME_CAP;
+    l_name_cap = Messages.L_NAME_CAP;
+    email_cap = Messages.EMAIL_ID_CAP;
+    gender_cap = Messages.GENDER_CAP;
+    male_cap = Messages.MALE_CAP;
+    female_cap = Messages.FEMALE_CAP;
+    dob_cap = Messages.DOB_CAP;
+    adrress_cap = Messages.ADDRESS_CAP;
+   
+    save_btn = Messages.SAVE_BTN;
+    mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
     checkinLabel;
     CheckedinLabel;
     ddate;
@@ -163,7 +178,20 @@ export class CustomerSearchComponent implements OnInit {
     //     //     url: 'provider/check-ins'
     //     // },
     // ];
-    breadcrumbs;
+    breadcrumbs_init = [
+        // {
+        //     title: 'Check-ins',
+        //     url: 'provider/check-ins'
+        // },
+        {
+            title: 'Customers',
+            url: 'provider/customers'
+        },
+        {
+            title: 'Add'
+        }
+    ];
+    breadcrumbs = this.breadcrumbs_init;
     // = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
     searchForm: FormGroup;
@@ -178,15 +206,75 @@ export class CustomerSearchComponent implements OnInit {
     searchClicked = false;
     appt = false;
     phoneNo: any;
+    customerId;
+    customerName;
+    checkin_type;
+    haveMobile = true;
+    loading = false;
+    customidFormat;
+    amForm: FormGroup;
+    email: any;
+    disableButton = false;
+
+
+
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
         private activated_route: ActivatedRoute,
+        private _location: Location,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            this.customerId = qparams.id;
+            if (this.customerId) {
+                if (this.customerId === 'add') {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                    this.action = 'add';
+                    this.createForm();
+                } else {
+                    this.activated_route.queryParams.subscribe(
+                        (qParams) => {
+                            this.action = qParams.action;
+                            this.getCustomers(this.customerId).then(
+                                (customer) => {
+                                    this.customer = customer;
+                                    this.customerName = this.customer[0].firstName;
+                                    if (this.action === 'edit') {
+                                        const breadcrumbs = [];
+                                        this.breadcrumbs_init.map((e) => {
+                                            breadcrumbs.push(e);
+                                        });
+                                        breadcrumbs.push({
+                                            title: this.customerName
+                                        });
+                                        this.breadcrumbs = breadcrumbs;
+                                        this.createForm();
+                                    } else if (this.action === 'view') {
+                                        const breadcrumbs = [];
+                                        this.breadcrumbs_init.map((e) => {
+                                            breadcrumbs.push(e);
+                                        });
+                                        breadcrumbs.push({
+                                            title: this.customerName
+                                        });
+                                        this.breadcrumbs = breadcrumbs;
+                                    }
+                                }
+                            );
+                        }
+                    );
+                }
+            }
             if (qparams.source) {
                 this.qParams['source'] = qparams.source;
             }
@@ -198,6 +286,21 @@ export class CustomerSearchComponent implements OnInit {
             // if ((qparams.appt && !qparams.source) || (qparams.appt && qparams.source && qparams.source !== 'clist')) {
             //     this.appt = qparams.appt;
             // }
+        });
+        this.activated_route.queryParams.subscribe(qparams => {
+            this.source = qparams.source;
+            if (qparams.phone) {
+                this.phoneNo = qparams.phone;
+            }
+            if (qparams.email) {
+                this.phoneNo = qparams.email;
+            }
+            if (qparams.checkinType) {
+                this.checkin_type = qparams.checkinType;
+            }
+            if (qparams.noMobile) {
+                this.haveMobile = false;
+            }
         });
     }
     ngOnInit() {
@@ -217,12 +320,45 @@ export class CustomerSearchComponent implements OnInit {
                 title: 'Find'
             }
         ];
+        this.loading = true;
+        this.getGlobalSettingsStatus();
+        this.breadcrumbs = [{
+            title: this.sharedFunctionobj.firstToUpper(this.customer_label) + 's',
+            url: 'provider/customers'
+        },
+        {
+            title: 'Add'
+        }
+        ];
         // this.breadcrumbs_init.map((e) => {
         //     breadcrumbs.push(e);
         // });
         // breadcrumbs.push(
         // );
         this.breadcrumbs = breadcrumbs;
+    }
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.customidFormat = data.jaldeeIdFormat;
+                this.createForm();
+            });
+    }
+    getCustomers(customerId) {
+        const _this = this;
+        const filter = { 'id-eq': customerId };
+        return new Promise(function (resolve, reject) {
+            _this.provider_services.getProviderCustomers(filter)
+                .subscribe(
+                    data => {
+                        resolve(data);
+
+                    },
+                    () => {
+                        reject();
+                    }
+                );
+        });
     }
     performActions(action) {
         if (action === 'learnmore') {
@@ -237,6 +373,177 @@ export class CustomerSearchComponent implements OnInit {
             this.searchForm.setValue({ search_input: this.phoneNo });
             this.searchCustomer(this.searchForm);
         }
+        if (!this.haveMobile) {
+            this.amForm = this.fb.group({
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                dob: [''],
+                gender: [''],
+                address: ['']
+            });
+            this.loading = false;
+        } else {
+            this.amForm = this.fb.group({
+                mobile_number: ['', Validators.compose([Validators.maxLength(10),
+                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                dob: [''],
+                gender: [''],
+                address: ['']
+            });
+            if (this.action === 'edit') {
+                this.updateForm();
+            }
+            this.loading = false;
+        }
+        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+        }
+        if (this.phoneNo) {
+            this.amForm.get('mobile_number').setValue(this.phoneNo);
+        }
+        if (this.email) {
+            this.amForm.get('email_id').setValue(this.email);
+        }
+    }
+    updateForm() {
+        this.amForm.setValue({
+            'first_name': this.customer[0].firstName || null,
+            'last_name': this.customer[0].lastName || null,
+            'email_id': this.customer[0].emailId || null,
+            'dob': this.customer[0].dob || null,
+            'gender': this.customer[0].gender || null,
+            'mobile_number': this.customer[0].phoneNo || null,
+            'address': this.customer[0].address || null,
+        });
+    }
+    onSubmit(form_data) {
+        this.disableButton = true;
+        console.log(this.action)
+        // if (this.action === 'add') {
+            const post_data = {
+                //   'userProfile': {
+                'firstName': form_data.first_name,
+                'lastName': form_data.last_name,
+                'dob': form_data.dob,
+                'gender': form_data.gender,
+                'phoneNo': form_data.mobile_number,
+                'address': form_data.address,
+                //   }
+            };
+            if (form_data.mobile_number) {
+                post_data['countryCode'] = '+91';
+            }
+            if (form_data.email_id && form_data.email_id !== '') {
+                post_data['email'] = form_data.email_id;
+            }
+            if (form_data.customer_id) {
+                post_data['jaldeeId'] = form_data.customer_id;
+            }
+            this.provider_services.createProviderCustomer(post_data)
+                .subscribe(
+                    data => {
+                        this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.sharedFunctionobj.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                        const qParams = {};
+                        qParams['pid'] = data;
+                        if (this.source === 'checkin') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type,
+                                    haveMobile: this.haveMobile,
+                                    id: data
+                                }
+                            };
+                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                        } else if (this.source === 'appointment') {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    ph: form_data.mobile_number,
+                                    checkin_type: this.checkin_type,
+                                    haveMobile: this.haveMobile,
+                                    id: data
+                                }
+                            };
+                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                        } else {
+                            const navigationExtras: NavigationExtras = {
+                                queryParams: {
+                                    phoneNo: this.phoneNo
+                                }
+                            };
+                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                        }
+                    },
+                    error => {
+                        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.disableButton = false;
+                    });
+        // } else if (this.action === 'edit') {
+        //     const post_data = {
+        //         //   'userProfile': {
+        //         'id': this.customerId,
+        //         'firstName': form_data.first_name,
+        //         'lastName': form_data.last_name,
+        //         'dob': form_data.dob,
+        //         'gender': form_data.gender,
+        //         'phoneNo': form_data.mobile_number,
+        //         'address': form_data.address,
+        //         //   }
+        //     }; if (form_data.mobile_number) {
+        //         post_data['countryCode'] = '+91';
+        //     }
+        //     if (form_data.email_id && form_data.email_id !== '') {
+        //         post_data['email'] = form_data.email_id;
+        //     }
+        //     if (form_data.customer_id) {
+        //         post_data['jaldeeId'] = form_data.customer_id;
+        //     }
+        //     this.provider_services.updateProviderCustomer(post_data)
+        //         .subscribe(
+        //             data => {
+        //                 this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+        //                 this.sharedFunctionobj.openSnackBar('Updated Successfully');
+        //                 const qParams = {};
+        //                 qParams['pid'] = data;
+        //                 if (this.source === 'checkin') {
+        //                     const navigationExtras: NavigationExtras = {
+        //                         queryParams: {
+        //                             ph: form_data.mobile_number,
+        //                             checkin_type: this.checkin_type
+        //                         }
+        //                     };
+        //                     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+        //                 } else if (this.source === 'appointment') {
+        //                     const navigationExtras: NavigationExtras = {
+        //                         queryParams: {
+        //                             ph: form_data.mobile_number,
+        //                             checkin_type: this.checkin_type
+        //                         }
+        //                     };
+        //                     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        //                 } else {
+        //                     const navigationExtras: NavigationExtras = {
+        //                         queryParams: {
+        //                             phoneNo: this.phoneNo
+        //                         }
+        //                     };
+        //                     this.router.navigate(['provider', 'customers'], navigationExtras);
+        //                 }
+        //             },
+        //             error => {
+        //                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //             });
+
+        // }
+
+    }
+    onCancel() {
+        this._location.back();
     }
     createNew() {
         const navigationExtras: NavigationExtras = {
@@ -266,6 +573,8 @@ export class CustomerSearchComponent implements OnInit {
     }
 
     searchCustomer(form_data, mod?) {
+        this.loading = true;
+
         let mode = 'id';
         if (mod) {
             mode = mod;
@@ -316,8 +625,20 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
+                    this.loading = false;
                     if (data.length === 0) {
                         this.form_data = data;
+                        if(mode == 'phone'){
+                            this.amForm.get('mobile_number').setValue(form_data.search_input);
+                        }
+                        if(mode == 'email'){
+                            this.amForm.get('email_id').setValue(form_data.search_input);
+                        }
+                        if(mode == 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL')
+                        {
+                            this.amForm.get('customer_id').setValue(form_data.search_input);
+                        }
+                       
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {
@@ -328,6 +649,7 @@ export class CustomerSearchComponent implements OnInit {
                     }
                 },
                 error => {
+                    this.loading = false;
                     this.sharedFunctionobj.apiErrorAutoHide(this, error);
                 }
             );
@@ -348,5 +670,20 @@ export class CustomerSearchComponent implements OnInit {
         this.emailerror = null;
         this.email1error = null;
         this.phoneerror = null;
+        this.api_error = null;
+        this.api_success = null;
+    }
+    onFieldBlur(key) {
+        this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
+    }
+    toCamelCase(word) {
+        if (word) {
+            return this.sharedFunctionobj.toCamelCase(word);
+        } else {
+            return word;
+        }
+    }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
     }
 }
