@@ -132,22 +132,31 @@
                                         <div class="mgn-bt-10 mgn-up-5">
                                             <div class=""
                                                 *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
-                                                <mat-checkbox (change)="handleModeSel(i, $event)"
-                                                    [value]="mode.callingMode"
-                                                    [checked]="!showInputSection[i] && callingModes[i] || showInputSection[i]">
+                                                <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
-                                                </mat-checkbox>
-                                                <div class="input-section mgn-bt-15" *ngIf="showInputSection[i]">
-                                                    <input style="border-bottom: 1px solid;padding: 0px;"
-                                                        class="form-control emailPrepay" placeholder=""
-                                                        [(ngModel)]="callingModes[i]" autocomplete="off">
-                                                    <div class="input-group-append mgn-up-5">
-                                                        <button class="btn bt3 btn-default" (click)="addCallingmode(i)"
-                                                            type="button">Add</button></div>
                                                 </div>
-                                                <div class="mgn-bt-10" *ngIf="!showInputSection[i] && callingModes[i]">
-                                                    {{callingModes[i]}}
-                                                    <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                <div class="cal-mod-instrct">
+                                                    {{mode.instructions}}
+                                                </div>
+                                                <div class="input-section mgn-bt-15 desfont">
+                                                    <i *ngIf="mode.callingMode === 'WhatsApp'"
+                                                        class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
+                                                    <!-- <i *ngIf="mode.callingMode === 'Skype'"
+                                                        class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
+                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
+                                                    <input *ngIf="!showInputSection"
+                                                        class="form-control emailPrepay call-mode-ip" placeholder=""
+                                                        [(ngModel)]="callingModes" autocomplete="off">
+                                                    <div class="input-group-append mgn-up-6"
+                                                        style="padding-left: 10px;">
+                                                        <button *ngIf="!showInputSection" class="btn bt3 btn-default"
+                                                            (click)="addCallingmode(i)" type="button">Add</button>
+                                                    </div>
+                                                    <div class="mgn-bt-10 cal-mod-edt" *ngIf="showInputSection">
+                                                        {{callingModes}}
+                                                        <span class="editbt mgn-lt-20"
+                                                            (click)="editCallingmodes(i)"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

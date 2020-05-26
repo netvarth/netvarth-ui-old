@@ -179,10 +179,11 @@ export class ProviderCheckinComponent implements OnInit {
     callingMode;
     virtualServiceArray;
     callingModes: any = [];
-    showInputSection: any = [];
+    showInputSection = false;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     checkinType;
     selectedUser;
+    wtsapmode: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -566,6 +567,12 @@ export class ProviderCheckinComponent implements OnInit {
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
+                if (serv.virtualCallingModes) {
+                    if (serv.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                        this.callingModes = this.customer_data.primaryPhoneNumber;
+                        this.wtsapmode = this.customer_data.primaryPhoneNumber;
+                    }
+                }
             }
         }
         this.sel_ser_det = [];
@@ -628,7 +635,7 @@ export class ProviderCheckinComponent implements OnInit {
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
         this.callingModes = [];
-        this.showInputSection = [];
+        this.showInputSection = false;
         this.sel_ser = obj;
         this.setServiceDetails(obj);
         this.queuejson = [];
@@ -781,11 +788,11 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
         this.virtualServiceArray = {};
-        for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes[i] !== '') {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[i].callingMode] = this.callingModes[i];
+        // for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes !== '') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
             }
-        }
+        // }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -1418,17 +1425,17 @@ export class ProviderCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        this.showInputSection[index] = false;
+        this.showInputSection = true;
     }
-    handleModeSel(index, ev) {
-        if (ev.checked) {
-            this.showInputSection[index] = true;
-        } else {
-            this.showInputSection[index] = false;
-            this.callingModes[index] = '';
-        }
-    }
+    // handleModeSel(index, ev) {
+    //     if (ev.checked) {
+    //         this.showInputSection[index] = true;
+    //     } else {
+    //         this.showInputSection[index] = false;
+    //         this.callingModes[index] = '';
+    //     }
+    // }
     editCallingmodes(index) {
-        this.showInputSection[index] = true;
+        this.showInputSection = false;
     }
 }
