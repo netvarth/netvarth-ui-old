@@ -488,6 +488,11 @@
                               style="font-size: smaller;">
                               {{checkin.waitlistStatus}}
                             </span>
+                            <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                              [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                              style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
+                              <i class="fa fa-video-camera"></i>
+                            </span>
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -499,7 +504,12 @@
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                               <i class="icon-note"></i>
                             </span>
-                           
+                            <span
+                              *ngIf="checkin.waitlistStatus !== 'cancelled' && checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                              [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                              style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
+                              <i class="fa fa-video-camera"></i>
+                            </span>
                             <span data-title="Payment Status" class="payment" *ngIf="pos">
                               <ng-container *ngIf="checkin.paymentStatus">
                                 <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -602,6 +612,11 @@
                             *ngIf="timeSlotCheckins[slot][0].consumerNote"
                             (click)="showConsumerNote(timeSlotCheckins[slot][0])">
                             <i class="icon-note"></i>
+                          </span>
+                          <span *ngIf="timeSlotCheckins[slot][0].virtualService" [matTooltip]="'calling modes'"
+                            class="pull-left cnote icon-btn1 pointer-cursor" style="font-size: 1rem;"
+                            (click)="showCallingModes(timeSlotCheckins[slot][0].virtualService)">
+                            <i class="fa fa-video-camera"></i>
                           </span>
                           <span data-title="Payment Status" class="payment" *ngIf="pos">
                             <ng-container *ngIf="timeSlotCheckins[slot][0].paymentStatus">
@@ -871,7 +886,11 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                             
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-video-camera"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1077,7 +1096,11 @@
                                 *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                            
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-video-camera"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1106,13 +1129,9 @@
                                 *ngIf="!small_device_display">Arrived </span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
-                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i] && !checkin.virtualService"
+                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i]"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
-                            </a>
-                            <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService" (click)="showCallingModes(checkin.virtualService)"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start Teleservice'">
-                              <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
@@ -1265,7 +1284,11 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                             
+                              <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
+                                [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
+                                style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
+                                <i class="fa fa-video-camera"></i>
+                              </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1360,7 +1383,7 @@
                               <span *ngIf="checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
                                 [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                 style="font-size: 1rem;" (click)="showCallingModes(checkin.virtualService)">
-                                <!-- <i class="fa fa-video-camera"></i> -->
+                                <i class="fa fa-video-camera"></i>
                               </span>
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
@@ -1421,7 +1444,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="dashqr" *ngIf="showQR">
-      <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+      <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value" style="width: 10px;">
       </ngx-qrcode>
     </div>
   </div>

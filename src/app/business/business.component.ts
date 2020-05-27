@@ -40,7 +40,7 @@ export class BusinessComponent implements OnInit {
             if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
               router.navigate(['provider', 'check-ins']);
             } else {
-              router.navigate(['provider', 'settings', 'bprofile']);
+              router.navigate(['provider', 'settings']);
             }
           }, 500);
         }

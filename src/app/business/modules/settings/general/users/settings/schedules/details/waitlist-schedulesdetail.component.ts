@@ -530,17 +530,17 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             // }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
-                const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
+                const error = 'Please enter a numeric value for ' + this.customer_label + 's served per timeslot';
                 this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
-                const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
+                const error = 'Please enter an integer value for ' + this.customer_label + 's served per timeslot';
                 this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 return;
             } else {
                 if (form_data.qserveonce === 0) {
-                    const error = this.customer_label + 's served at a time should be greater than 0';
+                    const error = this.customer_label + 's served per timeslot should be greater than 0';
                     this.shared_Functionsobj.apiErrorAutoHide(this, error);
                     return;
                 }

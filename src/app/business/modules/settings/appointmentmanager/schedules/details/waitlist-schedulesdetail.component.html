@@ -91,7 +91,7 @@
                                                 </mat-slide-toggle>
                                             </div>
                                         </div> -->
-                                        <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
+                                        <!-- <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                             <div class="mgn-up-10" style="display: flex;">
                                                 <h6> Batch mode </h6>
                                                 <mat-slide-toggle class="example-margin mgn-lt-10"
@@ -141,7 +141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
@@ -341,14 +341,14 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
-                                        placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
+                                        placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
                                         formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
                                         (keyup)="isvalid($event)">
                                 </mat-form-field>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
         {
-          'required' : 'Please enter the ' + customer_label + 's served at a time' ,
+          'required' : 'Please enter the ' + customer_label + 's served per timeslot' ,
           'maxlength' : 'Only 4 digits are allowed'
         })">
                                 </app-field-error-display>

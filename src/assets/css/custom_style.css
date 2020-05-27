@@ -1264,7 +1264,7 @@ sup {
 }
 
 .padding-tp-10 {
-  padding-top: 10px;
+  padding-top: 10px !important;
 }
 
 .pad-rt-10 {

@@ -10,16 +10,16 @@
                     <label>Customer Id Format</label>
                     <p class="form-level-settings">Choose one of the three customer series options.</p>
 
-                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
-                        <mat-radio-button value="{{formats.auto.value}}"></mat-radio-button>
-                        <label for="">{{formats.auto.displayName}}</label><br><br>
+                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">                        
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
                         <label for="">{{formats.manual.displayName}}</label><br><br>
-                        <mat-radio-button value="{{formats.pattern.value}}"></mat-radio-button>
-                        <label for="">{{formats.pattern.displayName}}</label><br>
+                        <mat-radio-button [disabled]="custIdFormat === formats.manual.value" value="{{formats.auto.value}}"></mat-radio-button>
+                        <label for="">{{formats.auto.displayName}}</label>
+                        <!-- <mat-radio-button value="{{formats.pattern.value}}"></mat-radio-button>
+                        <label for="">{{formats.pattern.displayName}}</label><br> -->
                     </mat-radio-group>
 
-                    <div *ngIf="custIdFormat == 'PATTERN'" class="mgn-up-10 ynw-common-form-nm">
+                    <div *ngIf="custIdFormat == 'AUTO'" class="mgn-up-10 ynw-common-form-nm">
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <mat-form-field>
                                 <input style="padding-top: 20px!important;padding-bottom: 5px !important;" matInput

@@ -39,7 +39,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
 
         {
             url: '/provider/settings/appointmentmanager',
-            title: 'Appointmentmanager'
+            title: 'Appointment Manager'
         },
 
         {
@@ -604,7 +604,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             const error = 'Please enter a numeric value for capacity';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (isNaN(instantQ.qserveonce)) {
-            const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
+            const error = 'Please enter a numeric value for ' + this.customer_label + 's served per timeslot';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else {
             if (this.action === 'edit') {

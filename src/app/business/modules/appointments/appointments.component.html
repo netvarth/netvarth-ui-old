@@ -8,9 +8,9 @@
       <div class="card p0 w-dta">
         <header class="main-header dash chkin">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
-            <div class="navbar-custom-menu ">
-              <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu loc-lst queue-menu">
+            <div class="navbar-custom-menu width100pc">
+              <ul class="nav navbar-nav width100pc">
+                <li class="dropdown messages-menu loc-lst queue-menu pull-right">
                   <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selected_location" style="padding-top: 12px !important;">
@@ -97,8 +97,26 @@
             </div>
           </nav>
         </header>
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="queues && queues.length > 0">
+          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+            <!-- <mat-chip-list class="pcheckin-owl"> -->
+              <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
+                <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
+                  <button class="item buttonCk" [ngClass]="{active: isQueueSelected(queue.id)?true:false}" (click)="viewQClicked(queue)" *ngFor="let queue of queues;let i = index">
+                      {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
+                    </button>
+                </owl-carousel>
+                <div class="owl-theme">
+                  <div class="owl-controls">
+                    <div class="checkins-nav owl-nav"></div>
+                  </div>
+                </div>
+              </div>
+            <!-- </mat-chip-list> -->
+          </div>
+        </div>
         <div class="head">
-          <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small ptp17" *ngIf="selected_location">
+          <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="selected_location">
             <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
               {{today_cap}} ({{today_waitlist_count}})
             </span>
@@ -126,27 +144,6 @@
               [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
               <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
             </span>
-          </div>
-        </div>
-        <div class="head" *ngIf="queues && queues.length > 0">
-          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-            <mat-chip-list class="pcheckin-owl">
-              <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl no-padding">
-                <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="queues">
-                  <mat-chip class="pointer-cursor item" (click)="viewQClicked(queue)"
-                    [selected]="isQueueSelected(queue.id)" *ngFor="let queue of queues;let i = index">
-                    <span class="break-inside: avoid">
-                      {{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
-                    </span>
-                  </mat-chip>
-                </owl-carousel>
-                <div class="owl-theme">
-                  <div class="owl-controls">
-                    <div class="checkins-nav owl-nav"></div>
-                  </div>
-                </div>
-              </div>
-            </mat-chip-list>
           </div>
         </div>
         <div class="dash-list">

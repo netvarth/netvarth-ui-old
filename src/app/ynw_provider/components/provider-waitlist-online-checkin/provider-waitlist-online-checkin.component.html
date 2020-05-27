@@ -5,9 +5,9 @@
       <p class="form-level-settings">{{frm_wait_cal_cap}}</p>
     </div>
     <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12  no-padding">
-      <div class="col-md-12 mgn-up-20  no-padding ">
-        <label>Token Manager <mat-slide-toggle [(ngModel)]="tokenManager" (change)="handleTokenManager($event)">
-          </mat-slide-toggle>&nbsp;{{showToken_str}}</label>
+      <div class="col-md-12  col-sm-12 col-xs-12  no-padding ">
+        <h6>Token Manager <mat-slide-toggle [(ngModel)]="tokenManager" (change)="handleTokenManager($event)">
+          </mat-slide-toggle>&nbsp;{{showToken_str}}</h6>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="tokenManager">
           <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
             <label>Show Token No.
@@ -30,11 +30,11 @@
         </div>
       </div>
     </div>
-    <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12  no-padding">
-      <div class="clearfix" class="brd-tp">&nbsp;</div>
+    <div class="clearfix"></div>
+    <div class="lbr col-sm-12 col-md-12 col-lg-12 brd-tp mgn-up-20 no-padding padding-tp-10">
       <div class="col-md-12 col-xs-12 col-sm-12  no-padding">
-        <label>Check-In Manager <mat-slide-toggle [(ngModel)]="checkinManager" (change)="handleCheckinManager($event)">
-          </mat-slide-toggle>&nbsp;{{showCheckinmgr_str}}</label>
+        <h6>Check-In Manager <mat-slide-toggle [(ngModel)]="checkinManager" (change)="handleCheckinManager($event)">
+          </mat-slide-toggle>&nbsp;{{showCheckinmgr_str}}</h6>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="checkinManager">
           <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
             <label>Show Waiting Time

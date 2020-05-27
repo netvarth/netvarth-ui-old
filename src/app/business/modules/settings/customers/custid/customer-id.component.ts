@@ -23,18 +23,18 @@ export class CustomerIdSettingsComponent implements OnInit {
     formats = {
         auto: { value: 'AUTO', displayName: 'Auto' },
         manual: { value: 'MANUAL', displayName: 'Manual' },
-        pattern: { value: 'PATTERN', displayName: 'Pattern' },
+        // pattern: { value: 'PATTERN', displayName: 'Pattern' },
     };
     prefixName;
     suffixName;
     custIdFormat: any;
     tempCustIdFormat: any;
     inputChanged = false;
-    domain:any;
+    domain: any;
     breadcrumb_moreoptions: any = [];
     constructor(
         private provider_services: ProviderServices,
-        public shared_functions:SharedFunctions,
+        public shared_functions: SharedFunctions,
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
     ) {
@@ -45,16 +45,16 @@ export class CustomerIdSettingsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'customers->custid-settings', 
+            'show_learnmore': true, 'scrollKey': 'customers->custid-settings',
             'actions': [
-            { 'title': 'Help', 'type': 'learnmore' }]
+                { 'title': 'Help', 'type': 'learnmore' }]
         };
     }
-    
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
+                console.log(this.custIdFormat);
                 this.tempCustIdFormat = data.jaldeeIdFormat;
                 if (data.jaldeeIdFormat.patternSettings) {
                     this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
@@ -65,7 +65,7 @@ export class CustomerIdSettingsComponent implements OnInit {
     formatChanged() {
         if (this.custIdFormat !== this.tempCustIdFormat.customerSeriesEnum) {
             this.inputChanged = true;
-        } else if (this.tempCustIdFormat.customerSeriesEnum === this.formats.pattern.value) {
+        } else if (this.tempCustIdFormat.customerSeriesEnum === this.formats.auto.value) {
             if (this.prefixName !== this.tempCustIdFormat.patternSettings.prefix || this.suffixName !== this.tempCustIdFormat.patternSettings.suffix) {
                 this.inputChanged = true;
             }
@@ -90,9 +90,9 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.inputChanged = false;
         this.getGlobalSettings();
     }
-    performActions(action) { 
+    performActions(action) {
         if (action === 'learnmore') {
-        this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/customers->custid-settings']);
         }
     }
 }
