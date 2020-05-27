@@ -1028,16 +1028,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
   }
-  payClicked(locid, locname, cdate, chdatereq) {
+  payClicked(locid) {
     // alert('j');
-    this.showDonation(locid, locname, cdate, 'consumer');
+    this.showDonation(locid);
   }
-  showDonation(locid, locname, curdate, origin?) {
+  showDonation(locid) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
-        sel_date: curdate,
-        cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id
       }

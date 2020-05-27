@@ -957,7 +957,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {};
       Mfilter = {
-        'waitlistStatus-neq': 'prepaymentPending'
+        'waitlistStatus-neq': 'prepaymentPending,failed'
       };
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
@@ -1635,7 +1635,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   qrCodegeneration(valuetogenerate) {
-    this.qr_value = this.path + '/#/wl/status/' + valuetogenerate.checkinEncId;
+    this.qr_value = this.path + '/wl/status/' + valuetogenerate.checkinEncId;
     this.showQR = true;
   }
   printCheckin(source) {

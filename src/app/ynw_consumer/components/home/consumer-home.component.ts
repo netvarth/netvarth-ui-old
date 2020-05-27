@@ -339,6 +339,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     const params = {
+      'waitlistStatus-neq': 'failed'
     };
     this.consumer_services.getWaitlist(params)
       .subscribe(

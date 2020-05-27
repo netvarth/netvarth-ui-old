@@ -789,7 +789,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes !== '') {
+            if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
             }
         // }

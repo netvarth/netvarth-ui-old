@@ -203,8 +203,8 @@ export class ConsumerDonationComponent implements OnInit {
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
-                this.sel_checkindate = params.sel_date;
-                this.hold_sel_checkindate = this.sel_checkindate;
+                // this.sel_checkindate = params.sel_date;
+                // this.hold_sel_checkindate = this.sel_checkindate;
                 this.action = params.action;
             });
     }
@@ -249,10 +249,10 @@ export class ConsumerDonationComponent implements OnInit {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         // this.minDate = this.todaydate;
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const ddd = new Date(day);
-        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
-        this.hold_sel_checkindate = this.sel_checkindate;
+        // const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        // const ddd = new Date(day);
+        // this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        // this.hold_sel_checkindate = this.sel_checkindate;
         // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
     }
