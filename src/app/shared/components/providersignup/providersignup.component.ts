@@ -265,7 +265,7 @@ export class ProvidersignupComponent implements OnInit {
   onItemSelect() {
     // this.license_description = this.license_packages[item.value];
   }
-  signUpApiProvider(user_details) {
+  signUpApiProvider(user_details, source?) {
     this.resetApiErrors();
     this.resendemailotpsuccess = false;
     this.shared_services.signUpProvider(user_details)
@@ -285,7 +285,9 @@ export class ProvidersignupComponent implements OnInit {
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
           this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+          if (!source) {
           this.createpasswordform();
+          }
           this.resetCounter(this.refreshTime);
           this.cronHandle = observableInterval(1000).subscribe(() => {
             if (this.resetCounterVal > 0) {
@@ -424,7 +426,7 @@ export class ProvidersignupComponent implements OnInit {
   resendOtp(user_details) {
     // if (user_details.isAdmin) {
     console.log(user_details);
-    this.signUpApiProvider(user_details);
+    this.signUpApiProvider(user_details, 'resend');
     // } else {
     //   this.signUpApiConsumer(user_details);
     // }

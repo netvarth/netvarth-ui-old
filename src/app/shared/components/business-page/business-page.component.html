@@ -256,14 +256,23 @@
                                                             </ul>
                                                         </div>
                                                         <div class="services"
-                                                            *ngIf="!loc.fields.departments && loc.fields.services && loc.fields.services.length > 0">
+                                                            *ngIf="!loc.fields.departments && loc.fields.serviceList && loc.fields.serviceList.length > 0">
                                                             <span class="sub-title">{{services_offered}}</span>
                                                             <ul>
-                                                                <li *ngFor="let serv of loc.fields.services"
-                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
-                                                                    {{serv}}</li>
+                                                                <li *ngFor="let serv of loc.fields.serviceList"
+                                                                    (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
+                                                                    {{serv.name}}</li>
                                                             </ul>
                                                         </div>
+                                                        <div class="services"
+                                                        *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
+                                                        <span class="sub-title">{{services_offered}}</span>
+                                                        <ul>
+                                                            <li *ngFor="let serv of loc.fields.services"
+                                                                (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                                {{serv}}</li>
+                                                        </ul>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>

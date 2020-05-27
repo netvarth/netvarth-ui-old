@@ -377,6 +377,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               } else {
                 this.isPlaceisSame = false;
               }
+              try {
+                this.locationjson[i].fields.serviceList = JSON.parse(this.locationjson[i].fields.services);
+              } catch (e) {
+              }
               if (this.locationjson[i].fields.business_hours1) {
                 schedule_arr = [];
                 const business_hours = JSON.parse(this.locationjson[i].fields.business_hours1[0]);

@@ -435,6 +435,7 @@ export class AppointmentComponent implements OnInit {
             });
     }
     initDepartments(accountId) {
+        this.departmentlist = this.departments = [];
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.shared_services.getProviderDept(accountId).subscribe(data => {

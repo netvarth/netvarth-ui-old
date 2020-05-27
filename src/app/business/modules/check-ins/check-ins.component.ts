@@ -1616,7 +1616,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const checkinlist = this.selectedCheckin[source];
     this.provider_services.smsCheckin(checkinlist.ynwUuid).subscribe(
       () => {
-        this.shared_functions.openSnackBar('Check-in details mailed successfully');
+        this.shared_functions.openSnackBar('Check-in details sent successfully');
       },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1627,7 +1627,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const checkinlist = this.selectedCheckin[source];
     this.provider_services.emailCheckin(checkinlist.ynwUuid).subscribe(
       () => {
-        this.shared_functions.openSnackBar('Check-in details sent successfully');
+        this.shared_functions.openSnackBar('Check-in details mailed successfully');
       },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
