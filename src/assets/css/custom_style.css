@@ -1073,12 +1073,12 @@ sup {
 }
 
 .billpopup .mat-dialog-container .two-col .name {
-  flex-basis: 75%!important;
+  flex-basis: 70%!important;
   text-align: right!important;
 }
 
 .billpopup .mat-dialog-container .two-col .price {
-  flex-basis: 25%!important;
+  flex-basis: 30%!important;
   text-align: right!important;
 }
 

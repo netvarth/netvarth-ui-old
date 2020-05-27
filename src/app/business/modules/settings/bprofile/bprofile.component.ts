@@ -365,9 +365,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
+        const status = (this.normal_search_active === true) ? 'disable' : 'enable';
+        this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getPublicSearch();
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.getPublicSearch();
       });
   }
   getJaldeeIntegrationSettings() {
