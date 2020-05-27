@@ -214,7 +214,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.uuid = params.id;
     });
     this.activated_route.queryParams.subscribe(qparams => {
-      console.log(qparams.source);
       this.source = qparams.source;
       if (this.source) {
         this.breadcrumbs = [
@@ -1278,9 +1277,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '<table width="100%">';
     bill_html += '	<tr style="line-height:20px">';
     if (!this.source) {
-    bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
+      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
     } else {
-    bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
+      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
     }
     bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
     bill_html += '	</tr>';
@@ -1324,7 +1323,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
