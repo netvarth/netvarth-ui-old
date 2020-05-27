@@ -388,11 +388,11 @@
                               *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                               <i class="icon-note"></i>
                             </span>
-                            <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                            <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                               [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                               style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                               <i class="fa fa-video-camera"></i>
-                            </span>
+                            </span> -->
                             <span data-title="Payment Status" class="payment" *ngIf="pos">
                               <ng-container *ngIf="appt.paymentStatus">
                                 <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
@@ -662,11 +662,11 @@
                                 (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                              <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                                 [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                 style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                                 <i class="fa fa-video-camera"></i>
-                              </span>
+                              </span> -->
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="appt.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
@@ -854,11 +854,11 @@
                                   *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                   <i class="icon-note"></i>
                                 </span>
-                                <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                                <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                                   [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                   style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                                   <i class="fa fa-video-camera"></i>
-                                </span>
+                                </span> -->
                                 <span data-title="Payment Status" class="payment" *ngIf="pos">
                                   <ng-container *ngIf="appt.paymentStatus">
                                     <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
@@ -881,11 +881,11 @@
                                 *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                              <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                                 [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                 style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                                 <i class="fa fa-video-camera"></i>
-                              </span>
+                              </span> -->
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="appt.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
@@ -917,9 +917,15 @@
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Started')"
-                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived'" [matTooltipClass]="tooltipcls"
+                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived' && !checkin.virtualService" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="showCallingModes(appt.virtualService)"
+                              *ngIf="checkin.virtualService" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Start Teleservice'">
+                              <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Confirmed')"
@@ -1042,11 +1048,11 @@
                                 (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                              <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                                 [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                 style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                                 <i class="fa fa-video-camera"></i>
-                              </span>
+                              </span> -->
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="appt.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
@@ -1139,11 +1145,11 @@
                                 (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
+                              <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                                 [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
                                 style="font-size: 1rem;" (click)="showCallingModes(appt.virtualService)">
                                 <i class="fa fa-video-camera"></i>
-                              </span>
+                              </span> -->
                               <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="appt.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span

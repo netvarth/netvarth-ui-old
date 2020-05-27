@@ -719,9 +719,9 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.selectedUser && this.selectedUser.firstName !== 'None') {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
-        if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
-        }
+        // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        // }
         if (this.partySizeRequired) {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
