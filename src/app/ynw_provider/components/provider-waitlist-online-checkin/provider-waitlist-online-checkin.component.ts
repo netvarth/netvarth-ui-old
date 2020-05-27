@@ -25,14 +25,6 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   toke_enable_cap = Messages.CHECKIN_TOKEN_ENABLE_CAP;
   toke_disable_cap = Messages.CHECKIN_TOKEN_DISABLE_CAP;
   accept_future_cap = Messages.CHECKIN_FUTURE_CAP;
-  form = {
-    'calculationMode': '',
-    'trnArndTime': '',
-    'sendNotification': false,
-    'filterByDept': false,
-    'futureDateWaitlist': false/*,
-    'showTokenId': false*/
-  };
   waitlist_manager: any = null;
   reset_waitlist_manager: any = null;
   formChange = 0;
@@ -45,6 +37,21 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   account_type;
   is_data_chnge: any;
   deptstatusstr = 'Off';
+  showToken = true;
+  showToken_str = 'Off';
+  showPersonsahead_str = 'Off';
+  showCheckinWaitTime = true;
+  showCheckinWaitTime_str = 'Off';
+  personsAhead = true;
+  manualMode_str = 'Off';
+  trnArndTime;
+  manualMode = false;
+  showTokenWaitTime: boolean;
+  checkinManager = false;
+  tokenManager = false;
+  showTokenWaitTime_str: string;
+  showCheckinmgr_str = 'Off';
+  isManualMode = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions,
@@ -56,8 +63,8 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   }
 
   ngOnInit() {
-const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-this.account_type = user.accountType;
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.account_type = user.accountType;
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
     this.frm_wait_cal_cap = Messages.FRM_LEVEL_WAIT_TIME_CALC_MSG.replace('[customer]', this.customer_label);
@@ -69,66 +76,97 @@ this.account_type = user.accountType;
    */
   isValid(number) {
     if (number <= 0) {
-      this.form.trnArndTime = '';
+      this.trnArndTime = '';
     } else if (number > 999) {
       let numString = number.toString();
       if (numString.length > 3) {
         numString = numString.substr(0, numString.length - 1);
-        this.form.trnArndTime = numString;
+        this.trnArndTime = numString;
       }
     }
   }
-  setValue(value) {
-    let calcMode = value['calculationMode'] || '';
-    const showToken = value['showTokenId'] || false;
-    if (calcMode === 'NoCalc' && showToken) {
-      calcMode = 'NoCalc_WithToken';
-    } else if (calcMode === 'NoCalc' && !showToken) {
-      calcMode = 'NoCalc_WithoutToken';
+  handleTokenManager(event) {
+    const postData = {};
+    if (event.checked) {
+      postData['showTokenId'] = true;
+    } else {
+      postData['showTokenId'] = false;
     }
-    // this.form.calculationMode = value['calculationMode'] || '';
-    this.form.calculationMode = calcMode || '';
-    this.form.trnArndTime = value['trnArndTime'] || null;
-    this.form.sendNotification = value['sendNotification'] || false;
-    this.form.futureDateWaitlist = value['futureDateWaitlist'] || false;
-    this.form.filterByDept = value['filterByDept'] || false;
-    // this.form.showTokenId = value['showTokenId'] || false;
-
-  }
-
-  OnSubmit() {
-
-    if (this.form.calculationMode === 'Fixed' && this.form.trnArndTime == null) {
-      return false;
-    }
-    let calcMode = this.form.calculationMode;
-    let showToken = false;
-    if (calcMode === 'NoCalc_WithToken') {
-      calcMode = 'NoCalc';
-      showToken = true;
-    } else if (calcMode === 'NoCalc_WithoutToken') {
-      calcMode = 'NoCalc';
-      showToken = false;
-    } else if (calcMode === 'Fixed') {
-      const turntime = this.form.trnArndTime || 0;
-      if (turntime <= 0) {
-        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
-        return;
-      }
-    }
-    const postData = {
-      calculationMode: calcMode,
-      trnArndTime: this.form.trnArndTime || null,
-      sendNotification: this.form.sendNotification,
-      futureDateWaitlist: this.form.futureDateWaitlist,
-      showTokenId: showToken,
-    };
-    // this.provider_services.setWaitlistMgr(this.form)
     this.provider_services.setWaitlistMgr(postData)
       .subscribe(
         () => {
           this.getWaitlistMgr();
-          // this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
+          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+  handleCheckinManager(event) {
+    const postData = {};
+    if (event.checked) {
+      postData['showTokenId'] = false;
+    } else {
+      postData['showTokenId'] = true;
+    }
+    this.provider_services.setWaitlistMgr(postData)
+      .subscribe(
+        () => {
+          this.getWaitlistMgr();
+          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+  setValue(value) {
+    console.log(value);
+    const calcMode = value['calculationMode'] || '';
+    if (value['showTokenId']) {
+      this.tokenManager = true;
+      this.checkinManager = false;
+      this.showToken_str = 'On';
+      this.showCheckinmgr_str = 'Off';
+      this.showPersonsahead_str = 'On';
+      if (calcMode === 'NoCalc') {
+        this.showTokenWaitTime = false;
+      } else {
+        this.showTokenWaitTime = true;
+      }
+      this.showTokenWaitTime_str = this.showTokenWaitTime ? 'On' : 'Off';
+    } else {
+      this.checkinManager = true;
+      this.tokenManager = false;
+      this.showCheckinmgr_str = 'On';
+      this.showToken_str = 'Off';
+      if (calcMode === 'Fixed') {
+        this.showCheckinWaitTime = false;
+        this.manualMode_str = 'On';
+        this.trnArndTime = value['trnArndTime'];
+        this.isManualMode = true;
+        this.manualMode = true;
+      } else {
+        this.isManualMode = false;
+        this.manualMode = false;
+        this.manualMode_str = 'Off';
+        this.showCheckinWaitTime = true;
+      }
+      this.showCheckinWaitTime_str = this.showCheckinWaitTime ? 'On' : 'Off';
+    }
+  }
+  updateTokenWaitTime(event) {
+    const postData = {
+      showTokenId: true
+    };
+    if (event.checked) {
+      postData['calculationMode'] = 'ML';
+    } else {
+      postData['calculationMode'] = 'NoCalc';
+    }
+    this.provider_services.setWaitlistMgr(postData)
+      .subscribe(
+        () => {
+          this.getWaitlistMgr();
           this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
         },
         error => {
@@ -136,19 +174,52 @@ this.account_type = user.accountType;
         });
   }
 
-
+  updateManualMode(trnArndTime) {
+      if (trnArndTime <= 0) {
+        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
+        return;
+      }
+      const postData = {
+        calculationMode: 'Fixed',
+        trnArndTime: trnArndTime,
+        showTokenId: false
+      };
+      this.provider_services.setWaitlistMgr(postData)
+        .subscribe(
+          () => {
+            this.getWaitlistMgr();
+            this.is_data_chnge = 0;
+            this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+          },
+          error => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+  }
+  fixedModeChanged(event) {
+    if (!event.checked) {
+      const postData = {
+        calculationMode: 'ML',
+        showTokenId: false
+      };
+      this.provider_services.setWaitlistMgr(postData)
+        .subscribe(
+          () => {
+            this.getWaitlistMgr();
+          });
+    } else {
+      this.isManualMode = true;
+      this.trnArndTime = '';
+    }
+  }
   getWaitlistMgr() {
-
     this.provider_services.getWaitlistMgr()
       .subscribe(
         data => {
           this.waitlist_manager = data;
-          this.deptstatusstr = this.waitlist_manager['filterByDept'] ? 'On' : 'Off';
+          console.log(data);
           this.reset_waitlist_manager = data;
           this.setValue(this.waitlist_manager);
           this.provider_datastorage.set('waitlistManage', data);
-          this.formChange = 0;
-          this.shared_functions.sendMessage({ ttype: 'filterbyDepartment', action: this.waitlist_manager.filterByDept });
         },
         () => {
 
@@ -156,51 +227,54 @@ this.account_type = user.accountType;
       );
   }
 
-  onFormChange() {
-    this.formChange = 1;
-  }
-
+  // onFormChange() {
+  //   this.formChange = 1;
+  // }
+inputChanged () {
+  this.is_data_chnge = 1;
+}
   cancelChange() {
-    this.formChange = 0;
-    this.is_data_chnge = 0;
-    this.setValue(this.reset_waitlist_manager);
+     // this.setValue(this.waitlist_manager);
+    // this.is_data_chnge = 0;
+  //  this.trnArndTime = this.waitlist_manager['trnArndTime'];
+      this.getWaitlistMgr();
   }
 
-  redirecTo(mod) {
-    switch (mod) {
-      case 'notifications':
-        this.routerobj.navigate(['provider', 'settings', 'notifications']);
-        break;
-    }
-  }
-  doRemoveservice() {
-    if (this.form['filterByDept']) {
-      this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
-    } else {
-      this.message = 'Assigned services are removed from the departments';
-    }
-    this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': this.message
-      }
-    });
-    this.removeitemdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const status = (this.form.filterByDept === true) ? 'Enable' : 'Disable';
-        this.provider_services.setDeptWaitlistMgr(status)
-          .subscribe(
-            () => {
-              this.getWaitlistMgr();
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
-      } else {
-        this.form['filterByDept'] = (this.form.filterByDept === true) ? false : true;
-      }
-    });
-  }
+  // redirecTo(mod) {
+  //   switch (mod) {
+  //     case 'notifications':
+  //       this.routerobj.navigate(['provider', 'settings', 'notifications']);
+  //       break;
+  //   }
+  // }
+  // doRemoveservice() {
+  //   if (this.form['filterByDept']) {
+  //     this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
+  //   } else {
+  //     this.message = 'Assigned services are removed from the departments';
+  //   }
+  //   this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'message': this.message
+  //     }
+  //   });
+  //   this.removeitemdialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       const status = (this.form.filterByDept === true) ? 'Enable' : 'Disable';
+  //       this.provider_services.setDeptWaitlistMgr(status)
+  //         .subscribe(
+  //           () => {
+  //             this.getWaitlistMgr();
+  //           },
+  //           error => {
+  //             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //           });
+  //     } else {
+  //       this.form['filterByDept'] = (this.form.filterByDept === true) ? false : true;
+  //     }
+  //   });
+  // }
 }

@@ -58,6 +58,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     account_type;
     waitlist_status: boolean;
     waitlist_statusstr: string;
+    todaycheckin_statusstr = 'Off';
+    futurecheckin_statusstr = 'Off';
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -129,6 +131,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     this.waitlist_manager = data;
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
+                    this.todaycheckin_statusstr = this.online_checkin ? 'On' : 'Off';
+                    this.futurecheckin_statusstr = this.futureDateWaitlist ? 'On' : 'Off';
                     this.provider_datastorage.set('waitlistManage', data);
                     // this.filterbydepartment = data['filterByDept'];
                 });

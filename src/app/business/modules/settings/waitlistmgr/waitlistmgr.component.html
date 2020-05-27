@@ -6,40 +6,50 @@
     <div class="content w-manager">
         <div class="col-md-12 no-padding-small" *ngIf="waitlist_manager != null">
             <div class="row">
-                <div class="card p0" *ngIf="loading">
-                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                </div>
-                <div class="card p0" *ngIf="!loading">
-                    <div class="copy">
-                        <div class="row">
-                            <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                                <label>Accept Check-Ins &nbsp;&nbsp;
-                                    <mat-slide-toggle [(ngModel)]="waitlist_status"
-                                        (change)="handleCheckinPresence($event)">
-                                    </mat-slide-toggle>&nbsp;{{waitlist_statusstr}}
-                                    <!-- <div class="onoff">{{waitlist_statusstr}}</div> -->
-                                </label>
-                                <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
-                                        id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
-                                        More</a></div>                                
-                            </div>
-                            <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20">
-                                <label>Online Check-Ins</label>
-                            </div>
-                            <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
-                                style="margin-left: 10px; display: grid">
-                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
-                                    (change)="handle_waitliststatus($event)">Same Day
-                                </mat-checkbox>
-                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
-                                    (change)="handleFuturewaitlist($event)">Future
-                                </mat-checkbox>
-                                Walk-in Check-Ins always enabled
-                            </div>
-                        </div>
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Accept Check-Ins
+                            <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                (change)="handleCheckinPresence($event)">
+                            </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
+                            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
+                        </label>
+                        
+                        <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
+                                More</a></div>
+                        <label class="mgn-up-20">Walk-in Check-Ins always enabled</label>
                     </div>
-                    <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
-                    </app-provider-waitlist-online-checkin>
+                </div>
+            </div>
+           
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Same Day Online Check-Ins
+                            <mat-slide-toggle [(ngModel)]="online_checkin"
+                                (change)="handle_waitliststatus($event)">
+                            </mat-slide-toggle>&nbsp;{{todaycheckin_statusstr}}
+                            <div class="form-level-settings">Set up same day check-ins here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
+                                More</a></div>
+                        </label>
+                   </div>
+                </div>
+            </div> 
+
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Same Day Online Future Check-Ins
+                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                (change)="handleFuturewaitlist($event)">
+                            </mat-slide-toggle>&nbsp;{{futurecheckin_statusstr}}                            
+                            <div class="form-level-settings">Set up future checked here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
+                                More</a></div>
+                        </label>
+                   </div>
                 </div>
             </div>
             <!-- <div class="row">
@@ -64,6 +74,42 @@
                     </span>
                 </div>
             </div> -->
+            <div class="row">
+                <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card p0" *ngIf="!loading">
+                    <!-- <div class="copy"> -->
+                        <!-- <div class="row"> -->
+                            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                                <label>Accept Check-Ins &nbsp;&nbsp;
+                                    <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                        (change)="handleCheckinPresence($event)">
+                                    </mat-slide-toggle>&nbsp;{{waitlist_statusstr}}
+                                </label>
+                                <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
+                                        id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
+                                        More</a></div>                                
+                            </div> -->
+                            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+                                <label>Online Check-Ins</label>
+                            </div> -->
+                            <!-- <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
+                                style="margin-left: 10px; display: grid">
+                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                    (change)="handle_waitliststatus($event)">Same Day
+                                </mat-checkbox>
+                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                    (change)="handleFuturewaitlist($event)">Future
+                                </mat-checkbox>
+                                Walk-in Check-Ins always enabled
+                            </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                    <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
+                    </app-provider-waitlist-online-checkin>
+                </div>
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="goService()">

@@ -6163,13 +6163,13 @@ body { font-size: 1rem !important}
 .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
     background-color: #dbdbdb !important;
     color: #666 !important;
-    margin-left: 50px;
+    margin-left: 10px;
     margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 575px) {
     .content.w-manager .card app-provider-waitlist-online-checkin .bt2 {
-        margin-left: 20px;
+        margin-left: 10px;
     }
 }
 

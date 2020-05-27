@@ -1368,7 +1368,9 @@ sup {
 .brd-bt {
   border-bottom: 1px solid #ddd !important;
 }
-
+.brd-tp {
+  border-top: 1px solid #ddd !important;
+}
 .ot-it div .col-md-6 {
   display: inline !important;
 }
@@ -8934,4 +8936,18 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .dashqr .qrcode img{
   width: 0px !important;
   height: 0px !important;
+}
+.jd-btn.bt2, .jd-btn.bt1 {
+  height: 30px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+@media only screen and (max-width: 480px) {
+  span.jd_btn_spn {
+    display: flex !important;
+    margin-top: 10px !important;
+  }
+  span.jd_btn_spn .bt2{
+   margin-left: 0px !important ;
+  }
 }

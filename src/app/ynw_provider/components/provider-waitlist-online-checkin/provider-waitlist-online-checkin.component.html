@@ -1,68 +1,71 @@
 <div class="copy">
   <div class="row">
-    <div class="lbl col-sm-12 col-md-12 col-lg-12">
-      <label>{{wait_time_calc_cap}}</label>
+    <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding">
+      <label>Token Manager / Check-In Manager</label>
       <p class="form-level-settings">{{frm_wait_cal_cap}}</p>
     </div>
-    <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
-      <mat-radio-group [(ngModel)]="form['calculationMode']" ngDefaultControl (change)="onFormChange()">
-        <div class="rw">
-          <div class="form-group">
-            <mat-radio-button value="ML"></mat-radio-button>
-            <label for="">{{ml_cap}}</label>
+    <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12  no-padding">
+      <div class="col-md-12 mgn-up-20  no-padding ">
+        <label>Token Manager <mat-slide-toggle [(ngModel)]="tokenManager" (change)="handleTokenManager($event)">
+          </mat-slide-toggle>&nbsp;{{showToken_str}}</label>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="tokenManager">
+          <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
+            <label>Show Token No.
+              <mat-slide-toggle [(ngModel)]="showToken" [disabled]="true">
+              </mat-slide-toggle>&nbsp;{{showToken_str}}
+            </label>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
+            <label>Show No. of Persons Ahead of you
+              <mat-slide-toggle [(ngModel)]="personsAhead" [disabled]="true">
+              </mat-slide-toggle>&nbsp;{{showPersonsahead_str}}
+            </label>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
+            <label>Show Waiting Time
+              <mat-slide-toggle [(ngModel)]="showTokenWaitTime" (change)="updateTokenWaitTime($event)">
+              </mat-slide-toggle>&nbsp;{{showTokenWaitTime_str}}
+            </label>
           </div>
         </div>
-        <div class="rw fxd">
-          <div class="form-group">
-            <mat-radio-button value="Fixed"></mat-radio-button>
-            <label for="">{{fixed_cap}}</label>
-            <input type="number" min="0" (keyup)="isValid(form['trnArndTime'])" class="form-control"
-              [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'"
-              (keydown)="is_data_chnge=1">
-            <span class='mins' *ngIf="form['calculationMode'] == 'Fixed'"> {{mins_cap}}</span>
-          </div>
-        </div>
-        <div class="rw">
-          <div class="form-group">
-            <mat-radio-button value="NoCalc_WithToken"></mat-radio-button>
-            <!-- <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_enable_cap}}</label> -->
-            <label for="">Token System ({{do_not_show_cap}} {{customer_label}}s)</label>
-          </div>
-        </div>
-        <div class="rw">
-          <div class="form-group">
-            <mat-radio-button value="NoCalc_WithoutToken"></mat-radio-button>
-            <!-- <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_disable_cap}}</label> -->
-            <label for="">No token</label>
-          </div>
-        </div>
-      </mat-radio-group>
+      </div>
     </div>
-
-  </div>
-  <div *ngIf="formChange == 1 || is_data_chnge==1">
-    <button type="button" mat-button (click)="cancelChange()" class="cs-btn bt2">{{cancel_btn}}</button>
-    <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
-      [disabled]="form.calculationMode == 'Fixed' && (form.trnArndTime == null || !form.trnArndTime)">{{save_btn}}</button>
-  </div>
-  <div class="row" *ngIf="account_type!='BRANCH_SP'">
-    <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 " style ="margin-bottom: 10px">
-          <label>Send notifications to {{customer_label}}
-          <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['sendNotification']"
-              [labelPosition]="'before'" [(ngModel)]="form['sendNotification']" (change)="OnSubmit()">
-            </mat-slide-toggle>
-          </label>
-        </div> -->
-    <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 ">
-      <label>Select services by department
-        <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
-          [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
-        </mat-slide-toggle>&nbsp;{{deptstatusstr}}
-      </label>
-    </div> -->
+    <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12  no-padding">
+      <div class="clearfix" class="brd-tp">&nbsp;</div>
+      <div class="col-md-12 col-xs-12 col-sm-12  no-padding">
+        <label>Check-In Manager <mat-slide-toggle [(ngModel)]="checkinManager" (change)="handleCheckinManager($event)">
+          </mat-slide-toggle>&nbsp;{{showCheckinmgr_str}}</label>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="checkinManager">
+          <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-10  no-padding" style="margin-bottom: 10px">
+            <label>Show Waiting Time
+              <mat-slide-toggle [(ngModel)]="showCheckinWaitTime" [disabled]="true">
+              </mat-slide-toggle>&nbsp;{{showCheckinWaitTime_str}}
+            </label>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12  no-padding" style="margin-bottom: 10px">
+            <label>Show No. of Persons Ahead of you
+              <mat-slide-toggle [(ngModel)]="personsAhead" [disabled]="true">
+              </mat-slide-toggle>&nbsp;{{showPersonsahead_str}}
+            </label>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12 no-padding " style="margin-bottom: 10px">
+            <label>Manual&nbsp;
+              <mat-slide-toggle [(ngModel)]="manualMode" (change)="fixedModeChanged($event)">
+              </mat-slide-toggle>&nbsp;{{manualMode_str}}
+              <span *ngIf="isManualMode"><input type="number" min="0" (keyup)="isValid('trnArndTime')"
+                  class="number-ip-sm mgn-lt-5" [(ngModel)]="trnArndTime" ngDefaultControl (change)="inputChanged()">
+                <span class='mins mgn-lt-5'>{{mins_cap}}</span>
+                <span class="jd_btn_spn" *ngIf="is_data_chnge===1"><button type="button" (click)="cancelChange()" class="jd-btn bt2">Reset</button>
+                  <button (click)="updateManualMode(trnArndTime)" type="button" class="jd-btn bt1"
+                    [disabled]= "trnArndTime == null">{{save_btn}}</button>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
