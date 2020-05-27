@@ -32,8 +32,8 @@
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                 <div class="mgn-bt-20" *ngIf="searchClicked && !foundCustomer">
                                     <span>Sorry, We were not able to find the record in our {{customer_label}}s
-                                        list. Fill the following to create a new {{customer_label}}</span>
-
+                                        list. Fill the following to create a new {{customer_label}}.</span>
+                                        <div class = "brd-bt"></div>
                                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                                         <form *ngIf="!loading" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
