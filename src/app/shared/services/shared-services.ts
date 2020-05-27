@@ -472,7 +472,7 @@ export class SharedServices {
     if (type === 'checkin') {
       return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
     } else if (type === 'appointment') {
-      return this.servicemeta.httpPut('consumer/appointment/cancel/' + id);
+      return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account']);
     }
   }
   getConsumerRateService(params, type) {

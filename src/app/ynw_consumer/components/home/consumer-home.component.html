@@ -283,7 +283,7 @@
                                                 Appointment Time<span style="display: flex">
                                                     {{appointment.appmtTime}}</span>
                                             </div>
-                                            <!-- <div class="lt0"
+                                            <div class="lt0"
                                                 *ngIf="appointment.appmtDate!='' && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
                                                 {{appointment.estimated_caption}} <span class="time now">
                                                     <span *ngIf="appointment.estimated_date_type == 'date'">{{appointment.estimated_date
@@ -291,10 +291,11 @@
                                                     <span
                                                         *ngIf="appointment.estimated_date_type == 'string'">{{appointment.estimated_date}}
                                                     </span>
-                                                    <span
-                                                        *ngIf="appointment.calculationMode != 'NoCalc'">{{appointment.estimated_time}}</span></span>
+                                                    <!-- <span
+                                                        *ngIf="appointment.calculationMode != 'NoCalc'">{{appointment.estimated_time}}</span> -->
+                                                    </span>
                                                 <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
-                                            </div> -->
+                                            </div>
                                             <div class="lt0" *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
                                                 <!-- <div class="lt0">
                                                     {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
@@ -310,7 +311,7 @@
                                                 </div>
                                             </div>
                                         </ng-container>
-                                        <div class="lt0"
+                                        <!-- <div class="lt0"
                                             *ngIf="appointment.apptStatus != 'Cancelled' && appointment.calculationMode == 'NoCalc' && appointment.token">
                                             <span *ngIf="appointment.personsAhead === 0"> {{first_person}}</span>
                                             <span *ngIf="appointment.personsAhead === 1"> <span
@@ -319,7 +320,7 @@
                                             <span *ngIf="appointment.personsAhead > 1"> <span
                                                     class="forwhom">{{appointment.personsAhead}}</span>{{people_ahead}}
                                             </span>
-                                        </div>
+                                        </div> -->
                                         <!-- <div class="lt0" *ngIf="appointment.token">
                                     {{token_no}} <span class="token">{{appointment.token}} </span>
                                 </div> -->
@@ -332,7 +333,7 @@
                                                 {{appointmentdisablemsg}}</span>
                                         </div>
                                         <div class="lt0 payment"
-                                            *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled'">
+                                            *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
                                             <span class="paytext"><span>Amount Due : <span>&#8377;
                                                     </span>{{appointment.amountDue}}
                                                 </span><a class="bt3 cust-btn pointer-cursor"
@@ -394,13 +395,13 @@
                                         <ul class="controls">
                                             <li *ngIf="appointment.billViewStatus == 'Show'">
                                                 <span class="view-bill"
-                                                    *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled'"
+                                                    *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
                                                     (click)="viewBill(appointment,'appointment')">Receipt</span>
                                                 <span class="view-bill"
-                                                    *ngIf="appointment.apptStatus === 'Cancelled' && appointment.paymentStatus !== 'NotPaid'"
+                                                    *ngIf="appointment.apptStatus === 'Cancelled' && appointment.apptStatus === 'Rejected' && appointment.paymentStatus !== 'NotPaid'"
                                                     (click)="viewBill(appointment,'appointment')">Receipt</span>
                                                 <span class="view-bill"
-                                                    *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled'"
+                                                    *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
                                                     (click)="viewBill(appointment,'appointment')">Bill</span>
                                             </li>
                                             <li (click)="makeApptFailedPayment(appointment)"

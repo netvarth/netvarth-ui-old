@@ -1409,4 +1409,16 @@ export class ProviderServices {
       const url = 'provider/appointment/live/locate/distance/time/' + uuid;
       return this.servicemeta.httpPost(url);
    }
+   getScheduleDelay(queueId) {
+      const url = 'provider/appointment/schedule/' + queueId + '/delay';
+      return this.servicemeta.httpGet(url);
+   }
+   addScheduleDelay(queueId, data) {
+      const url = 'provider/appointment/schedule/' + queueId + '/delay';
+      return this.servicemeta.httpPost(url, data);
+   }
+   getTodayApptlist(filter) {
+      const url = 'provider/appointment/today/';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
 }

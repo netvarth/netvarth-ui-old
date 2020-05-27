@@ -1688,7 +1688,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
-      this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
+      this.router.navigate(['provider', 'appointments', 'adjustdelay']);
     }
   }
   applyLabel(checkin) {

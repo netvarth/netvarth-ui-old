@@ -1,0 +1,147 @@
+<section>
+  <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+  <div class="content loc-list p-checkin ynw-common-form-nm">
+    <div class="col-md-12 no-padding">
+      <div class="row">
+        <div class="card p0">
+          <div class="copy locd">
+            <div class="lbl col-sm-12 col-md-8 col-lg-8">
+              <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+            onSubmit(amForm.value)" class="ynw-common-form">
+                  <div class="col-md-12 col-xs-12 col-sm-12 adjustdelay no-padding">
+                    <!-- <div class="form-group" *ngIf="queues.length>1"> -->
+                    <p class="form-level-settings">{{frm_adjust_del_cap}}</p>
+                    <div class="service-outer" *ngIf="filterDepart">
+                      <ng-container>
+                        <mat-form-field *ngIf="deptLength == 1">
+                          <input matInput *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
+                            value="{{dept.departmentName | capitalizeFirst}}">
+                        </mat-form-field>
+                        <mat-form-field *ngIf="deptLength > 1">
+                          <mat-select placeholder="{{select_deptment_cap}}" [ngModel]="selected_dept"
+                            [ngModelOptions]="{standalone: true}" #deptsel
+                            (selectionChange)="handleDeptSelction(deptsel.value)">
+                            <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+                              {{dept.departmentName | capitalizeFirst}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </ng-container>
+                    </div>
+                    <div class="service-outer" *ngIf="users.length > 0">
+                      <ng-container>
+                        <mat-form-field *ngIf="users.length == 1">
+                          <input matInput *ngFor="let user of users" [readonly]="true" placeholder="Doctors"
+                            value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
+                        </mat-form-field>
+                        <mat-form-field *ngIf="users.length > 1">
+                          <mat-select placeholder="Select Doctor" [ngModel]="selected_user"
+                            [ngModelOptions]="{standalone: true}" #usersel
+                            (selectionChange)="handleUserSelection(usersel.value)">
+                            <mat-option *ngFor="let user of users" [value]="user">
+                              {{user.firstName}} {{user.lastName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <!-- <ng-container *ngIf="servicesjson.length == 0">
+                                <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                            </ng-container> -->
+                      </ng-container>
+                    </div>
+                    <div class="service-outer" *ngIf="servicesjson.length > 0">
+                      <ng-container>
+                        <mat-form-field *ngIf="servicesjson.length == 1">
+                          <input matInput *ngFor="let serv of servicesjson" [readonly]="true" placeholder="Service"
+                            value="{{serv.name | capitalizeFirst}}">
+                        </mat-form-field>
+                        <mat-form-field *ngIf="servicesjson.length > 1">
+                          <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
+                            [ngModelOptions]="{standalone: true}" #servsel
+                            (selectionChange)="handleServiceSel(servsel.value)">
+                            <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
+                              {{serv.name | capitalizeFirst}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <ng-container *ngIf="servicesjson.length == 0">
+                          <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                    <div class="service-outer" *ngIf="queuejson.length > 0">
+                      <ng-container>
+                        <mat-form-field *ngIf="queuejson.length == 1">
+                          <input matInput *ngFor="let queue of queuejson" [readonly]="true" placeholder="Queue"
+                            value="{{queue.name | capitalizeFirst}}">
+                        </mat-form-field>
+                        <mat-form-field *ngIf="queuejson.length > 1">
+                          <mat-select placeholder="select queue" formControlName="queueControl" #selQueue
+                            (selectionChange)="handle_queue_sel(selQueue.value)">
+                            <mat-option *ngFor="let queue of queuejson" [value]="queue.id">
+                              {{queue.name | capitalizeFirst}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <ng-container *ngIf="queuejson.length == 0">
+                          <span class='no-queue-available'>No schedules available</span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                    <div class="form-group">
+                      <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}}</span>
+                      <span *ngIf="!instantQueue">
+                        {{queue_schedule}}
+                      </span>
+                    </div>
+                    <div class="brd-bt no-padding mgn-bt-10 mgn-up-10">
+                      <div class="row ">
+                        <div class="col-md-6 col-6 mgn-bt-10">
+                          <span>Total Checkins # {{today_checkins_count}}</span>
+                          <span class="mgn-lt-30">Arrived # {{today_arrived_count}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label">{{delay_cap}}</label>
+                      <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
+                      </ngb-timepicker>
+                    </div>
+                    <div class="form-group inline">
+                      <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
+                    </div>
+                    <div class="form-group">
+                      <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
+                        <label class="col-form-label">{{messgae_cap}}</label>
+                        <textarea class="form-control" placeholder="Message" formControlName="message"
+                          autocomplete="off" [placeholder]="placeholder" (keyup)="setCharCount($event)"
+                          (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500">
+
+                        </textarea>
+                      </ng-container>
+                    </div>
+                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
+                  </div>
+                <mat-dialog-actions>
+                  <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;">
+                    <button (click)="onCancel()" type="button"
+                                        class="cs-btn bt2">{{ cancel_btn}}</button>&nbsp;
+                    <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+                      class="cs-btn bt1">{{save_btn}}</button>
+                     
+                  </div>
+                </mat-dialog-actions >
+                <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+                </app-field-error-display>
+                <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+                </app-form-success-display>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

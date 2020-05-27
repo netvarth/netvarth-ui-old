@@ -17,6 +17,7 @@ import { LocateCustomerModule } from '../check-ins/locate-customer/locate-custom
 import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.module';
 import { CallingModesModule } from '../check-ins/calling-modes/calling-modes.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     ],
     declarations: [
         AppointmentsComponent,
-        ProviderAppointmentDetailComponent
+        ProviderAppointmentDetailComponent,
+        AdjustscheduleDelayComponent
     ],
     entryComponents: [
 
