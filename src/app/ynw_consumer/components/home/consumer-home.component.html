@@ -239,10 +239,10 @@
                                             <h3>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}
                                             </h3>
                                         </div>
-                                        <div class="location consumr" *ngIf="appointment.schedule.location">
-                                            {{appointment.schedule.location.place || '' | capitalizeFirst}}
-                                            <span class="consumr-loc-icon"><a *ngIf="appointment.schedule.location.googleMapUrl"
-                                                    rel="noopener" [href]="appointment.schedule.location.googleMapUrl" target="_blank"
+                                        <div class="location consumr" *ngIf="appointment.location">
+                                            {{appointment.location.place || '' | capitalizeFirst}}
+                                            <span class="consumr-loc-icon"><a *ngIf="appointment.location.googleMapUrl"
+                                                    rel="noopener" [href]="appointment.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></span>
                                         </div>
