@@ -249,11 +249,11 @@ export class ProviderCheckinComponent implements OnInit {
         this.get_token_cap = Messages.GET_TOKEN;
         this.breadcrumbs = [
             {
-                title: 'Check-ins',
+                title: 'Tokens/Check-ins',
                 url: 'provider/check-ins'
             },
             {
-                title: this.get_token_cap
+                title: 'Walk-ins'
             }
         ];
         this.maxsize = 1;
