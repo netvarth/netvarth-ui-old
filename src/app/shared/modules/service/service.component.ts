@@ -33,6 +33,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     service_name_cap = Messages.SERVICE_NAME_CAP;
     est_duration_cap = Messages.SERVICE_DURATION_CAP;
     enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+    frm_enable_prepayment_cap ='';
     prepayment_cap = Messages.PREPAYMENT_CAP;
     tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
     service_notify_cap = '';
@@ -55,6 +56,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     photo_cap = Messages.SERVICE_PHOTO_CAP;
     tooltip = Messages.NEW_SERVICE_TOOLTIP;
     tooltipDonation = Messages.NEW_DONATION_TOOLTIP;
+    frm_service_price = Messages.SER_PRICE;
     rupee_symbol = '₹';
     base_licence = false;
     is_virtual_serv = false;
@@ -114,6 +116,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         public router: Router) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
+        this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
                 if (serviceParams) {

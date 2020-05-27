@@ -432,7 +432,7 @@ export const Messages = {
   'GENERAL_WORKING_HRS_CAP': 'General working hours',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
-  'SERVPRICE_CAP': 'Price ',
+  'SERVPRICE_CAP': 'Please Enter Your Service Price ',
   'AMOUNT_VALUE_CAP': 'Amount ',
   'FOODSRVC_FORMLEVEL_CAP': 'Upload  food menu in the gallery and let your customers order food in Jaldee.',
 
@@ -1282,6 +1282,7 @@ export const Messages = {
   'SER_EST_DURATION_CAP': 'Estimated Duration',
   'SER_PRICE_CAP': 'Price',
   'SER_MIN_CAP': 'min',
+  'SER_PRICE': 'If you would like to use Jaldee pay , please enter the price and tax related information',
 
   // App-ynw_provider-components-upgrade-license
   'UP_LIC_PACKAGE_CAP': 'Upgrade License',
@@ -1358,7 +1359,7 @@ export const Messages = {
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
   'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
-
+  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG':'If you are experiencing no showups Jaldee recommends you to set the prepayment.You are responsible for the prepayment.This payment is between you and your [customer]\'s ',
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
   'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here. ',
