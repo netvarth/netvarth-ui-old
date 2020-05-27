@@ -50,7 +50,7 @@
                         </div>
                         <div class="details">
                             <div class="lt">
-                                <div class="lt0">
+                                <div class="lt0" (click)="showcheckindetails(waitlist)">
                                     <span class="service">{{waitlist.service.name | capitalizeFirst}}</span> for <span
                                         class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
@@ -223,7 +223,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Appointments
+                            Appointments<span *ngIf="appointments && appointments.length>0"> ({{waitlists.length}})</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div *ngIf="appointments.length == 0" class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
@@ -231,7 +231,7 @@
                     </div>
                     <div class="outer banner" *ngIf="appointments.length != 0">
                         <owl-carousel id="apptCarousel" [options]="carouselAppointments"
-                            [carouselClasses]="['owl-theme']" [items]="waitlists">
+                            [carouselClasses]="['owl-theme']" [items]="appointments">
                             <div class="item" *ngFor="let appointment of appointments; let i=index">
                                 <div class="header">
                                     <div class="lt">
@@ -239,10 +239,10 @@
                                             <h3>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}
                                             </h3>
                                         </div>
-                                        <div class="location consumr" *ngIf="appointment.location">
-                                            {{appointment.location.place || '' | capitalizeFirst}}
-                                            <span class="consumr-loc-icon"><a *ngIf="appointment.location"
-                                                    rel="noopener" [href]="appointment.location" target="_blank"
+                                        <div class="location consumr" *ngIf="appointment.schedule.location">
+                                            {{appointment.schedule.location.place || '' | capitalizeFirst}}
+                                            <span class="consumr-loc-icon"><a *ngIf="appointment.schedule.location.googleMapUrl"
+                                                    rel="noopener" [href]="appointment.schedule.location.googleMapUrl" target="_blank"
                                                     class="icon-location" matTooltip="Click to navigate">
                                                 </a></span>
                                         </div>
@@ -269,7 +269,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="lt">
-                                        <div class="lt0">
+                                        <div class="lt0" (click)="showApptdetails(appointment)">
                                             <span class="service">{{appointment.service.name | capitalizeFirst}}</span>
                                             for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}

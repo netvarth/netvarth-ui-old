@@ -264,7 +264,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
-
+  showApptdetails(apptlist) {
+    console.log(apptlist);
+    const apptlistJSON = JSON.stringify(apptlist);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        apptlist: apptlistJSON
+      }
+    };
+    this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+  }
 
   closeCounters() {
     if (this.cronHandle) {

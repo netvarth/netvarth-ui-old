@@ -21,7 +21,7 @@ export class CheckinDetailComponent implements OnInit {
             url: '/consumer'
         },
         {
-            title: 'checkinDetails'
+            title: 'Checkin Details'
         }
     ];
     api_loading = true;

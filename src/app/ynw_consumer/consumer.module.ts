@@ -43,6 +43,7 @@ import { CheckinAddMemberModule } from '../shared/modules/checkin-add-member/che
 import { ConsumerAppointmentModule } from './components/waitlist/appointment/consumer-appointment.module';
 import { ConsumerDonationModule } from './components/donations/consumer-donation.module';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
+import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 
 @NgModule({
   imports: [
@@ -72,6 +73,7 @@ import { CheckinDetailComponent } from './components/home/checkindetail.componen
     ConsumerHomeComponent,
     ConfirmBoxComponent,
     CheckinDetailComponent,
+    ApptDetailComponent,
     WaitlistComponent,
     NotificationListBoxComponent,
     MembersComponent,

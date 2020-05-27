@@ -11,6 +11,7 @@ import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mo
 import { ChangeEmailComponent } from '../shared/modules/change-email/change-email.component';
 import { ConsumerAppointmentComponent } from './components/waitlist/appointment/consumer-appointment.component';
 import { CheckinDetailComponent } from './components/home/checkindetail.component';
+import { ApptDetailComponent } from './components/home/appointmentdetail.component';
 const routes: Routes = [
   {
     path: '', component: ConsumerComponent, children: [
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin] },
       { path: 'inbox', loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule) },
       { path: 'checkindetails', component: CheckinDetailComponent, canActivate: [AuthGuardLogin] },
+      { path: 'apptdetails', component: ApptDetailComponent, canActivate: [AuthGuardLogin] },
       { path: 'appointment', loadChildren: () => import('../ynw_consumer/components/waitlist/appointment/consumer-appointment.module').then(m => m.ConsumerAppointmentModule) },
       { path: 'donations', loadChildren: () => import('./components/donations/consumer-donation.module').then(m => m.ConsumerDonationModule) },
       { path: 'payments', loadChildren: () => import('../ynw_consumer/components/payments/payments.module').then(m => m.ConsumerPaymentsModule) }

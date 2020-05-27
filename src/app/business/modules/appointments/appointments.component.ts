@@ -1683,7 +1683,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchCustomer(source, appttime) {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
   }
-  showAdjustDelay() {
+  showsheAdjustDelay() {
     if (this.queues.length === 0 || !this.selQId) {
       this.shared_functions.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
       return false;
@@ -1733,7 +1733,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   performActions(action) {
     if (action === 'adjustdelay') {
-      this.showAdjustDelay();
+      this.showsheAdjustDelay();
     } else if (action === 'learnmore') {
       this.routerobj.navigate(['/provider/' + this.domain + '/appointments']);
     }
