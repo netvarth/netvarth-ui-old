@@ -8,8 +8,8 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            { path: ':id', component: ProviderAppointmentDetailComponent },
             { path: 'adjustdelay', component: AdjustscheduleDelayComponent },
+            { path: ':id', component: ProviderAppointmentDetailComponent },
         ]
     }
 ];
