@@ -14,7 +14,15 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs;
+    breadcrumbs = [
+        {
+            title: 'Appointment',
+            url: ''
+        },
+        {
+            title: 'Payment'
+        }
+    ];
     breadcrumb_moreoptions: any = [];
     activeWt: any;
     prepaymentAmount: number;
@@ -42,15 +50,6 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'Appointment',
-                url: ''
-            },
-            {
-                title: 'Payment'
-            }
-        ];
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
@@ -81,9 +80,14 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
               this.status = this.status.toLowerCase();
               if (this.status === 'success') {
                 this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
-                this.router.navigate(['consumer', 'appointment', 'track']);
+                if (this.activeWt.service.livetrack) {
+                    this.router.navigate(['consumer', 'appointment', 'track']);
+                } else {
+                    this.router.navigate(['consumer']);
+                }
               } else {
                 this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+                this.router.navigate(['consumer']);
               }
             },
             error => {

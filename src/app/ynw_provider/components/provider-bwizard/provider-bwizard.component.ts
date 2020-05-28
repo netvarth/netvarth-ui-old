@@ -784,7 +784,8 @@ export class ProviderbWizardComponent implements OnInit {
     // this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
     const hideaction = { 'ttype': 'hidemenus', 'value': false };
     this.shared_functions.sendMessage(hideaction);
-    this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+    this.routerobj.navigate(['provider', 'settings']);
+    // this.routerobj.navigate(['provider', 'settings', 'bprofile']);
   }
 
   checkClose() {

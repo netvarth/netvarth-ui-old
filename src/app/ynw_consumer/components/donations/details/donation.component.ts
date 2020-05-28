@@ -14,7 +14,15 @@ export class ConsumerDonationPaymentComponent implements OnInit {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs;
+    breadcrumbs = [
+        {
+            title: 'Donation',
+            url: 'donations'
+        },
+        {
+            title: 'Payment'
+        }
+    ];
     breadcrumb_moreoptions: any = [];
     activeWt: any;
     prepaymentAmount: number;
@@ -48,15 +56,6 @@ export class ConsumerDonationPaymentComponent implements OnInit {
         if (activeUser) {
             this.customer_data = activeUser;
         }
-        this.breadcrumbs = [
-            {
-                title: 'Donation',
-                url: ''
-            },
-            {
-                title: 'Payment'
-            }
-        ];
         this.shared_services.getDonationByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
@@ -68,9 +67,9 @@ export class ConsumerDonationPaymentComponent implements OnInit {
                     'accountId': this.accountId,
                     'purpose': 'prePayment'
                 };
-                // if (this.pid) {
-                //     this.getPaymentStatus(this.pid);
-                // }
+                if (this.pid) {
+                    this.getPaymentStatus(this.pid);
+                 }
             },
             () => {
             }
@@ -79,6 +78,7 @@ export class ConsumerDonationPaymentComponent implements OnInit {
     getPaymentStatus(pid) {
         this.shared_functions.removeitemfromLocalStorage('acid');
         this.shared_functions.removeitemfromLocalStorage('uuid');
+        this.shared_functions.setitemonLocalStorage('p_src', 'c_d');
         this.shared_services.getPaymentStatus('consumer', pid)
           .subscribe(
             data => {
@@ -86,10 +86,10 @@ export class ConsumerDonationPaymentComponent implements OnInit {
               this.status = this.status.toLowerCase();
               if (this.status === 'success') {
                 this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
-                this.router.navigate(['consumer', 'checkin', 'track']);
               } else {
                 this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
               }
+              this.router.navigate(['consumers']);
             },
             error => {
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

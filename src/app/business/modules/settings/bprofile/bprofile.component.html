@@ -448,15 +448,15 @@
                                         <ul class="sbl" >
                                             <li>
                                                 <span class="custid" rel="noopener"
-                                                    target="_blank">{{wndw_path}}{{bProfile.uniqueId}} </span>
+                                                    target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
                                                 <span style="display: flex;">
                                                     <span class="custid custId-icon">
                                                         <i class="fa fa-copy custId-cursor"
-                                                            (click)="copyInputMessage(bProfile.uniqueId)"[matTooltip]="'Copy link'"></i>
+                                                            (click)="copyInputMessage(bProfile.accEncUid)"[matTooltip]="'Copy link'"></i>
                                                     </span>
                                                     <span class="custid custId-icon">
                                                         <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                            (click)="qrCodegenerateOnlineID(bProfile.uniqueId)"
+                                                            (click)="qrCodegenerateOnlineID(bProfile.accEncUid)"
                                                             [matTooltip]="'Generate QR code'"></i>
                                                     </span>
                                                 </span>

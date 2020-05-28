@@ -14,7 +14,15 @@ export class ConsumerPaymentComponent implements OnInit {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs;
+    breadcrumbs = [
+        {
+            title: 'Checkin',
+            url: 'consumer'
+        },
+        {
+            title: 'Payment'
+        }
+    ];
     breadcrumb_moreoptions: any = [];
     activeWt: any;
     prepaymentAmount: number;
@@ -42,15 +50,6 @@ export class ConsumerPaymentComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'Checkin',
-                url: 'consumer'
-            },
-            {
-                title: 'Payment'
-            }
-        ];
         this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
@@ -64,6 +63,7 @@ export class ConsumerPaymentComponent implements OnInit {
                     'purpose': 'prePayment'
                 };
                 if (this.pid) {
+                    this.shared_functions.setitemonLocalStorage('returntyp', 'consumer');
                     this.getPaymentStatus(this.pid);
                 }
             },
@@ -79,9 +79,14 @@ export class ConsumerPaymentComponent implements OnInit {
                 data => {
                     this.status = data;
                     this.status = this.status.toLowerCase();
+                    alert(pid);
                     if (this.status === 'success') {
                         this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
-                        this.router.navigate(['consumer', 'checkin', 'track']);
+                        if (this.activeWt.service.livetrack) {
+                            this.router.navigate(['consumer', 'checkin', 'track']);
+                        } else {
+                            this.router.navigate(['consumer']);
+                        }
                     } else {
                         this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
                         this.router.navigate(['consumer']);
@@ -134,5 +139,4 @@ export class ConsumerPaymentComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
-
 }

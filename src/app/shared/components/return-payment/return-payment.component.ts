@@ -35,26 +35,28 @@ export class ReturnPaymentComponent implements OnInit {
           this.shared_functions.openSnackBar(Messages.API_ERROR, { 'panelClass': 'snackbarerror' });
           this.router.navigate(['/']);
         } else {
-           const src = this.shared_functions.getitemfromLocalStorage('p_src');
-           if (src === 'c_c') {
-             const uuid = this.shared_functions.getitemfromLocalStorage('uuid');
-             const accountId = this.shared_functions.getitemfromLocalStorage('acid');
-             const navigationExtras: NavigationExtras = {
+          const src = this.shared_functions.getitemfromLocalStorage('p_src');
+          if (src === 'c_c') {
+            const uuid = this.shared_functions.getitemfromLocalStorage('uuid');
+            const accountId = this.shared_functions.getitemfromLocalStorage('acid');
+            const navigationExtras: NavigationExtras = {
               queryParams: {
                 account_id: accountId,
                 pid: this.unq_id
-               }
+              }
             };
             this.router.navigate(['consumer', 'checkin', 'payment', uuid], navigationExtras);
-           } else {
-            this.getPaymentStatus();
-           }
+          } else if (src === 'c_d') {
+            this.getPaymentStatus(src);
+          } else {
+            this.getPaymentStatus(src);
+          }
         }
 
       });
   }
 
-  getPaymentStatus() {
+  getPaymentStatus(src) {
     this.user_type = this.shared_functions.isBusinessOwner('returntyp');
     this.shared_services.getPaymentStatus(this.user_type, this.unq_id)
       .subscribe(
@@ -62,6 +64,14 @@ export class ReturnPaymentComponent implements OnInit {
           this.status = data;
           this.status = this.status.toLowerCase();
           this.loading = 0;
+          if (this.status === 'success') {
+            this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
+          } else {
+            this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+          }
+          if (this.user_type === 'consumer') {
+            this.router.navigate(['consumer']);
+          }
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -9,7 +9,15 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class ConsumerDonationsComponent implements OnInit {
     payments: any;
-    breadcrumbs;
+    breadcrumbs = [
+        {
+            title: 'My Jaldee',
+            url: 'consumer'
+        },
+        {
+            title: 'Donations'
+        }
+    ];
     date_cap = Messages.DATE_CAP;
     time_cap = Messages.TIME_CAP;
     refundable_cap = Messages.REFUNDABLE_CAP;
@@ -23,15 +31,6 @@ export class ConsumerDonationsComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.breadcrumbs = [
-            {
-                title: 'My Jaldee',
-                url: 'consumer'
-            },
-            {
-                title: 'Donations'
-            }
-        ];
         this.getDonations();
     }
     stringtoDate(dt, mod) {
