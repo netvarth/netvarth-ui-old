@@ -711,7 +711,17 @@ export class ConsumerCheckinComponent implements OnInit {
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
         };
         if (this.sel_ser_det.serviceType === 'virtualService') {
-            post_Data['virtualService'] = this.virtualServiceArray;
+            // tslint:disable-next-line:forin
+            for (let i in this.virtualServiceArray) {
+                console.log(i)
+                if (i === 'WhatsApp') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = {};
+                }
+            }
+            // post_Data['virtualService'] = this.virtualServiceArray;
+          //  post_Data['virtualService'] = {};
         }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
