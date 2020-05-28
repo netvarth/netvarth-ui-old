@@ -135,7 +135,9 @@ export class AdjustqueueDelayComponent implements OnInit {
             });
         }
       );
-
+      setTimeout(() => {
+        this.getQueueDelay(this.queuejson[0].id);
+    }, 1000);
 
 
     this.getDefaultMessages();
@@ -152,7 +154,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         this.getQueueDelay(data);
       }
     );*/
-    // this.getQueueDelay(this.data.queue_id);
+  //  this.getQueueDelay(this.queuejson[0].id);
     this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {

@@ -715,4 +715,8 @@ export class SharedServices {
     const url = 'consumer/appointment/update/latlong/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);
   }
+  getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid?) {
+    const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid ;
+    return this.servicemeta.httpGet(url);
+  }
 }

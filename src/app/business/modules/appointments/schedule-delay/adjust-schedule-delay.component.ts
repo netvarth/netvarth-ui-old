@@ -8,6 +8,7 @@ import { projectConstants } from '../../../../shared/constants/project-constants
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 @Component({
   selector: 'app-adjust-schedule-delay',
   templateUrl: './adjust-schedule-delay.component.html'
@@ -57,7 +58,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   queuejson: any = [];
   sel_ser;
   sel_ser_det: any = [];
-  sel_checkindate;
+  sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
   sortBy = 'sort_token';
   check_in_list: any = [];
   today_checkins_count = 0;
@@ -108,7 +109,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     //   this.closePopup('error');
     // }
     const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
-    this.sel_loc = loc.id;
+    this.sel_loc = loc;
     this.getBussinessProfileApi()
       .then(
         (data: any) => {
@@ -132,10 +133,16 @@ export class AdjustscheduleDelayComponent implements OnInit {
                   }
                 );
               }
+              
 
             });
         }
+        
       );
+      setTimeout(() => {
+        this.getScheduleDelay(this.queuejson[0].id);
+    }, 1000);
+      
 
 
 
@@ -153,7 +160,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
         this.getScheduleDelay(data);
       }
     );*/
-    // this.getScheduleDelay(this.data.queue_id);
+    // this.getScheduleDelay(this.queuejson[0].id);
     this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {
@@ -163,6 +170,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
+    
   }
   performActions(actions) {
     if (actions === 'learnmore') {
@@ -402,7 +410,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.provider_services.getScheduleDelay(queue_id)
       .subscribe(
         data => {
-          // console.log(data);
+           console.log(data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
         },
@@ -463,7 +471,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
 
   getTodayAppointments(queueid) {
     const Mfilter = this.setFilterForApi(queueid);
-    Mfilter[this.sortBy] = 'asc';
+    //Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayApptlist(Mfilter)
       .subscribe(
         data => {
