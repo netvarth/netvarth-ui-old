@@ -1,16 +1,27 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+    (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section class="content comn-cls lic-page notifications">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card w-dta p0 ">
-        <mat-accordion>
+
+
+        <!-- <mat-accordion>
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title class="block-level">{{provdr_domain_name|capitalizeFirst}} Notifications</mat-panel-title>
+            </mat-expansion-panel-header> -->
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header class="mgn-bt-10">
+              <mat-panel-title class="block-level">Check-in Notifications<br>
+                <span class="form-level-settings">{{mode_of_notify}}</span>
+              </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12"> 
+            <div class="rw col-md-12">
               <div class="form-group">
                 <div style="display: flex">
                   <span class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
@@ -35,7 +46,7 @@
                     </div>
                     <ul *ngIf="ph_arr.length > 0">
                       <li *ngFor="let phne of ph_arr">{{phne}} <i class="pointer-cursor icon-delete"
-                          (click)="removePhEmail(phne,ph_arr, 'newcheckin')"></i></li>
+                          (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></li>
                     </ul>
                   </li>
                   <li>
@@ -51,7 +62,7 @@
                     </div>
                     <ul *ngIf="em_arr.length > 0">
                       <li *ngFor="let emailval of em_arr">{{emailval}} <i class="pointer-cursor icon-delete"
-                          (click)="removePhEmail(emailval,em_arr, 'newcheckin')"></i></li>
+                          (click)="removePhEmail(emailval, em_arr, 'newcheckin')"></i></li>
                     </ul>
                   </li>
                   <li>
@@ -83,7 +94,7 @@
                       (click)="cancelledCheckinsmsAddClicked()"></span>
                     <div class="form-group" *ngIf="cancelsms">
                       <div class="input-group mb-3 phadd">
-                        <input type="text" class="form-control" placeholder="Phonenumber"  (keypress)="isNumeric($event)"
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
                           <button class="btn bt3 btn-default" (click)="addCheknCanclph()" type="button">Add</button>
@@ -92,7 +103,7 @@
                     </div>
                     <ul *ngIf="ph1_arr.length > 0">
                       <li *ngFor="let phnecancel of ph1_arr">{{phnecancel}} <i class="pointer-cursor icon-delete"
-                          (click)="removePhEmail(phnecancel,ph1_arr, 'cancelcheckin')"></i></li>
+                          (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></li>
                     </ul>
                   </li>
                   <li>
@@ -124,7 +135,132 @@
                 mat-button class="cs-btn bt1 notifyOk">OK</button>
             </div>
           </mat-expansion-panel>
+
         </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header class="mgn-bt-10">
+              <mat-panel-title class="block-level">Appointment Notifications<br>
+                <span class="form-level-settings">{{mode_of_notify}}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="rw col-md-12">
+              <div class="form-group">
+                <div style="display: flex">
+                  <span class="notification" style="font-weight: 600"> Notify whenever appointment happens</span>
+                  <mat-slide-toggle class="example-margin" (change)="selectApptNotify($event)"
+                    [(ngModel)]="selApptNotify">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+              <section class="leftselectAll" *ngIf="selApptNotify">
+                <ul class="notifications">
+                  <li>
+                    <span class="notification"> via SMS </span>
+                    <span [class.icon-add]="!smsAppt" [class.icon-minus]="smsAppt" (click)="smsApptAddClicked()"></span>
+                    <div class="form-group" *ngIf="smsAppt">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifyApptphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addApptPh()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptph_arr.length > 0">
+                      <li *ngFor="let phne of apptph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phne, apptph_arr, 'newappointment')"></i></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="notification"> via Email</span>
+                    <span [class.icon-add]="!emailAppt" [class.icon-minus]="emailAppt" (click)="emailApptAddClicked()"></span>
+                    <div class="form-group" *ngIf="emailAppt">
+                      <div class="input-group mb-3 emadd">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyApptemail">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default " (click)="addApptemail()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptem_arr.length > 0">
+                      <li *ngFor="let emailval of apptem_arr">{{emailval}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(emailval, apptem_arr, 'newappointment')"></i></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="notification">Push notifications</span>
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="apptPush"
+                      (change)="changePushMsgStatus('newappointment')">
+                    </mat-slide-toggle>
+                  </li>
+                </ul>
+              </section>
+              <button *ngIf="okApptStatus" (click)="apptNotifications('newappointment')" type="button" mat-button
+                class="cs-btn bt1 notifyOk">OK</button>
+            </div>
+            <div class="rw col-md-12">
+              <div class="form-group">
+                <div style="display: flex">
+                  <span class="notification" style="font-weight: 600"> Notify whenever appointment gets
+                    cancelled</span>
+                  <mat-slide-toggle class="example-margin" (change)="selectApptCanclNotify($event)"
+                    [(ngModel)]="selApptCancelNotify">
+                  </mat-slide-toggle>
+                </div>
+              </div>
+              <section class="leftselectAll" *ngIf="selApptCancelNotify">
+                <ul class="notifications">
+                  <li>
+                    <span class="notification"> via SMS</span>
+                    <span [class.icon-add]="!cancelsmsAppt" [class.icon-minus]="cancelsmsAppt"
+                      (click)="cancelledApptsmsAddClicked()"></span>
+                    <div class="form-group" *ngIf="cancelsmsAppt">
+                      <div class="input-group mb-3 phadd">
+                        <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
+                          [(ngModel)]="notifyApptcanclphonenumber" minlength="0" maxlength="10">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addApptCanclph()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptph1_arr.length > 0">
+                      <li *ngFor="let phnecancel_appt of apptph1_arr">{{phnecancel_appt}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(phnecancel_appt, apptph1_arr, 'cancelappointment')"></i></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="notification"> via Email </span>
+                    <span [class.icon-add]="!cancelemailAppt" [class.icon-minus]="cancelemailAppt"
+                      (click)="cancelledApptemailAddClicked()"></span>
+                    <div class="form-group" *ngIf="cancelemailAppt">
+                      <div class="input-group mb-3 emadd">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyApptcanclemail">
+                        <div class="input-group-append">
+                          <button class="btn bt3 btn-default" (click)="addApptCancelemail()" type="button">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                    <ul *ngIf="apptem1_arr.length > 0">
+                      <li *ngFor="let emailcancl of apptem1_arr">{{emailcancl}} <i class="pointer-cursor icon-delete"
+                          (click)="removePhEmail(emailcancl, apptem1_arr, 'cancelappointment')"></i></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="notification">Push notifications</span>
+                    <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpushAppt"
+                      (change)="changePushMsgStatus('cancelappointment')">
+                    </mat-slide-toggle>
+                  </li>
+                </ul>
+              </section>
+              <button *ngIf="okApptCancelStatus" (click)="apptCancelNotifications('cancelappointment')" type="button"
+                mat-button class="cs-btn bt1 notifyOk">OK</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- </mat-expansion-panel>
+        </mat-accordion> -->
       </div>
     </div>
   </div>
