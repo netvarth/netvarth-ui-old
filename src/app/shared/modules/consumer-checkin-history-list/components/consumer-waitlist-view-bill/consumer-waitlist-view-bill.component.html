@@ -17,9 +17,13 @@
                     <div class="section-one" >
                         <h3>{{bname | capitalizeFirst}}</h3>
                         <div class="details">
-                            <span class="columns" *ngFor="let user of checkin.waitlistingFor">
+                         <span class="columns" *ngIf="type == 'checkin'">  <span  *ngFor="let user of checkin.waitlistingFor">
                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                            </span> <span class="columns rightalign"><span class="dynamic">{{billdate}}
+                            </span></span> 
+                            <span class="columns" *ngIf="type == 'appointment'"><span  *ngFor="let user of checkin.appmtFor">
+                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                            </span></span>
+                             <span class="columns rightalign"><span class="dynamic">{{billdate}}
                                     {{billtime}}</span>
                             </span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
                                 <span class="dynamic">{{billnumber}}</span>
