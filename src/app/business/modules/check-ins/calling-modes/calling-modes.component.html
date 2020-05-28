@@ -26,16 +26,23 @@
               </mat-chip-list>
             <!-- <button type="button" mat-dialog-close class="cs-btn">Already waiting</button> -->
         </div>
-        <div>
-            <!-- <button type="button" mat-dialog-close class="cs-btn">Start video</button>
-            <button type="button" mat-dialog-close class="cs-btn">Mark as started</button> -->
-        </div>
-        
-        
     </div>
     <mat-form-field class="example-full-width" style="padding-top: 30px;">
         <textarea matInput placeholder="Sample text"></textarea>
       </mat-form-field>
+      <div class="mgtop40 form-group">
+        Send message via
+        <div class="coupon-outer">
+            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
+                SMS
+            </mat-checkbox>
+            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">Email
+            </mat-checkbox>
+            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">Push
+                notification
+            </mat-checkbox>
+        </div>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
