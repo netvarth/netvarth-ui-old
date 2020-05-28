@@ -308,7 +308,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   showPopup(source, status, profileExist) {
     const dialogrefd = this.dialog.open(ProviderErrorMesagePopupComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['popup-class', 'menupopup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         source: source,

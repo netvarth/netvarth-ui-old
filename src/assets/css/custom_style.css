@@ -1364,6 +1364,9 @@ sup {
 .mgn-up-25 {
   margin-top: 25px !important;
 }
+.mgn-up-50 {
+  margin-top: 50px !important;
+}
 
 .brd-bt {
   border-bottom: 1px solid #ddd !important;
@@ -8963,4 +8966,8 @@ padding-right: 0 !important; padding-top: 0 !important;}
   span.jd_btn_spn .bt2{
    margin-left: 0px !important ;
   }
+}
+.menupopup-class {
+  width: 500px !important;
+  height: 200px !important;
 }

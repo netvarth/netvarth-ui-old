@@ -79,7 +79,7 @@ export class ProviderNotificationsComponent implements OnInit {
   selApptCancelNotify = false;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
-
+  mode_of_notify = '';
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
