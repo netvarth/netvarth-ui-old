@@ -230,16 +230,15 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   })"> </app-field-error-display> -->
                 </ng-container>
             </div>
-            <div class="prepay-header"><h3>Prepayment</h3>
+            <div class="prepay-header" *ngIf="subdomainsettings.serviceBillable && !is_donation"><h3>Prepayment</h3>
                 <div class="settings_info" style="line-height:5%;">{{frm_enable_prepayment_cap}}</div>
-           <div class="form-group inline" style="margin-top: 10px;line-height:50px;"
-                    *ngIf="subdomainsettings.serviceBillable && !is_donation">
+           <div class="form-group inline" style="margin-top: 10px;line-height:50px;">
                     <label class="col-form-label">{{enable_prepayment_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
                         (change)="changePrepayment()">
                     </mat-slide-toggle>
             </div>
-        </div>
+       
                     <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
                         <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
                             <mat-form-field>
@@ -256,7 +255,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             </app-field-error-display>
                         </div>
                     </ng-container>
-                
+                </div>
             <div class="form-group glbl-preview" *ngIf="subdomainsettings.serviceBillable && is_donation">
                 <div>
                     <mat-form-field>
@@ -318,7 +317,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                <div class="row" style="margin-top: 5px; margin-left: 10px;" *ngIf="showAdvancedSettings && !is_donation">
                 <section>
                     <div class="price-header"><h3>Service Price</h3>
-                        <div class="settings_info" style="line-height:5%;margin-left:5px;">{{frm_service_price}}</div>
+                        <div class="settings_info" style="line-height:5%!important;margin-left:5px;display:flex;">{{frm_service_price}}</div>
                     <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
                                     <mat-form-field>
                                         <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
