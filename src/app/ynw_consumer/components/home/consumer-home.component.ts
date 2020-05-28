@@ -503,9 +503,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.appointments[i].cancelled_caption = retval.cancelled_caption;
             this.appointments[i].cancelled_date = retval.cancelled_date;
             this.appointments[i].cancelled_time = retval.cancelled_time;
-            // if (appointment.apptStatus === 'prepaymentPending') {
-            //   this.appointments[i].counter = this.prepaymentCounter(appointment);
-            // }
+            if (appointment.apptStatus === 'prepaymentPending') {
+              this.appointments[i].counter = this.prepaymentCounter(appointment);
+            }
             i++;
           }
           this.loadcomplete.appointment = true;
@@ -520,11 +520,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(appointment);
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '',  'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
-      
         appx_ret.caption = 'Appointment for'; // 'Check-In Time';
-        
           appx_ret.time = appointment.appmtTime;
-       
         const waitlist_date = new Date(appointment.appmtDate);
         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
@@ -548,11 +545,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.caption = 'Appointment for';
       appx_ret.date = appointment.appmtDate;
       appx_ret.time = appointment.appmtTime;
-      appx_ret.cancelled_date = moment(appointment.statusUpdatedTime, 'YYYY-MM-DD').format();
-      time = appointment.statusUpdatedTime.split('-');
-      time1 = time[2].trim();
-      t2 = time1.slice(2);
-      appx_ret.cancelled_time = t2;
+      if(appointment.statusUpdatedTime){
+        appx_ret.cancelled_date = moment(appointment.statusUpdatedTime, 'YYYY-MM-DD').format();
+        time = appointment.statusUpdatedTime.split('-');
+        time1 = time[2].trim();
+        t2 = time1.slice(2);
+        appx_ret.cancelled_time = t2;
+      }
       appx_ret.cancelled_caption = 'Cancelled on ';
     }
     return appx_ret;
@@ -1198,7 +1197,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.shared_services.statusOfApptLiveTrack(appointment.uid, appointment.providerAccount.id)
       .subscribe(data => {
         this.statusOfApptTrack[i] = data;
-        appointment.trackStatus = data;
+        appointment.appttrackStatus = data;
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1350,7 +1349,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                       });
                 }
               } else {
-                if (apptlist.trackStatus) {
+                if (apptlist.appttrackStatus) {
                   _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {

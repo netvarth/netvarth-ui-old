@@ -378,11 +378,11 @@
 
                                                     <span *ngIf="appointment.jaldeeStartTimeType == 'AFTERSTART'"
                                                         class="pull-right">
-                                                        <mat-slide-toggle [checked]="appointment[i]"
-                                                            (change)="changeTrackstatus(appointment.uid,appointment.providerAccount.id,i,$event)"
+                                                        <mat-slide-toggle [checked]="statusOfApptTrack[i]"
+                                                            (change)="changeAppointmentTrackstatus(appointment.uid,appointment.providerAccount.id,i,$event)"
                                                             class="trackSlide "></mat-slide-toggle>
                                                         <label
-                                                            class="mgn-lt-10"><b>{{appointment[i] ? 'On' : 'Off'}}</b></label>
+                                                            class="mgn-lt-10"><b>{{statusOfApptTrack[i] ? 'On' : 'Off'}}</b></label>
                                                     </span>
                                                 </div>
                                             </div>
