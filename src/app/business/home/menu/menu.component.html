@@ -83,18 +83,22 @@
       <!-- </ul> -->
       <!-- </li> -->
       <li class="treeview">
-        <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()" routerLinkActive="active-lnk">
+        <!-- <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()" routerLinkActive="active-lnk">
+          <i class="fa fa-check-circle"></i>
+          <span> Token/Check-ins</span>
+        </a> -->
+        <a class="pointer-cursor" (click)="menuClick('checkin');closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-check-circle"></i>
           <span> Token/Check-ins</span>
         </a>
       </li>
       <li class="treeview">
-        <a *ngIf="appointment" class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+        <!-- <a *ngIf="appointment" class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
           routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>
-        </a>
-        <a *ngIf="!appointment" class="pointer-cursor" (click)="showError();closeMenu()" routerLinkActive="active-lnk">
+        </a> -->
+        <a class="pointer-cursor" (click)="menuClick('appt');closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>
         </a>

@@ -6,6 +6,8 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { MatDialog } from '@angular/material';
+import { ProviderErrorMesagePopupComponent } from '../../modules/provider-error-message-popup/provider-error-message-popup.component';
 
 @Component({
   selector: 'app-menu',
@@ -27,13 +29,20 @@ export class MenuComponent implements OnInit, OnDestroy {
   iswiz = false; // is cur page is wizard
   isCheckin;
   customer_label = '';
-  appointment;
+  appointmentStatus = false;
+  checkinStatus = false;
   donationstatus;
+  locationExist = false;
+  serviceExist = false;
+  qExist = false;
+  scheduleExist = false;
+  profileExist = false;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
     private router: Router,
     private renderer: Renderer2,
+    private dialog: MatDialog,
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions
   ) {
@@ -94,8 +103,11 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.popular_search(this.jsonlist);
         //   break;
         case 'apptStatus':
-          this.appointment = message.apptStatus;
+          this.appointmentStatus = message.apptStatus;
           break;
+          case 'checkinStatus':
+            this.checkinStatus = message.checkinStatus;
+            break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
           break;
@@ -111,6 +123,12 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
     }
+    console.log(this.bname);
+    if (this.bname === '') {
+      this.profileExist = false;
+    } else {
+      this.profileExist = true;
+    }
   }
   closeMenu() {
     const screenWidth = window.innerWidth;
@@ -118,7 +136,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
   }
-  userClicked () {
+  userClicked() {
     this.closeMenu();
     this.router.navigate(['provider/settings/general/users']);
   }
@@ -172,6 +190,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.accountType = user.accountType;
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
+    this.getProviderLocations();
+    this.getServices();
+    this.getQs();
+    this.getSchedules();
     this.isAvailableNow();
     this.getGlobalSettings();
   }
@@ -193,11 +215,95 @@ export class MenuComponent implements OnInit, OnDestroy {
   getGlobalSettings() {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
-        this.appointment = data.appointment;
+        this.appointmentStatus = data.appointment;
         this.donationstatus = data.donationFundRaising;
+        this.checkinStatus = data.waitlist;
       });
   }
-  showError() {
-    this.shared_functions.openSnackBar('Appointment is disabled in your settings', { 'panelClass': 'snackbarerror' });
+
+  getProviderLocations() {
+    this.provider_services.getProviderLocations()
+      .subscribe((data: any) => {
+        if (data.length > 0) {
+          this.locationExist = true;
+        } else {
+          this.locationExist = false;
+        }
+      });
+  }
+
+  getServices() {
+    const filter = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getProviderServices(filter)
+      .subscribe((data: any) => {
+        if (data.length > 0) {
+          this.serviceExist = true;
+        } else {
+          this.serviceExist = false;
+        }
+      });
+  }
+
+  getSchedules() {
+    this.provider_services.getProviderSchedules()
+      .subscribe(
+        (data: any) => {
+          if (data.length > 0) {
+            this.scheduleExist = true;
+          } else {
+            this.scheduleExist = false;
+          }
+        });
+  }
+
+  getQs() {
+    this.provider_services.getProviderQueues()
+      .subscribe(
+        (data: any) => {
+          if (data.length > 0) {
+            this.qExist = true;
+          } else {
+            this.qExist = false;
+          }
+        });
+  }
+  // showError() {
+  //   this.shared_functions.openSnackBar('Appointment is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  // }
+  menuClick(source) {
+    console.log('checkin' +this.checkinStatus);
+    console.log('appt' +this.appointmentStatus);
+    console.log('profile' +this.profileExist);
+    console.log('loc' +this.locationExist);
+    console.log('serv' +this.serviceExist);
+    console.log('q' +this.qExist);
+    console.log('sche' +this.scheduleExist);
+    if (source === 'checkin') {
+      if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
+        this.showPopup(source, this.checkinStatus);
+      } else {
+        this.router.navigate(['provider/check-ins']);
+      }
+    } else {
+      if (!this.appointmentStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+        this.showPopup(source, this.appointmentStatus);
+      } else {
+        this.router.navigate(['provider/appointments']);
+      }
+    }
+  }
+  showPopup(source, status) {
+    const dialogrefd = this.dialog.open(ProviderErrorMesagePopupComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        source: source,
+        status: status
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+
+    });
   }
 }
