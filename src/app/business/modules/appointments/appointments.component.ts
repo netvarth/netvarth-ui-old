@@ -2321,7 +2321,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        modes: modes
+        modes: modes.virtualService,
+        uuid: modes.uid
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
