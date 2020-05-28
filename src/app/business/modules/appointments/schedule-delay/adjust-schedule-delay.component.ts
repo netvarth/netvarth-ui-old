@@ -496,7 +496,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
 
   }
-  getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
       this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)

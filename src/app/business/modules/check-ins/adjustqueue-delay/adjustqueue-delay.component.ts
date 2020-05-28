@@ -501,7 +501,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
-              this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+              this.amForm.get('queueControl').setValue(this.queuejson[0].id); 
               this.getTodayCheckIn(this.queuejson[0].id);
           }
          

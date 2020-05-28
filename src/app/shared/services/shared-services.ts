@@ -674,7 +674,7 @@ export class SharedServices {
       const url = 'consumer/appointment/service/' + locid;
       return this.servicemeta.httpGet(url);
     }
-  }
+  } 
   getAppointmentByConsumerUUID(uuid, accountid) {
     const url = 'consumer/appointment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
