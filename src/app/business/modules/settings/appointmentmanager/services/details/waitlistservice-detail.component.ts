@@ -228,6 +228,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 (id) => {
                     this.service_id = id;
+                    this.sharedfunctionObj.sendMessage({ 'ttype': 'serviceChange' });
                     this.getServiceDetail();
                 },
                 error => {

@@ -89,7 +89,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
- // path = window.location.host + ;
+  // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
 
   checked = false;
@@ -354,7 +354,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.handle_searchstatus();
     }
   }
-  confirm_opsearchStatus () {
+  confirm_opsearchStatus() {
     if (this.onlinepresence_status) {
       this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
     } else {
@@ -375,33 +375,33 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
-        (data: any) => {
-            this.onlinepresence_status = data.onlinePresence;
-            // this.walkinConsumer_status = data.walkinConsumer;
-            // this.jaldeeintegration_status = data.onlinePresence;
-            // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
-            this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
-            // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
-        }
+      (data: any) => {
+        this.onlinepresence_status = data.onlinePresence;
+        // this.walkinConsumer_status = data.walkinConsumer;
+        // this.jaldeeintegration_status = data.onlinePresence;
+        // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
+        this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
+      }
     );
-}
+  }
   handle_jaldeeOnlinePresence() {
     const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
     const data = {
-        'onlinePresence': !this.onlinepresence_status
+      'onlinePresence': !this.onlinepresence_status
     };
     this.provider_services.setJaldeeIntegration(data)
-        .subscribe(
-            () => {
-                this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-                this.getJaldeeIntegrationSettings();
-            },
-            error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getJaldeeIntegrationSettings();
-            }
-        );
-}
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getJaldeeIntegrationSettings();
+        }
+      );
+  }
   handle_opsearchstatus() {
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
@@ -556,6 +556,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       if (result) {
         if (result === 'reloadlist') {
           this.getBusinessProfile();
+          this.shared_functions.sendMessage({ 'ttype': 'profileChange' });
         }
       }
     });
@@ -618,26 +619,31 @@ export class BProfileComponent implements OnInit, OnDestroy {
     }
   }
   addLocation() {
-    this.addlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        // location : this.base_loc,
-        badges: this.loc_badges,
-        type: 'add',
-        source: 'bprofile'
-      }
-    });
-    this.addlocdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result === 'reloadlist') {
-          this.getBusinessProfile();
-          this.getProviderLocations();
-        }
-      }
-    });
+    // this.addlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
+    //   disableClose: true,
+    //   autoFocus: true,
+    //   data: {
+    //     // location : this.base_loc,
+    //     badges: this.loc_badges,
+    //     type: 'add',
+    //     source: 'bprofile'
+    //   }
+    // });
+    // this.addlocdialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     if (result === 'reloadlist') {
+    //       this.getBusinessProfile();
+    //       this.getProviderLocations();
+    //     }
+    //   }
+    // });
+    const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'addbase' }
+  };
+    this.routerobj.navigate(['provider', 'settings', 'general',
+    'locations', 'add'], navigationExtras);
   }
   // get the list of locations added for the current provider
   getProviderLocations() {
@@ -978,7 +984,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   showPasscode() {
     this.show_passcode = !this.show_passcode;
   }
-  gotoJaldeeIntegration () {
+  gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
   gotoMedia() {

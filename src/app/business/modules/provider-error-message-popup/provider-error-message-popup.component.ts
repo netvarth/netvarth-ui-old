@@ -10,14 +10,14 @@ export class ProviderErrorMesagePopupComponent {
   constructor(
     public dialogRef: MatDialogRef<ProviderErrorMesagePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (!this.data.status) {
+    if (this.data.profile === 'inactive') {
+      this.message = 'missing required fields';
+    } else {
       if (this.data.source === 'checkin') {
         this.message = 'Check-in is disabled in your settings';
       } else {
         this.message = 'Appointment is disabled in your settings';
       }
-    } else {
-      this.message = 'missing required fields';
     }
   }
 }

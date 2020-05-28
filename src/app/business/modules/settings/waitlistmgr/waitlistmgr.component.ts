@@ -66,7 +66,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private shared_functions: SharedFunctions,
         // private shared_services: SharedServices
-        ) {
+    ) {
         this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.shared_functions.getMessage().subscribe(data => {
@@ -127,7 +127,6 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.waitlist_manager = data;
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
@@ -164,8 +163,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.waitlist_status = data['waitlist'];
-                this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';  
-                this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.waitlist_status });
+                this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
+                this.shared_functions.sendMessage({ 'ttype': 'checkinStatus', checkinStatus: this.waitlist_status });
             });
     }
     setAcceptOnlineCheckin(is_check) {
@@ -303,17 +302,17 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     handleCheckinPresence(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';
         this.provider_services.setCheckinPresence(is_check)
-          .subscribe(
-            () => {
-              this.shared_functions.openSnackBar('Accept Check-Ins ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
-              this.getGlobalSettingsStatus();
-            },
-            error => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              this.getGlobalSettingsStatus();
-            }
-          );
-      }
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Accept Check-Ins ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                }
+            );
+    }
     // getDepartmentsCount() {
     //     this.loading = true;
     //     this.provider_services.getDepartmentCount()

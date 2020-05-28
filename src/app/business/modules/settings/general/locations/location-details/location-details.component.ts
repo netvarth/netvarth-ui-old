@@ -459,8 +459,14 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     (data) => {
                         this.location_id = data;
                         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
+                        this.shared_Functionsobj.sendMessage({'ttype': 'locationChange' });
                         this.getLocationDetail();
-                        this.action = 'view';
+                        if (this.params.action === 'addbase') {
+                            this.router.navigate(['provider', 'settings', 'bprofile']);
+                        } else {
+                            this.action = 'view';
+                        }
+                        this.shared_Functionsobj.sendMessage({'ttype': 'locationChange' });
                         this.disableButton = false;
                     },
                     error => {

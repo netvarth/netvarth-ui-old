@@ -105,11 +105,26 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'apptStatus':
           this.appointmentStatus = message.apptStatus;
           break;
-          case 'checkinStatus':
-            this.checkinStatus = message.checkinStatus;
-            break;
+        case 'checkinStatus':
+          this.checkinStatus = message.checkinStatus;
+          break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
+          break;
+        case 'serviceChange':
+          this.serviceExist = true;
+          break;
+        case 'qChange':
+          this.qExist = true;
+          break;
+        case 'scheduleChange':
+          this.scheduleExist = true;
+          break;
+        case 'locationChange':
+          this.locationExist = true;
+          break;
+        case 'profileChange':
+          this.profileExist = true;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -266,39 +281,39 @@ export class MenuComponent implements OnInit, OnDestroy {
           }
         });
   }
-  // showError() {
-  //   this.shared_functions.openSnackBar('Appointment is disabled in your settings', { 'panelClass': 'snackbarerror' });
-  // }
   menuClick(source) {
-    console.log('checkin' +this.checkinStatus);
-    console.log('appt' +this.appointmentStatus);
-    console.log('profile' +this.profileExist);
-    console.log('loc' +this.locationExist);
-    console.log('serv' +this.serviceExist);
-    console.log('q' +this.qExist);
-    console.log('sche' +this.scheduleExist);
+    console.log(this.locationExist);[]
     if (source === 'checkin') {
       if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-        this.showPopup(source, this.checkinStatus);
+        let status;
+        if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
+          status = 'inactive';
+        }
+        this.showPopup(source, this.checkinStatus, status);
       } else {
         this.router.navigate(['provider/check-ins']);
       }
     } else {
       if (!this.appointmentStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-        this.showPopup(source, this.appointmentStatus);
+        let status;
+        if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+          status = 'inactive';
+        }
+        this.showPopup(source, this.appointmentStatus, status);
       } else {
         this.router.navigate(['provider/appointments']);
       }
     }
   }
-  showPopup(source, status) {
+  showPopup(source, status, profileExist) {
     const dialogrefd = this.dialog.open(ProviderErrorMesagePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
         source: source,
-        status: status
+        status: status,
+        profile: profileExist
       }
     });
     dialogrefd.afterClosed().subscribe(result => {

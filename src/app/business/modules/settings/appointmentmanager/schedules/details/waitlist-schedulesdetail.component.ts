@@ -311,9 +311,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.deptObj = data;
-          console.log(this.deptObj);
           this.filterbyDept = this.deptObj.filterByDept;
-          console.log(this.filterbyDept);
           this.departments = this.deptObj.departments;
           for (let i = 0; i < this.services_list.length; i++) {
             for (let j = 0; j < this.departments.length; j++) {
@@ -408,7 +406,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   }
 
   updateForm() {
-    console.log(this.queue_data);
     const sttime = {
       hour: parseInt(moment(this.queue_data.apptSchedule.timeSlots[0].sTime,
         ['h:mm A']).format('HH'), 10),
@@ -455,7 +452,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     } else {
       this.Selall = false;
     }
-    console.log(this.filterbyDept);
     if (this.filterbyDept) {
       for (let j = 0; j < this.departments.length; j++) {
         this.serviceSelection[this.departments[j].departmentName] = [];
@@ -675,6 +671,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           this.disableButton = false;
           this.api_loading = false;
           this.queue_id = data;
+          this.shared_Functionsobj.sendMessage({ 'ttype': 'scheduleChange' });
           this.getScheduleDetail();
           this.action = 'view';
         },
@@ -891,4 +888,3 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     }
   }
 }
-

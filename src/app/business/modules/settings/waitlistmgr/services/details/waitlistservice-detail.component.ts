@@ -105,8 +105,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                         } else if (serviceActionModel.action === 'edit') {
                             post_itemdata2.id = this.service_id;
                             this.updateService(post_itemdata2);
-                        }
-                         else if (serviceActionModel.action === 'changestatus') {
+                        } else if (serviceActionModel.action === 'changestatus') {
                             this.changeServiceStatus(post_itemdata2);
                         }
                     } else {
@@ -229,6 +228,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 (id) => {
                     this.service_id = id;
+                    this.sharedfunctionObj.sendMessage({ 'ttype': 'serviceChange' });
                     this.getServiceDetail();
                 },
                 error => {
