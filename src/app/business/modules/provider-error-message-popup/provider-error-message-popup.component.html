@@ -3,6 +3,9 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
-<div mat-dialog-content>
-    <div style="margin-bottom: 10px;"> {{message}} </div>
+<div class="col-md-12r" mat-dialog-content>
+    <p> {{message}} </p>
+    <div class="locate-customer mgn-up-20">
+        <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Ok</button>
+    </div>
 </div>

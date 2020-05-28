@@ -20,4 +20,7 @@ export class ProviderErrorMesagePopupComponent {
       }
     }
   }
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

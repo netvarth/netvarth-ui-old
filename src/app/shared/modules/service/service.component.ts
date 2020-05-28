@@ -23,6 +23,7 @@ import { ProviderDataStorageService } from '../../../ynw_provider/services/provi
 
 export class ServiceComponent implements OnInit, OnDestroy {
     @Input() serviceFrom;
+    @Input() source;
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
     number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
@@ -33,7 +34,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     service_name_cap = Messages.SERVICE_NAME_CAP;
     est_duration_cap = Messages.SERVICE_DURATION_CAP;
     enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
-    frm_enable_prepayment_cap ='';
+    frm_enable_prepayment_cap = '';
     prepayment_cap = Messages.PREPAYMENT_CAP;
     tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
     service_notify_cap = '';
@@ -375,8 +376,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (this.departmentId) {
                 form_data['department'] = this.departmentId;
             }
-        //    form_data['serviceType'] = form_data.serviceType;
-          //  form_data['virtualServiceType'] = this.serv_mode;
+            //    form_data['serviceType'] = form_data.serviceType;
+            //  form_data['virtualServiceType'] = this.serv_mode;
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
@@ -523,6 +524,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         if (this.locationExists) {
             if (this.serviceFrom === 'userlevel') {
                 this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
+            } else if (this.source === 'appt') {
+                this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
             } else {
                 this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
             }
