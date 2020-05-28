@@ -118,10 +118,10 @@
                                                 <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
                                                 </div>
-                                                <div class="cal-mod-instrct">
+                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont">
+                                                <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'Skype'"

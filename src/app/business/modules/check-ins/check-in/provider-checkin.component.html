@@ -136,15 +136,15 @@
                                                 <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
                                                 </div>
-                                                <div class="cal-mod-instrct">
+                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont">
+                                                <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'SKYPE'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
-                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
+                                                        <!-- <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/> -->
                                                     <input *ngIf="!showInputSection" class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
                                                     <div class="input-group-append mgn-up-6"
