@@ -918,6 +918,8 @@
                               [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
+                            <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService" [matTooltip]="'Generate link'" (click)="generateLink(appt)">
+                              <i class="fa fa-link" aria-hidden="true"></i> </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="showCallingModes(appt.virtualService)"
                               *ngIf="appt.virtualService" [matTooltipClass]="tooltipcls"

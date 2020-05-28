@@ -291,6 +291,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   path = projectConstants.PATH;
   showQR = false;
   printContent;
+  gnr_link = 1;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -2512,6 +2513,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         modes: modes.virtualService,
         uuid: modes.ynwUuid
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
+  generateLink(modes) {
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '20%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes.virtualService,
+        uuid: modes.ynwUuid,
+        linkValue: this.gnr_link
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

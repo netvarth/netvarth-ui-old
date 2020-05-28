@@ -283,6 +283,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   qr_value;
   path = projectConstants.PATH;
   showQR = false;
+  gnr_link = 2;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -2352,5 +2353,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getVirtualServiceCount(virtualService) {
     return Object.keys(virtualService).length;
+  }
+  generateLink(modes) {
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '20%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes.virtualService,
+        uuid: modes.uid,
+        linkValue: this.gnr_link
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

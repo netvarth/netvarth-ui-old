@@ -14,13 +14,14 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 export class CallingModesComponent implements OnInit {
     callingModes;
     callingModesDisplayName = projectConstants.CALLING_MODES;
-    msg_to_user = 'Provider will start teleservice in 30 minutes from';
+    msg_to_user = '';
     sms = true;
     email = true;
     pushnotify = true;
     disableButton = false;
     api_success = null;
     medialink;
+    show_link_only = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -32,16 +33,25 @@ export class CallingModesComponent implements OnInit {
         for (const i in this.data.modes) {
             this.callingModes = i;
         }
-        this.selectHeadsup();
+        if (this.data.linkValue) {
+            this.show_link_only = true;
+            if (this.data.linkValue === 1) {
+                this.chkinTeleserviceJoinLink();
+            } else {
+                this.apptTeleserviceJoinLink();
+            }
+        } else {
+            this.selectHeadsup();
+        }
     }
     selectHeadsup() {
         this.msg_to_user = 'Provider will start ' + this.callingModes + ' call in 30 minutes from';
     }
     selectAlrdyWaiting() {
-        this.createTeleserviceJoinLink();
+        this.chkinTeleserviceJoinLink();
     }
     selectStrtVideo() {
-        this.createTeleserviceJoinLink();
+        this.chkinTeleserviceJoinLink();
     }
     selectStarted() {
         this.msg_to_user = 'Service Started';
@@ -69,11 +79,21 @@ export class CallingModesComponent implements OnInit {
               }
             );
     }
-    createTeleserviceJoinLink() {
+    chkinTeleserviceJoinLink() {
         const uuid_data = {
             'mode': this.callingModes
         };
-        this.shared_services.consumerTeleserviceWithId(uuid_data, this.data.uuid).
+        this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.data.uuid).
+        subscribe((modeData) => {
+            this.medialink = modeData;
+            this.msg_to_user = this.medialink.startingUl;
+        });
+    }
+    apptTeleserviceJoinLink() {
+        const uuid_data = {
+            'mode': this.callingModes
+        };
+        this.shared_services.consumerApptTeleserviceWithId(uuid_data, this.data.uuid).
         subscribe((modeData) => {
             this.medialink = modeData;
             this.msg_to_user = this.medialink.startingUl;
