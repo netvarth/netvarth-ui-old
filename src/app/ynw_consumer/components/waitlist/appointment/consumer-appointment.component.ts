@@ -720,7 +720,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             post_Data['provider'] = { 'id': this.selected_user.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
-            post_Data['virtualService'] = this.virtualServiceArray;
+          //  post_Data['virtualService'] = this.virtualServiceArray;
+          for (let i in this.virtualServiceArray) {
+            if (i === 'WhatsApp') {
+                post_Data['virtualService'] = this.virtualServiceArray;
+            } else {
+                post_Data['virtualService'] = {};
+            }
+        }
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
         //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');

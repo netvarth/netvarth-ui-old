@@ -812,7 +812,14 @@ export class ProviderCheckinComponent implements OnInit {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
-            post_Data['virtualService'] = this.virtualServiceArray;
+         //   post_Data['virtualService'] = this.virtualServiceArray;
+         for (let i in this.virtualServiceArray) {
+            if (i === 'WhatsApp') {
+                post_Data['virtualService'] = this.virtualServiceArray;
+            } else {
+                post_Data['virtualService'] = {};
+            }
+        }
         }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
