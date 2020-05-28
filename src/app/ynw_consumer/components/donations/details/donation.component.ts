@@ -78,7 +78,6 @@ export class ConsumerDonationPaymentComponent implements OnInit {
     getPaymentStatus(pid) {
         this.shared_functions.removeitemfromLocalStorage('acid');
         this.shared_functions.removeitemfromLocalStorage('uuid');
-        this.shared_functions.setitemonLocalStorage('p_src', 'c_d');
         this.shared_services.getPaymentStatus('consumer', pid)
           .subscribe(
             data => {
@@ -110,7 +109,7 @@ export class ConsumerDonationPaymentComponent implements OnInit {
         this.waitlistDetails.paymentMode = paymentMode;
         this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
         this.shared_functions.setitemonLocalStorage('acid', this.accountId);
-        this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
+        this.shared_functions.setitemonLocalStorage('p_src', 'c_d');
         this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe(pData => {
                 if (pData['response']) {

@@ -458,7 +458,7 @@ export class ConsumerDonationComponent implements OnInit {
                 };
                 this.sharedFunctionobj.setitemonLocalStorage('uuid', data['uid']);
                 this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
-                this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_c');
+                this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_d');
                 this.shared_services.consumerPayment(payInfo)
                     .subscribe(pData => {
                         if (pData['response']) {
