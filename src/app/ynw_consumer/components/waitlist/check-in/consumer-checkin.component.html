@@ -439,11 +439,20 @@
                                                             (keydown)="clearCouponErrors()"
                                                             placeholder="Enter coupon code" type="text"
                                                             class="form-control" [(ngModel)]="selected_coupon">
-                                                        <span class="input-group-btn">
+                                                        <!-- <span class="input-group-btn">
                                                             <button class="btn bt3 btn-default coupon-apply-btn"
                                                                 (click)="applyCoupons(selected_coupon)"
                                                                 type="button">Add</button>
-                                                        </span>
+                                                        </span> -->
+                                                    </div>
+                                                    <div class="col-md-12 no-padding mgn-up-10">
+                                                        <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
+                                                            (click)="handleGoBack(1)">
+                                                            Cancel
+                                                        </button>
+                                                        <button mat-button class="cs-btn bt1 backtocheckin"
+                                                                (click)="applyCoupons(selected_coupon)"
+                                                                type="button">Add</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-lg-12 col-12">
@@ -504,7 +513,7 @@
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
                                 Change Email</button>
                             <button *ngIf="s3CouponsList.length > 0" class="cs-btn bt3 width-100 mgn-up-20"
-                                (click)="handleSideScreen('coupon')">Apply Coupon
+                                (click)="handleSideScreen('coupons')">Apply Coupon
                             </button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
                                 <!-- <button type="button" class="cs-btn btn-attach bt_attach"

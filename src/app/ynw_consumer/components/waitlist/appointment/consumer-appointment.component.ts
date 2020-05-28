@@ -722,11 +722,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.sel_ser_det.serviceType === 'virtualService') {
             post_Data['virtualService'] = this.virtualServiceArray;
         }
-        if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-            // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
-            return;
-        }
+        // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+        //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
+        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
         // if (this.partySizeRequired) {
         //     this.holdenterd_partySize = this.enterd_partySize;
         //     post_Data['partySize'] = Number(this.holdenterd_partySize);

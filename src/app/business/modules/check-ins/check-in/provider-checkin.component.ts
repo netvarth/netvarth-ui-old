@@ -817,10 +817,10 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
-        if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-            // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
-        }
+        // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+        //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
+        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        // }
         if (this.partySizeRequired) {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
