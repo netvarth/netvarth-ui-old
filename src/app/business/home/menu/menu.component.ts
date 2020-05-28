@@ -123,7 +123,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
     }
-    console.log(this.bname);
     if (this.bname === '') {
       this.profileExist = false;
     } else {

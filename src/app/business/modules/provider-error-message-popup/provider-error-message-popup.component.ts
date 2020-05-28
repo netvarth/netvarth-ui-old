@@ -10,7 +10,6 @@ export class ProviderErrorMesagePopupComponent {
   constructor(
     public dialogRef: MatDialogRef<ProviderErrorMesagePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(this.data);
     if (!this.data.status) {
       if (this.data.source === 'checkin') {
         this.message = 'Check-in is disabled in your settings';
@@ -18,7 +17,7 @@ export class ProviderErrorMesagePopupComponent {
         this.message = 'Appointment is disabled in your settings';
       }
     } else {
-      this.message = 'missing required fileds';
+      this.message = 'missing required fields';
     }
   }
 }
