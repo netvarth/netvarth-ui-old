@@ -116,7 +116,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         private provider_datastorage: ProviderDataStorageService,
         public router: Router) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
-        this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
+        this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
                 if (serviceParams) {
