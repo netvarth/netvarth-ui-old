@@ -208,9 +208,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.inboxCntFetched = false;
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {
-      // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-      //   this.reloadHandler();
-      // });
+      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+        this.reloadHandler();
+      });
     } else {
       // if (this.cronHandle) {
       //   this.cronHandle.unsubscribe();
@@ -519,6 +519,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.inboxCntFetched = true;
         this.inboxUnreadCnt = data;
+        console.log('count ' + this.inboxUnreadCnt);
       },
         () => {
         });
