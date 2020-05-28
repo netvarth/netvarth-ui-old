@@ -64,7 +64,7 @@ export class CallingModesComponent implements OnInit {
               pushNotification: this.pushnotify
             },
             communicationMessage: this.msg_to_user,
-            consumerId: [this.data.uuid]
+            consumerId: [this.data.consumerid]
           };
           this.shared_services.consumerMassCommunicationWithId(post_data).
             subscribe(() => {
