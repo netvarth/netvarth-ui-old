@@ -81,6 +81,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.getProviderServices(filter)
             .subscribe(
                 data => {
+                    this.service_list = [];
                     this.serv_list = data;
                     for (const serv of this.serv_list) {
                         if (serv.serviceType !== 'donationService') {

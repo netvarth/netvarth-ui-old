@@ -991,6 +991,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   reloadAPIs() {
     this.getWaitlist();
+    this.getApptlist();
     this.reload_history_api = { status: true };
   }
 

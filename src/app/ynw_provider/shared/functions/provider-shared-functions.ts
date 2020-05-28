@@ -176,6 +176,7 @@ export class ProviderSharedFuctions {
 
 
   changeServiceStatus(ob, service) {
+    console.log(service);
     let chstatusmsg = '';
     if (service.status === 'ACTIVE') {
       chstatusmsg = 'disabled';

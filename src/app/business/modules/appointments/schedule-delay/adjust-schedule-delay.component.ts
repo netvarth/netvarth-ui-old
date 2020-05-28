@@ -58,7 +58,8 @@ export class AdjustscheduleDelayComponent implements OnInit {
   queuejson: any = [];
   sel_ser;
   sel_ser_det: any = [];
-  sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  //sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  sel_checkindate;
   sortBy = 'sort_token';
   check_in_list: any = [];
   today_checkins_count = 0;
@@ -499,7 +500,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
    getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
-      this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
+      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid,accountid)
         .subscribe(data => {
           this.queuejson = data;
           console.log(this.queuejson);
