@@ -2510,7 +2510,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        modes: modes
+        modes: modes.virtualService,
+        uuid: modes.ynwUuid
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

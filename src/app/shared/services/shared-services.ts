@@ -719,4 +719,7 @@ export class SharedServices {
     const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid +'/?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  consumerTeleserviceWithId(postdata, uuid) {
+    return this.servicemeta.httpPost('provider/waitlist/' + uuid + '/createmeetingrequest', postdata);
+   }
 }

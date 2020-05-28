@@ -10,17 +10,17 @@
     <div class="form-group" style="padding-left: 15px;">
         <div>
             <mat-chip-list>
-                <mat-chip>
+                <mat-chip (click)="selectHeadsup()">
                   Headsup
                 </mat-chip>
-                <mat-chip>
+                <mat-chip (click)="selectAlrdyWaiting()">
                     Already waiting
                   </mat-chip>
-                  <mat-chip>
+                  <mat-chip (click)="selectStrtVideo()">
                     <i class="fa fa-video-camera" style="padding-right: 10px;font-size: small;"></i>
                     Start video
                   </mat-chip>
-                  <mat-chip>
+                  <mat-chip (click)="selectStarted()">
                     Mark as started
                   </mat-chip>
               </mat-chip-list>
@@ -28,7 +28,7 @@
         </div>
     </div>
     <mat-form-field class="example-full-width" style="padding-top: 30px;">
-        <textarea matInput placeholder="Sample text"></textarea>
+        <textarea matInput placeholder="Sample text" [(ngModel)]="msg_to_user"></textarea>
       </mat-form-field>
       <div class="mgtop40 form-group">
         Send message via
@@ -46,5 +46,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button type="button" mat-dialog-close class="cs-btn bt1">Send</button>
+    <button type="button" mat-dialog-close class="cs-btn bt1" (click)="sendMessage()">Send</button>
 </mat-dialog-actions>
