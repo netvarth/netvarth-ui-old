@@ -32,6 +32,7 @@ export class CustomViewComponent implements OnInit {
     allUsersIds: any = [];
     loading = true;
     viewId;
+    isDepartments = false;
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
     deptMultiFilterCtrl: FormControl = new FormControl();
@@ -162,7 +163,8 @@ export class CustomViewComponent implements OnInit {
     }
     getAccountServices() {
         const filter = {
-            'scope-eq': 'account'
+            'scope-eq': 'account',
+            'serviceType-neq': 'donationService'
         };
         this.provider_services.getProviderServices(filter)
             .subscribe(
@@ -238,11 +240,13 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getDepartments()
             .subscribe(
                 (data: any) => {
+                    this.isDepartments = true;
                     this.departments = data.departments;
                     this.filterDepList = data.departments;
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
+                    this.isDepartments = false;
                 }
             );
     }

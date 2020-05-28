@@ -7,15 +7,15 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
-                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20" style="margin-bottom: 10px">
                         <label>Select services by department
                             <span class="ctrl">
                                 <mat-slide-toggle class="example-margin" [checked]="filterbydepartment"
                                     [labelPosition]="'before'" [(ngModel)]="filterByDept" (change)="doRemoveservice()">
-                                </mat-slide-toggle>
+                                </mat-slide-toggle>&nbsp;{{deptstatusstr}}
                             </span>
-                            <p class="sts" [class.active]="filterbydepartment"></p>
-                            <div class="onoff">{{deptstatusstr}}</div>
+                            <!-- <p class="sts" [class.active]="filterbydepartment"></p>
+                            <div class="onoff"></div> -->
                         </label>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+            <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotocustomview()">
                         <h2>Custom Views</h2>
