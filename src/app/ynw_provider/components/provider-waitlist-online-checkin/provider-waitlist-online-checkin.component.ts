@@ -159,7 +159,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       showTokenId: true
     };
     if (event.checked) {
-      postData['calculationMode'] = 'ML';
+      postData['calculationMode'] = 'Conventional';
     } else {
       postData['calculationMode'] = 'NoCalc';
     }
@@ -198,7 +198,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   fixedModeChanged(event) {
     if (!event.checked) {
       const postData = {
-        calculationMode: 'ML',
+        calculationMode: 'Conventional',
         showTokenId: false
       };
       this.provider_services.setWaitlistMgr(postData)
