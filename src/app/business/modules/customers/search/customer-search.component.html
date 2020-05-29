@@ -40,13 +40,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="form-group mobile-field" *ngIf="haveMobile">
                                     <mat-form-field>
                                         <div class="input-group">
-                                            <div class="input-group-prepend mob-prefix">
+                                           
                                                 <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-                                            </div>
-                                            <input matInput type="text" matInput class="form-control"
+                                                <input matInput type="text" matInput class="form-control"
                                                 (keypress)="isNumeric($event)" id="mobile_number"
                                                 placeholder="{{mobile_cap}} " formControlName="mobile_number"
                                                 autocomplete="off" maxlength=10>
+                                          
+                                           
                                         </div>
                                     </mat-form-field>
 

@@ -11,6 +11,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         id="register-form">
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <div class="input-group-prepend mob-prefix">
+                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                            </div>
                             <input type="text" formControlName="phonenumber" name="phone" id="phone"
                                 placeholder="Mobile number" maxlength=10 />
                             <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')"
@@ -77,8 +80,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <h2 class="form-title">Select your area of specialization </h2>
                             <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
                                 <mat-accordion class="acc-btn acc-doms">
-                                    <mat-expansion-panel *ngFor="let domain of business_domains" [class.active]="domain===selectedDomain">
-                                        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
+                                    <mat-expansion-panel [expanded] = "false" *ngFor="let domain of business_domains" [class.active]="domain===selectedDomain">
+                                        <mat-expansion-panel-header
+                                         [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
                                             class="acc-header">
                                             <mat-panel-title class="block-level">
                                                 <div class="subdom_img {{domainSettings[domain.domain].iconClass}}"
@@ -232,11 +236,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 <!-- <app-saleschannel (retfromSC)="onReferalSubmit($event)"
                                         (resetApiErrors)="resetApiErrors()">
                                     </app-saleschannel> -->
-                                <li [class.active]="hearus=='Jaldee'" (click)="saleschannelselection('Jaldee')">
+                                <!-- <li [class.active]="hearus=='Jaldee'" (click)="saleschannelselection('Jaldee')">
                                     <img src="../../../../assets/images/home/signup/jaldee.png" width="25"
                                         height="25" />
                                     <h6>Jaldee</h6>
-                                </li>
+                                </li> -->
                                 <li [class.active]="hearus=='Facebook'"
                                     (click)="saleschannelselection('Facebook')">
                                     <img src="../../../../assets/images/home/signup/facebook-01.png" width="25"
