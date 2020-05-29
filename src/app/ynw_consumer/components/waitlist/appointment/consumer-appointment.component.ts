@@ -197,6 +197,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selected_coupon;
     couponsList: any = [];
     coupon_status = null;
+    
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
