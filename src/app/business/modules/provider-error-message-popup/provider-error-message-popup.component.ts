@@ -11,7 +11,7 @@ export class ProviderErrorMesagePopupComponent {
     public dialogRef: MatDialogRef<ProviderErrorMesagePopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (this.data.profile === 'inactive') {
-      this.message = 'missing required fields';
+      this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile.';
     } else {
       if (this.data.source === 'checkin') {
         this.message = 'Check-in is disabled in your settings';

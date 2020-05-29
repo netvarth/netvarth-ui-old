@@ -240,9 +240,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   })"> </app-field-error-display> -->
                 </ng-container>
             </div>
-            <div class="mgn-bt-10" *ngIf="subdomainsettings.serviceBillable && !is_donation">
-                <div class="no-margin form-group">
-                    <label class="no-margin">{{enable_prepayment_cap}}
+            <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                <div>
+                    <label style="margin-bottom: 0 !important;">{{enable_prepayment_cap}}
                         <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
                             (change)="changePrepayment()">
                         </mat-slide-toggle>
@@ -250,7 +250,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </label>
                 </div>
                 <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
-                    <div class="mgn-bt-20 form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
+                    <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
                         <mat-form-field>
                             <input matInput min="0" max={{maxlimit}} type="text"
                                 (keyup)="isvalid($event, 'minPrePaymentAmount')" (keypress)="isNumeric($event)"
@@ -324,11 +324,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
 
             <a class="learnmore-pointer no-padding" (click)="advancedClick()" *ngIf="!is_donation"
-                style="font-size: 1rem;">
+                style="font-size: 1.1rem;">
                 Additional Info</a>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
-                <section class="mgn-lt-5 mgn-bt-5">
-                    <label class="no-margin col-form-label">Service Price</label>
+                <section class="mgn-bt-30">
+                    <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
                         {{frm_service_price}}</div>
                     <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
