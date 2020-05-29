@@ -6,6 +6,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+
 
 @Component({
     selector: 'app-calling-modes',
@@ -26,6 +28,7 @@ export class CallingModesComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
+        private provider_shared_functions: ProviderSharedFuctions,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<CallingModesComponent>) {
     }
@@ -58,6 +61,7 @@ export class CallingModesComponent implements OnInit {
     }
     selectStarted() {
         this.msg_to_user = 'Service Started';
+        this.changeWaitlistStatus(this.data.qdata, 'STARTED');
     }
     sendMessage() {
         const post_data = {
@@ -108,4 +112,15 @@ export class CallingModesComponent implements OnInit {
             this.msg_to_user = this.medialink.startingUl;
         });
     }
+    changeWaitlistStatus(qdata, action) {
+        qdata.disableStartbtn = true;
+        this.provider_shared_functions.changeWaitlistStatus(this, qdata, action);
+    }
+    changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+        this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+          .then(
+            result => {
+            }
+          );
+      }
 }
