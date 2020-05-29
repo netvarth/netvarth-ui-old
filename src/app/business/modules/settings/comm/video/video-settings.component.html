@@ -43,9 +43,9 @@
                                                                 class="form-control" placeholder="{{callingMode.value.placeHolder}}"
                                                                 autocomplete="off">
                                                             <div class="input-group-append">
-                                                                <button class="btn bt3 mgn-up-8"
+                                                                <button class="cs-btn bt3 mgn-up-8"
                                                                     (click)="updateVideoSettings(callingMode, callingMode.key)"
-                                                                    type="button">Update</button>
+                                                                    type="button" [disabled]= "callingMode.value.actualValue == ''">Update</button>
                                                             </div>
                                                         </div>
                                                     </mat-form-field>
