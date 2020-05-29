@@ -121,14 +121,12 @@
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont"
-                                                    *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'Skype'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
-                                                    <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
-                                                        src="https://img.icons8.com/color/18/000000/zoom.png" />
+                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
                                                     <input *ngIf="!showInputSection"
                                                         class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
@@ -137,8 +135,7 @@
                                                         <button *ngIf="!showInputSection" class="btn bt3 btn-default"
                                                             (click)="addCallingmode(i)" type="button">Add</button>
                                                     </div>
-                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
-                                                        *ngIf="showInputSection">
+                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
                                                         {{callingModes}}
                                                         <span class="editbt mgn-lt-20"
                                                             (click)="editCallingmodes(i)"></span>
@@ -443,91 +440,96 @@
                                                     *ngIf="emailerror != null" errorMsg={{emailerror}}>
                                                 </app-field-error-display>
                                             </div>
-                                            <!-- <div class="form-group" *ngIf="confrmshow"> -->
-                                            <div class="form-group"></div>
-                                            <!-- <mat-form-field> -->
-                                            <input style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                                id="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                                [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
-                                                oncopy="return false" oncut="return false" ondrag="return false"
-                                                ondrop="return false">
-                                            <!-- </mat-form-field> -->
-                                            <app-field-error-display [displayError]="true" *ngIf="email1error != null"
-                                                errorMsg={{email1error}}>
-                                            </app-field-error-display>
+                                            <div class="form-group" *ngIf="confrmshow">
+                                                <!-- <mat-form-field> -->
+                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                                    id="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                                    [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
+                                                    oncopy="return false" oncut="return false" ondrag="return false"
+                                                    ondrop="return false">
+                                                <!-- </mat-form-field> -->
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="email1error != null" errorMsg={{email1error}}>
+                                                </app-field-error-display>
+                                            </div>
+                                            <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
+                                                <span class="input-group-btn">
+                                                <button class="btn bt3 btnCancel" type="button"
+                                                    (click)="handleGoBack(1)">
+                                                    Cancel
+                                                </button>
+                                                <button class="btn bt3 btn-default" (click)="addEmail()"
+                                                    type="button">Add</button>
+                                            </span>
+                                        </ng-container>
                                     </div>
-                                    <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
-                                    <span class="input-group-btn">
-                                        <button class="btn bt3 btnCancel" type="button" (click)="handleGoBack(1)">
-                                            Cancel
-                                        </button>
-                                        <button class="btn bt3 btn-default" (click)="addEmail()"
-                                            type="button">Add</button>
-                                    </span>
                                 </ng-container>
-                        </div>
-                        </ng-container>
-                        <ng-container *ngIf="(s3CouponsList.length > 0) && action=='coupons' && queuejson.length > 0">
-                            <div class="coupon-outer">
-                                <div class="form-group">
-                                    <!-- <div>Coupon Codes</div> -->
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                        <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
-                                            *ngIf="showCouponWB">
-                                            <p class="form-level-settings applybill"> <i
-                                                    class="icon-bell"></i>{{applied_inbilltime}}</p>
-                                            <div class="input-group">
-                                                <input [ngClass]="{'invalid':!couponvalid}"
-                                                    (keydown)="clearCouponErrors()" placeholder="Enter coupon code"
-                                                    type="text" class="form-control" [(ngModel)]="selected_coupon">
-                                                <!-- <span class="input-group-btn">
+                                <ng-container
+                                    *ngIf="(s3CouponsList.length > 0) && action=='coupons' && queuejson.length > 0">
+                                    <div class="coupon-outer">
+                                        <div class="form-group">
+                                            <!-- <div>Coupon Codes</div> -->
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                                                    *ngIf="showCouponWB">
+                                                    <p class="form-level-settings applybill"> <i
+                                                            class="icon-bell"></i>{{applied_inbilltime}}</p>
+                                                    <div class="input-group">
+                                                        <input [ngClass]="{'invalid':!couponvalid}"
+                                                            (keydown)="clearCouponErrors()"
+                                                            placeholder="Enter coupon code" type="text"
+                                                            class="form-control" [(ngModel)]="selected_coupon">
+                                                        <!-- <span class="input-group-btn">
                                                             <button class="btn bt3 btn-default coupon-apply-btn"
                                                                 (click)="applyCoupons(selected_coupon)"
                                                                 type="button">Add</button>
                                                         </span> -->
-                                            </div>
-                                            <div class="col-md-12 no-padding mgn-up-10">
-                                                <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
-                                                    (click)="handleGoBack(1)">
-                                                    Cancel
-                                                </button>
-                                                <button mat-button class="cs-btn bt1 backtocheckin"
-                                                    (click)="applyCoupons(selected_coupon)" type="button">Add</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12 col-lg-12 col-12">
-                                            <div class="coupon-outer">
-                                                <div class="row" *ngFor="let coupon of couponsList let i=index">
-                                                    <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
-                                                        {{coupon.couponCode}} <div class="delteTC"><span
-                                                                *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                                                class="pointer-cursor read-more-checkin">Read
-                                                                T & C </span> <i class="pointer-cursor icon-delete"
-                                                                (click)="removeJCoupon(i)"
-                                                                [matTooltipClass]="tooltipcls"
-                                                                [matTooltip]="'Remove Coupon'"></i></div>
                                                     </div>
-                                                    <div class="col-md-12 no-padding read-more-contents"
-                                                        *ngIf="coupon.showme">
-                                                        {{coupon.instructions}}
+                                                    <div class="col-md-12 no-padding mgn-up-10">
+                                                        <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
+                                                            (click)="handleGoBack(1)">
+                                                            Cancel
+                                                        </button>
+                                                        <button mat-button class="cs-btn bt1 backtocheckin"
+                                                                (click)="applyCoupons(selected_coupon)"
+                                                                type="button">Add</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                                                    <div class="coupon-outer">
+                                                        <div class="row" *ngFor="let coupon of couponsList let i=index">
+                                                            <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
+                                                                {{coupon.couponCode}} <div class="delteTC"><span
+                                                                        *ngIf="coupon.instructions"
+                                                                        (click)="toggleterms(i)"
+                                                                        class="pointer-cursor read-more-checkin">Read
+                                                                        T & C </span> <i
+                                                                        class="pointer-cursor icon-delete"
+                                                                        (click)="removeJCoupon(i)"
+                                                                        [matTooltipClass]="tooltipcls"
+                                                                        [matTooltip]="'Remove Coupon'"></i></div>
+                                                            </div>
+                                                            <div class="col-md-12 no-padding read-more-contents"
+                                                                *ngIf="coupon.showme">
+                                                                {{coupon.instructions}}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="coupon-outer" *ngIf="coupon_status">
-                                <div class="form-group">
-                                    <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
-                                        applied
-                                        successfully</span>
-                                    <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
-                                        valid</span>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <!-- <ng-container *ngIf="action=='attachment'">
+                                    <div class="coupon-outer" *ngIf="coupon_status">
+                                        <div class="form-group">
+                                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
+                                                applied
+                                                successfully</span>
+                                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
+                                                valid</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- <ng-container *ngIf="action=='attachment'">
                                     <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'">
                                         <input #imagefile type="file" accept="image/*,application/pdf"
@@ -541,34 +543,34 @@
                                     </button>
                                 </ng-container> -->
 
-                        </aside>
-                    </div>
-                    <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
-                        <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
-                            Member</button>
-                        <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
-                            Note</button>
-                        <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
-                            Change Email</button>
-                        <button *ngIf="s3CouponsList.length > 0" class="cs-btn bt3 width-100 mgn-up-20"
-                            (click)="handleSideScreen('coupons')">Apply Coupon
-                        </button>
-                        <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
-                            <!-- <button type="button" class="cs-btn btn-attach bt_attach"
+                            </aside>
+                        </div>
+                        <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
+                            <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
+                                Member</button>
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
+                                Note</button>
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
+                                Change Email</button>
+                            <button *ngIf="s3CouponsList.length > 0" class="cs-btn bt3 width-100 mgn-up-20"
+                                (click)="handleSideScreen('coupons')">Apply Coupon
+                            </button>
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
+                                <!-- <button type="button" class="cs-btn btn-attach bt_attach"
                                         (click)="imagefile.click()" [matTooltip]="'Attach files'"> -->
-                            <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;"
-                                multiple (change)="filesSelected($event)">
-                            <span> Attach
-                                File</span>
-                            <!-- </button> -->
-                        </button>
+                                <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;"
+                                    multiple (change)="filesSelected($event)">
+                                <span> Attach
+                                    File</span>
+                                <!-- </button> -->
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
 
+                </div>
             </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
     </div>
 </section>
