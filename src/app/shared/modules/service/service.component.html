@@ -240,18 +240,17 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   })"> </app-field-error-display> -->
                 </ng-container>
             </div>
-            <div class="prepay-header" *ngIf="subdomainsettings.serviceBillable && !is_donation">
-                <h3>Prepayment</h3>
-                <div class="settings_info" style="line-height:5%;">{{frm_enable_prepayment_cap}}</div>
-                <div class="form-group inline" style="margin-top: 10px;line-height:50px;">
-                    <label class="col-form-label">{{enable_prepayment_cap}}</label>
-                    <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
-                        (change)="changePrepayment()">
-                    </mat-slide-toggle>
+            <div class="mgn-bt-10" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                <div class="no-margin form-group">
+                    <label class="no-margin">{{enable_prepayment_cap}}
+                        <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
+                            (change)="changePrepayment()">
+                        </mat-slide-toggle>
+                        <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div>
+                    </label>
                 </div>
-
                 <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
-                    <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
+                    <div class="mgn-bt-20 form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
                         <mat-form-field>
                             <input matInput min="0" max={{maxlimit}} type="text"
                                 (keyup)="isvalid($event, 'minPrePaymentAmount')" (keypress)="isNumeric($event)"
@@ -324,36 +323,36 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
             </div>
 
-            <a class="learnmore-pointer" (click)="advancedClick()" *ngIf="!is_donation"> Additional Info</a>
-            <div class="row" style="margin-top: 5px; margin-left: 10px;" *ngIf="showAdvancedSettings && !is_donation">
-                <section>
-                    <div class="price-header">
-                        <h3>Service Price</h3>
-                        <div class="settings_info" style="line-height:5%!important;margin-left:5px;display:flex;">
-                            {{frm_service_price}}</div>
-                        <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
-                            <mat-form-field>
-                                <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
-                                    id="price" maxlength="10" (keypress)="isNumeric($event)"
-                                    (keyup)="isvalid($event, 'totalAmount')"
-                                    placeholder="{{service_price_cap}} ({{rupee_symbol}}) *"
-                                    formControlName="totalAmount" autocomplete="off">
-                            </mat-form-field>
-                            <app-field-error-display
-                                [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
+            <a class="learnmore-pointer no-padding" (click)="advancedClick()" *ngIf="!is_donation"
+                style="font-size: 1rem;">
+                Additional Info</a>
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
+                <section class="mgn-lt-5 mgn-bt-5">
+                    <label class="no-margin col-form-label">Service Price</label>
+                    <div class="settings_info">
+                        {{frm_service_price}}</div>
+                    <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                        <mat-form-field>
+                            <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                                id="price" maxlength="10" (keypress)="isNumeric($event)"
+                                (keyup)="isvalid($event, 'totalAmount')"
+                                placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
+                                autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')"
+                            [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
                         {'required' : 'Please enter price',
                         'pattern' : 'Enter a valid price',
                         'maxlength' : 'Only 10 digits are allowed'})">
-                            </app-field-error-display>
-                        </div>
-                        <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
-                            <label class="col-form-label">{{tax_applicable_cap}}</label>
-                            <mat-slide-toggle class="example-margin" formControlName="taxable"
-                                (change)="taxapplicableChange()">
-                            </mat-slide-toggle>
-                        </div>
+                        </app-field-error-display>
                     </div>
-                </section><br>
+                    <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
+                        <label class="col-form-label">{{tax_applicable_cap}}</label>
+                        <mat-slide-toggle class="example-margin" formControlName="taxable"
+                            (change)="taxapplicableChange()">
+                        </mat-slide-toggle>
+                    </div>
+                </section>
                 <div class="form-group inline" *ngIf="!is_donation">
                     <label class="col-form-label">{{end_service_notify_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="notification"
@@ -391,7 +390,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </span>
                 </div>
             </div>
-            <br />
         </ng-container>
         <ng-container *ngIf="mode=='afteradd'">
             <div class="message-one">

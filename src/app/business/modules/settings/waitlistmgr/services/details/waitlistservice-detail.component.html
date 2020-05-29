@@ -1,32 +1,34 @@
 <section>
-        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-    </section>
-    <section >
-        <div class="content loc-list">
-            <div class="col-md-12 no-padding-small">
-                <div class="row">
-                    <div class="card p0" *ngIf="api_loading"><app-common-innerloading-spinner ></app-common-innerloading-spinner></div>
-                    <div class="card p0">
-                        <div class="copy locd">
-                            <div class="lbl col-sm-12 col-md-8 col-lg-8">
-                                <app-jaldee-service  [source]="'waitlist'">
-                                </app-jaldee-service>
-                            </div>
-                            <div class="lbr col-sm-12 col-md-4 col-lg-4" >
-                                <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list" *ngIf="service_id">
-                                </app-jaldee-gallery>
-                                <!-- <div style="margin-top: 10px;">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0" *ngIf="api_loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <app-jaldee-service [source]="'waitlist'">
+                            </app-jaldee-service>
+                        </div>
+                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
+                            <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list"
+                                *ngIf="service_id">
+                            </app-jaldee-gallery>
+                            <!-- <div style="margin-top: 10px;">
                                         <ul class="info-lst">
                                                 <li class="red">{{can_change_hours}}. <span >{{click_here_cap}}</span>
                                                     {{view_time_wind_cap}}.</li>
                                             </ul>
                                     </div> -->
-                            </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    
+        <div class="clearfix"></div>
+    </div>
+</section>
