@@ -45,6 +45,9 @@ export class CallingModesComponent implements OnInit {
         }
     }
     selectHeadsup() {
+        if (this.callingModes !== 'WhatsApp') {
+            this.callingModes = 'Zoom';
+        }
         this.msg_to_user = 'Provider will start ' + this.callingModes + ' call in 30 minutes from';
     }
     selectAlrdyWaiting() {
@@ -64,9 +67,9 @@ export class CallingModesComponent implements OnInit {
               pushNotification: this.pushnotify
             },
             communicationMessage: this.msg_to_user,
-            consumerId: [this.data.consumerid]
+            uuid: [this.data.uuid]
           };
-          this.shared_services.consumerMassCommunicationWithId(post_data).
+          this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
               this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
               setTimeout(() => {
