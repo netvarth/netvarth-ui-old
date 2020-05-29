@@ -16,7 +16,7 @@
                   </mat-slide-toggle>
               </label>
               <p class="sts" [class.active]="consumerNotification">{{notification_statusstr}}</p>
-          </div>
+          </div> 
       </div>
         <mat-accordion>
           <mat-expansion-panel [expanded]="true">
@@ -64,7 +64,7 @@
                       </mat-slide-toggle>
                     </li>
                     <li>
-                      <span class="notification">Push notifications</span>
+                      <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin" [(ngModel)]="earlyNotificatonSettings.pushNotification"
                         (change)="showSubmit('EARLY')">
                       </mat-slide-toggle>
@@ -96,7 +96,7 @@
                       </mat-slide-toggle>
                     </li>
                     <li>
-                      <span class="notification">Push notifications</span>
+                      <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
                         [(ngModel)]="prefinalNotificationSettings.pushNotification" (change)="showSubmit('PREFINAL')">
                       </mat-slide-toggle>
@@ -129,7 +129,7 @@
                       </mat-slide-toggle>
                     </li>
                     <li>
-                      <span class="notification">Push notifications</span>
+                      <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin" [(ngModel)]="finalNotificationSettings.pushNotification"
                         (change)="showSubmit('FINAL')">
                       </mat-slide-toggle>
