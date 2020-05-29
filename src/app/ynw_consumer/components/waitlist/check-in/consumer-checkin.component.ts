@@ -199,6 +199,11 @@ export class ConsumerCheckinComponent implements OnInit {
     ];
     wtsapmode: any;
     tele_srv_stat: any;
+    couponvalid = true;
+    selected_coupons: any = [];
+    selected_coupon;
+    couponsList: any = [];
+    coupon_status = null;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -691,13 +696,12 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes !== '') {
-                if (this.sel_ser_det.serviceType === 'virtualService') {
+        if (this.callingModes !== '') {
+            if (this.sel_ser_det.serviceType === 'virtualService') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-                }
             }
+        }
         // }
-        console.log(this.consumerNote);
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -708,12 +712,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for))
+            'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+            'coupons': this.selected_coupons
         };
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // tslint:disable-next-line:forin
-            for (let i in this.virtualServiceArray) {
-                console.log(i)
+            for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else {
@@ -721,7 +725,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
             // post_Data['virtualService'] = this.virtualServiceArray;
-          //  post_Data['virtualService'] = {};
+            //  post_Data['virtualService'] = {};
         }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -1454,5 +1458,71 @@ export class ConsumerCheckinComponent implements OnInit {
     // }
     editCallingmodes() {
         this.showInputSection = false;
+    }
+    clearCouponErrors() {
+        this.couponvalid = true;
+        this.api_cp_error = null;
+    }
+    checkCouponExists(couponCode) {
+        let found = false;
+        for (let index = 0; index < this.selected_coupons.length; index++) {
+            if (couponCode === this.selected_coupons[index]) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+    applyCoupons(jCoupon) {
+        this.api_cp_error = null;
+        this.couponvalid = true;
+        const couponInfo = {
+            'couponCode': '',
+            'instructions': ''
+        };
+        if (jCoupon) {
+            const jaldeeCoupn = jCoupon.trim();
+            if (this.checkCouponExists(jaldeeCoupn)) {
+                this.api_cp_error = 'Coupon already applied';
+                this.couponvalid = false;
+                return false;
+            }
+            this.couponvalid = false;
+            let found = false;
+            for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+                if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+                    this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+                    couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+                    couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+                    this.couponsList.push(couponInfo);
+                    found = true;
+                    this.selected_coupon = '';
+                    break;
+                }
+            }
+            if (found) {
+                this.couponvalid = true;
+            } else {
+                this.api_cp_error = 'Coupon invalid';
+            }
+        } else {
+            this.api_cp_error = 'Enter a Coupon';
+        }
+    }
+    toggleterms(i) {
+        if (this.couponsList[i].showme) {
+            this.couponsList[i].showme = false;
+        } else {
+            this.couponsList[i].showme = true;
+        }
+    }
+    removeJCoupon(i) {
+        this.selected_coupons.splice(i, 1);
+        this.couponsList.splice(i, 1);
+    }
+    removeCoupons() {
+        this.selected_coupons = [];
+        this.couponsList = [];
+        this.coupon_status = null;
     }
 }

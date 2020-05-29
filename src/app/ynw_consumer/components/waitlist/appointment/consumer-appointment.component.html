@@ -121,12 +121,14 @@
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="input-section mgn-bt-15 desfont"
+                                                    *ngIf="mode.callingMode === 'WhatsApp'">
                                                     <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'Skype'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
-                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
+                                                    <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
+                                                        src="https://img.icons8.com/color/18/000000/zoom.png" />
                                                     <input *ngIf="!showInputSection"
                                                         class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
@@ -135,7 +137,8 @@
                                                         <button *ngIf="!showInputSection" class="btn bt3 btn-default"
                                                             (click)="addCallingmode(i)" type="button">Add</button>
                                                     </div>
-                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
+                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                        *ngIf="showInputSection">
                                                         {{callingModes}}
                                                         <span class="editbt mgn-lt-20"
                                                             (click)="editCallingmodes(i)"></span>
@@ -453,7 +456,7 @@
                                                 </app-field-error-display>
                                             </div>
                                             <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
-                                                <span class="input-group-btn">
+                                            <span class="input-group-btn">
                                                 <button class="btn bt3 btnCancel" type="button"
                                                     (click)="handleGoBack(1)">
                                                     Cancel
@@ -485,14 +488,16 @@
                                                                 type="button">Add</button>
                                                         </span> -->
                                                     </div>
+                                                    <div style="color: red;" *ngIf="api_cp_error !== null">
+                                                        {{api_cp_error}}</div>
                                                     <div class="col-md-12 no-padding mgn-up-10">
                                                         <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
                                                             (click)="handleGoBack(1)">
                                                             Cancel
                                                         </button>
                                                         <button mat-button class="cs-btn bt1 backtocheckin"
-                                                                (click)="applyCoupons(selected_coupon)"
-                                                                type="button">Add</button>
+                                                            (click)="applyCoupons(selected_coupon)"
+                                                            type="button">Add</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-lg-12 col-12">
