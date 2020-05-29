@@ -504,7 +504,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.appointments[i].cancelled_date = retval.cancelled_date;
             this.appointments[i].cancelled_time = retval.cancelled_time;
             if (appointment.apptStatus === 'prepaymentPending') {
-              this.appointments[i].counter = this.prepaymentCounter(appointment);
+              this.appointments[i].counter = this.prepaymentCounterAppt(appointment);
             }
             i++;
           }
@@ -1011,7 +1011,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.mins = 15 - this.mins;
     return this.mins;
   }
-
+  prepaymentCounterAppt(list) {
+    // this.setSystemDate();
+    let server_time;
+    let checkinTime;
+    let currentTime;
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          server_time = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+    checkinTime = moment(list.apptTakenTime, ['h:mm A']).format('HH:mm:ss');
+    currentTime = moment(server_time).format('HH:mm:ss');
+    this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
+    this.mins = 15 - this.mins;
+    return this.mins;
+  }
   recheckwaitlistCounters() {
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
