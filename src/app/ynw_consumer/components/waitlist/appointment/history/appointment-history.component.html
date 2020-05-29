@@ -33,12 +33,12 @@
                                         <td data-title="Service" class="td6">
                                             {{his_wait.service.name || '' | capitalizeFirst}}</td>
                                         <td data-title="Location" class="td2">
-                                            {{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
-                                        <td data-title="Date/Time" class="td3">{{his_wait.date | date: dateFormat }}
+                                            {{his_wait.location.place || '' | capitalizeFirst}}</td>
+                                        <td data-title="Date/Time" class="td3">{{his_wait.appmtDate | date: dateFormat }}
                                         </td>
                                         <td data-title="Status" class="td4">
                                             <span
-                                                class="{{his_wait.waitlistStatus}}">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
+                                                class="{{his_wait.apptStatus}}">{{getStatusLabel(his_wait.apptStatus)}}</span>
                                         </td>
                                         <td data-title="" class="td5">
                                             <ul class="controls">
@@ -51,7 +51,7 @@
                                                 <li *ngIf="his_wait.billStatus"><span class="view-bill"
                                                         (click)="getWaitlistBill(his_wait)">Bill</span>
                                                 </li>
-                                                <li *ngIf="his_wait.waitlistStatus == 'done'"><span class="rate-service"
+                                                <li *ngIf="his_wait.apptStatus == 'Completed'"><span class="rate-service"
                                                         [class.rated]="isRated(his_wait)"
                                                         (click)="rateService(his_wait)">Rate Your Visit</span>
                                                     <!-- <span class="rate-no-service" *ngIf="his_wait.waitlistStatus !== 'done'"></span> -->

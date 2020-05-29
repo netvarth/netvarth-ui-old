@@ -72,14 +72,14 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getHistoryCount();
-    this.getApoointmentHistory();
+    this.getAppointmentHistoryCount();
+    this.getAppointmentHistory();
   }
 
   
 
-  getHistoryCount() {
-    this.consumer_services.getHistoryWaitlistCount()
+  getAppointmentHistoryCount() {
+    this.consumer_services.getAppointmentHistoryCount()
       .subscribe(
         data => {
           this.pagination.totalCnt = data;
@@ -101,9 +101,10 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
   addWaitlistMessage(waitlist) {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
-    pass_ob['uuid'] = waitlist.ynwUuid;
+    pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['appt'] = 'appt';
     this.addNote(pass_ob);
 
   }
@@ -128,7 +129,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     const params = {
       account: waitlist.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.ynwUuid)
+    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
       .subscribe(
         data => {
           const bill_data = data;
@@ -151,7 +152,8 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
         autoFocus: true,
         data: {
           checkin: checkin,
-          bill_data: bill_data
+          bill_data: bill_data,
+          isFrom: 'appointment'
         }
       });
 
@@ -178,18 +180,18 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     });
 
     this.paydialogRef.afterClosed().subscribe(() => {
-      this.getHistoryCount();
+      this.getAppointmentHistoryCount();
     });
   }
 
   getStatusLabel(status) {
     let label_status = status;
     switch (status) {
-      case 'cancelled': label_status = 'Cancelled'; break;
-      case 'arrived': label_status = 'Arrived'; break;
-      case 'done': label_status = 'Done'; break;
-      case 'checkedIn': label_status = 'checked in'; break;
-      case 'started': label_status = 'Started'; break;
+      case 'Cancelled': label_status = 'Cancelled'; break;
+      case 'Arrived': label_status = 'Arrived'; break;
+      case 'Completed': label_status = 'Completed'; break;
+      case 'Confirmed': label_status = 'Confirmed'; break;
+      case 'Started': label_status = 'Started'; break;
     }
     return label_status;
   }
@@ -201,7 +203,10 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
-      data: waitlist
+      data: {
+        'detail':waitlist,
+        'isFrom':'appointment'
+      }
     });
 
     this.ratedialogRef.afterClosed().subscribe(result => {
@@ -217,12 +222,8 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       return false;
     }
   }
-  getApoointmentHistory () {
-    const userDetails = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    // const accountId = {
-    //       'account-eq': userDetails.id
-    // };
-    this.consumer_services.getApoointmentHistory(userDetails.id)
+  getAppointmentHistory () {
+    this.consumer_services.getAppointmentHistory()
     .subscribe(
       data => {
         this.history = data;

@@ -145,8 +145,11 @@ export class ConsumerServices {
     const path = 'consumer/appointment/today';
     return this.servicemeta.httpGet(path);
   }
-  getApoointmentHistory(accountId) {
-    const path = 'consumer/appointment/history?account-eq=' + accountId;
+  getAppointmentHistory() {
+    const path = 'consumer/appointment/history' ;
     return this.servicemeta.httpGet(path);
+  }
+  getAppointmentHistoryCount() {
+    return this.servicemeta.httpGet('consumer/appointment/history/count');
   }
 }

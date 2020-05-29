@@ -294,12 +294,12 @@
                                                 <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
                                             </div>
                                             <div class="lt0" *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
-                                                <!-- <div class="lt0">
+                                                <div class="lt0">
                                                     {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
                                                 | date: dateFormatSp }},
                                                         <span style="display: flex">
                                                             {{appointment.estimated_time}}</span></span>
-                                                </div> -->
+                                                </div>
                                                 <div class="red">
                                                     {{appointment.cancelled_caption}}
                                                     <span class="time">
@@ -323,6 +323,9 @@
                                 </div> -->
                                         <div class="lt0" *ngIf="appointment.partySize && appointment.partySize > 1">
                                             {{party_size}} <span class="persons">{{appointment.partySize}}</span>
+                                        </div>
+                                        <div class="lt0" *ngIf="appointment.batchName" style="font-size: 0.9rem;">
+                                            Batch <span class="token">{{appointment.batchName}} </span>
                                         </div>
                                         <div class="lt0 payment"
                                             *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
