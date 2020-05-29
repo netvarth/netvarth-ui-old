@@ -98,26 +98,30 @@
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
-                                                <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="input-section mgn-bt-15 desfont"
+                                                    *ngIf="mode.callingMode === 'WhatsApp'">
                                                     <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'SKYPE'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
-                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
-                                                    <input *ngIf="!showInputSection" class="form-control emailPrepay call-mode-ip" placeholder=""
+                                                    <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
+                                                        src="https://img.icons8.com/color/18/000000/zoom.png" />
+                                                    <input *ngIf="!showInputSection"
+                                                        class="form-control emailPrepay call-mode-ip" placeholder=""
                                                         [(ngModel)]="callingModes" autocomplete="off">
                                                     <div class="input-group-append mgn-up-6"
                                                         style="padding-left: 10px;">
-                                                        <button *ngIf="!showInputSection"
-                                                            class="btn bt3 btn-default" (click)="addCallingmode(i)"
-                                                            type="button">Add</button>
+                                                        <button *ngIf="!showInputSection" class="btn bt3 btn-default"
+                                                            (click)="addCallingmode(i)" type="button">Add</button>
                                                         <!-- <span *ngIf="mode.callingMode === 'WHATSAPP' && !showInputSection"
                                                             class="editbt mgn-lt-20" (click)="editCallingmodes(i)"
                                                             style="padding-bottom: 10px;"></span> -->
                                                     </div>
-                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
+                                                    <div class="mgn-bt-10 cal-mod-edt custId-flex-form"
+                                                        *ngIf="showInputSection">
                                                         {{callingModes}}
-                                                        <span class="editbt mgn-lt-20" (click)="editCallingmodes(i)"></span>
+                                                        <span class="editbt mgn-lt-20"
+                                                            (click)="editCallingmodes(i)"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -413,7 +417,8 @@
                                                     *ngIf="email1error != null" errorMsg={{email1error}}>
                                                 </app-field-error-display>
                                             </div>
-                                            <span class="input-group-btn" *ngIf="confrmshow">
+                                            <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
+                                            <span class="input-group-btn">
                                                 <button class="btn bt3 btnCancel" type="button"
                                                     (click)="handleGoBack(1)">
                                                     Cancel
@@ -451,8 +456,8 @@
                                                             Cancel
                                                         </button>
                                                         <button mat-button class="cs-btn bt1 backtocheckin"
-                                                                (click)="applyCoupons(selected_coupon)"
-                                                                type="button">Add</button>
+                                                            (click)="applyCoupons(selected_coupon)"
+                                                            type="button">Add</button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-lg-12 col-12">
