@@ -15,15 +15,15 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 })
 export class ApptDetailComponent implements OnInit {
     apptlist: any;
-    breadcrumbs = [
-        {
-            title: 'Dashboard',
-            url: '/consumer'
-        },
-        {
-            title: 'Appointment Details'
-        }
-    ];
+    // breadcrumbs = [
+    //     {
+    //         title: 'Dashboard',
+    //         url: '/consumer'
+    //     },
+    //     {
+    //         title: 'Appointment Details'
+    //     }
+    // ];
     api_loading = true;
     waitlistdata: any;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
@@ -89,10 +89,10 @@ export class ApptDetailComponent implements OnInit {
         this.BusinessName = apptlistjson.providerAccount.businessName;
         this.providerId = apptlistjson.providerAccount.id;
         this.ynwUuid = apptlistjson.uid;
-        this.date = apptlistjson.date;
+        this.date = apptlistjson.appmtDate;
         this.locn = apptlistjson.location.place;
-        this.firstname = apptlistjson.consumer.firstName;
-        this.lastname = apptlistjson.consumer.lastName;
+        this.firstname = apptlistjson.appmtFor[0].firstName;
+        this.lastname = apptlistjson.appmtFor[0].lastName;
         this.service = apptlistjson.service.name;
         this.deptName = apptlistjson.service.deptName;
         this.queueStart = apptlistjson.schedule.apptSchedule.timeSlots[0].sTime;
@@ -100,7 +100,7 @@ export class ApptDetailComponent implements OnInit {
         this.paymntstats = apptlistjson.paymentStatus;
         this.batchname = apptlistjson.batchName;
         this.status = apptlistjson.apptStatus;
-       // this.statusUpdatedTime = apptlistjson.statusUpdatedTime;
+        this.statusUpdatedTime = apptlistjson.statusUpdatedTime;
         this.consumerNote = apptlistjson.consumerNote;
         this.callingModes = apptlistjson.virtualService;
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
