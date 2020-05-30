@@ -54,3 +54,4 @@
      <a style="cursor: pointer;color: blue;" target="_blank" [href]="msg_to_user">{{msg_to_user}}</a>   
     </div>
 </mat-dialog-content>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
