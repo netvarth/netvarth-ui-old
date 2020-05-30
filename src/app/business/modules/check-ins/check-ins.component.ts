@@ -2514,7 +2514,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         modes: modes.virtualService,
         uuid: modes.ynwUuid,
         consumerid: modes.consumer.id,
-        qdata: modes
+        qdata: modes,
+        type: 'checkin'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

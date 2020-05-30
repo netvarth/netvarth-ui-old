@@ -61,7 +61,11 @@ export class CallingModesComponent implements OnInit {
     }
     selectStarted() {
         this.msg_to_user = 'Service Started';
-        this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+        if (this.data.type === 'checkin') {
+            this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+        } else {
+            this.changeWaitlistStatus(this.data.qdata, 'Started');
+        }
     }
     sendMessage() {
         const post_data = {
@@ -114,13 +118,25 @@ export class CallingModesComponent implements OnInit {
     }
     changeWaitlistStatus(qdata, action) {
         qdata.disableStartbtn = true;
-        this.provider_shared_functions.changeWaitlistStatus(this, qdata, action);
+        if (this.data.type === 'checkin') {
+            this.provider_shared_functions.changeWaitlistStatus(this, qdata, action);
+        } else {
+            this.provider_shared_functions.changeWaitlistStatus(this, qdata, action, 'appt');
+        }
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
-        this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+        if (this.data.type === 'checkin') {
+            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
           .then(
             result => {
             }
           );
+        } else {
+            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+      .then(
+        result => {
+        }
+      );
+        }
       }
 }

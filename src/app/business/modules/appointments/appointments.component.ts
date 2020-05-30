@@ -2323,7 +2323,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         modes: modes.virtualService,
         uuid: modes.uid,
-        consumerid: modes.consumer.id
+        consumerid: modes.consumer.id,
+        qdata: modes,
+        type: 'appt'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
