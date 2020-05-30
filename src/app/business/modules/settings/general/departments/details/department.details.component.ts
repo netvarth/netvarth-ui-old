@@ -228,7 +228,7 @@ export class DepartmentDetailComponent implements OnInit {
      ///   this.srvcArry = this.defaultdepartmentservice;
         this.serviceArray = this.defaultdepartmentservice;
         for (const serv of this.serviceArray) {
-            if (serv.serviceType !== 'donationService') {
+            if (serv.serviceType !== 'donationService' && serv.status !== 'INACTIVE') {
                 this.srvcArry.push(serv);
             }
         }
