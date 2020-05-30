@@ -79,7 +79,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-  loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false ,appointment: false};
+  loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
   tooltipcls = projectConstants.TOOLTIP_CLS;
   pagination: any = {
     startpageval: 1,
@@ -171,9 +171,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.breadcrumbs = [
       {
-          title: 'My Jaldee'
+        title: 'My Jaldee'
       }
-  ];
+    ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -227,7 +227,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.gets3curl();
     this.getWaitlist();
     this.getApptlist();
-   // this.getAppointmentToday();
+    // this.getAppointmentToday();
     this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
@@ -458,7 +458,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return appx_ret;
   }
 
-  getApptlist(){
+  getApptlist() {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
     const params = {
@@ -498,7 +498,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.appointments[i].estimated_caption = retval.caption;
               this.appointments[i].estimated_date = retval.date;
               this.appointments[i].estimated_date_type = retval.date_type;
-              this.appointments[i].estimated_autocounter = retval.autoreq;;
+              this.appointments[i].estimated_autocounter = retval.autoreq;
             }
             this.appointments[i].cancelled_caption = retval.cancelled_caption;
             this.appointments[i].cancelled_date = retval.cancelled_date;
@@ -518,34 +518,33 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getApptAppxTime(appointment) {
     console.log(appointment);
-    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '',  'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
-        appx_ret.caption = 'Appointment for'; // 'Check-In Time';
-          appx_ret.time = appointment.appmtTime;
-        const waitlist_date = new Date(appointment.appmtDate);
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const today = new Date(todaydt);
-        today.setHours(0, 0, 0, 0);
-        waitlist_date.setHours(0, 0, 0, 0);
-        if (today.valueOf() < waitlist_date.valueOf()) {
-          appx_ret.date = appointment.appmtDate;
-          appx_ret.date_type = 'date';
-          appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
-        } else {
-          appx_ret.date = 'Today';
-          appx_ret.date_type = 'string';
-          appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
-        }
-     
+      appx_ret.caption = 'Appointment for'; // 'Check-In Time';
+      appx_ret.time = appointment.appmtTime;
+      const waitlist_date = new Date(appointment.appmtDate);
+      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const today = new Date(todaydt);
+      today.setHours(0, 0, 0, 0);
+      waitlist_date.setHours(0, 0, 0, 0);
+      if (today.valueOf() < waitlist_date.valueOf()) {
+        appx_ret.date = appointment.appmtDate;
+        appx_ret.date_type = 'date';
+        appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
+      } else {
+        appx_ret.date = 'Today';
+        appx_ret.date_type = 'string';
+        appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
+      }
     } else {
-      console.log("in else");
+      console.log('in else');
       let time = [];
       let time1 = [];
       let t2;
       appx_ret.caption = 'Appointment for';
       appx_ret.date = appointment.appmtDate;
       appx_ret.time = appointment.appmtTime;
-      if(appointment.statusUpdatedTime){
+      if (appointment.statusUpdatedTime) {
         appx_ret.cancelled_date = moment(appointment.statusUpdatedTime, 'YYYY-MM-DD').format();
         time = appointment.statusUpdatedTime.split('-');
         time1 = time[2].trim();
@@ -639,15 +638,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       this.consumer_services.getApptTime(post_provids_locid)
         .subscribe(data => {
-          this.appttime_arr = data; 
+          this.appttime_arr = data;
           let locindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
-          this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+            this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
           }
         });
-      }
     }
+  }
   getWaitingTime(provids_locid, index) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
@@ -749,19 +748,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  doCancelWaitlist(waitlist,type) {
+  doCancelWaitlist(waitlist, type) {
     console.log(waitlist);
     // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
     //   return false;
     // }
     console.log(type);
-    this.shared_functions.doCancelWaitlist(waitlist,type, this)
+    this.shared_functions.doCancelWaitlist(waitlist, type, this)
       .then(
         data => {
-          if (data === 'reloadlist' && type == 'checkin') {
+          if (data === 'reloadlist' && type === 'checkin') {
             this.getWaitlist();
-          }
-          else if(data === 'reloadlist' && type == 'appointment'){
+          } else if (data === 'reloadlist' && type === 'appointment') {
             this.getApptlist();
           }
         },
@@ -830,15 +828,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return fav;
   }
 
-  addWaitlistMessage(waitlist,type?) {
+  addWaitlistMessage(waitlist, type?) {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
-    if(type == 'appt'){
+    if (type === 'appt') {
       pass_ob['appt'] = type;
       pass_ob['uuid'] = waitlist.uid;
-    }else{
+    } else {
       pass_ob['uuid'] = waitlist.ynwUuid;
     }
     this.addNote(pass_ob);
@@ -970,12 +968,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  gotoDonations () {
+  gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
   getDonations() {
     const filter = {};
-    filter['date-eq'] =  moment(this.server_date).format('YYYY-MM-DD');
+    filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
     this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
@@ -1043,7 +1041,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewBill(checkin,type) {
+  viewBill(checkin, type) {
     if (!this.billdialogRef) {
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '40%',
@@ -1061,23 +1059,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-  rateService(waitlist,type) {
+  getMapUrl(latitude, longitude) {
+    const mapurl = projectConstants.MAP_BASE_URL + latitude + ',' + longitude + '/@' + latitude + ',' + longitude + ',15z';
+    return mapurl;
+  }
+  rateService(waitlist, type) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
       data: {
-        'detail':waitlist,
-        'isFrom':type
+        'detail': waitlist,
+        'isFrom': type
       }
     });
     this.ratedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist' && type =='checkin') {
+      if (result === 'reloadlist' && type === 'checkin') {
         this.getWaitlist();
-      }
-     else if (result === 'reloadlist' && type =='appointment') {
+      } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
       }
     });
@@ -1406,16 +1406,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
-  gotoApptmentHistory(){
+  gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
-  getAppointmentToday(){
+  getAppointmentToday() {
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
           this.appointments = data;
-          console.log("Appointments",this.appointments)
-          },
+          console.log('Appointments', this.appointments);
+        },
         error => {
         }
       );

@@ -215,18 +215,19 @@
                     History</a></div>
         </div>
 
-        <div class="card favourites c-checkins">
+        <div class="card c-checkins">
             <mat-accordion>
-                <mat-expansion-panel>
+                <mat-expansion-panel class="no-padding">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Appointments &nbsp;<span *ngIf="appointments && appointments.length>0">({{appointments.length}})</span>
+                            Appointments &nbsp;<span
+                                *ngIf="appointments && appointments.length>0">({{appointments.length}})</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div *ngIf="appointments.length == 0" class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p>No current Appointments available</p>
                     </div>
-                    <div class="outer banner" *ngIf="appointments.length != 0">
+                    <div class="outer banner no-padding" *ngIf="appointments.length != 0">
                         <owl-carousel id="apptCarousel" [options]="carouselAppointments"
                             [carouselClasses]="['owl-theme']" [items]="appointments">
                             <div class="item" *ngFor="let appointment of appointments; let i=index">
@@ -239,8 +240,9 @@
                                         <div class="location consumr" *ngIf="appointment.location">
                                             {{appointment.location.place || '' | capitalizeFirst}}
                                             <span class="consumr-loc-icon"><a *ngIf="appointment.location.googleMapUrl"
-                                                    rel="noopener" [href]="appointment.location.googleMapUrl" target="_blank"
-                                                    class="icon-location" matTooltip="Click to navigate">
+                                                    rel="noopener" [href]="appointment.location.googleMapUrl"
+                                                    target="_blank" class="icon-location"
+                                                    matTooltip="Click to navigate">
                                                 </a></span>
                                         </div>
                                         <div class="status-outer">
@@ -290,10 +292,11 @@
                                                     </span>
                                                     <!-- <span
                                                         *ngIf="appointment.calculationMode != 'NoCalc'">{{appointment.estimated_time}}</span> -->
-                                                    </span>
+                                                </span>
                                                 <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
                                             </div>
-                                            <div class="lt0" *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
+                                            <div class="lt0"
+                                                *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
                                                 <div class="lt0">
                                                     {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
                                                 | date: dateFormatSp }},
@@ -452,53 +455,65 @@
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p>No Donations Today</p>
                     </div>
-                    <div class="outer banner donation"
+                    <div class="outer banner donation no-padding"
                         *ngIf="loadcomplete.donations && donations && donations.length != 0">
                         <owl-carousel id="donCarousel" [options]="carouselDonations" [carouselClasses]="['owl-theme']"
                             [items]="dontations">
                             <div class="item" *ngFor="let donation of donations; let i=index">
-                                <!-- <div class="header">
-                                <div class="lt">
-                                    <div class="title" (click)="providerDetail(waitlist.providerAccount)">
-                                        <h3>{{donation.providerAccount.businessName || '' | capitalizeFirst}}</h3>
-                                    </div> 
-                                    <div class="location consumr" *ngIf="waitlist.queue.location">
-                                        {{waitlist.queue.location.place || '' | capitalizeFirst}}
-                                        <span class="consumr-loc-icon"><a *ngIf="waitlist.queue.location.googleMapUrl"
-                                                rel="noopener" [href]="waitlist.queue.location.googleMapUrl" target="_blank"
-                                                class="icon-location" matTooltip="Click to navigate">
-                                            </a></span>
-                                    </div> 
-                                    <div class="status-outer">
+                                <div class="header">
+                                    <div class="lt">
+                                        <div class="title" *ngIf="donation.providerAccount"
+                                            (click)="providerDetail(donation.providerAccount)">
+                                            <h3>{{donation.providerAccount.businessName || '' | capitalizeFirst}}</h3>
+                                        </div>
+                                        <div class="location consumr" *ngIf="donation.location.place">
+                                            {{donation.location.place || '' | capitalizeFirst}}
+                                            <span class="consumr-loc-icon"><a
+                                                    *ngIf="donation.location.latitude && donation.location.longitude"
+                                                    rel="noopener"
+                                                    [href]="getMapUrl(donation.location.latitude, donation.location.longitude)"
+                                                    target="_blank" class="icon-location"
+                                                    matTooltip="Click to navigate">
+                                                </a></span>
+                                        </div>
+                                        <!-- <div class="status-outer">
                                         <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
                                             {{status_started_cap}}
                                         </div>
                                         <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
                                             {{status_done_cap}}
                                         </div>
+                                    </div> -->
+                                    </div>
+                                    <div class="rt">
+                                        <div class="favourite"
+                                            *ngIf="donation.providerAccount && checkIfFav(donation.providerAccount.id)">
+                                            <span class="icon-favourite-filled"
+                                                (click)="doDeleteFavProvider(donation.providerAccount)"
+                                                matTooltip="{{remove_fav_cap}}"></span>
+                                        </div>
+                                        <div class="favourite"
+                                            *ngIf="donation.providerAccount && !checkIfFav(donation.providerAccount.id)">
+                                            <span class="icon-favourite" matTooltip="Add to Favourite"
+                                                (click)="addFavProvider(donation.providerAccount.id)"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="rt">
-                                    <div class="favourite" *ngIf="checkIfFav(waitlist.providerAccount.id)">
-                                        <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount)"
-                                            matTooltip="{{remove_fav_cap}}"></span>
-                                    </div>
-                                    <div class="favourite" *ngIf="!checkIfFav(waitlist.providerAccount.id)">
-                                        <span class="icon-favourite" matTooltip="Add to Favourite"
-                                            (click)="addFavProvider(waitlist.providerAccount.id)"></span>
-                                    </div>
-                                </div>
-                            </div> -->
                                 <div class="details">
                                     <div class="lt">
                                         <div class="lt0">
-                                            <span class="">{{donation.service.name | capitalizeFirst}}</span>
+                                            <span class="">Donation for <span class="service">{{donation.service.name | capitalizeFirst}}</span></span>
                                             <!-- for <span
                                             class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                             {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                         </span> -->
+                                        </div>
+                                        <div class="lt0" *ngIf="donation.donor.firstName">
+                                            <span class="">Donor : <span class="bold">{{donation.donor.firstName}}</span></span>
+                                        </div>
+                                        <div class="lt0">
                                             <div class="">
-                                                <span class="">Amount: {{rupee_symbol}} {{donation.donationAmount}}
+                                                <span class="">Amount: <span class="bold">{{rupee_symbol}} {{donation.donationAmount}}</span>
                                                 </span>
                                             </div>
                                         </div>
