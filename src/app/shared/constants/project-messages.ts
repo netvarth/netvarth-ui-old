@@ -1359,7 +1359,7 @@ export const Messages = {
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
   'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
-  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG':'If you are experiencing no showups , Jaldee recommends you to setup the prepayment at your own responsibility.' ,
+  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG': 'If you are experiencing no showups , Jaldee recommends you to setup the prepayment at your own responsibility.' ,
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
   'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here. ',

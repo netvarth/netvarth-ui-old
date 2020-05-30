@@ -4,7 +4,7 @@ import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
-import { Observable ,  Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
@@ -443,6 +443,7 @@ export class SharedFunctions {
 
   get_Popularsarchlabels(labeltype, searchlabels_arr, params?) {
     let retdet = [];
+    console.log(labeltype);
     switch (labeltype) {
       case 'global':
         retdet = searchlabels_arr.popularSearchLabels.all.labels;
@@ -1132,7 +1133,7 @@ export class SharedFunctions {
     return retstr;
   }
 
-  doCancelWaitlist(waitlist,type, cthis?) {
+  doCancelWaitlist(waitlist, type, cthis?) {
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -1148,12 +1149,12 @@ export class SharedFunctions {
       cthis.canceldialogRef.afterClosed().subscribe(result => {
         if (result) {
           let id;
-          if(type == 'checkin'){
-            id=waitlist.ynwUuid;
-          }else if(type == 'appointment'){
+          if (type === 'checkin') {
+            id = waitlist.ynwUuid;
+          } else if (type === 'appointment') {
             id = waitlist.uid;
           }
-          this.cancelWaitlist(id, waitlist.providerAccount.id,type)
+          this.cancelWaitlist(id, waitlist.providerAccount.id, type)
             .then(
               data => {
                 resolve(data);
@@ -1168,12 +1169,12 @@ export class SharedFunctions {
       });
     });
   }
-  cancelWaitlist(id, provider_id,type) {
+  cancelWaitlist(id, provider_id, type) {
     return new Promise((resolve, reject) => {
       const params = {
         'account': provider_id
       };
-      this.shared_service.deleteWaitlist(id, params,type)
+      this.shared_service.deleteWaitlist(id, params, type)
         .subscribe(
           data => {
             resolve('reloadlist');
@@ -1427,6 +1428,25 @@ export class SharedFunctions {
         message += ' to reach ' + businessName;
       }
       return message;
+    }
+  }
+  stringtoDate(dt, mod) {
+    let dtsarr;
+    if (dt) {
+      dtsarr = dt.split(' ');
+      const dtarr = dtsarr[0].split('-');
+      let retval = '';
+      if (mod === 'all') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+      } else if (mod === 'date') {
+        retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
+      } else if (mod === 'time') {
+        retval = dtsarr[1] + ' ' + dtsarr[2];
+      }
+      return retval;
+      // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
+    } else {
+      return;
     }
   }
 }

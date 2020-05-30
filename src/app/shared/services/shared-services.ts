@@ -674,7 +674,7 @@ export class SharedServices {
       const url = 'consumer/appointment/service/' + locid;
       return this.servicemeta.httpGet(url);
     }
-  } 
+  }
   getAppointmentByConsumerUUID(uuid, accountid) {
     const url = 'consumer/appointment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -716,13 +716,13 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid?) {
-    const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid +'/?account=' + accountid;
+    const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
   consumerWtlstTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/waitlist/' + uuid + '/createmeetingrequest', postdata);
-   }
-   consumerApptTeleserviceWithId(postdata, uuid) {
+  }
+  consumerApptTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/appointment/' + uuid + '/createmeetingrequest', postdata);
-   }
+  }
 }

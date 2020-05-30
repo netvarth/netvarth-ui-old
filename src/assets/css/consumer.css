@@ -5385,9 +5385,9 @@
     -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    /* width: 90%;
     margin-right: 5%;
-    margin-left: 5%;
+    margin-left: 5%; */
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .header {

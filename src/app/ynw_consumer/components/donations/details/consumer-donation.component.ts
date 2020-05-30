@@ -137,7 +137,7 @@ export class ConsumerDonationComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-
+    rupee_symbol = '₹';
     userData: any = [];
     userEmail;
     userPhone;
@@ -186,6 +186,7 @@ export class ConsumerDonationComponent implements OnInit {
     showEditView = false;
     slots;
     freeSlots: any = [];
+    donorName: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -221,6 +222,7 @@ export class ConsumerDonationComponent implements OnInit {
         if (activeUser) {
             this.customer_data = activeUser;
         }
+        this.donorName = this.customer_data.firstName + ' ' + this.customer_data.lastName;
         this.main_heading = this.checkinLabel; // 'Check-in';
         this.maxsize = 1;
         this.step = 1;
@@ -435,7 +437,7 @@ export class ConsumerDonationComponent implements OnInit {
             'date': this.todaydate,
             'donationAmount': this.donationAmount,
             'donor': {
-                'id': this.customer_data.id
+                'firstName': this.donorName
             }
         };
         console.log(this.api_error);
@@ -726,6 +728,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.shared_services.getConsumerDonationServices(this.account_id)
             .subscribe(data => {
                 this.servicesjson = data;
+                console.log(this.servicesjson);
                 this.serviceslist = data;
                 this.sel_ser_det = [];
                 if (this.servicesjson.length > 0) {

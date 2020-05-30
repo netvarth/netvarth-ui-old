@@ -44,7 +44,7 @@ import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { projectConstants } from './shared/constants/project-constants';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
@@ -167,7 +167,7 @@ import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module'
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ],

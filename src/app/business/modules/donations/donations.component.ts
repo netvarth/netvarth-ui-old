@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
     'selector': 'app-donations',
@@ -42,6 +43,8 @@ export class DonationsComponent implements OnInit {
     filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
     filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     tooltipcls = projectConstants.TOOLTIP_CLS;
+    date_cap = Messages.DATE_CAP;
+    amount_cap = Messages.AMOUNT_CAP;
     apiloading = false;
     filters: any = {
         'first_name': false,
@@ -97,6 +100,8 @@ export class DonationsComponent implements OnInit {
     }
     getDonationsList(from_oninit = false) {
         let filter = this.setFilterForApi();
+        filter ['donationStatus-eq'] = 'SUCCESS';
+        // filter ['sort_date'] = 'desc';
         this.getDonationsCount(filter)
             .then(
                 result => {
@@ -138,6 +143,9 @@ export class DonationsComponent implements OnInit {
                     }
                 );
         });
+    }
+    stringtoDate(dt, mod) {
+        return this.shared_functions.stringtoDate(dt, mod);
     }
     toggleFilter() {
         this.open_filter = !this.open_filter;

@@ -18,6 +18,12 @@ export class CheckYourStatusComponent implements OnInit {
   statusInfo: any;
   foundDetails = false;
   estimatesmallCaption = Messages.ESTIMATED_TIME_SMALL_CAPTION;
+  status_started_cap = Messages.STATUS_STARTED;
+  status_done_cap = Messages.STATUS_DONE;
+  first_person = Messages.FIRST_PEOPLE_AHEAD;
+  one_person_ahead = Messages.ONE_PERSON_AHEAD;
+  people_ahead = Messages.PEOPLE_AHEAD_CAP;
+  token_no = Messages.TOKEN_NO;
   server_date;
   placeText;
   breadcrumbs = [

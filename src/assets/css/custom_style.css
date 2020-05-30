@@ -8972,3 +8972,10 @@ padding-right: 0 !important; padding-top: 0 !important;}
   height: 180px !important;
 }
 .content.w-manager .card .b-link.inactive h2{color: #ddd !important;}
+
+.p-donations .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th {
+  background: #d8e2f1 !important;
+}
+.form-level-settings .bold {
+  color: #000 !important;
+}

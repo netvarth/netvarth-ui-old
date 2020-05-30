@@ -322,10 +322,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
                 </mat-radio-group>
             </div>
-
-            <a class="learnmore-pointer no-padding" (click)="advancedClick()" *ngIf="!is_donation"
+            <div class="mgn-bt-20">
+            <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                 style="font-size: 1.1rem;">
                 Additional Info</a>
+            </div>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
                 <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>

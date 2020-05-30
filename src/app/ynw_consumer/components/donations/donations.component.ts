@@ -34,26 +34,13 @@ export class ConsumerDonationsComponent implements OnInit {
         this.getDonations();
     }
     stringtoDate(dt, mod) {
-        let dtsarr;
-        if (dt) {
-            dtsarr = dt.split(' ');
-            const dtarr = dtsarr[0].split('-');
-            let retval = '';
-            if (mod === 'all') {
-                retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
-            } else if (mod === 'date') {
-                retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
-            } else if (mod === 'time') {
-                retval = dtsarr[1] + ' ' + dtsarr[2];
-            }
-            return retval;
-            // return dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
-        } else {
-            return;
-        }
+        return this.shared_functions.stringtoDate(dt, mod);
     }
     getDonations() {
-        this.shared_services.getConsumerDonations().subscribe(
+        const filter = {
+            'donationStatus-eq' : 'SUCCESS'
+        };
+        this.shared_services.getConsumerDonations(filter).subscribe(
             (donations) => {
                 this.donations = donations;
             }

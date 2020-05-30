@@ -16,7 +16,7 @@
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
               <!-- <h2>Checkin Details</h2> -->
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="encId">
                 <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
                   <mat-form-field>
                     <input matInput placeholder={{placeText}} class="form-control" [(ngModel)]="encId"
