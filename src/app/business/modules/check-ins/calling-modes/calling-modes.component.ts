@@ -24,6 +24,7 @@ export class CallingModesComponent implements OnInit {
     api_success = null;
     medialink;
     show_link_only = false;
+    showcomm = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -48,19 +49,23 @@ export class CallingModesComponent implements OnInit {
         }
     }
     selectHeadsup() {
+        this.showcomm = true;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
         this.msg_to_user = 'Provider will start ' + this.callingModes + ' call in 30 minutes from';
     }
     selectAlrdyWaiting() {
-        this.chkinTeleserviceJoinLink();
+        this.showcomm = true;
+        this.msg_to_user = 'Provider is already waiting';
     }
     selectStrtVideo() {
+        this.showcomm = false;
         this.chkinTeleserviceJoinLink();
     }
     selectStarted() {
-        this.msg_to_user = 'Service Started';
+        this.showcomm = false;
+     //   this.msg_to_user = 'Service Started';
         if (this.data.type === 'checkin') {
             this.changeWaitlistStatus(this.data.qdata, 'STARTED');
         } else {

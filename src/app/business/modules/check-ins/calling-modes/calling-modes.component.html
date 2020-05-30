@@ -13,12 +13,12 @@
                 <mat-chip (click)="selectHeadsup()">
                   Headsup
                 </mat-chip>
-                <mat-chip (click)="selectAlrdyWaiting()">
-                    Already waiting
-                  </mat-chip>
-                  <mat-chip (click)="selectStrtVideo()">
+                <mat-chip (click)="selectStrtVideo()">
                     <i class="fa fa-video-camera" style="padding-right: 10px;font-size: small;"></i>
                     Start video
+                  </mat-chip>
+                <mat-chip (click)="selectAlrdyWaiting()">
+                    Already waiting
                   </mat-chip>
                   <mat-chip (click)="selectStarted()">
                     Mark as started
@@ -27,10 +27,10 @@
             <!-- <button type="button" mat-dialog-close class="cs-btn">Already waiting</button> -->
         </div>
     </div>
-    <mat-form-field class="example-full-width" style="padding-top: 30px;">
+    <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="showcomm">
         <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
       </mat-form-field>
-      <div class="mgtop40 form-group">
+      <div class="mgtop40 form-group" *ngIf="showcomm">
         Send message via
         <div class="coupon-outer">
             <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
@@ -44,7 +44,7 @@
         </div>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions *ngIf="!show_link_only">
+<mat-dialog-actions *ngIf="!show_link_only && showcomm">
     <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
     <button type="button" mat-dialog-close class="cs-btn bt1" (click)="sendMessage()">Send</button>
 </mat-dialog-actions>
