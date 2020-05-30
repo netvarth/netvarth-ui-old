@@ -197,7 +197,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selected_coupon;
     couponsList: any = [];
     coupon_status = null;
-    
+    is_wtsap_empty = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -701,8 +701,19 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
         if (this.callingModes !== '') {
+            this.is_wtsap_empty = false;
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+            }
+        } else if (this.callingModes === '') {
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                for (const i in this.sel_ser_det.virtualCallingModes) {
+                    if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp') {
+                        this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        this.is_wtsap_empty = true;
+                        break;
+                    }
+                }
             }
         }
         // }
@@ -749,7 +760,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.api_error === null) {
             // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
-            this.addCheckInConsumer(post_Data);
+            if (!this.is_wtsap_empty) {
+                this.addCheckInConsumer(post_Data);
+            }
+          //  this.addCheckInConsumer(post_Data);
         }
     }
     addCheckInConsumer(post_Data) {
@@ -1506,7 +1520,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode() {
+        if (this.callingModes === '') {
+            this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+        } else {
         this.showInputSection = true;
+        }
     }
     // handleModeSel(index, ev) {
     //     if (ev.checked) {

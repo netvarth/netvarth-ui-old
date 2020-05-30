@@ -129,9 +129,9 @@
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
                                                     <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
                                                         src="https://img.icons8.com/color/18/000000/zoom.png" />
-                                                    <input *ngIf="!showInputSection"
+                                                    <input *ngIf="!showInputSection" (keypress)="isNumeric($event)" 
                                                         class="form-control emailPrepay call-mode-ip" placeholder=""
-                                                        [(ngModel)]="callingModes" autocomplete="off">
+                                                        [(ngModel)]="callingModes" autocomplete="off" maxlength="10">
                                                     <div class="input-group-append mgn-up-6"
                                                         style="padding-left: 10px;">
                                                         <button *ngIf="!showInputSection" class="btn bt3 btn-default"
