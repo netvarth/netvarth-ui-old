@@ -16,7 +16,7 @@ export class NotificationsComponent implements OnInit {
             title: 'Settings'
         },
         {
-            title: 'Comm.',
+            title: 'Communications And Notifications',
             url: '/provider/settings/comm',
         },
         {

@@ -7,6 +7,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html'
@@ -77,7 +78,10 @@ export class ProviderReimburseReportComponent implements OnInit {
     'to_date': false,
     'pay_status': false
   };
+
+  statusMultiCtrl: any = [];
   constructor(private dialog: MatDialog, private router: Router,
+    public dateformat: DateFormatPipe,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
 
@@ -105,7 +109,6 @@ export class ProviderReimburseReportComponent implements OnInit {
     });
     this.requestdialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        // this.sharedfunctionObj.openSnackBar(Messages.SCCESS_MSG);
         this.getCouponReport();
       }
     });
@@ -129,6 +132,7 @@ export class ProviderReimburseReportComponent implements OnInit {
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
     };
+    this.statusMultiCtrl = [];
   }
 
   clearFilter() {
@@ -170,14 +174,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   checkFilterDateMaxMin(type) {
     if (type === 'from_date') {
       this.filter_date_end_min = this.filter.from_date;
-      // if (this.filter.to_date < this.filter.from_date) {
-      //   this.filter.to_date = this.filter.from_date;
-      // }
     } else if (type === 'to_date') {
       this.filter_date_start_max = this.filter.to_date;
-      // if (this.filter.to_date < this.filter.from_date) {
-      //   this.filter.from_date = this.filter.to_date;
-      // }
     }
     this.doSearch();
   }
@@ -185,39 +183,15 @@ export class ProviderReimburseReportComponent implements OnInit {
    * set Filter Values for Rest API Coupon List
    */
   setFilterForApi() {
-    let toDate;
-    let fromDate;
-    if (this.filter.from_date) {
-      let dd1 = this.filter.from_date.getDate();
-      if (dd1 < 10) {
-        dd1 = '0' + dd1;
-      };
-      let mm1 = this.filter.from_date.getMonth() + 1;
-      if (mm1 < 10) {
-        mm1 = '0' + mm1;
-      }
-      fromDate = this.filter.from_date.getFullYear() + '-' + mm1 + '-' + dd1;
-    }
-    if (this.filter.to_date) {
-      let dd2 = this.filter.to_date.getDate();
-      if (dd2 < 10) {
-        dd2 = '0' + dd2;
-      }
-      let mm2 = this.filter.to_date.getMonth() + 1;
-      if (mm2 < 10) {
-        mm2 = '0' + mm2;
-      }
-      toDate = this.filter.to_date.getFullYear() + '-' + mm2 + '-' + dd2;
-    }
     const api_filter = {};
-    if (this.filter.pay_status !== 'all') {
-      api_filter['status-eq'] = this.filter.pay_status;
+    if (this.statusMultiCtrl.length > 0) {
+      api_filter['status-eq'] = this.statusMultiCtrl.toString();
     }
     if (this.filter.from_date != null) {
-      api_filter['reportFromDate-ge'] = fromDate;
+      api_filter['reportFromDate-ge'] = this.dateformat.transformTofilterDate(this.filter.from_date);
     }
     if (this.filter.to_date != null) {
-      api_filter['reportEndDate-le'] = toDate;
+      api_filter['reportEndDate-le'] = this.dateformat.transformTofilterDate(this.filter.to_date);
     }
     return api_filter;
   }
@@ -227,8 +201,33 @@ export class ProviderReimburseReportComponent implements OnInit {
    * @param value Filter Value eg. PAYMENTPENDING
    */
   setFilterData(type, value) {
-    this.filter[type] = value;
+    if (type === 'status') {
+      const indx = this.statusMultiCtrl.indexOf(value);
+      if (indx === -1) {
+        this.statusMultiCtrl.push(value);
+      } else {
+        this.statusMultiCtrl.splice(indx, 1);
+      }
+    } else {
+      this.filter[type] = value;
+    }
     this.resetPaginationData();
+    this.doSearch();
+  }
+  statusSelection(value) {
+    if (this.statusMultiCtrl.indexOf(value) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  selectAllStatus(ev) {
+    this.statusMultiCtrl = [];
+    if (ev.checked) {
+      for (const status of this.report_status_filter) {
+        this.statusMultiCtrl.push(status.value);
+      }
+    }
     this.doSearch();
   }
   /**
@@ -266,7 +265,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    */
   doSearch() {
     this.loadApiSwitch('doSearch');
-    if (this.filter.from_date !== '' || this.filter.to_date !== '' || this.filter.pay_status !== 'all') {
+    if (this.filter.from_date !== null || this.filter.to_date !== null || this.statusMultiCtrl.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -351,18 +350,15 @@ export class ProviderReimburseReportComponent implements OnInit {
         this.filter.from_date = null;
       } else if (value === 'to_date') {
         this.filter.to_date = null;
-      } else if (value === 'ack_status') {
-        this.filter.pay_status = 'all';
       }
+      this.statusMultiCtrl = [];
       this.doSearch();
     }
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
-    //console.log(this.filter_sidebar);
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
-    //console.log(this.filter_sidebar);
   }
 }

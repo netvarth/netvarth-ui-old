@@ -17,7 +17,7 @@ export class CommSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Comm.'
+            title: 'Communications And Notifications'
         }
     ];
     virtualCallingMode_status: any;

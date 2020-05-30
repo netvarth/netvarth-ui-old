@@ -66,9 +66,9 @@
                                               <li class="filterli filterDatepicker">
                                                   <input class="filterTextbox" type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
                                                   (dateChange)="doSearch()" (blur)="doSearch()" placeholder="To Date">
-                                                  <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker2">
                                                   </mat-datepicker-toggle>
-                                                  <mat-datepicker #picker1></mat-datepicker>
+                                                  <mat-datepicker #picker2></mat-datepicker>
                                               </li>
                                       </div>
                                   </li>
@@ -76,11 +76,11 @@
                                       <div>
                                           <label class="filterHeaders">Select payment status</label>
                                           <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                            <mat-checkbox (click)="setFilterData('status', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                                            <mat-checkbox (change)="selectAllStatus($event)" [value]="'all'"> {{all_cap}}</mat-checkbox>
                                           </li>
                                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                            <mat-checkbox *ngFor="let status of report_status_filter"
-                                            (click)="setFilterData('status', status.value)" [value]="status.value">
+                                            <mat-checkbox *ngFor="let status of report_status_filter" (click)="setFilterData('status', status.value)"
+                                            [checked]="statusSelection(status.value)">
                                             {{status.displayName}}
                                             </mat-checkbox>
                                           </li>

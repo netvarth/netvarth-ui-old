@@ -146,7 +146,7 @@
           <i class="fa fa-gears"></i> <span> Settings</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="accountType=='BRANCH'">
         <a class="pointer-cursor"  routerLink="settings/general/users" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-users"></i> <span> Users</span>
         </a>

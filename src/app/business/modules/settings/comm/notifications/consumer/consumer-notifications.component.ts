@@ -20,7 +20,7 @@ export class ConsumerNotificationsComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Comm.',
+      title: 'Communications And Notifications',
       url: '/provider/settings/comm',
   },
     {

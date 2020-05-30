@@ -1666,7 +1666,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         sel_date: seldate,
         cur: this.changedate_req,
         unique_id: unique_id,
-        account_id: acc_loc_id[0]
+        account_id: acc_loc_id[0],
+        tel_serv_stat: this.current_provider.fields.virtual_service_status
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
@@ -1706,7 +1707,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         loc_id: acc_loc_id[1],
         cur: this.changedate_req,
         unique_id: unique_id,
-        account_id: acc_loc_id[0]
+        account_id: acc_loc_id[0],
+        tel_serv_stat: this.current_provider.fields.virtual_service_status
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
