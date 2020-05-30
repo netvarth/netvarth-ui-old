@@ -62,6 +62,7 @@ export class CallingModesComponent implements OnInit {
     selectStrtVideo() {
         this.showcomm = false;
         this.chkinTeleserviceJoinLink();
+        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     selectStarted() {
         this.showcomm = false;
@@ -84,7 +85,8 @@ export class CallingModesComponent implements OnInit {
           };
           this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
-              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              this.shared_functions.openSnackBar('Message has been sent');
               setTimeout(() => {
                 this.dialogRef.close('reloadlist');
               }, projectConstants.TIMEOUT_DELAY);
