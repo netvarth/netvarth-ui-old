@@ -9,6 +9,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 })
 export class NotificationsComponent implements OnInit {
     smsGlobalStatus;
+    notificationStatus;
     smsGlobalStatusStr;
     breadcrumbs_init = [
         {
@@ -75,6 +76,20 @@ export class NotificationsComponent implements OnInit {
         this.provider_services.getSMSglobalSettings().subscribe(data => {
             this.smsGlobalStatus = data['enableSms'];
             this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
+            this.notificationStatus = data['sendNotification'];
+            // this.smsGlobalStatusStr = (this.notificationStatus) ? 'On' : 'Off';
+        });
+    }
+    handlenotificationSettings(event) {
+        const value = (event.checked) ? true : false;
+        const status = (value) ? 'enabled' : 'disabled';
+        const state = (value) ? 'Enable' : 'Disable';
+        this.provider_services.setNotificationSettings(state).subscribe(data => {
+            this.shared_functions.openSnackBar('Send notification  ' + status + ' successfully');
+            this.getSMSglobalSettings();
+        }, (error) => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.getSMSglobalSettings();
         });
     }
     handleGlobalSMSSettings(event) {

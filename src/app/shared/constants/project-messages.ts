@@ -1282,7 +1282,7 @@ export const Messages = {
   'SER_EST_DURATION_CAP': 'Estimated Duration',
   'SER_PRICE_CAP': 'Price',
   'SER_MIN_CAP': 'min',
-  'SER_PRICE': 'If you would like to include jaldee pay in this service, please enter the price and tax details',
+  'SER_PRICE': 'If you would like to include this service in the bill, please enter the price and tax details.',
 
   // App-ynw_provider-components-upgrade-license
   'UP_LIC_PACKAGE_CAP': 'Upgrade License',

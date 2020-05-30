@@ -1421,4 +1421,8 @@ export class ProviderServices {
       const url = 'provider/appointment/today/';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   setNotificationSettings(state) {
+      const url = 'provider/account/settings/notification/' + state;
+      return this.servicemeta.httpPut(url);
+   }
 }
