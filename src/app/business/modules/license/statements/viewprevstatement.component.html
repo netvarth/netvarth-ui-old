@@ -42,7 +42,7 @@
                                         <table class="table .table-hover">
                                             <tbody>
                                                 <tr>
-                                                    <td style="margin-top: 8px">Bill To: </td>
+                                                    <td style="margin-top: 8px">Bill To </td>
                                                     <td class="previousDue" style="text-align: end;">{{serv_period}}
                                                     </td>
                                                 </tr>
@@ -53,12 +53,12 @@
                                                             *ngIf="invoice.periodTo"> - {{invoice.periodTo | date:
                                                 dateFormat}}</span></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>GSTIN: {{gstNumber}}</td>
+                                                <tr *ngIf="gstNumber">
+                                                    <td>GSTIN {{gstNumber}}</td>
                                                 </tr>
                                                 <br>
                                                 <tr>
-                                                    <td style="margin-top: 8px">Invoice Reference No:</td>
+                                                    <td style="margin-top: 8px">Invoice Reference No</td>
                                                     <td class="previousDue" style="text-align: end;">Due On </td>
                                                 </tr>
                                                 <tr>
