@@ -556,17 +556,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bottom-sect" *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile">
+                        <!-- <div class="bottom-sect" *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile">
                             <div class="bt-l"> </div>
                             <div style="flex-grow:1"></div>
-                            <div class="bottom-actions-root">
+                            <div class="bottom-actions-root"> -->
                                 <!-- <span class="checkin-btn disabled"
                                     *ngIf="search_result.fields.today_appt != 1">Appointment</span> -->
-                                <span class="checkin-btn"
-                                    (click)="appointmentClicked(search_result, false)">Appointment</span>
+                                <!-- <span class="checkin-btn"
+                                    (click)="appointmentClicked(search_result, false)">Appointment</span> -->
 
                                 <!-- <div class="future-date-link checkin-future"> <span class="bt10" *ngIf="search_result.fields.future_appt == 1" (click)="appointmentClicked(search_result, true)" >{{do_you_want_to_cap}} <span>Appointment </span>{{for_cap}} <span>{{different_date}}</span>
                                 </span> </div>   -->
+                            <!-- </div>
+                        </div> -->
+                        <div class="bottom-sect pdetail"
+                        *ngIf="search_result.fields.apptAllowed">
+                            <div class="bt-l">
+                                <div class="wt-tme">
+                                    <div class="donat-service">
+                                        <span class="sub-title-donate">Appointment Service(s)</span>
+                                        <ul *ngIf="!search_result.fields.appointmentServiceList">
+                                            <li *ngFor="let appointmentService of search_result.fields.appt_services"
+                                                (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointent')">
+                                                {{appointmentService}}</li>
+                                        </ul>
+                                        <ul *ngIf="search_result.fields.appointmentServiceList">
+                                            <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
+                                                (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
+                                                {{appointmentService.name}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="flex-grow:1"></div>
+                            <div class="bottom-actions-root">
+                                <span (click)="appointmentClicked(search_result, false)" class="checkin-btn">Appointment</span>
                             </div>
                         </div>
                         <div class="bottom-sect pdetail"
