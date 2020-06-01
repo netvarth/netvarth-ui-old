@@ -37,7 +37,6 @@ export class CallingModesComponent implements OnInit {
         public dialogRef: MatDialogRef<CallingModesComponent>) {
     }
     ngOnInit() {
-        console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         for (const i in this.data.modes) {
             this.callingModes = i;
@@ -75,6 +74,13 @@ export class CallingModesComponent implements OnInit {
         this.msg_to_user = 'SMS and email notification with your ' + this.callingModes + ' link has been sent.You can click the link to start the service';
        // this.chkinTeleserviceJoinLink();
        // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+    }
+    clicktoSend() {
+        if (this.data.type === 'checkin') {
+            this.chkinTeleserviceJoinLink();
+        } else {
+            this.apptTeleserviceJoinLink();
+        }
     }
     selectStarted(val) {
         this.chipValue = val;
@@ -114,7 +120,6 @@ export class CallingModesComponent implements OnInit {
            // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     chkinTeleserviceJoinLink() {
-        console.log("inside")
         this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
@@ -126,8 +131,6 @@ export class CallingModesComponent implements OnInit {
         subscribe((modeData) => {
             this.medialink = modeData;
             this.msg_to_user = this.medialink.startingUl;
-            console.log(modeData)
-            console.log(this.msg_to_user)
            // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         });
       //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
