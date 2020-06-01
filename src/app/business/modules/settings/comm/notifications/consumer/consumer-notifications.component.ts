@@ -115,13 +115,9 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   handleNotificationSettings(event) {
     const value = (event.checked) ? true : false;
-    const status = (value) ? 'enabled' : 'disabled';
-    // const state = (value) ? 'Enable' : 'Disable';
-    const notificationSettings = {
-      'sendNotification': value
-    };
-    this.provider_services.setWaitlistMgr(notificationSettings).subscribe(data => {
-      this.shared_functions.openSnackBar('Notifications ' + status + ' successfully');
+    const status = (value) ? 'Enable' : 'Disable';
+    this.provider_services.setNotificationSettings(status).subscribe(data => {
+      this.shared_functions.openSnackBar('Notifications ' + status + 'ed successfully');
       this.getNotificationSettings();
     }, (error) => {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -129,18 +125,13 @@ export class ConsumerNotificationsComponent implements OnInit {
     });
   }
   getNotificationSettings() {
-    this.provider_services.getWaitlistMgr()
-      .subscribe(
-        (data: any) => {
-          const waitlist_manager = data;
-          this.consumerNotification = waitlist_manager.sendNotification;
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        const global_data = data;
+          this.consumerNotification = global_data.sendNotification;
           this.notification_statusstr = (this.consumerNotification) ? 'On' : 'Off';
           this.provider_datastorage.set('waitlistManage', data);
-        },
-        () => {
-
-        }
-      );
+      });
   }
   setNotifications(notificationList: any) {
     notificationList.forEach(notificationObj => {
