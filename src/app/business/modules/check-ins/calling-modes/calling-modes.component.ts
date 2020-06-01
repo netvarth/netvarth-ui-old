@@ -20,7 +20,7 @@ export class CallingModesComponent implements OnInit {
     sms = true;
     email = true;
     pushnotify = true;
-    disableButton = false;
+  //  disableButton = false;
     api_success = null;
     medialink;
     show_link_only = false;
@@ -88,6 +88,7 @@ export class CallingModesComponent implements OnInit {
         }
     }
     sendMessage() {
+        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         const post_data = {
             medium: {
               email: this.email,
@@ -101,18 +102,20 @@ export class CallingModesComponent implements OnInit {
             subscribe(() => {
             //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             //  this.shared_functions.openSnackBar('Message has been sent');
-            //   setTimeout(() => {
-            //     this.dialogRef.close('reloadlist');
-            //   }, projectConstants.TIMEOUT_DELAY);
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
             }
             //   error => {
             //     this.shared_functions.apiErrorAutoHide(this, error);
             //     this.disableButton = false;
             //   }
             );
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+           // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     chkinTeleserviceJoinLink() {
+        console.log("inside")
+        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
@@ -122,10 +125,12 @@ export class CallingModesComponent implements OnInit {
         this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.data.uuid).
         subscribe((modeData) => {
             this.medialink = modeData;
-            //this.msg_to_user = this.medialink.startingUl;
+            this.msg_to_user = this.medialink.startingUl;
+            console.log(modeData)
+            console.log(this.msg_to_user)
            // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         });
-        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+      //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     apptTeleserviceJoinLink() {
         if (this.callingModes !== 'WhatsApp') {

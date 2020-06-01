@@ -8979,3 +8979,9 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .form-level-settings .bold {
   color: #000 !important;
 }
+.telemode-msg {
+  padding-left: 10px;
+  font-size: smaller;
+  color: #29b6f6;
+  padding-bottom: 10px;
+}

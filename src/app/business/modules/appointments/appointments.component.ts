@@ -2366,7 +2366,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         modes: modes.virtualService,
         uuid: modes.uid,
-        linkValue: this.gnr_link
+        linkValue: this.gnr_link,
+        qdata: modes,
+        type: 'appt'
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
