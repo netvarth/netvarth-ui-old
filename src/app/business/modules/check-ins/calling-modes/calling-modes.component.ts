@@ -25,6 +25,8 @@ export class CallingModesComponent implements OnInit {
     medialink;
     show_link_only = false;
     showcomm = false;
+    chipValue: any;
+    videonote = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -45,27 +47,42 @@ export class CallingModesComponent implements OnInit {
                 this.apptTeleserviceJoinLink();
             }
         } else {
-            this.selectHeadsup();
+            this.selectHeadsup('heads');
         }
     }
-    selectHeadsup() {
+    selectHeadsup(val) {
+       // this.chipValue = '';
+        this.chipValue = val;
+        console.log(this.chipValue)
         this.showcomm = true;
+        this.videonote = false;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
-        this.msg_to_user = 'Provider will start ' + this.callingModes + ' call in 30 minutes from';
+        this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from Provider in 30 seconds'
     }
-    selectAlrdyWaiting() {
+    selectAlrdyWaiting(val) {
+        //this.chipValue = '';
+        this.chipValue = val;
+        console.log(this.chipValue)
         this.showcomm = true;
-        this.msg_to_user = 'Provider is already waiting';
+        this.videonote = false;
+        this.msg_to_user = 'Provider is already waiting.Please click the link to join';
     }
-    selectStrtVideo() {
+    selectStrtVideo(val) {
+      //  this.chipValue = '';
+        this.chipValue = val;
         this.showcomm = false;
-        this.chkinTeleserviceJoinLink();
-        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+        this.videonote = true;
+        this.msg_to_user = 'SMS and email notification with your ' + this.callingModes + ' link has been sent.You can click the link to start the service';
+       // this.chkinTeleserviceJoinLink();
+       // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
-    selectStarted() {
+    selectStarted(val) {
+      //  this.chipValue = '';
+        this.chipValue = val;
         this.showcomm = false;
+        this.videonote = false;
      //   this.msg_to_user = 'Service Started';
         if (this.data.type === 'checkin') {
             this.changeWaitlistStatus(this.data.qdata, 'STARTED');
@@ -87,14 +104,14 @@ export class CallingModesComponent implements OnInit {
             subscribe(() => {
             //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
               this.shared_functions.openSnackBar('Message has been sent');
-              setTimeout(() => {
-                this.dialogRef.close('reloadlist');
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-              error => {
-                this.shared_functions.apiErrorAutoHide(this, error);
-                this.disableButton = false;
-              }
+            //   setTimeout(() => {
+            //     this.dialogRef.close('reloadlist');
+            //   }, projectConstants.TIMEOUT_DELAY);
+            }
+            //   error => {
+            //     this.shared_functions.apiErrorAutoHide(this, error);
+            //     this.disableButton = false;
+            //   }
             );
     }
     chkinTeleserviceJoinLink() {
@@ -107,7 +124,8 @@ export class CallingModesComponent implements OnInit {
         this.shared_services.consumerWtlstTeleserviceWithId(uuid_data, this.data.uuid).
         subscribe((modeData) => {
             this.medialink = modeData;
-            this.msg_to_user = this.medialink.startingUl;
+            //this.msg_to_user = this.medialink.startingUl;
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         });
     }
     apptTeleserviceJoinLink() {

@@ -10,17 +10,17 @@
     <div class="form-group" style="padding-left: 15px;">
         <div>
             <mat-chip-list>
-                <mat-chip (click)="selectHeadsup()">
+                <mat-chip (click)="selectHeadsup('heads')" color="{{(chipValue === 'heads') ? 'primary' : ''}}" selected="{{(chipValue === 'heads') ? true : false}}">
                   Headsup
                 </mat-chip>
-                <mat-chip (click)="selectStrtVideo()">
+                <mat-chip (click)="selectStrtVideo('video')" color="{{(chipValue === 'video') ? 'primary' : ''}}" selected="{{(chipValue === 'video') ? true : false}}">
                     <i class="fa fa-video-camera" style="padding-right: 10px;font-size: small;"></i>
-                    Start video
+                    Initiate call
                   </mat-chip>
-                <mat-chip (click)="selectAlrdyWaiting()">
+                <mat-chip (click)="selectAlrdyWaiting('wait')" color="{{(chipValue === 'wait') ? 'primary' : ''}}" selected="{{(chipValue === 'wait') ? true : false}}">
                     Already waiting
                   </mat-chip>
-                  <mat-chip (click)="selectStarted()">
+                  <mat-chip (click)="selectStarted('started')" color="{{(chipValue === 'started') ? 'primary' : ''}}" selected="{{(chipValue === 'started') ? true : false}}">
                     Mark as started
                   </mat-chip>
               </mat-chip-list>
@@ -29,6 +29,9 @@
     </div>
     <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="showcomm">
         <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="videonote">
+        <textarea matInput placeholder="" [(ngModel)]="msg_to_user" [readonly]="true"></textarea>
       </mat-form-field>
       <div class="mgtop40 form-group" *ngIf="showcomm">
         Send message via
@@ -47,6 +50,9 @@
 <mat-dialog-actions *ngIf="!show_link_only && showcomm">
     <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
     <button type="button" mat-dialog-close class="cs-btn bt1" (click)="sendMessage()">Send</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="videonote">
+    <button type="button" mat-dialog-close class="cs-btn bt1" (click)="chkinTeleserviceJoinLink()">OK</button>
 </mat-dialog-actions>
 <mat-dialog-content *ngIf="show_link_only" style="padding-left: 50px;padding-bottom: 50px;">
    <div style="font-weight: 600;">Your meeting url is :</div> 

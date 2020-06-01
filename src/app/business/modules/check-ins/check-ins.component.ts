@@ -2509,7 +2509,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
+      disableClose: false,
       data: {
         modes: modes.virtualService,
         uuid: modes.ynwUuid,
@@ -2518,10 +2518,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         type: 'checkin'
       }
     });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
+    // this.notedialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //   }
+    // });
   }
   generateLink(modes) {
     this.notedialogRef = this.dialog.open(CallingModesComponent, {

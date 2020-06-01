@@ -87,7 +87,7 @@
                         <span class="noti-it"
                             *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                 </div>
-                <div class="item">
+                <div class="item" *ngIf="service.serviceType !== 'virtualService'">
                     <span class="ttle">Live tracking </span>
                     <span>{{(service_data.livetrack ? 'On': 'Off')}}</span>
                 </div>
