@@ -8985,3 +8985,6 @@ padding-right: 0 !important; padding-top: 0 !important;}
   color: #29b6f6;
   padding-bottom: 10px;
 }
+.tel-serv-flex {
+  display: flex;
+}

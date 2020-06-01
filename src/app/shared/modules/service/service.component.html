@@ -162,7 +162,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-form-field>
             </div>
             <div class="form-group" *ngIf="!is_donation"
-                [ngClass]="{'glbl-preview':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
+                [ngClass]="{'tel-serv-flex':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
                 <mat-form-field class="example-full-width"
                     [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
                     <mat-select formControlName="serviceType" placeholder="Type" #virtual
@@ -190,7 +190,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-form-field>
             </div>
             <div class="form-group"
-                [ngClass]="{'glbl-preview':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
+                [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
                 *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="mat-select-virtualsrvcategory">
                     <mat-label>Select tool</mat-label>
