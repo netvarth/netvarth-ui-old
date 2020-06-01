@@ -907,7 +907,7 @@
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Arrived')"
-                              *ngIf="appt.apptStatus != 'Arrived' && !section_new[i]" [matTooltipClass]="tooltipcls"
+                              *ngIf="appt.apptStatus != 'Arrived' && !section_new[i] && !appt.virtualService" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Arrived'">
                               <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
                                 *ngIf="!small_device_display">Arrived </span>
