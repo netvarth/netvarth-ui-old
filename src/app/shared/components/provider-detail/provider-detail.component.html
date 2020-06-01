@@ -305,7 +305,7 @@
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail" style="padding-bottom: 10px"
-                                            *ngIf="loc['waitlist']">
+                                            *ngIf="loc['waitlist'] && loc.fields.online_profile">
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                                     <!-- <div class="o-now" *ngIf="loc.opennow">
@@ -384,7 +384,7 @@
                                                     (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail" *ngIf="loc['apptAllowed']">
+                                        <div class="bottom-sect pdetail" *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
                                             <div class="bt-l"> </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
@@ -397,7 +397,7 @@
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="results_data.fields.donation_status == 1 && results_data.fields.donation_services">
+                                            *ngIf="loc.fields.donation_status == 1 && loc.fields.donation_services && loc.fields.online_profile">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">

@@ -65,7 +65,7 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Online Presence
+                                            <h2>Business profile
                                             </h2>
                                             <span class="status">{{current_status_cap}} -
                                                 <span class="on" *ngIf="onlinepresence_status">{{on_cap}}</span>
@@ -572,6 +572,19 @@
             </div>
             <div class="row">
                 <div class="card p0">
+                    <span class="b-link" (click)="gotoAdditionalInfo()">
+                        <h2>
+                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                class="req-flds-cap">*required fields missing</i>
+                        </h2>
+                        <span class="form-level-settings">{{frm_additional_cap}} <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
                         <h2>Languages Known</h2>
                         <span class="form-level-settings">{{frm_lang_cap}}<a class="learnmore-pointer"
@@ -586,19 +599,6 @@
                         <h2>Privacy</h2>
                         <span class="form-level-settings">{{frm_privacy_cap}} <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn
-                                More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="gotoAdditionalInfo()">
-                        <h2>
-                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                class="req-flds-cap">*required fields missing</i>
-                        </h2>
-                        <span class="form-level-settings">{{frm_additional_cap}} <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

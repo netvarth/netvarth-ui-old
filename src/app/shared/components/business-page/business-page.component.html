@@ -305,7 +305,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail" style="padding-bottom: 10px">
+                                        <div class="bottom-sect pdetail" style="padding-bottom: 10px" *ngIf="loc['waitlist'] && loc.fields.online_profile">
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                                     <div class="o-now" *ngIf="loc.opennow">
@@ -382,13 +382,13 @@
                                                     <span>{{different_date_cap}}</span></span>
                                             </div>
                                         </div>
-                                        <div class="bottom-sect pdetail" *ngIf="loc['apptAllowed']">
+                                        <div class="bottom-sect pdetail" *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
                                             <div class="bt-l"></div>
                                             <div class="bottom-actions-root">
-                                                <div style="flex-grow:1"></div>
+                                                <!-- <div style="flex-grow:1"></div>
                                                 <span class="checkin-btn disabled"
-                                                    *ngIf="results_data.fields.today_appt != 1 ">Appointment</span>
-                                                <span class="checkin-btn" *ngIf="results_data.fields.today_appt == 1 "
+                                                    *ngIf="results_data.fields.today_appt != 1 ">Appointment</span> -->
+                                                <span class="checkin-btn"
                                                     (click)="appointmentClicked(loc,loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span>
                                                 <!-- <span class="checkin-future pdetailbt10"
                                                     *ngIf="loc.fields.hasOwnProperty('future_appt') && loc.fields.future_appt == 1"

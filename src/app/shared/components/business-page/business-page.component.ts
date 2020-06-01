@@ -1196,6 +1196,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.locationjson[locindx]['estimatedtime_det'] = [];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
               this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
