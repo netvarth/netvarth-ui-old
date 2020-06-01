@@ -27,6 +27,7 @@ export class CallingModesComponent implements OnInit {
     showcomm = false;
     chipValue: any;
     videonote = false;
+    busnes_name: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -36,6 +37,8 @@ export class CallingModesComponent implements OnInit {
         public dialogRef: MatDialogRef<CallingModesComponent>) {
     }
     ngOnInit() {
+        console.log(this.data)
+        this.busnes_name = this.data.qdata.providerAccount.businessName;
         for (const i in this.data.modes) {
             this.callingModes = i;
         }
@@ -51,26 +54,21 @@ export class CallingModesComponent implements OnInit {
         }
     }
     selectHeadsup(val) {
-       // this.chipValue = '';
         this.chipValue = val;
-        console.log(this.chipValue)
         this.showcomm = true;
         this.videonote = false;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
-        this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from Provider in 30 seconds'
+        this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
     }
     selectAlrdyWaiting(val) {
-        //this.chipValue = '';
         this.chipValue = val;
-        console.log(this.chipValue)
         this.showcomm = true;
         this.videonote = false;
-        this.msg_to_user = 'Provider is already waiting.Please click the link to join';
+        this.msg_to_user =  this.busnes_name + ' is already waiting.Please click the link to join';
     }
     selectStrtVideo(val) {
-      //  this.chipValue = '';
         this.chipValue = val;
         this.showcomm = false;
         this.videonote = true;
@@ -79,7 +77,6 @@ export class CallingModesComponent implements OnInit {
        // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     selectStarted(val) {
-      //  this.chipValue = '';
         this.chipValue = val;
         this.showcomm = false;
         this.videonote = false;
@@ -103,7 +100,7 @@ export class CallingModesComponent implements OnInit {
           this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
             //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-              this.shared_functions.openSnackBar('Message has been sent');
+            //  this.shared_functions.openSnackBar('Message has been sent');
             //   setTimeout(() => {
             //     this.dialogRef.close('reloadlist');
             //   }, projectConstants.TIMEOUT_DELAY);
@@ -113,6 +110,7 @@ export class CallingModesComponent implements OnInit {
             //     this.disableButton = false;
             //   }
             );
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     chkinTeleserviceJoinLink() {
         if (this.callingModes !== 'WhatsApp') {
@@ -125,8 +123,9 @@ export class CallingModesComponent implements OnInit {
         subscribe((modeData) => {
             this.medialink = modeData;
             //this.msg_to_user = this.medialink.startingUl;
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+           // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         });
+        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     apptTeleserviceJoinLink() {
         if (this.callingModes !== 'WhatsApp') {

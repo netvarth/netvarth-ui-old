@@ -31,7 +31,7 @@
         <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
       </mat-form-field>
       <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="videonote">
-        <textarea matInput placeholder="" [(ngModel)]="msg_to_user" [readonly]="true"></textarea>
+        <textarea matInput placeholder="" [(ngModel)]="msg_to_user" [readonly]="true" style="height: 70px;border: none;"></textarea>
       </mat-form-field>
       <div class="mgtop40 form-group" *ngIf="showcomm">
         Send message via
