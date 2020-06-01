@@ -80,7 +80,12 @@ export class ForgotPasswordComponent {
   }
 
   cancelForgotPassword() {
-    this.retonCancelForgotPassword.emit();
+    if(this.is_provider) {
+      this.dialogRef.close();
+    }else{
+      this.retonCancelForgotPassword.emit();
+    }
+    
   }
 
   onPhoneSubmit(submit_data) {
