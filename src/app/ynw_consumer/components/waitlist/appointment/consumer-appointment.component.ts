@@ -1247,7 +1247,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.shared_services.getServicesforAppontmntByLocationId(locid)
             .subscribe(data => {
                 // this.servicesjson = data;
-                if (this.tele_srv_stat === '1') {
+                if (this.tele_srv_stat === '1' || this.tele_srv_stat === 'true') {
                     this.servicesjson = data;
                 } else {
                     this.servicesjson = [];

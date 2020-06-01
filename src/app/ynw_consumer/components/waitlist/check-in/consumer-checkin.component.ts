@@ -1217,7 +1217,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.resetApi();
         this.shared_services.getServicesByLocationId(locid)
             .subscribe(data => {
-                if (this.tele_srv_stat === '1') {
+                if (this.tele_srv_stat === '1' || this.tele_srv_stat === 'true') {
                     this.servicesjson = data;
                 } else {
                     this.servicesjson = [];

@@ -909,7 +909,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         sel_date: currdate,
         cur: chdatereq,
         unique_id: provider.uniqueId,
-        account_id: provider.id
+        account_id: provider.id,
+        tel_serv_stat: provider.virtulServiceStatus
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
@@ -1398,7 +1399,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         cur: chdatereq,
         unique_id: provider.uniqueId,
         account_id: provider.id,
-        tel_serv_stat: provider.virtual_service_status
+        tel_serv_stat: provider.virtulServiceStatus
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
