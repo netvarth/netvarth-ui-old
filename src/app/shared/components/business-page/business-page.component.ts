@@ -202,6 +202,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   userType = '';
   pageFound = false;
   results_data;
+  appttime_arr: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -404,6 +405,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               }
             }
             this.getWaitingTime(locarr);
+            this.getApptTime(locarr);
             this.api_loading = false;
           });
       });
@@ -580,6 +582,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
             }
             this.getWaitingTime(locarr);
+            this.getApptTime(locarr);
             break;
           }
           case 'terminologies': {
@@ -1494,5 +1497,25 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
        }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
+  }
+  getApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+            this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+          }
+        });
+    }
   }
 }

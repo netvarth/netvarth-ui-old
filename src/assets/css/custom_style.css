@@ -1315,6 +1315,10 @@ sup {
   margin-left: 20px !important;
 }
 
+.mgn-lt-25 {
+  margin-left: 25px !important;
+}
+
 .mgn-lt-30 {
   margin-left: 30px !important;
 }
@@ -8987,4 +8991,11 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .tel-serv-flex {
   display: flex;
+}
+.coming-soon {
+  font-weight: 600;
+  color: #80808082;
+  font-style: italic;
+  font-size: x-small;
+  margin-left: 10px;
 }
