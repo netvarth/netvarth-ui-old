@@ -156,6 +156,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   donations: any = [];
   rupee_symbol = '₹';
   appttime_arr: any = [];
+  api_error: any;
+  differceofDistance;
+  differofDistanc;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -171,9 +174,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.breadcrumbs = [
       {
-        title: 'My Jaldee'
+          title: 'My Jaldee'
       }
-    ];
+  ];
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.carouselOne = {
@@ -227,7 +230,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.gets3curl();
     this.getWaitlist();
     this.getApptlist();
-    // this.getAppointmentToday();
+   // this.getAppointmentToday();
     this.getDonations();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
@@ -359,6 +362,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
+            if(waitlist.service.livetrack){
+              this.differofDistanc = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,waitlist.queue.location.lattitude,waitlist.queue.location.longitude);
+               console.log(this.differceofDistance);
+             }
             this.trackMode[i] = false;
             this.changemode[i] = false;
             const waitlist_date = new Date(waitlist.date);
@@ -458,7 +465,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return appx_ret;
   }
 
-  getApptlist() {
+  getApptlist(){
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
     const params = {
@@ -473,6 +480,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const appointment of this.appointments) {
+            if(appointment.service.livetrack){
+             this.differceofDistance = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,appointment.location.lattitude,appointment.location.longitude);
+              console.log(this.differceofDistance);
+            }
             this.trackModeAppt[i] = false;
             this.changemodeAppt[i] = false;
             const waitlist_date = new Date(appointment.appmtDate);
@@ -544,7 +555,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.caption = 'Appointment for';
       appx_ret.date = appointment.appmtDate;
       appx_ret.time = appointment.appmtTime;
-      if (appointment.statusUpdatedTime) {
+      if(appointment.statusUpdatedTime){
         appx_ret.cancelled_date = moment(appointment.statusUpdatedTime, 'YYYY-MM-DD').format();
         time = appointment.statusUpdatedTime.split('-');
         time1 = time[2].trim();
@@ -748,7 +759,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  doCancelWaitlist(waitlist, type) {
+  doCancelWaitlist(waitlist,type) {
     console.log(waitlist);
     // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
     //   return false;
@@ -1228,8 +1239,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.lat_lng.latitude = +pos.coords.latitude;
       },
         error => {
+          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+          this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
         });
     }
+  }
+  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    
+    const R = 6371; // Radius of the earth in km
+    const dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
+    const dLon = this.deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const d = R * c; // Distance in km
+    return d;
+  }
+  deg2rad(deg) {
+    return deg * Math.PI / 180;
   }
   updateLatLong(uid, id, passdata) {
     this.shared_services.updateLatLong(uid, id, passdata)
@@ -1407,18 +1436,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoHistory() {
     this.router.navigate(['consumer', 'checkin', 'history']);
   }
-  gotoApptmentHistory() {
+  gotoApptmentHistory(){
     this.router.navigate(['consumer', 'appointment', 'history']);
   }
-  getAppointmentToday() {
+  getAppointmentToday(){
     this.consumer_services.getAppointmentToday()
       .subscribe(
         data => {
           this.appointments = data;
-          console.log('Appointments', this.appointments);
-        },
+          console.log("Appointments",this.appointments)
+          },
         error => {
         }
       );
+  }
+  gotoLivetrack(uid,accountid,stat){
+    const navigationExtras: NavigationExtras = {
+      queryParams: { account_id: accountid ,
+        status : stat
+      }
+  };
+      this.router.navigate(['consumer', 'appointment', 'track', uid], navigationExtras);
+  
+  }
+  gotoLivetrackchekin(uid,accountid,stat){
+    const navigationExtras: NavigationExtras = {
+      queryParams: { account_id: accountid ,
+        status : stat
+      }
+  };
+      this.router.navigate(['consumer', 'checkin', 'track', uid], navigationExtras);
+  
   }
 }

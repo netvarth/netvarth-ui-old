@@ -12,23 +12,20 @@
                                 <div class="servicefor-outer btborder">                                    
                                     <div class="successmsg">Your appointment for {{activeWt.service.name}} is successful !!
                                     </div>
-                                    <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
-                                                <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
+                                    
                                     <div class="mgn-up-20">Allow {{activeWt.providerAccount.businessName}} to track your
                                         <span class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
                                                 <mat-slide-toggle [(ngModel)]="shareLoc"
                                                     (change)=locationEnableDisable($event)>
                                                 </mat-slide-toggle>
                                             </span></span>
-                                        <!-- <span >
-                                                    <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
-                                                </span> -->
+                                        
                                     </div>
                                     <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
-                                        <span class="mgn-lt-10">
+                                        <!-- <span class="mgn-lt-10">
                                             <mat-slide-toggle [(ngModel)]="notifyAutomatic"
                                                 (change)=notifyEvent($event)></mat-slide-toggle>
-                                        </span>
+                                        </span> -->
                                         <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In
                                                 "Automatic tracking" Jaldee
                                                 will start tracking 1 hour prior to your turn. </span></div>

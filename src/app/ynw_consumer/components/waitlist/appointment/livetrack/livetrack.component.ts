@@ -32,6 +32,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
     api_loading: boolean;
     payment_popup: any;
     firstTimeClick = true;
+    state;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -43,6 +44,17 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
         this.route.queryParams.subscribe(
             params => {
                 this.accountId = params.account_id;
+                this.state = params.status;
+                console.log(this.state);
+                if (this.state === 'true') {
+                    this.shareLoc = true;
+                    this.firstTimeClick = false;
+                   // this.updateLiveTrackInfo();
+                }  else {
+                    this.shareLoc = false;
+                    this.firstTimeClick = true;
+                }
+                console.log(this.shareLoc);
             });
     }
 
@@ -53,8 +65,8 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbs = [
             {
-                title: 'Appointment',
-                url: ''
+                title: 'My Jaldee',
+                url: '/consumer'
             },
             {
                 title: 'Live Tracking'
@@ -64,6 +76,14 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
+                if (this.shareLoc) {
+                    console.log('fgjdjs');
+                if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
+                    this.driving = true;
+                } else if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
+                    this.walking = true;
+                }
+            }
             },
             () => {
             }
@@ -127,7 +147,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                     'longitude': _this.lat_lng.longitude
                 },
                 'travelMode': _this.travelMode,
-                'waitlistPhoneNumber': _this.activeWt.phoneNumber,
+                'phoneNumber': _this.activeWt.phoneNumber,
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
@@ -174,7 +194,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                     'longitude': _this.lat_lng.longitude
                 },
                 'travelMode': _this.travelMode,
-                'waitlistPhoneNumber': _this.activeWt.phoneNumber,
+                'phoneNumber': _this.activeWt.phoneNumber,
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };

@@ -32,6 +32,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
     api_loading: boolean;
     payment_popup: any;
     firstTimeClick = true;
+    state;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -43,6 +44,17 @@ export class ConsumerLiveTrackComponent implements OnInit {
         this.route.queryParams.subscribe(
             params => {
                 this.accountId = params.account_id;
+                this.state = params.status;
+                console.log(this.state);
+                if (this.state === 'true') {
+                    this.shareLoc = true;
+                    this.firstTimeClick = false;
+                   // this.updateLiveTrackInfo();
+                }  else {
+                    this.shareLoc = false;
+                    this.firstTimeClick = true;
+                }
+                console.log(this.shareLoc);
             });
     }
 
@@ -53,8 +65,8 @@ export class ConsumerLiveTrackComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbs = [
             {
-                title: 'Checkin',
-                url: 'consumer'
+                title: 'My Jaldee',
+                url: '/consumer'
             },
             {
                 title: 'Live Tracking'
@@ -64,6 +76,14 @@ export class ConsumerLiveTrackComponent implements OnInit {
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
+                if (this.shareLoc) {
+                    console.log('fgjdjs');
+                if (this.activeWt.jaldeeWaitlistDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
+                    this.driving = true;
+                } else if (this.activeWt.jaldeeWaitlistDistanceTime  && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
+                    this.walking = true;
+                }
+            }
             },
             () => {
             }

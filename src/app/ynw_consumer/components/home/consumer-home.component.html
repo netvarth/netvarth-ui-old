@@ -50,7 +50,7 @@
                         </div>
                         <div class="details">
                             <div class="lt">
-                                <div class="lt0" (click)="showcheckindetails(waitlist)">
+                                <div class="lt0 pointlist" (click)="showcheckindetails(waitlist)">
                                     <span class="service">{{waitlist.service.name | capitalizeFirst}}</span> for <span
                                         class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
@@ -123,9 +123,11 @@
                                 </div>
                                 <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
                                     <div class="lt0"
-                                        *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
+                                        *ngIf="waitlist.jaldeeWaitlistDistanceTime  && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                         <div>
-                                            <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable
+                                                <div class="mb5">You are 10 km away from {{waitlist.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'true')" aria-hidden="true"></i></span></div>
+                                                <div class="mb5"> You are sharing your arrival time with {{waitlist.providerAccount.businessName}}<span><i class="fa fa-check fl-right" aria-hidden="true"></i></span></div>
+                                            <!-- <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable
                                                     live tracking </label></span>
                                             <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'"
                                                 class="form-level-settings">Automatic Live tracking is enabled</p>
@@ -140,7 +142,7 @@
                                             <span class="" *ngIf="!changemode[i]">
                                                 <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
                                                     class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
-                                                <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
+                                               
                                                 <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                     style="width: 15px;height:15px;"
                                                     *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
@@ -151,7 +153,7 @@
                                                 <i class="fa fa-car mgn-lt-20" [class.driving]="driving"
                                                     aria-hidden="true"
                                                     (click)="getTravelMod(waitlist.ynwUuid,waitlist.providerAccount.id,'DRIVING',i)"></i>
-                                                <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
+                                                
                                                 <img src="./assets/images/walking.png" alt=""
                                                     class="walkingMode mgn-lt-20" [class.walking]="walking"
                                                     aria-hidden="true"
@@ -165,9 +167,16 @@
                                                     class="trackSlide "></mat-slide-toggle>
                                                 <label
                                                     class="mgn-lt-10"><b>{{statusOfTrack[i] ? 'On' : 'Off'}}</b></label>
-                                            </span>
+                                            </span> -->
                                         </div>
                                     </div>
+                                    <div class="lt0" *ngIf="!waitlist.jaldeeWaitlistDistanceTime  && waitlist.apptStatus === 'checkedIn' && !waitlist.future">
+                                            <div >
+                                                    <div class="mb5"> You are 10 km away from {{waitlist.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')" aria-hidden="true"></i></span></div>
+                                                    <div class="mb5"> Oops you are NOT sharing your arrival time with {{waitlist.providerAccount.businessName}}<span><i class="fa fa-times fl-right" aria-hidden="true"></i></span></div>
+                                                    <span> Jaldee recommands you share your arrival time with provider</span>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                             <div class="rt">
@@ -216,19 +225,19 @@
         </div>
 
         <div class="card c-checkins">
-            <mat-accordion>
-                <mat-expansion-panel class="no-padding">
+            <mat-                <mat-expansion-panel class="no-padding">
+ion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Appointments &nbsp;<span
+                                    Appointments &nbsp;<span
                                 *ngIf="appointments && appointments.length>0">({{appointments.length}})</span>
-                        </mat-panel-title>
+                </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div *ngIf="appointments.length == 0" class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p>No current Appointments available</p>
                     </div>
-                    <div class="outer banner no-padding" *ngIf="appointments.length != 0">
-                        <owl-carousel id="apptCarousel" [options]="carouselAppointments"
+                    <div class="outer ba                    <div class="outer banner no-padding" *ngIf="appointments.length != 0">
+="apptCarousel" [options]="carouselAppointments"
                             [carouselClasses]="['owl-theme']" [items]="appointments">
                             <div class="item" *ngFor="let appointment of appointments; let i=index">
                                 <div class="header">
@@ -240,10 +249,10 @@
                                         <div class="location consumr" *ngIf="appointment.location">
                                             {{appointment.location.place || '' | capitalizeFirst}}
                                             <span class="consumr-loc-icon"><a *ngIf="appointment.location.googleMapUrl"
-                                                    rel="noopener" [href]="appointment.location.googleMapUrl"
+                                                                                                       rel="noopener" [href]="appointment.location.googleMapUrl"
                                                     target="_blank" class="icon-location"
                                                     matTooltip="Click to navigate">
-                                                </a></span>
+></span>
                                         </div>
                                         <div class="status-outer">
                                             <div class="started-label" *ngIf="appointment.apptStatus == 'Started'">
@@ -268,7 +277,7 @@
                                 </div>
                                 <div class="details">
                                     <div class="lt">
-                                        <div class="lt0" (click)="showApptdetails(appointment)">
+                                        <div class="lt0 pointlist" (click)="showApptdetails(appointment)">
                                             <span class="service">{{appointment.service.name | capitalizeFirst}}</span>
                                             for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
@@ -292,13 +301,13 @@
                                                     </span>
                                                     <!-- <span
                                                         *ngIf="appointment.calculationMode != 'NoCalc'">{{appointment.estimated_time}}</span> -->
-                                                </span>
-                                                <span style="display: flex"> {{appointment.estimated_timeslot}}</span>
+                                                    </span>
+                                                                                           </span>
+meslot}}</span>
                                             </div>
-                                            <div class="lt0"
+                                            <div class="lt0" *ngIf="appointment.apptStatus == 'Canc                                            <div class="lt0"
                                                 *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
-                                                <div class="lt0">
-                                                    {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
+                   {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
                                                 | date: dateFormatSp }},
                                                         <span style="display: flex">
                                                             {{appointment.estimated_time}}</span></span>
@@ -344,9 +353,11 @@
                                         </div>
                                         <div *ngIf="appointment.apptStatus=='Confirmed'|| 'prepaymentPending'">
                                             <div class="lt0"
-                                                *ngIf="appointment.jaldeeApptDistanceTime && appointment.jaldeeApptDistanceTime.jaldeeDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                                *ngIf="appointment.jaldeeApptDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                                 <div>
-                                                    <span *ngIf="appointment.jaldeeStartTimeType == 'AFTERSTART'">
+                                                    <div class="mb5"> You are 10 km away from {{appointment.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'true')" aria-hidden="true"></i></span></div>
+                                                    <div class="mb5"> You are sharing your arrival time with {{appointment.providerAccount.businessName}}<span><i class="fa fa-check fl-right" aria-hidden="true"></i></span></div>
+                                                    <!-- <span *ngIf="appointment.jaldeeStartTimeType == 'AFTERSTART'">
                                                         <label>Enable
                                                             live tracking </label></span>
                                                     <p *ngIf="appointment.jaldeeStartTimeType == 'ONEHOUR'"
@@ -363,7 +374,6 @@
                                                     <span class="" *ngIf="!changemodeAppt[i]">
                                                         <i *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'"
                                                             class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
-                                                        <!-- <i *ngIf="waitlist.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
                                                         <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                             style="width: 15px;height:15px;"
                                                             *ngIf="appointment.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
@@ -375,7 +385,6 @@
                                                         <i class="fa fa-car mgn-lt-20" [class.driving]="driving"
                                                             aria-hidden="true"
                                                             (click)="getAppointmentTravelMod(appointment.uid,appointment.providerAccount.id,'DRIVING',i)"></i>
-                                                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getAppointmentTravelMod(waitlist.uid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
                                                         <img src="./assets/images/walking.png" alt=""
                                                             class="walkingMode mgn-lt-20" [class.walking]="walking"
                                                             aria-hidden="true"
@@ -389,10 +398,18 @@
                                                             class="trackSlide "></mat-slide-toggle>
                                                         <label
                                                             class="mgn-lt-10"><b>{{statusOfApptTrack[i] ? 'On' : 'Off'}}</b></label>
-                                                    </span>
+                                                    </span> -->
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="lt0" *ngIf="!appointment.jaldeeApptDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                            <div >
+                                                    <div class="mb5"> You are 10 km away from {{appointment.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'false')" aria-hidden="true"></i></span></div>
+                                                    <div class="mb5"> Oops you are NOT sharing your arrival time with {{appointment.providerAccount.businessName}}<span><i class="fa fa-times fl-right" aria-hidden="true"></i></span></div>
+                                                    <div> Jaldee recommands you share your arrival time with provider</div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                     <div class="rt">
                                         <ul class="controls">
@@ -455,12 +472,14 @@
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p>No Donations Today</p>
                     </div>
-                    <div class="outer banner donation no-padding"
-                        *ngIf="loadcomplete.donations && donations && donations.length != 0">
-                        <owl-carousel id="donCarousel" [options]="carouselDonations" [carouselClasses]="['owl-theme']"
+                    <div class="outer banner donation"
+                        *ngIf="loadcomplete.donations && donations && donations.length != 0"                    <div class="outer banner donation no-padding"
+" [options]="carouselDonations" [carouselClasses]="['owl-theme']"
                             [items]="dontations">
                             <div class="item" *ngFor="let donation of donations; let i=index">
-                                <div class="header">
+                                <!-- <div class="header">
+                                <div class="lt">
+                                    <div class="tit                                <div class="header">
                                     <div class="lt">
                                         <div class="title" *ngIf="donation.providerAccount"
                                             (click)="providerDetail(donation.providerAccount)">
@@ -477,15 +496,20 @@
                                                 </a></span>
                                         </div>
                                         <!-- <div class="status-outer">
-                                        <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
-                                            {{status_started_cap}}
+{status_started_cap}}
                                         </div>
                                         <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
                                             {{status_done_cap}}
                                         </div>
-                                    </div> -->
                                     </div>
-                                    <div class="rt">
+                                </div>
+                                <div class="rt">
+                                    <div class="favourite" *ngIf="checkIfFav(waitlist.providerAccount.id)">
+                                        <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount)"
+                                            matTooltip="{{remove_fav_cap}}"></span>
+                                                               </div> -->
+         </div>
+                                    <div class="favourite" *ngIf="!checkIf                                    <div class="rt">
                                         <div class="favourite"
                                             *ngIf="donation.providerAccount && checkIfFav(donation.providerAccount.id)">
                                             <span class="icon-favourite-filled"
@@ -497,40 +521,30 @@
                                             <span class="icon-favourite" matTooltip="Add to Favourite"
                                                 (click)="addFavProvider(donation.providerAccount.id)"></span>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="details">
-                                    <div class="lt">
-                                        <div class="lt0">
-                                            <span class="">Donation for <span class="service">{{donation.service.name | capitalizeFirst}}</span></span>
-                                            <!-- for <span
-                                            class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
+er of waitlist.waitlistingFor">
                                             {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                         </span> -->
-                                        </div>
+                                            <div class="">
+                                                <span ation.donationAmount}}
+                                                </span>
+                                            </d                                            <span class="">Donation for <span class="service">{{donation.service.name | capitalizeFirst}}</span></span>
+t0 payment"
+                                        *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
+                                        <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
+                                            {{checkindisablemsg1}}</span>
+                                    </div>                                                                 </div>
                                         <div class="lt0" *ngIf="donation.donor.firstName">
                                             <span class="">Donor : <span class="bold">{{donation.donor.firstName}}</span></span>
                                         </div>
                                         <div class="lt0">
-                                            <div class="">
-                                                <span class="">Amount: <span class="bold">{{rupee_symbol}} {{donation.donationAmount}}</span>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <!-- <div class="lt0 payment"
-                                        *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
-                                        <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
-                                            {{checkindisablemsg1}}</span>
-                                    </div>                                  -->
+         -->
                                     </div>
                                     <div class="rt">
                                         <!-- <ul class="controls">
                                         <li *ngIf="waitlist.billViewStatus == 'Show'">
                                             <span class="view-bill"
-                                                *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistStatus != 'cancelled'"
-                                                (click)="viewBill(waitlist)">Receipt</span>
-                                            <span class="view-bill"
+                                                *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistS                                                <span class="">Amount: <span class="bold">{{rupee_symbol}} {{donation.donationAmount}}</span>
+                                          <span class="view-bill"
                                                 *ngIf="waitlist.waitlistStatus === 'cancelled' && waitlist.paymentStatus !== 'NotPaid'"
                                                 (click)="viewBill(waitlist)">Receipt</span>
                                             <span class="view-bill"

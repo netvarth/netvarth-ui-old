@@ -15,15 +15,15 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 })
 export class ApptDetailComponent implements OnInit {
     apptlist: any;
-    // breadcrumbs = [
-    //     {
-    //         title: 'Dashboard',
-    //         url: '/consumer'
-    //     },
-    //     {
-    //         title: 'Appointment Details'
-    //     }
-    // ];
+    breadcrumbs = [
+        {
+            title: 'Dashboard',
+            url: '/consumer'
+        },
+        {
+            title: 'Appointment Details'
+        }
+    ];
     api_loading = true;
     waitlistdata: any;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
