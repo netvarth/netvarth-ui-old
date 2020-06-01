@@ -839,9 +839,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   if (this.search_data.hits.hit[i].fields.services) {
                   this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
                   }
+                  if (this.search_data.hits.hit[i].fields.appt_services) {
+                    this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
+                    console.log("Appointment List",this.search_data.hits.hit[i].fields.appointmentServiceList);
+                    }
                   if (this.search_data.hits.hit[i].fields.donation_services) {
                   this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
-                  }
+                  console.log("Donation List",this.search_data.hits.hit[i].fields.donationServices); 
+                }
                 } catch (e) {
                 }
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
@@ -1879,6 +1884,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let servicesList: any = [];
               servicesList = services;
               if (origin === 'donationList' || origin === 'serviceListClick') {
+                selected_service = name;
+              }
+              if (origin === 'appointmentList' || origin === 'serviceListClick') {
                 selected_service = name;
               }
               if (origin === 'serviceClick' || origin === 'donation') {
