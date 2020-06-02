@@ -37,6 +37,7 @@ export class CallingModesComponent implements OnInit {
     is_web: boolean;
     meetlink_data: any;
     starting_url: any;
+    show_note: boolean;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -68,7 +69,6 @@ export class CallingModesComponent implements OnInit {
                 this.apptTeleserviceJoinLink();
             }
         }
-
         const isMobile = {
             Android: function () {
               return navigator.userAgent.match(/Android/i);
@@ -99,6 +99,7 @@ export class CallingModesComponent implements OnInit {
             console.log('is is others')
             this.is_web = true;
           }
+          this.getMeetingDetails();
     }
     selectHeadsup() {
         if (this.callingModes !== 'WhatsApp') {
@@ -218,6 +219,7 @@ export class CallingModesComponent implements OnInit {
         this.step = 1;
     }
     getMeetingDetails() {
+        this.starting_url = '';
         const uuid_data = {
             'mode': this.callingModes
         };
@@ -237,9 +239,7 @@ export class CallingModesComponent implements OnInit {
     }
     launchWhtsap() {
         if (this.is_web) {
-            console.log("pleasse web")
-        } else {
-            
+            this.show_note = true;
         }
     }
     shareUrl() {
