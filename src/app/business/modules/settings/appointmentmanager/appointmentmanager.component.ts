@@ -174,3 +174,4 @@ export class AppointmentmanagerComponent implements OnInit {
                 });
     }
 }
+
