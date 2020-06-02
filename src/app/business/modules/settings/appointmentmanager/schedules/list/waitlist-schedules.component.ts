@@ -815,8 +815,8 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         this.getTodayAppointmentCount(queueObj, index, que);
         this.getfutureAppointmentCount(queueObj, index, que);
         this.getTomorrowAppointmentCount(queueObj, index, que);
-        this.futureQcountCaption[index] = 'Checkins Count';
-        this.todayQcountCaption[index] = 'Checkins Count';
+        this.futureQcountCaption[index] = 'Appointments Count';
+        this.todayQcountCaption[index] = 'Appointments Count';
         if (que === 'scheduleQ') {
             if (!this.sqShowFutureCount[index]) {
                 this.sqShowFutureCount[index] = true;
@@ -893,7 +893,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'apptStatus-neq': 'prepaymentpending',
+                'apptStatus-neq': 'prepaymentPending',
                 'schedule-eq': queueid
             };
             no_filter = true;
@@ -943,7 +943,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         if (!Mfilter) {
             Mfilter = {
                 'location-eq': queue.location.id,
-                'apptStatus-neq': 'prepaymentpending',
+                'apptStatus-neq': 'prepaymentPending',
                 'schedule-eq': queueid,
                 'date-eq': tommorrow
             };
