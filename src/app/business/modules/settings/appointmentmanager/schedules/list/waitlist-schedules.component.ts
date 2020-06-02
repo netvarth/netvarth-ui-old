@@ -809,7 +809,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         } else {
             this.initInstantQForm(queue);
         }
-    }
+    } 
 
     viewDashboard(queueObj, index, que) {
         this.getTodayAppointmentCount(queueObj, index, que);

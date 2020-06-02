@@ -807,7 +807,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
             );
         } else {
             this.initInstantQForm(queue);
-        }
+        } 
     }
 
     viewDashboard(queueObj, index, que) {
