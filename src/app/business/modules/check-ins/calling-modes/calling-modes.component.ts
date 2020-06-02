@@ -135,7 +135,7 @@ export class CallingModesComponent implements OnInit {
         }
     }
     sendMessage() {
-        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+        // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         const post_data = {
             medium: {
                 email: this.email,
@@ -148,6 +148,9 @@ export class CallingModesComponent implements OnInit {
         this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                      this.api_success = '';
+                  }, 4000);
             }
             );
     }

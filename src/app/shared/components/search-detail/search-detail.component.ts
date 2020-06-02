@@ -837,16 +837,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
-                    this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
+                  this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
-                    console.log("Appointment List", this.search_data.hits.hit[i].fields.appointmentServiceList);
-                  }
+                    console.log("Appointment List",this.search_data.hits.hit[i].fields.appointmentServiceList);
+                    }
                   if (this.search_data.hits.hit[i].fields.donation_services) {
-                    this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
-                    console.log("Donation List", this.search_data.hits.hit[i].fields.donationServices);
-                  }
+                  this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
+                  console.log("Donation List",this.search_data.hits.hit[i].fields.donationServices); 
+                }
                 } catch (e) {
                 }
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
@@ -953,14 +953,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.appttime_arr = data;
           let srchindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            if (provids[i] && provids[i].searchindx) {
-              srchindx = provids[i].searchindx;
-              this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            }
+            srchindx = provids[i].searchindx;
+            this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
           }
         });
     }
-  }
+    }
 
   private getWaitingTime(provids) {
     if (provids.length > 0) {
@@ -1924,9 +1922,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.btn_clicked = false;
               }
             },
-              error => {
-                this.btn_clicked = false;
-              });
+            error => {
+              this.btn_clicked = false;
+            });
         });
   }
   // departmentClicked(deptName, searchData) {

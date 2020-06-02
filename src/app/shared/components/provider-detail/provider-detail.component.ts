@@ -353,20 +353,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.account_Type = this.result_data.hits.hit[i].fields.account_type;
               try {
                 if (this.result_data.hits.hit[i].fields.services) {
-                this.result_data.hits.hit[i].fields.serviceList = JSON.parse(this.result_data.hits.hit[i].fields.services);
+                  this.result_data.hits.hit[i].fields.serviceList = JSON.parse(this.result_data.hits.hit[i].fields.services);
                 }
                 if (this.result_data.hits.hit[i].fields.appt_services) {
                   this.result_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.result_data.hits.hit[i].fields.appt_services);
-                  console.log("Appointment List",this.result_data.hits.hit[i].fields.appointmentServiceList);
-                  }
+                  console.log("Appointment List", this.result_data.hits.hit[i].fields.appointmentServiceList);
+                }
                 if (this.result_data.hits.hit[i].fields.donation_services) {
-                this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
-                console.log("Donation List",this.result_data.hits.hit[i].fields.donationServices); 
-              }
+                  this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
+                  console.log("Donation List", this.result_data.hits.hit[i].fields.donationServices);
+                }
               } catch (e) {
               }
             }
-           
+
 
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
@@ -1082,10 +1082,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.appttime_arr = data;
           let locindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            if (provids_locid[i] && provids_locid[i].locindx) {
-              locindx = provids_locid[i].locindx;
-              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            }
+            locindx = provids_locid[i].locindx;
+            this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
           }
         });
     }
@@ -1223,13 +1221,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (type === 'servicedetails') {
       service = serv;
     } else {
-    if (!this.showDepartments) {
-      const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
-      service = serviceDetails[0];
-    } else {
-      service = serv;
+      if (!this.showDepartments) {
+        const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
+        service = serviceDetails[0];
+      } else {
+        service = serv;
+      }
     }
-  }
     if (service.serviceType && service.serviceType === 'donationService') {
       servData = {
         bname: busname,
