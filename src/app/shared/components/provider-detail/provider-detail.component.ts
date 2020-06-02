@@ -348,6 +348,26 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
           .subscribe(res => {
             this.result_data = res;
+
+            for (let i = 0; i < this.result_data.hits.hit.length; i++) {
+              this.account_Type = this.result_data.hits.hit[i].fields.account_type;
+              try {
+                if (this.result_data.hits.hit[i].fields.services) {
+                this.result_data.hits.hit[i].fields.serviceList = JSON.parse(this.result_data.hits.hit[i].fields.services);
+                }
+                if (this.result_data.hits.hit[i].fields.appt_services) {
+                  this.result_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.result_data.hits.hit[i].fields.appt_services);
+                  console.log("Appointment List",this.result_data.hits.hit[i].fields.appointmentServiceList);
+                  }
+                if (this.result_data.hits.hit[i].fields.donation_services) {
+                this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
+                console.log("Donation List",this.result_data.hits.hit[i].fields.donationServices); 
+              }
+              } catch (e) {
+              }
+            }
+           
+
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
             if (this.locationjson) {
