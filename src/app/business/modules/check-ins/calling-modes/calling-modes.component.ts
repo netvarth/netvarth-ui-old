@@ -32,6 +32,11 @@ export class CallingModesComponent implements OnInit {
     consumer_fname: any;
     consumer_lname: any;
     appt_time: any;
+    is_android: boolean;
+    is_ios: boolean;
+    is_web: boolean;
+    meetlink_data: any;
+    starting_url: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -41,7 +46,6 @@ export class CallingModesComponent implements OnInit {
         public dialogRef: MatDialogRef<CallingModesComponent>) {
     }
     ngOnInit() {
-        console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
             this.consumer_fname = this.data.qdata.consumer.firstName;
@@ -64,27 +68,53 @@ export class CallingModesComponent implements OnInit {
                 this.apptTeleserviceJoinLink();
             }
         }
-        console.log(this.callingModes)
+
+        const isMobile = {
+            Android: function () {
+              return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function () {
+              return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function () {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function () {
+              return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function () {
+              return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function () {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+          };
+          if (isMobile.Android()) {
+            console.log('is is android')
+            this.is_android = true;
+          } else if (isMobile.iOS()) {
+            console.log('is is ios')
+            this.is_ios = true;
+          } else {
+            console.log('is is others')
+            this.is_web = true;
+          }
     }
     selectHeadsup() {
-        console.log('headsup')
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
         this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
     }
     selectAlrdyWaiting() {
-        console.log('wait')
         this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join';
     }
-    selectStrtVideo(val) {
-        this.chipValue = val;
-        this.showcomm = false;
-        this.videonote = true;
-        this.msg_to_user = 'SMS and email notification with your ' + this.callingModes + ' link has been sent.You can click the link to start the service';
-        // this.chkinTeleserviceJoinLink();
-        // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-    }
+    // selectStrtVideo(val) {
+    //     this.chipValue = val;
+    //     this.showcomm = false;
+    //     this.videonote = true;
+    //     this.msg_to_user = 'SMS and email notification with your ' + this.callingModes + ' link has been sent.You can click the link to start the service';
+    // }
     clicktoSend() {
         if (this.data.type === 'checkin') {
             this.chkinTeleserviceJoinLink();
@@ -116,21 +146,11 @@ export class CallingModesComponent implements OnInit {
         };
         this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
-                //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                //  this.shared_functions.openSnackBar('Message has been sent');
-                setTimeout(() => {
-                    this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             }
-                //   error => {
-                //     this.shared_functions.apiErrorAutoHide(this, error);
-                //     this.disableButton = false;
-                //   }
             );
-        // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     chkinTeleserviceJoinLink() {
-        this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
@@ -141,9 +161,8 @@ export class CallingModesComponent implements OnInit {
             subscribe((modeData) => {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
-                // this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             });
-        //  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
     }
     apptTeleserviceJoinLink() {
         if (this.callingModes !== 'WhatsApp') {
@@ -156,6 +175,7 @@ export class CallingModesComponent implements OnInit {
             subscribe((modeData) => {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             });
     }
     changeWaitlistStatus(qdata, action) {
@@ -202,15 +222,27 @@ export class CallingModesComponent implements OnInit {
             'mode': this.callingModes
         };
         if (this.data.type === 'checkin') {
-            // this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.data.uuid).
-            // subscribe((meetingdata) => {
-            //     console.log(meetingdata);
-            // });
+            this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.data.uuid).
+            subscribe((meetingdata) => {
+                this.meetlink_data = meetingdata;
+                this.starting_url = this.meetlink_data.startingUl;
+            });
         } else {
-            // this.shared_services.getApptMeetingDetails(this.callingModes, this.data.uuid).
-            // subscribe((meetingdata) => {
-            //     console.log(meetingdata);
-            // });
+            this.shared_services.getApptMeetingDetails(this.callingModes, this.data.uuid).
+            subscribe((meetingdata) => {
+                this.meetlink_data = meetingdata;
+                this.starting_url = this.meetlink_data.startingUl;
+            });
         }
+    }
+    launchWhtsap() {
+        if (this.is_web) {
+            console.log("pleasse web")
+        } else {
+            
+        }
+    }
+    shareUrl() {
+        this.clicktoSend();
     }
 }
