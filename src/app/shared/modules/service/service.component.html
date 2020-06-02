@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="c-ot m0" *ngIf="!is_donation">
-                <div class="item">
+                <div class="item"  *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
