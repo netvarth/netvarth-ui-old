@@ -175,7 +175,7 @@
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Services</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="services_list.length > 0">
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
                             <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
                                 placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
@@ -186,6 +186,9 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="services_list.length === 0">
+                        No services
+                    </div>
                 </div>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="servMultiCtrl.length > 0">
                     <p>
@@ -200,7 +203,8 @@
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Queues</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
+                    <mat-form-field
+                    *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
                                 noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
@@ -211,6 +215,10 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                      <div class="mgn-lt-5 disabled-text"
+                        *ngIf="display_schedule.length === 0 || serviceScheduleCount === 0">
+                        No schedules
+                    </div>
                 </div>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="qMultiCtrl.length > 0">
                     <p>

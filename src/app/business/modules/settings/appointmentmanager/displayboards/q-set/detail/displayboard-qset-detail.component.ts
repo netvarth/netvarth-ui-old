@@ -618,12 +618,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
             }
-            console.log(this.display_scheduleList);
-            if (this.display_scheduleList.length === 0) {
-                this.serviceScheduleCount = this.display_scheduleList.length;
-            }
+            this.serviceScheduleCount = this.display_scheduleList.length;
         } else {
             this.display_scheduleList = this.display_schedule;
+            this.serviceScheduleCount = this.display_scheduleList.length;
         }
         if (this.actionparam === 'edit' && this.displayBoardData.qBoardConditions.apptSchedule && this.displayBoardData.qBoardConditions.apptSchedule.length > 0) {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.apptSchedule.length; j++) {
