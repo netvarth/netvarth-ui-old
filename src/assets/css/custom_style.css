@@ -8999,3 +8999,27 @@ padding-right: 0 !important; padding-top: 0 !important;}
   font-size: x-small;
   margin-left: 10px;
 }
+.tele-popup {
+  max-width: 40vw !important;
+  pointer-events: auto !important;
+  /* width: 50%; */
+  position: static !important;
+}
+.tele-popup .mat-dialog-title .modal_close {
+  right: 20px!important;
+  margin-top: -10px!important;
+  width: 24px!important;
+  height: 30px!important;
+  color: black !important;
+}
+
+.tele-popup .mat-dialog-title {
+  padding: 20px 20px 10px!important;
+  background: transparent!important;
+  color: #222223!important;
+  font-size: 1rem !important;
+}
+
+.tele-popup .mat-dialog-title .modal_close i:before {
+  font-size: 75% !important;
+}
