@@ -6,6 +6,8 @@ import { ProviderDataStorageService } from '../../../../ynw_provider/services/pr
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -60,11 +62,17 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     waitlist_statusstr: string;
     todaycheckin_statusstr = 'Off';
     futurecheckin_statusstr = 'Off';
+    qSystem = 'token';
+    trnArndTime;
+    isManualMode = false;
+    is_data_chnge: any;
+    confirmdialogRef;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
         private routerobj: Router,
         private shared_functions: SharedFunctions,
+        private dialog: MatDialog
         // private shared_services: SharedServices
     ) {
         this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -81,6 +89,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
+    calcMode;
+    est_time;
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -128,6 +138,22 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.waitlist_manager = data;
+                    if (this.waitlist_manager.showTokenId) {
+                        this.qSystem = 'token';
+                        if (this.waitlist_manager.showTokenId && this.waitlist_manager.calculationMode === 'Conventional') {
+                            this.est_time = true;
+                        }
+                    } else {
+                        this.qSystem = 'fifo';
+                        if (this.waitlist_manager.calculationMode === 'Fixed') {
+                            this.calcMode = 'manual';
+                            this.isManualMode = true;
+                            this.trnArndTime = this.waitlist_manager.trnArndTime;
+                        }
+                        if (this.waitlist_manager.calculationMode === 'Conventional') {
+                            this.calcMode = 'conventional';
+                        }
+                    }
                     this.online_checkin = data['onlineCheckIns'];
                     this.futureDateWaitlist = data['futureDateWaitlist'];
                     this.todaycheckin_statusstr = this.online_checkin ? 'On' : 'Off';
@@ -346,5 +372,128 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         //         }
         //     }
         // });
+    }
+
+    handleModeSelection(qSystem) {
+        let postData;
+        if (qSystem === 'token') {
+            postData = {
+                calculationMode: 'NoCalc',
+                showTokenId: true
+            };
+        } else {
+            postData = {
+                calculationMode: 'Conventional',
+                showTokenId: false
+            };
+        }
+        this.confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Are you sure you want to change your queue system? This will effect your tokens/check-ins'
+            }
+        });
+        this.confirmdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.provider_services.setWaitlistMgr(postData)
+                    .subscribe(
+                        () => {
+                            this.getWaitlistMgr();
+                            this.is_data_chnge = 0;
+                            this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                        },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            } else {
+                if (qSystem === 'token') {
+                    this.qSystem = 'fifo';
+                } else {
+                    this.qSystem = 'token';
+                }
+            }
+        });
+    }
+    setWaitingTime(ev) {
+        if (ev.checked) {
+            const postData = {
+                calculationMode: 'Conventional',
+                showTokenId: true
+            };
+            this.provider_services.setWaitlistMgr(postData)
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
+                        this.is_data_chnge = 0;
+                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        } else {
+            const postData = {
+                calculationMode: 'NoCalc',
+                showTokenId: true
+            };
+            this.provider_services.setWaitlistMgr(postData)
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
+                        this.is_data_chnge = 0;
+                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
+    }
+    inputChange() {
+        this.is_data_chnge = 1;
+    }
+    updateManualMode() {
+        if (this.trnArndTime <= 0) {
+            this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        const postData = {
+            calculationMode: 'Fixed',
+            trnArndTime: this.trnArndTime,
+            showTokenId: false
+        };
+        this.provider_services.setWaitlistMgr(postData)
+            .subscribe(
+                () => {
+                    this.getWaitlistMgr();
+                    this.is_data_chnge = 0;
+                    this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                },
+                error => {
+                    this.is_data_chnge = 0;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+    }
+    cancelChange() {
+        this.is_data_chnge = 0;
+        this.getWaitlistMgr();
+    }
+    fixedModeChanged(calcMode) {
+        if (calcMode === 'conventional') {
+            this.is_data_chnge = 0;
+            const postData = {
+                calculationMode: 'Conventional',
+                showTokenId: false
+            };
+            this.provider_services.setWaitlistMgr(postData)
+                .subscribe(
+                    () => {
+                        this.getWaitlistMgr();
+                    });
+            this.isManualMode = false;
+        } else {
+            this.isManualMode = true;
+            this.trnArndTime = 0;
+        }
     }
 }

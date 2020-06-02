@@ -91,7 +91,7 @@
                                     </div>
                                 </ng-container>
                                 <div class="lt0"
-                                    *ngIf="waitlist.waitlistStatus != 'cancelled' && waitlist.calculationMode == 'NoCalc' && waitlist.token">
+                                    *ngIf="waitlist.waitlistStatus != 'cancelled'">
                                     <span *ngIf="waitlist.personsAhead === 0"> {{first_person}}</span>
                                     <span *ngIf="waitlist.personsAhead === 1"> <span
                                             class="forwhom">{{waitlist.personsAhead}}</span>{{one_person_ahead}} </span>
@@ -624,7 +624,7 @@
                                         </sup>
                                     </div>
                                     <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
-                                        <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
+                                        <div style="display: block;" class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                             <!-- <div class="o-now" *ngIf="loc.opennow">{{open_now_cap}}</div> -->
                                             <div class="timing"
                                                 *ngIf="loc['calculationMode']!='NoCalc' && loc['estimatedtime_det']['caption']">
@@ -632,9 +632,9 @@
                                                 <span class="time-data">{{loc['estimatedtime_det']['time']}}
                                                 </span>
                                             </div>
-                                            <div *ngIf="loc['calculationMode']=='NoCalc' && loc['showToken']">
+                                            <div>
                                                 <div *ngIf="loc['personAhead']">
-                                                    <div class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow">
+                                                    <div class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
                                                         <span class="est-time"> Next Available Time:</span>
                                                         <span class="time-data">
                                                             {{loc['estimatedtime_det']['nextAvailDate']}} </span>
@@ -646,7 +646,7 @@
                                                         {{one_person_ahead}}</span>
                                                 </div>
                                                 <div style="font-weight: 600" *ngIf="loc['personAhead'] === 0">
-                                                    <div class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow">
+                                                    <div class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow && loc['calculationMode']=='NoCalc' && loc['showToken']">
                                                         <span class="est-time"> Next Available Time:</span>
                                                         <span class="time-data">
                                                             {{loc['estimatedtime_det']['nextAvailDate']}} </span>

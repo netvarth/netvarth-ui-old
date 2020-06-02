@@ -8994,7 +8994,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .coming-soon {
   font-weight: 600;
-  color: #80808082;
+  color: #008000;
   font-style: italic;
   font-size: x-small;
   margin-left: 10px;
@@ -9028,4 +9028,10 @@ max-width: 350px !important;
 /* min-width: 350px !important; */
 min-height: 425px !important;
 max-height: 425px !important; 
+}
+.wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+  background-color: #29b6f6 !important;
+}
+.wtmgr .mat-checkbox-disabled .mat-checkbox-label {
+  color: black !important;
 }

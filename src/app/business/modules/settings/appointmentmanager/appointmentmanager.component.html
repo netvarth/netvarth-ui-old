@@ -4,53 +4,83 @@
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Appointments
                             <mat-slide-toggle [(ngModel)]="createappointment_status"
                                 (change)="handle_appointmentPresence($event)">
-                            </mat-slide-toggle> &nbsp;{{createappointment_statusstr}}
-                            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
-                        </label>
+                            </mat-slide-toggle> &nbsp;{{createappointment_statusstr}} -->
+            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
+            <!-- </label>
                         <div class="form-level-settings"> Enable "Accept Appointments" here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
                                 More</a></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Appointments
                             <mat-slide-toggle [(ngModel)]="apptlist_status"
                                 (change)="handle_apptliststatus($event)">
-                            </mat-slide-toggle>&nbsp;{{apptlist_statusstr}}
-                            <!-- <div class="onoff">{{apptlist_statusstr}}</div> -->
-                            <div class="form-level-settings">Set up same day appointment here<a class="learnmore-pointer"
+                            </mat-slide-toggle>&nbsp;{{apptlist_statusstr}} -->
+            <!-- <div class="onoff">{{apptlist_statusstr}}</div> -->
+            <!-- <div class="form-level-settings">Set up same day appointment here<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
                                 More</a></div>
                         </label>
                    </div>
                 </div>
-            </div> 
+            </div>  -->
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Future Appointments
                             <mat-slide-toggle [(ngModel)]="futureDateApptlist"
                                 (change)="handle_futureapptliststatus($event)">
-                            </mat-slide-toggle>&nbsp;{{futureapptlist_statusstr}}
-                            <!-- <div class="onoff">{{futureapptlist_statusstr}}</div> -->
-                            <div class="form-level-settings">Set up future appointment here<a class="learnmore-pointer"
+                            </mat-slide-toggle>&nbsp;{{futureapptlist_statusstr}} -->
+            <!-- <div class="onoff">{{futureapptlist_statusstr}}</div> -->
+            <!-- <div class="form-level-settings">Set up future appointment here<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-appointments', $event)">Learn
                                 More</a></div>
                         </label>
                    </div>
                 </div>
-            </div> 
+            </div>  -->
+            <div class="row">
+                <div class="card pos">
+                    <div style="margin-bottom: 10px">
+                        <h4>Appointment Manager
+                            <mat-slide-toggle [(ngModel)]="createappointment_status"
+                                (change)="handle_appointmentPresence($event)">
+                            </mat-slide-toggle> &nbsp;{{createappointment_statusstr}}
+                        </h4>
+                    </div>
+
+                    <div class="">
+                        <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online appointments
+                        </div>
+                        <div>
+                            <mat-checkbox [checked]="apptlist_status" [(ngModel)]="apptlist_status"
+                                (change)="handle_apptliststatus($event)">
+                                Accept online appointments for today
+                            </mat-checkbox>
+                        </div>
+                        <div>
+                            <mat-checkbox [checked]="futureDateApptlist" [(ngModel)]="futureDateApptlist"
+                                (change)="handle_futureapptliststatus($event)">
+                                Accept online appointments for future
+                            </mat-checkbox>
+                            <div class="mgn-lt-25" style="font-size: small;">We will allow up to 90 days</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
             <div class="row">
                 <div class="card p0">

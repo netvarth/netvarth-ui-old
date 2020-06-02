@@ -5,25 +5,24 @@
 <section>
     <div class="content w-manager">
         <div class="col-md-12 no-padding-small" *ngIf="waitlist_manager != null">
-            <div class="row">
+
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Accept Check-Ins
                             <mat-slide-toggle [(ngModel)]="waitlist_status"
                                 (change)="handleCheckinPresence($event)">
-                            </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
-                            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
-                        </label>
-                        
+                            </mat-slide-toggle> &nbsp;{{waitlist_statusstr}} -->
+            <!-- <div class="onoff">{{createappointment_statusstr}}</div> -->
+            <!-- </label>
                         <div class="form-level-settings"> Enable "Accept Check-Ins" here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
                                 More</a></div>
                         <label class="mgn-up-20">Walk-in Check-Ins always enabled</label>
                     </div>
                 </div>
-            </div>
-           
-            <div class="row">
+            </div> -->
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Check-Ins
@@ -36,9 +35,8 @@
                         </label>
                    </div>
                 </div>
-            </div> 
-
-            <div class="row">
+            </div>  -->
+            <!-- <div class="row">
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Same Day Online Future Check-Ins
@@ -51,7 +49,9 @@
                         </label>
                    </div>
                 </div>
-            </div>
+            </div> -->
+
+
             <!-- <div class="row">
                 <div class="card p0">
                     <span (click)="goLocation()" class="b-link">
@@ -74,14 +74,16 @@
                     </span>
                 </div>
             </div> -->
-            <div class="row">
+
+            <!-- <div class="row">
                 <div class="card p0" *ngIf="loading">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
-                <div class="card p0" *ngIf="!loading">
-                    <!-- <div class="copy"> -->
-                        <!-- <div class="row"> -->
-                            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                <div class="card p0" *ngIf="!loading"> -->
+
+            <!-- <div class="copy"> -->
+            <!-- <div class="row"> -->
+            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12">
                                 <label>Accept Check-Ins &nbsp;&nbsp;
                                     <mat-slide-toggle [(ngModel)]="waitlist_status"
                                         (change)="handleCheckinPresence($event)">
@@ -91,10 +93,10 @@
                                         id="customer-help" (click)="learnmore_clicked('accept-checkins', $event)">Learn
                                         More</a></div>                                
                             </div> -->
-                            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+            <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 mgn-up-20">
                                 <label>Online Check-Ins</label>
                             </div> -->
-                            <!-- <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
+            <!-- <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
                                 style="margin-left: 10px; display: grid">
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
                                     (change)="handle_waitliststatus($event)">Same Day
@@ -104,10 +106,156 @@
                                 </mat-checkbox>
                                 Walk-in Check-Ins always enabled
                             </div> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
                     </app-provider-waitlist-online-checkin>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="card pos wtmgr">
+                    <div style="margin-bottom: 10px">
+                        <h4>QManager
+                            <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handleCheckinPresence($event)">
+                            </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
+                        </h4>
+                    </div>
+                    <div class="mgn-bt-30">
+                        <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
+                        <mat-radio-group [(ngModel)]="qSystem">
+                            <mat-radio-button class="mgn-rt-10" [value]="'token'"
+                                (change)="handleModeSelection('token')">Token system
+                            </mat-radio-button>
+                            <mat-radio-button class="" [value]="'fifo'" (change)="handleModeSelection('fifo')">Virtual
+                                queue system
+                            </mat-radio-button>
+                            <i [matTooltip]="'Virtual Queue System (First-In-First-Out waitlist System)'"
+                                class="material-icons pointer-cursor" style="font-size: 1rem;">help</i>
+                        </mat-radio-group>
+                    </div>
+
+                    <div *ngIf="qSystem=='fifo'">
+                        <div class="mgn-bt-20">
+                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your patients can see</div>
+                            <div class="mgn-bt-5 col-md-12 col-xs-12 col-sm-12 no-padding">
+                                <mat-checkbox [checked]="true" [disabled]="true">
+                                    Show waiting time
+                                </mat-checkbox>
+                                <div class="mgn-lt-20">
+                                    <div class="mgn-bt-10"> Calculate estimated waiting time based on</div>
+                                    <mat-radio-group [(ngModel)]="calcMode">
+                                        <mat-radio-button
+                                            class="mgn-lt-5 col-xs-12 col-sm-12 col-md-12 no-padding mgn-bt-5"
+                                            [value]="'conventional'" (change)="fixedModeChanged('conventional')">
+                                            Conventional waiting time calculation
+                                            <i [matTooltip]="'Virtual Queue System (First-In-First-Out waitlist System)'"
+                                                class="material-icons pointer-cursor" style="font-size: 1rem;">help</i>
+                                        </mat-radio-button>
+                                        <mat-radio-button
+                                            class="mgn-lt-5 col-xs-3 col-sm-2 col-md-1 no-padding mgn-rt-10"
+                                            [value]="'manual'" (change)="fixedModeChanged('manual')">
+                                            Manual
+                                        </mat-radio-button>
+                                        <span *ngIf="isManualMode"><input type="number" min="0" max="999" maxlength="3"
+                                                class="number-ip-sm mgn-lt-5" (keyup)="inputChange()"
+                                                [(ngModel)]="trnArndTime" (change)="inputChange()">
+                                            <span class='mins mgn-lt-5'>Minutes</span>
+                                            <span class="jd_btn_spn mgn-lt-5" *ngIf="is_data_chnge===1"><button
+                                                    type="button" (click)="cancelChange()"
+                                                    class="jd-btn bt2">Reset</button>
+                                                <button (click)="updateManualMode()" type="button" class="jd-btn bt1"
+                                                    [disabled]="trnArndTime == null">save</button>
+                                            </span>
+                                        </span>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [checked]="true" [disabled]="true">
+                                    Number of persons ahead
+                                </mat-checkbox>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [disabled]="true">
+                                    Sequence/Priority number in queue
+                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [disabled]="true">
+                                    Queue check-in barcode
+                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [disabled]="true">
+                                    Jaldee check status link
+                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online queue check-in
+                            </div>
+                            <div>
+                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                    (change)="handle_waitliststatus($event)">
+                                    Allow online check-in for today
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                    (change)="handleFuturewaitlist($event)">
+                                    Allow online check-in for future
+                                </mat-checkbox>
+                                <div class="mgn-lt-25" style="font-size: small;">We will allow up to 90 days</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="qSystem=='token'">
+                        <div class="mgn-bt-20">
+                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your patients can see</div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [checked]="true" [disabled]="true">
+                                    Token number
+                                </mat-checkbox>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [checked]="true" [disabled]="true">
+                                    Number of persons ahead
+                                </mat-checkbox>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox (change)="setWaitingTime($event)" [checked]="est_time">
+                                    Estimated waiting time
+                                </mat-checkbox>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [disabled]="true">
+                                    Queue check-in barcode
+                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                            </div>
+                            <div class="mgn-bt-5">
+                                <mat-checkbox [disabled]="true">
+                                    Jaldee check status link
+                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online tokens </div>
+                            <div>
+                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                    (change)="handle_waitliststatus($event)">
+                                    Issue tokens for today
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                    (change)="handleFuturewaitlist($event)">
+                                    Issue tokens for future
+                                </mat-checkbox>
+                                <div class="mgn-lt-25" style="font-size: small;">We will allow up to 90 days</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">

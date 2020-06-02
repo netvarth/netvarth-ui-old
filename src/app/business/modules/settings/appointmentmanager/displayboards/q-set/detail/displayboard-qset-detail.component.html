@@ -207,7 +207,7 @@
                     <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
-                                noEntriesFoundLabel="no matching queue found">
+                                noEntriesFoundLabel="no matching schedule found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, 'SCHEDULE')">
