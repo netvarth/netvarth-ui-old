@@ -71,35 +71,35 @@ export class CallingModesComponent implements OnInit {
         }
         const isMobile = {
             Android: function () {
-              return navigator.userAgent.match(/Android/i);
+                return navigator.userAgent.match(/Android/i);
             },
             BlackBerry: function () {
-              return navigator.userAgent.match(/BlackBerry/i);
+                return navigator.userAgent.match(/BlackBerry/i);
             },
             iOS: function () {
-              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
             },
             Opera: function () {
-              return navigator.userAgent.match(/Opera Mini/i);
+                return navigator.userAgent.match(/Opera Mini/i);
             },
             Windows: function () {
-              return navigator.userAgent.match(/IEMobile/i);
+                return navigator.userAgent.match(/IEMobile/i);
             },
             any: function () {
-              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
             }
-          };
-          if (isMobile.Android()) {
-            console.log('is is android')
+        };
+        if (isMobile.Android()) {
+            console.log('is is android');
             this.is_android = true;
-          } else if (isMobile.iOS()) {
-            console.log('is is ios')
+        } else if (isMobile.iOS()) {
+            console.log('is is ios');
             this.is_ios = true;
-          } else {
-            console.log('is is others')
+        } else {
+            console.log('is is others');
             this.is_web = true;
-          }
-          this.getMeetingDetails();
+        }
+        this.getMeetingDetails();
     }
     selectHeadsup() {
         if (this.callingModes !== 'WhatsApp') {
@@ -147,10 +147,10 @@ export class CallingModesComponent implements OnInit {
         };
         this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
-                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                  setTimeout(() => {
-                      this.api_success = '';
-                  }, 4000);
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                    this.api_success = '';
+                }, 5000);
             }
             );
     }
@@ -166,6 +166,9 @@ export class CallingModesComponent implements OnInit {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                    this.api_success = '';
+                }, 5000);
             });
     }
     apptTeleserviceJoinLink() {
@@ -180,6 +183,9 @@ export class CallingModesComponent implements OnInit {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                    this.api_success = '';
+                }, 5000);
             });
     }
     changeWaitlistStatus(qdata, action) {
@@ -228,16 +234,16 @@ export class CallingModesComponent implements OnInit {
         };
         if (this.data.type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.data.uuid).
-            subscribe((meetingdata) => {
-                this.meetlink_data = meetingdata;
-                this.starting_url = this.meetlink_data.startingUl;
-            });
+                subscribe((meetingdata) => {
+                    this.meetlink_data = meetingdata;
+                    this.starting_url = this.meetlink_data.startingUl;
+                });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.data.uuid).
-            subscribe((meetingdata) => {
-                this.meetlink_data = meetingdata;
-                this.starting_url = this.meetlink_data.startingUl;
-            });
+                subscribe((meetingdata) => {
+                    this.meetlink_data = meetingdata;
+                    this.starting_url = this.meetlink_data.startingUl;
+                });
         }
     }
     launchWhtsap() {

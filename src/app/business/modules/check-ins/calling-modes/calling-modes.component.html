@@ -67,52 +67,57 @@
     </button>
 </h1>
 <div *ngIf="step === 1">
-<mat-dialog-content>
-    <div class="form-group" style="padding-left: 15px;">
-        <div class="border-style locate-customer">
-            <div  *ngIf="callingModes === 'WhatsApp'">
-                <span *ngIf="!is_web" class="btn-primary-n tele-btn">
-                    <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                    <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
-                    <a style="padding-left: 20px;" target="_blank" [href]="starting_url">Launch WhatsApp</a>
-                </span>
-                <span *ngIf="is_web" class="btn-primary-n tele-btn" (click)="launchWhtsap()">
-                    <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                    <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
-                    <span style="padding-left: 20px;">Launch WhatsApp</span>
-                </span>
+    <mat-dialog-content>
+        <div class="form-group" style="padding-left: 15px;">
+            <div class="border-style locate-customer">
+                <div *ngIf="callingModes === 'WhatsApp'">
+                    <span *ngIf="!is_web" class="btn-primary-n tele-btn">
+                        <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                        <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
+                        <a style="padding-left: 20px;" target="_blank" [href]="starting_url">Launch WhatsApp</a>
+                    </span>
+                    <span *ngIf="is_web" class="btn-primary-n tele-btn" (click)="launchWhtsap()">
+                        <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                        <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
+                        <span style="padding-left: 20px;">Launch WhatsApp</span>
+                    </span>
+                </div>
+                <div *ngIf="callingModes !== 'WhatsApp'">
+                    <span class="btn-primary-n tele-btn">
+                        <img src="https://img.icons8.com/color/16/000000/zoom.png" />
+                        <a style="padding-left: 10px;" target="_blank" [href]="starting_url">Launch Zoom</a>
+                    </span>
+                </div>
+                <div class="coupon-outer"><a class="custId-cursor" (click)="meetingDetails()">Meeting Details</a></div>
             </div>
-            <div *ngIf="callingModes !== 'WhatsApp'">
-            <span class="btn-primary-n tele-btn">
-                <img src="https://img.icons8.com/color/16/000000/zoom.png"/>
-                <a style="padding-left: 10px;" target="_blank" [href]="starting_url">Launch Zoom</a>
-            </span>
-            </div>
-            <div class="coupon-outer"><a class="custId-cursor" (click)="meetingDetails()">Meeting Details</a></div>
+            <div *ngIf="show_note">You are using web browser.Please use app or mobile browser to launch WhatsApp</div>
         </div>
-        <div *ngIf="show_note">You are using web browser.Please use app or mobile browser to launch WhatsApp</div>
-    </div>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <div>
-        <i class="fa fa-bell-o" aria-hidden="true" style="color: #afaf0f;"></i> <a class="tspace custId-cursor" (click)="reminder()">Reminder</a>
-    </div>
-    <div style="padding-left: 320px;">
-        <i class="fa fa-hourglass-half" aria-hidden="true" style="color: chocolate;"></i> <a class="tspace custId-cursor" (click)="waitingFor()">Waiting for you!</a>
-    </div>
-</mat-dialog-actions>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div style="width: 100%;padding: 20px;">
+            <div class="pull-left">
+                <i class="fa fa-bell-o" aria-hidden="true" style="color: #afaf0f;"></i> <a class="tspace custId-cursor"
+                    (click)="reminder()">Reminder</a>
+            </div>
+            <div class="pull-right">
+                <i class="fa fa-hourglass-half" aria-hidden="true" style="color: chocolate;"></i> <a
+                    class="tspace custId-cursor" (click)="waitingFor()">Waiting for you!</a>
+            </div>
+        </div>
+    </mat-dialog-actions>
 </div>
 <div *ngIf="step === 2">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading" aria-hidden="true"></i>Back</button>
+        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
+                aria-hidden="true"></i>Back</button>
         <div class="example-full-width" style="padding-top: 30px;">
             <div class="tspace"><span style="font-size: x-large;">Reminder</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
             <div class="telemode-msg">Message to Consumer</div>
             <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
-          </mat-form-field>
-          <div class="mgtop40 form-group">
+        </mat-form-field>
+        <div class="mgtop40 form-group">
             Send message via
             <div class="coupon-outer">
                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
@@ -132,15 +137,16 @@
 </div>
 <div *ngIf="step === 3">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading" aria-hidden="true"></i>Back</button>
+        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
+                aria-hidden="true"></i>Back</button>
         <div class="example-full-width" style="padding-top: 30px;">
             <div class="tspace"><span style="font-size: x-large;">Waiting for you!</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
             <div class="telemode-msg">Message to Consumer</div>
             <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
-          </mat-form-field>
-          <div class="mgtop40 form-group">
+        </mat-form-field>
+        <div class="mgtop40 form-group">
             Send message via
             <div class="coupon-outer">
                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
@@ -155,12 +161,13 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button type="button" mat-dialog-close class="cs-btn bt1" (click)="sendMessage()">Send</button>
+        <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
     </mat-dialog-actions>
 </div>
 <div *ngIf="step === 4">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading" aria-hidden="true"></i>Back</button>
+        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
+                aria-hidden="true"></i>Back</button>
         <div class="example-full-width" style="padding-top: 30px;">
             <div><span style="font-size: x-large;">Meeting Details</span></div>
         </div>
@@ -190,4 +197,5 @@
         </div>
     </mat-dialog-content>
 </div>
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>
