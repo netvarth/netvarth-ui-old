@@ -39,7 +39,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
 
         {
             url: '/provider/settings/appointmentmanager',
-            title: 'Appointment Manager'
+            title: 'Jaldee Appointment'
         },
 
         {

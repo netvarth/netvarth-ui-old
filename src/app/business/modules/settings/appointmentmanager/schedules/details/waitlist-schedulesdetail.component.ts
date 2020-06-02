@@ -39,7 +39,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     },
     {
       url: '/provider/settings/appointmentmanager',
-      title: 'Appointment Manager'
+      title: 'Jaldee Appointment'
     },
     {
       url: '/provider/settings/appointmentmanager/schedules',

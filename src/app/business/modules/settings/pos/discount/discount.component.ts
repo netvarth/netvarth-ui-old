@@ -30,7 +30,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
       title: 'Settings'
     },
     {
-      title: 'Billing/POS',
+      title: 'Jaldee Billing',
       url: '/provider/settings/pos'
     },
     {

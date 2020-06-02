@@ -27,7 +27,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Appointment Manager',
+            title: 'Jaldee Appointment',
             url: '/provider/settings/appointmentmanager'
         },
         {

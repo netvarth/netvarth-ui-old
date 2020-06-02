@@ -16,7 +16,7 @@ export class POSComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Billing/POS',
+      title: 'Jaldee Billing',
       url: '/provider/settings/pos'
     }
   ];

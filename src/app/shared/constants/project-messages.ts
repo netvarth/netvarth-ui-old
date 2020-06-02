@@ -1008,7 +1008,7 @@ export const Messages = {
   'DATE_TO_CAP': 'Date To',
 
   // App-ynw_provider-components-provider-settings
-  'WAITLIST_MANAGE_CAP': 'QManager',
+  'WAITLIST_MANAGE_CAP': 'Jaldee QManager',
   'ACCEPT_ONLINE_CAP': 'Accept Online',
   'SETTINGS_CAP': 'Settings',
   'LOCATIONS_CAP': 'Locations',

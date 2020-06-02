@@ -40,7 +40,7 @@ export class DiscountDetailsComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Billing/POS',
+      title: 'Jaldee Billing',
       url: '/provider/settings/pos'
     },
     {

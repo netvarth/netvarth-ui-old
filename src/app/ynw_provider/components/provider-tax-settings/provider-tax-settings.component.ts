@@ -18,7 +18,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Payments',
+            title: 'Jaldee Pay',
             url: '/provider/settings/payments'
         },
         {

@@ -14,7 +14,7 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings"><a>{{frm_mis_cap}}</a></li>
+                                <li class="form-level-settings"><a>Set up and manage your locations, departments and more</a></li>
                                 <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{locName}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
@@ -164,7 +164,7 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">QManager <i
+                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager <i
                                     class="fa fa-gears fl-right lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
@@ -231,7 +231,7 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
-                                {{appointmentmanager_cap}} <i class="fa fa-gears fl-right lnk"></i></h4>
+                                Jaldee Appointment  <i class="fa fa-gears fl-right lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
@@ -372,7 +372,7 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="billposTooltip">{{billing_cap}} <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltip]="billposTooltip">Jaldee Billing <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
@@ -421,10 +421,11 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="payments">
-                                Payments <i class="fa fa-gears fl-right lnk"></i></h4>
+                                Jaldee Pay <i class="fa fa-gears fl-right lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
+                                <li class="form-level-settings"><a>Set up and manage your banking details.</a></li>
                                 <li (click)="redirecTo('payments')"><a class="pointer-cursor"><span class="lnk setings">Jaldee Pay<span
                                             class="pull-right">
                                             <!-- <mat-slide-toggle [(ngModel)]="payment_status"

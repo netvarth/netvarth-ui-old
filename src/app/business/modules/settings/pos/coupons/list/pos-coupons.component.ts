@@ -45,7 +45,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
-      title: 'Billing/POS',
+      title: 'Jaldee Billing',
       url: '/provider/settings/pos'
     },
     {

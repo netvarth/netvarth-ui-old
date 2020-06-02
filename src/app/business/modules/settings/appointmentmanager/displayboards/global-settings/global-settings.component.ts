@@ -35,7 +35,7 @@ export class GlobalSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Appointment Manager',
+            title: 'Jaldee Appointment',
             url: '/provider/settings/appointmentmanager'
         },
         {

@@ -16,7 +16,7 @@ export class PaymentSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Payments'
+            title: 'Jaldee Pay'
         }
     ];
     jaldee_pay_cap: string;
