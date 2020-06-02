@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-displayboards',
@@ -262,7 +263,7 @@ export class DisplayboardsComponent implements OnInit {
     }
     goDisplayboardLayoutDetails(layout, source?) {
         if (source) {
-            window.open('#/displayboard/' + layout.id, '_blank');
+            window.open(projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl', '_blank');
         } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { id: layout.id }

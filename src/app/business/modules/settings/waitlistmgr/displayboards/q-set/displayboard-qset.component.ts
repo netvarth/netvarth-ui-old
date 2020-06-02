@@ -10,31 +10,12 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 })
 export class DisplayboardQSetComponent implements OnInit {
     refresh = false;
-    // breadcrumb_moreoptions: any = [];
-    // breadcrumbs = [
-    //     {
-    //         title: 'Settings',
-    //         url: '/provider/settings'
-    //     },
-    //     {
-    //         title: Messages.WAITLIST_MANAGE_CAP,
-    //         url: '/provider/settings/q-manager'
-    //     },
-    //     {
-    //         title: 'Queue Statusboards',
-    //         url: '/provider/settings/q-manager/displayboards'
-    //     },
-    //     {
-    //         title: 'Queue-Set'
-    //     }
-    // ];
     api_loading: boolean;
     board_list: any = [];
     domain: any;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
     @Input() source;
     @Output() idSelected = new EventEmitter<any>();
-
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     constructor(
         private router: Router,
@@ -44,9 +25,6 @@ export class DisplayboardQSetComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.breadcrumb_moreoptions = {
-        //     'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        // };
         this.getDisplayboardQsets();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -81,9 +59,7 @@ export class DisplayboardQSetComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
     }
-     addQSet() {
-        //  this.router.navigate(['provider', 'settings',  'q-manager',
-        //  'displayboards', 'q-set', 'add']);
+    addQSet() {
         const actionObj = {
             action: 'add',
             id: null,
@@ -92,24 +68,14 @@ export class DisplayboardQSetComponent implements OnInit {
         this.idSelected.emit(actionObj);
     }
     editDisplayboardQSet(board) {
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { id: board.id }
-        // };
         const actionObj = {
             action: 'edit',
             id: board.id,
             source: 'QLIST'
         };
         this.idSelected.emit(actionObj);
-        // this.router.navigate(['provider', 'settings', 'q-manager',
-        //     'displayboards', 'q-set', 'edit'], navigationExtras);
     }
     goDisplayboardQSetDetails(board) {
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { id: board.id }
-        // };
-        // this.router.navigate(['provider', 'settings',  'q-manager',
-        // 'displayboards', 'q-set', 'view'], navigationExtras);
         const actionObj = {
             action: 'view',
             id: board.id

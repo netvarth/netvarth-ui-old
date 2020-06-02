@@ -2,10 +2,10 @@
     <div class="mgn-up-5 mgn-bt-5 brd-bt" *ngIf="isContainer">
         <div class="branch-sp">
             <div class="col-md-12 no-padding">
-                <div class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="gPosition=='RIGHT'?'pull-right':'pull-left'">
-                    <img [src] ="glogo" width="{{gLogoWidth}}" height="{{gLogoHeight}}" alt="Image" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"/>
+                <div *ngIf="glogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="gPosition=='RIGHT'?'pull-right':'pull-left'">
+                    <img  [src] ="glogo" width="{{gLogoWidth}}" height="{{gLogoHeight}}" alt="Image" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"/>
                 </div>
-                <div class="col-md-10 col-sm-10 col-xs-9 no-padding-small " [innerHTML]="qBoardGroupTitle">                   
+                <div class="" [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': glogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': glogo!='' } " [innerHTML]="qBoardGroupTitle">                   
                 </div>
             </div>
         </div>
@@ -13,11 +13,11 @@
     </div>
     <div class="mgn-up-5 mgn-bt-5">
         <div class="branch-sp">
-            <div class="col-md-12 no-padding"> 
-                <div class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'">
+            <div class="col-md-12 no-padding">
+                <div *ngIf="blogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'">
                     <img [src] ="blogo" width="{{bLogoWidth}}" height="{{bLogoHeight}}" alt="Image" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"/>
                 </div>
-                <div class="col-md-10 col-sm-10 col-xs-9 no-padding-small" [innerHTML]="qBoardTitle">
+                <div class="" [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': blogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': blogo!=''}" [innerHTML]="qBoardTitle">
                 </div>
             </div>
         </div>

@@ -116,16 +116,6 @@ export class GlobalSettingsComponent implements OnInit {
             });
         }
     }
-    // onFileSelected(file: FileList) {
-    //     this.fileToUpload = file.item(0);
-    //     const reader = new FileReader();
-    //     reader.onload = (event: any) => {
-    //         this.imageUrl = event.target.result;
-    //         this.is_image = true;
-    //     };
-    //     reader.readAsDataURL(this.fileToUpload);
-    // }
-
     imageSelect(input) {
         this.success_error = null;
         this.qboardLogo = '';
@@ -221,8 +211,6 @@ export class GlobalSettingsComponent implements OnInit {
                             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
                 }
-                console.log(propertiesDet);
-
             } else {
                 this.api_loading = false;
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });

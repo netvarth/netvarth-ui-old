@@ -1,11 +1,3 @@
-<!-- <section>
-    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
-<!-- <section>
-    <div class="content comn-cls loc-list">
-        <div class="col-md-12 no-padding-small"> -->
-<!-- <div class="row"> -->
 <div class="col-md-12 no-padding" *ngIf="!api_loading">
     <div class="card no-padding display-board">
         <div class="copy">
@@ -17,23 +9,13 @@
                                     class="bold fa fa-angle-left"></i><span class="backicon">QBoard</span></span>
                         </a>
                     </li>
-                    <!-- <li class="dropdown notifications-menu pull-right" (click)="addQSet()">
-                            <mat-panel-description class="acc-plus-btn">
-                                <button mat-icon-button>
-                                    <mat-icon>{{add_circle_outline}}</mat-icon>
-                                </button>
-                            </mat-panel-description>
-                        </li> -->
                     <li class="dropdown notifications-menu pull-right">
-                        <!-- <div class="title">queue board Criterias</div> -->
-
                         <a (click)="addQSet()" class="dropdown-toggle navbar-item-color bold pointer-cursor">
                             <span>
                                 <i class="fa fa-plus"></i> QBoard query
                             </span>
                         </a>
                     </li>
-
                 </ul>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="board_list.length == 0">
@@ -47,17 +29,8 @@
                     <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                </span>
-                <!-- <h3 (click)="goDisplayboardQSetDetails(board)" class="pointer-cursor"> {{board.displayName |
-                            capitalizeFirst}}</h3> -->
-                <h3 class="st-brd-title"> {{board.displayName |
-                                                                capitalizeFirst}}</h3>
-                <!-- <div class="c-ot m0">
-                                        <div class="item" style="width: 100%;">
-                                            <span class="" *ngFor="let fields of board.statusBoardFor">{{fields.type}}
-                                            </span>
-                                        </div>
-                                    </div> -->
+                </span>              
+                <h3 class="st-brd-title"> {{board.displayName | capitalizeFirst}}</h3>               
                 <mat-menu #appMenu="matMenu">
                     <button mat-menu-item (click)="editDisplayboardQSet(board)">
                         <i class="icon-edit"></i>
@@ -72,7 +45,3 @@
         </div>
     </div>
 </div>
-<!-- </div> -->
-<!-- </div>
-        </div>
-    </section> -->

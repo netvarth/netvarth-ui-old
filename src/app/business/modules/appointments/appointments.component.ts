@@ -346,26 +346,26 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         touchDrag: true,
         pullDrag: false,
         loop: false,
-        autoWidth: false,
-        responsiveClass: true,
-        responsiveBaseElement: '.checkins-owl',
-        responsive: {
-          0: {
-            items: 1
-          },
-          479: {
-            items: 3
-          },
-          768: {
-            items: 4
-          },
-          979: {
-            items: 4
-          },
-          1200: {
-            items: 5
-          }
-        }
+        autoWidth: true,
+        // responsiveClass: true,
+        // responsiveBaseElement: '.checkins-owl',
+        // responsive: {
+        //   0: {
+        //     items: 1
+        //   },
+        //   479: {
+        //     items: 3
+        //   },
+        //   768: {
+        //     items: 4
+        //   },
+        //   979: {
+        //     items: 4
+        //   },
+        //   1200: {
+        //     items: 5
+        //   }
+        // }
       };
     });
   }
@@ -1940,8 +1940,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getServiceList() {
-    const filter = { 'serviceType-neq': 'donationService' };
-    this.provider_services.getServicesList(filter)
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {
           this.services = data;
@@ -2195,11 +2195,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.labels(this.selectedAppt['new']);
     }
-    Object.keys(this.apptSelected).forEach(slot => {
-      for (let i = 0; i < this.apptSelected[slot].length; i++) {
-        if (this.apptSelected[slot][i]) {
-          if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot][i]) === -1) {
-            this.newApptforMsg.push(this.timeSlotAppts[slot][i]);
+    Object.keys(this.apptSelected).forEach(slot1 => {
+      for (let i = 0; i < this.apptSelected[slot1].length; i++) {
+        if (this.apptSelected[slot1][i]) {
+          if (this.newApptforMsg.indexOf(this.timeSlotAppts[slot1][i]) === -1) {
+            this.newApptforMsg.push(this.timeSlotAppts[slot1][i]);
           }
         }
       }

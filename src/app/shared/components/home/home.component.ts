@@ -286,7 +286,7 @@ export class HomeComponent implements OnInit {
     // alert('Clicked learn more');
   }
   doSignuppage() {
-    this.routerobj.navigate(['/provider-home']);
+    this.routerobj.navigate(['/business']);
   }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';

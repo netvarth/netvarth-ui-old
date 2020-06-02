@@ -7,7 +7,6 @@ const routes: Routes = [
     { path: '', component: DisplayboardsComponent},
     { path: 'q-set', loadChildren: () => import('./q-set/displayboard-qset.module').then(m => m.DisplayboardQSetModule) },
     { path: 'global', loadChildren: () => import('./global-settings/global-settings.module').then(m => m.GlobalSettingsModule) },
-    { path: 'containers', loadChildren: () => import('./containers/container.module').then(m => m.ContainerModule) },
     { path: ':id', component: DisplayboardDetailComponent }
 ];
 

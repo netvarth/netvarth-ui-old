@@ -38,28 +38,6 @@ export class DisplayboardDetailComponent implements OnInit {
     /** control for the MatSelect filter keyword multi-selection */
     public qBoardFilterMultictrl: FormControl = new FormControl();
 
-    /** list of banks */
-    //   private banks: Bank[] = [
-    //     {name: 'Bank A (Switzerland)', id: 'A'},
-    //     {name: 'Bank B (Switzerland)', id: 'B'},
-    //     {name: 'Bank C (France)', id: 'C'},
-    //     {name: 'Bank D (France)', id: 'D'},
-    //     {name: 'Bank E (France)', id: 'E'},
-    //     {name: 'Bank F (Italy)', id: 'F'},
-    //     {name: 'Bank G (Italy)', id: 'G'},
-    //     {name: 'Bank H (Italy)', id: 'H'},
-    //     {name: 'Bank I (Italy)', id: 'I'},
-    //     {name: 'Bank J (Italy)', id: 'J'},
-    //     {name: 'Bank K (Italy)', id: 'K'},
-    //     {name: 'Bank L (Germany)', id: 'L'},
-    //     {name: 'Bank M (Germany)', id: 'M'},
-    //     {name: 'Bank N (Germany)', id: 'N'},
-    //     {name: 'Bank O (Germany)', id: 'O'},
-    //     {name: 'Bank P (Germany)', id: 'P'},
-    //     {name: 'Bank Q (Germany)', id: 'Q'},
-    //     {name: 'Bank R (Germany)', id: 'R'}
-    //   ]
-
     /** list of banks filtered by search keyword */
     public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
@@ -70,7 +48,6 @@ export class DisplayboardDetailComponent implements OnInit {
 
     /** Subject that emits when the component has been destroyed. */
     private _onDestroy = new Subject<void>();
-
 
     amForm: FormGroup;
     char_count = 0;
@@ -85,9 +62,6 @@ export class DisplayboardDetailComponent implements OnInit {
     statusse2 = false;
     statussel3 = false;
     showMode = 'DBOARD';
-
-    // showQsets = true;
-    // showQset = false;
     layoutData: any = [];
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     boardSelectedItems: any = {};
@@ -246,21 +220,13 @@ export class DisplayboardDetailComponent implements OnInit {
         let search = this.qBoardFilterMultictrl.value;
         console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
-            //   this.filteredQboardsMulti.next(this.qboard_list.slice());
             this.filteredQboardList = this.qboard_list.slice();
             return;
         } else {
             search = search.toLowerCase();
         }
         this.filteredQboardList = this.qboard_list.filter(qboard => qboard.name.toLowerCase().indexOf(search) > -1);
-        // filter the banks
-        // this.filteredQboardsMulti.next(
-        //   this.qboard_list.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
-        // );
     }
-
-
-
     createRange(number) {
         const items = [];
         for (let i = 0; i < number; i++) {
@@ -288,7 +254,6 @@ export class DisplayboardDetailComponent implements OnInit {
             this.name = this.layoutData.name;
             this.displayName = this.layoutData.displayName;
             this.serviceRoom = this.layoutData.serviceRoom;
-            // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
             const layoutPosition = this.layoutData.layout.split('_');
             this.boardRows = layoutPosition[0];
@@ -311,7 +276,6 @@ export class DisplayboardDetailComponent implements OnInit {
         this.footerSetting = true;
     }
     onSubmit() {
-        // if (!this.qboardSelected) {
         this.metric = [];
         let name = '';
         if (this.displayName) {
@@ -339,9 +303,6 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-            // } else {
-            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-            // }
         }
         if (this.actionparam === 'edit') {
             const post_data = {
@@ -366,53 +327,6 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-        // } else {
-        //     let name = '';
-        //     if (this.displayName) {
-        //         name = this.displayName.trim().replace(/ /g, '_');
-        //     }
-        //     if (this.actionparam === 'add') {
-        //         const post_data = {
-        //             'name': name,
-        //             'layout': '1_1',
-        //             'displayName': this.displayName,
-        //             'interval': this.refreshInterval,
-        //             'sbDetails': this.sbDetailslist
-        //         };
-        //         this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
-        //             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-        //             // this.editLayoutbyId(data);
-        //             // this.actionparam = 'view';
-        //             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-        //         },
-        //             error => {
-        //                 this.api_loading = false;
-        //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //             });
-        //         // } else {
-        //         //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-        //         // }
-        //     }
-        //     if (this.actionparam === 'edit') {
-        //         const post_data = {
-        //             'id': this.layoutData.id,
-        //             'name': name,
-        //             'layout': '1_1',
-        //             'interval': this.refreshInterval,
-        //             'displayName': this.displayName,
-        //             'sbDetails': this.sbDetailslist
-        //         };
-        //         this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
-        //             this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-        //             // this.editLayoutbyId(this.layoutData.id);
-        //             this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-        //         },
-        //             error => {
-        //                 this.api_loading = false;
-        //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //             });
-        //     }
-        // }
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -458,19 +372,12 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     resetApiErrors() {
     }
-    // gotoAddQset() {
-    //     this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
-    // }
-    // nestedQboardSelected(event) {
-    //     this.qboardSelected = event.checked;
-    // }
     clearQboardSelected() {
         this.qBoardFilterMultictrl.reset();
         this.nestedRefreshInterval = '';
     }
     addBtnClicked() {
         this.selectedQboardlist.push({ 'qBoard': this.qBoardFilterMultictrl.value.displayName, 'interval': this.nestedRefreshInterval });
-        // console.log(this.qBoardFilterMultictrl.value);
         this.sbDetailslist.push({ 'sbId': this.qBoardFilterMultictrl.value.id, 'sbInterval': this.nestedRefreshInterval });
         this.clearQboardSelected();
     }

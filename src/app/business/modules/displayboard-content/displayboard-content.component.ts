@@ -27,7 +27,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     boardHeight;
     fullHeight;
     bname;
-    blogo;
+    blogo = '';
     metricElement;
     cronHandle: Subscription;
     @ViewChildren('boardid') private boardstyle;
@@ -63,7 +63,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     bLogoHeight: string;
     gLogoWidth: string;
     gLogoHeight: string;
-    glogo;
+    glogo = '';
     gPosition;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -77,7 +77,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             });
         this.activated_route.queryParams.subscribe(
             queryparams => {
-                this.type = queryparams.type;
+                if (queryparams.type === 'wl') {
+                    this.type = 'waitlist';
+                } else {
+                    this.type = 'appointment';
+                }
             });
     }
     @HostListener('window:resize', ['$event'])
@@ -147,7 +151,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
 
 
     initBoard() {
-        this.provider_services.getDisplayboardAppointment(this.layout_id).subscribe(
+        this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
                 if (displayboard_data.isContainer) {
                     this.inputStatusboards = displayboard_data.containerData;
@@ -338,7 +342,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         if (boardObj.sbId) {
             this.roomName = '';
             this.api_loading = true;
-            this.provider_services.getDisplayboardAppointment(boardObj.sbId).subscribe(
+            this.provider_services.getDisplayboardById_Type(boardObj.sbId, this.type).subscribe(
                 (displayboard_data: any) => {
                     this.roomName = displayboard_data['serviceRoom'];
                     this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
@@ -390,6 +394,21 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     // }
     getFieldValue(field, checkin) {
         let fieldValue = '';
+        if (field.name === 'apptFor') {
+            const lastName = checkin[field.name][0].lastName;
+            const nameLength = lastName.length;
+            const encryptedName = [];
+            let lastname = '';
+            for (let i = 0; i < nameLength; i++) {
+                encryptedName[i] = lastName[i].replace(/./g, '*');
+            }
+            for (let i = 0; i < nameLength; i++) {
+                lastname += encryptedName[i];
+
+            }
+            fieldValue = checkin[field.name][0].firstName + ' ' + lastname;
+        }
+        console.log(field.name);
         if (field.name === 'waitlistingFor') {
             const lastName = checkin[field.name][0].lastName;
             const nameLength = lastName.length;
@@ -416,7 +435,12 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 fieldValue = field.defaultValue;
             }
         } else if (field.name === 'primaryMobileNo') {
-            const full_phone = checkin['waitlistingFor'][0]['primaryMobileNo'];
+            let full_phone = '';
+            if (this.type === 'waitlist') {
+                full_phone = checkin['waitlistingFor'][0]['primaryMobileNo'];
+            } else {
+                full_phone = checkin['apptFor'][0]['primaryMobileNo'];
+            }
             const phLength = full_phone.length;
             const tele = [];
             if (phLength === 10) {
@@ -441,14 +465,29 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
         displayboard.fieldList = fieldlistasc;
         this.selectedDisplayboards[element.position]['board'] = displayboard;
-        const Mfilter = this.setFilterForApi(displayboard);
-        Object.keys(displayboard['sortBy']).forEach(key => {
-            Mfilter[key] = displayboard['sortBy'][key];
-        });
-        this.provider_services.getTodayWaitlist(Mfilter).subscribe(
-            (waitlist) => {
-                this.selectedDisplayboards[element.position]['checkins'] = waitlist;
-            });
+        console.log(displayboard);
+        // const Mfilter = this.setFilterForApi(displayboard);
+        const Mfilter = displayboard.queryString;
+        // let sortp = '';
+        // Object.keys(displayboard['sortBy']).forEach(key => {
+        //     sortp  = key + '=' + displayboard['sortBy'][key];
+        // });
+        // Mfilter = Mfilter + '&' + sortp;/
+        console.log(Mfilter);
+        if (this.type === 'waitlist') {
+            // Mfilter = 'service-eq=5036,5027&queue-eq=9771,9766&sort_token=asc';
+            this.provider_services.getTodayWaitlistFromStringQuery(Mfilter).subscribe(
+                (waitlist) => {
+                    this.selectedDisplayboards[element.position]['checkins'] = waitlist;
+                });
+        } else {
+            // Mfilter = 'service-eq=5036,5027&queue-eq=9771,9766&sort_token=asc';
+            this.provider_services.getTodayAppointmentsFromStringQuery(Mfilter).subscribe(
+                (waitlist) => {
+                    this.selectedDisplayboards[element.position]['checkins'] = waitlist;
+                });
+        }
+
     }
     createRange(number) {
         const items = [];
@@ -457,18 +496,18 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         }
         return items;
     }
-    setFilterForApi(layout) {
-        const api_filter = {};
-        layout.queueSetFor.forEach(element => {
-            if (element.type === 'SERVICE') {
-                api_filter['service-eq'] = element.id;
-            } else if (element.type === 'QUEUE') {
-                api_filter['queue-eq'] = element.id;
-            } else {
-                api_filter['department-eq'] = element.id;
-            }
-            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
-        });
-        return api_filter;
-    }
+    // setFilterForApi(layout) {
+    //     const api_filter = {};
+    //     layout.queueSetFor.forEach(element => {
+    //         if (element.type === 'SERVICE') {
+    //             api_filter['service-eq'] = element.id;
+    //         } else if (element.type === 'QUEUE') {
+    //             api_filter['queue-eq'] = element.id;
+    //         } else {
+    //             api_filter['department-eq'] = element.id;
+    //         }
+    //         api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
+    //     });
+    //     return api_filter;
+    // }
 }

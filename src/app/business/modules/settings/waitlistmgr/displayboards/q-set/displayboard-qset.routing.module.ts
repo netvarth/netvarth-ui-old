@@ -6,8 +6,6 @@ import { DisplayboardQSetDetailComponent } from './detail/displayboard-qset-deta
 const routes: Routes = [
     { path: '', component: DisplayboardQSetComponent},
     { path: ':id', component: DisplayboardQSetDetailComponent }
-    // { path: 'labels', loadChildren: '../../../business/modules/displayboardmgr/labels/displayboard-labels.module#DisplayboardLabelsModule' },
-    // { path: 'list', loadChildren: '../../../business/modules/displayboardmgr/displayboard/displayboards.module#DisplayboardsModule' }
 ];
 
 @NgModule({

@@ -9,8 +9,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../../../shared/modules/common/shared.module';
 import { DisplayboardQSetComponent } from './displayboard-qset.component';
 import { DisplayboardQSetDetailComponent } from './detail/displayboard-qset-detail.component';
-import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.module';
-// import { MatSelectSearchModule } from '../../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
@@ -20,7 +18,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         DisplayboardQSetDetailComponent
     ],
     imports: [
-        // DisplayboardQSetRoutingModule,
         BreadCrumbModule,
         MaterialModule,
         FormMessageDisplayModule,
@@ -30,7 +27,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         CapitalizeFirstPipeModule,
         CommonModule,
         SharedModule,
-        // MatSelectSearchModule,
         NgxMatSelectSearchModule,
         DragDropModule
     ],

@@ -26,14 +26,14 @@ const routes: Routes = [
         canActivate: [AuthGuardProvider]
     },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
-    { path: 'provider-home', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
+    { path: 'business', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
     { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
-    { path: 'provider-home/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
+    { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
         canActivate: [AuthGuardProvider]

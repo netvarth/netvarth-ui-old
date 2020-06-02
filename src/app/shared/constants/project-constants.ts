@@ -563,7 +563,7 @@ export const projectConstants = {
   ],
   APPT_STATUS_BOARD: [
     {
-      'name': 'waitlistingFor',
+      'name': 'apptFor',
       'displayname': 'Customer',
       'label': false,
       'checked': false,
@@ -627,6 +627,6 @@ export const projectConstants = {
     BOTIM: 'Botim',
     IMO: 'Imo'
   },
-  PATH: window.location.host + '/jaldee/#'
+  PATH: window.location.host + '/'
 
 };

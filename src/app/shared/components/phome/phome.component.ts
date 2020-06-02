@@ -320,16 +320,16 @@ export class PhomeComponent implements OnInit {
   //   if
   // }
   doSignuppage() {
-    this.routerobj.navigate(['provider-home/providersignup']);
+    this.routerobj.navigate(['business/providersignup']);
   }
   gotoproducts() {
     const navigationExtras: NavigationExtras = {
       queryParams: { type: 'products' }
     };
-    this.router.navigate(['provider-home'], navigationExtras);
+    this.router.navigate(['business'], navigationExtras);
   }
   doLoginpage() {
-    this.routerobj.navigate(['provider-home/providerlogin']);
+    this.routerobj.navigate(['business/providerlogin']);
   }
   // doForgotPassword() {
   //   const dialogRef = this.dialog.open(ForgotPasswordComponent, {

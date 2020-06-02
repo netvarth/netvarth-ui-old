@@ -228,7 +228,7 @@ export class LoginComponent implements OnInit {
   }
   goBusinessClicked() {
     this.dialogRef.close();
-    this.router.navigate(['/provider-home']);
+    this.router.navigate(['/business']);
   }
 }
 

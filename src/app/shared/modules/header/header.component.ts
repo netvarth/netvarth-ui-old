@@ -539,7 +539,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }, 200);
   }
   providerLinkClicked() {
-    this.router.navigate(['/provider-home']);
+    this.router.navigate(['/business']);
   }
   btnAvailableClicked() {
     this.router.navigate(['provider/settings/q-manager/queues']);
@@ -612,23 +612,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
 gotoPricing() {
-  this.router.navigate(['provider-home','jaldeepricing']);
+  this.router.navigate(['business','jaldeepricing']);
  
 }
 gotocontactus () {
 
-  this.router.navigate(['provider-home','contactus']);
+  this.router.navigate(['business','contactus']);
 }
 gotoproducts(){
   const navigationExtras: NavigationExtras = {
     queryParams: { type: 'products' }
 };
-  this.router.navigate(['provider-home'], navigationExtras);
+  this.router.navigate(['business'], navigationExtras);
 }
 gotosales () {
   const navigationExtras: NavigationExtras = {
     queryParams: { type: 'sales' }
 };
-  this.router.navigate(['provider-home'], navigationExtras);
+  this.router.navigate(['business'], navigationExtras);
 }
 }

@@ -402,8 +402,14 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url, null, filter);
    }
    getTodayWaitlist(filter) {
+      console.log(filter);
       const url = 'provider/waitlist/today/';
       return this.servicemeta.httpGet(url, null, filter);
+   }
+   getTodayWaitlistFromStringQuery(filter) {
+      console.log(filter);
+      const url = 'provider/waitlist/today?' + filter;
+      return this.servicemeta.httpGet(url, null, null);
    }
    getHistroryWaitlist(filter = {}) {
       const url = 'provider/waitlist/history';
@@ -1128,6 +1134,10 @@ export class ProviderServices {
       const url = 'provider/appointment/today';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   getTodayAppointmentsFromStringQuery(filter) {
+      const url = 'provider/appointment/today?' + filter;
+      return this.servicemeta.httpGet(url, null, null);
+   }
    getTodayAppointmentsCount(filter = {}) {
       const url = 'provider/appointment/today/count';
       return this.servicemeta.httpGet(url, null, filter);
@@ -1364,6 +1374,10 @@ export class ProviderServices {
    }
    getDisplayboardAppointment(id) {
       const url = 'provider/appointment/statusBoard/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getDisplayboardById_Type(id, type) {
+      const url = 'provider/' + type + '/statusBoard/' + id;
       return this.servicemeta.httpGet(url);
    }
    getDisplayboardWaitlist(id) {

@@ -408,12 +408,24 @@ export class ConsumerDonationComponent implements OnInit {
     // }
     payuPayment() {
         this.resetApi();
+        if (this.sel_ser) {
+
+        } else {
+            this.sharedFunctionobj.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+            return;
+        }
         let paymentWay;
         paymentWay = 'DC';
         this.donate(paymentWay);
     }
     paytmPayment() {
         this.resetApi();
+        if (this.sel_ser) {
+
+        } else {
+            this.sharedFunctionobj.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+            return;
+        }
         let paymentWay;
         paymentWay = 'PPI';
         this.donate(paymentWay);
