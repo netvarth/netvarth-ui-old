@@ -725,4 +725,8 @@ export class SharedServices {
   consumerApptTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/appointment/' + uuid + '/createmeetingrequest', postdata);
   }
+  getMeetingDetails(uuid) {
+    const path = 'provider/waitlist/' + uuid + '/meetingDetails';
+    return this.servicemeta.httpGet(path);
+  }
 }

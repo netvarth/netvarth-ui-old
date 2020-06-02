@@ -9035,3 +9035,8 @@ max-height: 425px !important;
 .wtmgr .mat-checkbox-disabled .mat-checkbox-label {
   color: black !important;
 }
+.tele-btn {
+  width: fit-content !important;
+  padding: 10px !important;
+  border-color: #1873f2 !important;
+}
