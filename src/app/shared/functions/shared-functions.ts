@@ -1134,13 +1134,19 @@ export class SharedFunctions {
   }
 
   doCancelWaitlist(waitlist, type, cthis?) {
+   let msg;
+    if (type === 'checkin') {
+      msg = 'Check-In';
+    } else if (type === 'appointment') {
+      msg = 'Appointment';
+    }
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': 'Do you want to cancel this Check-In ?',
+          'message': 'Do you want to cancel this ' + msg + '?',
           'heading': 'Confirm',
           'type': 'yes/no'
         }

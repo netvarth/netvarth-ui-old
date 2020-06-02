@@ -99,7 +99,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
-      'title': this.checkin_upper
+      'title': 'Appointment'
     });
   }
   ngOnInit() {

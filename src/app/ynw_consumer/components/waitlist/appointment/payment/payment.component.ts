@@ -16,8 +16,8 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
     breadcrumbs = [
         {
-            title: 'Appointment',
-            url: ''
+            title: 'My Jaldee',
+            url: '/consumer'
         },
         {
             title: 'Payment'
