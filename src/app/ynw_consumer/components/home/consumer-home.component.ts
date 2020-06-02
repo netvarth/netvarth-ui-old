@@ -363,8 +363,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const waitlist of this.waitlists) {
             if(waitlist.service.livetrack){
-              this.differofDistanc = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,waitlist.queue.location.lattitude,waitlist.queue.location.longitude);
-               console.log(this.differceofDistance);
+             // this.differofDistanc = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,waitlist.queue.location.lattitude,waitlist.queue.location.longitude);
+              // console.log(this.differceofDistance);
              }
             this.trackMode[i] = false;
             this.changemode[i] = false;
@@ -481,8 +481,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const appointment of this.appointments) {
             if(appointment.service.livetrack){
-             this.differceofDistance = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,appointment.location.lattitude,appointment.location.longitude);
-              console.log(this.differceofDistance);
+            // this.differceofDistance = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,appointment.location.lattitude,appointment.location.longitude);
+            //  console.log(this.differceofDistance);
             }
             this.trackModeAppt[i] = false;
             this.changemodeAppt[i] = false;

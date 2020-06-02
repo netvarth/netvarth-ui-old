@@ -14,7 +14,7 @@
             <div class="outer banner" *ngIf="loadcomplete.waitlist && waitlists && waitlists.length != 0">
                 <owl-carousel id="wlCarousel" [options]="carouselOne" [carouselClasses]="['owl-theme']"
                     [items]="waitlists">
-                    <div class="item" *ngFor="let waitlist of waitlists; let i=index">
+                    <div class="item checklist" *ngFor="let waitlist of waitlists; let i=index">
                         <div class="header">
                             <div class="lt">
                                 <div class="title" (click)="providerDetail(waitlist.providerAccount)">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="details">
                             <div class="lt">
-                                <div class="lt0" (click)="showcheckindetails(waitlist)">
+                                <div class="lt0 pointlist" (click)="showcheckindetails(waitlist)">
                                     <span class="service">{{waitlist.service.name | capitalizeFirst}}</span> for <span
                                         class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
@@ -170,7 +170,7 @@
                                             </span> -->
                                         </div>
                                     </div>
-                                    <div class="lt0" *ngIf="!waitlist.jaldeeWaitlistDistanceTime  && waitlist.apptStatus === 'checkedIn' && !waitlist.future">
+                                    <div class="lt0" *ngIf="!waitlist.jaldeeWaitlistDistanceTime  && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                             <div >
                                                     <div class="mb5"> You are 10 km away from {{waitlist.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')" aria-hidden="true"></i></span></div>
                                                     <div class="mb5"> Oops you are NOT sharing your arrival time with {{waitlist.providerAccount.businessName}}<span><i class="fa fa-times fl-right" aria-hidden="true"></i></span></div>
@@ -238,7 +238,7 @@
                     <div class="outer banner no-padding" *ngIf="appointments.length != 0">
                         <owl-carousel id="apptCarousel" [options]="carouselAppointments"
                             [carouselClasses]="['owl-theme']" [items]="appointments">
-                            <div class="item" *ngFor="let appointment of appointments; let i=index">
+                            <div class="item apptlist" *ngFor="let appointment of appointments; let i=index">
                                 <div class="header">
                                     <div class="lt">
                                         <div class="title" (click)="providerDetail(appointment.providerAccount)">

@@ -9023,3 +9023,9 @@ padding-right: 0 !important; padding-top: 0 !important;}
 .tele-popup .mat-dialog-title .modal_close i:before {
   font-size: 75% !important;
 }
+.checklist,.apptlist{
+max-width: 350px !important;
+/* min-width: 350px !important; */
+min-height: 425px !important;
+max-height: 425px !important; 
+}
