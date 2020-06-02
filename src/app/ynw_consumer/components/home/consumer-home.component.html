@@ -123,7 +123,7 @@
                                 </div>
                                 <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
                                     <div class="lt0"
-                                        *ngIf="waitlist.jaldeeWaitlistDistanceTime  && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
+                                        *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                         <div>
                                                 <div class="mb5">You are 10 km away from {{waitlist.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'true')" aria-hidden="true"></i></span></div>
                                                 <div class="mb5"> You are sharing your arrival time with {{waitlist.providerAccount.businessName}}<span><i class="fa fa-check fl-right" aria-hidden="true"></i></span></div>
@@ -170,7 +170,7 @@
                                             </span> -->
                                         </div>
                                     </div>
-                                    <div class="lt0" *ngIf="!waitlist.jaldeeWaitlistDistanceTime  && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
+                                    <div class="lt0" *ngIf="!waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                             <div >
                                                     <div class="mb5"> You are 10 km away from {{waitlist.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')" aria-hidden="true"></i></span></div>
                                                     <div class="mb5"> Oops you are NOT sharing your arrival time with {{waitlist.providerAccount.businessName}}<span><i class="fa fa-times fl-right" aria-hidden="true"></i></span></div>
@@ -350,7 +350,7 @@
                                         </div>
                                         <div *ngIf="appointment.apptStatus=='Confirmed'|| 'prepaymentPending'">
                                             <div class="lt0"
-                                                *ngIf="appointment.jaldeeApptDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                                *ngIf="appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                                 <div>
                                                     <div class="mb5"> You are 10 km away from {{appointment.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'true')" aria-hidden="true"></i></span></div>
                                                     <div class="mb5"> You are sharing your arrival time with {{appointment.providerAccount.businessName}}<span><i class="fa fa-check fl-right" aria-hidden="true"></i></span></div>
@@ -398,7 +398,7 @@
                                                     </span> -->
                                                 </div>
                                             </div>
-                                            <div class="lt0" *ngIf="!appointment.jaldeeApptDistanceTime && appointment.apptStatus === 'Confirmed' && !appointment.future">
+                                            <div class="lt0" *ngIf="!appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                             <div >
                                                     <div class="mb5"> You are 10 km away from {{appointment.providerAccount.businessName}}<span><i class="fa fa-refresh fl-right" (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'false')" aria-hidden="true"></i></span></div>
                                                     <div class="mb5"> Oops you are NOT sharing your arrival time with {{appointment.providerAccount.businessName}}<span><i class="fa fa-times fl-right" aria-hidden="true"></i></span></div>
