@@ -225,6 +225,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             {
                 title: 'My Jaldee',
                 url: '/consumer'
+            },
+            {
+                title: 'Appointment'
             }
         ];
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');

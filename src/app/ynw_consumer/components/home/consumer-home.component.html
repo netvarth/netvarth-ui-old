@@ -264,7 +264,7 @@
                                     <div class="rt">
                                         <div class="favourite" *ngIf="checkIfFav(appointment.providerAccount.id)">
                                             <span class="icon-favourite-filled"
-                                                (click)="doDeleteFavProvider(appointment.providerAccount.id)"
+                                                (click)="doDeleteFavProvider(appointment.providerAccount)"
                                                 matTooltip="{{remove_fav_cap}}"></span>
                                         </div>
                                         <div class="favourite" *ngIf="!checkIfFav(appointment.providerAccount.id)">
