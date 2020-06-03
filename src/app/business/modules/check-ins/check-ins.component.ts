@@ -1638,7 +1638,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   qrCodegeneration(valuetogenerate) {
-    this.qr_value = this.path + '/wl/status/' + valuetogenerate.checkinEncId;
+    this.qr_value = this.path + 'wl/status/' + valuetogenerate.checkinEncId;
     this.showQR = true;
   }
   printCheckin(source) {
