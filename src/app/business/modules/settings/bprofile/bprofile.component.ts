@@ -223,6 +223,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   show_passcode = false;
   onlinepresence_status = false;
   onlinepresence_statusstr = '';
+  is_customized = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -889,6 +890,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.editMode = 0;
     }
   }
+  customizeId() {
+    this.is_customized = true;
+    this.editCustomId();
+  }
   deleteCustomId(customId) {
     this.provider_services.removeCustomId(customId).subscribe(
       data => {
@@ -896,6 +901,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         this.normal_customid_show = 2;
       });
     this.customForm.setValue({ 'customid': '' });
+    this.is_customized = false;
   }
   cancelCusUpdt() {
     this.customForm.setValue({ 'customid': '' });
@@ -905,6 +911,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.normal_customid_show = 3;
     }
     this.editMode = 3;
+    this.is_customized = false;
   }
   add_updateCustomId(submit_data) {
     const customId = submit_data.customid;
