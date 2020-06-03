@@ -1340,6 +1340,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;
+    this.clearFilter();
     if (this.open_filter) {
       this.setFilterdobMaxMin();
     }
@@ -2298,7 +2299,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'waitlistMode') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
