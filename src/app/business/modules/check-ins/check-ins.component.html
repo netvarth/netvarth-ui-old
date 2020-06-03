@@ -1138,7 +1138,7 @@
                             <!-- <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService" [matTooltip]="'Generate link'" (click)="generateLink(checkin)">
                               <i class="fa fa-link" aria-hidden="true"></i> </a> -->
                             <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start Teleservice'" (click)="showCallingModes(checkin)">
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
                               <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"

@@ -921,7 +921,7 @@
                             <!-- <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService" [matTooltip]="'Generate link'" (click)="generateLink(appt)">
                               <i class="fa fa-link" aria-hidden="true"></i> </a> -->
                             <a class="statusText btn-play pointer-cursor"
-                              (click)="showCallingModes(appt)"
+                              (click)="showCallingModes(appt, 'Started')"
                               *ngIf="appt.virtualService" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Start Teleservice'">
                               <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>

@@ -2506,7 +2506,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getHistoryCheckinCount();
     // this.getFutureCheckinCount();
   }
-  showCallingModes(modes) {
+  showCallingModes(modes, action) {
+    this.changeWaitlistStatus(modes, action);
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

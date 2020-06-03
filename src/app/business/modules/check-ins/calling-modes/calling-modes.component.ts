@@ -124,11 +124,11 @@ export class CallingModesComponent implements OnInit {
             this.apptTeleserviceJoinLink();
         }
     }
-    selectStarted() {
+    selectCompleted() {
         if (this.data.type === 'checkin') {
-            this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+            this.changeWaitlistStatus(this.data.qdata, 'DONE');
         } else {
-            this.changeWaitlistStatus(this.data.qdata, 'Started');
+            this.changeWaitlistStatus(this.data.qdata, 'Completed');
         }
     }
     sendMessage() {
