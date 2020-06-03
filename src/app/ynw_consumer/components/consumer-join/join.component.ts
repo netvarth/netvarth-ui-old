@@ -76,7 +76,7 @@ export class ConsumerJoinComponent implements OnInit {
   }
   createForm() {
     this.loginForm = this.fb.group({
-      emailId: ['', Validators.pattern(projectConstants.VALIDATOR_MOBILE_AND_EMAIL)],
+      emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERONLY)])],
       password: ['', Validators.compose([Validators.required])],
       first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -296,7 +296,7 @@ export class ConsumerJoinComponent implements OnInit {
                   () => {
                     login_info['firstName'] = this.user_details.userProfile['firstName'];
                     login_info['lastName'] = this.user_details.userProfile['lastName'];
-                    login_info['userName'] =  login_info['firstName'] + ' ' + login_info['lastName'];
+                    login_info['userName'] = login_info['firstName'] + ' ' + login_info['lastName'];
                     this.shared_functions.setLoginData(login_info, login_data, 'consumer');
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.shared_functions.sendMessage(pdata);
@@ -389,16 +389,20 @@ export class ConsumerJoinComponent implements OnInit {
 
   checkAccountExists() {
     this.mobile_num = this.document.getElementById('emailId').value;
-    this.shared_services.consumerMobilenumCheck(this.mobile_num).subscribe((accountExists) => {
-      if (accountExists) {
-        this.phoneExists = true;
-        this.isPhoneValid = true;
-      } else {
-        this.phoneExists = false;
-        this.isPhoneValid = true;
-        this.otpSend();
+    console.log(this.loginForm.valid);
+    console.log(this.loginForm.get('emailId').valid);
+    if (this.mobile_num) {
+      this.shared_services.consumerMobilenumCheck(this.mobile_num).subscribe((accountExists) => {
+        if (accountExists) {
+          this.phoneExists = true;
+          this.isPhoneValid = true;
+        } else {
+          this.phoneExists = false;
+          this.isPhoneValid = true;
+          this.otpSend();
+        }
       }
+      );
     }
-    );
   }
 }

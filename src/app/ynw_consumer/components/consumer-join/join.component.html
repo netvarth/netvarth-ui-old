@@ -1,8 +1,7 @@
 <!-- join Section starts -->
 <form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)">
-    <div class="mat-dialog-title"
-        style="text-align: center;color: #3c8dbc !important;">{{heading}} <button
+    <div class="mat-dialog-title" style="text-align: center;color: #3c8dbc !important;">{{heading}} <button
             mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"><i class="fa fa-window-close"
                 aria-hidden="true"></i></button></div>
     <!-- step 1 for mobile number entering  -->
@@ -14,8 +13,14 @@ onSubmit(loginForm.value)">
                         placeholder="Enter your mobile number" formControlName="emailId" autocomplete="off"
                         (keyup)="handlekeyup($event)">
                 </mat-form-field>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
+                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                     [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
+                </app-field-error-display> -->
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
+                {
+                  'required' : 'Mobile number is required',
+                  'pattern' : 'Invalid mobile number'
+                })">
                 </app-field-error-display>
             </div>
             <!-- Signin Password -->
@@ -31,8 +36,9 @@ onSubmit(loginForm.value)">
             </div>
         </div>
         <div class="mat-dialog-actions">
-            <button class="cust-logpg-submt" *ngIf="!phoneExists" type="submit" mat-button [disabled]="api_loading"
-                (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
+            <button class="cust-logpg-submt" *ngIf="!phoneExists" type="submit" mat-button
+                [disabled]="api_loading || !loginForm.get('emailId').valid" (click)="checkAccountExists()"
+                (keyup)="clearPhoneExists()">
                 <span *ngIf="!api_loading">Ok</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
@@ -61,7 +67,8 @@ onSubmit(loginForm.value)">
             <div class="form-group" *ngIf="!resendViaEmail">
                 <mat-form-field>
                     <input type="text" matInput class="form-control" id="first_name" placeholder="First name"
-                        formControlName="first_name" (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
+                        formControlName="first_name" (keypress)="resetApiErrors()" autocomplete="off"
+                        (blur)="onFieldBlur('first_name')">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
             {
@@ -72,8 +79,9 @@ onSubmit(loginForm.value)">
             </div>
             <div class="form-group" *ngIf="!resendViaEmail">
                 <mat-form-field>
-                    <input type="text" matInput  class="form-control" id="last_name" placeholder="Last name"
-                        formControlName="last_name" autocomplete="off"(keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
+                    <input type="text" matInput class="form-control" id="last_name" placeholder="Last name"
+                        formControlName="last_name" autocomplete="off" (keypress)="resetApiErrors()"
+                        (blur)="onFieldBlur('last_name')">
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
                     {
@@ -85,7 +93,8 @@ onSubmit(loginForm.value)">
             <div class="example-container joinotp">
                 <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
                     (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
-                    [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin" (resendOTPEmail)="resendOTPEmail($event)">
+                    [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
+                    (resendOTPEmail)="resendOTPEmail($event)">
                 </app-otp-form>
             </div>
             <div class="">
@@ -94,8 +103,8 @@ onSubmit(loginForm.value)">
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button> -->
-                <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener" [routerLink]="['/terms']"
-                        target="_blank">{{terms_cond_cap}}</a></span>
+                <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
+                        [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
             </div>
             <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
             </app-field-error-display>

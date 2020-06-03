@@ -102,7 +102,7 @@
             </li>
           </ul>
         </li>
-         <li [matTooltip]="enable_disable" class="dropdown tasks-menu" *ngIf="!iswiz && waitlistmgr">
+        <li [matTooltip]="enable_disable" class="dropdown tasks-menu" *ngIf="!iswiz && waitlistmgr">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-checkin"></i>
           </a>
@@ -175,9 +175,10 @@
         <li class="dropdown user user-menu">
           <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
             <span class="fa-stack">
-              <i class="fa fa-circle fa-stack-2x text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
+              <i class="fa fa-circle fa-stack-2x text-success"
+                *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
               <i class="fa fa-circle fa-stack-2x  text-failure"
-                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
+                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
               <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
             <!-- <img [src]="blogo" class="user-image" alt=""> -->
@@ -196,12 +197,13 @@
               </p>
               <p><small>
                   <a routerLink="settings/q-manager/queues" class="white"
-                    *ngIf="qAvailability && qAvailability.availableNow">
-                    <span class="white bold">I am available online
-                      until {{qAvailability.timeRange.eTime}}</span>
+                    *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)">
+                    <!-- <span class="white bold">I am available online
+                      until {{qAvailability.timeRange.eTime}}</span> -->
+                    <span class="white bold">I am available now</span>
                   </a>
                   <a routerLink="settings/q-manager/queues" class="white"
-                    *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+                    *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange">
                     <span class="white bold"> I am not available now </span>
                   </a>
                 </small>

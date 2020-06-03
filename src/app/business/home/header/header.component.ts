@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
+import { interval as observableInterval, Subscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
 import { HttpHandler, HttpHeaders } from '@angular/common/http';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-header',
@@ -39,11 +40,13 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   waitlist_label: any;
   sessionStorage = false;
   myData: any;
+  scheduleAvailability;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
     private renderer: Renderer2,
     public shared_service: SharedServices,
+    private provider_services: ProviderServices,
     private titleService: Title) {
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -61,6 +64,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
         case 'instant_q':
           this.qAvailability = message.qAvailability;
+          break;
+        case 'scheduleAvailbility':
+          this.scheduleAvailability = message.scheduleAvailbility;
           break;
         case 'alertCount':
           this.alertCnt = message.alertCnt;
@@ -85,7 +91,14 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
+  getScheduleAvailablity() {
+    this.provider_services.getScheduleAvailablity()
+      .subscribe(data => {
+        this.scheduleAvailability = data;
+      },
+        () => {
+        });
+  }
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);
   }
@@ -106,6 +119,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.sessionStorage = true;
     }
     this.isAvailableNow();
+    this.getScheduleAvailablity();
     this.showCheckinED();
     this.getLicenseDetails();
     this.setLicense();
@@ -174,8 +188,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     // if (usertype === 'provider') {
     //   type = 'account';
     // } else {
-      type = usertype;
-   // }
+    type = usertype;
+    // }
     this.shared_service.getInboxUnreadCount(type)
       .subscribe(data => {
         this.inboxCntFetched = true;

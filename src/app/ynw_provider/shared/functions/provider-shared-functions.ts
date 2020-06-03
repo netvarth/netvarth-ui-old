@@ -91,7 +91,7 @@ export class ProviderSharedFuctions {
   /**
    * Funtion will return the required fields set
    */
-  getProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields) {
+  getProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields, subdomain?) {
     const reqFields = {};
     if (!profile.specialization) {
       reqFields['specialization'] = true;
@@ -109,16 +109,16 @@ export class ProviderSharedFuctions {
     if (domainMandatoryFields) {
       for (const domainfield of domainMandatoryFields) {
         if (domainfield.mandatory) {
-          if (!profile['domainVirtualFields'][domainfield]) {
+          if (!profile['domainVirtualFields'][domainfield.name]) {
             reqFields['domainvirtual'] = true;
           }
         }
       }
     }
-    if (domainMandatoryFields) {
+    if (subdomainMandatoryFields) {
       for (const domainfield of subdomainMandatoryFields) {
         if (domainfield.mandatory) {
-          if (!profile['domainVirtualFields'][domainfield]) {
+          if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
             reqFields['subdomainvirtual'] = true;
           }
         }

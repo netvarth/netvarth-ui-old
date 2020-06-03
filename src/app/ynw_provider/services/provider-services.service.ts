@@ -1439,4 +1439,8 @@ export class ProviderServices {
       const url = 'provider/account/settings/notification/' + state;
       return this.servicemeta.httpPut(url);
    }
+   getScheduleAvailablity() {
+      const url = 'provider/appointment/schedule/availableNow';
+      return this.servicemeta.httpGet(url);
+    }
 }

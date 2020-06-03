@@ -419,7 +419,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
           this.bProfile = data;
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
-              this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+              this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
                 });
@@ -641,9 +641,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
     // });
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'addbase' }
-  };
+    };
     this.routerobj.navigate(['provider', 'settings', 'general',
-    'locations', 'add'], navigationExtras);
+      'locations', 'add'], navigationExtras);
   }
   // get the list of locations added for the current provider
   getProviderLocations() {

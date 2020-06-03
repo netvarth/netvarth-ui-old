@@ -384,12 +384,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
      */
     isAvailableNow() {
         return new Promise((resolve, reject) => {
-            this.provider_services.isAvailableNow()
+            this.provider_services.getScheduleAvailablity()
                 .subscribe(data => {
                     this.qAvailability = data;
                     const message = {};
-                    message['ttype'] = 'instant_q';
-                    message['qAvailability'] = this.qAvailability;
+                    message['ttype'] = 'scheduleAvailbility';
+                    message['scheduleAvailbility'] = this.qAvailability;
                     this.shared_Functionsobj.sendMessage(message);
                     resolve();
                 },
@@ -809,7 +809,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         } else {
             this.initInstantQForm(queue);
         }
-    } 
+    }
 
     viewDashboard(queueObj, index, que) {
         this.getTodayAppointmentCount(queueObj, index, que);
