@@ -18,10 +18,11 @@
                                 <div class="col-md-12 no-padding">
                                     <ul class="nav jd-custom-nav chkn-dash">
                                         <li class="dropdown notifications-menu pull-right" style="display: flex;"
-                                        [class.disabled]="qBoardSelectCount == 0">
+                                            [class.disabled]="qBoardSelectCount == 0">
                                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                                 (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
-                                                [class.pointer-cursor]="(qBoardSelectCount > 0)" class="dropdown-toggle navbar-item-color bold ">
+                                                [class.pointer-cursor]="(qBoardSelectCount > 0)"
+                                                class="dropdown-toggle navbar-item-color bold ">
                                                 <span>
                                                     <i class="fa fa-plus"></i> New Group
                                                 </span>
@@ -65,17 +66,21 @@
                                                         </mat-checkbox> 
                                                     </td> -->
                                                     <td>
-                                                        <input type="checkbox" class="ckbx pull-left" [disabled]="layout.isContainer" [checked]="qBoardsSelectedIndex[i]"
-                                                        (click)="!layout.isContainer && qBoardClicked(i)" [value]="layout.id"/>
-                                                            <div
-                                                                (click)="goDisplayboardLayoutDetails(layout, 'layout')" class="pull-left mgn-lt-10"><h3 
-                                                                class="pointer-cursor">
+                                                        <input type="checkbox" class="ckbx pull-left"
+                                                            [disabled]="layout.isContainer"
+                                                            [checked]="qBoardsSelectedIndex[i]"
+                                                            (click)="!layout.isContainer && qBoardClicked(i)"
+                                                            [value]="layout.id" />
+                                                        <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                                            class="pull-left mgn-lt-10">
+                                                            <h3 class="pointer-cursor">
                                                                 <i *ngIf="layout.isContainer"
                                                                     class="fa fa-object-group"></i>&nbsp;{{layout.displayName | capitalizeFirst}}
                                                                 <!-- <span
                                                                     *ngIf="!layout.container" class="layout_name"> (Id -
                                                                     {{layout.id}})</span> -->
-                                                                </h3></div>
+                                                            </h3>
+                                                        </div>
                                                     </td>
                                                     <td class="pull-right">
                                                         <span class="">
@@ -102,9 +107,10 @@
                                                             </button>
                                                             <button mat-menu-item>
                                                                 <i class="fa fa-folder-open"></i>
-                                                                <a class="pointer-cursor" target="_blank"
+                                                                <a class="pointer-cursor"
                                                                     style="color: black; font-weight: 400;"
-                                                                    routerLink="/displayboard/{{layout.id}}"> Open
+                                                                    (click)="goDisplayboardLayoutDetails(layout, 'layout')">
+                                                                    Open
                                                                 </a> </button>
                                                         </mat-menu>
                                                     </td>

@@ -14,7 +14,8 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings"><a>Set up and manage your locations, departments and more</a></li>
+                                <li class="form-level-settings"><a>Set up and manage your locations, departments and
+                                        more</a></li>
                                 <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{locName}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
@@ -35,11 +36,11 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('livetrack')"><a class="pointer-cursor">
-                                    <span class="lnk setings">Live Tracking<span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
+                                        <span class="lnk setings">Live Tracking<span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                 (change)="handle_liveTracking($event)">
                                             </mat-slide-toggle> -->
-                                            {{livetrack_statusstr}}</span>
+                                                {{livetrack_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="livetrack_status">{{livetrack_statusstr}}</p> -->
                                         <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
@@ -87,8 +88,8 @@
                                 <li class="form-level-settings"><a>{{frm_profile_cap}}</a></li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{public_search_cap}}
-                                        <span class="pull-right">
-                                            {{search_statusstr}}</span>
+                                            <span class="pull-right">
+                                                {{search_statusstr}}</span>
                                             <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> -->
@@ -99,23 +100,23 @@
                                 </li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
                                             class="lnk setings">Business profile
-                                        <span class="pull-right">
-                                            {{onlinepresence_statusstr}}
-                                            <!-- <mat-slide-toggle [(ngModel)]="search_status"
+                                            <span class="pull-right">
+                                                {{onlinepresence_statusstr}}
+                                                <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> --></span>
                                         </span>
                                         <p class="settings_info">Enable this to get online visibility.</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a></li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
+                                <!-- <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
                                             style="display: flex;">Online
                                             Profile
                                             <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
                                                 class="req-flds-cap">*required fields missing</p></span>
                                         <p class="settings_info">Manage your profile here</p>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('integration')" class="pointer-cursor"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="integration"><a
                                         class="pointer-cursor"><span class="lnk setings"
@@ -172,31 +173,32 @@
                                 <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
                                 <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Accept Check-ins<span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="waitlistStatus"
+                                                <!-- <mat-slide-toggle [(ngModel)]="waitlistStatus"
                                                 (change)="handleCheckinPresence($event)">
                                             </mat-slide-toggle> -->
-                                            {{waitlistStatusStr}}</span>
+                                                {{waitlistStatusStr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="waitlistStatus">
                                             {{waitlistStatusStr}}</p> -->
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
-                                    class="lnk setings">Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
+                                            class="lnk setings">Same Day Online {{checkin_label |capitalizeFirst}}s
+                                            <span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
                                                 (change)="handle_waitliststatus($event)"></mat-slide-toggle> -->
-                                            {{waitlist_statusstr}}</span>
+                                                {{waitlist_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p> -->
                                         <p class="settings_info">Set up same day checkin here</p>
                                     </a></li>
                                 <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
-                                    class="lnk setings">Future {{checkin_label |capitalizeFirst}}s
-                                        <span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                            class="lnk setings">Future {{checkin_label |capitalizeFirst}}s
+                                            <span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
                                                 [disabled]="!waitlistStatus"
                                                 (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle> -->
-                                            {{futurewaitlist_statusstr}}</span>
+                                                {{futurewaitlist_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
                                         </p> -->
@@ -231,17 +233,17 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
-                                Jaldee Appointment  <i class="fa fa-gears fl-right lnk"></i></h4>
+                                Jaldee Appointment <i class="fa fa-gears fl-right lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
                                 <li class="form-level-settings"><a>{{frm_appointment_cap}}</a></li>
                                 <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Accept Appointments<span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
+                                                <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
                                                 (change)="handle_appointmentPresence($event)">
                                             </mat-slide-toggle> -->
-                                            {{createappointment_statusstr}}</span>
+                                                {{createappointment_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="createappointment_status">
                                             {{createappointment_statusstr}}</p> -->
@@ -253,22 +255,22 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
-                                    class="lnk setings">Same Day Online Appointments <span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="apptlist_status"
+                                            class="lnk setings">Same Day Online Appointments <span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="apptlist_status"
                                                 [disabled]="!createappointment_status"
                                                 (change)="handle_apptliststatus($event)"></mat-slide-toggle> -->
-                                            {{apptlist_statusstr}}</span>
+                                                {{apptlist_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p> -->
                                         <p class="settings_info">Set up same day appointment here</p>
                                     </a></li>
                                 <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
-                                    class="lnk setings">Future Appointments
-                                        <span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                                            class="lnk setings">Future Appointments
+                                            <span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="futureDateApptlist"
                                                 [disabled]="!createappointment_status"
                                                 (change)="handle_futureapptliststatus($event)"></mat-slide-toggle> -->
-                                            {{futureapptlist_statusstr}}</span>
+                                                {{futureapptlist_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}} -->
                                         <!-- </p> -->
@@ -378,12 +380,12 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>{{frm_bill_cap}}.</a></li>
-                                <li (click)="redirecTo('pos')" ><a class="pointer-cursor"><span class="lnk setings">Billing/POS<span
-                                            class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="pos_status"
+                                <li (click)="redirecTo('pos')"><a class="pointer-cursor"><span
+                                            class="lnk setings">Billing/POS<span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="pos_status"
                                                 (change)="handle_posStatus($event)">
                                             </mat-slide-toggle> -->
-                                            {{pos_statusstr}}</span> 
+                                                {{pos_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="pos_status">{{pos_statusstr}}</p> -->
                                         <p class="settings_info" *ngIf="pos_status">Billing/pos hints.</p>
@@ -426,11 +428,11 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>Set up and manage your banking details.</a></li>
-                                <li (click)="redirecTo('payments')"><a class="pointer-cursor"><span class="lnk setings">Jaldee Pay<span
-                                            class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="payment_status"
+                                <li (click)="redirecTo('payments')"><a class="pointer-cursor"><span
+                                            class="lnk setings">Jaldee Pay<span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="payment_status"
                                                 (change)="handle_paymentstatus($event)"></mat-slide-toggle> -->
-                                            {{payment_statusstr}}</span>
+                                                {{payment_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p> -->
                                         <p class="settings_info" *ngIf="payment_status">{{jaldee_pay_cap}}</p>
@@ -481,7 +483,7 @@
                                 <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
                                 <li (click)="redirecTo('donationmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Accept Donations<span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="donations_status"
+                                                <!-- <mat-slide-toggle [(ngModel)]="donations_status"
                                                 (change)="handle_Donations($event)">
                                             </mat-slide-toggle> --> {{donations_statusstr}}</span>
                                         </span>
@@ -514,11 +516,11 @@
                             <ul class="nav nav-stacked set-block-4">
                                 <li class="form-level-settings"><a>These settings allows the video call options</a></li>
                                 <li (click)="redirecTo('comm')"><a class="pointer-cursor"><span
-                                    class="lnk setings">Virtual Calling Mode<span class="pull-right">
-                                            <!-- <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                                            class="lnk setings">Virtual Calling Mode<span class="pull-right">
+                                                <!-- <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
                                                 (change)="handle_virtualCallingModeStatus($event)">
                                             </mat-slide-toggle> -->
-                                            {{virtualCallingMode_statusstr}}</span>
+                                                {{virtualCallingMode_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="virtualCallingMode_status">
                                             {{virtualCallingMode_statusstr}}</p> -->

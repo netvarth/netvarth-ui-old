@@ -157,7 +157,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
                     this.isContainer = true;
-                    this.qBoardGroupTitle = displayboard_data['headerSettings']['title1'] || '';
+                    if (displayboard_data['headerSettings']) {
+                        this.qBoardGroupTitle = displayboard_data['headerSettings']['title1'] || '';
+                    }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
@@ -179,7 +181,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     });
                 } else {
                     this.roomName = displayboard_data['serviceRoom'];
-                    this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
+                        this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
@@ -345,7 +349,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.provider_services.getDisplayboardById_Type(boardObj.sbId, this.type).subscribe(
                 (displayboard_data: any) => {
                     this.roomName = displayboard_data['serviceRoom'];
-                    this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
+                        this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
@@ -394,22 +400,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     // }
     getFieldValue(field, checkin) {
         let fieldValue = '';
-        if (field.name === 'appmtFor') {
-            const lastName = checkin[field.name][0].lastName;
-            const nameLength = lastName.length;
-            const encryptedName = [];
-            let lastname = '';
-            for (let i = 0; i < nameLength; i++) {
-                encryptedName[i] = lastName[i].replace(/./g, '*');
-            }
-            for (let i = 0; i < nameLength; i++) {
-                lastname += encryptedName[i];
-
-            }
-            fieldValue = checkin[field.name][0].firstName + ' ' + lastname;
-        }
-        console.log(field.name);
-        if (field.name === 'waitlistingFor') {
+        if (field.name === 'waitlistingFor' || field.name === 'appmtFor') {
             const lastName = checkin[field.name][0].lastName;
             const nameLength = lastName.length;
             const encryptedName = [];
@@ -424,10 +415,14 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             fieldValue = checkin[field.name][0].firstName + ' ' + lastname;
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
+        } else if (field.name === 'appointmentTime') {
+            fieldValue = checkin.appmtTime;
         } else if (field.name === 'service') {
             fieldValue = checkin[field.name].name;
         } else if (field.name === 'queue') {
             fieldValue = checkin[field.name].queueStartTime + ' - ' + checkin[field.name].queueEndTime;
+        } else if (field.name === 'schedule') {
+            fieldValue = checkin[field.name].apptSchedule.timeSlots[0].sTime + ' - ' + checkin[field.name].apptSchedule.timeSlots[0].eTime;
         } else if (field.label === true) {
             if (checkin.label[field.name]) {
                 fieldValue = checkin.label[field.name];
@@ -437,9 +432,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         } else if (field.name === 'primaryMobileNo') {
             let full_phone = '';
             if (this.type === 'waitlist') {
-                full_phone = checkin['waitlistingFor'][0]['primaryMobileNo'];
+                full_phone = checkin['waitlistingFor'][0]['phoneNo'];
             } else {
-                full_phone = checkin['apptFor'][0]['primaryMobileNo'];
+                full_phone = checkin.phoneNumber;
             }
             const phLength = full_phone.length;
             const tele = [];
@@ -465,7 +460,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
         displayboard.fieldList = fieldlistasc;
         this.selectedDisplayboards[element.position]['board'] = displayboard;
-        console.log(displayboard);
         // const Mfilter = this.setFilterForApi(displayboard);
         const Mfilter = displayboard.queryString;
         // let sortp = '';
@@ -473,7 +467,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         //     sortp  = key + '=' + displayboard['sortBy'][key];
         // });
         // Mfilter = Mfilter + '&' + sortp;/
-        console.log(Mfilter);
         if (this.type === 'waitlist') {
             // Mfilter = 'service-eq=5036,5027&queue-eq=9771,9766&sort_token=asc';
             this.provider_services.getTodayWaitlistFromStringQuery(Mfilter).subscribe(
@@ -481,7 +474,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     this.selectedDisplayboards[element.position]['checkins'] = waitlist;
                 });
         } else {
-            // Mfilter = 'service-eq=5036,5027&queue-eq=9771,9766&sort_token=asc';
             this.provider_services.getTodayAppointmentsFromStringQuery(Mfilter).subscribe(
                 (waitlist) => {
                     this.selectedDisplayboards[element.position]['checkins'] = waitlist;

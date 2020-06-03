@@ -263,7 +263,7 @@ export class DisplayboardsComponent implements OnInit {
     }
     goDisplayboardLayoutDetails(layout, source?) {
         if (source) {
-            const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+            const path = projectConstants.PATH + '/displayboard/' + layout.id + '?type=wl';
             window.open(path, '_blank');
         } else {
             const navigationExtras: NavigationExtras = {

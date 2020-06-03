@@ -250,10 +250,10 @@
                         [checked]="selectedWtlstList.indexOf(status.value) !==-1">
                         {{status.displayName}}
                     </mat-checkbox>
-                    <mat-checkbox class="example-margin" style="margin-left: 30px" [value]="'calling'"
+                    <!-- <mat-checkbox class="example-margin" style="margin-left: 30px" [value]="'calling'"
                         (change)="waitlistSelection('calling')" [checked]="selectedWtlstList.indexOf('calling') !==-1">
                         Calling
-                    </mat-checkbox>
+                    </mat-checkbox> -->
                 </div>
             </div>
             <div class="col-md-12 mgn-bt-20" *ngIf="providerLabelsCount > 0">
