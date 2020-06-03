@@ -38,6 +38,7 @@ export class CallingModesComponent implements OnInit {
     meetlink_data: any;
     starting_url: any;
     show_note: boolean;
+    temp_msglink: string;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -108,7 +109,7 @@ export class CallingModesComponent implements OnInit {
         this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
     }
     selectAlrdyWaiting() {
-        this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join';
+        this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join ' + this.temp_msglink;
     }
     // selectStrtVideo(val) {
     //     this.chipValue = val;
@@ -222,6 +223,7 @@ export class CallingModesComponent implements OnInit {
     }
     waitingFor() {
         this.step = 3;
+        this.getMeetingDetails();
         this.selectAlrdyWaiting();
     }
     back() {
@@ -237,6 +239,7 @@ export class CallingModesComponent implements OnInit {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
+                    this.temp_msglink = this.meetlink_data.startingUl;
                 });
         } else {
             this.shared_services.getApptMeetingDetails(this.callingModes, this.data.uuid).
