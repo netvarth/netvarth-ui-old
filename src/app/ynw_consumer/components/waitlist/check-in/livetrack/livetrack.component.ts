@@ -72,6 +72,15 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 title: 'Live Tracking'
             }
         ];
+        this.getCurrentLocation().then(
+            (lat_long: any) => {
+            }, (error) => {
+                this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                this.shareLoc = false;
+                this.track_loading = false;
+            }
+        );
         this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
@@ -80,9 +89,20 @@ export class ConsumerLiveTrackComponent implements OnInit {
                     console.log('fgjdjs');
                 if (this.activeWt.jaldeeWaitlistDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
                     this.driving = true;
+                    this.walking = false;
+                    this.bicycling = false;
+                    this.travelMode = 'DRIVING';
                 } else if (this.activeWt.jaldeeWaitlistDistanceTime  && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
                     this.walking = true;
-                }
+                    this.driving = false;
+                    this.bicycling = false;
+                    this.travelMode = 'WALKING';
+                } 
+                // else {
+                //     this.walking = false;
+                //     this.driving = false;
+                //     this.bicycling = true;
+                // }
             }
             },
             () => {
@@ -101,11 +121,12 @@ export class ConsumerLiveTrackComponent implements OnInit {
             this.walking = true;
             this.driving = false;
             this.bicycling = false;
-        } else {
-            this.walking = false;
-            this.driving = false;
-            this.bicycling = true;
-        }
+        } 
+        // else {
+        //     this.walking = false;
+        //     this.driving = false;
+        //     this.bicycling = true;
+        // }
         this.saveLiveTrackTravelModeInfo().then(
             data => {
                 this.api_loading = true;
