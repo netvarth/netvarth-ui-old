@@ -9040,3 +9040,11 @@ max-height: 425px !important;
   padding: 10px !important;
   border-color: #1873f2 !important;
 }
+.acc-url-li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  height: 40px;
+  list-style: none;
+}
