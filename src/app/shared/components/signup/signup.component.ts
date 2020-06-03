@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit {
   activeSubDomainIndex;
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   subDomainList = [];
-  
+
   dropdownSettings = {
     singleSelection: false,
     text: 'Select Sub Sector',
@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     enableSearchFilter: true,
     classes: 'myclass custom-class'
-    
+
   };
   selectedDomain = null;
   signupForm: FormGroup;
@@ -474,16 +474,16 @@ export class SignUpComponent implements OnInit {
       post_data['scCode'] = this.scCode;
     }
     this.shared_services.saveReferralInfo(this.otp, post_data)
-    .subscribe(
-      () => {
-        this.actionstarted = false;
-        this.createForm(4);
-      },
-      error => {
-        this.actionstarted = false;
-        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-      }
-    );
+      .subscribe(
+        () => {
+          this.actionstarted = false;
+          this.createForm(4);
+        },
+        error => {
+          this.actionstarted = false;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        }
+      );
   }
   onPasswordSubmit(submit_data) {
     this.actionstarted = true;

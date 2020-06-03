@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
+import { interval as observableInterval, Subscription, Observable } from 'rxjs';
 import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
@@ -513,8 +513,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // if (this.ctype === 'provider') {
     //   usertype = 'account';
     // } else {
-      usertype = this.ctype;
-   // }
+    usertype = this.ctype;
+    // }
     this.shared_service.getInboxUnreadCount(usertype)
       .subscribe(data => {
         this.inboxCntFetched = true;
@@ -611,24 +611,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-gotoPricing() {
-  this.router.navigate(['business','jaldeepricing']);
- 
-}
-gotocontactus () {
+  gotoPricing() {
+    this.router.navigate(['business', 'jaldeepricing']);
 
-  this.router.navigate(['business','contactus']);
-}
-gotoproducts(){
-  const navigationExtras: NavigationExtras = {
-    queryParams: { type: 'products' }
-};
-  this.router.navigate(['business'], navigationExtras);
-}
-gotosales () {
-  const navigationExtras: NavigationExtras = {
-    queryParams: { type: 'sales' }
-};
-  this.router.navigate(['business'], navigationExtras);
-}
+  }
+  gotocontactus() {
+
+    this.router.navigate(['business', 'contactus']);
+  }
+  gotoproducts() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { type: 'products' }
+    };
+    this.router.navigate(['business'], navigationExtras);
+  }
+  gotosales() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { type: 'sales' }
+    };
+    this.router.navigate(['business'], navigationExtras);
+  }
 }

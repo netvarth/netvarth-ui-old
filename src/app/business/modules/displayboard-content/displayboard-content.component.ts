@@ -394,7 +394,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     // }
     getFieldValue(field, checkin) {
         let fieldValue = '';
-        if (field.name === 'apptFor') {
+        if (field.name === 'appmtFor') {
             const lastName = checkin[field.name][0].lastName;
             const nameLength = lastName.length;
             const encryptedName = [];

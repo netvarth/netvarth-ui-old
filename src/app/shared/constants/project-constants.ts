@@ -564,7 +564,7 @@ export const projectConstants = {
   ],
   APPT_STATUS_BOARD: [
     {
-      'name': 'apptFor',
+      'name': 'appmtFor',
       'displayname': 'Customer',
       'label': false,
       'checked': false,
@@ -592,7 +592,7 @@ export const projectConstants = {
       'order': 6,
     },
     {
-      'name': 'queue',
+      'name': 'schedule',
       'displayname': 'Schedule',
       'label': false,
       'checked': false,
