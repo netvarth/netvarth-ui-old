@@ -1331,9 +1331,11 @@ export const Messages = {
   'FRM_LEVEL_DONATION_MSG': 'Manage your donation settings here. Enable "Accept Donations" here.',
 
   // form-level-provider-bprofile-search
-  'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. ',
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on, to make yourself  visible to [customer]\'s in Jaldee.com. ',
   'FRM_LEVEL_PUBLIC_SEARCHH_MSG': 'Unless you enable, the [customer]s won\'t be able to view your profile in their search result. Turning off Public Search will not restrict consumers from online check-ins.',
-  'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your  [customer]s can now search and find you in Jaldee.com',
+  'FRM_LEVEL_BPUBLIC_SEARCH_MSG': 'Your profille is now visible to [customer]s in Jaldee.com',
+  'FRM_LEVEL_BPUBLIC_SEARCH_MSG_OFF': 'Turn it on,to make your profile visible to  [customer]s in jaldee.com',
   'FRM_LEVEL_PUBLIC_SEARCH': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',

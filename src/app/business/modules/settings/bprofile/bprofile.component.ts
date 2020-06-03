@@ -191,6 +191,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   frm_public_search_cap = '';
   frm_public_searchh_cap = '';
   frm_public_search_off_cap = '';
+  frm_bpublic_search_cap = '';
+  frm_bpublic_search_off_cap = '';
   frm_adword_cap = '';
   frm_loc_amen_cap = '';
   frm_additional_cap = '';
@@ -275,6 +277,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
+    this.frm_bpublic_search_cap = Messages.FRM_LEVEL_BPUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_bpublic_search_off_cap = Messages.FRM_LEVEL_BPUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
