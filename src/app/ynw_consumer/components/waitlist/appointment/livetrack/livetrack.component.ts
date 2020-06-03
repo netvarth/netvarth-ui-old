@@ -72,17 +72,36 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 title: 'Live Tracking'
             }
         ];
+        this.getCurrentLocation().then(
+            (lat_long: any) => {
+            }, (error) => {
+                this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                this.shareLoc = false;
+                this.track_loading = false;
+            }
+        );
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
                 if (this.shareLoc) {
-                    console.log('fgjdjs');
                 if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
                     this.driving = true;
+                    this.walking = false;
+                    this.bicycling = false;
+                    this.travelMode = 'DRIVING';
                 } else if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
                     this.walking = true;
-                }
+                    this.driving = false;
+                    this.bicycling = false;
+                    this.travelMode = 'WALKING';
+                } 
+                // else {
+                //     this.walking = false;
+                //     this.driving = false;
+                //     this.bicycling = true;
+                // }
             }
             },
             () => {
@@ -101,11 +120,12 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             this.walking = true;
             this.driving = false;
             this.bicycling = false;
-        } else {
-            this.walking = false;
-            this.driving = false;
-            this.bicycling = true;
-        }
+        } 
+        // else {
+        //     this.walking = false;
+        //     this.driving = false;
+        //     this.bicycling = true;
+        // }
         this.saveLiveTrackTravelModeInfo().then(
             data => {
                 this.api_loading = true;
