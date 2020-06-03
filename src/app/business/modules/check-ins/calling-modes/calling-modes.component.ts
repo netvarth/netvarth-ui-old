@@ -124,11 +124,7 @@ export class CallingModesComponent implements OnInit {
             this.apptTeleserviceJoinLink();
         }
     }
-    selectStarted(val) {
-        this.chipValue = val;
-        this.showcomm = false;
-        this.videonote = false;
-        //   this.msg_to_user = 'Service Started';
+    selectStarted() {
         if (this.data.type === 'checkin') {
             this.changeWaitlistStatus(this.data.qdata, 'STARTED');
         } else {
@@ -202,12 +198,14 @@ export class CallingModesComponent implements OnInit {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
+                        this.dialogRef.close();
                     }
                 );
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
+                        this.dialogRef.close();
                     }
                 );
         }
@@ -256,5 +254,8 @@ export class CallingModesComponent implements OnInit {
     }
     shareUrl() {
         this.clicktoSend();
+    }
+    makeStarted() {
+        this.step = 5;
     }
 }
