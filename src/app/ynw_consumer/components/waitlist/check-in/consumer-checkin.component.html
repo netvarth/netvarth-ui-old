@@ -80,7 +80,9 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                                                    <i *ngIf="serv.serviceType === 'virtualService'" class="fa fa-video-camera cal-mod-font tool-pading"></i>
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic tool-pading"></i>
+                                                    <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="tool-pading"
+                                                    src="https://img.icons8.com/color/20/000000/zoom.png" />
                                                     {{serv.name | capitalizeFirst}}
                                                 </mat-option>
                                             </mat-select>
@@ -97,10 +99,10 @@
                                                 <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
                                                 </div>
-                                                <div style="padding-bottom: 10px;">
+                                                <!-- <div style="padding-bottom: 10px;">
                                                     <p *ngIf="mode.callingMode === 'WhatsApp'" class="tel-srv-cust-p ">This is a WhatsApp meeting</p>
                                                     <p *ngIf="mode.callingMode !== 'WhatsApp'" class="tel-srv-cust-p ">This is a Zoom meeting</p>
-                                                </div>
+                                                </div> -->
                                                 <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
                                                     {{mode.instructions}}
                                                 </div>
