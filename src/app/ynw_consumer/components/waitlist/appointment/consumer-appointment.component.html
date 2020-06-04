@@ -99,6 +99,7 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
+                                                    <i *ngIf="serv.serviceType === 'virtualService'" class="fa fa-video-camera cal-mod-font tool-pading"></i>
                                                     {{serv.name | capitalizeFirst}}
                                                 </mat-option>
                                             </mat-select>
