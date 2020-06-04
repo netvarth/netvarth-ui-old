@@ -89,7 +89,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     breadcrumb_moreoptions: any = [];
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
-    calcMode;
+    calcMode = 'conventional';
     est_time;
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -134,6 +134,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     getWaitlistMgr() {
         this.loading = true;
         this.waitlist_manager = null;
+        this.est_time = false;
+        this.isManualMode = false;
+        this.trnArndTime = 0;
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {

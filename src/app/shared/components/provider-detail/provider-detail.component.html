@@ -217,7 +217,7 @@
                                                 </div>
                                                 <h3 *ngIf="isPlaceisSame">
                                                     {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
-                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                                        class="font-open-now" *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
                                                     </sup></h3>
                                             </div>
                                         </mat-panel-title>

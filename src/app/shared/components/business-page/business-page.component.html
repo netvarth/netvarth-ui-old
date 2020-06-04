@@ -204,8 +204,9 @@
                                         <mat-panel-title>
                                             <div class="location-accord">
                                                 <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
-                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
-                                                    </sup>
+                                                    class="font-open-now"
+                                                    *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
+                                                </sup>
                                                     <a style="margin-left: 20px;" rel="noopener"
                                                         class="directions ft-smlr"
                                                         [href]="'https://www.google.com/maps/place/'+loc.fields.location1+'/@'+loc.fields.location1+',15z'"
@@ -216,7 +217,7 @@
                                                 </div>
                                                 <h3 *ngIf="isPlaceisSame">
                                                     {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
-                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                                        class="font-open-now" *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
                                                     </sup></h3>
                                             </div>
                                         </mat-panel-title>
@@ -308,8 +309,8 @@
                                         <div class="bottom-sect pdetail" style="padding-bottom: 10px" *ngIf="loc['waitlist'] && loc.fields.online_profile">
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
-                                                    <div class="o-now" *ngIf="loc.opennow">
-                                                        {{open_now_cap}}</div>
+                                                    <!-- <div class="o-now" *ngIf="loc.opennow">
+                                                        {{open_now_cap}}</div> -->
                                                     <div
                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && showToken)">
                                                         <div class="timing" *ngIf="loc['personAhead']">

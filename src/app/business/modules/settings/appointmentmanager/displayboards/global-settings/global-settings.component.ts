@@ -49,7 +49,7 @@ export class GlobalSettingsComponent implements OnInit {
     largeImage: string;
     position: string;
     position_values = [
-        { value: 'NONE', displayName: 'None' },
+        // { value: 'NONE', displayName: 'None' },
         { value: 'LEFT', displayName: 'Left' },
         { value: 'RIGHT', displayName: 'Right' }
     ];

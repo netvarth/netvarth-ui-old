@@ -917,7 +917,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-  
+
   openJdn() {
     this.jdndialogRef = this.dialog.open(JdnComponent, {
       width: '50%',
@@ -959,12 +959,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           if (this.favprovs.length === 0) {
             this.handle_Fav('add');
           } else {
-            for (let i = 0; i < this.favprovs.length; i++) {
-              if (this.favprovs[i].id === this.provider_bussiness_id) {
-                this.isInFav = true;
-              } else {
-                this.handle_Fav('add');
-              }
+            const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
+            if (provider.length === 0) {
+              this.handle_Fav('add');
+            } else {
+              this.isInFav = true;
             }
           }
         }, error => {
@@ -1116,7 +1115,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getFavProviders(passParam['mod']);
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
-        }  else if (passParam['callback'] === 'appointment') {
+        } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         } else {
           this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
@@ -1495,7 +1494,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id
-       }
+      }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
@@ -1515,6 +1514,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.appttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
             this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+            this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
           }
         });
     }
