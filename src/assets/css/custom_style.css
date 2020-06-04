@@ -9057,3 +9057,20 @@ max-height: 425px !important;
     padding-top: 5px;
   }
 }
+.ngx-qrcod {
+  border: outset;
+  width: fit-content;
+}
+.ngx-qr-btn {
+  background: #3c8dbc;
+  color: white;
+  font-weight: 500;
+}
+.ngx-qrcod .qrcode img{
+  width: 100px !important;
+}
+.ngx-qr-close {
+  position: absolute;
+  padding-left: 110px;
+  color: #3c8dbc;
+}
