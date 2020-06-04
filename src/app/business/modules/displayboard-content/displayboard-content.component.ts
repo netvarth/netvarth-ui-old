@@ -100,6 +100,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.boardHeight = (screenHeight - hgt_reduced);
         }
     }
+    getSingleTime (slot) {
+        const slots = slot.split('-');
+        return this.shared_functions.convert24HourtoAmPm(slots[0]);
+    }
     ngOnDestroy() {
         if (this.cronHandle) {
             this.cronHandle.unsubscribe();
@@ -202,6 +206,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                         this.metricElement = element;
                         this.selectedDisplayboards[element.position] = {};
                         this.setDisplayboards(this.metricElement);
+                    });
+                    this.cronHandle = observableInterval(10000).subscribe(() => {
+                        displayboard_data.metric.forEach(element => {
+                            this.metricElement = element;
+                            this.selectedDisplayboards[element.position] = {};
+                            this.setDisplayboards(this.metricElement);
+                        });
                     });
                     this.api_loading = false;
                 }
@@ -416,7 +427,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
         } else if (field.name === 'appointmentTime') {
-            fieldValue = checkin.appmtTime;
+            fieldValue = this.getSingleTime(checkin.appmtTime);
         } else if (field.name === 'service') {
             fieldValue = checkin[field.name].name;
         } else if (field.name === 'queue') {

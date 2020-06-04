@@ -102,7 +102,8 @@
                         </mat-radio-button>
                         <mat-radio-button class="mgright50" [value]="'SCHEDULE'" *ngIf="display_schedule.length > 0"
                             (change)="categorySelection('SCHEDULE')">
-                            {{queue_cap}}
+                            <!-- {{queue_cap}} -->
+                            Schedules
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
@@ -205,8 +206,8 @@
                     Schedules</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
-                        <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
+                        <mat-select [(ngModel)]="qMultiCtrl" placeholder="Schedules" [multiple]="true">
+                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search schedules"
                                 noEntriesFoundLabel="no matching schedule found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"

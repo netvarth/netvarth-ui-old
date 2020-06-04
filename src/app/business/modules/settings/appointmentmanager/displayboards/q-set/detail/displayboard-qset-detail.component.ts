@@ -135,8 +135,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.api_loading = true;
         this.id = this.qsetId;
         this.actionparam = this.action;
-        this.getDepartments();
-        this.getUsers();
+        this.getDepartments().then(
+            () => {
+                this.getUsers();
+            }
+        );
         this.getProviderServices();
         this.getProviderQueues();
         this.getLabels();
