@@ -110,11 +110,11 @@
                                 <div class="lt0" *ngIf="waitlist.partySize && waitlist.partySize > 1">
                                     {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                 </div>
-                                <div class="lt0 payment"
+                                <!-- <div class="lt0 payment"
                                     *ngIf="!waitlist.parentUuid && waitlist.waitlistStatus=='prepaymentPending'">
                                     <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
                                         {{checkindisablemsg1}}</span>
-                                </div>
+                                </div> -->
                                 <div class="lt0 payment"
                                     *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
                                     <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{waitlist.amountDue}}
@@ -336,11 +336,11 @@
                                         <div class="lt0" *ngIf="appointment.batchName" style="font-size: 0.9rem;">
                                             Batch <span class="token">{{appointment.batchName}} </span>
                                         </div>
-                                        <div class="lt0 payment"
+                                        <!-- <div class="lt0 payment"
                                             *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
                                             <span class="paytext">{{checkindisablemsg}} {{appointment.counter}}
                                                 {{appointmentdisablemsg}}</span>
-                                        </div>
+                                        </div> -->
                                         <div class="lt0 payment"
                                             *ngIf="appointment.amountDue>0 && (appointment.billViewStatus=='Show') && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'">
                                             <span class="paytext"><span>Amount Due : <span>&#8377;
