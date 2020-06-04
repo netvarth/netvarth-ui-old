@@ -39,6 +39,7 @@ export class CallingModesComponent implements OnInit {
     starting_url: any;
     show_note: boolean;
     temp_msglink: string;
+    customer_label: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -46,6 +47,7 @@ export class CallingModesComponent implements OnInit {
         private provider_shared_functions: ProviderSharedFuctions,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<CallingModesComponent>) {
+            this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.busnes_name = this.data.qdata.providerAccount.businessName;
@@ -104,13 +106,19 @@ export class CallingModesComponent implements OnInit {
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
-        this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
+        // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
+        if (this.callingModes === 'WhatsApp') {
+            this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
+        } else {
+            this.getMeetingDetails();
+            this.msg_to_user = this.busnes_name + ' will be contacting you via ' + this.callingModes + ' .Join the ' + this.callingModes + ' using ' + this.temp_msglink;
+        }
     }
     selectAlrdyWaiting() {
         if (this.callingModes === 'WhatsApp') {
             this.msg_to_user = this.busnes_name + ' is already waiting';
         } else {
-            this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join ' + this.temp_msglink;
+            this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
         }
     }
     clicktoSend() {
@@ -158,7 +166,7 @@ export class CallingModesComponent implements OnInit {
             subscribe((modeData) => {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                this.api_success = Messages.TELESERVICE_SHARE_LINK.replace('[customer]', this.customer_label);
                 setTimeout(() => {
                     this.api_success = '';
                 }, 5000);
@@ -175,7 +183,7 @@ export class CallingModesComponent implements OnInit {
             subscribe((modeData) => {
                 this.medialink = modeData;
                 this.msg_to_user = this.medialink.startingUl;
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                this.api_success = Messages.TELESERVICE_SHARE_LINK.replace('[customer]', this.customer_label);
                 setTimeout(() => {
                     this.api_success = '';
                 }, 5000);

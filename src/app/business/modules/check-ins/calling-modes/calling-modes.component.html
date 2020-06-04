@@ -1,65 +1,3 @@
-<!-- <h1 class="mat-dialog-title">Teleservice
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-        <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-</h1>
-<mat-dialog-content *ngIf="!show_link_only">
-    <div class="form-group" style="padding-left: 15px;">
-        <div>
-            <mat-chip-list>
-                <mat-chip (click)="selectHeadsup('heads')" color="{{(chipValue === 'heads') ? 'primary' : ''}}" selected="{{(chipValue === 'heads') ? true : false}}">
-                  Headsup
-                </mat-chip>
-                <mat-chip (click)="selectStrtVideo('video')" color="{{(chipValue === 'video') ? 'primary' : ''}}" selected="{{(chipValue === 'video') ? true : false}}">
-                    <i class="fa fa-video-camera" style="padding-right: 10px;font-size: small;"></i>
-                    Initiate call
-                  </mat-chip>
-                <mat-chip (click)="selectAlrdyWaiting('wait')" color="{{(chipValue === 'wait') ? 'primary' : ''}}" selected="{{(chipValue === 'wait') ? true : false}}">
-                    Already waiting
-                  </mat-chip>
-                  <mat-chip (click)="selectStarted('started')" color="{{(chipValue === 'started') ? 'primary' : ''}}" selected="{{(chipValue === 'started') ? true : false}}">
-                    Mark as started
-                  </mat-chip>
-              </mat-chip-list>
-        </div>
-    </div>
-    <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="showcomm">
-        <div class="telemode-msg">Message to Consumer</div>
-        <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
-      </mat-form-field>
-      <mat-form-field class="example-full-width" style="padding-top: 30px;" *ngIf="videonote">
-        <div class="telemode-msg">Message to Consumer</div>
-        <textarea matInput placeholder="" [(ngModel)]="msg_to_user" [readonly]="true" style="height: 70px;border: none;"></textarea>
-      </mat-form-field>
-      <div class="mgtop40 form-group" *ngIf="showcomm">
-        Send message via
-        <div class="coupon-outer">
-            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms">
-                SMS
-            </mat-checkbox>
-            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">Email
-            </mat-checkbox>
-            <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">App
-                notification
-            </mat-checkbox>
-        </div>
-    </div>
-</mat-dialog-content>
-<mat-dialog-actions *ngIf="!show_link_only && showcomm">
-    <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-    <button type="button" mat-dialog-close class="cs-btn bt1" (click)="sendMessage()">Send</button>
-</mat-dialog-actions>
-<mat-dialog-actions *ngIf="videonote">
-    <button type="button" mat-dialog-close class="cs-btn bt1" (click)="clicktoSend()">OK</button>
-</mat-dialog-actions>
-<mat-dialog-content *ngIf="show_link_only" style="padding-left: 50px;padding-bottom: 50px;">
-   <div style="font-weight: 600;">Your meeting url is :</div> 
-    <div style="padding-top: 10px;">
-     <a style="cursor: pointer;color: blue;" target="_blank" [href]="msg_to_user">{{msg_to_user}}</a>   
-    </div>
-</mat-dialog-content>
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display> -->
-
 
 <h1 *ngIf="step === 1" class="mat-dialog-title">Teleservice
     <button (click)="makeStarted()" class="modal_close" tabindex="-1">
@@ -114,7 +52,7 @@
             <div class="tspace"><span style="font-size: x-large;">Reminder</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
-            <div class="telemode-msg">Message to Consumer</div>
+            <div class="telemode-msg">Message to {{customer_label}}</div>
             <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
         </mat-form-field>
         <div class="mgtop40 form-group">
@@ -143,7 +81,7 @@
             <div class="tspace"><span style="font-size: x-large;">Waiting for you!</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
-            <div class="telemode-msg">Message to Consumer</div>
+            <div class="telemode-msg">Message to {{customer_label}}</div>
             <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
         </mat-form-field>
         <div class="mgtop40 form-group">

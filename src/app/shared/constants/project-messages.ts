@@ -150,6 +150,7 @@ export const Messages = {
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message has been successfully sent',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message has been successfully sent',
+  'TELESERVICE_SHARE_LINK': 'Notification has been sent to you and your [customer]',
   'MSG_ERROR': 'Please enter the message',
   'ESTDATE': 'Estimated Service time',
   'SEARCH_ESTIMATE_TOOPTIP': 'Estimated Waiting Time',
