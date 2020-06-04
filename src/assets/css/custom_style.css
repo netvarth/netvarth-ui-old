@@ -9079,3 +9079,6 @@ max-height: 425px !important;
   font-weight: 500;
   color: #1873f2;
 }
+.wtsap-ip-wdth {
+  width: fit-content !important;
+}
