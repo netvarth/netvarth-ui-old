@@ -124,7 +124,7 @@
                                     <div class="lt0"
                                         *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                         <div>
-                                            <div class="mb5">You are 10 km away from
+                                            <div class="mb5">You are {{waitlist.differofDistanc}} km away from
                                                 {{waitlist.providerAccount.businessName}}<span><i
                                                         class="fa fa-refresh fl-right"
                                                         (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'true')"
@@ -179,7 +179,7 @@
                                     <div class="lt0"
                                         *ngIf="!waitlist.jaldeeWaitlistDistanceTime && waitlist.service.livetrack && waitlist.waitlistStatus === 'checkedIn' && !waitlist.future">
                                         <div>
-                                            <div class="mb5"> You are 10 km away from
+                                            <div class="mb5"> You are {{waitlist.differofDistanc}} km away from
                                                 {{waitlist.providerAccount.businessName}}<span><i
                                                         class="fa fa-refresh fl-right"
                                                         (click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')"
@@ -369,7 +369,7 @@
                                             <div class="lt0"
                                                 *ngIf="appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                                 <div>
-                                                    <div class="mb5"> You are 10 km away from
+                                                    <div class="mb5"> You are {{appointment.differceofDistance}} km away from
                                                         {{appointment.providerAccount.businessName}}<span><i
                                                                 class="fa fa-refresh fl-right"
                                                                 (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'true')"
@@ -425,7 +425,7 @@
                                             <div class="lt0"
                                                 *ngIf="!appointment.jaldeeApptDistanceTime && appointment.service.livetrack && appointment.apptStatus === 'Confirmed' && !appointment.future">
                                                 <div>
-                                                    <div class="mb5"> You are 10 km away from
+                                                    <div class="mb5"> You are {{appointment.differceofDistance}} km away from
                                                         {{appointment.providerAccount.businessName}}<span><i
                                                                 class="fa fa-refresh fl-right"
                                                                 (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'false')"

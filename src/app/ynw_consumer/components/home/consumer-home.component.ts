@@ -157,8 +157,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   rupee_symbol = '₹';
   appttime_arr: any = [];
   api_error: any;
-  differceofDistance;
-  differofDistanc;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -363,8 +361,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const waitlist of this.waitlists) {
             if (waitlist.service.livetrack) {
-              // this.differofDistanc = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,waitlist.queue.location.lattitude,waitlist.queue.location.longitude);
-              // console.log(this.differceofDistance);
+              this.getCurrentLocation().then(
+                (lat_long: any) => {
+                  waitlist['differofDistanc'] = Math.round(this.getDistanceFromLatLonInKm(lat_long.latitude, lat_long.longitude, waitlist.queue.location.lattitude, waitlist.queue.location.longitude));
+                   }, (error) => {
+                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                }
+            );
             }
             this.trackMode[i] = false;
             this.changemode[i] = false;
@@ -481,8 +485,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const appointment of this.appointments) {
             if (appointment.service.livetrack) {
-              // this.differceofDistance = this.getDistanceFromLatLonInKm(this.lat_lng.latitude,this.lat_lng.longitude,appointment.location.lattitude,appointment.location.longitude);
-              //  console.log(this.differceofDistance);
+              this.getCurrentLocation().then(
+                (lat_long: any) => {
+                  console.log(lat_long);
+                  appointment['differceofDistance'] = Math.round(this.getDistanceFromLatLonInKm(lat_long.latitude, lat_long.longitude, appointment.location.lattitude, appointment.location.longitude));
+                }, (error) => {
+                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                }
+            );
             }
             this.trackModeAppt[i] = false;
             this.changemodeAppt[i] = false;
@@ -1233,20 +1244,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
 
+  // getCurrentLocation() {
+  //   if (navigator) {
+  //     navigator.geolocation.getCurrentPosition(pos => {
+  //       this.lat_lng.longitude = +pos.coords.longitude;
+  //       this.lat_lng.latitude = +pos.coords.latitude;
+  //     },
+  //       error => {
+  //         this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+  //         this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+  //       });
+  //   }
+  // }
   getCurrentLocation() {
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        this.lat_lng.longitude = +pos.coords.longitude;
-        this.lat_lng.latitude = +pos.coords.latitude;
-      },
-        error => {
-          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-          this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
-        });
-    }
-  }
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+        if (navigator) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                _this.lat_lng.longitude = +pos.coords.longitude;
+                _this.lat_lng.latitude = +pos.coords.latitude;
+                resolve(_this.lat_lng);
+            },
+                error => {
+                    reject();
+                });
+        }
+    });
+}
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-
     const R = 6371; // Radius of the earth in km
     const dLat = this.deg2rad(lat2 - lat1);  // deg2rad below
     const dLon = this.deg2rad(lon2 - lon1);
@@ -1256,6 +1281,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = R * c; // Distance in km
+    console.log(d);
     return d;
   }
   deg2rad(deg) {
