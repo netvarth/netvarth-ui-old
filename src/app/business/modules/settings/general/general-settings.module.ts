@@ -43,3 +43,4 @@ import { DepartmentListComponent } from './departments/department-list/departmen
     ]
 })
 export class GeneralSettingsModule {}
+
