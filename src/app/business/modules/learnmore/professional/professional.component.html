@@ -12,11 +12,11 @@
                             (click)="menu('jaldeeonline')">
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title">
-                                    Profile and Search
+                                   Jaldee Online
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>The profile & search settings offers an in-depth overview of a provider's profile.
+                                <span>The Jaldee Online settings offers an in-depth overview of a provider's profile.
                                     This
                                     would
                                     help clients make informed decisions and choose a relevant provider. The dashboard
@@ -88,6 +88,33 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
+                            <mat-expansion-panel [expanded]="showbusiness && showprofilesearch">
+                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                    class="accordion">
+                                    <mat-panel-title class="accordion-title">
+                                        <span class="helpcontent"
+                                            (click)="handleScroll('business-profile', 'jaldeeonline')">Business Profile</span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="helpcontent"><strong>ComingSoon..</strong></div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion> 
+                            <mat-expansion-panel [expanded]="showjaldeeintegration && showprofilesearch">
+                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                            class="accordion">
+                                    <mat-panel-title class="accordion-title">
+                                                <span class="helpcontent"
+                                                    (click)="handleScroll('jaldee.com-integration', 'jaldeeonline')">Jaldee.com Integration</span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                         <div class="helpcontent">
+                                            <strong>ComingSoon...</strong>
+                                         </div>
+                                    </mat-expansion-panel>
+                            </mat-accordion>
+                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showverified && showprofilesearch">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -1441,7 +1468,7 @@
 
                                 </mat-expansion-panel>
                             </mat-accordion>
-                            <mat-accordion>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="showcustom  && showprofilesearch">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -1500,20 +1527,20 @@
                                     </div>
 
                                 </mat-expansion-panel>
-                            </mat-accordion>
+                            </mat-accordion> -->
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showonlineid  && showprofilesearch">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                     class="accordion"> 
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                            (click)="handleScroll('online-id','jaldeeonline')">OnlineID
+                                            (click)="handleScroll('jaldeebusiness-id','jaldeeonline')">Jaldee Business ID
                                            </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                         <span>
-                                            An Online id is a unique id of a provider that is generated automatically when the provider signup the Jaldee  Soft.
+                                            An Jaldeebusiness-id  is a unique id of a provider that is generated automatically when the provider signup the Jaldee  Soft.
                                             You can share this ID to other jaldee partners to visit
                                              in your
                                             website or any other portal.
@@ -1534,6 +1561,7 @@
                                                      </mat-panel-title>
                                                  </mat-expansion-panel-header>
                                                  <div class="helpcontent">
+                                                     <strong>comingsoon...</strong>
                                                  </div>
                                              </mat-expansion-panel>
                                                 </mat-accordion>
@@ -1681,7 +1709,7 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
-                                    <div class="helpcontent"></div>
+                                    <div class="helpcontent"><strong>ComingSoon..</strong></div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
@@ -1790,7 +1818,7 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
-                                    <div class="helpcontent"></div>
+                                    <div class="helpcontent"><strong>ComingSoon...</strong></div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
@@ -1819,12 +1847,12 @@
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('q-manager')">
-                                    QManager
+                                    Jaldee QManager
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
 
-                                <span>The QManager helps the provider in managing the working hours and ensuring
+                                <span>The Jaldee QManager helps the provider in managing the working hours and ensuring
                                     the
                                     seamless workflow from the point of the check-in to the completion of
                                     service.</span>
@@ -3585,147 +3613,7 @@
                     
                                         </mat-expansion-panel>
                                     </mat-accordion> -->
-                                    <mat-accordion>
-                                        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
-                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                                                <mat-panel-title class="accordion-title">
-                                                    <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
-                                                        Notifications</span>
-                                                </mat-panel-title>
-                                            </mat-expansion-panel-header>
-                    
-                                            <div class="helpcontent">
-                                                <span>Notifications are information the provider send and receive, it can be reminders,
-                                                    communication
-                                                    from customers, or other timely information</span><br>
-                                                <strong><u>Enable SMS Notification</u></strong><br>
-                                                This is a global notification toggle button which can only be enabled, if the provider
-                                                has
-                                                purchased any of the Jaldee Messaging add-ons available. Once the provider turn on
-                                                “Enable
-                                                SMS Notification“, the provider can see the available SMS credits for the respective
-                                                add-on
-                                                bought, under the label “Remaining SMS credits“. And the remaining SMS credits will be
-                                                updated according to the usage of SMS.
-                                            </div>
-                                            <mat-accordion>
-                                                <mat-expansion-panel>
-                                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                        class="accordion">
-                                                        <mat-panel-title class="accordion-title">
-                                                            <span class="helpcontent">
-                                                                Customer Notifications</span>
-                                                        </mat-panel-title>
-                                                    </mat-expansion-panel-header>
-                    
-                                                    <div class="helpcontent">
-                                                        <span>Deliver timely information to your customers like, the number of customers
-                                                            ahead of a particular
-                                                            customer in line, when the customer is second next in line and also when the
-                                                            customer is next in line for the actual appointment.</span>
-                                                        <ol>
-                                                            <li><strong>Early Notification:</strong><br>
-                                                                Notify a customer, the number of people ahead of him/her in line via
-                                                                SMS/Email/Notifications. First the provider has to enter a customer number
-                                                                to whom you
-                                                                wish to send a notification. Enable the following modes of channel through
-                                                                which you
-                                                                wish to send notifications to your customer.
-                                                                <ul>
-                                                                    <li>Via SMS</li>
-                                                                    <li>Via Email</li>
-                                                                    <li>App Notifications</li>
-                                                                </ul>
-                                                                Choose convenient options from the above and click Ok to save the
-                                                                information.
-                                                            </li>
-                                                            <li>
-                                                                <strong>
-                                                                    Pre Final Notification
-                                                                </strong><br>
-                                                                Notify a customer when he is second next in line via
-                                                                SMS/Email/Notifications.
-                                                                Enable the following modes of channel through which you wish to send
-                                                                notifications to your
-                                                                customer.
-                                                                <ul>
-                                                                    <li>Via SMS</li>
-                                                                    <li>Via Email</li>
-                                                                    <li>App Notifications</li>
-                                                                </ul>
-                                                                Choose convenient options from the above and click Ok to save the
-                                                                information.
-                                                            </li>
-                                                            <li>
-                                                                <strong>
-                                                                    Final Notification
-                                                                </strong><br>
-                                                                Notify a customer when he is next in line via SMS/Email/Notifications.
-                                                                Enable the following modes of channel through which you wish to send
-                                                                notifications to your customer.
-                                                                <ul>
-                                                                    <li>Via SMS</li>
-                                                                    <li>Via Email</li>
-                                                                    <li>App Notifications</li>
-                                                                </ul>
-                                                                Choose convenient options from the above and click Ok to save the
-                                                                information.
-                                                            </li>
-                                                        </ol>
-                                                    </div>
-                    
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
-                                            <mat-accordion>
-                                                <mat-expansion-panel>
-                                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                        class="accordion">
-                                                        <mat-panel-title class="accordion-title">
-                                                            <span class="helpcontent">
-                                                                Provider Notifications</span>
-                                                        </mat-panel-title>
-                                                    </mat-expansion-panel-header>
-                    
-                                                    <div class="helpcontent">
-                                                        <span>It is important to receive notifications for the provider when a customer
-                                                            checks-in or when a customer check-in is cancelled.
-                                                        </span>
-                                                        <ul>
-                                                            <li>
-                                                                <strong>Notify whenever check-in happens:</strong><br>
-                                                                When a customer checks-in with the provider, the provider can receive
-                                                                notifications in the following ways:
-                                                                <ul>
-                                                                    <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
-                                                                    <li>Via Email: Add email id to which you wish to receive email
-                                                                        notification.</li>
-                                                                    <li>App Notification: Turn on this toggle button if you would like to
-                                                                        receive information via App notification.</li>
-                                                                </ul>
-                                                            </li>
-                                                            <li>
-                                                                <strong>Notify whenever check-in gets cancelled:</strong><br>
-                                                                When a customer checks-in gets cancelled with the provider, the provider can
-                                                                receive notifications in the following ways:
-                                                                <ul>
-                                                                    <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
-                                                                    <li>Via Email: Add email id to which you wish to receive email
-                                                                        notification.</li>
-                                                                    <li>App Notification: Turn on this toggle button if you would like to
-                                                                        receive information via App notification.</li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                        Choose convenient options from the above and click Ok to save the information.
-                    
-                    
-                                                    </div>
-                    
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
-                    
-                                        </mat-expansion-panel>
-                                    </mat-accordion>
+                                  
                                     <!-- <mat-accordion>
                                         <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -3863,84 +3751,7 @@
                         </mat-accordion>
                         <!-- next -->
                         
-                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='showjaldeeintegrations '>
-                                <mat-expansion-panel-header class="accordion">
-                                    <mat-panel-title class="accordion-title" (click)="menu('jaldee-integration')">
-                                        Jaldee.com Integration
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                    <div class="helpcontent">
-                                        <span>
-                                                Manage your Jaldee.com app Integration  here.
-                                                These settings allows the customers to see their walkin check-ins
-                                        </span>
-                                    </div>
-                                    <mat-accordion> 
-                                        <mat-expansion-panel [expanded]="showonlinepresence && showjaldeeintegrations">
-                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                class="accordion">
-                                                <mat-panel-title class="accordion-title">
-                                                    <span class="helpcontent"
-                                                        (click)="handleScroll('onlinepresence', 'jaldee-integration')">Jaldee.com Online Presence</span>
-                                                </mat-panel-title>
-                                            </mat-expansion-panel-header>
-                                             <div class="helpcontent">
-                                                <section>
-                                                        <span>In this section, a provider can select the Jaldee.com Online Presence mode with which he/she wishes
-                                                            to
-                                                          enable Jaldee.com Online Presence  here.
-                                                        </span>
-                                                </section>
-                                                <section>
-                                                        <ul class="ul-normal">
-                                                            <li>To enable Online Presence, a provider has to switch
-                                                                on the
-                                                                " Jaldee.com Online Presence" mode. Initially, this is set to off mode.</li>
-                                                        </ul>
-                                                </section>
-                                                <section>
-                                                    <ul class="ul-normal">
-                                                        <li>If true, the provider is available in Jaldee search, he can publish online queues etc. 
-                                                            if false he is not available in search.</li>
-                                                    </ul>
-                                            </section>
-                                             </div>
-                                        </mat-expansion-panel>
-                                </mat-accordion>
-                                <mat-accordion> 
-                                    <mat-expansion-panel [expanded]="showjaldeeintegration && showjaldeeintegrations">
-                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                            class="accordion">
-                                            <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"
-                                                    (click)="handleScroll('jaldee-app-integration', 'jaldee-integration')">Jaldee Mobile App Integration</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                         <div class="helpcontent">
-                                            <section>
-                                                    <span>In this section, a provider can select the Jaldee Mobile App Integration mode with which he/she wishes
-                                                        to
-                                                      enable Jaldee Mobile App Integration  here.
-                                                    </span>
-                                            </section>
-                                            <section>
-                                                    <ul class="ul-normal">
-                                                        <li>To enable Mobile App Integration, a provider has to switch
-                                                            on the
-                                                            "Jaldee Mobile App Integration" mode. Initially, this is set to off mode.</li>
-                                                    </ul>
-                                            </section>
-                                            <section>
-                                                    <ul class="ul-normal">
-                                                        <li>Allow customer to integrate Jaldee App to manage check-ins.</li>
-                                                    </ul>
-                                            </section>
-                                         </div>
-                                    </mat-expansion-panel>
-                            </mat-accordion>
-                            </mat-expansion-panel>
-                        </mat-accordion>
+                        
                          <!-- next -->
                          <mat-accordion>
                             <mat-expansion-panel [expanded]='showcustomers  '>
@@ -3997,10 +3808,10 @@
                          </mat-accordion>
                          <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='showvirtualcallingmodes  '>
+                            <mat-expansion-panel [expanded]='showvirtualcallingmodes'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('comm')">
-                                        Comm
+                                        Communications And Notifications
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                     <div class="helpcontent">
@@ -4085,6 +3896,147 @@
                                                     </section>
                                          </div>
                                     </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="shownotifications && showvirtualcallingmodes">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent" (click)="handleScroll('notifications', 'comm')">
+                                                Notifications</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+            
+                                    <div class="helpcontent">
+                                        <span>Notifications are information the provider send and receive, it can be reminders,
+                                            communication
+                                            from customers, or other timely information</span><br>
+                                        <strong><u>Enable SMS Notification</u></strong><br>
+                                        This is a global notification toggle button which can only be enabled, if the provider
+                                        has
+                                        purchased any of the Jaldee Messaging add-ons available. Once the provider turn on
+                                        “Enable
+                                        SMS Notification“, the provider can see the available SMS credits for the respective
+                                        add-on
+                                        bought, under the label “Remaining SMS credits“. And the remaining SMS credits will be
+                                        updated according to the usage of SMS.
+                                    </div>
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent">
+                                                        Customer Notifications</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+            
+                                            <div class="helpcontent">
+                                                <span>Deliver timely information to your customers like, the number of customers
+                                                    ahead of a particular
+                                                    customer in line, when the customer is second next in line and also when the
+                                                    customer is next in line for the actual appointment.</span>
+                                                <ol>
+                                                    <li><strong>Early Notification:</strong><br>
+                                                        Notify a customer, the number of people ahead of him/her in line via
+                                                        SMS/Email/Notifications. First the provider has to enter a customer number
+                                                        to whom you
+                                                        wish to send a notification. Enable the following modes of channel through
+                                                        which you
+                                                        wish to send notifications to your customer.
+                                                        <ul>
+                                                            <li>Via SMS</li>
+                                                            <li>Via Email</li>
+                                                            <li>App Notifications</li>
+                                                        </ul>
+                                                        Choose convenient options from the above and click Ok to save the
+                                                        information.
+                                                    </li>
+                                                    <li>
+                                                        <strong>
+                                                            Pre Final Notification
+                                                        </strong><br>
+                                                        Notify a customer when he is second next in line via
+                                                        SMS/Email/Notifications.
+                                                        Enable the following modes of channel through which you wish to send
+                                                        notifications to your
+                                                        customer.
+                                                        <ul>
+                                                            <li>Via SMS</li>
+                                                            <li>Via Email</li>
+                                                            <li>App Notifications</li>
+                                                        </ul>
+                                                        Choose convenient options from the above and click Ok to save the
+                                                        information.
+                                                    </li>
+                                                    <li>
+                                                        <strong>
+                                                            Final Notification
+                                                        </strong><br>
+                                                        Notify a customer when he is next in line via SMS/Email/Notifications.
+                                                        Enable the following modes of channel through which you wish to send
+                                                        notifications to your customer.
+                                                        <ul>
+                                                            <li>Via SMS</li>
+                                                            <li>Via Email</li>
+                                                            <li>App Notifications</li>
+                                                        </ul>
+                                                        Choose convenient options from the above and click Ok to save the
+                                                        information.
+                                                    </li>
+                                                </ol>
+                                            </div>
+            
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent">
+                                                        Provider Notifications</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+            
+                                            <div class="helpcontent">
+                                                <span>It is important to receive notifications for the provider when a customer
+                                                    checks-in or when a customer check-in is cancelled.
+                                                </span>
+                                                <ul>
+                                                    <li>
+                                                        <strong>Notify whenever check-in happens:</strong><br>
+                                                        When a customer checks-in with the provider, the provider can receive
+                                                        notifications in the following ways:
+                                                        <ul>
+                                                            <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                            <li>Via Email: Add email id to which you wish to receive email
+                                                                notification.</li>
+                                                            <li>App Notification: Turn on this toggle button if you would like to
+                                                                receive information via App notification.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <strong>Notify whenever check-in gets cancelled:</strong><br>
+                                                        When a customer checks-in gets cancelled with the provider, the provider can
+                                                        receive notifications in the following ways:
+                                                        <ul>
+                                                            <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                            <li>Via Email: Add email id to which you wish to receive email
+                                                                notification.</li>
+                                                            <li>App Notification: Turn on this toggle button if you would like to
+                                                                receive information via App notification.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                                Choose convenient options from the above and click Ok to save the information.
+            
+            
+                                            </div>
+            
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+            
+                                </mat-expansion-panel>
                             </mat-accordion>
                             </mat-expansion-panel>
                         </mat-accordion>
@@ -6438,15 +6390,15 @@
                             <td class="td2">0</td>
                         </tr>
                         <tr class="tr3">
-                            <td class="td1">SILVER</td>
+                            <td class="td1">BASIC</td>
                             <td class="td2">0</td>
                         </tr>
                         <tr class="tr2">
-                            <td class="td1">GOLD</td>
+                            <td class="td1">PREMIUM</td>
                             <td class="td2">2</td>
                         </tr>
                         <tr class="tr3">
-                            <td class="td1">PLATINUM</td>
+                            <td class="td1">TEAM</td>
                             <td class="td2">5</td>
                         </tr>
                         <!-- <tr class="tr4">
@@ -6454,9 +6406,9 @@
                             <td class="td2">10</td>
                         </tr> -->
                         <tr class="tr5">
-                            <td class="td1">DIAMOND</td>
+                            <td class="td1">ENTERPRISE</td>
                             <td class="td2">25</td>
-                        </tr>
+                        </tr> 
                     </tbody>
                 </table>
                 <ul class="ul-normal">

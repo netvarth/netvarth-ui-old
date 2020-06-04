@@ -107,6 +107,6 @@ export class IntegrationSettingsComponent implements OnInit {
 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.router.navigate(['/provider/' + this.domain + '/jaldee-integration->' + mod]);
+        this.router.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
 }

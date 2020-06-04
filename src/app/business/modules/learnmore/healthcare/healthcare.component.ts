@@ -109,6 +109,7 @@ export class HealthCareComponent implements OnInit {
   showdelay = false;
   showlocation = false;
   showlocationAmenities = false;
+  showbusiness = false;
   
   
   constructor(
@@ -176,6 +177,12 @@ export class HealthCareComponent implements OnInit {
       if (childContent === 'public-search') {
         this.showpublic = true;
       }
+      if (childContent === 'business-profile') {
+        this.showbusiness = true;
+      }
+      if (childContent === 'jaldee.com-integration') {
+        this.showjaldeeintegration  = true;
+      }
       if (childContent === 'verified-levels') {
         this.showverified = true;
       }
@@ -197,7 +204,7 @@ export class HealthCareComponent implements OnInit {
       if (childContent === 'custom-id') {
         this.showcustom = true;
       }
-      if (childContent === 'online-id') {
+      if (childContent === 'jaldeebusiness-id') {
         this.showonlineid = true;
       }
       if (childContent === 'languages-known') {
@@ -313,9 +320,7 @@ export class HealthCareComponent implements OnInit {
     if (parentContent === 'miscellaneous') {
       this.showmiscellaneous = true;
      
-      if (childContent === 'notifications') {
-        this.shownotifications = true;
-      }
+     
        if (childContent === 'jdn') {
         this.showjdn = true;
       }
@@ -330,15 +335,7 @@ export class HealthCareComponent implements OnInit {
       }
     }
 
-    if (parentContent === 'jaldee-integration') {
-      this.showjaldeeintegrations = true;
-      if (childContent === 'onlinepresence') {
-        this.showonlinepresence = true;
-      }
-      if (childContent === 'jaldee-app-integration') {
-        this.showjaldeeintegration  = true;
-      }
-    }
+  
 
     if (parentContent === 'customers') {
       this.showcustomers = true;
@@ -354,6 +351,9 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'videocall-settings') {
         this.showvideocallmode  = true;
+      }
+      if (childContent === 'notifications') {
+        this.shownotifications = true;
       }
     }
     

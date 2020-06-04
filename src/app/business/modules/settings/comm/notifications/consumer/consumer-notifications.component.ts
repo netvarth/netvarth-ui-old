@@ -216,6 +216,6 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
 }
