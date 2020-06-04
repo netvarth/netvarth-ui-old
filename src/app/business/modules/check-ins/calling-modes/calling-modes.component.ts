@@ -56,6 +56,7 @@ export class CallingModesComponent implements OnInit {
             this.consumer_fname = this.data.qdata.appmtFor[0].userName;
             this.appt_time = this.data.qdata.appmtFor[0].apptTime;
         }
+        // tslint:disable-next-line:forin
         for (const i in this.data.modes) {
             this.callingModes = i;
         }
@@ -91,13 +92,10 @@ export class CallingModesComponent implements OnInit {
             }
         };
         if (isMobile.Android()) {
-            console.log('is is android');
             this.is_android = true;
         } else if (isMobile.iOS()) {
-            console.log('is is ios');
             this.is_ios = true;
         } else {
-            console.log('is is others');
             this.is_web = true;
         }
         this.getMeetingDetails();
@@ -109,14 +107,12 @@ export class CallingModesComponent implements OnInit {
         this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
     }
     selectAlrdyWaiting() {
-        this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join ' + this.temp_msglink;
+        if (this.callingModes === 'WhatsApp') {
+            this.msg_to_user = this.busnes_name + ' is already waiting';
+        } else {
+            this.msg_to_user = this.busnes_name + ' is already waiting.Please click the link to join ' + this.temp_msglink;
+        }
     }
-    // selectStrtVideo(val) {
-    //     this.chipValue = val;
-    //     this.showcomm = false;
-    //     this.videonote = true;
-    //     this.msg_to_user = 'SMS and email notification with your ' + this.callingModes + ' link has been sent.You can click the link to start the service';
-    // }
     clicktoSend() {
         if (this.data.type === 'checkin') {
             this.chkinTeleserviceJoinLink();
