@@ -51,7 +51,9 @@
                         <div class="details">
                             <div class="lt">
                                 <div class="lt0 pointlist" (click)="showcheckindetails(waitlist)">
-                                    <span class="service">{{waitlist.service.name | capitalizeFirst}}</span> for <span
+                                    <span class="service">
+                                        <i *ngIf="waitlist.service.serviceType === 'virtualService'" class="fa fa-video-camera cal-mod-font tool-pading"></i>
+                                        {{waitlist.service.name | capitalizeFirst}}</span> for <span
                                         class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                     </span>
@@ -292,7 +294,9 @@
                                 <div class="details">
                                     <div class="lt">
                                         <div class="lt0 pointlist" (click)="showApptdetails(appointment)">
-                                            <span class="service">{{appointment.service.name | capitalizeFirst}}</span>
+                                            <span class="service">
+                                                <i *ngIf="appointment.service.serviceType === 'virtualService'" class="fa fa-video-camera cal-mod-font tool-pading"></i>
+                                                {{appointment.service.name | capitalizeFirst}}</span>
                                             for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                             </span>
