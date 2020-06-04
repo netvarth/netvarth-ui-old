@@ -293,7 +293,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.end_cause_notify_cap = Messages.DONATION_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
         this.getGlobalSettings();
-        this.getVirtualCallingModesList();
 
         if (this.donationservice) {
             this.is_donation = true;
@@ -561,6 +560,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             (data: any) => {
                 if (data.virtualService === true) {
                     this.is_virtual_enable = true;
+                    this.getVirtualCallingModesList();
                 }
             });
     }
