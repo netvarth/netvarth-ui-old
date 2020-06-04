@@ -35,17 +35,27 @@ export class BusinessComponent implements OnInit {
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
-          setTimeout(() => {
-            if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
-              router.navigate(['provider', 'check-ins']);
-            } else {
-              router.navigate(['provider', 'settings']);
+        this.provider_services.getGlobalSettings().subscribe(
+          (data: any) => {
+            if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
+              setTimeout(() => {
+                if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
+                  if (data.waitlist) {
+                    router.navigate(['provider', 'check-ins']);
+                  } else if (data.appointment) {
+                    router.navigate(['provider', 'appointments']);
+                  } else {
+                    router.navigate(['provider', 'settings']);
+                  }
+                } else {
+                  router.navigate(['provider', 'settings']);
+                }
+              }, 500);
             }
-          }, 500);
-        }
+          });
       }
     });
+
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
         this.provider_datastorage.set('terminologies', data.terminologies);

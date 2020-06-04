@@ -95,7 +95,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.provider_services.setAppointmentPresence(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Appointment creation ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.shared_functions.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getOnlinePresence();
                 },
                 error => {

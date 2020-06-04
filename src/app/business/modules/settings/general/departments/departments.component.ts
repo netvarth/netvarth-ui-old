@@ -4,6 +4,8 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     'selector': 'app-departments',
@@ -29,66 +31,82 @@ export class DepartmentsComponent implements OnInit {
     ];
     isCheckin;
     domain: any;
-
+    account_type;
+    filterbydepartment = false;
+    removeitemdialogRef;
+    message;
+    deptstatusstr = 'Off';
+    departmentCount;
     constructor(public router: Router,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
+        private dialog: MatDialog,
         private provider_services: ProviderServices) {
 
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.loading = true;
-        this.getDepartments();
+        this.account_type = user.accountType;
+        this.getWaitlistMgr();
+        this.getDepartmentsCount();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }, { 'title': 'Help', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
-        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-        // this.loading = false;
     }
-    gotoDepartmentDetails(dept) {
-        this.router.navigate(['provider', 'settings', 'general',
-            'department', dept.departmentId]);
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
     }
-    getDepartments() {
-        this.loading = false;
-        this.provider_services.getDepartments()
+    getDepartmentsCount() {
+        this.provider_services.getDepartmentCount()
             .subscribe(
                 data => {
-                    this.deptObj = data;
-                    this.departments = this.deptObj.departments;
-                    this.loading = false;
-                },
-                error => {
-                    this.loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                }
-            );
-    }
-    changeDepartmentStatus(dept) {
-        if (dept.departmentStatus === 'ACTIVE') {
-            this.provider_services.disableDepartment(dept.departmentId).subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('Department and its services disabled successfully', { 'panelClass': 'snackbarnormal' });
-                    this.getDepartments();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
-        } else {
-            this.provider_services.enableDepartment(dept.departmentId).subscribe(
-                () => {
-                    this.shared_functions.openSnackBar('Department and its services enabled successfully', { 'panelClass': 'snackbarnormal' });
-                    this.getDepartments();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.departmentCount = data;
                 });
+    }
+    doRemoveservice() {
+        if (this.filterbydepartment) {
+            this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
+        } else {
+            this.message = 'Assigned services are removed from the departments';
         }
+        this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': this.message
+            }
+        });
+        this.removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const status = (this.filterbydepartment === true) ? 'Enable' : 'Disable';
+                this.provider_services.setDeptWaitlistMgr(status)
+                    .subscribe(
+                        () => {
+                            this.getWaitlistMgr();
+                        },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            } else {
+                this.filterbydepartment = (this.filterbydepartment === true) ? false : true;
+            }
+        });
+    }
+    getWaitlistMgr() {
+        this.provider_services.getWaitlistMgr()
+            .subscribe(
+                data => {
+                    this.filterbydepartment = data['filterByDept'];
+                    this.deptstatusstr = data['filterByDept'] ? 'On' : 'Off';
+                });
+    }
+    goDepartments() {
+        this.router.navigate(['provider', 'settings', 'general', 'departments', 'list']);
     }
     performActions(action) {
         if (action === 'addDepartment') {
@@ -96,7 +114,6 @@ export class DepartmentsComponent implements OnInit {
                 'department', 'add']);
         } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/general->departments']);
-
         }
     }
 }

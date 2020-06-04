@@ -330,7 +330,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.setCheckinPresence(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Accept Check-Ins ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.shared_functions.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
                 },
                 error => {

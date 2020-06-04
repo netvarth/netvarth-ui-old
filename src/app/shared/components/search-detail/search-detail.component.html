@@ -361,7 +361,7 @@
                                         <span
                                             (click)="providerDetClicked(search_result)">{{search_result.fields.title | capitalizeFirst}}<sup
                                                 class="font-open-now"
-                                                *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
+                                                *ngIf="search_result.fields['opennow'] || search_result.fields['apptopennow']">&nbsp;{{open_now_cap}}
                                             </sup></span><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1"
                                             (click)="openJdn(search_result)" [matTooltip]="jdnTooltip"><img height="35"
                                                 width="35" src="./assets/images/JDN.png"></span>
@@ -484,7 +484,8 @@
                                         aria-hidden="true"></i></span>
                             </div>
                         </div>
-                        <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile">
+                        <div class="bottom-sect"
+                            *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile">
                             <div class="bt-l">
                                 <div class="wt-tme"
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
@@ -560,17 +561,16 @@
                             <div class="bt-l"> </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root"> -->
-                                <!-- <span class="checkin-btn disabled"
+                        <!-- <span class="checkin-btn disabled"
                                     *ngIf="search_result.fields.today_appt != 1">Appointment</span> -->
-                                <!-- <span class="checkin-btn"
+                        <!-- <span class="checkin-btn"
                                     (click)="appointmentClicked(search_result, false)">Appointment</span> -->
 
-                                <!-- <div class="future-date-link checkin-future"> <span class="bt10" *ngIf="search_result.fields.future_appt == 1" (click)="appointmentClicked(search_result, true)" >{{do_you_want_to_cap}} <span>Appointment </span>{{for_cap}} <span>{{different_date}}</span>
+                        <!-- <div class="future-date-link checkin-future"> <span class="bt10" *ngIf="search_result.fields.future_appt == 1" (click)="appointmentClicked(search_result, true)" >{{do_you_want_to_cap}} <span>Appointment </span>{{for_cap}} <span>{{different_date}}</span>
                                 </span> </div>   -->
-                            <!-- </div>
+                        <!-- </div>
                         </div> -->
-                        <div class="bottom-sect pdetail"
-                        *ngIf="search_result.fields.apptAllowed">
+                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.apptAllowed">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">
@@ -590,7 +590,8 @@
                             </div>
                             <div style="flex-grow:1"></div>
                             <div class="bottom-actions-root">
-                                <span (click)="appointmentClicked(search_result, false)" class="checkin-btn">Appointment</span>
+                                <span (click)="appointmentClicked(search_result, false)"
+                                    class="checkin-btn">Appointment</span>
                             </div>
                         </div>
                         <div class="bottom-sect pdetail"

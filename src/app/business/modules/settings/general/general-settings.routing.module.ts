@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GeneralSettingsComponent } from './general-settings.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentDetailComponent } from './departments/details/department.details.component';
+import { DepartmentListComponent } from './departments/department-list/department-list.component';
 
 const routes: Routes = [
     {path: '', component: GeneralSettingsComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: 'users', loadChildren: () => import('../../settings/general/users/users.module').then(m => m.UsersModule) },
     { path: 'livetrack', loadChildren: () => import('../../settings/general/livetrack/livetrack-settings.module').then(m => m.LiveTrackSettingsModule) },
     {path: 'departments', component: DepartmentsComponent },
+    {path: 'departments/list', component: DepartmentListComponent },
     {path: 'department/:id', component: DepartmentDetailComponent },
 ];
 

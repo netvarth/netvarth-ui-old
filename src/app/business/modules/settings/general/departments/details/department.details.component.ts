@@ -29,6 +29,10 @@ export class DepartmentDetailComponent implements OnInit {
         {
             title: 'Departments',
             url: '/provider/settings/general/departments'
+        },
+        {
+            title: 'Department List',
+            url: '/provider/settings/general/departments/list'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -172,7 +176,7 @@ export class DepartmentDetailComponent implements OnInit {
                 this.selected_action = 'show';
                 this.changeDetectorRef.detectChanges();
             } else {
-                this.router.navigate(['provider/settings/general/departments']);
+                this.router.navigate(['provider/settings/general/departments/list']);
             }
         }
     }
@@ -225,7 +229,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.srvcArry = [];
         // this.srvcArry = this.services_all.filter(item1 =>
         //     !this.defaultdepartmentservice.some(item2 => (item2.id === item1.id)))
-     ///   this.srvcArry = this.defaultdepartmentservice;
+        ///   this.srvcArry = this.defaultdepartmentservice;
         this.serviceArray = this.defaultdepartmentservice;
         for (const serv of this.serviceArray) {
             if (serv.serviceType !== 'donationService' && serv.status !== 'INACTIVE') {
@@ -263,7 +267,7 @@ export class DepartmentDetailComponent implements OnInit {
                             for (let i = 0; i < this.servicesjson.length; i++) {
                                 for (let j = 0; j < this.dept_services.length; j++) {
                                     if (this.dept_services[j] === this.servicesjson[i].id) {
-                                            newserviceArray.push(this.servicesjson[i]);
+                                        newserviceArray.push(this.servicesjson[i]);
                                     }
                                 }
                             }

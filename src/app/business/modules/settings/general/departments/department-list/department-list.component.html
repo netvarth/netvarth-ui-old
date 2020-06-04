@@ -1,0 +1,60 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card" *ngIf="!loading">
+                    <!-- <p class="form-level-settings">You can create departments here.</p> -->
+                    <div class="row" *ngFor="let dept of departments">
+                        <div class="card" [class.disabled]="dept.departmentStatus=='INACTIVE'">
+                            <div class="copy">
+                                <span class="mbt" *ngIf="!dept.isDefault">
+                                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </span>
+                                <span class="lcn-sts-label inactv"
+                                    *ngIf="!dept.departmentStatus || dept.departmentStatus=='INACTIVE'"></span>
+                                <h3 (click)="gotoDepartmentDetails(dept)" class="pointer-cursor"> {{dept.departmentName |
+                                            capitalizeFirst}}</h3>
+                                <div class="c-ot m0">
+                                    <div class="item">
+                                        <span class="ttle">Department Code</span>
+                                        <span>{{dept.departmentCode}}</span>
+                                    </div>
+                                    <div class="item" *ngIf="dept.departmentDescription">
+                                        <span class="ttle">Description</span>
+                                        <span>{{dept.departmentDescription}}</span>
+                                    </div>
+                                </div>
+                                <mat-menu #appMenu="matMenu">
+                                    <!-- <button mat-menu-item (click)="addEditProviderService('edit', service)" *ngIf="service.status=='ACTIVE'">
+                                            <i class="icon-edit"></i>
+                                            Edit
+                                        </button> -->
+                                    <button mat-menu-item (click)="changeDepartmentStatus(dept)">
+                                        <i *ngIf="dept.departmentStatus=='INACTIVE' || !dept.departmentStatus"
+                                            class="icon-enable"></i>
+                                        <i *ngIf="dept.departmentStatus=='ACTIVE'" class="icon-disable"></i>
+                                        {{(dept.departmentStatus=='ACTIVE') ? 'Disable' :'Enable'}}
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="departments && departments.length===0">
+                        <div class="col-md-12">
+                            No departments found
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

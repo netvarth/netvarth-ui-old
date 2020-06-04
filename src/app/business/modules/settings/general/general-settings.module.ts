@@ -14,6 +14,7 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentDetailComponent } from './departments/details/department.details.component';
+import { DepartmentListComponent } from './departments/department-list/department-list.component';
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import { DepartmentDetailComponent } from './departments/details/department.deta
         GeneralSettingsComponent,
         ProviderWaitlistLocationDetailComponent,
         DepartmentsComponent,
+        DepartmentListComponent,
         DepartmentDetailComponent
     ],
     exports: [

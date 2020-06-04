@@ -204,7 +204,8 @@
                                         <mat-panel-title>
                                             <div class="location-accord">
                                                 <h3 *ngIf="!isPlaceisSame">{{loc.fields.place1 | capitalizeFirst}}<sup
-                                                        class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                                        class="font-open-now"
+                                                        *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
                                                     </sup>
                                                     <a style="margin-left: 20px;" rel="noopener"
                                                         class="directions ft-smlr"
@@ -265,14 +266,14 @@
                                                             </ul>
                                                         </div>
                                                         <div class="services"
-                                                        *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
-                                                        <span class="sub-title">{{services_offered}}</span>
-                                                        <ul>
-                                                            <li *ngFor="let serv of loc.fields.services"
-                                                                (click)="showServiceDetail(serv, businessjson.businessName)">
-                                                                {{serv}}</li>
-                                                        </ul>
-                                                    </div>
+                                                            *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
+                                                            <span class="sub-title">{{services_offered}}</span>
+                                                            <ul>
+                                                                <li *ngFor="let serv of loc.fields.services"
+                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                                    {{serv}}</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,39 +389,43 @@
                                             <div class="bt-l"> </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root"> -->
-                                                <!-- <span class="checkin-btn disabled"
+                                        <!-- <span class="checkin-btn disabled"
                                                     *ngIf="loc.fields.today_appt != 1">Appointment</span> -->
-                                                <!-- <span class="checkin-btn"
+                                        <!-- <span class="checkin-btn"
                                                     (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
-                                                <!-- <div class="future-date-link checkin-future">  <span class="bt10" *ngIf="loc.fields.future_appt == 1" (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], true)" >{{do_you_want_to_cap}} <span> Appointment </span>{{for_cap}} <span>{{different_date_cap}}</span>
+                                        <!-- <div class="future-date-link checkin-future">  <span class="bt10" *ngIf="loc.fields.future_appt == 1" (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], true)" >{{do_you_want_to_cap}} <span> Appointment </span>{{for_cap}} <span>{{different_date_cap}}</span>
                                                 </span> </div> -->
-                                            <!-- </div>
+                                        <!-- </div>
                                         </div> -->
 
                                         <div class="bottom-sect pdetail"
-                                        *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
-                            <div class="bt-l">
-                                <div class="wt-tme">
-                                    <div class="donat-service">
-                                        <span class="sub-title-donate">Appointment Service(s)</span>
-                                        <ul *ngIf="!result_data.fields.appointmentServiceList">
-                                            <li *ngFor="let appointmentService of result_data.fields.appt_services">
-                                                {{appointmentService}}</li>
-                                        </ul>
-                                        <ul *ngIf="result_data.fields.appointmentServiceList">
-                                            <li *ngFor="let appointmentService of result_data.fields.appointmentServiceList">
-                                                {{appointmentService.name}}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div style="flex-grow:1"></div>
-                            <div class="bottom-actions-root">
-                                <span (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)" class="checkin-btn">Appointment</span>
-                            </div>
-                        </div>
+                                            *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
+                                            <div class="bt-l">
+                                                <div class="wt-tme">
+                                                    <div class="donat-service">
+                                                        <span class="sub-title-donate">Appointment Service(s)</span>
+                                                        <ul *ngIf="!result_data.fields.appointmentServiceList">
+                                                            <li
+                                                                *ngFor="let appointmentService of result_data.fields.appt_services">
+                                                                {{appointmentService}}</li>
+                                                        </ul>
+                                                        <ul *ngIf="result_data.fields.appointmentServiceList">
+                                                            <li
+                                                                *ngFor="let appointmentService of result_data.fields.appointmentServiceList">
+                                                                {{appointmentService.name}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div style="flex-grow:1"></div>
+                                            <div class="bottom-actions-root">
+                                                <span
+                                                    (click)="appointmentClicked(loc.fields.location_id1, loc.fields.place1,loc['estimatedtime_det']['cdate'], false)"
+                                                    class="checkin-btn">Appointment</span>
+                                            </div>
+                                        </div>
 
                                         <div class="bottom-sect pdetail"
                                             *ngIf="loc.fields.donation_status == 1 && loc.fields.donation_services && loc.fields.online_profile">
@@ -443,8 +448,7 @@
                                             </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
-                                                <span
-                                                    (click)="payClicked(loc.fields.location_id1)"
+                                                <span (click)="payClicked(loc.fields.location_id1)"
                                                     class="checkin-btn">Donate</span>
                                             </div>
                                         </div>
