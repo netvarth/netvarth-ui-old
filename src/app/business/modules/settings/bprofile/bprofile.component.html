@@ -108,7 +108,7 @@
                                                     <li class="acc-url-li">
                                                         <span class="custid" rel="noopener"
                                                             target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
-                                                        <span style="display: flex;">
+                                                        <span style="display: flex;" class="busns-id">
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor"
                                                                     (click)="copyInputMessage(bProfile.accEncUid)"
@@ -183,36 +183,39 @@
                                                     <li class="acc-url-li">
                                                         <span class="custid" rel="noopener"
                                                             target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
-                                                        <span class="custid custId-icon"><i
-                                                                class="fa fa-copy custId-cursor"
-                                                                (click)="copyInputMessage(bProfile.customId)"
-                                                                [matTooltip]="'Copy link'"></i>
-                                                        </span>
-                                                        <span class="custid custId-icon">
-                                                            <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                                (click)="qrCodegenerateCustID(bProfile.customId)"
-                                                                [matTooltip]="'Generate QR code'"></i>
-                                                        </span>
-                                                        <span class="custid" style="padding-left: 40px;">
-                                                            <button type="button" mat-icon-button
-                                                                [matMenuTriggerFor]="menu">
-                                                                <mat-icon>more_vert</mat-icon>
-                                                            </button>
-                                                            <mat-menu #menu="matMenu">
-                                                                <button type="button"
-                                                                    (click)="editCustomId(bProfile.customId)"
-                                                                    mat-menu-item>
-                                                                    <i class="icon-edit"></i>
-                                                                    <span>{{edit_cap}}</span>
+                                                            <span class="busns-id">
+                                                                <span class="custid custId-icon"><i
+                                                                    class="fa fa-copy custId-cursor"
+                                                                    (click)="copyInputMessage(bProfile.customId)"
+                                                                    [matTooltip]="'Copy link'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
+                                                                    (click)="qrCodegenerateCustID(bProfile.customId)"
+                                                                    [matTooltip]="'Generate QR code'"></i>
+                                                            </span>
+                                                            <span class="custid" style="padding-left: 40px;">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="menu">
+                                                                    <mat-icon>more_vert</mat-icon>
                                                                 </button>
-                                                                <button type="button"
-                                                                    (click)="deleteCustomId(bProfile.customId)"
-                                                                    mat-menu-item>
-                                                                    <i class="icon-delete"></i>
-                                                                    <span>{{delete_btn}}</span>
-                                                                </button>
-                                                            </mat-menu>
-                                                        </span>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button type="button"
+                                                                        (click)="editCustomId(bProfile.customId)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-edit"></i>
+                                                                        <span>{{edit_cap}}</span>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        (click)="deleteCustomId(bProfile.customId)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-delete"></i>
+                                                                        <span>{{delete_btn}}</span>
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                            </span>
+                                                       
                                                     </li>
                                                 </ul>
                                             </div>

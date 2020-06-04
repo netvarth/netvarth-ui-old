@@ -9047,4 +9047,13 @@ max-height: 425px !important;
   font-size: 0.875rem;
   height: 40px;
   list-style: none;
+  flex-wrap: wrap;
+}
+.busns-id {
+  padding-top: 0px;
+}
+@media only screen and (max-width: 575px) {
+  .busns-id{
+    padding-top: 5px;
+  }
 }
