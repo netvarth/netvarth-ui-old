@@ -9062,8 +9062,8 @@ max-height: 425px !important;
   width: fit-content;
 }
 .ngx-qr-btn {
-  background: #3c8dbc;
-  color: white;
+  /* background: #3c8dbc; */
+  color: black;
   font-weight: 500;
 }
 .ngx-qrcod .qrcode img{
@@ -9072,5 +9072,5 @@ max-height: 425px !important;
 .ngx-qr-close {
   position: absolute;
   padding-left: 110px;
-  color: #3c8dbc;
+  /* color: #3c8dbc; */
 }

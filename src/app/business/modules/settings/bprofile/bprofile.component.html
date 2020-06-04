@@ -126,16 +126,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" *ngIf="qr_code_oId" style="display: flex;">
-                                        <div>
+                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId">
+                                        <div><i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
+                                        <div  class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
                                                 [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
-                                        <div class="custId-prnt">
-                                            <button (click)="printQr('print-section')">Print</button> &nbsp;&nbsp;&nbsp;
-                                            <button (click)="closeOnlineQR()">close</button>
+                                        <div class="coupon-outer">
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="href" (click)="downloadQR()" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
+                                            <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button (click)="closeOnlineQR()">close</button> -->
                                         </div>
+
+
                                     </div>
 
 
@@ -221,26 +226,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" *ngIf="qr_code_cId" style="display: flex;">
-                                        <div>
+                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId">
+                                        <div><i (click)="closeCustomQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
+                                        <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
                                                 [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
-                                        <div class="custId-prnt">
-                                            <button (click)="printQr('print-section')">Print</button>&nbsp;&nbsp;&nbsp;
-                                            <button (click)="closeCustomQR()">close</button>
+                                        <div class="coupon-outer">
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="href" (click)="downloadQR()" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
                                         </div>
+                                        <!-- <div class="custId-prnt">
+                                            <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button (click)="closeCustomQR()">close</button>
+                                        </div> -->
                                     </div>
 
 
-                                    <div  *ngIf="!bProfile.customId">
+                                    <div class="coupon-outer" *ngIf="!bProfile.customId">
                                         <a (click)="customizeId()" style="font-weight: 500;cursor: pointer;">
                                             Customize your business ID
                                         </a>
-                                         <!-- <a *ngIf="normal_customid_show==2 && !showCustomId" style="font-weight: 500;">
-                                            Customize your business ID
-                                        </a> -->
                                         <div class="duration" *ngIf="normal_customid_show==2 && !showCustomId">
                                             (You are not allowed to do this operation. Please upgrade license package)
                                         </div> 

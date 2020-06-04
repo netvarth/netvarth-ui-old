@@ -148,6 +148,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   normal_locationinfo_show = 1;
   normal_locationamenities_show = 1;
   normal_customid_show = 1;
+  href: string;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
@@ -994,6 +996,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   showPasscode() {
     this.show_passcode = !this.show_passcode;
+  }
+  downloadQR() {
+    this.href = document.getElementsByTagName('img')[3].src;
   }
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
