@@ -98,7 +98,7 @@ export class ApptDetailComponent implements OnInit {
         this.queueStart = apptlistjson.schedule.apptSchedule.timeSlots[0].sTime;
         this.queueEnd = apptlistjson.schedule.apptSchedule.timeSlots[0].eTime;
         this.paymntstats = apptlistjson.paymentStatus;
-        this.batchname = apptlistjson.batchName;
+        this.batchname = apptlistjson.batchId;
         this.status = apptlistjson.apptStatus;
         this.statusUpdatedTime = apptlistjson.statusUpdatedTime;
         this.consumerNote = apptlistjson.consumerNote;

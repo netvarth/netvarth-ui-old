@@ -354,8 +354,8 @@
                                         <div class="lt0" *ngIf="appointment.partySize && appointment.partySize > 1">
                                             {{party_size}} <span class="persons">{{appointment.partySize}}</span>
                                         </div>
-                                        <div class="lt0" *ngIf="appointment.batchName" style="font-size: 0.9rem;">
-                                            Batch <span class="token">{{appointment.batchName}} </span>
+                                        <div class="lt0" *ngIf="appointment.batchId" style="font-size: 0.9rem;">
+                                            Batch <span class="token">{{appointment.batchId}} </span>
                                         </div>
                                         <!-- <div class="lt0 payment"
                                             *ngIf="!appointment.parentUuid && appointment.apptStatus=='prepaymentPending'">
