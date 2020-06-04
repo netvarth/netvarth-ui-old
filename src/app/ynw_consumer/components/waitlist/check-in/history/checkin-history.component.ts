@@ -137,6 +137,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   getWaitlistBill(waitlist) {
+    console.log(waitlist);
     const params = {
       account: waitlist.providerAccount.id
     };
@@ -163,7 +164,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         autoFocus: true,
         data: {
           checkin: checkin,
-          bill_data: bill_data
+          bill_data: bill_data,
+          isFrom: 'checkin'
         }
       });
 

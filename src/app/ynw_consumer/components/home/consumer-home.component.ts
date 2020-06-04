@@ -1260,6 +1260,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const _this = this;
     return new Promise(function (resolve, reject) {
         if (navigator) {
+         _this.lat_lng = {
+            latitude: 0,
+            longitude: 0
+          };
             navigator.geolocation.getCurrentPosition(pos => {
                 _this.lat_lng.longitude = +pos.coords.longitude;
                 _this.lat_lng.latitude = +pos.coords.latitude;
