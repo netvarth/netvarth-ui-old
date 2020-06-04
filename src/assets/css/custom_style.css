@@ -9074,3 +9074,8 @@ max-height: 425px !important;
   padding-left: 110px;
   /* color: #3c8dbc; */
 }
+.tel-srv-cust-p {
+  font-size: small;
+  font-weight: 500;
+  color: #1873f2;
+}
