@@ -262,6 +262,7 @@ export class CallingModesComponent implements OnInit {
                 subscribe((meetingdata) => {
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
+                    this.temp_msglink = this.meetlink_data.startingUl;
                 });
         }
     }
