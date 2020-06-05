@@ -138,15 +138,22 @@
 </div>
 <div  *ngIf="step === 5">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
-            aria-hidden="true"></i>Back</button>
+        <div>
+            <h1 class="mat-dialog-title wtsap-ip-wdth fl-right">
+                <button mat-dialog-close class="modal_close" tabindex="-1">
+                    <i class="fa fa-window-close" aria-hidden="true"></i>
+                </button>
+            </h1>
+            <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
+                aria-hidden="true"></i>Back</button>
+        </div>
         <div class="example-full-width" style="padding-top: 30px;text-align: center;">
             Change status to "Completed"
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button type="button" class="cs-btn bt1" (click)="selectCompleted()">OK</button>&nbsp;&nbsp;&nbsp;
-        <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+        <button type="button" class="cs-btn bt1" style="background: #00cc96;" (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" mat-dialog-close class="cs-btn bt1" style="background: #f24949;">No</button>
     </mat-dialog-actions>
 </div>
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">

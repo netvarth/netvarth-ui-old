@@ -153,6 +153,7 @@ export class CallingModesComponent implements OnInit {
             this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                this.step = 1;
                 setTimeout(() => {
                     this.api_success = '';
                 }, 5000);
@@ -162,6 +163,7 @@ export class CallingModesComponent implements OnInit {
             this.shared_services.consumerMassCommunicationAppt(post_data).
             subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                this.step = 1;
                 setTimeout(() => {
                     this.api_success = '';
                 }, 5000);
