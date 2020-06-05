@@ -472,8 +472,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getApptlist() {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
-    const params = {
-    };
+    const params = {'apptStatus-neq': 'failed'};
     this.consumer_services.getApptlist(params)
       .subscribe(
         data => {

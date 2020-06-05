@@ -119,6 +119,9 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic tool-pading"></i>
+                                                        <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="tool-pading"
+                                                        src="https://img.icons8.com/color/20/000000/zoom.png" />
                                                     {{serv.name | capitalizeFirst}}
                                                 </mat-option>
                                             </mat-select>
@@ -139,14 +142,14 @@
                                                     {{mode.instructions}}
                                                 </div>
                                                 <div class="input-section mgn-bt-15 desfont" *ngIf="mode.callingMode === 'WhatsApp'">
-                                                    <i *ngIf="mode.callingMode === 'WhatsApp'"
+                                                    <span><i *ngIf="mode.callingMode === 'WhatsApp'"
                                                         class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
                                                     <!-- <i *ngIf="mode.callingMode === 'Skype'"
                                                         class="fa fa-skype fa-lg skype-ic call-icon"></i> -->
-                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/>
-                                                    <input *ngIf="!showInputSection"
-                                                        class="form-control emailPrepay call-mode-ip" placeholder=""
-                                                        [(ngModel)]="callingModes" autocomplete="off">
+                                                        <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon" src="https://img.icons8.com/color/18/000000/zoom.png"/></span>
+                                                   <span> <input *ngIf="!showInputSection"
+                                                        class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" placeholder=""
+                                                        [(ngModel)]="callingModes" autocomplete="off"></span>
                                                     <div class="input-group-append mgn-up-6"
                                                         style="padding-left: 10px;">
                                                         <button *ngIf="!showInputSection" class="btn bt3 btn-default"
