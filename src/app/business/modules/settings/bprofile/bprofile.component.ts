@@ -228,6 +228,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   onlinepresence_status = false;
   onlinepresence_statusstr = '';
   is_customized = false;
+  licence_warn = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -897,8 +898,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
     }
   }
   customizeId() {
-    this.is_customized = true;
-    this.editCustomId();
+    if (this.normal_customid_show === 2 && !this.showCustomId) {
+      this.licence_warn = true;
+    } else {
+      this.is_customized = true;
+      this.editCustomId();
+    }
   }
   deleteCustomId(customId) {
     this.provider_services.removeCustomId(customId).subscribe(

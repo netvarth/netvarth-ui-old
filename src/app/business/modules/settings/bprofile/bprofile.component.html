@@ -250,8 +250,8 @@
                                                 Customize ID
                                             </a>
                                         </button>
-                                        <div class="duration" *ngIf="normal_customid_show==2 && !showCustomId">
-                                            (You are not allowed to do this operation. Please upgrade license package)
+                                        <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                                            You are not allowed to do this operation. Please upgrade license package
                                         </div> 
                                     </div>
 
