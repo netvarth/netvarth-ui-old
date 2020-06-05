@@ -151,7 +151,7 @@
                                             <div class="form-group custId-flex">
                                                 <mat-form-field class="custId-ip-wdth">
                                                     <input matInput type="text" minlength="4" maxlength="25"
-                                                        class="form-control" autocomplete="off" value="www.jaldee.com/#"
+                                                        class="form-control" autocomplete="off" value="www.jaldee.com/"
                                                         [readonly]="true" style="color: #a5a2a2;">
                                                 </mat-form-field>
                                                 <mat-form-field>
@@ -245,9 +245,11 @@
 
 
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
-                                        <a (click)="customizeId()" style="font-weight: 500;cursor: pointer;">
-                                            Customize your business ID
-                                        </a>
+                                        <button class="btn-primary-n" (click)="customizeId()">
+                                            <a>
+                                                Customize ID
+                                            </a>
+                                        </button>
                                         <div class="duration" *ngIf="normal_customid_show==2 && !showCustomId">
                                             (You are not allowed to do this operation. Please upgrade license package)
                                         </div> 

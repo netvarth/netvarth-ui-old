@@ -9082,3 +9082,9 @@ max-height: 425px !important;
 .wtsap-ip-wdth {
   width: fit-content !important;
 }
+.tele_srv_txtarea {
+  height: 80px !important;
+  border: 1px solid !important;
+  border-color: #b5abab !important;
+  overflow: hidden !important;
+}

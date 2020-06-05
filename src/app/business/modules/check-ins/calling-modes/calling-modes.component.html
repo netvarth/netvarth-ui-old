@@ -14,8 +14,8 @@
                         <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
                         <a style="padding-left: 20px;" target="_blank" [href]="starting_url">Launch WhatsApp</a>
                     </span>
-                    <span *ngIf="is_web" class="btn-primary-n tele-btn" (click)="launchWhtsap()">
-                        <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                    <span *ngIf="is_web" class="cs-btn bt2 disabled" (click)="launchWhtsap()">
+                        <i class="fa fa-whatsapp fa-lg"></i>
                         <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
                         <span style="padding-left: 20px;">Launch WhatsApp</span>
                     </span>
@@ -26,9 +26,12 @@
                         <a style="padding-left: 10px;" target="_blank" [href]="starting_url">Launch Zoom</a>
                     </span>
                 </div>
-                <div class="coupon-outer"><a class="custId-cursor" (click)="meetingDetails()">Meeting Details</a></div>
+                <div class="coupon-outer">
+                    <a *ngIf="callingModes !== 'WhatsApp'" class="custId-cursor" (click)="meetingDetails()">Meeting Details</a>
+                    <a *ngIf="callingModes === 'WhatsApp' && !is_web" class="custId-cursor" (click)="meetingDetails()">Meeting Details</a>
+                </div>
             </div>
-            <div *ngIf="show_note">You are using web browser.Please use app or mobile browser to launch WhatsApp</div>
+            <div *ngIf="callingModes === 'WhatsApp' && is_web">You're using web browser. Send <a class="custId-cursor" (click)="meetingDetails()">meeting details</a> to your phone to launch WhatsApp</div>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>
@@ -46,14 +49,12 @@
 </div>
 <div *ngIf="step === 2">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
-                aria-hidden="true"></i>Back</button>
         <div class="example-full-width" style="padding-top: 30px;">
             <div class="tspace"><span style="font-size: x-large;">Reminder</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
             <div class="telemode-msg">Message to {{customer_label}}</div>
-            <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
+            <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
         </mat-form-field>
         <div class="mgtop40 form-group">
             Send message via
@@ -71,18 +72,17 @@
     </mat-dialog-content>
     <mat-dialog-actions>
         <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
+        <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
     </mat-dialog-actions>
 </div>
 <div *ngIf="step === 3">
     <mat-dialog-content>
-        <button type="button" (click)="back()"><i class="fa fa-arrow-left tool-pading"
-                aria-hidden="true"></i>Back</button>
         <div class="example-full-width" style="padding-top: 30px;">
             <div class="tspace"><span style="font-size: x-large;">Waiting for you!</span></div>
         </div>
         <mat-form-field class="example-full-width" style="padding-top: 30px;">
             <div class="telemode-msg">Message to {{customer_label}}</div>
-            <textarea matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
+            <textarea class="tele_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"></textarea>
         </mat-form-field>
         <div class="mgtop40 form-group">
             Send message via
@@ -100,6 +100,7 @@
     </mat-dialog-content>
     <mat-dialog-actions>
         <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
+        <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
     </mat-dialog-actions>
 </div>
 <div *ngIf="step === 4">

@@ -94,11 +94,14 @@ export class CallingModesComponent implements OnInit {
             }
         };
         if (isMobile.Android()) {
+            console.log('Android')
             this.is_android = true;
         } else if (isMobile.iOS()) {
+            console.log('iois')
             this.is_ios = true;
         } else {
             this.is_web = true;
+            console.log('web')
         }
         this.getMeetingDetails();
     }
