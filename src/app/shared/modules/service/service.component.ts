@@ -145,6 +145,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                             }
                             if (this.action === 'edit') {
                                 this.createForm();
+                                if (this.service_data.serviceType === 'virtualService') {
+                                    this.is_virtual_serv = true;
+                                }
                                 if (!this.subdomainsettings.serviceBillable) {
                                     this.serviceForm.setValue({
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
