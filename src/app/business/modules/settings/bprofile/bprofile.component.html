@@ -108,7 +108,7 @@
                                                     <li class="acc-url-li">
                                                         <span class="custid" rel="noopener"
                                                             target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
-                                                        <span style="display: flex;" class="busns-id">
+                                                        <span class="busns-id">
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor"
                                                                     (click)="copyInputMessage(bProfile.accEncUid)"
@@ -118,6 +118,13 @@
                                                                 <i class="fa fa-qrcode custId-cursor custId-qr"
                                                                     (click)="qrCodegenerateOnlineID(bProfile.accEncUid)"
                                                                     [matTooltip]="'Generate QR code'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                                <button class="btn-primary-n" (click)="customizeId()">
+                                                                    <a>
+                                                                        Customize ID
+                                                                    </a>
+                                                                </button>
                                                             </span>
                                                         </span>
 
@@ -245,11 +252,6 @@
 
 
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
-                                        <button class="btn-primary-n" (click)="customizeId()">
-                                            <a>
-                                                Customize ID
-                                            </a>
-                                        </button>
                                         <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
                                             You are not allowed to do this operation. Please upgrade license package
                                         </div> 
