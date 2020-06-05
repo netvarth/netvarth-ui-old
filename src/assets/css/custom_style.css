@@ -8603,12 +8603,18 @@ owl-carousel .bt3.active {
   display: flex !important;
   float: none !important;
 }
+@media (max-width: 1200px) {
+  .appt-in-chip .mat-chip {
+    min-width: 30%!important;
+  max-width: 30%!important;
+  }
+}
 .appt-in-chip .mat-chip {
   /* width: 90px !important; */
   font-size: .75rem !important;
   text-align: center !important;
-  min-width: 30%;
-  max-width: 30%;
+  min-width: 15%;
+  max-width: 20%;
   border-radius: .5px !important;
   margin: 10px !important;
   border: 1px solid black !important;
@@ -9081,10 +9087,4 @@ max-height: 425px !important;
 }
 .wtsap-ip-wdth {
   width: fit-content !important;
-}
-.tele_srv_txtarea {
-  height: 80px !important;
-  border: 1px solid !important;
-  border-color: #b5abab !important;
-  overflow: hidden !important;
 }
