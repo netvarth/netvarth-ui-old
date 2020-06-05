@@ -41,6 +41,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   sessionStorage = false;
   myData: any;
   scheduleAvailability;
+  licenseDetails;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
@@ -203,6 +204,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.license_message = '';
     this.shared_service.getLicenseDetails()
       .subscribe(data => {
+        this.licenseDetails = data;
         if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
           const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
           const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;

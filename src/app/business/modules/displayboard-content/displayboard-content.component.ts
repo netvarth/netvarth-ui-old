@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription, Observable } from 'rxjs';
-import { Component, OnInit, HostListener, ViewChildren, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChildren, OnDestroy, wtfLeave } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -58,6 +58,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     height: any;
     isContainer = false;
     qBoardTitle: any;
+    qBoardFooter;
+    qBoardGroupFooter: any;
     qBoardGroupTitle: any;
     bLogoWidth: string;
     bLogoHeight: string;
@@ -100,7 +102,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.boardHeight = (screenHeight - hgt_reduced);
         }
     }
-    getSingleTime (slot) {
+    getSingleTime(slot) {
         const slots = slot.split('-');
         return this.shared_functions.convert24HourtoAmPm(slots[0]);
     }
@@ -164,6 +166,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (displayboard_data['headerSettings']) {
                         this.qBoardGroupTitle = displayboard_data['headerSettings']['title1'] || '';
                     }
+                    if (displayboard_data['footerSettings']) {
+                        this.qBoardGroupFooter = displayboard_data['footerSettings']['title1'] || '';
+                    }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
@@ -187,6 +192,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     this.roomName = displayboard_data['serviceRoom'];
                     if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
                         this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
+                    }
+                    if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
+                        this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
                     }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
@@ -363,6 +371,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
                         this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
                     }
+                    if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
+                        this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
+                    }
                     if (displayboard_data.logoSettings) {
                         if (displayboard_data.logoSettings.logo) {
                             this.is_image = true;
@@ -481,13 +492,15 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         if (this.type === 'waitlist') {
             // Mfilter = 'service-eq=5036,5027&queue-eq=9771,9766&sort_token=asc';
             this.provider_services.getTodayWaitlistFromStringQuery(Mfilter).subscribe(
-                (waitlist) => {
-                    this.selectedDisplayboards[element.position]['checkins'] = waitlist;
+                (waitlist: any) => {
+                    const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                    this.selectedDisplayboards[element.position]['checkins'] = filteredList;
                 });
         } else {
             this.provider_services.getTodayAppointmentsFromStringQuery(Mfilter).subscribe(
-                (waitlist) => {
-                    this.selectedDisplayboards[element.position]['checkins'] = waitlist;
+                (waitlist: any) => {
+                    const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                    this.selectedDisplayboards[element.position]['checkins'] = filteredList;
                 });
         }
 

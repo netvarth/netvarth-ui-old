@@ -118,6 +118,7 @@ export class ProvidersignupComponent implements OnInit {
   otp_mobile = null;
   providerPwd;
   email;
+  isValidConfirm_pw = true;
   images = {
     veterinaryPetcare: 'assets/images/home/pet-01.svg',
     finance: 'assets/images/home/bank-01.svg',
@@ -286,7 +287,7 @@ export class ProvidersignupComponent implements OnInit {
           this.showOTPEmailContainer = false;
           this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
           if (!source) {
-          this.createpasswordform();
+            this.createpasswordform();
           }
           this.resetCounter(this.refreshTime);
           this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -409,15 +410,17 @@ export class ProvidersignupComponent implements OnInit {
   onPasswordSubmit() {
     this.actionstarted = true;
     this.resetApiErrors();
-    this.onOtpSubmit().then(data => {
-      this.saveReferralInfo().then(
-        () => {
-          this.setPassword();
-        },
-        (error) => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-    });
+    if (this.isValidConfirm_pw) {
+      this.onOtpSubmit().then(data => {
+        this.saveReferralInfo().then(
+          () => {
+            this.setPassword();
+          },
+          (error) => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      });
+    }
   }
   resetApiErrors() {
     this.api_error = null;
@@ -603,6 +606,13 @@ export class ProvidersignupComponent implements OnInit {
   }
   showregistersection() {
     this.active_step = 0;
+  }
+  keyPressed() {
+    if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
+      this.isValidConfirm_pw = true;
+    } else {
+      this.isValidConfirm_pw = false;
+    }
   }
   createpasswordform() {
     this.spForm = this.fb.group({

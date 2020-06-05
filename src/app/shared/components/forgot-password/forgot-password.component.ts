@@ -23,7 +23,6 @@ export class ForgotPasswordModel {
   // styleUrls: ['./home.component.scss']
 })
 
-
 export class ForgotPasswordComponent {
 
   forgot_password_cap = Messages.FORGOT_PASSWORD_CAP;
@@ -55,14 +54,12 @@ export class ForgotPasswordComponent {
     public fed_service: FormMessageDisplayService,
     public shared_functions: SharedFunctions
   ) {
-
     this.createForm(1);
     this.is_provider = data.is_provider;
   }
 
   createForm(form_num) {
     this.step = form_num;
-
     switch (form_num) {
       case 1: this.fpForm = this.fb.group({
         phonenumber: ['', Validators.compose(
@@ -80,29 +77,23 @@ export class ForgotPasswordComponent {
   }
 
   cancelForgotPassword() {
-    if(this.is_provider) {
+    if (this.is_provider === 'true') {
       this.dialogRef.close();
-    }else{
+    } else {
       this.retonCancelForgotPassword.emit();
     }
-    
   }
 
   onPhoneSubmit(submit_data) {
-
     this.resetApiErrors();
-
     if (this.fpForm.valid) {
       this.sendOtpApi(submit_data.phonenumber);
     } else {
       this.fed_service.validateAllFormFields(this.fpForm);
     }
-
-
   }
 
   onOtpSubmit(submit_data) {
-
     this.resetApiErrors();
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
     this.shared_services.OtpValidate(type, submit_data.phone_otp)
@@ -115,34 +106,27 @@ export class ForgotPasswordComponent {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-
   }
 
   onPasswordSubmit(submit_data) {
-
     this.resetApiErrors();
-  
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
-    console.log(type)
     const post_data = { password: submit_data.new_password };
     this.shared_services.changePassword(type, this.otp, post_data)
       .subscribe(
         () => {
           this.api_success = 'Password changed successfully .. you will be redirected to the login page now';
           setTimeout(() => {
-            if(type=='provider'){
+            if (type === 'provider') {
               this.dialogRef.close();
             }
             this.retonChangePassword.emit();
           }, projectConstants.TIMEOUT_DELAY);
-
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-
-
   }
 
   resendOtp(phonenumber) {
@@ -151,9 +135,7 @@ export class ForgotPasswordComponent {
 
   sendOtpApi(phonenumber) {
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
-
     this.resetApiErrors();
-
     this.shared_services.forgotPassword(type, phonenumber)
       .subscribe(
         () => {
@@ -168,7 +150,6 @@ export class ForgotPasswordComponent {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-
   }
 
   reset() {
@@ -181,5 +162,3 @@ export class ForgotPasswordComponent {
   }
 
 }
-
-

@@ -433,7 +433,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     getProviderServices() {
         return new Promise((resolve) => {
-            const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
+            const params = { 'status-eq': 'ACTIVE', 'serviceType-eq': 'physicalService' };
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }

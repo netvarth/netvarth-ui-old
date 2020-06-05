@@ -31,8 +31,7 @@
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
-														<span class="dynamic"
-															*ngFor="let user of checkin.appmtFor">
+														<span class="dynamic" *ngFor="let user of checkin.appmtFor">
 															{{user.firstName | capitalizeFirst}}
 															{{user.lastName | capitalizeFirst}}
 														</span>
@@ -427,17 +426,29 @@
 																		*ngIf="service.GSTpercentage > 0">Tax</sup>
 																</div>
 																<div class="quantity"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled' || 
+																	*ngIf="!source && bill_data.checkinStatus !== 'cancelled' || 
 																	(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
 																	{{qnty_cap}}
 																	{{service.quantity}}</div>
+																<div class="quantity"
+																	*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' || 
+																	((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
+																	{{qnty_cap}}
+																	{{service.quantity}}</div>
 																<div class="price"
-																	*ngIf="bill_data.checkinStatus !== 'cancelled' || 
+																	*ngIf="!source && bill_data.checkinStatus !== 'cancelled' || 
 																(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">{{(service.quantity * service.price) |
 												currency:'&#8377; '}}</div>
 																<div class="price"
-																	style="color: red;font-size: smaller;"
-																	*ngIf="bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId
+																	*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' || 
+											((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">{{(service.quantity * service.price) |
+							currency:'&#8377; '}}</div>
+																<div class="price"
+																	style="color: red;font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId
+																	&& service.quantity === 0">
+																	Cancelled</div>
+																<div class="price"
+																	style="color: red;font-size: smaller;" *ngIf="source && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled') && bill_data.checkinedService === service.serviceId
 																	&& service.quantity === 0">
 																	Cancelled</div>
 															</div>
@@ -519,9 +530,29 @@
 															</div>
 														</div>
 														<div class="more"
-															*ngIf="bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
+															*ngIf="!source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-															<!-- <span class="icon-vertical-ellipse"></span> -->
+															<button mat-icon-button [matMenuTriggerFor]="menu">
+																<mat-icon>more_vert</mat-icon>
+															</button>
+															<mat-menu #menu="matMenu">
+																<button mat-menu-item (click)="serviceDiscCoupSec(i)"
+																	*ngIf="itemdiscounts.length > 0">
+																	<span>{{applydiscount_cap}}</span>
+																</button>
+																<button mat-menu-item
+																	(click)="adjustService(service.serviceName, service.quantity)">
+																	<span>{{changeqty_cap}}</span>
+																</button>
+																<button mat-menu-item
+																	(click)="removeService(service.serviceId, service.quantity)">
+																	<span>{{removeservice_cap}}</span>
+																</button>
+															</mat-menu>
+														</div>
+														<div class="more"
+															*ngIf="source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' || 
+														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
 															</button>

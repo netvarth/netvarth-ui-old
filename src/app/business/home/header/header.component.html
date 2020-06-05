@@ -74,16 +74,16 @@
           </a>
           <ul class="dropdown-menu" *ngIf="active_license!='Diamond'">
             <li class="header">
-              <p *ngIf="active_license=='Platinum - FREE Trial 60 days' && license_message != ''"
+              <p *ngIf="licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
                 style="color: red; width: 100%; text-align: left;">
-                Your 'Platinum - Free trial 60 days' license package will expire {{license_message}}.
+                Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
                 <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
                     </b></span><span style="color: red"> to Upgrade License.</span></span>
               </p>
               <p style="width: 100%; text-align: left;"
-                *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond'">
+                *ngIf="licenseDetails.accountLicense.licPkgOrAddonId!=9 && active_license!='Diamond'">
                 Your current license is
-                <i style="color:red">{{active_license}}.</i><span> Upgrade license </span> for more features.
+                <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span> for more features.
               </p>
             </li>
             <li>

@@ -2,10 +2,14 @@
     <div class="mgn-up-5 mgn-bt-5 brd-bt" *ngIf="isContainer">
         <div class="branch-sp">
             <div class="col-md-12 no-padding">
-                <div *ngIf="glogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="gPosition=='RIGHT'?'pull-right':'pull-left'">
-                    <img  [src] ="glogo" width="{{gLogoWidth}}" height="{{gLogoHeight}}" alt="Image" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"/>
+                <div *ngIf="glogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small"
+                    [ngClass]="gPosition=='RIGHT'?'pull-right':'pull-left'">
+                    <img [src]="glogo" width="{{gLogoWidth}}" height="{{gLogoHeight}}" alt="Image"
+                        [ngClass]="position=='RIGHT'?'pull-right':'pull-left'" />
                 </div>
-                <div class="" [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': glogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': glogo!='' } " [innerHTML]="qBoardGroupTitle">                   
+                <div class=""
+                    [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': glogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': glogo!='' } "
+                    [innerHTML]="qBoardGroupTitle">
                 </div>
             </div>
         </div>
@@ -14,10 +18,14 @@
     <div class="mgn-up-5 mgn-bt-5">
         <div class="branch-sp">
             <div class="col-md-12 no-padding">
-                <div *ngIf="blogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'">
-                    <img [src] ="blogo" width="{{bLogoWidth}}" height="{{bLogoHeight}}" alt="Image" [ngClass]="position=='RIGHT'?'pull-right':'pull-left'"/>
+                <div *ngIf="blogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small"
+                    [ngClass]="position=='RIGHT'?'pull-right':'pull-left'">
+                    <img [src]="blogo" width="{{bLogoWidth}}" height="{{bLogoHeight}}" alt="Image"
+                        [ngClass]="position=='RIGHT'?'pull-right':'pull-left'" />
                 </div>
-                <div class="" [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': blogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': blogo!=''}" [innerHTML]="qBoardTitle">
+                <div class=""
+                    [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': blogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': blogo!=''}"
+                    [innerHTML]="qBoardTitle">
                 </div>
             </div>
         </div>
@@ -27,25 +35,29 @@
         <div class="form-group">
             <div class="tab-lst">
                 <div *ngFor="let row of createRange(boardRows)">
-                    <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} no-padding board-box"
+                    <div *ngFor="let col of createRange(boardCols)"
+                        class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} no-padding board-box"
                         [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}">
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="selectedDisplayboards[row + '_' + col]">
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                            *ngIf="selectedDisplayboards[row + '_' + col]">
                             <!-- <div class="qset-name" *ngIf="selectedDisplayboards[row + '_' + col]['board']">
                                 {{selectedDisplayboards[row + '_' + col]['board'].displayName}}
                             </div> -->
                             <table class="table table-striped responsive-table"
                                 *ngIf="selectedDisplayboards[row + '_' + col]['board']">
                                 <thead>
-                                    <tr  *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                        <th class="qset-name" [attr.colspan]="(selectedDisplayboards[row + '_' + col]['board']).fieldList.length">{{selectedDisplayboards[row + '_' + col]['board'].displayName}}</th>
+                                    <tr *ngIf="selectedDisplayboards[row + '_' + col]['board']">
+                                        <th class="qset-name"
+                                            [attr.colspan]="(selectedDisplayboards[row + '_' + col]['board']).fieldList.length">
+                                            {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</th>
                                     </tr>
                                     <tr>
                                         <th class="qset-name"
                                             *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
-                                           <span *ngIf="field.name !== 'calling'"> {{field.displayName}}</span></th>
+                                            <span *ngIf="field.name !== 'calling'"> {{field.displayName}}</span></th>
                                     </tr>
                                 </thead>
-                                <tbody style="overflow: scroll;">                                    
+                                <tbody style="overflow: scroll;">
                                     <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
                                         [class.startWaitlist]="checkin.callingStatus">
                                         <td
@@ -65,6 +77,26 @@
             </div>
         </div>
     </div>
+
+    <div class="mgn-up-5 mgn-bt-5" *ngIf="!isContainer">
+        <div class="branch-sp">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" [innerHTML]="qBoardFooter">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="mgn-up-5 mgn-bt-5 brd-bt" *ngIf="isContainer">
+        <div class="branch-sp">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" [innerHTML]="qBoardGroupFooter">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
     <div class="clearfix"></div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs footer_info">
