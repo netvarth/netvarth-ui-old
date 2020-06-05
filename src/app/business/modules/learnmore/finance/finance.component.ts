@@ -103,6 +103,8 @@ export class FinanceComponent implements OnInit {
   showlocation = false;
   showlocationAmenities = false;
   showbusiness = false;
+  showserviceprovider = false;
+  showcorporate = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -218,6 +220,9 @@ export class FinanceComponent implements OnInit {
       if (childContent === 'departments') {
         this.showdepartment = true;
       }
+      if (childContent === 'branchsps') {
+        this.showserviceprovider = true;
+      }
       if (childContent === 'livetracking') {
         this.showlivetrackstatus = true;
       }
@@ -308,6 +313,9 @@ export class FinanceComponent implements OnInit {
       }
       if (childContent === 'saleschannel') {
         this.showsaleschannel = true;
+      }
+      if (childContent === 'corporate') {
+        this.showcorporate = true;
       }
     }  
 

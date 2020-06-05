@@ -232,6 +232,9 @@ export class HealthCareComponent implements OnInit {
       if (childContent === 'departments') {
         this.showdepartment = true;
       }
+      if (childContent === 'branchsps') {
+        this.showserviceprovider = true;
+      }
       if (childContent === 'livetracking') {
         this.showlivetrackstatus = true;
       }
@@ -330,9 +333,7 @@ export class HealthCareComponent implements OnInit {
      if (childContent === 'corporate') {
         this.showcorporate = true;
       }
-      if (childContent === 'branchsps') {
-        this.showserviceprovider = true;
-      }
+     
     }
 
   

@@ -189,7 +189,7 @@ export class BranchUsersComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
         }
     }
     showFilterSidebar() {
