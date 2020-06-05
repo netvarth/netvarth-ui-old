@@ -953,9 +953,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.appttime_arr = data;
           let srchindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            srchindx = provids[i].searchindx;
-            this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            this.search_data.hits.hit[srchindx].fields['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+            if (provids[i]) {
+              srchindx = provids[i].searchindx;
+              this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.search_data.hits.hit[srchindx].fields['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
           }
         });
     }

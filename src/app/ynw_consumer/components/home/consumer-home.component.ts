@@ -364,11 +364,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.getCurrentLocation().then(
                 (lat_long: any) => {
                   waitlist['differofDistanc'] = Math.round(this.getDistanceFromLatLonInKm(lat_long.latitude, lat_long.longitude, waitlist.queue.location.lattitude, waitlist.queue.location.longitude));
-                   }, (error) => {
-                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                }, (error) => {
+                  this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                  this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                 }
-            );
+              );
             }
             this.trackMode[i] = false;
             this.changemode[i] = false;
@@ -472,7 +472,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getApptlist() {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
-    const params = {'apptStatus-neq': 'failed'};
+    const params = { 'apptStatus-neq': 'failed' };
     this.consumer_services.getApptlist(params)
       .subscribe(
         data => {
@@ -489,10 +489,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   console.log(lat_long);
                   appointment['differceofDistance'] = Math.round(this.getDistanceFromLatLonInKm(lat_long.latitude, lat_long.longitude, appointment.location.lattitude, appointment.location.longitude));
                 }, (error) => {
-                    this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                  this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+                  this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                 }
-            );
+              );
             }
             this.trackModeAppt[i] = false;
             this.changemodeAppt[i] = false;
@@ -662,9 +662,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.appttime_arr = data;
           let locindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            locindx = provids_locid[i].locindx;
-            this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            this.fav_providers[index]['locations'][locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+            if (provids_locid[i]) {
+              locindx = provids_locid[i].locindx;
+              this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.fav_providers[index]['locations'][locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
           }
         });
     }
@@ -1258,22 +1262,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getCurrentLocation() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-        if (navigator) {
-         _this.lat_lng = {
-            latitude: 0,
-            longitude: 0
-          };
-            navigator.geolocation.getCurrentPosition(pos => {
-                _this.lat_lng.longitude = +pos.coords.longitude;
-                _this.lat_lng.latitude = +pos.coords.latitude;
-                resolve(_this.lat_lng);
-            },
-                error => {
-                    reject();
-                });
-        }
+      if (navigator) {
+        _this.lat_lng = {
+          latitude: 0,
+          longitude: 0
+        };
+        navigator.geolocation.getCurrentPosition(pos => {
+          _this.lat_lng.longitude = +pos.coords.longitude;
+          _this.lat_lng.latitude = +pos.coords.latitude;
+          resolve(_this.lat_lng);
+        },
+          error => {
+            reject();
+          });
+      }
     });
-}
+  }
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
     const dLat = this.deg2rad(lat2 - lat1);  // deg2rad below

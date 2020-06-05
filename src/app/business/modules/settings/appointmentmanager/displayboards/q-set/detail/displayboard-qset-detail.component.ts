@@ -775,8 +775,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
     }
     waitlistSelection(status) {
-        if (this.selectedWtlstList.indexOf(status) === -1) {
+        const indx = this.selectedWtlstList.indexOf(status);
+        if (indx === -1) {
             this.selectedWtlstList.push(status);
+        } else {
+            this.selectedWtlstList.splice(indx, 1);
         }
     }
     removeFIeldFromArray(field, index) {

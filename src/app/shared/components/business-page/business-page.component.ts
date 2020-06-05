@@ -1512,9 +1512,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.appttime_arr = data;
           let locindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            locindx = provids_locid[i].locindx;
-            this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+            if (provids_locid[i]) {
+              locindx = provids_locid[i].locindx;
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
           }
         });
     }

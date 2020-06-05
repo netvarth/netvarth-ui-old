@@ -35,7 +35,6 @@ export class BusinessComponent implements OnInit {
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // alert(this.shared_functions.checkLogin());
         if (this.shared_functions.checkLogin()) {
           this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {

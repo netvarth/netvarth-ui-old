@@ -72,22 +72,22 @@
           <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="icon-license"></i>
           </a>
-          <ul class="dropdown-menu" *ngIf="active_license!='Diamond'">
+          <ul class="dropdown-menu" *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
             <li class="header">
-              <p *ngIf="licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
+              <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
                 style="color: red; width: 100%; text-align: left;">
                 Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
                 <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
                     </b></span><span style="color: red"> to Upgrade License.</span></span>
               </p>
               <p style="width: 100%; text-align: left;"
-                *ngIf="licenseDetails.accountLicense.licPkgOrAddonId!=9 && active_license!='Diamond'">
+                *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
                 Your current license is
                 <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span> for more features.
               </p>
             </li>
-            <li>
-              <ul class="menu">
+            <li *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+              <ul class="menu pointer-cursor">
                 <li>
                   <a (click)="upgradeMembership()">
                     <h3 style="align-content: center">

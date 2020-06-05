@@ -56,7 +56,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.showCheckinED();
           break;
         case 'upgradelicence':
-          this.setLicense();
+          // this.setLicense();
+          this.getLicenseDetails();
           break;
         case 'hidemenus':
           this.renderer.removeClass(document.body, 'sidebar-open');
@@ -231,7 +232,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
 
   gotoLicense() {
-    if (this.active_license === 'Diamond') {
+    if (this.licenseDetails && this.licenseDetails.accountLicense && this.licenseDetails.accountLicense.licPkgOrAddonId === 6) {
       this.router.navigate(['provider', 'license']);
       this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'license' });
     }
