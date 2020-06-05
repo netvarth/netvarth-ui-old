@@ -39,7 +39,7 @@
                         <mat-menu #appMenu="matMenu">
                             <button [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'" mat-menu-item (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)" *ngIf="service.status=='ACTIVE'">
                                 <i class="icon-edit" *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'"></i>
-                                <i [matTooltip]="'Please turn on Virtual Calling Mode in settings'" *ngIf="!is_virtual_enbl && service.serviceType === 'virtualService'" class="material-icons" style="cursor: help;">help</i>
+                                <i [matTooltip]="'Please turn on Teleservice in settings'" *ngIf="!is_virtual_enbl && service.serviceType === 'virtualService'" class="material-icons" style="cursor: help;">help</i>
                                 Edit
                             </button>
                             <button mat-menu-item (click)="changeServiceStatus(service)">

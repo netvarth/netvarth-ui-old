@@ -62,7 +62,7 @@ export class CommSettingsComponent implements OnInit {
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Virtual Calling Mode ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
                 },
                 error => {
