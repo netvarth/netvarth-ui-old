@@ -60,7 +60,8 @@
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
-                                                            <div class="attach" *ngIf="inbox.attachments"
+                                                            <div class="attach" style="display: flex;"
+                                                                *ngIf="inbox.attachments"
                                                                 (click)="showImagesection(childIndex)">
                                                                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                                                 <p class="attach-link"> {{inbox.attachments.length}}
