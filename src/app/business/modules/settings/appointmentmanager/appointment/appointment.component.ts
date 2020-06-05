@@ -1523,4 +1523,8 @@ export class AppointmentComponent implements OnInit {
     editCallingmodes(index) {
         this.showInputSection = false;
     }
+    getSingleTime (slot) {
+        const slots = slot.split('-');
+        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+    }
 }

@@ -1607,4 +1607,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.couponsList = [];
         this.coupon_status = null;
     }
+    getSingleTime (slot) {
+        const slots = slot.split('-');
+        return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
+    }
 }

@@ -255,14 +255,14 @@
                                             <mat-chip-list class="appt-in-chip">
                                                 <mat-chip *ngFor="let slot of freeSlots"
                                                     [selected]="slot.time === apptTime"
-                                                    (click)="timeSelected(slot.time);">{{slot.time}}</mat-chip>
+                                                    (click)="timeSelected(slot.time);">{{getSingleTime(slot.time)}}</mat-chip>
                                             </mat-chip-list>
 
                                         </div>
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
                                             <div *ngIf="showApptTime">
                                                 <div class="ttle mgn-bt-10">Appointment Time</div>
-                                                <span class="label-bold">{{apptTime}} </span>
+                                                <span class="label-bold">{{getSingleTime(apptTime)}} </span>
                                                 <span style="margin-left: 30px" class="editbt"
                                                     (click)="editClicked()"></span>
                                             </div>
