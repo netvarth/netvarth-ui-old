@@ -149,7 +149,8 @@ export class CallingModesComponent implements OnInit {
             communicationMessage: this.msg_to_user,
             uuid: [this.data.uuid]
         };
-        this.shared_services.consumerMassCommunication(post_data).
+        if ( this.data.type === 'checkin') {
+            this.shared_services.consumerMassCommunication(post_data).
             subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                 setTimeout(() => {
@@ -157,6 +158,16 @@ export class CallingModesComponent implements OnInit {
                 }, 5000);
             }
             );
+        } else {
+            this.shared_services.consumerMassCommunicationAppt(post_data).
+            subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                    this.api_success = '';
+                }, 5000);
+            }
+            );
+        }
     }
     chkinTeleserviceJoinLink() {
         if (this.callingModes !== 'WhatsApp') {
