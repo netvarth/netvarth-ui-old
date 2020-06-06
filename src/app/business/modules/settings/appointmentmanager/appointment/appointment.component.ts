@@ -804,9 +804,9 @@ export class AppointmentComponent implements OnInit {
         // }
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-            }
+        if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
+            this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+        }
         // }
         this.showEditView = false;
         const post_Data = {
@@ -833,14 +833,14 @@ export class AppointmentComponent implements OnInit {
             }
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
-           // post_Data['virtualService'] = this.virtualServiceArray;
-           for (let i in this.virtualServiceArray) {
-            if (i === 'WhatsApp') {
-                post_Data['virtualService'] = this.virtualServiceArray;
-            } else {
-                post_Data['virtualService'] = {};
+            // post_Data['virtualService'] = this.virtualServiceArray;
+            for (const i in this.virtualServiceArray) {
+                if (i === 'WhatsApp') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = {};
+                }
             }
-        }
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
         //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
@@ -1363,6 +1363,9 @@ export class AppointmentComponent implements OnInit {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
+        if (this.consumerNote === '') {
+            this.consumerNote = 'Please find the attachment from Consumer with this message';
+        }
         dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;
@@ -1529,7 +1532,7 @@ export class AppointmentComponent implements OnInit {
     editCallingmodes(index) {
         this.showInputSection = false;
     }
-    getSingleTime (slot) {
+    getSingleTime(slot) {
         const slots = slot.split('-');
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }

@@ -796,9 +796,9 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
-            if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-            }
+        if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
+            this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+        }
         // }
         const post_Data = {
             'queue': {
@@ -818,14 +818,14 @@ export class ProviderCheckinComponent implements OnInit {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
-         //   post_Data['virtualService'] = this.virtualServiceArray;
-         for (let i in this.virtualServiceArray) {
-            if (i === 'WhatsApp') {
-                post_Data['virtualService'] = this.virtualServiceArray;
-            } else {
-                post_Data['virtualService'] = {};
+            //   post_Data['virtualService'] = this.virtualServiceArray;
+            for (const i in this.virtualServiceArray) {
+                if (i === 'WhatsApp') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else {
+                    post_Data['virtualService'] = {};
+                }
             }
-        }
         }
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
@@ -1342,6 +1342,9 @@ export class ProviderCheckinComponent implements OnInit {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
+        if (this.consumerNote === '') {
+            this.consumerNote = 'Please find the attachment from Consumer with this message';
+        }
         dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;

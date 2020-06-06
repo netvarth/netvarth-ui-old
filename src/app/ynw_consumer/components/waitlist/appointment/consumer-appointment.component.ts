@@ -767,7 +767,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (!this.is_wtsap_empty) {
                 this.addCheckInConsumer(post_Data);
             }
-          //  this.addCheckInConsumer(post_Data);
+            //  this.addCheckInConsumer(post_Data);
         }
     }
     addCheckInConsumer(post_Data) {
@@ -1301,6 +1301,9 @@ export class ConsumerAppointmentComponent implements OnInit {
 
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
+        if (this.consumerNote === '') {
+            this.consumerNote = 'Please find the attachment from Consumer with this message';
+        }
         dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;
@@ -1527,7 +1530,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.callingModes === '') {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         } else {
-        this.showInputSection = true;
+            this.showInputSection = true;
         }
     }
     // handleModeSel(index, ev) {
@@ -1607,7 +1610,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.couponsList = [];
         this.coupon_status = null;
     }
-    getSingleTime (slot) {
+    getSingleTime(slot) {
         const slots = slot.split('-');
         return this.sharedFunctionobj.convert24HourtoAmPm(slots[0]);
     }

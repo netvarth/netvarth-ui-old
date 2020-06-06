@@ -164,7 +164,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 </div>
 <div class="example-container" *ngIf="step==4">
   <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
-    (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
+    (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'"></app-sp-form>
 </div>
 <div class="example-container" *ngIf="step==5">
   <mat-dialog-content class="pwd_cancel_scr">

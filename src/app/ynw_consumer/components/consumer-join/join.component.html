@@ -56,7 +56,7 @@ onSubmit(loginForm.value)">
 
     <!-- step 2 for forgot password -->
     <div class="example-container" *ngIf="step==2">
-        <app-forgot-password (retonChangePassword)="onChangePassword($event)"
+        <app-forgot-password (retonChangePassword)="onChangePassword($event)" [business]="true"
             (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin]="consumerjoin"></app-forgot-password>
     </div>
 
@@ -122,7 +122,7 @@ onSubmit(loginForm.value)">
     <!-- step 6 for signup password -->
     <div class="example-container" *ngIf="step==6">
         <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
-            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider" [consumerlogin]="consumerjoin">
+            (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">
         </app-sp-form>
     </div>
     <!-- step 7 for password cancel option -->
