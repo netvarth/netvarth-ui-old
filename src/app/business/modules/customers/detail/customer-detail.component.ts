@@ -234,7 +234,7 @@ export class CustomerDetailComponent implements OnInit {
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
-            'email_id': this.customer[0].emailId || null,
+            'email_id': this.customer[0].email || null,
             'dob': this.customer[0].dob || null,
             'gender': this.customer[0].gender || null,
             'mobile_number': this.customer[0].phoneNo || null,
