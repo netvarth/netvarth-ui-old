@@ -113,7 +113,11 @@
         <div *ngIf="data.type === 'checkin'" class="example-full-width" style="padding-top: 30px;">
             <div>
                 <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
-                <!-- <p>Token : {{data.qdata.token}}</p> -->
+                <p>Service : {{serv_name}}</p>
+                <p>Date & Time: {{date}}, {{time}}</p>
+                <p>Service Provider: {{serv_provider}}</p>
+                <p>Location: {{location}}</p>
+                <!-- <p>Jaldee token id: {{jalde_q_id}}</p> -->
                 <p>Join {{callingModes}} Meeting</p>
                 <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">
@@ -125,7 +129,10 @@
         <div *ngIf="data.type === 'appt'" class="example-full-width" style="padding-top: 30px;">
             <div>
                 <p>Appointment for : {{consumer_fname}}</p>
-                <!-- <p>Appointment time : {{appt_time}}</p> -->
+                <p>Service : {{serv_name}}</p>
+                <p>Date & Time: {{date}}, {{time}}</p>
+                <p>Service Provider: {{serv_provider}}</p>
+                <p>Location: {{location}}</p>
                 <p>Join {{callingModes}} Meeting</p>
                 <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">

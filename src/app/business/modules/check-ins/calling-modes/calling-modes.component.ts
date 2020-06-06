@@ -40,6 +40,12 @@ export class CallingModesComponent implements OnInit {
     show_note: boolean;
     temp_msglink: string;
     customer_label: any;
+    serv_name: any;
+    date: any;
+    time: any;
+    location: any;
+    jalde_q_id;
+    serv_provider: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -50,13 +56,28 @@ export class CallingModesComponent implements OnInit {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
             this.consumer_fname = this.data.qdata.consumer.firstName;
             this.consumer_lname = this.data.qdata.consumer.lastName;
+            this.serv_name = this.data.qdata.service.name;
+            this.date = this.data.qdata.date;
+            this.time = this.data.qdata.checkInTime;
+            this.serv_provider = this.data.qdata.providerAccount.businessName;
+            this.location = this.data.qdata.queue.location.address;
+            if (this.data.qdata.calculationMode === 'NoCalc') {
+                this.jalde_q_id = this.data.qdata.token;
+            } else {
+                this.jalde_q_id = this.data.qdata.appxWaitingTime + ' min';
+            }
         } else {
             this.consumer_fname = this.data.qdata.appmtFor[0].userName;
-            this.appt_time = this.data.qdata.appmtFor[0].apptTime;
+            this.serv_name = this.data.qdata.service.name;
+            this.date = this.data.qdata.appmtDate;
+            this.time = this.data.qdata.appmtTime;
+            this.serv_provider = this.data.qdata.providerAccount.businessName;
+            this.location = this.data.qdata.location.address;
         }
         // tslint:disable-next-line:forin
         for (const i in this.data.modes) {
@@ -94,14 +115,11 @@ export class CallingModesComponent implements OnInit {
             }
         };
         if (isMobile.Android()) {
-            console.log('Android')
             this.is_android = true;
         } else if (isMobile.iOS()) {
-            console.log('iois')
             this.is_ios = true;
         } else {
             this.is_web = true;
-            console.log('web')
         }
         this.getMeetingDetails();
     }
