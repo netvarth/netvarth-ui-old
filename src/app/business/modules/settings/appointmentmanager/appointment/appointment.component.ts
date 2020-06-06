@@ -189,6 +189,7 @@ export class AppointmentComponent implements OnInit {
     apptType;
     showApptTime = false;
     wtsapmode: any;
+    appt_title: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -201,6 +202,11 @@ export class AppointmentComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.checkinType) {
                 this.apptType = qparams.checkinType;
+                if (this.apptType === 'PHONE_IN_APPOINTMENT') {
+                    this.appt_title = 'Phone-in Appointment';
+                } else {
+                    this.appt_title = 'Appointment';
+                }
             }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
@@ -255,7 +261,7 @@ export class AppointmentComponent implements OnInit {
                 url: 'provider/appointments'
             },
             {
-                title: 'Appointment'
+                title: this.appt_title
             }
         ];
         this.maxsize = 1;

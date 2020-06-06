@@ -184,6 +184,7 @@ export class ProviderCheckinComponent implements OnInit {
     checkinType;
     selectedUser;
     wtsapmode: any;
+    chekin_title: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -196,6 +197,11 @@ export class ProviderCheckinComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.checkin_type) {
                 this.checkinType = qparams.checkin_type;
+                if (this.checkinType === 'PHONE_CHECKIN') {
+                    this.chekin_title = 'Phone-in';
+                } else {
+                    this.chekin_title = 'Walk-ins';
+                }
             }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
@@ -253,7 +259,7 @@ export class ProviderCheckinComponent implements OnInit {
                 url: 'provider/check-ins'
             },
             {
-                title: 'Walk-ins'
+                title: this.chekin_title
             }
         ];
         this.maxsize = 1;
