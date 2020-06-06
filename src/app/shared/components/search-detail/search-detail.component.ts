@@ -846,6 +846,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   if (this.search_data.hits.hit[i].fields.donation_services) {
                     this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
                     console.log("Donation List", this.search_data.hits.hit[i].fields.donationServices);
+                    this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
                   }
                 } catch (e) {
                 }
