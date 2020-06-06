@@ -16,7 +16,7 @@
                     [items]="waitlists">
                     <div class="item checklist" *ngFor="let waitlist of waitlists; let i=index">
                         <div class="header">
-                            <div class="lt">
+                            <div class="lt width20">
                                 <div class="title" (click)="providerDetail(waitlist.providerAccount)">
                                     <h3>{{waitlist.providerAccount.businessName || '' | capitalizeFirst}}</h3>
                                 </div>
@@ -257,7 +257,7 @@
                             [carouselClasses]="['owl-theme']" [items]="appointments">
                             <div class="item apptlist" *ngFor="let appointment of appointments; let i=index">
                                 <div class="header">
-                                    <div class="lt">
+                                    <div class="lt width20">
                                         <div class="title" (click)="providerDetail(appointment.providerAccount)">
                                             <h3>{{appointment.providerAccount.businessName || '' | capitalizeFirst}}
                                             </h3>
