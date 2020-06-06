@@ -412,7 +412,10 @@
                                                         <ul *ngIf="loc.fields.appointmentServiceList">
                                                             <li   *ngFor="let appointmentService of loc.fields.appointmentServiceList"
                                                             (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
-                                                                {{appointmentService.name}}</li>
+                                                                {{appointmentService.name}}
+                                                                <span *ngIf="appointmentService.serviceType == 'virtualService'" >
+                                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                </span></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -441,7 +444,10 @@
                                                         <ul *ngIf="showDepartments">
                                                             <li *ngFor="let donationService of donationData"
                                                                 (click)="showServiceDetail(donationService, businessjson.businessName)">
-                                                                {{donationService.name}}</li>
+                                                                {{donationService.name}}
+                                                                <span *ngIf="donationService.serviceType == 'virtualService'" >
+                                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                </span></li>
                                                         </ul>
                                                     </div>
                                                 </div>

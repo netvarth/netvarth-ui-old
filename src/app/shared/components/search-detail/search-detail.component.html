@@ -583,7 +583,10 @@
                                         <ul *ngIf="search_result.fields.appointmentServiceList">
                                             <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
-                                                {{appointmentService.name}}</li>
+                                                {{appointmentService.name}}
+                                                <span *ngIf="appointmentService.serviceType == 'virtualService'" >
+                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                </span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -608,7 +611,10 @@
                                         <ul *ngIf="search_result.fields.donationServices">
                                             <li *ngFor="let donationService of search_result.fields.donationServices"
                                                 (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
-                                                {{donationService.name}}</li>
+                                                {{donationService.name}}
+                                                <span *ngIf="donationService.serviceType == 'virtualService'" >
+                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                </span></li>
                                         </ul>
                                     </div>
                                 </div>
