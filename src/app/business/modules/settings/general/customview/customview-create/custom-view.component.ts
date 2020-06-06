@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Messages } from '../../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../../shared/constants/project-constants';
+
 
 @Component({
     selector: 'app-custom-view',
@@ -13,6 +15,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 })
 export class CustomViewComponent implements OnInit {
     customViewName;
+    customViewFor = 'Waitlist';
     departments: any = [];
     users_list: any = [];
     service_list: any = [];
@@ -30,6 +33,8 @@ export class CustomViewComponent implements OnInit {
     providerQs: any = [];
     providerServices: any = [];
     allUsersIds: any = [];
+    todaysQs: any = [];
+    scheduledQs: any = [];
     loading = true;
     viewId;
     isDepartments = false;
@@ -39,6 +44,7 @@ export class CustomViewComponent implements OnInit {
     userMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
     qMultiFilterCtrl: FormControl = new FormControl();
+    scheduleMultiFilterCtrl : FormControl = new FormControl();
     onDestroy = new Subject<void>();
     filterDepList: any = [];
     filterUsersList: any = [];
@@ -97,6 +103,7 @@ export class CustomViewComponent implements OnInit {
             .subscribe(() => {
                 this.filterQbySearch();
             });
+           
     }
     filterDeptbySearch() {
         if (!this.filterDepList) {
@@ -203,7 +210,12 @@ export class CustomViewComponent implements OnInit {
                             }
                         }
                         this.getServices();
-                        this.getQs();
+                        if (this.customViewFor === 'Waitlist'){
+                            this.getQs();
+                        }else {
+                            this.getAppointmentSchedules();
+                        }
+                        
                     }, 100);
                     setTimeout(() => {
                         if (this.customViewDetails.customViewConditions.services.length > 0) {
@@ -308,6 +320,79 @@ export class CustomViewComponent implements OnInit {
 
                 });
     }
+
+    getAppointmentSchedules() {
+        let doctorsIds;
+        if (this.selectedUsersId.length > 0) {
+            doctorsIds = this.selectedUsersId;
+        }
+        // } else {
+        //     doctorsIds = this.allUsersIds;
+        // }
+        console.log(doctorsIds)
+        return new Promise((resolve, reject) => {
+            let filter;
+            if(doctorsIds && doctorsIds.length>0){
+                 filter = {
+                    'provider-eq': doctorsIds.toString()
+                };
+            }
+            this.provider_services.getProviderSchedules(filter)
+                .subscribe(
+                    (data) => {
+                        console.log(data);
+                        let allQs: any = [];
+                        this.todaysQs = [];
+                        this.scheduledQs = [];
+                        
+                        const activeQs = [];
+                        allQs = data;
+                        console.log(allQs);
+                        const server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+                        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                        const today = new Date(todaydt);
+                        const dd = today.getDate();
+                        const mm = today.getMonth() + 1;
+                        const yyyy = today.getFullYear();
+                        let cmon;
+                        let cdate;
+                        if (mm < 10) {
+                            cmon = '0' + mm;
+                        } else {
+                            cmon = '' + mm;
+                        }
+                        if (dd < 10) {
+                            cdate = '0' + dd;
+                        } else {
+                            cdate = '' + dd;
+                        }
+                        const todayDate = yyyy + '-' + cmon + '-' + cdate;
+                        for (let ii = 0; ii < allQs.length; ii++) {
+                            let schedule_arr = [];
+                            // extracting the schedule intervals
+                            if (allQs[ii].apptSchedule) {
+                                schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].apptSchedule);
+                            }
+                            let display_schedule = [];
+                            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                            allQs[ii]['displayschedule'] = display_schedule;
+                            if (allQs[ii].apptState === 'ENABLED') {
+                                this.todaysQs.push(allQs[ii]);
+                                console.log("qs",this.todaysQs)
+                            }
+                        }
+                        resolve();
+                    },
+                    (error) => {
+                        console.log(error);
+                        reject(error);
+                    });
+        });
+    }
+
+
+
+    
     deptSelection(depIds) {
         if (this.selectedDeptIds.indexOf(depIds) === -1) {
             this.selectedDeptIds.push(depIds);
@@ -328,7 +413,11 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedUsersId.splice(this.selectedUsersId.indexOf(userIds), 1);
         }
-        this.getQs();
+        if (this.customViewFor === 'Waitlist'){
+            this.getQs();
+        }else {
+            this.getAppointmentSchedules();
+        }
         this.getServices();
         this.selectedServices = [];
         this.selectedQs = [];
@@ -346,7 +435,8 @@ export class CustomViewComponent implements OnInit {
         this.selectedQIds = [];
     }
     qSelectionByService() {
-        const qs = [];
+        if (this.customViewFor === 'Waitlist'){
+            const qs = [];
         if (this.selectedServices.length > 0) {
             for (let i = 0; i < this.selectedServices.length; i++) {
                 for (let j = 0; j < this.queuestoDisplay.length; j++) {
@@ -361,6 +451,24 @@ export class CustomViewComponent implements OnInit {
             return false;
         } else {
             this.qstoDisplay = this.queuestoDisplay;
+        }
+        }else{
+            const qs = [];
+            if (this.selectedServices.length > 0) {
+                for (let i = 0; i < this.selectedServices.length; i++) {
+                    for (let j = 0; j < this.todaysQs.length; j++) {
+                        for (let k = 0; k < this.todaysQs[j].services.length; k++) {
+                            if (this.selectedServices[i].id === this.todaysQs[j].services[k].id) {
+                                qs.push(this.todaysQs[j]);
+                            }
+                        }
+                    }
+                }
+                this.qstoDisplay = qs;
+                return false;
+            } else {
+                this.qstoDisplay = this.todaysQs;
+            }
         }
     }
     qSelection(QIds) {
@@ -386,7 +494,8 @@ export class CustomViewComponent implements OnInit {
                     }
                 }
                 if (!this.customViewDetails.customViewConditions) {
-                    this.getQs();
+                        this.getQs();
+                        this.getAppointmentSchedules();
                     this.getServices();
                 }
             }
@@ -415,16 +524,33 @@ export class CustomViewComponent implements OnInit {
                 qids.push({ 'id': id.id });
             }
         }
-        const customViewInput = {
-            'name': this.customViewName,
-            'merged': true,
-            'customViewConditions': {
-                'departments': depids,
-                'users': userids,
-                'services': servicesids,
-                'queues': qids
-            }
-        };
+        let customViewInput;
+        if(this.customViewFor == 'Waitlist'){
+             customViewInput = {
+                'name': this.customViewName,
+                'merged': true,
+                'customViewConditions': {
+                    'departments': depids,
+                    'users': userids,
+                    'services': servicesids,
+                    'queues': qids
+                },
+                'type': this.customViewFor
+            };
+        }else {
+             customViewInput = {
+                'name': this.customViewName,
+                'merged': true,
+                'customViewConditions': {
+                    'departments': depids,
+                    'users': userids,
+                    'services': servicesids,
+                    'schedules': qids
+                },
+                'type': this.customViewFor
+            };
+        }
+        
         if (this.viewId) {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data) => {

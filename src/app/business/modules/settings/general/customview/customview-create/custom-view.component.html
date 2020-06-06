@@ -17,6 +17,25 @@
                   </mat-form-field>
                 </div>
                 <div class="form-group col-md-12" *ngIf="isDepartments">
+
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Custom View For
+                  </label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor">
+                        
+                        <mat-option [value]="'Waitlist'">
+                          Check-in/Token
+                        </mat-option>
+                        <mat-option [value]="'Appointment'">
+                          Appointment
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                  <div class="form-group col-md-12">
+
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Department</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -94,7 +113,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" *ngIf ="customViewFor == 'Waitlist'">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Queues</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -121,6 +140,38 @@
                     </ul>
                   </div>
                 </div>
+
+                <div class="form-group col-md-12" *ngIf ="customViewFor == 'Appointment'">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Appointment Schedules</label>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                      <mat-select placeholder="Schedules" [(ngModel)]="selectedSchedules" [multiple]="true">
+                        <ngx-mat-select-search [formControl]="scheduleMultiFilterCtrl" placeholderLabel="Search schedules">
+                        </ngx-mat-select-search>
+                        <mat-option *ngFor=" let schedule of todaysQs" [value]="schedule" (click)="qSelection(schedule.id)">
+                          {{schedule.name}}
+                          {{schedule.displayschedule[0].dstr}}[{{schedule.displayschedule[0].time}}]
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedQs.length > 0">
+                    <p>
+                      Selected Queues:
+                    </p>
+                    <ul *ngFor="let queue of selectedQs">
+                      <li>
+                        {{queue.name}}<br>
+                        {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+
+
+
                 <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                   <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;
                   <button mat-button type="submit" class="cs-btn bt1" (click)="createCustomView()">Save</button>
