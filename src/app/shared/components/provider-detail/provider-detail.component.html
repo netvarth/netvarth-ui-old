@@ -263,7 +263,7 @@
                                                                 <li *ngFor="let serv of loc.fields.serviceList"
                                                                     (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
                                                                     {{serv.name}}</li>
-                                                            </ul>
+                                                            </ul> 
                                                         </div>
                                                         <div class="services"
                                                             *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
@@ -404,14 +404,14 @@
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
                                                         <span class="sub-title-donate">Appointment Service(s)</span>
-                                                        <ul *ngIf="!result_data.fields.appointmentServiceList">
-                                                            <li
-                                                                *ngFor="let appointmentService of result_data.fields.appt_services">
+                                                        <ul *ngIf="!loc.fields.appointmentServiceList">
+                                                            <li *ngFor="let appointmentService of loc.fields.appt_services"
+                                                            (click)="showServiceDetail(appointmentService, businessjson.businessName)">
                                                                 {{appointmentService}}</li>
                                                         </ul>
-                                                        <ul *ngIf="result_data.fields.appointmentServiceList">
-                                                            <li
-                                                                *ngFor="let appointmentService of result_data.fields.appointmentServiceList">
+                                                        <ul *ngIf="loc.fields.appointmentServiceList">
+                                                            <li   *ngFor="let appointmentService of loc.fields.appointmentServiceList"
+                                                            (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
                                                                 {{appointmentService.name}}</li>
                                                         </ul>
                                                     </div>
