@@ -22,6 +22,7 @@ export class SetPasswordFormComponent implements OnInit {
   isValidConfirm_pw = false;
   customer = '';
   spForm;
+  patternError
   @Input() type;
   @Input() checkConsumerOrProvider;
   @Input() consumerlogin;
@@ -52,13 +53,15 @@ export class SetPasswordFormComponent implements OnInit {
         confirm_password: ['', Validators.compose(
           [Validators.required])],
       });
+      this.patternError = 'Use minimum 8 characters with atleast one uppercase, lowercase and number';
     } else {
       this.spForm = this.fb.group({
         new_password: ['', Validators.compose(
-          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+          [Validators.required, Validators.pattern('^.{6,32}$')])],
         confirm_password: ['', Validators.compose(
-          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+          [Validators.required, Validators.pattern('^.{6,32}$')])],
       });
+      this.patternError = 'Use minimum 6 characters, maximum 32 characters';
     }
     setTimeout(() => {
       if (this.document.getElementById('newpassfield')) {

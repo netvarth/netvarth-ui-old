@@ -12,7 +12,11 @@ export class ProviderErrorMesagePopupComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
     if (this.data.profile === 'inactive') {
-      this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile.';
+      if (this.data.source === 'checkin') {
+        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
+      } else {
+        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';
+      }
     } else {
       if (this.data.source === 'checkin') {
         this.message = 'QManager is disabled in your settings';

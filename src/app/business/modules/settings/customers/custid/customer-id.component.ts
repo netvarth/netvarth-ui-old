@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 @Component({
     'selector': 'app-custid',
     'templateUrl': './customer-id.component.html'
@@ -37,6 +39,7 @@ export class CustomerIdSettingsComponent implements OnInit {
         public shared_functions: SharedFunctions,
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
+        private dialog: MatDialog
     ) {
     }
 
@@ -76,15 +79,28 @@ export class CustomerIdSettingsComponent implements OnInit {
             'prefix': this.prefixName,
             'suffix': this.suffixName
         };
-
-        this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
-            (data: any) => {
-                this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
-                this.inputChanged = false;
-            },
-            (error) => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-            });
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Once you switch to manual mode, auto generation of custom id won’t be available anymore. Are you sure you want to continue ?'
+            }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
+                    (data: any) => {
+                        this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                        this.inputChanged = false;
+                    },
+                    (error) => {
+                        this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                    });
+            } else {
+                this.resetCustIdConfig();
+            }
+        });
     }
     resetCustIdConfig() {
         this.inputChanged = false;
