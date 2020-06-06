@@ -108,6 +108,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tools_ids: any;
     tool_instruct: any;
     default_instruct: any;
+    is_lvtrack_enable = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -561,6 +562,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     getGlobalSettings() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
+                if (data.livetrack === true) {
+                    this.is_lvtrack_enable = true;
+                }
                 if (data.virtualService === true) {
                     this.is_virtual_enable = true;
                     this.getVirtualCallingModesList();
