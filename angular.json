@@ -34,7 +34,8 @@
               "src/assets/css/mat_form_style.css",
               "src/assets/css/custom_style.css",
               "src/assets/third-party/Admin-LTE/css/_all-skins.css",
-              "src/assets/css/p_app.css"
+              "src/assets/css/p_app.css",
+              "src/assets/css/style.css"
             ],
             "scripts": [
               "src/assets/third-party/jquery/dist/jquery.min.js",
