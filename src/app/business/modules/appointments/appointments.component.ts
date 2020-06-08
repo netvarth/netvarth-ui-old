@@ -1678,10 +1678,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type , date: this.filter.future_appt_date} });
     }
   }
-  searchCustomer(source, appttime) {
+  searchCustomer(source, appttime) { 
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
   }
   showsheAdjustDelay() {
@@ -1815,8 +1815,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getViews() {
     const _this = this;
+    let filter;
+    filter = {
+      'type-eq': 'Appointment'
+  };
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getCustomViewList().subscribe(data => {
+      _this.provider_services.getCustomViewList(filter).subscribe(data => {
         resolve(data);
       }, error => {
         reject();
