@@ -2,13 +2,13 @@
 
 
 
-.breadcrumb_bg {
+/* .breadcrumb_bg {
     background-image: url(assets/images/home/breadcrumb.png) !important;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     
-}
+} */
 .breadcrumb {
     position: relative;
     z-index: 1;

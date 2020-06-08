@@ -628,6 +628,6 @@ export const projectConstants = {
     BOTIM: 'Botim',
     IMO: 'Imo'
   },
-  PATH: 'http://' + window.location.host + '/'
+  PATH: 'https://' + window.location.host + '/'
 
 };

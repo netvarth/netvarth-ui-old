@@ -71,7 +71,7 @@
                                                             [checked]="qBoardsSelectedIndex[i]"
                                                             (click)="!layout.isContainer && qBoardClicked(i)"
                                                             [value]="layout.id" />
-                                                        <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                                        <div
                                                             class="pull-left mgn-lt-10">
                                                             <h3 class="pointer-cursor">
                                                                 <i *ngIf="layout.isContainer"
@@ -105,13 +105,13 @@
                                                                 <i class="icon-delete"></i>
                                                                 Delete
                                                             </button>
-                                                            <button mat-menu-item>
+                                                            <!-- <button mat-menu-item>
                                                                 <i class="fa fa-folder-open"></i>
                                                                 <a class="pointer-cursor"
                                                                     style="color: black; font-weight: 400;"
                                                                     (click)="goDisplayboardLayoutDetails(layout, 'layout')">
                                                                     Open
-                                                                </a> </button>
+                                                                </a> </button> -->
                                                         </mat-menu>
                                                     </td>
                                                 </tr>

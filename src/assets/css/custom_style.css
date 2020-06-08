@@ -3289,11 +3289,11 @@ figcaption {
   margin-left: 10px !important;
 }
 
-.copyLink {
+/* .copyLink {
   background: url("../images/home/copy-file.png") no-repeat;
   padding-left: 20px;
   margin-left: 10px;
-}
+} */
 
 .tablewidth {
   width: 100% !important;
