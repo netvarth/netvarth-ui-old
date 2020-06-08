@@ -79,6 +79,7 @@ export class SignUpComponent implements OnInit {
   actionstarted = false;
   scCode;
   scfound = false;
+  showTermcondition = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -628,4 +629,7 @@ export class SignUpComponent implements OnInit {
   // bank(){
   //   this.bank_action = true;
   // }
+  termsClicked() {
+    (this.showTermcondition) ? this.showTermcondition = false : this.showTermcondition = true;
+  }
 }

@@ -58,7 +58,6 @@ import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
-import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
@@ -91,7 +90,6 @@ import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module'
     BusinessPageComponent,
     ForceDialogComponent,
     AdminLoginComponent,
-    ConsumerJoinComponent,
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,

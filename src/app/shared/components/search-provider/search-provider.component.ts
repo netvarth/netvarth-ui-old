@@ -11,7 +11,6 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
 @Component({
   selector: 'app-search-provider',
@@ -252,32 +251,32 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         is_test_account = false;
       }
     }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
+    // const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+    //   width: '40%',
+    //   panelClass: ['loginmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: false,
+    //     test_account: is_test_account,
+    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.shared_functions.sendMessage(pdata);
-        this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
-        } else {
-          this.showCheckin('consumer');
-        }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'success') {
+    //     const pdata = { 'ttype': 'updateuserdetails' };
+    //     this.shared_functions.sendMessage(pdata);
+    //     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
+    //     if (passParam['callback'] === 'communicate') {
+    //       this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+    //     } else {
+    //       this.showCheckin('consumer');
+    //     }
+    //   } else if (result === 'showsignup') {
+    //     this.doSignup(passParam);
+    //   }
+    // });
   }
   doSignup(passParam?) {
     // this.api_loading = false;

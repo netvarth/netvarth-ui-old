@@ -16,7 +16,6 @@ import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.c
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
@@ -1053,42 +1052,42 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         is_test_account = false;
       }
     }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
+    // const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+    //   width: '40%',
+    //   panelClass: ['loginmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: false,
+    //     test_account: is_test_account,
+    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.getFavProviders();
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'fav') {
-          this.getFavProviders(passParam['mod']);
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
-        } else {
-          this.getFavProviders();
-          this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
-        }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'success') {
+    //     const pdata = { 'ttype': 'updateuserdetails' };
+    //     this.sharedFunctionobj.sendMessage(pdata);
+    //     this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+    //     if (passParam['callback'] === 'communicate') {
+    //       this.getFavProviders();
+    //       this.showCommunicate(passParam['providerId']);
+    //     } else if (passParam['callback'] === 'history') {
+    //       this.redirectToHistory();
+    //     } else if (passParam['callback'] === 'fav') {
+    //       this.getFavProviders(passParam['mod']);
+    //     } else if (passParam['callback'] === 'donation') {
+    //       this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+    //     } else if (passParam['callback'] === 'appointment') {
+    //       this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+    //     } else {
+    //       this.getFavProviders();
+    //       this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+    //     }
+    //   } else if (result === 'showsignup') {
+    //     this.doSignup(passParam);
+    //   }
+    // });
   }
   doSignup(passParam?) {
     // this.api_loading = false;

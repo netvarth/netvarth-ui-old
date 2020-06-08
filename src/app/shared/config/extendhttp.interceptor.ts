@@ -10,7 +10,7 @@ import { projectConstants } from '../constants/project-constants';
 import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
-// import { version } from '../constants/version' ;
+import { version } from '../constants/version';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -106,6 +106,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.stopThisRequest = false;
+        this.forceUpdateCalled = false;
       }
     });
   }
@@ -126,8 +127,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
                 return EMPTY;
-              } else {
-                return throwError(error);
               }
             } else {
               return throwError(error);
@@ -146,33 +145,18 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
-               this.shared_functions.doLogout().then (
-                 () => {
-                   this.router.navigate(['/']);
-                 }
-               );
-              // return EMPTY;
-              // return this._ifSessionExpired().pipe(
-              //   switchMap(() => {
-              //     return next.handle(this.updateHeader(req, url));
-              //   })
-              // );
-               return EMPTY;
-              // return throwError(error);
+              return this._ifSessionExpired().pipe(
+                switchMap(() => {
+                  return next.handle(this.updateHeader(req, url));
+                })
+              );
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);
             } else if (error.status === 0) {
-              // Network Error Handling
-              // return next.handle(this.updateHeader(req, url)).pipe(
                 retry(2),
-                // catchError((errorN: HttpErrorResponse) => {
-                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-                   return EMPTY;
-                // }),
-                // delay(10000);
-              // );
+                this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                return EMPTY;
             } else if (error.status === 404) {
               // return EMPTY;
               return throwError(error);
@@ -201,8 +185,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
+    req = req.clone({ headers: req.headers.append('Hybrid-Version', version.mobile) });
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {

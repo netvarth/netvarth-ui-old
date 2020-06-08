@@ -9097,3 +9097,19 @@ max-height: 500px !important;
 .width20{
   width: 20px !important;
 }
+.pay-hint {
+  font-family: 'Roboto Slab', sans-serif;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.pay-hint .icon-bell{
+  width: 22px;
+  height: 22px;
+  border-radius: 50px;
+  background: #ffc107;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+}

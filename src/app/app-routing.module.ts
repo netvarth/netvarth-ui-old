@@ -9,23 +9,15 @@ import { BusinessPageComponent } from './shared/components/business-page/busines
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
-import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
+import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
         path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
         canActivate: [AuthGuardProvider]
     },
-    {
-        path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
-        canActivate: [AuthGuardConsumer]
-    },
-    {
-        path: 'kiosk', loadChildren: () => import('./ynw_kiosk/kiosk.module').then(m => m.KioskModule),
-        canActivate: [AuthGuardProvider]
-    },
-    { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
+    { path: '', component: HomeAppComponent, canActivate: [AuthGuardHome] },
     { path: 'business', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
@@ -42,10 +34,7 @@ const routes: Routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
-    { path: ':type/status/:id', component: CheckYourStatusComponent },
-    // { path: 'appt/status/:id', component: CheckYourStatusComponent },
-      { path: 'consumer-join', component: ConsumerJoinComponent},
-    // { path: '**', redirectTo: 'not-found' }
+    { path: ':type/status/:id', component: CheckYourStatusComponent }
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes, {

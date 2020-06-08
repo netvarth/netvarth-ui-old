@@ -19,7 +19,6 @@ import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { projectConstants } from '../shared/constants/project-constants';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
-import { KioskModule } from '../ynw_kiosk/kiosk.module';
 import { BusinessComponent } from './business.component';
 import { ProviderCustomersComponent } from '../ynw_provider/components/provider-customers/provider-customers.component';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
@@ -76,7 +75,6 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
         BusinessRoutingModule,
         RouterModule,
         ProviderFaqModule,
-        KioskModule,
         BreadCrumbModule,
         CommonModule,
         CapitalizeFirstPipeModule,
