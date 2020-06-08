@@ -276,7 +276,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getBusinessConfiguration();
     this.getProviderLocations();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
