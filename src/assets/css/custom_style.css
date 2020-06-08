@@ -5779,7 +5779,7 @@ li.separator.setsplit {
 
 .btn-play {
   border-radius: 3px;
-  padding: 5px 10px 5px 10px;
+  /* padding: 5px 10px 5px 10px; */
   margin-bottom: 1px;
   box-shadow: none;
   background-color: buttonface;
