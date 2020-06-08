@@ -1815,8 +1815,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getViews() {
     const _this = this;
+    let filter;
+    filter = {
+      'type-eq': 'Waitlist'
+  };
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getCustomViewList().subscribe(data => {
+      _this.provider_services.getCustomViewList(filter).subscribe(data => {
         resolve(data);
       }, error => {
         reject();
