@@ -1131,15 +1131,21 @@
                                 *ngIf="!small_device_display">Arrived</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
-                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i] && !checkin.virtualService"
+                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i]"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
                             <!-- <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService" [matTooltip]="'Generate link'" (click)="generateLink(checkin)">
                               <i class="fa fa-link" aria-hidden="true"></i> </a> -->
+                             
                             <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
-                              <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
+                              <!-- <span *ngFor = "let calmode of checkin.virtualService | keyvalue">
+                                <i *ngIf="calmode.key == 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic"></i>{{calmode|json}}
+                                <img *ngIf="calmode == ''" src="https://img.icons8.com/color/16/000000/zoom.png" />
+                              </span> -->
+                              <i class="fa fa-video-camera"></i>
+                              <span *ngIf="!small_device_display">Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
