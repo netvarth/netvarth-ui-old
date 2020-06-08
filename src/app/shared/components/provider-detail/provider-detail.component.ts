@@ -362,6 +362,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 if (this.result_data.hits.hit[i].fields.donation_services) {
                   this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
                   console.log("Donation List", this.result_data.hits.hit[i].fields.donationServices);
+                  this.result_data.hits.hit[i].fields.donationlength = this.result_data.hits.hit[i].fields.donationServices.length;
                 }
               } catch (e) {
               }
@@ -373,6 +374,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.locationjson) {
               for (const i in this.locationjson) {
                 this.results_data = this.locationjson[i];
+                console.log(this.locationjson[i].fields.donationlength)
               }
             }
             // this.search_data = this.result_data.hits.hit;
