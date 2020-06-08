@@ -228,6 +228,10 @@ export class AppointmentComponent implements OnInit {
                 this.slotTime = qparams.timeslot;
                 this.comingSchduleId = qparams.scheduleId;
             }
+            if(qparams.date) {
+                this.sel_checkindate = moment(qparams.date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+                
+            }
         });
     }
     ngOnInit() {
@@ -358,7 +362,7 @@ export class AppointmentComponent implements OnInit {
                 }
             );
     }
-    initAppointment() {
+    initAppointment() { 
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
@@ -380,8 +384,9 @@ export class AppointmentComponent implements OnInit {
         const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
         console.log(loc);
         this.sel_loc = loc;
-
-        this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+        if(this.sel_checkindate == undefined){
+            this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+        } 
         console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1422,7 +1427,7 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             console.log(this.queuejson[this.sel_queue_indx].id);
 
-                            if (this.queuejson[this.sel_queue_indx].id === this.comingSchduleId) {
+                            if (this.queuejson[this.sel_queue_indx].id == this.comingSchduleId) {
                                 console.log('scheduleid');
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
