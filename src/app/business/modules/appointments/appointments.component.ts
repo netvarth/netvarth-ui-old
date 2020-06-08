@@ -2320,7 +2320,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getFutureAppointmentsCount();
   }
   showCallingModes(modes, action) {
-    this.changeWaitlistStatus(modes, action);
+   // this.changeWaitlistStatus(modes, action);
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

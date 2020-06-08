@@ -46,6 +46,7 @@ export class CallingModesComponent implements OnInit {
     location: any;
     jalde_q_id;
     serv_provider: any;
+    is_started = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -236,14 +237,18 @@ export class CallingModesComponent implements OnInit {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
-                        this.dialogRef.close();
+                        if (action === 'DONE') {
+                              this.dialogRef.close();
+                        }
                     }
                 );
         } else {
             this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
                 .then(
                     result => {
-                        this.dialogRef.close();
+                       if (action === 'Completed') {
+                         this.dialogRef.close();
+                       }
                     }
                 );
         }
@@ -294,7 +299,25 @@ export class CallingModesComponent implements OnInit {
     shareUrl() {
         this.clicktoSend();
     }
+    makeCompleted() {
+        if (this.is_started) {
+            this.step = 5;
+        } else {
+            this.dialogRef.close();
+        }
+    }
+    asktoLaunch() {
+        this.step = 6;
+    }
     makeStarted() {
-        this.step = 5;
+        if (this.data.type === 'checkin') {
+            this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+            this.step = 1;
+            this.is_started = true;
+        } else {
+            this.changeWaitlistStatus(this.data.qdata, 'Started');
+            this.step = 1;
+            this.is_started = true;
+        }
     }
 }
