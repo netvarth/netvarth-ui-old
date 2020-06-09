@@ -39,7 +39,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   email = true;
   pushnotify = true;
   typeOfMsg;
-  constructor(
+  type;
+  constructor( 
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
@@ -54,7 +55,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
-    console.log(this.data.appt);
+    console.log(this.uuid);
+    if( this.uuid.indexOf('wl') >= 0){
+      this.type = 'wl';
+    } else {
+      this.type = 'appt';
+    }
+    console.log(this.type);
     if (this.data.caption) {
       this.caption = this.data.caption;
     } else {
@@ -128,6 +135,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit(form_data) {
+    console.log(this.typeOfMsg);
     this.resetApiErrors();
     const blankvalidate = projectConstants.VALIDATOR_BLANK;
     if (blankvalidate.test(form_data.message)) {
@@ -166,7 +174,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             communicationMessage: form_data.message,
             uuid: this.uuid
           };
-          if (this.data.appt) {
+          if (this.type == 'appt') {
             this.shared_services.consumerMassCommunicationAppt(post_data).
               subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -248,7 +256,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      if (this.data.appt) {
+      if (this.type == 'appt') {
         this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
           .subscribe(
             () => {
@@ -294,7 +302,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      if (this.data.appt) {
+      if (this.type == 'appt') {
       this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
         dataToSend)
         .subscribe(
