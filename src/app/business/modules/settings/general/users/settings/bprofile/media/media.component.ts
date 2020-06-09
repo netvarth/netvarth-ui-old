@@ -106,7 +106,7 @@ export class MediaComponent implements OnInit, OnDestroy {
 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     ngOnDestroy() {
         if (this.socialdialogRef) {

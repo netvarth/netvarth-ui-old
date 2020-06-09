@@ -112,7 +112,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
   }
   performActions(action) {
     if (action === 'learnmore') {
-      this.router.navigate(['/provider/' + this.domain + '/miscellaneous->nonworking']);
+      this.router.navigate(['/provider/' + this.domain + '/general->nonworking']);
     }
   }
   getNonworkingdays() {
@@ -187,7 +187,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
   }
 
   isAvailableNow() {

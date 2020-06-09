@@ -146,7 +146,7 @@ getNotificationSettings() {
 
   performActions(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
   showSubmit(type) {
@@ -187,6 +187,6 @@ getNotificationSettings() {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
 }
