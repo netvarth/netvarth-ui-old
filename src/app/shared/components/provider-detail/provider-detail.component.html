@@ -289,7 +289,7 @@
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail" style="padding-bottom: 10px"
-                                            *ngIf="loc['waitlist'] && loc.fields.online_profile">
+                                            *ngIf="loc['waitlist'] && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                                     <!-- <div class="o-now" *ngIf="loc.opennow">
@@ -404,7 +404,7 @@
                                         </div> -->
 
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
+                                            *ngIf="loc['apptAllowed'] && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
@@ -436,7 +436,7 @@
                                         </div>
 
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="loc.fields.donation_status == 1 && loc.fields.donationlength >= 1 && loc.fields.donation_services && loc.fields.online_profile">
+                                            *ngIf="loc.fields.donation_status == 1 && loc.fields.donationlength >= 1 && loc.fields.donation_services && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
