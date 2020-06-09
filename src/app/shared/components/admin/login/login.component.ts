@@ -64,8 +64,9 @@ export class AdminLoginComponent implements OnInit {
     this.shared_functions.adminLogin(post_data)
       .then(
         () => {
-          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+          // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.shared_functions.setitemonLocalStorage('jld', data.password);
           this.api_loading = false;
           this.router.navigate(['home']);
           // this.dialogRef.close();j

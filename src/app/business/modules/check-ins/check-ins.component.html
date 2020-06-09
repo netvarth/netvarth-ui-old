@@ -236,10 +236,10 @@
                     alt="" /> &nbsp;</i>
               </a>
             </span>
-            <!-- <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
+            <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && check_in_list.length>0"
               [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
               <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
-            </span> -->
+            </span>
           </div>
         </div>
         <div class="chkins-sect m0">
@@ -1023,8 +1023,8 @@
                     <i class="fa fa-envelope-o" (click)="emailCheckin('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
-                  <!-- <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Print'">
-                    <i class="fa fa-print" (click)="printCheckin('new')"></i> </div> -->
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Print'">
+                    <i class="fa fa-print" (click)="printCheckin('new')"></i> </div>
                   <div class="statuslink "
                     *ngIf="waitlistSelection===1 && pos && selectedCheckin['new'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['new'].parentUuid"
                     [matTooltip]="'Bill'">

@@ -256,8 +256,9 @@ export class PhomeComponent implements OnInit {
     this.shared_functions.providerLogin(post_data)
       .then(
         () => {
-          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          // const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
+          // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.shared_functions.setitemonLocalStorage('jld', this.password);
           // this.dialogRef.close();
 
         },

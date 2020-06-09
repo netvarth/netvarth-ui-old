@@ -506,14 +506,16 @@ export class SignUpComponent implements OnInit {
               this.shared_functions.doLogout().then(() => {
                 this.shared_functions.setitemonLocalStorage('new_provider', 'true');
                 this.shared_functions.providerLogin(login_data);
-                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                // const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                this.shared_functions.setitemonLocalStorage('jld', post_data.password);
               });
             } else {
               this.shared_functions.setitemonLocalStorage('new_provider', 'true');
               this.shared_functions.providerLogin(login_data);
-              const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              // const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+              // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              this.shared_functions.setitemonLocalStorage('jld', post_data.password);
             }
           },
           error => {
@@ -535,8 +537,9 @@ export class SignUpComponent implements OnInit {
             this.shared_functions.consumerLogin(login_data, this.moreParams)
               .then(
                 () => {
-                  const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                  // const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                  // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                  this.shared_functions.setitemonLocalStorage('jld', post_data.password);
                   this.dialogRef.close('success');
                 },
                 error => {

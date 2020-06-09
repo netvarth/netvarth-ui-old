@@ -140,8 +140,9 @@ export class LoginComponent implements OnInit {
       this.shared_functions.providerLogin(post_data)
         .then(
           () => {
-            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-            this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+            // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            this.shared_functions.setitemonLocalStorage('jld', data.password);
             // this.dialogRef.close();
             setTimeout(() => {
               this.dialogRef.close();
@@ -163,8 +164,9 @@ export class LoginComponent implements OnInit {
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
-              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              // const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+              this.shared_functions.setitemonLocalStorage('jld', data.password);
               this.dialogRef.close('success');
             },
             error => {

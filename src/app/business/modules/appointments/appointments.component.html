@@ -140,10 +140,10 @@
                     alt="" /> &nbsp;</i>
               </a>
             </span>
-            <!-- <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && appt_list.length>0"
+            <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3 && appt_list.length>0"
               [matTooltipClass]="tooltipcls" [matTooltip]="'Print'">
               <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
-            </span> -->
+            </span>
           </div>
         </div>
         <div class="dash-list">
@@ -771,8 +771,8 @@
                     <i class="fa fa-envelope-o" (click)="emailAppt('new')"></i> </div>
                   <div class="statuslink " *ngIf="apptSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
-                  <!-- <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Print'">
-                    <i class="fa fa-print" (click)="printAppt('new')"></i> </div> -->
+                  <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Print'">
+                    <i class="fa fa-print" (click)="printAppt('new')"></i> </div>
                   <div class="statuslink "
                     *ngIf="apptSelection===1 && pos && selectedAppt['new'].apptStatus != 'prepaymentPending' && !selectedAppt['new'].parentUuid"
                     [matTooltip]="'Bill'">
