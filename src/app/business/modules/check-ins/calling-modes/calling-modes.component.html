@@ -115,6 +115,7 @@
         </div>
         <div *ngIf="data.type === 'checkin'" class="example-full-width" style="padding-top: 30px;">
             <div>
+                <div id="meetinInfochekin">
                 <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                 <p>Service : {{serv_name}}</p>
                 <p>Date & Time: {{date}}, {{time}}</p>
@@ -123,24 +124,33 @@
                 <!-- <p>Jaldee token id: {{jalde_q_id}}</p> -->
                 <p>Join {{callingModes}} Meeting</p>
                 <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                </div>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">
                     <i class="fa fa-share-alt" aria-hidden="true"></i>
                     Share
+                </span>
+                <span class="btn-primary-n custId-cursor" (click)="copyInfo()">
+                    <i class="fa fa-clone" aria-hidden="true"></i> Copy Info
                 </span>
             </div>
         </div>
         <div *ngIf="data.type === 'appt'" class="example-full-width" style="padding-top: 30px;">
             <div>
-                <p>Appointment for : {{consumer_fname}}</p>
-                <p>Service : {{serv_name}}</p>
-                <p>Date & Time: {{date}}, {{time}}</p>
-                <p>Service Provider: {{serv_provider}}</p>
-                <p>Location: {{location}}</p>
-                <p>Join {{callingModes}} Meeting</p>
-                <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                <div id="meetinInfoappt">
+                    <p>Appointment for : {{consumer_fname}}</p>
+                    <p>Service : {{serv_name}}</p>
+                    <p>Date & Time: {{date}}, {{time}}</p>
+                    <p>Service Provider: {{serv_provider}}</p>
+                    <p>Location: {{location}}</p>
+                    <p>Join {{callingModes}} Meeting</p>
+                    <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                </div>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">
                     <i class="fa fa-share-alt" aria-hidden="true"></i>
                     Share
+                </span>
+                <span class="btn-primary-n custId-cursor" (click)="copyInfo()">
+                    <i class="fa fa-clone" aria-hidden="true"></i> Copy Info
                 </span>
             </div>
         </div>

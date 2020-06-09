@@ -321,4 +321,21 @@ export class CallingModesComponent implements OnInit {
             this.is_started = true;
         }
     }
+    copyInfo() {
+        let info;
+    if (this.data.type === 'checkin') {
+         info = document.getElementById('meetinInfochekin');
+    } else {
+         info = document.getElementById('meetinInfoappt');
+    }
+    if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(info);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('Copy');
+        this.shared_functions.openSnackBar('Meeting details copied to clipboard');
+      }
+    }
 }
