@@ -1463,9 +1463,9 @@ export class ConsumerCheckinComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode() {
-        if (this.callingModes === '') {
+        if (this.callingModes === '' || this.callingModes.length < 10) {
             this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-        } else {
+        } else if (this.callingModes && this.callingModes.length === 10) {
             this.showInputSection = true;
         }
     }
