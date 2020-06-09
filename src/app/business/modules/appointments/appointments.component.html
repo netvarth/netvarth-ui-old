@@ -914,7 +914,7 @@
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Started')"
-                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived' && !appt.virtualService" [matTooltipClass]="tooltipcls"
+                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived'" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
@@ -923,8 +923,8 @@
                             <a class="statusText btn-play pointer-cursor"
                               (click)="showCallingModes(appt, 'Started')"
                               *ngIf="appt.virtualService" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Start Teleservice'">
-                              <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display"> Start Teleservice</span>
+                              [matTooltip]="'Teleservice'">
+                              <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display">Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Confirmed')"
