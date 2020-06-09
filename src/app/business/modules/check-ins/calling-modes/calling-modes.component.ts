@@ -139,9 +139,11 @@ export class CallingModesComponent implements OnInit {
     }
     selectAlrdyWaiting() {
         if (this.callingModes === 'WhatsApp') {
-            this.msg_to_user = this.busnes_name + ' is already waiting';
+         //   this.msg_to_user = this.busnes_name + ' is already waiting';
+         this.msg_to_user = 'I am waiting for you to start the video call';
         } else {
-            this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
+          //  this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
+          this.msg_to_user = 'I am waiting for you to start the video call. Here is the meeting details ' + this.temp_msglink;
         }
     }
     clicktoSend() {
