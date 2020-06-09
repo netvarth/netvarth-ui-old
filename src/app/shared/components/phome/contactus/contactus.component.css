@@ -215,5 +215,85 @@
   margin-bottom: 0px !important;
 }
 
+.breadcrumb_bg {
+  background-image: url(assets/images/home/breadcrumb.png) !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.breadcrumb {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
 
 
+.breadcrumb .breadcrumb_iner {
+  height: 475px;
+  width: 100%;
+  display: table;
+}
+
+
+.breadcrumb .breadcrumb_iner .breadcrumb_iner_item {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
+  color: #fff;
+  font-size: 100px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+@media (max-width: 576px) {
+  
+  .breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  
+  .breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  
+  .breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
+    font-size: 40px;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  
+  .breadcrumb .breadcrumb_iner .breadcrumb_iner_item h2 {
+    font-size: 50px;
+  }
+}
+
+
+.breadcrumb .breadcrumb_iner .breadcrumb_iner_item p {
+  font-size: 15px;
+  color: #fff;
+}
+
+
+.breadcrumb .breadcrumb_iner .breadcrumb_iner_item span {
+  margin: 0px 5px;
+  font-size: 12px;
+}
+
+
+.breadcrumb {
+  margin-bottom: 0px !important;
+}
+
+.contactus {
+  background-color: white;
+}
