@@ -222,7 +222,9 @@ export class RetailStoresComponent implements OnInit {
         if (childContent === 'departments') {
           this.showdepartment = true;
         }
-       
+        if (childContent === 'branchsps') {
+          this.showserviceprovider = true;
+        }
         if (childContent === 'livetracking') {
           this.showlivetrackstatus = true;
         }
@@ -314,7 +316,9 @@ export class RetailStoresComponent implements OnInit {
         if (childContent === 'saleschannel') {
           this.showsaleschannel = true;
         }
-       
+        if (childContent === 'corporate') {
+          this.showcorporate = true;
+        }
       }  
   
        if (parentContent === 'customers') {
