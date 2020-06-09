@@ -962,7 +962,6 @@
 													class=" d-none d-lg-block cs-btn bt1 print"
 													*ngIf="bill_data.billStatus=='Settled'"
 													(click)="printMe()">Print</button>
-
 												<button type="button" mat-button class="cs-btn bt1 accept"
 													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
 													(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
