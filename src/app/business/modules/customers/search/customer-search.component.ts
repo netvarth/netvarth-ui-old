@@ -136,6 +136,8 @@ export class CustomerSearchComponent implements OnInit {
     female_cap = Messages.FEMALE_CAP;
     dob_cap = Messages.DOB_CAP;
     adrress_cap = Messages.ADDRESS_CAP;
+    tday = new Date();
+
    
     save_btn = Messages.SAVE_BTN;
     mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
