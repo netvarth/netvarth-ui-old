@@ -62,8 +62,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
       const phone_number = ynw_user.loginId;
       // const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-      const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
-      const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
+      // const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
+      // const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
+      const password = this.shared_functions.getitemfromLocalStorage('jld');
       const post_data = {
         'countryCode': '+91',
         'loginId': phone_number,
