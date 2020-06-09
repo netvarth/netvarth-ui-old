@@ -158,7 +158,7 @@
                     aria-hidden="true"></i>Back</button>
         </div>
         <div class="example-full-width" style="padding-top: 30px;text-align: center;">
-            Change status to "Completed"
+            Video call completed? Change <p *ngIf="data.type === 'checkin'">Checkin</p> <p *ngIf="data.type === 'appt'">Appointment</p> status to completed?
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>

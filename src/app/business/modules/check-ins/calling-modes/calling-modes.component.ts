@@ -128,12 +128,13 @@ export class CallingModesComponent implements OnInit {
         if (this.callingModes !== 'WhatsApp') {
             this.callingModes = 'Zoom';
         }
-        // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
         if (this.callingModes === 'WhatsApp') {
-            this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
+            // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
+            this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready';
         } else {
             this.getMeetingDetails();
-            this.msg_to_user = this.busnes_name + ' will be contacting you via ' + this.callingModes + ' .Join the ' + this.callingModes + ' using ' + this.temp_msglink;
+            // this.msg_to_user = this.busnes_name + ' will be contacting you via ' + this.callingModes + ' .Join the ' + this.callingModes + ' using ' + this.temp_msglink;
+            this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready. Here is the link for joining the video call - ' + this.temp_msglink;
         }
     }
     selectAlrdyWaiting() {
