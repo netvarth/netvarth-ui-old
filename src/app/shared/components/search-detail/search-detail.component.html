@@ -496,7 +496,7 @@
 
                                         <div class="donat-service"
                                             *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
-                                            <span class="sub-title-donate">Check-in Service(s)</span>
+                                            <span class="sub-title-donate checkin-service-group">Check-in Service(s)</span>
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.serviceList"
                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
