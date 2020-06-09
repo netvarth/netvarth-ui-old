@@ -5779,7 +5779,7 @@ li.separator.setsplit {
 
 .btn-play {
   border-radius: 3px;
-  /* padding: 5px 10px 5px 10px; */
+  padding: 5px 10px 5px 10px;
   margin-bottom: 1px;
   box-shadow: none;
   background-color: buttonface;
@@ -7826,7 +7826,7 @@ hr.wide-separator-line {
 
 .checkin-aside {
   right: 0;
-  position: absolute;
+  position: relative;
   z-index: 500;
   top: 0;
   width: 100%;
@@ -8098,11 +8098,11 @@ owl-carousel .bt3.active {
   display: inherit !important;
 }
 
-@media only screen and (min-width: 575px) {
+/* @media only screen and (min-width: 575px) {
   .checkin-aside {
     position: relative !important;
   }
-}
+} */
 
 .nav navbar-nav {
   background: #ffffff;

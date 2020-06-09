@@ -419,6 +419,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           (data: any) => {
             this.views = data;
             this.views.push(tempView);
+            const selected_view = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
+            if (selected_view) {
+              const viewFilter = this.views.filter(view => view.id === selected_view.id);
+              if (viewFilter.length !== 0) {
+                this.selectedView = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
+              } else {
+                this.selectedView = tempView;
+                this.shared_functions.setitemToGroupStorage('appt-selectedView', this.selectedView);
+              }
+            } else {
+              this.selectedView = tempView;
+              this.shared_functions.setitemToGroupStorage('appt-selectedView', this.selectedView);
+            }
             this.initView(this.selectedView);
           },
           error => {
@@ -493,9 +506,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         _this.provider_services.getProviderSchedules().subscribe(
           (queues: any) => {
             const qs = [];
-            for (let i = 0; i < queues.length; i++) {
-              if (queues[i].apptState === 'ENABLED') {
-                qs.push(queues[i]);
+            if (this.selectedView && this.selectedView.name !== 'Default') {
+              for (let i = 0; i < queues.length; i++) {
+                for (let j = 0; j < this.selectedView.customViewConditions.schedules.length; j++) {
+                  if (queues[i].apptState === 'ENABLED' && queues[i].id === this.selectedView.customViewConditions.schedules[j].id) {
+                    qs.push(queues[i]);
+                  }
+                }
+              }
+            } else {
+              for (let i = 0; i < queues.length; i++) {
+                if (queues[i].apptState === 'ENABLED') {
+                  qs.push(queues[i]);
+                }
               }
             }
             resolve(qs);
@@ -510,9 +533,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           _this.provider_services.getProviderSchedulesbyDate(date).subscribe(
             (queues: any) => {
               const qs = [];
-              for (let i = 0; i < queues.length; i++) {
-                if (queues[i].apptState === 'ENABLED') {
-                  qs.push(queues[i]);
+              if (this.selectedView && this.selectedView.name !== 'Default') {
+                for (let i = 0; i < queues.length; i++) {
+                  for (let j = 0; j < this.selectedView.customViewConditions.schedules.length; j++) {
+                    if (queues[i].apptState === 'ENABLED' && queues[i].id === this.selectedView.customViewConditions.schedules[j].id) {
+                      qs.push(queues[i]);
+                    }
+                  }
+                }
+              } else {
+                for (let i = 0; i < queues.length; i++) {
+                  if (queues[i].apptState === 'ENABLED') {
+                    qs.push(queues[i]);
+                  }
                 }
               }
               resolve(qs);
@@ -619,6 +652,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleViewSel(view) {
     this.shared_functions.setitemonLocalStorage('t_slv', view);
     this.selectedView = view;
+    this.shared_functions.setitemToGroupStorage('appt-selectedView', this.selectedView);
     this.initView(this.selectedView);
     this.reloadAPIs();
   }
@@ -715,9 +749,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   initView(view) {
     return new Promise((resolve) => {
       const qIds = [];
-      if (view.customViewConditions.queues.length > 0) {
-        for (let i = 0; i < view.customViewConditions.queues.length; i++) {
-          qIds.push(view.customViewConditions.queues[i]['id']);
+      if (view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
+        for (let i = 0; i < view.customViewConditions.schedules.length; i++) {
+          qIds.push(view.customViewConditions.schedules[i]['id']);
         }
       }
       if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ') && this.shared_functions.getitemFromGroupStorage('appt_history_selQ').length !== 0) {
@@ -1678,10 +1712,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type , date: this.filter.future_appt_date} });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date } });
     }
   }
-  searchCustomer(source, appttime) { 
+  searchCustomer(source, appttime) {
     this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
   }
   showsheAdjustDelay() {
@@ -1818,7 +1852,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let filter;
     filter = {
       'type-eq': 'Appointment'
-  };
+    };
     return new Promise(function (resolve, reject) {
       _this.provider_services.getCustomViewList(filter).subscribe(data => {
         resolve(data);
@@ -2320,7 +2354,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getFutureAppointmentsCount();
   }
   showCallingModes(modes, action) {
-   // this.changeWaitlistStatus(modes, action);
+    // this.changeWaitlistStatus(modes, action);
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

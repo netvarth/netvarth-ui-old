@@ -411,23 +411,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="services"
-                                            *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
-                                            <ul>
-                                                <li *ngFor="let serv of search_result.fields.serviceList"
-                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
-                                                    | capitalizeFirst}}</li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="services"
-                                            *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
-                                            <ul>
-                                                <li *ngFor="let serv of search_result.fields.services"
-                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
-                                                    | capitalizeFirst}}</li>
-                                            </ul>
-                                        </div>
+                                        
                                     </div>
                                     <div class="more-clinics" *ngIf="search_result.fields.moreclinics>0"
                                         (click)="providerDetClicked(search_result)">
@@ -508,6 +492,28 @@
                                             <div class="time-data">
                                                 {{search_result.fields['estimatedtime_det']['personAhead']}}
                                                 {{people_ahead}} </div>Be the first in line
+                                        </div>
+
+                                        <div class="donat-service"
+                                            *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
+                                            <span class="sub-title-donate">Check-in Service(s)</span>
+                                            <ul>
+                                                <li *ngFor="let serv of search_result.fields.serviceList"
+                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
+                                                    | capitalizeFirst}}
+                                                    <span *ngIf="serv.serviceType == 'virtualService'" >
+                                                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                    </span></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="donat-service"
+                                            *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
+                                            <ul>
+                                                <li *ngFor="let serv of search_result.fields.services"
+                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
+                                                    | capitalizeFirst}}</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
