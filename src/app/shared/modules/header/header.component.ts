@@ -192,6 +192,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.getBusinessdetFromLocalstorage();
     });
   }
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+myFunction() {
+  const x = document.getElementById('myTopnav');
+  if (x.className === 'topnav') {
+    x.className += 'responsive';
+  } else {
+    x.className = 'topnav';
+  }
+}
   hideLearnmore() {
     this.showLearnMore = false;
     this.scrollhideclass.emit(false);

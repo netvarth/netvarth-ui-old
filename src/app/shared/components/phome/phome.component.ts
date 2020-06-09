@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, HostListener } from '@angular/core';
 import { SignUpComponent } from '../signup/signup.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
@@ -35,7 +35,7 @@ export class PhomeComponent implements OnInit {
   carouselPricing;
   activePrice = '';
   showMoreList: any = {};
-
+  windowScrolled: boolean;
   images = {
     special_offers: 'assets/images/special offer-01-01.png',
     jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -56,7 +56,10 @@ export class PhomeComponent implements OnInit {
     jaldee_health: 'assets/images/home/HealthCare.jpg',
     jaldee_kiosk: 'assets/images/home/jaldee_kiosk.svg',
 
-    jaldee_qMgr: '',
+    jaldee_qMgr: 'assets/images/home/qmanager.png',
+    jaldee_onlineN: 'assets/images/home/Jaldee online.png',
+    jaldee_payN: 'assets/images/home/jaldee pay3.png',
+    jaldee_takeout: 'assets/images/home/Takeout.png',
     jaldee_appDesktop: 'assets/images/home/available-app.png',
     jaldee_playstore: 'assets/images/home/app_btn1.png',
     jaldee_appstore: 'assets/images/home/app_btn2.png'
@@ -75,15 +78,25 @@ export class PhomeComponent implements OnInit {
     private _scrollToService: ScrollToService,
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
   ) {
     this.activateRoute.queryParams.subscribe(data => {
       console.log(data);
       this.qParams = data;
       this.handleScroll(this.qParams.type);
-
     });
   }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+        this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+        this.windowScrolled = false;
+    }
+}
+scrollToTop() {
+  this.handleScroll('pro_home');
+}
   doForgotPassword() {
     this.resetApiErrors();
     this.api_loading = false;

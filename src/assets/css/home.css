@@ -1664,7 +1664,8 @@ marquee p {
  }
 
 .phome .features, .phome .contact {
-  background: #f8f9fa !important;
+  /* background: #f8f9fa !important; */
+  background: #fff !important;
 }
 
 .text-center {
@@ -6433,7 +6434,7 @@ padding-bottom: 40px;
 margin-right: 30px !important;
 }
 .unit-4 {
-  padding: 30px;
+  padding: 10px;
   background: #f1f1f1;
   border-radius: 5px;
   -webkit-transition: .3s all ease;
@@ -6444,8 +6445,8 @@ margin-right: 30px !important;
   margin-bottom: 4em;
   text-align: center;
   padding-top: 50px; 
-  margin-right: 30px;
-  margin-left: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
   min-height: 350px;
   
 }
@@ -6555,7 +6556,7 @@ margin-right: 30px !important;
                 margin-left: -15px; }
                 
 .containerbanner{
-margin-left: 70px;
+/* margin-left: 70px; */
 }
 @media only screen and (max-width:620px) {
 
@@ -6777,7 +6778,7 @@ margin-left: 70px;
 
 
 .feature_part .single_feature {
-  margin-top: 90px;
+  margin-top: 30px;
 }
 
 @media (max-width: 991px) {
@@ -6920,3 +6921,70 @@ margin-left: 70px;
 
 .acc-doms { position: relative;}
 .acc-subdoms { position: relative;}
+
+ @media (max-width: 576px) {
+  .container8 {margin-right: 0px !important;}
+  .wrap-login100 {width: auto !important;}
+}
+.feature_part {margin-top:30px !important}
+.feature_part  p {
+  text-align: justify !important;
+}
+.feature_part  .title {
+  font-weight: 700px !important;
+  font-size: 20px !important;
+}
+
+.phome .login-form {
+  margin: auto;
+}
+.site-section .container8,.domain-info{
+  background-color: #f8f9fa;
+}
+.phome .about_us_text p {
+  text-align: justify !important;
+}
+@media (min-width:992px) {
+  .qmgr img {
+    height:600px !important;
+    padding-left: 50px;
+  }
+  .jdonline img {
+    height:480px !important;
+    padding-left: 50px;
+  }
+  .pos_bl img {
+      height: 370px !important;
+    padding-left: 50px;
+    }
+    .pos_bl img {
+      height: 370px !important;
+    }
+}
+.mob-nav-item {
+  display: inline-block !important;
+  width: 100% !important;
+  padding: 10px !important;
+  color: #000 !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hamburg i {font-size:x-large}
+.scroll-to-top {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  opacity: 0;
+  transition: all .2s ease-in-out;
+ }
+ .show-scrollTop {
+  opacity: 1;
+  transition: all .2s ease-in-out;
+ }
+ .scroll-to-top button {
+   padding-left: 10px;
+   padding-right: 10px;
+   padding-bottom: 5px;
+   padding-top:5px;
+  background-image: linear-gradient(to left, #00b4ff 0%, #57ddff 51%, #fff 100%);
+ }
