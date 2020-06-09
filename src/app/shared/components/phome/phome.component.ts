@@ -59,7 +59,7 @@ export class PhomeComponent implements OnInit {
     jaldee_qMgr: 'assets/images/home/qmanager.png',
     jaldee_onlineN: 'assets/images/home/Jaldee online.png',
     jaldee_payN: 'assets/images/home/jaldee pay3.png',
-    jaldee_takeout: 'assets/images/home/Takeout.png',
+    jaldee_takeout: 'assets/images/home/Appoinment.png',
     jaldee_appDesktop: 'assets/images/home/available-app.png',
     jaldee_playstore: 'assets/images/home/app_btn1.png',
     jaldee_appstore: 'assets/images/home/app_btn2.png'
