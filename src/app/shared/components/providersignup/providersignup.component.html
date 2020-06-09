@@ -35,6 +35,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                 [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
 {
   'required' : 'First name is required',
+  'minlength' : 'First name is too short',
   'pattern' : 'Only alphabets are allowed'
 })">
                             </app-field-error-display>

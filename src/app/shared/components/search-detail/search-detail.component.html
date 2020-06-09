@@ -469,7 +469,7 @@
                             </div>
                         </div>
                         <div class="bottom-sect"
-                            *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile">
+                            *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['waitlist'] && search_result.fields.online_profile == 1">
                             <div class="bt-l">
                                 <div class="wt-tme"
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
@@ -496,7 +496,7 @@
 
                                         <div class="donat-service"
                                             *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
-                                            <span class="sub-title-donate">Check-in Service(s)</span>
+                                            <span class="sub-title-donate checkin-service-group">Check-in Service(s)</span>
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.serviceList"
                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
@@ -576,7 +576,7 @@
                                 </span> </div>   -->
                         <!-- </div>
                         </div> -->
-                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.apptAllowed">
+                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">
@@ -604,7 +604,7 @@
                             </div>
                         </div>
                         <div class="bottom-sect pdetail"
-                            *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donationlength >= 1 && search_result.fields.donation_services && search_result.fields.online_profile">
+                            *ngIf="search_result.fields.donation_status == 1 && search_result.fields.donationlength >= 1 && search_result.fields.donation_services && search_result.fields.online_profile == 1">
                             <div class="bt-l">
                                 <div class="wt-tme">
                                     <div class="donat-service">

@@ -208,7 +208,7 @@ export class ProvidersignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       phonenumber: ['', Validators.compose(
         [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      first_name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       selectedDomainIndex: [''],
       selectedSubDomains: [0],

@@ -11,15 +11,29 @@
             <div class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
         </div>
-        <div *ngIf=" includedfrom =='phome'">
-            <ul class="navul ">
-            
+        <div *ngIf="includedfrom =='phome'" class="pull-right">
+            <span class="visible-xs visible-sm hamburg">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <mat-menu #menu="matMenu">
+                        <a class="mob-nav-item"  (click)="gotoproducts()"> Jaldee Products</a>
+                        <a class="mob-nav-item" (click)="gotoPricing()">Jaldee Pricing</a>
+                      <!-- <a class="mob-nav-item"  (click)="gotosales()">Jaldee Sales</a> -->
+                      <a class="mob-nav-item" (click)="gotocontactus()">Contact us</a>
+                    <!-- <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                        <i class="icon-delete"></i>
+                        <span>delete</span>
+                    </button> -->
+                </mat-menu>
+            </span>
+            <ul class="navul" class="hidden-xs hidden-sm">
                 <li class="navli"  (click)="gotoproducts()"> Jaldee Products</li>
                 <li class="navli" (click)="gotoPricing()">Jaldee Pricing</li>
               <li class="navli"  (click)="gotosales()">Jaldee Sales</li>
               <li class="navli" (click)="gotocontactus()">Contact us</li>
 
-            </ul>
+            </ul> 
         </div>
             <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button

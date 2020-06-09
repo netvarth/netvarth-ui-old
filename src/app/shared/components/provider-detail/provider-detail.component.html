@@ -256,27 +256,7 @@
                                                                     {{dept}}</li>
                                                             </ul>
                                                         </div>
-                                                        <div class="services"
-                                                            *ngIf="!loc.fields.departments && loc.fields.serviceList && loc.fields.serviceList.length > 0">
-                                                            <span class="sub-title">{{services_offered}}</span>
-                                                            <ul>
-                                                                <li *ngFor="let serv of loc.fields.serviceList"
-                                                                    (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
-                                                                    {{serv.name}}
-                                                                    <span *ngIf="serv.serviceType == 'virtualService'" >
-                                                                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                                                    </span></li>
-                                                            </ul> 
-                                                        </div>
-                                                        <div class="services"
-                                                            *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
-                                                            <span class="sub-title">{{services_offered}}</span>
-                                                            <ul>
-                                                                <li *ngFor="let serv of loc.fields.services"
-                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
-                                                                    {{serv}}</li>
-                                                            </ul>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,7 +289,7 @@
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail" style="padding-bottom: 10px"
-                                            *ngIf="loc['waitlist'] && loc.fields.online_profile">
+                                            *ngIf="loc['waitlist'] && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                                     <!-- <div class="o-now" *ngIf="loc.opennow">
@@ -332,6 +312,28 @@
                                                                 {{loc['personAhead']}} {{people_ahead}} </div>Be the
                                                             first in
                                                             line
+                                                        </div>
+
+                                                        <div class="donat-service"
+                                                            *ngIf="!loc.fields.departments && loc.fields.serviceList && loc.fields.serviceList.length > 0">
+                                                            <span class="sub-title-donate checkin-service-group">Check-in Service(s)</span>
+                                                            <ul>
+                                                                <li *ngFor="let serv of loc.fields.serviceList"
+                                                                    (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
+                                                                    {{serv.name}}
+                                                                    <span *ngIf="serv.serviceType == 'virtualService'" >
+                                                                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                    </span></li>
+                                                            </ul> 
+                                                        </div>
+                                                        <div class="donat-service"
+                                                            *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
+                                                            <span class="sub-title">{{services_offered}}</span>
+                                                            <ul>
+                                                                <li *ngFor="let serv of loc.fields.services"
+                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                                    {{serv}}</li>
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                     <div class="wt-tme notallowed"
@@ -402,7 +404,7 @@
                                         </div> -->
 
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="loc['apptAllowed'] && loc.fields.online_profile">
+                                            *ngIf="loc['apptAllowed'] && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
@@ -434,7 +436,7 @@
                                         </div>
 
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="loc.fields.donation_status == 1 && loc.fields.donationlength >= 1 && loc.fields.donation_services && loc.fields.online_profile">
+                                            *ngIf="loc.fields.donation_status == 1 && loc.fields.donationlength >= 1 && loc.fields.donation_services && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">

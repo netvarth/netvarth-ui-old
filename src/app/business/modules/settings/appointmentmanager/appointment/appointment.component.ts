@@ -190,6 +190,7 @@ export class AppointmentComponent implements OnInit {
     showApptTime = false;
     wtsapmode: any;
     appt_title: string;
+    is_wtsap_empty = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -796,6 +797,7 @@ export class AppointmentComponent implements OnInit {
     }
     saveCheckin() {
         console.log(this.waitlist_for);
+        this.is_wtsap_empty = false;
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
                 if (list.id === this.customer_data.id) {
@@ -839,6 +841,12 @@ export class AppointmentComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
+            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                if (!this.callingModes || this.callingModes.length < 10) {
+                    this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.is_wtsap_empty = true;
+                }
+            }
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
                     post_Data['virtualService'] = this.virtualServiceArray;
@@ -860,7 +868,9 @@ export class AppointmentComponent implements OnInit {
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             //   post_Data['ignorePrePayment'] = true;
-            this.addAppointmentInProvider(post_Data);
+            if (!this.is_wtsap_empty) {
+                this.addAppointmentInProvider(post_Data);
+            }
         }
     }
     addAppointmentInProvider(post_Data) {
@@ -1524,7 +1534,11 @@ export class AppointmentComponent implements OnInit {
         return this.sharedFunctionobj.isNumeric(evt);
     }
     addCallingmode(index) {
-        this.showInputSection = true;
+        if (this.callingModes && this.callingModes.length === 10) {
+            this.showInputSection = true;
+        } else if (!this.callingModes || this.callingModes.length < 10) {
+            this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+        }
     }
     // handleModeSel(index, ev) {
     //     if (ev.checked) {

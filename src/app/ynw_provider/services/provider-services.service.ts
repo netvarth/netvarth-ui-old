@@ -236,8 +236,8 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/license/adwords');
    }
    addAdwords(data) {
-      const url = 'provider/license/adwords/' + data;
-      return this.servicemeta.httpPost(url);
+      const url = 'provider/license/adwords/create';
+      return this.servicemeta.httpPost(url, data);
    }
    deleteAdwords(id) {
       const url = 'provider/license/adwords/' + id;
