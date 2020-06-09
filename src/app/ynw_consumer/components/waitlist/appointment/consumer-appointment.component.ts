@@ -709,7 +709,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
             }
-        } else if (this.callingModes === '') {
+        } else if (this.callingModes === '' || this.callingModes.length < 10) {
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 for (const i in this.sel_ser_det.virtualCallingModes) {
                     if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp') {
