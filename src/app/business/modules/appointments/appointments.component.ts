@@ -143,7 +143,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
-  filter_date_end_max = null;
+  filter_date_end_max = new Date();
+
+  // filter_date_end_max = null;
   filter_dob_start_min = null;
   filter_dob_start_max = null;
   filter_dob_end_min = null;
@@ -2192,7 +2194,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_date_end_max = null;
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
+      // this.filter_date_end_max = moment(new Date()).add(-1, 'days');
     } else if (this.time_type === 2) {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
