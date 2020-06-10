@@ -1718,6 +1718,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+    }
+  }
+  apptFutureClicked(type, time?) {
+    if (this.queues.length === 0) {
+      this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+    } else {
+      let slot = '';
+      if (time) {
+        slot = time;
+      }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date } });
     }
   }
