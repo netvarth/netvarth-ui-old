@@ -839,7 +839,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // }
     // this.services = servicesByDept;
     // this.deptlist = this.groubedByTeam[dept.departmentName];
-    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept.departmentId);
+    const service = this.servicesjson.filter(dpt => dpt.departmentId === dept.departmentId);
     this.services = [];
     this.allservices = service[0].services;
     for (let i = 0; i < this.allservices.length; i++) {

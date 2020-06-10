@@ -832,7 +832,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     // }
     // this.services = servicesByDept;
     // this.deptlist = this.groubedByTeam[dept.departmentName];
-    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
+    const service = this.servicesjson.filter(dpt => dpt.departmentId === dept.departmentId);
     this.services = service[0].services;
     this.deptlist = this.groubedByTeam[dept];
     this.selectedDepartment = service[0];
