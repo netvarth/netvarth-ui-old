@@ -9239,7 +9239,7 @@ button.cust-button-1:disabled {
   height: min-content;
   margin-right: 0px;
 }
-.icon-disable {
+.icon-disable1 {
   padding-right: 0px;
 }
 @media only screen and (max-width: 575px) {
@@ -9247,7 +9247,7 @@ button.cust-button-1:disabled {
     height: 38px;
     margin-right: 20px;
   }
-  .icon-disable {
+  .icon-disable1 {
     padding-right: 20px;
   }
 }
