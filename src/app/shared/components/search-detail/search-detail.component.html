@@ -403,15 +403,15 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="departments" *ngIf="search_result.fields.departments">
+                                        <!-- <div class="departments" *ngIf="search_result.fields.departments">
                                             <ul>
                                                 <li [class.active]="selectedDepartment==departments"
                                                     *ngFor="let departments of search_result.fields.departments">
                                                     {{departments | capitalizeFirst}}
                                                 </li>
                                             </ul>
-                                        </div>
-                                        
+                                        </div> -->
+
                                     </div>
                                     <div class="more-clinics" *ngIf="search_result.fields.moreclinics>0"
                                         (click)="providerDetClicked(search_result)">
@@ -496,14 +496,26 @@
 
                                         <div class="donat-service"
                                             *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
-                                            <span class="sub-title-donate checkin-service-group">Check-in Service(s)</span>
+                                            <span class="sub-title-donate checkin-service-group">Check-in
+                                                Service(s)</span>
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.serviceList"
                                                     (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceListClick')">{{serv.name
                                                     | capitalizeFirst}}
-                                                    <span *ngIf="serv.serviceType == 'virtualService'" >
-                                                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                    <span *ngIf="serv.serviceType == 'virtualService'">
+                                                        (<i class="fa fa-video-camera cal-mod-font"
+                                                            aria-hidden="true"></i>)
                                                     </span></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="donat-service" *ngIf="search_result.fields.departments">
+                                            <span class="sub-title-donate checkin-service-group">Department(s)</span>
+                                            <ul>
+                                                <li [class.active]="selectedDepartment==departments"
+                                                    *ngFor="let departments of search_result.fields.departments">
+                                                    {{departments | capitalizeFirst}}
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -576,10 +588,11 @@
                                 </span> </div>   -->
                         <!-- </div>
                         </div> -->
-                        <div class="bottom-sect pdetail" *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1">
+                        <div class="bottom-sect pdetail"
+                            *ngIf="search_result.fields.apptAllowed && search_result.fields.online_profile == 1">
                             <div class="bt-l">
                                 <div class="wt-tme">
-                                    <div class="donat-service">
+                                    <div class="donat-service" *ngIf="!search_result.fields.departments">
                                         <span class="sub-title-donate">Appointment Service(s)</span>
                                         <ul *ngIf="!search_result.fields.appointmentServiceList">
                                             <li *ngFor="let appointmentService of search_result.fields.appt_services"
@@ -590,9 +603,18 @@
                                             <li *ngFor="let appointmentService of search_result.fields.appointmentServiceList"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                 {{appointmentService.name}}
-                                                <span *ngIf="appointmentService.serviceType == 'virtualService'" >
+                                                <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                     (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
                                                 </span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="donat-service" *ngIf="search_result.fields.departments">
+                                        <span class="sub-title-donate">Department(s)</span>
+                                        <ul>
+                                            <li [class.active]="selectedDepartment==departments"
+                                                *ngFor="let departments of search_result.fields.departments">
+                                                {{departments | capitalizeFirst}}
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -618,7 +640,7 @@
                                             <li *ngFor="let donationService of search_result.fields.donationServices"
                                                 (click)="!btn_clicked && checkserviceClicked(donationService,search_result, 'donationList')">
                                                 {{donationService.name}}
-                                                <span *ngIf="donationService.serviceType == 'virtualService'" >
+                                                <span *ngIf="donationService.serviceType == 'virtualService'">
                                                     (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
                                                 </span></li>
                                         </ul>

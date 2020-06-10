@@ -217,7 +217,8 @@
                                                 </div>
                                                 <h3 *ngIf="isPlaceisSame">
                                                     {{loc.fields.address1.length <= 50 ? (loc.fields.address1 | capitalizeFirst) : (loc.fields.address1.substr(0, 50) | capitalizeFirst)+"..."}}<sup
-                                                        class="font-open-now" *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
+                                                        class="font-open-now"
+                                                        *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
                                                     </sup></h3>
                                             </div>
                                         </mat-panel-title>
@@ -248,15 +249,15 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <div class="services" *ngIf="loc.fields.departments">
+                                                        <!-- <div class="services" *ngIf="loc.fields.departments">
                                                             <span class="sub-title">Departments</span>
                                                             <ul>
                                                                 <li *ngFor="let dept of loc.fields.departments"
                                                                     (click)="getServicesByDepartment(loc, dept)">
                                                                     {{dept}}</li>
                                                             </ul>
-                                                        </div>
-                                                        
+                                                        </div> -->
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -316,15 +317,26 @@
 
                                                         <div class="donat-service"
                                                             *ngIf="!loc.fields.departments && loc.fields.serviceList && loc.fields.serviceList.length > 0">
-                                                            <span class="sub-title-donate checkin-service-group">Check-in Service(s)</span>
+                                                            <span
+                                                                class="sub-title-donate checkin-service-group">Check-in
+                                                                Service(s)</span>
                                                             <ul>
                                                                 <li *ngFor="let serv of loc.fields.serviceList"
                                                                     (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
                                                                     {{serv.name}}
-                                                                    <span *ngIf="serv.serviceType == 'virtualService'" >
-                                                                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                    <span *ngIf="serv.serviceType == 'virtualService'">
+                                                                        (<i class="fa fa-video-camera cal-mod-font"
+                                                                            aria-hidden="true"></i>)
                                                                     </span></li>
-                                                            </ul> 
+                                                            </ul>
+                                                        </div>
+                                                        <div class="donat-service" *ngIf="loc.fields.departments">
+                                                            <span class="sub-title-donate checkin-service-group">Departments</span>
+                                                            <ul>
+                                                                <li *ngFor="let dept of loc.fields.departments"
+                                                                    (click)="getServicesByDepartment(loc, dept)">
+                                                                    {{dept}}</li>
+                                                            </ul>
                                                         </div>
                                                         <div class="donat-service"
                                                             *ngIf="!loc.fields.departments && !loc.fields.serviceList && loc.fields.services && loc.fields.services.length > 0">
@@ -407,26 +419,34 @@
                                             *ngIf="loc['apptAllowed'] && loc.fields.online_profile == 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
-                                                    <div class="donat-service">
+                                                    <div class="donat-service" *ngIf="!loc.fields.departments">
                                                         <span class="sub-title-donate">Appointment Service(s)</span>
                                                         <ul *ngIf="!loc.fields.appointmentServiceList">
                                                             <li *ngFor="let appointmentService of loc.fields.appt_services"
-                                                            (click)="showServiceDetail(appointmentService, businessjson.businessName)">
+                                                                (click)="showServiceDetail(appointmentService, businessjson.businessName)">
                                                                 {{appointmentService}}</li>
                                                         </ul>
                                                         <ul *ngIf="loc.fields.appointmentServiceList">
-                                                            <li   *ngFor="let appointmentService of loc.fields.appointmentServiceList"
-                                                            (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
+                                                            <li *ngFor="let appointmentService of loc.fields.appointmentServiceList"
+                                                                (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
                                                                 {{appointmentService.name}}
-                                                                <span *ngIf="appointmentService.serviceType == 'virtualService'" >
-                                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                <span
+                                                                    *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                                    (<i class="fa fa-video-camera cal-mod-font"
+                                                                        aria-hidden="true"></i>)
                                                                 </span></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="donat-service" *ngIf="loc.fields.departments">
+                                                        <span class="sub-title-donate">Departments</span>
+                                                        <ul>
+                                                            <li *ngFor="let dept of loc.fields.departments"
+                                                                (click)="getServicesByDepartment(loc, dept)">
+                                                                {{dept}}</li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
                                                 <span
@@ -450,8 +470,10 @@
                                                             <li *ngFor="let donationService of donationData"
                                                                 (click)="showServiceDetail(donationService, businessjson.businessName)">
                                                                 {{donationService.name}}
-                                                                <span *ngIf="donationService.serviceType == 'virtualService'" >
-                                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                                                <span
+                                                                    *ngIf="donationService.serviceType == 'virtualService'">
+                                                                    (<i class="fa fa-video-camera cal-mod-font"
+                                                                        aria-hidden="true"></i>)
                                                                 </span></li>
                                                         </ul>
                                                     </div>
