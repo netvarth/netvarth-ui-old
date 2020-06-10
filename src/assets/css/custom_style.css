@@ -1270,7 +1270,9 @@ sup {
 .pad-rt-10 {
   padding-right: 10px !important;
 }
-
+.pad-rt-5 {
+  padding-right: 5px !important;
+}
 .pad-rt-0 {
   padding-right: 0px !important;
 }
@@ -2168,9 +2170,9 @@ sup {
   width: 1.5rem
 }
 
-.mat-icon-button .mat-button-wrapper>* {
+/* .mat-icon-button .mat-button-wrapper>* {
   vertical-align: sub !important;
-}
+} */
 
 .wiz-service .form-group:last-child {
   margin-bottom: 0rem !important
@@ -7362,9 +7364,9 @@ label.filterHeaders {
   margin-left: 5px;
 }
 
-.filterDatepicker .mat-icon-button .mat-button-wrapper>* {
+/* .filterDatepicker .mat-icon-button .mat-button-wrapper>* {
   color: white !important;
-}
+} */
 
 .filterCheckboxborder .mat-checkbox-frame {
   border-color: #b8c7ce !important;

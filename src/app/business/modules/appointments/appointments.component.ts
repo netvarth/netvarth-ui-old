@@ -143,7 +143,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
-  filter_date_end_max = null;
+  filter_date_end_max = new Date();
+
+  // filter_date_end_max = null;
   filter_dob_start_min = null;
   filter_dob_start_max = null;
   filter_dob_end_min = null;
@@ -818,6 +820,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQId = this.queues[0].id;
         this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      } else if (selQ.length !== 0 && this.queues.length > 0) {
+        this.servicesCount = this.queues[0].services.length;
       }
       if (this.selQId) {
         Mfilter['schedule-eq'] = this.selQId;
@@ -901,6 +905,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQId = this.queues[0].id;
         this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      } else if (selQ.length !== 0 && this.queues.length > 0) {
+        this.servicesCount = this.queues[0].services.length;
       }
       this.load_waitlist = 0;
       let Mfilter = this.setFilterForApi();
@@ -2192,7 +2198,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_date_end_max = null;
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
-      this.filter_date_end_max = moment(new Date()).add(-1, 'days');
+      // this.filter_date_end_max = moment(new Date()).add(-1, 'days');
     } else if (this.time_type === 2) {
       this.filter_date_start_min = moment(new Date()).add(+1, 'days');
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');

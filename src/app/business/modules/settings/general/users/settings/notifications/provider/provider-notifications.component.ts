@@ -115,7 +115,7 @@ export class ProviderNotificationUserComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
   setNotificationList(notificationList: any): any {
@@ -451,6 +451,6 @@ export class ProviderNotificationUserComponent implements OnInit {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
 }

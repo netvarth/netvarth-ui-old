@@ -139,9 +139,11 @@ export class CallingModesComponent implements OnInit {
     }
     selectAlrdyWaiting() {
         if (this.callingModes === 'WhatsApp') {
-            this.msg_to_user = this.busnes_name + ' is already waiting';
+         //   this.msg_to_user = this.busnes_name + ' is already waiting';
+         this.msg_to_user = 'I am waiting for you to start the video call';
         } else {
-            this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
+          //  this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
+          this.msg_to_user = 'I am waiting for you to start the video call. Here is the meeting details ' + this.temp_msglink;
         }
     }
     clicktoSend() {
@@ -320,5 +322,22 @@ export class CallingModesComponent implements OnInit {
             this.step = 1;
             this.is_started = true;
         }
+    }
+    copyInfo() {
+        let info;
+    if (this.data.type === 'checkin') {
+         info = document.getElementById('meetinInfochekin');
+    } else {
+         info = document.getElementById('meetinInfoappt');
+    }
+    if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(info);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('Copy');
+        this.shared_functions.openSnackBar('Meeting details copied to clipboard');
+      }
     }
 }

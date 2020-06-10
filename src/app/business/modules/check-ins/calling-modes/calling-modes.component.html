@@ -95,7 +95,7 @@
                 </mat-checkbox>
                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email">Email
                 </mat-checkbox>
-                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">App
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify">Jaldee App
                     notification
                 </mat-checkbox>
             </div>
@@ -115,6 +115,7 @@
         </div>
         <div *ngIf="data.type === 'checkin'" class="example-full-width" style="padding-top: 30px;">
             <div>
+                <div id="meetinInfochekin">
                 <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
                 <p>Service : {{serv_name}}</p>
                 <p>Date & Time: {{date}}, {{time}}</p>
@@ -123,24 +124,33 @@
                 <!-- <p>Jaldee token id: {{jalde_q_id}}</p> -->
                 <p>Join {{callingModes}} Meeting</p>
                 <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                </div>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">
                     <i class="fa fa-share-alt" aria-hidden="true"></i>
                     Share
+                </span>
+                <span class="btn-primary-n custId-cursor" (click)="copyInfo()">
+                    <i class="fa fa-clone" aria-hidden="true"></i> Copy Info
                 </span>
             </div>
         </div>
         <div *ngIf="data.type === 'appt'" class="example-full-width" style="padding-top: 30px;">
             <div>
-                <p>Appointment for : {{consumer_fname}}</p>
-                <p>Service : {{serv_name}}</p>
-                <p>Date & Time: {{date}}, {{time}}</p>
-                <p>Service Provider: {{serv_provider}}</p>
-                <p>Location: {{location}}</p>
-                <p>Join {{callingModes}} Meeting</p>
-                <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                <div id="meetinInfoappt">
+                    <p>Appointment for : {{consumer_fname}}</p>
+                    <p>Service : {{serv_name}}</p>
+                    <p>Date & Time: {{date}}, {{time}}</p>
+                    <p>Service Provider: {{serv_provider}}</p>
+                    <p>Location: {{location}}</p>
+                    <p>Join {{callingModes}} Meeting</p>
+                    <p><a target="_blank" [href]="starting_url">{{starting_url}}</a></p>
+                </div>
                 <span class="btn-primary-n custId-cursor" (click)="shareUrl()">
                     <i class="fa fa-share-alt" aria-hidden="true"></i>
                     Share
+                </span>
+                <span class="btn-primary-n custId-cursor" (click)="copyInfo()">
+                    <i class="fa fa-clone" aria-hidden="true"></i> Copy Info
                 </span>
             </div>
         </div>
@@ -158,10 +168,10 @@
                     aria-hidden="true"></i>Back</button>
         </div>
         <div class="example-full-width" style="padding-top: 30px;text-align: center;">
-            Video call completed? Change <p *ngIf="data.type === 'checkin'">Checkin</p> <p *ngIf="data.type === 'appt'">Appointment</p> status to completed?
+            Video call completed? <br> Change <span *ngIf="data.type === 'checkin'">Checkin</span> <span *ngIf="data.type === 'appt'">Appointment</span> status to completed?
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions>
+    <mat-dialog-actions style="padding-left: 30%;">
         <button type="button" class="cs-btn bt1" style="background: #00cc96;"
             (click)="selectCompleted()">Yes</button>&nbsp;&nbsp;&nbsp;
         <button type="button" mat-dialog-close class="cs-btn bt1" style="background: #f24949;">No</button>
@@ -173,7 +183,7 @@
             Change status to "Started"
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions>
+    <mat-dialog-actions style="padding-left: 30%;">
         <button type="button" class="cs-btn bt1" style="background: #00cc96;"
             (click)="makeStarted()">
             <a style="color:white" target="_blank" [href]="starting_url">Yes</a>

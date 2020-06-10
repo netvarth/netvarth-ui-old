@@ -62,10 +62,10 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->languages-known']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->languages-known']);
     }
     setLanguages() {
         this.bProfile = [];
