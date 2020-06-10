@@ -190,7 +190,7 @@
                                                 {{waitlist.providerAccount.businessName}}<span><i
                                                         class="fa fa-times fl-right" aria-hidden="true"></i></span>
                                             </div>
-                                            <span> Jaldee recommands you share your arrival time with provider</span>
+                                            <span class ="pointlist"(click)="gotoLivetrackchekin(waitlist.ynwUuid,waitlist.providerAccount.id,'false')"> Jaldee recommends you share your arrival time with provider</span>
                                         </div>
                                     </div>
                                 </div>
@@ -438,7 +438,7 @@
                                                         {{appointment.providerAccount.businessName}}<span><i
                                                                 class="fa fa-times fl-right"
                                                                 aria-hidden="true"></i></span></div>
-                                                    <div> Jaldee recommands you share your arrival time with provider
+                                                    <div class="pointlist" (click)="gotoLivetrack(appointment.uid,appointment.providerAccount.id,'false')"> Jaldee recommends you share your arrival time with provider
                                                     </div>
                                                 </div>
                                             </div>
