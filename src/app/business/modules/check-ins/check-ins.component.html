@@ -1140,11 +1140,8 @@
                              
                             <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
-                              <!-- <span *ngFor = "let calmode of checkin.virtualService | keyvalue">
-                                <i *ngIf="calmode.key == 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic"></i>{{calmode|json}}
-                                <img *ngIf="calmode == ''" src="https://img.icons8.com/color/16/000000/zoom.png" />
-                              </span> -->
-                              <i class="fa fa-video-camera"></i>
+                              <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                              <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" />
                               <span *ngIf="!small_device_display">Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
