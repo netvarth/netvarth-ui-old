@@ -458,12 +458,12 @@ img::-moz-selection {
   vertical-align: text-top;
   width: 40%;
   text-align: right;
-  padding: 0 50px 0 0px;
+  padding: 0 5px 0 0px;
 }
 
 @media(max-width:400px) {
   .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-    padding: 0 25px 0 0px;
+    padding: 0 2px 0 0px;
   }
 }
 
