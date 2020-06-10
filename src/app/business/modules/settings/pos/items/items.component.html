@@ -75,8 +75,8 @@
                                                         <button class="status tel-serv-flex" type="button"
                                                             (click)="dochangeStatus(item)">
                                                             <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                                class="icon-enable"></i>
-                                                            <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
+                                                                class="icon-enable icon-disable1"></i>
+                                                            <i *ngIf="item.status=='ACTIVE'" class="icon-disable icon-disable1"></i>
                                                             {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
                                                         <button class="deletecls" type="button"
                                                             (click)="doRemoveItem(item)">{{delete_btn}}</button>

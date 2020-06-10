@@ -9248,7 +9248,8 @@ button.cust-button-1:disabled {
     margin-right: 20px;
   }
   .icon-disable1 {
-    padding-right: 20px;
+    padding-right: 10px;
+    font-size: larger;
   }
 }
 .checkin-service-group {
