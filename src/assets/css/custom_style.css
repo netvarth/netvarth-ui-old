@@ -9038,7 +9038,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .checklist,.apptlist{
 max-width: 325px !important;
-/* min-width: 325px !important;    */
+min-width: 325px !important;   
 min-height: 500px !important;
 max-height: 500px !important; 
 }
