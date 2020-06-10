@@ -9003,7 +9003,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
   padding-bottom: 10px;
 }
 .tel-serv-flex {
-  display: flex;
+  display: flex !important;
 }
 .coming-soon {
   font-weight: 600;
@@ -9239,10 +9239,16 @@ button.cust-button-1:disabled {
   height: min-content;
   margin-right: 0px;
 }
+.icon-disable {
+  padding-right: 0px;
+}
 @media only screen and (max-width: 575px) {
   .otpbtn {
     height: 38px;
     margin-right: 20px;
+  }
+  .icon-disable {
+    padding-right: 20px;
   }
 }
 .checkin-service-group {
