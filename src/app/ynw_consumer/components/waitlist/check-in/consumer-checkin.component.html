@@ -103,7 +103,7 @@
                                                     <p *ngIf="mode.callingMode === 'WhatsApp'" class="tel-srv-cust-p ">This is a WhatsApp meeting</p>
                                                     <p *ngIf="mode.callingMode !== 'WhatsApp'" class="tel-srv-cust-p ">This is a Zoom meeting</p>
                                                 </div> -->
-                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode">
                                                     {{mode.instructions}}
                                                 </div>
                                                 <div class="input-section mgn-bt-15 desfont"
