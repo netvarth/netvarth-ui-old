@@ -204,9 +204,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   locationId;
   donation: any = [];
   results_data;
-  donationData: any;
+  donationData: any = [];
   allservices;
   appttime_arr: any = [];
+  apptServicesjson: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -232,7 +233,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.provider_id = params.get('id');
-        this.api_loading = true;
+        // this.api_loading = true;
         this.gets3curl();
       });
     this.activaterouterobj.queryParams.subscribe(qparams => {
@@ -291,6 +292,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
           this.getbusinessprofiledetails_json('services', true);
+          this.getbusinessprofiledetails_json('apptServices', true);
           this.getbusinessprofiledetails_json('jaldeediscount', true);
         },
         error => {
@@ -441,6 +443,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
               .subscribe((data) => {
                 this.donationData = data;
+                console.log(this.donationData);
               });
             if (this.businessjson.claimStatus === 'Claimed') {
               this.getProviderDepart(this.provider_bussiness_id);
@@ -494,19 +497,23 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            // this.getbusinessprofiledetails_json('location', true);
-            this.fetchClouddata();
+            this.getbusinessprofiledetails_json('location', true);
+            // this.fetchClouddata();
             break;
           }
           case 'services': {
             this.servicesjson = res;
-            for (const serv of this.servicesjson) {
-              if (serv.serviceType === 'donationService') {
-                this.donation.push(serv);
-              }
-            }
             for (let i = 0; i < this.servicesjson.length; i++) {
               if (this.servicesjson[i].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+              }
+            }
+            break;
+          }
+          case 'apptServices': {
+            this.apptServicesjson = res;
+            for (let i = 0; i < this.apptServicesjson.length; i++) {
+              if (this.apptServicesjson[i].hasOwnProperty('departmentName')) {
                 this.showDepartments = true;
               }
             }
@@ -832,7 +839,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // }
     // this.services = servicesByDept;
     // this.deptlist = this.groubedByTeam[dept.departmentName];
-    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept);
+    const service = this.servicesjson.filter(dpt => dpt.departmentName === dept.departmentId);
     this.services = [];
     this.allservices = service[0].services;
     for (let i = 0; i < this.allservices.length; i++) {
@@ -1139,6 +1146,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.locationjson[locindx]['estimatedtime_det'] = [];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];

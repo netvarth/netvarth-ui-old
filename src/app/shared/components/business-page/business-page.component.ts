@@ -203,6 +203,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   pageFound = false;
   results_data;
   appttime_arr: any = [];
+  apptServicesjson: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -315,6 +316,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
           this.getbusinessprofiledetails_json('services', true);
+          this.getbusinessprofiledetails_json('apptServices', true);
           this.getbusinessprofiledetails_json('jaldeediscount', true);
         },
         error => {
@@ -498,6 +500,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               break;
             }
             // }
+            break;
+          }
+          case 'apptServices': {
+            this.apptServicesjson = res;
+            for (let i = 0; i < this.apptServicesjson.length; i++) {
+              if (this.apptServicesjson[i].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+              }
+            }
             break;
           }
           case 'gallery': {
@@ -1195,6 +1206,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.locationjson[locindx]['estimatedtime_det'] = [];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
