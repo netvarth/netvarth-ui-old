@@ -485,15 +485,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            // this.getbusinessprofiledetails_json('location', true);
-            this.fetchClouddata();
+            this.getbusinessprofiledetails_json('location', true);
+            // this.fetchClouddata();
             break;
           }
           case 'services': {
             this.servicesjson = res;
             // for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[0].hasOwnProperty('departmentName')) {
-              this.showDepartments = true;
+              // this.showDepartments = true;
               if (this.branch_id && this.account_Type === 'BRANCH') {
                 this.getDoctors();
               }
@@ -538,6 +538,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'settings': {
             this.settingsjson = res;
+            this.showDepartments = this.settingsjson.filterByDept;
             this.showToken = this.settingsjson.showTokenId;
             this.settings_exists = true;
             this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
@@ -1366,7 +1367,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     this.shared_services.getProviderDept(id).
       subscribe(data => {
         this.departmentlist = data;
-        this.showDepartments = this.departmentlist.filterByDept;
+        // this.showDepartments = this.departmentlist.filterByDept;
         // if (this.departmentlist.filterByDept === true) {
         //   this.showDepartments = true;
         // }

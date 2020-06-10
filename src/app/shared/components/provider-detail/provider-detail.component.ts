@@ -443,7 +443,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
               .subscribe((data) => {
                 this.donationData = data;
-                console.log(this.donationData);
               });
             if (this.businessjson.claimStatus === 'Claimed') {
               this.getProviderDepart(this.provider_bussiness_id);
