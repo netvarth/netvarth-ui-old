@@ -198,7 +198,7 @@
                             <mat-accordion *ngFor="let loc of locationjson">
                                 <mat-expansion-panel style="margin-top: 10px !important;
                             box-shadow: none !important;"
-                                    [expanded]="locationId === loc.id || !locationId">
+                                    [expanded]="locationId == loc.id || !locationId">
                                     <mat-expansion-panel-header expandedHeight="80px" collapsedHeight="80px"
                                         style="background-color: white !important;">
                                         <mat-panel-title>

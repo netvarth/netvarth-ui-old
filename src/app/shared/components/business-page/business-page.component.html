@@ -247,29 +247,7 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <div class="donat-service"
-                                                        *ngIf="servicesjson.length > 0 && !showDepartments">
-                                                        <span
-                                                            class="sub-title-donate checkin-service-group">Check-in
-                                                            Service(s)</span>
-                                                        <ul>
-                                                            <li *ngFor="let serv of servicesjson"
-                                                                (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
-                                                                {{serv.name}}
-                                                                <span *ngIf="serv.serviceType == 'virtualService'">
-                                                                    (<i class="fa fa-video-camera cal-mod-font"
-                                                                        aria-hidden="true"></i>)
-                                                                </span></li>
-                                                        </ul>
-                                                    </div> 
-                                                    <div class="donat-service" *ngIf="servicesjson.length > 0 && showDepartments">
-                                                        <span class="sub-title-donate checkin-service-group">Departments</span>
-                                                        <ul>
-                                                            <li *ngFor="let dept of servicesjson"
-                                                                (click)="getServicesByDepartment(loc, dept)">
-                                                                {{dept.departmentName}}</li>
-                                                        </ul>
-                                                    </div> 
+                                                       
                                                         <!-- <div class="services" *ngIf="loc.departments">
                                                             <span class="sub-title">Departments</span>
                                                             <ul>
@@ -354,6 +332,30 @@
                                                             first in
                                                             line
                                                         </div>
+
+                                                        <div class="donat-service"
+                                                        *ngIf="servicesjson.length > 0 && !showDepartments">
+                                                        <span
+                                                            class="sub-title-donate checkin-service-group">Check-in
+                                                            Service(s)</span>
+                                                        <ul>
+                                                            <li *ngFor="let serv of servicesjson"
+                                                                (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
+                                                                {{serv.name}}
+                                                                <span *ngIf="serv.serviceType == 'virtualService'">
+                                                                    (<i class="fa fa-video-camera cal-mod-font"
+                                                                        aria-hidden="true"></i>)
+                                                                </span></li>
+                                                        </ul>
+                                                    </div> 
+                                                    <div class="donat-service" *ngIf="servicesjson.length > 0 && showDepartments">
+                                                        <span class="sub-title-donate checkin-service-group">Departments</span>
+                                                        <ul>
+                                                            <li *ngFor="let dept of servicesjson"
+                                                                (click)="getServicesByDepartment(loc, dept)">
+                                                                {{dept.departmentName}}</li>
+                                                        </ul>
+                                                    </div> 
                                                     </div>
                                                     <div class="wt-tme notallowed"
                                                         *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">

@@ -502,20 +502,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
-            for (let i = 0; i < this.servicesjson.length; i++) {
-              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
-                this.showDepartments = true;
-              }
-            }
             break;
           }
           case 'apptServices': {
             this.apptServicesjson = res;
-            for (let i = 0; i < this.apptServicesjson.length; i++) {
-              if (this.apptServicesjson[i].hasOwnProperty('departmentName')) {
-                this.showDepartments = true;
-              }
-            }
             break;
           }
           case 'gallery': {
