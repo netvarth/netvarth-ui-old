@@ -26,9 +26,6 @@ export class ConsumerNotificationsComponent implements OnInit {
     {
       title: 'Notifications',
       url: '/provider/settings/comm/notifications',
-    },
-    {
-      title: 'Consumer'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -86,6 +83,14 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.getNotificationList();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
+    const breadcrumbs = [];
+    this.breadcrumbs_init.map((e) => {
+        breadcrumbs.push(e);
+    });
+    breadcrumbs.push({
+        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
+    });
+    this.breadcrumbs = breadcrumbs;
   }
   // isNumeric(evt) {
   //   return this.sharedfunctionObj.isNumeric(evt);

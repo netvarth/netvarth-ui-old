@@ -25,9 +25,6 @@ export class ProviderNotificationsComponent implements OnInit {
     {
       title: 'Notifications',
       url: '/provider/settings/comm/notifications',
-    },
-    {
-      title: 'Provider'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -94,6 +91,14 @@ export class ProviderNotificationsComponent implements OnInit {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    const breadcrumbs = [];
+    this.breadcrumbs_init.map((e) => {
+        breadcrumbs.push(e);
+    });
+    breadcrumbs.push({
+        title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
+    });
+    this.breadcrumbs = breadcrumbs;
   }
   getNotificationList() {
     this.provider_services.getUserNotificationList(0)
