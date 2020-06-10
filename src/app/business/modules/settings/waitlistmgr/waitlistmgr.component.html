@@ -128,12 +128,11 @@
                             </mat-radio-button>
                             <mat-radio-button class="" [value]="'fifo'" (change)="handleModeSelection('fifo')">Virtual
                                 queue system
-                            </mat-radio-button>
-                            <i [matTooltip]="'First-In-First-Out waitlist System'" class="material-icons pointer-cursor"
-                                style="font-size: 1rem;">help</i>
+                            </mat-radio-button>&nbsp;
+                            <i [matTooltip]="'First-In-First-Out waitlist System'" class="fa fa-info-circle"
+                                style="font-size: 1rem;"></i>
                         </mat-radio-group>
                     </div>
-
                     <div *ngIf="qSystem=='fifo'">
                         <div class="mgn-bt-20">
                             <div class="mgn-bt-10" style="font-weight: 600"> Select what your {{customer_label}}s can see</div>
@@ -148,8 +147,8 @@
                                             class="mgn-lt-5 col-xs-12 col-sm-12 col-md-12 no-padding mgn-bt-5"
                                             [value]="'conventional'" (change)="fixedModeChanged('conventional')">
                                             Conventional waiting time calculation
-                                            <i [matTooltip]="'Calculated using average of service time'"
-                                                class="material-icons pointer-cursor" style="font-size: 1rem;">help</i>
+                                            <i [matTooltip]="'Calculated using average of service time'" class="fa fa-info-circle"
+                                            style="font-size: 1rem;"></i>
                                         </mat-radio-button>
                                         <mat-radio-button
                                             class="mgn-lt-5 col-xs-3 col-sm-2 col-md-1 no-padding mgn-rt-10"

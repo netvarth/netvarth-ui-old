@@ -395,10 +395,10 @@
 
                                     <div class="helpcontent">
                                         <h6 id="basic-information">Basic Information</h6>
-                                        <span>It displays the Basic information about a business given by the doctor
+                                        <span>It displays the Basic information about a business given by the provider
                                             at
                                             the time of
-                                            initial profile setup. The doctor is allowed to edit each section under
+                                            initial profile setup. The provider is allowed to edit each section under
                                             “Basic Information".</span>
                                         <span>To increase the patient acquisition fill this section with appropriate
                                             details.</span>
@@ -408,7 +408,7 @@
                                             <li>Click on the image to change the Profile picture and upload a new one.
                                             </li>
                                             <li>Images may include the photograph of your clinic, a photograph of the
-                                                doctor, etc.</li>
+                                                provider, etc.</li>
                                         </ol>
 
 
@@ -417,13 +417,13 @@
                                                 <div class="fweight">SEARCHABLE - YES <span
                                                         class="form-level-settings"><i>&nbsp;&nbsp;(The
                                                             Searchable label indicates that patients can search for the
-                                                            doctor using
+                                                            provider using
                                                             mentioned attributes.)</i></span></div>
                                                 <div class="fweight">VIEWABLE - YES <span
                                                         class="form-level-settings"><i>&nbsp;&nbsp;(The
                                                             Viewable label indicates that patients can only view the
                                                             attributes in
-                                                            doctors
+                                                            providers
                                                             profile in search results.)</i></span></div>
                                             </section><br>
                                         </div>
@@ -446,21 +446,21 @@
                                                                 under this
                                                                 section.
                                                             </li>
-                                                            <li>Initially the location added to the doctor profile
+                                                            <li>Initially the location added to the provider profile
                                                                 during the initial
                                                                 profile set up, will be automatically set as the base
                                                                 location.</li>
-                                                            <li>The doctor can add multiple locations of the business.
+                                                            <li>The provider can add multiple locations of the business.
                                                                 The link to add a
                                                                 new
                                                                 location is given here.</li>
                                                             <li>If the business has multiple locations, then, only the
                                                                 base location is
-                                                                displayed here. The doctor can edit the base location
+                                                                displayed here. The provider can edit the base location
                                                                 as
                                                                 well. To do so,
                                                                 click on the edit button.</li>
-                                                            <li>To add working hours to the location, a doctor needs
+                                                            <li>To add working hours to the location, a provider needs
                                                                 to
                                                                 go to
                                                                 <strong>“Locations"</strong> under <strong>“Check-In
@@ -486,7 +486,7 @@
                                                             <li>Location amenities are resources, conveniences,
                                                                 facilities or benefits offered to the
                                                                 patients for their use.</li>
-                                                            <li>A doctor can manage the location amenities here.
+                                                            <li>A provider can manage the location amenities here.
                                                                 Choose
                                                                 the available amenities from the
                                                                 list. The following table shows the location amenities
@@ -2248,9 +2248,9 @@
                                                 </mat-expansion-panel-header>
                                                  <div class="helpcontent">
                                                     <section>
-                                                            <span>In this section, a doctor can schedule the  Appointments and also book a future date for [customer]'s appointment here.
+                                                            <span>In this section, a provider can schedule the  Appointments and also book a future date for [customer]'s appointment here.
                                                                 Also schedule the queue and disable the queue.
-                                                                A doctor can manage the schedules for his/her appointments.
+                                                                A provider can manage the schedules for his/her appointments.
                                                             </span>
                                                             <span>Queues simply means the active time of the business. One can add
                                                                     multiple Working
@@ -3153,7 +3153,7 @@
                                                                 service provider. All types
                                                                 of
                                                                 taxes are collected directly by the service provider, so it is the
-                                                                doctor’s responsibility
+                                                                provider’s responsibility
                                                                 to
                                                                 remit the taxes to the Government.</li>
                                                         </ul>
@@ -3412,87 +3412,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                        
-                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='showjaldeeintegrations '>
-                                <mat-expansion-panel-header class="accordion">
-                                    <mat-panel-title class="accordion-title" (click)="menu('jaldee-integration')">
-                                        Jaldee.com Integration
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                    <div class="helpcontent">
-                                        <span>
-                                                Manage your Jaldee.com app Integration  here.
-                                                These settings allows the customers to see their walkin check-ins
-                                        </span>
-                                    </div>
-                                    <mat-accordion> 
-                                        <mat-expansion-panel [expanded]="showonlinepresence && showjaldeeintegrations">
-                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                class="accordion">
-                                                <mat-panel-title class="accordion-title">
-                                                    <span class="helpcontent"
-                                                        (click)="handleScroll('onlinepresence', 'jaldee-integration')">Jaldee.com Online Presence</span>
-                                                </mat-panel-title>
-                                            </mat-expansion-panel-header>
-                                             <div class="helpcontent">
-                                                <section>
-                                                        <span>In this section, a provider can select the Jaldee.com Online Presence mode with which he/she wishes
-                                                            to
-                                                          enable Jaldee.com Online Presence  here.
-                                                        </span>
-                                                </section>
-                                                <section>
-                                                        <ul class="ul-normal">
-                                                            <li>To enable Online Presence, a provider has to switch
-                                                                on the
-                                                                " Jaldee.com Online Presence" mode. Initially, this is set to off mode.</li>
-                                                        </ul>
-                                                </section>
-                                                <section>
-                                                    <ul class="ul-normal">
-                                                        <li>If true, the provider is available in Jaldee search, he can publish online queues etc. 
-                                                            if false he is not available in search.</li>
-                                                    </ul>
-                                            </section>
-                                             </div>
-                                        </mat-expansion-panel>
-                                </mat-accordion>
-                                <mat-accordion> 
-                                    <mat-expansion-panel [expanded]="showjaldeeintegration && showjaldeeintegrations">
-                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                            class="accordion">
-                                            <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"
-                                                    (click)="handleScroll('jaldee-app-integration', 'jaldee-integration')">Jaldee Mobile App Integration</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                         <div class="helpcontent">
-                                            <section>
-                                                    <span>In this section, a provider can select the Jaldee Mobile App Integration mode with which he/she wishes
-                                                        to
-                                                      enable Jaldee Mobile App Integration  here.
-                                                    </span>
-                                            </section>
-                                            <section>
-                                                    <ul class="ul-normal">
-                                                        <li>To enable Mobile App Integration, a provider has to switch
-                                                            on the
-                                                            "Jaldee Mobile App Integration" mode. Initially, this is set to off mode.</li>
-                                                    </ul>
-                                            </section>
-                                            <section>
-                                                    <ul class="ul-normal">
-                                                        <li>Allow customer to integrate Jaldee App to manage check-ins.</li>
-                                                    </ul>
-                                            </section>
-                                         </div>
-                                    </mat-expansion-panel>
-                            </mat-accordion>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                         <!-- next -->
-                         <mat-accordion>
+                      <mat-accordion>
                             <mat-expansion-panel [expanded]='showcustomers  '>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('customers')">

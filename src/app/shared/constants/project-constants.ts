@@ -178,6 +178,7 @@ export const projectConstants = {
     'autopaymentoptions': { 'icon': 'autopay.png', 'class': 'icon-auto-payment' },
     'densistambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'docambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
+    'altambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
   },
   DOMAIN_ICONS: {

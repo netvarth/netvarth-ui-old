@@ -1270,7 +1270,9 @@ sup {
 .pad-rt-10 {
   padding-right: 10px !important;
 }
-
+.pad-rt-5 {
+  padding-right: 5px !important;
+}
 .pad-rt-0 {
   padding-right: 0px !important;
 }
@@ -9001,7 +9003,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
   padding-bottom: 10px;
 }
 .tel-serv-flex {
-  display: flex;
+  display: flex !important;
 }
 .coming-soon {
   font-weight: 600;
@@ -9036,7 +9038,7 @@ padding-right: 0 !important; padding-top: 0 !important;}
 }
 .checklist,.apptlist{
 max-width: 325px !important;
-/* min-width: 325px !important;    */
+min-width: 325px !important;   
 min-height: 500px !important;
 max-height: 500px !important; 
 }
@@ -9237,12 +9239,25 @@ button.cust-button-1:disabled {
   height: min-content;
   margin-right: 0px;
 }
+.icon-disable1 {
+  padding-right: 0px;
+}
 @media only screen and (max-width: 575px) {
   .otpbtn {
     height: 38px;
     margin-right: 20px;
   }
+  .icon-disable1 {
+    padding-right: 10px;
+    font-size: larger;
+  }
 }
 .checkin-service-group {
   margin-top: 10px;
+}
+@media (max-width: 320px) {
+  .form-level-early-hint {
+    width: 100% !important;
+    height: 100% !important;
+  }
 }

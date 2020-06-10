@@ -1025,9 +1025,8 @@ export class ProviderServices {
    getUserProviderQueues(id) {
       return this.servicemeta.httpGet('provider/waitlist/queues?provider-eq=' + id);
    }
-   getUserServicesList(id) {
-      const url = 'provider/services/?provider-eq=' + id;
-      return this.servicemeta.httpGet(url);
+   getUserServicesList(filter?) {
+      return this.servicemeta.httpGet('provider/services', null, filter);
    }
    getUserServiceDetail(service_id) {
       const url = 'provider/services/' + service_id;

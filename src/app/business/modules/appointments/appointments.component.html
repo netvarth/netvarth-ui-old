@@ -349,7 +349,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                         [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
-                        (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                        (click)="!isAvailableSlot(slot) && apptFutureClicked('WALK_IN_APPOINTMENT',slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
@@ -924,7 +924,9 @@
                               (click)="showCallingModes(appt, 'Started')"
                               *ngIf="appt.virtualService" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Teleservice'">
-                              <i class="fa fa-video-camera"></i> <span *ngIf="!small_device_display">Teleservice</span>
+                              <i *ngIf="getVirtualServiceCount(appt.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                              <img *ngIf="!getVirtualServiceCount(appt.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" />
+                              <span class="tspace" *ngIf="!small_device_display">Teleservice</span>
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Confirmed')"
