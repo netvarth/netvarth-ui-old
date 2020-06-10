@@ -48,3 +48,4 @@ html, body {
 .signupterms {text-align: justify !important;padding-right: 5px !important;}
 .signupterms .p-subouter {font-size: 0.75rem !important; line-height: 20px;}
 .signupterms p {font-size: 0.75rem !important;}
+.login-form .mob-prefix span {padding-top: 19px !important}

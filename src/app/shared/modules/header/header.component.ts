@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
-import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -100,7 +99,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isprovider = false;
   ctype;
   active_license;
-  public searchfields: SearchFields = new SearchFields();
+  // public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
   selected_domain = '';
