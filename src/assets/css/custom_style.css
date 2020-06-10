@@ -1270,7 +1270,9 @@ sup {
 .pad-rt-10 {
   padding-right: 10px !important;
 }
-
+.pad-rt-5 {
+  padding-right: 5px !important;
+}
 .pad-rt-0 {
   padding-right: 0px !important;
 }

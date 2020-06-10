@@ -820,6 +820,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQId = this.queues[0].id;
         this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+      } else if (selQ.length !== 0 && this.queues.length > 0) {
+        this.servicesCount = this.queues[0].services.length;
       }
       if (this.selQId) {
         Mfilter['schedule-eq'] = this.selQId;
@@ -903,6 +905,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQId = this.queues[0].id;
         this.servicesCount = this.queues[0].services.length;
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      } else if (selQ.length !== 0 && this.queues.length > 0) {
+        this.servicesCount = this.queues[0].services.length;
       }
       this.load_waitlist = 0;
       let Mfilter = this.setFilterForApi();
