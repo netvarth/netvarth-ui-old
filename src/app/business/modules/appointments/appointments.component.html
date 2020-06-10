@@ -349,7 +349,7 @@
                     <mat-chip-list>
                       <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
                         [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
-                        (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                        (click)="!isAvailableSlot(slot) && apptFutureClicked('WALK_IN_APPOINTMENT',slot.time)">
                         {{slot.time}} </mat-chip>
                     </mat-chip-list>
                   </div>
