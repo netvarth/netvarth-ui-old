@@ -263,19 +263,38 @@ export class CustomViewComponent implements OnInit {
             );
     }
     getServices() {
+        
         let doctorsIds;
+        let departmentIds;
+        if(this.selectedDeptIds.length > 0){
+            departmentIds = this.selectedDeptIds;
+        }
         if (this.selectedUsersId.length > 0) {
             doctorsIds = this.selectedUsersId;
         } else {
             doctorsIds = this.allUsersIds;
         }
-        this.provider_services.getUserServicesList(doctorsIds.toString())
+
+        let filter;
+            if(departmentIds && departmentIds.length > 0){
+                 filter = {
+                     'department-eq' : departmentIds.toString()
+                };
+            }
+            if (doctorsIds && doctorsIds.length > 0){
+                filter = {
+                   'provider-eq': doctorsIds.toString()
+               };
+            }
+        this.provider_services.getUserServicesList(filter)
             .subscribe(
                 data => {
                     this.service_list = data;
-                    if (this.selectedUsersId.length === 0) {
+                    console.log("Services by dep :", this.service_list)
+                    if (this.selectedUsersId.length === 0 && this.selectedDeptIds.length == 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
+                    console.log(this.service_list)
                     this.filterServiicesList = this.service_list;
                 },
                 error => {
@@ -400,6 +419,7 @@ export class CustomViewComponent implements OnInit {
         } else {
             this.selectedDeptIds.splice(this.selectedDeptIds.indexOf(depIds), 1);
         }
+        this.getServices();
         this.selectedUsers = [];
         this.selectedServices = [];
         this.selectedQs = [];

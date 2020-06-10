@@ -3,22 +3,23 @@
         <!-- Step 0 -->
         <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="pt-top">
-                <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
-                <p>{{frm_wiz_one_cap}}</p>
-                <p>{{frm_wiz_two_cap}}</p>
-                <p>{{frm_wiz_three_cap}}</p>
-                <p>{{frm_wiz_four_cap}}</p>
+            <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;">
+                <h1 style="font-size: xx-large;line-height: 2;">Welcome {{userdet.userName}}!</h1>
+                <p style="font-size: 1.4rem;line-height: 2;">{{frm_wiz_one_cap}}</p>
+                <!-- <p>{{frm_wiz_two_cap}}</p>
+                <p>{{frm_wiz_three_cap}}</p> -->
+                <p style="font-size: 1.4rem;">{{frm_wiz_four_cap}}</p>
             </div>
-            <div class="pt-btm">
-                <ul class="ico">
+            <div class="pt-btm" style="padding-top: 80px;">
+                <!-- <ul class="ico">
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="profileTooltip" data-icon="l"></span></li>
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="settingsTooltip" data-icon="D"></span></li>
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="locationTooltip" data-icon="k"></span></li>
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="workinghourTooltip" data-icon="1"></span>
                     </li>
                     <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
-                </ul>
+                </ul> -->
+
                 <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="skipMe()">{{get_start_cap}} <i
                         class="icon icon-angle-right"></i>
                 </span>
