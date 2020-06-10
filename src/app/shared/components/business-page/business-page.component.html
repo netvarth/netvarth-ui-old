@@ -397,7 +397,7 @@
                                             <span class="checkin-btn disabled" style="cursor: auto"
                                                 *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                             <span class="checkin-future pdetailbt10"
-                                                *ngIf="loc['estimatedtime_det']['cdate'] && loc.hasOwnProperty('future_checkins') && loc.future_checkins==1"
+                                                *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                                 (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                 <span
                                                     *ngIf="!loc['showToken']">{{getTerminologyTerm('waitlist')}}</span>
