@@ -179,7 +179,9 @@ export const projectConstants = {
     'densistambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'docambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'altambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
-    'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
+    'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' },
+    'homesamplecollection': { 'class': 'fa fa fa-flask' },
+    'onlinereports': { 'class': 'fa fa-file-pdf-o' }
   },
   DOMAIN_ICONS: {
     healthCare: { iconClass: 'healthcare_icon' },

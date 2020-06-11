@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../shared/constants/project-constants';
@@ -91,7 +91,19 @@ export class BProfileComponent implements OnInit, OnDestroy {
   jaldee_acc_url = Messages.JALDEE_URL;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
-
+  // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
+  private qrCodeParent: ElementRef;
+  @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
+    if (content1) { // initially setter gets called with undefined
+      this.qrCodeParent = content1;
+    }
+  }
+  private qrCodeCustId: ElementRef;
+  @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
+    if (content2) { // initially setter gets called with undefined
+      this.qrCodeParent = content2;
+    }
+  }
   checked = false;
   bProfile = null;
   serviceSector = null;
@@ -148,7 +160,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   normal_locationinfo_show = 1;
   normal_locationamenities_show = 1;
   normal_customid_show = 1;
-  href: string;
+  qrCodePath: string;
   elementType: 'url' | 'canvas' | 'img' = 'url';
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   customButtonsFontAwesomeConfig: ButtonsConfig = {
@@ -229,7 +241,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   onlinepresence_statusstr = '';
   is_customized = false;
   licence_warn = false;
-
+  adword_loading = true;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -239,7 +251,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
-    private shared_services: SharedServices) {
+    private shared_services: SharedServices,
+    private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.shared_functions.getMessage().subscribe(data => {
       this.getLicensemetrics();
@@ -401,7 +414,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Business profile ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -844,6 +857,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.currentlicense_details = data;
         this.adwordsmaxcount = this.currentlicense_details;
+        this.adword_loading = false;
         this.getAdwords();
       });
   }
@@ -973,10 +987,19 @@ export class BProfileComponent implements OnInit, OnDestroy {
   qrCodegenerateOnlineID(valuetogenerate) {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
+    this.changeDetectorRef.detectChanges();
+    // console.log(this.qrCodeParent.nativeElement.getElementsByTagName('img')[0]);
+    setTimeout(() => {
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+    }, 50);
   }
   qrCodegenerateCustID(valuetogenerate) {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_cId = true;
+    this.changeDetectorRef.detectChanges();
+    setTimeout(() => {
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+    }, 50);
   }
   closeOnlineQR() {
     this.qr_code_oId = false;
@@ -1012,7 +1035,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.show_passcode = !this.show_passcode;
   }
   downloadQR() {
-    this.href = document.getElementsByTagName('img')[3].src;
+
   }
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);

@@ -878,6 +878,8 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
+                this.router.navigate(['provider', 'check-ins']);
+
             },
                 error => {
                     // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

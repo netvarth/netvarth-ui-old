@@ -904,6 +904,7 @@ export class AppointmentComponent implements OnInit {
                 // }
                 this.showCheckin = false;
                 this.searchForm.reset();
+                this.router.navigate(['provider', 'appointments']);
             },
                 error => {
                     // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

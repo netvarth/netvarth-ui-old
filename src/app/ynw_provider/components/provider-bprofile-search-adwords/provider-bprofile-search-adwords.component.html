@@ -4,7 +4,7 @@
         <div class="ttle block-level">
             <span [matTooltipClass]="tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}}
                 <!-- <span class="addbt" (click)="addAdwords()" *ngIf="adwordsmaxcount > 0"></span> -->
-                <span class="addbt" (click)="addAdwords()"></span>
+                <span *ngIf="!adword_loading" class="addbt" (click)="addAdwords()"></span>
             </span>
             <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div> -->
             <p class="form-level-settings">{{frm_adword_cap}}<a class="learnmore-pointer" id="customer-help"
@@ -18,7 +18,9 @@
           <p class="form-level-settings">Adword content here</p>
         </div> -->
     </div>
-    <ng-container>
+    <app-common-innerloading-spinner *ngIf="adword_loading">
+    </app-common-innerloading-spinner>
+    <ng-container *ngIf="!adword_loading">
         <div *ngFor="let adword of showadword_list; let i = index">
             <div class="lc3-2 lcd">
                 <div class="ttle">{{getAdwordDisplayName(adword.name)}}</div>

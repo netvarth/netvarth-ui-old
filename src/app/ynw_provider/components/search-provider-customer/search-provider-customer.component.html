@@ -48,7 +48,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                 </app-field-error-display>
                 <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Mobile number is required">
                 </app-field-error-display>
-                <div class="mgn-up-10" *ngIf="source === 'providerCheckin'">
+                <div class="mgn-up-10 col-md-12 no-padding-small" *ngIf="source === 'providerCheckin'">
                     Don't have a mobile number? <a class="pointer-cursor" (click)="skip()"> Click here.</a>
                 </div>
             </div>

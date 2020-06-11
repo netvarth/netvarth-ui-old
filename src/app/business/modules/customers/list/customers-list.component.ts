@@ -277,7 +277,7 @@ export class CustomersListComponent implements OnInit {
     CustomersInboxMessage() {
         let customerlist = [];
         customerlist = this.selectedcustomersformsg;
-        this.provider_shared_functions.ConsumerInboxMessage(customerlist)
+        this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'customer-list')
             .then(
                 () => { },
                 () => { }

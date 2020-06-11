@@ -208,6 +208,7 @@ export class CustomerSearchComponent implements OnInit {
     searchClicked = false;
     appt = false;
     phoneNo: any;
+    eMail: any;
     customerId;
     customerName;
     checkin_type;
@@ -217,6 +218,12 @@ export class CustomerSearchComponent implements OnInit {
     amForm: FormGroup;
     email: any;
     disableButton = false;
+    appointmentScheduleId;
+    appointmentSlot;
+    appointmentDate;
+    checkinType;
+    isFrom;
+    
 
 
 
@@ -230,6 +237,22 @@ export class CustomerSearchComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
+            if(qparams.isFrom){
+                this.isFrom = qparams.isFrom;
+                console.log("isForm", this.isFrom)
+            }
+            if(qparams.scheduleId){
+                this.appointmentScheduleId = qparams.scheduleId;
+            }
+            if(qparams.timeslot){
+                this.appointmentSlot = qparams.timeslot;
+            }
+            if(qparams.checkinType){
+                this.checkinType = qparams.checkinType;
+            }
+            if(qparams.date){
+                this.appointmentDate = qparams.date;
+            }
             this.customerId = qparams.id;
             if (this.customerId) {
                 if (this.customerId === 'add') {
@@ -375,6 +398,11 @@ export class CustomerSearchComponent implements OnInit {
             this.searchForm.setValue({ search_input: this.phoneNo });
             this.searchCustomer(this.searchForm);
         }
+        if (this.eMail) {
+            this.searchForm.setValue({ search_input: this.eMail });
+            this.searchCustomer(this.searchForm);
+        }
+
         if (!this.haveMobile) {
             this.amForm = this.fb.group({
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -390,6 +418,7 @@ export class CustomerSearchComponent implements OnInit {
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                customer_id: ['',Validators.compose([ Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
                 last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
                 dob: [''],
@@ -412,6 +441,7 @@ export class CustomerSearchComponent implements OnInit {
         }
     }
     updateForm() {
+        console.log("Jaldeeid",this.customer[0].jaldeeId)
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -419,6 +449,7 @@ export class CustomerSearchComponent implements OnInit {
             'dob': this.customer[0].dob || null,
             'gender': this.customer[0].gender || null,
             'mobile_number': this.customer[0].phoneNo || null,
+            'customer_id': this.customer[0].jaldeeId || null,
             'address': this.customer[0].address || null,
         });
     }
@@ -558,12 +589,30 @@ export class CustomerSearchComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: { ph: this.customerPhone }
         };
-        if (this.appt) {
-            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-        } else {
+        
             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
         }
+    appointmentClicked() {
+        if (this.appointmentDate){
+            const navigationExtras: NavigationExtras = {
+                queryParams: { 
+                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate 
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        }else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { 
+                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType 
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        }
+        
+        
+
     }
+    
     selectMode(type) {
         this.selectedMode = type;
     }
