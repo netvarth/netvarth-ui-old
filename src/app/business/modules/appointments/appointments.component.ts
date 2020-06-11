@@ -1729,7 +1729,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date, isFrom : 'appointment' } });
+      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, isFrom : 'appointment' } });
     }
   }
   apptFutureClicked(type, time?) {
@@ -1740,7 +1740,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date } });
+      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date, isFrom : 'appointment' } });
     }
   }
   searchCustomer(source, appttime) {

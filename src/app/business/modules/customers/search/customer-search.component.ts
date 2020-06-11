@@ -590,12 +590,23 @@ export class CustomerSearchComponent implements OnInit {
             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
         }
     appointmentClicked() {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { 
-                ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate 
-            }
-        };
-        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        if (this.appointmentDate){
+            const navigationExtras: NavigationExtras = {
+                queryParams: { 
+                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate 
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        }else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { 
+                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType 
+                }
+            };
+            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+        }
+        
+        
 
     }
     
