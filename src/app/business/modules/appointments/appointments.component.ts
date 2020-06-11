@@ -1312,6 +1312,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.filter.future_appt_date != null && this.time_type === 2) {
         api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+        api_filter['apptStatus-neq'] = 'failed';
       }
     }
     if (this.time_type !== 2) {
