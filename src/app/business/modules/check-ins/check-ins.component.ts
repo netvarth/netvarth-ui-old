@@ -559,7 +559,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   }
                 }
               }
-              this.loading = false;
+              // this.loading = false;
               resolve(qs);
             });
         }
@@ -585,7 +585,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
             }
-            this.loading = false;
+            // this.loading = false;
             resolve(qs);
           });
       });
@@ -1084,9 +1084,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         () => {
           this.load_waitlist = 1;
+          this.loading = false;
         },
         () => {
           this.load_waitlist = 1;
+          this.loading = false;
         });
     // });
   }
@@ -1118,9 +1120,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.load_waitlist = 1;
+              this.loading = false;
             });
       });
     // });
@@ -1643,7 +1647,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   printCheckin(source) {
     const checkinlist = this.selectedCheckin[source];
-    console.log(checkinlist);
     this.qrCodegeneration(checkinlist);
     setTimeout(() => {
       const printContent = document.getElementById('print-section');

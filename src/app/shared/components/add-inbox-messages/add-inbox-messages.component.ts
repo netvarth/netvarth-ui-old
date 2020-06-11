@@ -56,7 +56,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
     if (this.source !== 'customer-list') {
-      if (this.uuid && this.uuid.indexOf('appt') >= 0) {
+      if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
         this.type = 'appt';
       } else {
         this.type = 'wl';
