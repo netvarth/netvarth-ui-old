@@ -439,6 +439,10 @@
                                         <span class="icon-first-aid"></span></li>
                                     <li *ngIf="search_result.fields.docambulance_location1==1"
                                         [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
+                                        <li *ngIf="search_result.fields.onlinereports_location1==1"
+                                        [matTooltip]="'Online Reports'"><span class="fa fa-file-pdf-o"></span></li>
+                                        <li *ngIf="search_result.fields.homesamplecollection_location1==1"
+                                        [matTooltip]="'Home Sample Collection'"><span class="fa fa fa-flask"></span></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
                                             src="./assets/images/basic.png" alt="Basic"></li>

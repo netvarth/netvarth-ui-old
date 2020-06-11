@@ -198,7 +198,7 @@
                             <mat-accordion *ngFor="let loc of locationjson">
                                 <mat-expansion-panel style="margin-top: 10px !important;
                             box-shadow: none !important;"
-                                    [expanded]="locationId === loc.id || !locationId">
+                                    [expanded]="locationId == loc.id || !locationId">
                                     <mat-expansion-panel-header expandedHeight="80px" collapsedHeight="80px"
                                         style="background-color: white !important;">
                                         <mat-panel-title>
@@ -285,6 +285,12 @@
                                                             <span class="icon-emergency"></span></li>
                                                         <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
                                                             [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
+                                                        </li>
+                                                        <li *ngIf="loc?.locationVirtualFields?.onlinereports=='true'"
+                                                            [matTooltip]="'Online Reports'"><span class="fa fa-file-pdf-o"></span>
+                                                        </li>
+                                                        <li *ngIf="loc?.locationVirtualFields?.homesamplecollection=='true'"
+                                                            [matTooltip]="'Home Sample Collection'"><span class="fa fa fa-flask"></span>
                                                         </li>
                                                 </ul>
                                             </div>

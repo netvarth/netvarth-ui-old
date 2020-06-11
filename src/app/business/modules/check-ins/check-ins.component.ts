@@ -559,7 +559,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   }
                 }
               }
-              this.loading = false;
+              // this.loading = false;
               resolve(qs);
             });
         }
@@ -585,7 +585,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
             }
-            this.loading = false;
+            // this.loading = false;
             resolve(qs);
           });
       });
@@ -1084,9 +1084,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         () => {
           this.load_waitlist = 1;
+          this.loading = false;
         },
         () => {
           this.load_waitlist = 1;
+          this.loading = false;
         });
     // });
   }
@@ -1118,9 +1120,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.load_waitlist = 1;
+              this.loading = false;
             });
       });
     // });
@@ -1653,57 +1657,79 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       ].join(',');
       const printWindow = window.open('', '', params);
       let checkin_html = '';
-      checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
-      checkin_html += '<div style="width:65%;">';
-      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;margin-top:10px">';
-      checkin_html += '<div style="margin-top:82px">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '</div>';
+      checkin_html += '<table style="width:100%;"><thead>';
+      checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '<br/>';
       if (checkinlist.token) {
-        checkin_html += '<div style="margin-top:10px">Token# ' + checkinlist.token + '</div>';
+        checkin_html += 'Token# <span style="font-weight:bold">' + checkinlist.token + '</span>';
       }
-      checkin_html += '</div>';
-      checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
-      checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
-      checkin_html += this.bname.charAt(0).toUpperCase() + this.bname.substring(1);
-      checkin_html += '<div style="clear:both;font-weight:500;font-size:0.95rem;padding:0px;margin:0px">';
-      checkin_html += checkinlist.queue.location.place;
-      checkin_html += '</div>';
-      checkin_html += '</h2>';
-      checkin_html += '<div style="padding-top:5px;padding-left:5px">';
-      checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
-      checkin_html += '</div>';
+      checkin_html += '</td></tr>';
+      checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" style="text-align:center">' + checkinlist.queue.location.place + '</td></tr>';
+      checkin_html += '</thead><tbody>';
+      checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName + '</td></tr>';
       if (checkinlist.service && checkinlist.service.deptName) {
-        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">Department: </span>';
-        checkin_html += '<span>' + checkinlist.service.deptName + '</span>';
-        checkin_html += '</div>';
+      checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + checkinlist.service.deptName + '</td></tr>';
       }
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Service: </span>';
-      checkin_html += '<span>' + checkinlist.service.name + '</span>';
-      checkin_html += '</div>';
+      checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + checkinlist.service.name + '</td></tr>';
       if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
-        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ': </span>';
-        checkin_html += '<span>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName;
-        checkin_html += '</span></div>';
+        checkin_html += '<tr><td>' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName + '</td></tr>';
       }
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Queue: </span>';
-      checkin_html += '<span>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']';
-      checkin_html += '</span></div>';
+      checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']' + '</td></tr>';
+      // checkin_html += '<tr><td>Check-in Id</td><td>:</td><td>' + this.qr_value + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+      checkin_html += '</tbody></table>';
+      // checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
+      // checkin_html += '<div style="width:65%;">';
+      // checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;margin-top:10px">';
+      // checkin_html += '<div style="margin-top:82px">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '</div>';
+      // if (checkinlist.token) {
+      //   checkin_html += '<div style="margin-top:10px">Token# ' + checkinlist.token + '</div>';
+      // }
+      // checkin_html += '</div>';
+      // checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
+      // checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
+      // checkin_html += this.bname.charAt(0).toUpperCase() + this.bname.substring(1);
+      // checkin_html += '<div style="clear:both;font-weight:500;font-size:0.95rem;padding:0px;margin:0px">';
+      // checkin_html += checkinlist.queue.location.place;
+      // checkin_html += '</div>';
+      // checkin_html += '</h2>';
+      // checkin_html += '<div style="padding-top:5px;padding-left:5px">';
+      // checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
+      // checkin_html += '</div>';
+      // if (checkinlist.service && checkinlist.service.deptName) {
+      //   checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      //   checkin_html += '<span style="color: #999999">Department: </span>';
+      //   checkin_html += '<span>' + checkinlist.service.deptName + '</span>';
+      //   checkin_html += '</div>';
+      // }
       // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      // checkin_html += '<span style="color: #999999">Check-in Id: </span>';
-      // checkin_html += '<span>' + this.qr_value;
+      // checkin_html += '<span style="color: #999999">Service: </span>';
+      // checkin_html += '<span>' + checkinlist.service.name + '</span>';
+      // checkin_html += '</div>';
+      // if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
+      //   checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      //   checkin_html += '<span style="color: #999999">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + ': </span>';
+      //   checkin_html += '<span>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName;
+      //   checkin_html += '</span></div>';
+      // }
+      // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      // checkin_html += '<span style="color: #999999">Queue: </span>';
+      // checkin_html += '<span>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']';
       // checkin_html += '</span></div>';
-      checkin_html += '</div>';
-      checkin_html += '</div>';
-      checkin_html += '<div style="margin-top:65px;width:35%">';
-      checkin_html += '<div style="text-align:right;width:150px;height:150px">';
-      checkin_html += printContent.innerHTML;
-      checkin_html += '</div>';
-      checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
-      checkin_html += '</div>';
-      checkin_html += '</div>';
+      // // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+      // // checkin_html += '<span style="color: #999999">Check-in Id: </span>';
+      // // checkin_html += '<span>' + this.qr_value;
+      // // checkin_html += '</span></div>';
+      // checkin_html += '</div>';
+      // checkin_html += '</div>';
+      // checkin_html += '<div style="margin-top:65px;width:35%">';
+      // checkin_html += '<div style="text-align:right;width:150px;height:150px">';
+      // checkin_html += printContent.innerHTML;
+      // checkin_html += '</div>';
+      // checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
+      // checkin_html += '</div>';
+      // checkin_html += '</div>';
       printWindow.document.write('<html><head><title></title>');
       printWindow.document.write('</head><body>');
       printWindow.document.write(checkin_html);
@@ -1859,10 +1885,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkinClicked(source) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        checkin_type: source
+        checkin_type: source,
+        isFrom: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
   }
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {

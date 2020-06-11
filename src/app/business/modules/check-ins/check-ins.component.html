@@ -777,7 +777,7 @@
               </div>
             </div>
             <!-- Today-->
-            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0">
+            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0 && !loading">
               <p>{{no_service_cap}}</p>
             </div>
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">

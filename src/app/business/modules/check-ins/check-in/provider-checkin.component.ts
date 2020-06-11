@@ -288,7 +288,7 @@ export class ProviderCheckinComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/add'], navigationExtras);
+        this.router.navigate(['/provider/customers/find'], navigationExtras);
     }
     selectMode(type) {
         this.selectedMode = type;
@@ -878,6 +878,8 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
+                this.router.navigate(['provider', 'check-ins']);
+
             },
                 error => {
                     // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

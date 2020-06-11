@@ -178,7 +178,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   settings;
   delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
+  cloudTooltip = 'Online Appointment';
   notedialogRef;
   addnotedialogRef;
   makPaydialogRef;
@@ -369,7 +369,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         //   }
         // }
       };
+      if (this.availableSlots.length > 0) {
+        this.scrollToSection();
+      }
+      // if (this.futureUnAvailableSlots.length > 0) {
+      //   this.scrollToSection();
+      // }
     });
+
+  }
+  scrollToSection() {
+    // if (this.time_type === 2) {
+    //   this.slotIds.toArray().forEach(element => {
+    //     if (element.nativeElement.innerText === this.futureUnAvailableSlots[0]) {
+    //       element.nativeElement.scrollIntoViewIfNeeded();
+    //       return false;
+    //     }
+    //   });
+    // }
+    // if (this.time_type === 1) {
+    this.slotIds.toArray().forEach(element => {
+      if (element.nativeElement.innerText === this.availableSlots[0].time) {
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
+    // }
   }
   ngOnInit() {
     const savedtype = this.shared_functions.getitemFromGroupStorage('apptType');
@@ -873,6 +898,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 if (this.selQId) {
                   this.getAvaiableSlots();
+                  setTimeout(() => {
+                    if (this.availableSlots.length > 0) {
+                      this.scrollToSection();
+                    }
+                  }, 500);
                 }
                 this.loading = false;
               },
@@ -930,6 +960,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 if (this.selQId) {
                   this.getAvaiableSlots();
+                  setTimeout(() => {
+                    if (this.availableSlots.length > 0) {
+                      this.scrollToSection();
+                    }
+                  }, 500);
                 }
                 this.loading = false;
               },
@@ -988,6 +1023,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAvaiableSlots() {
     this.unAvailableSlots = [];
+    this.availableSlots = [];
     let date;
     if (this.time_type === 1) {
       date = this.dateformat.transformTofilterDate(this.server_date);
@@ -1017,6 +1053,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                   slots.push(this.availableSlotDetails.availableSlots[i]);
                 }
               }
+
+              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+                if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
+                  this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
+                }
+              }
             }
             this.apptSelected[key] = [];
             if (this.newApptforMsg.length > 0) {
@@ -1036,9 +1078,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
                 this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
               }
+              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+                if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
+                  this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
+                }
+              }
             }
           }
         }
+
         if (this.availableSlotDetails && this.availableSlotDetails.availableSlots) {
           this.availableSlotDetails.availableSlots = this.availableSlotDetails.availableSlots.filter(x => !this.unAvailableSlots.includes(x));
         }
@@ -1710,6 +1758,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
+  // apptClicked(type, time?) {
+  //   if (this.queues.length === 0) {
+  //     this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     let slot = '';
+  //     if (time) {
+  //       slot = time;
+  //     }
+  //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+  //   }
+  // }
   apptClicked(type, time?) {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1718,7 +1777,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, isFrom : 'appointment' } });
     }
   }
   apptFutureClicked(type, time?) {
@@ -1729,11 +1788,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date } });
+      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date, isFrom : 'appointment' } });
     }
   }
   searchCustomer(source, appttime) {
-    this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
+    this.router.navigate(['provider', 'customers', 'find'], { queryParams: { appt: true } });
   }
   showsheAdjustDelay() {
     if (this.queues.length === 0 || !this.selQId) {

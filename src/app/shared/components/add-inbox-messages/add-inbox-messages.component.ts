@@ -40,7 +40,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   pushnotify = true;
   typeOfMsg;
   type;
-  constructor( 
+  constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
@@ -55,13 +55,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
-    console.log(this.uuid);
-    if( this.uuid.indexOf('wl') >= 0){
-      this.type = 'wl';
-    } else {
-      this.type = 'appt';
+    if (this.source !== 'customer-list') {
+      if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
+        this.type = 'appt';
+      } else {
+        this.type = 'wl';
+      }
     }
-    console.log(this.type);
     if (this.data.caption) {
       this.caption = this.data.caption;
     } else {
@@ -135,7 +135,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit(form_data) {
-    console.log(this.typeOfMsg);
     this.resetApiErrors();
     const blankvalidate = projectConstants.VALIDATOR_BLANK;
     if (blankvalidate.test(form_data.message)) {
@@ -174,7 +173,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             communicationMessage: form_data.message,
             uuid: this.uuid
           };
-          if (this.type == 'appt') {
+          if (this.type === 'appt') {
             this.shared_services.consumerMassCommunicationAppt(post_data).
               subscribe(() => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -256,7 +255,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      if (this.type == 'appt') {
+      if (this.type === 'appt') {
         this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
           .subscribe(
             () => {
@@ -302,35 +301,35 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      if (this.type == 'appt') {
-      this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
-        dataToSend)
-        .subscribe(
-          () => {
-            this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
-          }
-        );
-        }else{
-          this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
-            dataToSend)
-            .subscribe(
-              () => {
-                this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
-                setTimeout(() => {
-                  this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
-              },
-              error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              }
-            );
-        }
+      if (this.type === 'appt') {
+        this.shared_services.addConsumerAppointmentNote(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            }
+          );
+      } else {
+        this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            }
+          );
+      }
     }
   }
   providerToConsumerNoteAdd(post_data) {
