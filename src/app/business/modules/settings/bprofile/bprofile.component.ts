@@ -16,7 +16,7 @@ import { ProviderBprofileSearchPrimaryComponent } from '../../../../ynw_provider
 import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
-
+declare let cordova: any;
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html'
@@ -986,18 +986,27 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt.document.write('<html><head><title></title>');
-    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
-    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
-    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
-    WindowPrt.document.write(printContent.innerHTML);
-    WindowPrt.document.write('</div>');
-    WindowPrt.document.write('</body></html>');
-    WindowPrt.document.close();
-    WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
+    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    // WindowPrt.document.write('<html><head><title></title>');
+    // WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+    // WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+    // WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+    // WindowPrt.document.write(printContent.innerHTML);
+    // WindowPrt.document.write('</div>');
+    // WindowPrt.document.write('</body></html>');
+    // WindowPrt.document.close();
+    // WindowPrt.focus();
+    // WindowPrt.print();
+    // WindowPrt.close();
+
+    let printsection = '<html><head><title></title>';
+    printsection += '</head><body style="border-style: dashed;width:500px;height:600px">';
+    printsection += '<div style="padding-left:190px;padding-top: 50px;">';
+    printsection += '<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>';
+    printsection += printContent.innerHTML;
+    printsection += '</div>';
+    printsection += '</body></html>';
+    cordova.plugins.printer.print(printsection);
   }
   showPasscode() {
     this.show_passcode = !this.show_passcode;

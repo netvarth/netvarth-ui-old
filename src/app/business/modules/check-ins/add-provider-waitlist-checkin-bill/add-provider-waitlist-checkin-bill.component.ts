@@ -19,7 +19,7 @@ export interface ItemServiceGroup {
   type: string;
   values: string[];
 }
-
+declare let cordova: any;
 @Component({
   selector: 'app-provider-waitlist-checkin-bill',
   templateUrl: './add-provider-waitlist-checkin-bill.component.html',
@@ -1264,12 +1264,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   printMe() {
     // window.print();
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
+    // const params = [
+    //   'height=' + screen.height,
+    //   'width=' + screen.width,
+    //   'fullscreen=yes'
+    // ].join(',');
+    // const printWindow = window.open('', '', params);
     let bill_html = '';
     bill_html += '<table width="100%">';
     bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.providerAccount['businessName'] + '</td></tr>';
@@ -1477,14 +1477,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	</td></tr>';
     }
     bill_html += '</table>';
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(bill_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.document.close();
-    printWindow.print();
-    printWindow.close();
+    cordova.plugins.printer.print(bill_html);
+    // printWindow.document.write('<html><head><title></title>');
+    // printWindow.document.write('</head><body >');
+    // printWindow.document.write(bill_html);
+    // printWindow.document.write('</body></html>');
+    // printWindow.moveTo(0, 0);
+    // printWindow.document.close();
+    // printWindow.print();
+    // printWindow.close();
   }
   showJCCouponNote(coupon) {
     if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {

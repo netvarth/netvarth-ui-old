@@ -17,6 +17,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { CallingModesComponent } from './calling-modes/calling-modes.component';
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -1646,12 +1647,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qrCodegeneration(checkinlist);
     setTimeout(() => {
       const printContent = document.getElementById('print-section');
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
       checkin_html += '<div style="width:65%;">';
@@ -1704,13 +1705,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
-      printWindow.document.write('<html><head><title></title>');
-      printWindow.document.write('</head><body>');
-      printWindow.document.write(checkin_html);
-      printWindow.document.write('</body></html>');
-      // this.showQR = false;
-      printWindow.moveTo(0, 0);
-      printWindow.print();
+      cordova.plugins.printer.print(checkin_html);
+      // printWindow.document.write('<html><head><title></title>');
+      // printWindow.document.write('</head><body>');
+      // printWindow.document.write(checkin_html);
+      // printWindow.document.write('</body></html>');
+      // // this.showQR = false;
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
     });
   }
   printHistoryCheckin() {
@@ -1722,12 +1724,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -1756,16 +1758,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              cordova.plugins.printer.print(checkin_html);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
             });
       });
   }

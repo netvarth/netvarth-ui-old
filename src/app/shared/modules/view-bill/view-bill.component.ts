@@ -8,6 +8,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
 import { DOCUMENT } from '@angular/common';
+declare let cordova: any;
 @Component({
   selector: 'app-view-bill',
   templateUrl: './view-bill.component.html'
@@ -198,12 +199,12 @@ export class ViewBillComponent implements OnInit, OnChanges {
    * To Print Receipt
    */
   printMe() {
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
+    // const params = [
+    //   'height=' + screen.height,
+    //   'width=' + screen.width,
+    //   'fullscreen=yes'
+    // ].join(',');
+    // const printWindow = window.open('', '', params);
     let bill_html = '';
     bill_html += '<table width="100%">';
     bill_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:11pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + this.checkin.provider['businessName'] + '</td></tr>';
@@ -384,14 +385,15 @@ export class ViewBillComponent implements OnInit, OnChanges {
       bill_html += '	</td></tr>';
     }
     bill_html += '</table>';
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(bill_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.document.close();
-    printWindow.print();
-    printWindow.close();
+    // printWindow.document.write('<html><head><title></title>');
+    // printWindow.document.write('</head><body >');
+    // printWindow.document.write(bill_html);
+    // printWindow.document.write('</body></html>');
+    // printWindow.moveTo(0, 0);
+    // printWindow.document.close();
+    // printWindow.print();
+    // printWindow.close();
+    cordova.plugins.printer.print(bill_html);
     // window.print();
   }
   // printElement(elem) {

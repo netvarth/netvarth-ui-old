@@ -16,7 +16,7 @@ import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-cus
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ApplyLabelComponent } from '../check-ins/apply-label/apply-label.component';
 import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.component';
-
+declare let cordova: any;
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -1498,12 +1498,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qrCodegeneration(apptlist);
     setTimeout(() => {
       const printContent = document.getElementById('print-section');
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
       checkin_html += '<div style="width:65%;">';
@@ -1541,10 +1541,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<span style="color: #999999">Schedule: </span>';
       checkin_html += '<span>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']';
       checkin_html += '</span></div>';
-      // checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      // checkin_html += '<span style="color: #999999">Appointment Id: </span>';
-      // checkin_html += '<span>' + this.qr_value;
-      // checkin_html += '</span></div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
       checkin_html += '<div style="margin-top:65px;width:35%">';
@@ -1554,13 +1550,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<div>Scan to know your status or log on to ' + this.qr_value + '</div>';
       checkin_html += '</div>';
       checkin_html += '</div>';
-      printWindow.document.write('<html><head><title></title>');
-      printWindow.document.write('</head><body >');
-      printWindow.document.write(checkin_html);
-      printWindow.document.write('</body></html>');
+      // printWindow.document.write('<html><head><title></title>');
+      // printWindow.document.write('</head><body >');
+      // printWindow.document.write(checkin_html);
+      // printWindow.document.write('</body></html>');
       this.showQR = false;
-      printWindow.moveTo(0, 0);
-      printWindow.print();
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
+      cordova.plugins.printer.print(checkin_html);
     });
   }
 
@@ -1573,12 +1570,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -1605,16 +1602,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              cordova.plugins.printer.print(checkin_html);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
             });
       });
   }
