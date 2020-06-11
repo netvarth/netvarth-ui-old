@@ -133,23 +133,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId">
+                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
                                         <div><i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
-                                        <div  class="ngx-qrcod">
+                                        <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
                                                 [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="href" (click)="downloadQR()" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
                                             <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
                                             &nbsp;&nbsp;&nbsp;
                                             <button (click)="closeOnlineQR()">close</button> -->
                                         </div>
-
-
-                                    </div>
-
+                                </div>
 
                                     <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
                                         <form [formGroup]="customForm"
@@ -233,7 +230,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId">
+                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
                                         <div><i (click)="closeCustomQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
                                         <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
@@ -241,7 +238,7 @@
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="href" (click)="downloadQR()" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
                                         </div>
                                         <!-- <div class="custId-prnt">
                                             <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
