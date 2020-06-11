@@ -48,8 +48,6 @@ export class ReturnPaymentComponent implements OnInit {
             this.router.navigate(['consumer', 'checkin', 'payment', uuid], navigationExtras);
           } else if (src === 'c_d') {
             this.getPaymentStatus(src);
-          } else if (src === 'p_lic') {
-            this.getPaymentStatus (src);
           } else {
             this.getPaymentStatus(src);
           }
