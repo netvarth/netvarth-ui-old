@@ -712,24 +712,24 @@
                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || provider.settings && provider.settings.futureDateWaitlist)">
                                         <span class="cs-btn chk-btn"
                                             (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !loc['showToken']))">
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday'] && !loc['showToken']">
                                             {{getTerminologyTerm('waitlist')}}</span>
                                         <span class="cs-btn chk-btn"
                                             (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && loc['showToken']">{{get_token_btn}}</span>
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['onlineCheckIn'] && loc['isAvailableToday'] && loc['availableToday'] && loc['showToken']">{{get_token_btn}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !loc['showToken'])) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && !loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">
                                             {{getTerminologyTerm('waitlist')}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['calculationMode']=='NoCalc' && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
+                                            *ngIf="loc['waitlist'] && provider.onlinePresence && loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                         <span class="cs-btn bt10"
                                             *ngIf="loc['waitlist'] && provider.onlinePresence && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']"
                                             (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
                                             {{do_you_want_to_cap}} <span
-                                                *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !loc['showToken'])">
+                                                *ngIf="!loc['showToken']">
                                                 {{getTerminologyTerm('waitlist')}} </span>
                                             <span
-                                                *ngIf="loc['calculationMode']=='NoCalc' && loc['showToken']">{{get_token_btn}}
+                                                *ngIf="loc['showToken']">{{get_token_btn}}
                                             </span>{{for_cap}}
                                             <span>{{different_date_cap}}</span>
                                         </span>

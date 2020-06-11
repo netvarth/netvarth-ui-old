@@ -154,6 +154,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    getUnreadCount() {
+        this.shared_services.getInboxUnreadCount('provider')
+            .subscribe(data => {
+                this.shared_functions.sendMessage({ ttype: 'unreadCount', unreadCount: data });
+            },
+                () => {
+                });
+    }
     sendMessage(messageToSend, inboxList, parentIndex) {
         // const userId = this.getReceiverId(inboxList);
         const userId = inboxList[0].accountId;
@@ -408,6 +416,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         if (messageids) {
             this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
                 this.getInboxMessages();
+                this.getUnreadCount();
                 this.openState[index] = true;
             });
         }

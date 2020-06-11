@@ -415,7 +415,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Business profile ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -986,7 +986,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
   qrCodegenerateOnlineID(valuetogenerate) {
-    alert('here');
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
