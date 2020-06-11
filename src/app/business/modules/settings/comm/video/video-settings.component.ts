@@ -139,8 +139,15 @@ export class VideoSettingsComponent implements OnInit {
         };
         this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
-                this.shared_functions.openSnackBar('Virtual calling modes added successfully', { 'panelclass': 'snackbarerror' });
+                console.log(postdata)
+                if(postdata.virtualCallingModes[0].callingMode == "WhatsApp"){
+                    this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
                 this.getVirtualCallingModesList();
+                }else if(postdata.virtualCallingModes[0].callingMode == "Zoom"){
+                    this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                    this.getVirtualCallingModesList();
+                }
+                
             },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
