@@ -1710,6 +1710,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
+  // apptClicked(type, time?) {
+  //   if (this.queues.length === 0) {
+  //     this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     let slot = '';
+  //     if (time) {
+  //       slot = time;
+  //     }
+  //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+  //   }
+  // }
   apptClicked(type, time?) {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1718,7 +1729,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date, isFrom : 'appointment' } });
     }
   }
   apptFutureClicked(type, time?) {
