@@ -60,10 +60,8 @@ export class CustomerDetailComponent implements OnInit {
         {
             title: 'Customers',
             url: 'provider/customers'
-        },
-        {
-            title: 'Add'
         }
+       
     ];
     breadcrumbs = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
@@ -108,6 +106,7 @@ export class CustomerDetailComponent implements OnInit {
                                     (customer) => {
                                         this.customer = customer;
                                         this.customerName = this.customer[0].firstName;
+
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
                                             this.breadcrumbs_init.map((e) => {
@@ -146,7 +145,7 @@ export class CustomerDetailComponent implements OnInit {
                 this.phoneNo = qparams.phone;
             }
             if (qparams.email) {
-                this.phoneNo = qparams.email;
+                this.email = qparams.email;
             }
             if (qparams.checkinType) {
                 this.checkin_type = qparams.checkinType;
@@ -176,14 +175,15 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
-        this.breadcrumbs = [{
-            title: this.shared_functions.firstToUpper(this.customer_label) + 's',
-            url: 'provider/customers'
-        },
-        {
-            title: 'Add'
-        }
-        ];
+        this.breadcrumbs= this.breadcrumbs_init;
+        // this.breadcrumbs = [{
+        //     title: this.shared_functions.firstToUpper(this.customer_label) + 's',
+        //     url: 'provider/customers'
+        // },
+        // {
+        //     title: 'Add'
+        // }
+        // ];
     }
 
     getGlobalSettingsStatus() {
@@ -208,6 +208,7 @@ export class CustomerDetailComponent implements OnInit {
             this.amForm = this.fb.group({
                 mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+                customer_id: [''],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
@@ -231,6 +232,7 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
     updateForm() {
+        console.log(this.customer)
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -238,6 +240,7 @@ export class CustomerDetailComponent implements OnInit {
             'dob': this.customer[0].dob || null,
             'gender': this.customer[0].gender || null,
             'mobile_number': this.customer[0].phoneNo || null,
+            'customer_id': this.customer[0].jaldeeId || null,
             'address': this.customer[0].address || null,
         });
     }

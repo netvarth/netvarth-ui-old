@@ -1886,10 +1886,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         checkin_type: source,
-        isFrom: 'checkin'
+        // isFrom: 'checkin'
       }
     };
-    this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
   }
   searchCustomer(source) {
     const navigationExtras: NavigationExtras = {

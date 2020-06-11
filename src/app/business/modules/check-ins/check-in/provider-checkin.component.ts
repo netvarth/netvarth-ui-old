@@ -288,7 +288,7 @@ export class ProviderCheckinComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/find'], navigationExtras);
+        this.router.navigate(['/provider/customers/add'], navigationExtras);
     }
     selectMode(type) {
         this.selectedMode = type;

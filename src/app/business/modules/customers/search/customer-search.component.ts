@@ -418,6 +418,7 @@ export class CustomerSearchComponent implements OnInit {
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+                customer_id: ['',Validators.compose([ Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
                 last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
                 dob: [''],
@@ -440,6 +441,7 @@ export class CustomerSearchComponent implements OnInit {
         }
     }
     updateForm() {
+        console.log("Jaldeeid",this.customer[0].jaldeeId)
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -447,6 +449,7 @@ export class CustomerSearchComponent implements OnInit {
             'dob': this.customer[0].dob || null,
             'gender': this.customer[0].gender || null,
             'mobile_number': this.customer[0].phoneNo || null,
+            'customer_id': this.customer[0].jaldeeId || null,
             'address': this.customer[0].address || null,
         });
     }
