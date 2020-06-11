@@ -453,11 +453,11 @@
           <div class="dash-list">
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
-              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
+              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0 && !future_loading">
                 {{no_future_checkins}}
               </div>
               <!-- Timeslot disabled queue dashboard -->
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0 && !future_loading">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
@@ -567,10 +567,10 @@
                   </div>
                 </div>
               </div>
-              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              <app-common-innerloading-spinner *ngIf="future_loading"></app-common-innerloading-spinner>
               <!-- Timeslot enabled queue dashboard -->
               <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
+                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !future_loading">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                   *ngFor="let slot of availableSlots, let i=index">
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
@@ -679,10 +679,11 @@
             </div>
             <!--History-->
             <div class="col-md-12 history col-xs-12 col-sm-12 history no-padding-small" *ngIf="time_type==3">
-              <div class="no-dta col-md-12" *ngIf="check_in_filtered_list.length === 0">
+              <app-common-innerloading-spinner *ngIf="history_loading"></app-common-innerloading-spinner>
+              <div class="no-dta col-md-12" *ngIf="check_in_filtered_list.length === 0 && !history_loading">
                 {{no_history}}
               </div>
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_filtered_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_filtered_list.length>0 && !history_loading">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_filtered_list, let i=index">
                   <div class="info-box">
@@ -777,10 +778,10 @@
               </div>
             </div>
             <!-- Today-->
-            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0 && !loading">
+            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0 && !today_loading && !loading">
               <p>{{no_service_cap}}</p>
             </div>
-            <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
+            <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0 && !today_loading">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="labelList">
                   <div class="statuses col-md-12 col-xs-12 col-sm-12"
@@ -1047,7 +1048,7 @@
 
                 <!-- Timeslot disabled queue statusboard -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  *ngIf="new_checkins_list.length>0 && showstatus['new'] && !today_loading">
 
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of new_checkins_list, let i=index"
@@ -1186,7 +1187,7 @@
                     </div>
                   </div>
                 </div>
-                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">

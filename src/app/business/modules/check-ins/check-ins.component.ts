@@ -292,6 +292,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showQR = false;
   printContent;
   gnr_link = 1;
+  today_loading = false;
+  future_loading = false;
+  history_loading = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -560,7 +563,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   }
                 }
               }
-              // this.loading = false;
+              this.loading = false;
               resolve(qs);
             });
         }
@@ -586,7 +589,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
             }
-            // this.loading = false;
+            this.loading = false;
             resolve(qs);
           });
       });
@@ -1032,7 +1035,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getTodayCheckIn() {
-    this.loading = true;
+    this.today_loading = true;
     // this.queues = [];
     // this.getQs().then(queue => {
     //   this.queues = queue;
@@ -1081,20 +1084,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
-          this.loading = false;
+          setTimeout(() => {
+            this.today_loading = false;
+          }, 100);
+          
         },
         () => {
           this.load_waitlist = 1;
-          this.loading = false;
+          this.today_loading = false;
         },
         () => {
           this.load_waitlist = 1;
-          this.loading = false;
+          this.today_loading = false;
         });
     // });
   }
   getFutureCheckIn() {
     this.load_waitlist = 0;
+    this.future_loading = true;
     // this.queues = [];
     // this.getQs().then(queue => {
     //   this.queues = queue;
@@ -1117,21 +1124,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              this.loading = false;
+              this.future_loading = false;
             },
             () => {
               this.load_waitlist = 1;
-              this.loading = false;
+              this.future_loading = false;
             },
             () => {
               this.load_waitlist = 1;
-              this.loading = false;
+              this.future_loading = false;
             });
       });
     // });
   }
   getHistoryCheckIn() {
-    this.loading = true;
+    this.history_loading = true;
     this.load_waitlist = 0;
     // this.queues = [];
     // this.getQs().then(queue => {
@@ -1160,7 +1167,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             () => {
               this.load_waitlist = 1;
             });
-        this.loading = false;
+        this.history_loading = false;
       }
     );
     // });
