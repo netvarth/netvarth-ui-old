@@ -541,7 +541,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const date = this.dateformat.transformTofilterDate(this.server_date);
       return new Promise((resolve, reject) => {
         if (this.selected_location && this.selected_location.id && date) {
-          _this.provider_services.getProviderLocationQueuesByDate(this.selected_location.id, date).subscribe(
+          _this.provider_services.getProviderLocationQueues(this.selected_location.id).subscribe(
+            // _this.provider_services.getProviderLocationQueuesByDate(this.selected_location.id, date).subscribe(
             (queues: any) => {
               const qs = [];
               if (this.selectedView && this.selectedView.name !== 'Default') {
