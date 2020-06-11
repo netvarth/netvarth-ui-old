@@ -174,9 +174,7 @@ export class ProviderSharedFuctions {
     }
   }
 
-
   changeServiceStatus(ob, service) {
-    console.log(service);
     let chstatusmsg = '';
     if (service.status === 'ACTIVE') {
       chstatusmsg = 'disabled';
@@ -293,7 +291,6 @@ export class ProviderSharedFuctions {
   }
 
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
-    console.log(waitlist);
     const uuids = [];
     let type;
     let ynwUuid;
@@ -303,7 +300,7 @@ export class ProviderSharedFuctions {
       type = 'multiple';
       for (const watlst of waitlist) {
         if (appt) {
-        uuids.push(watlst.uid);
+          uuids.push(watlst.uid);
         } else {
           uuids.push(watlst.ynwUuid);
         }
@@ -349,7 +346,7 @@ export class ProviderSharedFuctions {
       });
     });
   }
-  ConsumerInboxMessage(customerlist) {
+  ConsumerInboxMessage(customerlist, source?) {
     const custids = [];
     let type;
     let ynwcustid;
@@ -379,7 +376,7 @@ export class ProviderSharedFuctions {
         data: {
           typeOfMsg: type,
           uuid: ynwcustid,
-          source: 'customer-list',
+          source: source,
           type: 'send',
           terminologies: terminologies,
           name: name
@@ -458,4 +455,3 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
-

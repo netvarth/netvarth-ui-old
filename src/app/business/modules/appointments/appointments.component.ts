@@ -178,7 +178,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   settings;
   delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
+  cloudTooltip = 'Online Appointment';
   notedialogRef;
   addnotedialogRef;
   makPaydialogRef;
