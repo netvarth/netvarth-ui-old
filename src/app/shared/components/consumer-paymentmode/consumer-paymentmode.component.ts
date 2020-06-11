@@ -69,6 +69,7 @@ export class ConsumerPaymentmodeComponent implements OnInit {
       this.shared_services.providerPayment(this.waitlistDetails)
         .subscribe(pData => {
           if (pData['response']) {
+            this.shared_functions.setitemonLocalStorage('p_src', 'p_lic');
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
             this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {

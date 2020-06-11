@@ -48,6 +48,8 @@ export class ReturnPaymentComponent implements OnInit {
             this.router.navigate(['consumer', 'checkin', 'payment', uuid], navigationExtras);
           } else if (src === 'c_d') {
             this.getPaymentStatus(src);
+          } else if (src === 'p_lic') {
+            this.getPaymentStatus (src);
           } else {
             this.getPaymentStatus(src);
           }
@@ -71,6 +73,9 @@ export class ReturnPaymentComponent implements OnInit {
           }
           if (this.user_type === 'consumer') {
             this.router.navigate(['consumer']);
+          } else if (src === 'p_src') {
+            this.shared_functions.removeitemfromLocalStorage('p_src');
+            this.router.navigate(['provider', 'license']);
           }
         },
         error => {
