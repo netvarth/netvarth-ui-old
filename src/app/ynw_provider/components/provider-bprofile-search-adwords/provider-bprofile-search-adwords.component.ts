@@ -35,7 +35,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   remadwdialogRef;
   adwdialogRef;
   active_user;
-
+  adword_loading = true;
   customer_label = '';
   frm_adword_cap = '';
   domain;
@@ -103,6 +103,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       .subscribe(data => {
         this.adword_list = data;
         this.remaining_adword = this.adwordsmaxcount - this.adword_list.length;
+        this.adword_loading = false;
         this.showAdwordBuilder(0);
         this.startpageval = 1;
         this.query_executed = true;

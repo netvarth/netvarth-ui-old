@@ -94,16 +94,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId', {static : false, read: ElementRef}) set content1(content1: ElementRef) {
-     if (content1) { // initially setter gets called with undefined
-         this.qrCodeParent = content1;
-     }
+  @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
+    if (content1) { // initially setter gets called with undefined
+      this.qrCodeParent = content1;
+    }
   }
   private qrCodeCustId: ElementRef;
-  @ViewChild('qrCodeCustId', {static : false}) set content2(content2: ElementRef) {
-     if (content2) { // initially setter gets called with undefined
-         this.qrCodeParent = content2;
-     }
+  @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
+    if (content2) { // initially setter gets called with undefined
+      this.qrCodeParent = content2;
+    }
   }
   checked = false;
   bProfile = null;
@@ -242,7 +242,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   onlinepresence_statusstr = '';
   is_customized = false;
   licence_warn = false;
-
+  adword_loading = true;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -858,6 +858,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.currentlicense_details = data;
         this.adwordsmaxcount = this.currentlicense_details;
+        this.adword_loading = false;
         this.getAdwords();
       });
   }
@@ -991,7 +992,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.detectChanges();
     // console.log(this.qrCodeParent.nativeElement.getElementsByTagName('img')[0]);
     setTimeout(() => {
-      this.qrCodePath =  this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
     }, 50);
   }
   qrCodegenerateCustID(valuetogenerate) {
@@ -999,7 +1000,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.qr_code_cId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
-      this.qrCodePath =  this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
     }, 50);
   }
   closeOnlineQR() {
@@ -1027,7 +1028,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.show_passcode = !this.show_passcode;
   }
   downloadQR() {
-    
+
   }
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);

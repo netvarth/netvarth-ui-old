@@ -53,8 +53,7 @@
                                         </div>
                                     </div>
                                     <p class="form-level-settings" *ngIf="!normal_search_active">
-                                        {{frm_public_search_cap}}<a class="learnmore-pointer"
-                                            id="customer-help"
+                                        {{frm_public_search_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                     <p class="form-level-settings" *ngIf="normal_search_active">
@@ -81,8 +80,7 @@
                                         </div>
                                     </div>
                                     <p class="form-level-settings" *ngIf="!onlinepresence_status">
-                                        {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer"
-                                            id="customer-help"
+                                        {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a></p>
                                     <p class="form-level-settings" *ngIf="onlinepresence_status">
@@ -97,7 +95,8 @@
                                         </div>
                                     </div>
                                     <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
-                                            id="customer-help" (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
+                                            id="customer-help"
+                                            (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
                                             More</a></p>
 
 
@@ -134,19 +133,23 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
-                                        <div><i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
+                                        <div><i (click)="closeOnlineQR()"
+                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i></div>
                                         <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
                                                 [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
+                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
+                                                        style="padding-right: 2px;"></i>Download</a></button>
                                             <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
                                             &nbsp;&nbsp;&nbsp;
                                             <button (click)="closeOnlineQR()">close</button> -->
                                         </div>
-                                </div>
+                                    </div>
 
                                     <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
                                         <form [formGroup]="customForm"
@@ -192,8 +195,8 @@
                                                     <li class="acc-url-li">
                                                         <span class="custid" rel="noopener"
                                                             target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
-                                                            <span class="busns-id">
-                                                                <span class="custid custId-icon"><i
+                                                        <span class="busns-id">
+                                                            <span class="custid custId-icon"><i
                                                                     class="fa fa-copy custId-cursor"
                                                                     (click)="copyInputMessage(bProfile.customId)"
                                                                     [matTooltip]="'Copy link'"></i>
@@ -223,22 +226,26 @@
                                                                     </button>
                                                                 </mat-menu>
                                                             </span>
-                                                            </span>
-                                                       
+                                                        </span>
+
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
-                                        <div><i (click)="closeCustomQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i></div>
+                                        <div><i (click)="closeCustomQR()"
+                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i></div>
                                         <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
                                                 [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath" download><i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
+                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
+                                                        style="padding-right: 2px;"></i>Download</a></button>
                                         </div>
                                         <!-- <div class="custId-prnt">
                                             <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
@@ -249,9 +256,10 @@
 
 
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
-                                        <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                                        <div class="duration instantQ"
+                                            *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
                                             You are not allowed to do this operation. Please upgrade license package
-                                        </div> 
+                                        </div>
                                     </div>
 
                                 </div>
@@ -632,7 +640,9 @@
                                     <p class="form-level-settings">{{frm_adword_cap}}<a class="learnmore-pointer"
                                             id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn
                                             More</a></p>
-                                    <div class="ad-tble" *ngIf="adwordsmaxcount > 0">
+                                    <app-common-innerloading-spinner *ngIf="adword_loading">
+                                    </app-common-innerloading-spinner>
+                                    <div class="ad-tble" *ngIf="!adword_loading && adwordsmaxcount > 0">
                                         <div class="ad-l">
                                             You can have upto<b> {{adwordsmaxcount}} </b> <a class="learnmore-pointer"
                                                 matTooltip="Go to Jaldee Search Keywords"
@@ -648,7 +658,7 @@
                                                 *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
                                         </div>
                                     </div>
-                                    <div class="ad-l" *ngIf="adwordsmaxcount <= 0">
+                                    <div class="ad-l" *ngIf="!adword_loading && adwordsmaxcount <= 0">
                                         {{adword_maxcount}}
                                     </div>
                                 </div>
