@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="quantity">{{qnty_cap}}
                                             {{service.quantity}}</div>
-                                        <div class="price" style="flex-basis: 30% !important">{{(service.quantity * service.price) |
+                                        <div class="price">{{(service.quantity * service.price) |
                                             currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two">
@@ -110,7 +110,7 @@
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
                                             <div class="name">JDN</div>
-                                            <div class="price" style="flex-basis:50% !important">(-){{bill_data.jdn.discount |
+                                            <div class="price" style="flex-basis:30% !important">(-){{bill_data.jdn.discount |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div> 
