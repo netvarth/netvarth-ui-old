@@ -431,9 +431,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
-            if (this.businessjson.claimStatus === 'Claimed') {
-            this.getProviderDepart(this.provider_bussiness_id);
-            }
+            // if (this.businessjson.claimStatus === 'Claimed') {
+            // this.getProviderDepart(this.provider_bussiness_id);
+            // }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
@@ -493,6 +493,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.servicesjson = res;
             // for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[0].hasOwnProperty('departmentName')) {
+              this.showDepartments = true;
               if (this.branch_id && this.account_Type === 'BRANCH') {
                 this.getDoctors();
               }
@@ -583,7 +584,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               // this.getProviderDepart(this.provider_bussiness_id);
               // }
               this.locationjson[i]['checkins'] = [];
-              this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
+              if (this.userType === 'consumer') {
+                this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+              }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
             }
             this.getWaitingTime(locarr);
