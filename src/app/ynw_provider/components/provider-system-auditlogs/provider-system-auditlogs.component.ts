@@ -163,7 +163,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     }
     let seldate = '';
     if (this.holdlogSeldate) {
-      seldate = this.date_format.transformTofilterDate(this.holdlogSeldate);
+      seldate = this.shared_functions.transformToYMDFormat(this.holdlogSeldate);
     }
     /*if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
       this.sharedfunctionObj.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});

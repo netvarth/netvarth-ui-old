@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
+import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 @Injectable()
 
 export class SharedFunctions {
@@ -19,6 +20,7 @@ export class SharedFunctions {
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    public dateformat: DateFormatPipe,
     private common_datastorage: CommonDataStorageService
   ) { }
 
@@ -1455,5 +1457,16 @@ export class SharedFunctions {
     } else {
       return;
     }
+  }
+  transformToYMDFormat(date) {
+    const server = date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const newdate = new Date(serverdate);
+   const dd = newdate.getDate();
+   const mm = newdate.getMonth() + 1;
+    const y = newdate.getFullYear();
+    const date1 = y + '-' + mm + '-' + dd;
+    return date1 ;
+    
   }
 }

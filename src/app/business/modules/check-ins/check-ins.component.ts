@@ -541,7 +541,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loading = true;
     const _this = this;
     if (this.time_type === 1) {
-      const date = this.dateformat.transformTofilterDate(this.server_date);
+      //const date = this.dateformat.transformTofilterDate(this.server_date);
+      
+   const date = this.shared_functions.transformToYMDFormat(this.server_date);
+   console.log(date);
       return new Promise((resolve, reject) => {
         if (this.selected_location && this.selected_location.id && date) {
           _this.provider_services.getProviderLocationQueues(this.selected_location.id).subscribe(
@@ -1395,10 +1398,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
+        // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
+        // api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
+        api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
       // if (this.filter.futurecheckin_date != null && this.time_type === 2) {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
@@ -1442,7 +1447,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.labelSelection();
-    this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
+    // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
+    this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
@@ -2529,8 +2535,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
-      this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+    // if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
+      if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) { 
+    this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }

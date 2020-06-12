@@ -554,7 +554,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return new Promise((resolve) => {
         if (this.time_type === 1) {
-          date = this.dateformat.transformTofilterDate(this.server_date);
+         // date = this.dateformat.transformTofilterDate(this.server_date);
+          date = this.shared_functions.transformToYMDFormat(this.server_date);
         }
         if (date) {
           _this.provider_services.getProviderSchedulesbyDate(date).subscribe(
@@ -920,8 +921,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.future_appt_date === null) {
       this.getTomorrowDate();
     }
-    this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.future_appt_date));
-    const date = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+    this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
+    const date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     this.getQs(date).then(queues => {
       this.queues = queues;
       // if (!this.selQId) {
@@ -1026,10 +1027,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.availableSlots = [];
     let date;
     if (this.time_type === 1) {
-      date = this.dateformat.transformTofilterDate(this.server_date);
+     // date = this.dateformat.transformTofilterDate(this.server_date);
+     date = this.shared_functions.transformToYMDFormat(this.server_date);
     }
     if (this.time_type === 2) {
-      date = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+     // date = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+     date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     }
     if (this.selQId && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(data => {
@@ -1305,13 +1308,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
+        // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
+        api_filter['date-ge'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
+       // api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
+       api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
       if (this.filter.future_appt_date != null && this.time_type === 2) {
-        api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+       // api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.future_appt_date);
+       api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
         api_filter['apptStatus-neq'] = 'failed';
       }
     }
@@ -1352,7 +1358,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.labelSelection();
-    this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.future_appt_date));
+    this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
@@ -2413,7 +2419,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
+    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
       this.filter.future_appt_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');

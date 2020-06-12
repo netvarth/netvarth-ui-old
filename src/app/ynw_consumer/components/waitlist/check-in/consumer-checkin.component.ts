@@ -718,7 +718,7 @@ export class ConsumerCheckinComponent implements OnInit {
             'queue': {
                 'id': this.sel_queue_id
             },
-            'date': this.dateformat.transformTofilterDate(this.sel_checkindate),
+            'date': this.sharedFunctionobj.transformToYMDFormat(this.sel_checkindate),
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
