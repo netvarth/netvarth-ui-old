@@ -8,23 +8,20 @@
         <div class="form-group" style="padding-left: 15px;">
             <div class="border-style locate-customer">
                 <div *ngIf="callingModes === 'WhatsApp'">
-                    <span *ngIf="!is_web" class="btn-primary-n tele-btn" (click)="asktoLaunch()">
+                    <button *ngIf="!is_web" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}" (click)="asktoLaunch()">
                         <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
-                        <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
-                        <a style="padding-left: 10px;color: #3c8dbc;">Launch WhatsApp</a>
-                    </span>
-                    <span *ngIf="is_web" class="cs-btn bt2 disabled" (click)="launchWhtsap()">
+                        <a class="tspace"  [ngClass]="{'teli-wtsap-a': !btndisabled, 'tel-serv-a': btndisabled}">Launch WhatsApp</a>
+                    </button>
+                    <button *ngIf="is_web" class="cs-btn bt2 disabled">
                         <i class="fa fa-whatsapp fa-lg"></i>
-                        <!-- <a target="_blank" [href]="starting_url">{{starting_url}}</a> -->
                         <span style="padding-left: 20px;">Launch WhatsApp</span>
-                    </span>
+                    </button>
                 </div>
                 <div *ngIf="callingModes !== 'WhatsApp'">
-                    <span class="btn-primary-n tele-btn" (click)="asktoLaunch()">
+                    <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
                         <img src="https://img.icons8.com/color/16/000000/zoom.png" />
-                        <!-- <a style="padding-left: 10px;" target="_blank" [href]="starting_url">Launch Zoom</a> -->
-                        <a style="padding-left: 10px;">Launch Zoom</a>
-                    </span>
+                        <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Zoom</a>
+                    </button>
                 </div>
                 <div class="coupon-outer">
                     <a *ngIf="callingModes !== 'WhatsApp'" class="custId-cursor" (click)="meetingDetails()">Meeting

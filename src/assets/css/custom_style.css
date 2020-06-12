@@ -9267,3 +9267,9 @@ button.cust-button-1:disabled {
     word-break: break-all !important;
   }
 }
+.tel-serv-a {
+  color: grey !important;
+}
+.teli-wtsap-a {
+  color: #3c8dbc;
+}
