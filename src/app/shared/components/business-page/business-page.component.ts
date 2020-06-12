@@ -1298,7 +1298,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     // } else {
     //   service = serv;
     // }
-    // console.log(service);
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
