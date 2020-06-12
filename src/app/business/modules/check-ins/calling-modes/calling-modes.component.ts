@@ -61,8 +61,8 @@ export class CallingModesComponent implements OnInit {
         console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
-            this.consumer_fname = this.data.qdata.consumer.firstName;
-            this.consumer_lname = this.data.qdata.consumer.lastName;
+            this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
+            this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
             this.serv_name = this.data.qdata.service.name;
             this.date = this.data.qdata.date;
             this.time = this.data.qdata.checkInTime;
