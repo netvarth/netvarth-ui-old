@@ -1199,7 +1199,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   onButtonAfterHook() { }
   // Edited//
-  showExistingCheckin(locId, locName) {
+  showExistingCheckin(locId, locName, index) {
     this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -1215,6 +1215,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.extChecindialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         // this.getbusinessprofiledetails_json('location', true);
+        this.getExistingCheckinsByLocation(locId, index);
       }
     });
   }

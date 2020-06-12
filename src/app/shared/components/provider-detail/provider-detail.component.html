@@ -195,10 +195,9 @@
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <ng-container *ngIf="locationjson.length > 0 && !api_loading">
                         <div class="loc-accor">
-                            <mat-accordion *ngFor="let loc of locationjson">
+                            <mat-accordion *ngFor="let loc of locationjson; let i = index">
                                 <mat-expansion-panel style="margin-top: 10px !important;
-                            box-shadow: none !important;"
-                                    [expanded]="locationId == loc.id || !locationId">
+                            box-shadow: none !important;" [expanded]="locationId == loc.id || !locationId">
                                     <mat-expansion-panel-header expandedHeight="80px" collapsedHeight="80px"
                                         style="background-color: white !important;">
                                         <mat-panel-title>
@@ -226,7 +225,7 @@
                                             <div class="tp-l">
                                                 <div class="tp2">
                                                     <span class="ch-title" *ngIf="loc.checkins && loc.checkins.length>0"
-                                                        (click)="showExistingCheckin(loc.id, loc.place)">{{you_have_cap}}
+                                                        (click)="showExistingCheckin(loc.id, loc.place, i)">{{you_have_cap}}
                                                         <span class="count">{{loc.checkins.length}}
                                                             {{getTerminologyTerm('waitlist')}}</span>
                                                         {{at_this_loc_cap}}</span>
@@ -235,8 +234,7 @@
                                                             *ngIf="loc.display_schedule && loc.display_schedule.length > 0">
                                                             <span class="sub-title">Business Working Hours</span>
                                                             <ul>
-                                                                <li
-                                                                    *ngFor="let schedule of loc.display_schedule">
+                                                                <li *ngFor="let schedule of loc.display_schedule">
                                                                     <span class="day">{{schedule.dstr}}&nbsp;:</span>
                                                                     <span class="time">{{schedule.time}}
                                                                         <span class="form-level-settings"
@@ -264,28 +262,28 @@
                                                     <li *ngIf="loc.parkingType && loc.parkingType!=='' && loc.parkingType != undefined && loc.parkingType != 'none'"
                                                         [matTooltip]="'Parking Type: ' + loc.parkingType">
                                                         <span class="icon-parking"></span></li>
-                                                    <li
-                                                        *ngIf="loc.open24hours && loc.open24hours==1">
+                                                    <li *ngIf="loc.open24hours && loc.open24hours==1">
                                                         <span class="icon-open-time"
                                                             [matTooltip]="'24 Hours Open'"></span></li>
 
 
-                                                            <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'"
-                                                            [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
-                                                        </li>
-                                                        <li *ngIf="loc?.locationVirtualFields?.docambulance=='true'"
-                                                            [matTooltip]="'Ambulance Services'"><span
-                                                                class="icon-ambulance"></span>
-                                                        </li>
-                                                        <li [matTooltip]="'Emergency Services'" *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || 
+                                                    <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'"
+                                                        [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
+                                                    </li>
+                                                    <li *ngIf="loc?.locationVirtualFields?.docambulance=='true'"
+                                                        [matTooltip]="'Ambulance Services'"><span
+                                                            class="icon-ambulance"></span>
+                                                    </li>
+                                                    <li [matTooltip]="'Emergency Services'"
+                                                        *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || 
                                                             loc?.locationVirtualFields?.dentistemergencyservices=='true' || 
                                                             loc?.locationVirtualFields?.altemergencyservices=='true' ||
                                                             loc?.locationVirtualFields?.hosemergencyservices=='true' || 
                                                             loc?.locationVirtualFields?.veterinaryemergencyservices=='true'">
-                                                            <span class="icon-emergency"></span></li>
-                                                        <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
-                                                            [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
-                                                        </li>
+                                                        <span class="icon-emergency"></span></li>
+                                                    <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
+                                                        [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -329,15 +327,17 @@
                                                                             aria-hidden="true"></i>)
                                                                     </span></li>
                                                             </ul>
-                                                        </div> 
-                                                        <div class="donat-service" *ngIf="servicesjson.length > 0 && showDepartments">
-                                                            <span class="sub-title-donate checkin-service-group">Departments</span>
+                                                        </div>
+                                                        <div class="donat-service"
+                                                            *ngIf="servicesjson.length > 0 && showDepartments">
+                                                            <span
+                                                                class="sub-title-donate checkin-service-group">Departments</span>
                                                             <ul>
                                                                 <li *ngFor="let dept of servicesjson"
                                                                     (click)="getServicesByDepartment(loc, dept)">
                                                                     {{dept.departmentName}}</li>
                                                             </ul>
-                                                        </div> 
+                                                        </div>
                                                         <!-- <div class="donat-service"
                                                             *ngIf="!loc.departments && loc.serviceList && loc.serviceList.length > 0">
                                                             <span
@@ -417,8 +417,7 @@
                                                     (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                     <span
                                                         *ngIf="!loc['showToken']">{{getTerminologyTerm('waitlist')}}</span>
-                                                    <span
-                                                        *ngIf="loc['showToken']">{{get_token_btn}}</span>
+                                                    <span *ngIf="loc['showToken']">{{get_token_btn}}</span>
                                                     {{for_cap}}
                                                     <span>{{different_date_cap}}</span></span>
                                                 <!-- <span class="checkin-btn"
@@ -468,7 +467,8 @@
                                                                 {{dept}}</li>
                                                         </ul>
                                                     </div> -->
-                                                    <div class="donat-service" *ngIf="apptServicesjson.length > 0 && !showDepartments">
+                                                    <div class="donat-service"
+                                                        *ngIf="apptServicesjson.length > 0 && !showDepartments">
                                                         <span class="sub-title-donate">Appointment Service(s)</span>
                                                         <ul>
                                                             <li *ngFor="let appointmentService of apptServicesjson"
@@ -481,7 +481,8 @@
                                                                 </span></li>
                                                         </ul>
                                                     </div>
-                                                    <div class="donat-service" *ngIf="apptServicesjson.length > 0 && showDepartments">
+                                                    <div class="donat-service"
+                                                        *ngIf="apptServicesjson.length > 0 && showDepartments">
                                                         <span class="sub-title-donate">Departments</span>
                                                         <ul>
                                                             <li *ngFor="let dept of apptServicesjson"
@@ -525,8 +526,7 @@
                                             </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
-                                                <span (click)="payClicked(loc.id)"
-                                                    class="checkin-btn">Donate</span>
+                                                <span (click)="payClicked(loc.id)" class="checkin-btn">Donate</span>
                                             </div>
                                         </div>
                                     </div>
