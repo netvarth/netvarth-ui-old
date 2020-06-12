@@ -1093,8 +1093,8 @@ export class ProviderServices {
    getCustomViewDetail(id) {
       return this.servicemeta.httpGet('provider/customView/' + id);
    }
-   getCustomViewList(filter?) {
-      return this.servicemeta.httpGet('provider/customView',null, filter);
+   getCustomViewList() {
+      return this.servicemeta.httpGet('provider/customView');
    }
    deleteCustomView(id) {
       const path = 'provider/customView/' + id;

@@ -184,7 +184,9 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 data => {
                     this.customViewDetails = data;
+                    console.log(this.customViewDetails)
                     this.customViewName = this.customViewDetails.name;
+                    this.customViewFor = this.customViewDetails.type;
                     this.selectedDepartments = [];
                     this.selectedUsers = [];
                     this.selectedServices = [];
