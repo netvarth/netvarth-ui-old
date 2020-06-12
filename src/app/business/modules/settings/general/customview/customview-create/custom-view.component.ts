@@ -49,6 +49,10 @@ export class CustomViewComponent implements OnInit {
     filterDepList: any = [];
     filterUsersList: any = [];
     filterServiicesList: any = [];
+    providerSds: any = [];
+    schedulestoDisplay: any = [];
+    selectedScheduls: any = [];
+    selectedScheduleIds: any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -103,7 +107,12 @@ export class CustomViewComponent implements OnInit {
             .subscribe(() => {
                 this.filterQbySearch();
             });
-           
+            this.scheduleMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterSchedulebySearch();
+            });
+            
     }
     filterDeptbySearch() {
         if (!this.filterDepList) {
@@ -158,6 +167,19 @@ export class CustomViewComponent implements OnInit {
         }
         this.qstoDisplay = this.queuestoDisplay.filter(q => q.name.toLowerCase().indexOf(search) > -1);
     }
+    filterSchedulebySearch() {
+        if (!this.schedulestoDisplay) {
+            return;
+        }
+        let search = this.scheduleMultiFilterCtrl.value;
+        if (!search) {
+            this.todaysQs = this.schedulestoDisplay.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.todaysQs = this.schedulestoDisplay.filter(q => q.name.toLowerCase().indexOf(search) > -1);
+    }
     getAccountQs() {
         const filter = {
             'scope-eq': 'account'
@@ -166,6 +188,16 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.providerQs = data;
+                });
+    }
+    getAccountSchedules() {
+        const filter = {
+            'scope-eq': 'account'
+        };
+        this.provider_services.getAccountSchedules(filter)
+            .subscribe(
+                (data: any) => {
+                    this.providerSds = data;
                 });
     }
     getAccountServices() {
@@ -191,6 +223,8 @@ export class CustomViewComponent implements OnInit {
                     this.selectedUsers = [];
                     this.selectedServices = [];
                     this.selectedQs = [];
+                    this.selectedScheduls = [];
+                    
                     for (const id of this.customViewDetails.customViewConditions.departments) {
                         this.selectedDeptIds.push(id.departmentId);
                         for (const dept of this.departments) {
@@ -230,7 +264,7 @@ export class CustomViewComponent implements OnInit {
                                 }
                             }
                         }
-                        // if (this.customViewDetails.customViewConditions.queues){
+                        if (this.customViewDetails.customViewConditions.queues){
                             if (this.customViewDetails.customViewConditions.queues.length > 0) {
                                 for (const id of this.customViewDetails.customViewConditions.queues) {
                                     this.selectedQIds.push(id.id);
@@ -241,19 +275,19 @@ export class CustomViewComponent implements OnInit {
                                     }
                                 }
                             }
-                        // }
-                        // else if(this.customViewDetails.customViewConditions.schedules){
-                        //     if (this.customViewDetails.customViewConditions.schedules.length > 0) {
-                        //         for (const id of this.customViewDetails.customViewConditions.schedules) {
-                        //             this.selectedQIds.push(id.id);
-                        //             for (const q of this.qstoDisplay) {
-                        //                 if (q.id === id.id) {
-                        //                     this.selectedQs.push(q);
-                        //                 }
-                        //             }
-                        //         }
-                        //     }
-                        // }
+                        }
+                        else if(this.customViewDetails.customViewConditions.schedules){
+                            if (this.customViewDetails.customViewConditions.schedules.length > 0) {
+                                for (const id of this.customViewDetails.customViewConditions.schedules) {
+                                    this.selectedScheduleIds.push(id.id);
+                                    for (const q of this.todaysQs) {
+                                        if (q.id === id.id) {
+                                            this.selectedScheduls.push(q);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         
                     }, 250);
                     setTimeout(() => {
@@ -280,7 +314,6 @@ export class CustomViewComponent implements OnInit {
             );
     }
     getServices() {
-        
         let doctorsIds;
         let departmentIds;
         if(this.selectedDeptIds.length > 0){
@@ -362,13 +395,9 @@ export class CustomViewComponent implements OnInit {
         if (this.selectedUsersId.length > 0) {
             doctorsIds = this.selectedUsersId;
         }
-        // } else {
-        //     doctorsIds = this.allUsersIds;
-        // }
-        console.log(doctorsIds)
-        return new Promise((resolve, reject) => {
-            let filter;
-            if(doctorsIds && doctorsIds.length>0){
+        
+            let filter = {};
+            if (doctorsIds && doctorsIds.length > 0) {
                  filter = {
                     'provider-eq': doctorsIds.toString()
                 };
@@ -379,51 +408,54 @@ export class CustomViewComponent implements OnInit {
                         console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
-                        this.scheduledQs = [];
-                        
-                        const activeQs = [];
+                       // this.scheduledQs = [];
                         allQs = data;
                         console.log(allQs);
-                        const server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-                        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                        const today = new Date(todaydt);
-                        const dd = today.getDate();
-                        const mm = today.getMonth() + 1;
-                        const yyyy = today.getFullYear();
-                        let cmon;
-                        let cdate;
-                        if (mm < 10) {
-                            cmon = '0' + mm;
-                        } else {
-                            cmon = '' + mm;
+                        // const server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+                        // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                        // const today = new Date(todaydt);
+                        // const dd = today.getDate();
+                        // const mm = today.getMonth() + 1;
+                        // const yyyy = today.getFullYear();
+                        // let cmon;
+                        // let cdate;
+                        // if (mm < 10) {
+                        //     cmon = '0' + mm;
+                        // } else {
+                        //     cmon = '' + mm;
+                        // }
+                        // if (dd < 10) {
+                        //     cdate = '0' + dd;
+                        // } else {
+                        //     cdate = '' + dd;
+                        // }
+                        // const todayDate = yyyy + '-' + cmon + '-' + cdate;
+                        if (this.selectedUsersId.length === 0) {
+                            allQs = allQs.concat(this.providerSds);
                         }
-                        if (dd < 10) {
-                            cdate = '0' + dd;
-                        } else {
-                            cdate = '' + dd;
-                        }
-                        const todayDate = yyyy + '-' + cmon + '-' + cdate;
                         for (let ii = 0; ii < allQs.length; ii++) {
                             let schedule_arr = [];
-                            // extracting the schedule intervals
                             if (allQs[ii].apptSchedule) {
                                 schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].apptSchedule);
                             }
                             let display_schedule = [];
                             display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
                             allQs[ii]['displayschedule'] = display_schedule;
-                            if (allQs[ii].apptState === 'ENABLED') {
+                        }
+                        for (let ii = 0; ii < allQs.length; ii++) {
+                            if (allQs[ii].apptState === 'ENABLED'&& this.todaysQs.indexOf(allQs[ii]) === -1) {
                                 this.todaysQs.push(allQs[ii]);
-                                console.log("qs",this.todaysQs)
                             }
                         }
-                        resolve();
+
+                        this.schedulestoDisplay = this.todaysQs;
+                       
                     },
                     (error) => {
                         console.log(error);
-                        reject(error);
+                        
                     });
-        });
+       
     }
 
 
@@ -440,9 +472,12 @@ export class CustomViewComponent implements OnInit {
         this.selectedUsers = [];
         this.selectedServices = [];
         this.selectedQs = [];
+        this.selectedScheduls = [];
         this.selectedUsersId = [];
         this.selectedServiceids = [];
         this.selectedQIds = [];
+        this.selectedScheduleIds = [];
+        
     }
     userSelection(userIds) {
         if (this.selectedUsersId.indexOf(userIds) === -1) {
@@ -452,14 +487,16 @@ export class CustomViewComponent implements OnInit {
         }
         if (this.customViewFor === 'Waitlist'){
             this.getQs();
-        }else {
+        } else {
             this.getAppointmentSchedules();
         }
         this.getServices();
         this.selectedServices = [];
         this.selectedQs = [];
+        this.selectedScheduls = [];
         this.selectedServiceids = [];
         this.selectedQIds = [];
+        this.selectedScheduleIds = [];
     }
     serviceSelection(servIds) {
         if (this.selectedServiceids.indexOf(servIds) === -1) {
@@ -469,7 +506,9 @@ export class CustomViewComponent implements OnInit {
         }
         this.qSelectionByService();
         this.selectedQs = [];
+        this.selectedScheduls = [];
         this.selectedQIds = [];
+        this.selectedScheduleIds = [];
     }
     qSelectionByService() {
         if (this.customViewFor === 'Waitlist'){
@@ -493,18 +532,18 @@ export class CustomViewComponent implements OnInit {
             const qs = [];
             if (this.selectedServices.length > 0) {
                 for (let i = 0; i < this.selectedServices.length; i++) {
-                    for (let j = 0; j < this.todaysQs.length; j++) {
-                        for (let k = 0; k < this.todaysQs[j].services.length; k++) {
-                            if (this.selectedServices[i].id === this.todaysQs[j].services[k].id) {
-                                qs.push(this.todaysQs[j]);
+                    for (let j = 0; j < this.schedulestoDisplay.length; j++) {
+                        for (let k = 0; k < this.schedulestoDisplay[j].services.length; k++) {
+                            if (this.selectedServices[i].id === this.schedulestoDisplay[j].services[k].id) {
+                                qs.push(this.schedulestoDisplay[j]);
                             }
                         }
                     }
                 }
-                this.qstoDisplay = qs;
+                this.todaysQs = qs;
                 return false;
             } else {
-                this.qstoDisplay = this.todaysQs;
+                this.todaysQs = this.schedulestoDisplay;
             }
         }
     }
@@ -513,6 +552,13 @@ export class CustomViewComponent implements OnInit {
             this.selectedQIds.push(QIds);
         } else {
             this.selectedQIds.splice(this.selectedQIds.indexOf(QIds), 1);
+        }
+    }
+    scheduleSelection(QIds) {
+        if (this.selectedScheduleIds.indexOf(QIds) === -1) {
+            this.selectedScheduleIds.push(QIds);
+        } else {
+            this.selectedScheduleIds.splice(this.selectedScheduleIds.indexOf(QIds), 1);
         }
     }
     getUsers() {
@@ -558,6 +604,15 @@ export class CustomViewComponent implements OnInit {
             }
         } else {
             for (const id of this.qstoDisplay) {
+                qids.push({ 'id': id.id });
+            }
+        }
+        if (this.selectedScheduleIds.length !== 0) {
+            for (const id of this.selectedScheduleIds) {
+                qids.push({ 'id': id });
+            }
+        } else {
+            for (const id of this.todaysQs) {
                 qids.push({ 'id': id.id });
             }
         }

@@ -347,7 +347,7 @@ export class ProviderServices {
    }
    getProviderQueues(filter?) {
       return this.servicemeta.httpGet('provider/waitlist/queues', null, filter);
-   }
+   } 
    getProviderLocationQueues(location_id) {
       const url = 'provider/waitlist/queues/' + location_id + '/location';
       return this.servicemeta.httpGet(url);
@@ -1442,4 +1442,7 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/availableNow';
       return this.servicemeta.httpGet(url);
     }
+    getAccountSchedules(filter?) {
+      return this.servicemeta.httpGet('provider/appointment/schedule', null, filter);
+   } 
 }
