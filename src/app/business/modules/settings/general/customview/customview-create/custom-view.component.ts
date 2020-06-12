@@ -230,16 +230,31 @@ export class CustomViewComponent implements OnInit {
                                 }
                             }
                         }
-                        if (this.customViewDetails.customViewConditions.queues.length > 0) {
-                            for (const id of this.customViewDetails.customViewConditions.queues) {
-                                this.selectedQIds.push(id.id);
-                                for (const q of this.qstoDisplay) {
-                                    if (q.id === id.id) {
-                                        this.selectedQs.push(q);
+                        // if (this.customViewDetails.customViewConditions.queues){
+                            if (this.customViewDetails.customViewConditions.queues.length > 0) {
+                                for (const id of this.customViewDetails.customViewConditions.queues) {
+                                    this.selectedQIds.push(id.id);
+                                    for (const q of this.qstoDisplay) {
+                                        if (q.id === id.id) {
+                                            this.selectedQs.push(q);
+                                        }
                                     }
                                 }
                             }
-                        }
+                        // }
+                        // else if(this.customViewDetails.customViewConditions.schedules){
+                        //     if (this.customViewDetails.customViewConditions.schedules.length > 0) {
+                        //         for (const id of this.customViewDetails.customViewConditions.schedules) {
+                        //             this.selectedQIds.push(id.id);
+                        //             for (const q of this.qstoDisplay) {
+                        //                 if (q.id === id.id) {
+                        //                     this.selectedQs.push(q);
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        
                     }, 250);
                     setTimeout(() => {
                         this.loading = false;

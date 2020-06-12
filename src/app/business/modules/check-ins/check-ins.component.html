@@ -52,7 +52,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <ul class="menu">
-                        <li *ngFor="let view of views;let i = index" [(value)]="i"
+                        <li *ngFor="let view of viewsList;let i = index" [(value)]="i"
                           [ngClass]="{'active': (view.id == selectedView.id)}">
                           <a class="pointer-cursor" (click)="handleViewSel(view)">
                             <h4 *ngIf="view.name.length>='27'">

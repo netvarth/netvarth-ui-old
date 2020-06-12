@@ -295,6 +295,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_loading = false;
   future_loading = false;
   history_loading = false;
+  checkinViewList: any =[];
+  viewsList: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -498,13 +500,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             this.getViews().then(
               (data: any) => {
+                this.checkinViewList = data
+            for (let i = 0; i < this.checkinViewList.length; i++) {
+              if (this.checkinViewList[i].type === 'Waitlist') {
+                this.viewsList.push(this.checkinViewList[i]);
+                console.log(this.viewsList)
+              }
+            }
                 this.views = data;
+                console.log(this.views)
                 const tempView = {};
                 tempView['name'] = 'Default';
                 tempView['id'] = 0;
                 tempView['customViewConditions'] = {};
                 tempView['customViewConditions'].queues = allActiveQs;
-                this.views.push(tempView);
+                this.viewsList.push(tempView);
                 const selected_view = this.shared_functions.getitemFromGroupStorage('selectedView');
                 if (selected_view) {
                   const viewFilter = this.views.filter(view => view.id === selected_view.id);
@@ -2018,12 +2028,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getViews() {
     const _this = this;
-    let filter;
-    filter = {
-      'type-eq': 'Waitlist'
-  };
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getCustomViewList(filter).subscribe(data => {
+      _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
       },
         (error) => {

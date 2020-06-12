@@ -442,7 +442,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         tempView['name'] = 'Default';
         tempView['id'] = 0;
         tempView['customViewConditions'] = {};
-        tempView['customViewConditions'].queues = allActiveQs;
+        tempView['customViewConditions'].schedules = allActiveQs;
         this.selectedView = tempView;
         this.getViews().then(
           (data: any) => {
@@ -454,7 +454,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
             this.views = data;
-            this.views.push(tempView);
+            this.viewsList.push(tempView);
             const selected_view = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
             if (selected_view) {
               const viewFilter = this.views.filter(view => view.id === selected_view.id);
