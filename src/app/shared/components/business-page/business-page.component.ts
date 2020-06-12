@@ -1024,7 +1024,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
 
   }
-  checkinClicked(obj, locid, locname, cdate, chdatereq) {
+  checkinClicked( locid, locname, cdate, chdatereq,obj) {
+    console.log(cdate);
     // this.changedate_req = chdatereq;
     // this.showCheckin(locid, locname, cdate, 'consumer');
 
@@ -1040,7 +1041,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  appointmentClicked(obj, locid, locname, cdate, chdatereq) {
+  appointmentClicked(locid, locname, cdate, chdatereq,obj) {
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
@@ -1133,6 +1134,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(locid, locname, curdate, origin?) {
+    console.log(curdate);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,

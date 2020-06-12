@@ -391,10 +391,10 @@
                                                     </ng-container>
                                                 </ng-container>
                                                 <span class="checkin-btn"
-                                                    (click)="checkinClicked(loc, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                                    (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                                     *ngIf="loc['isAvailableToday'] && loc['availableToday'] && !loc['showToken'] && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
                                                 <span class="checkin-btn"
-                                                    (click)="checkinClicked(loc, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                                    (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                                     *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['showToken'] && loc['onlineCheckIn']">{{get_token_btn}}</span>
                                                 <span class="checkin-btn disabled" style="cursor: auto"
                                                     *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
@@ -402,7 +402,7 @@
                                                     *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                                 <span class="checkin-future pdetailbt10"
                                                     *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                                    (click)="checkinClicked(loc, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                                    (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                     <span
                                                         *ngIf="!loc['showToken']">{{getTerminologyTerm('waitlist')}}</span>
                                                     <span *ngIf="loc['showToken']">{{get_token_btn}}</span>
@@ -468,7 +468,7 @@
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
                                                 <span
-                                                    (click)="appointmentClicked(loc, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                                    (click)="appointmentClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                                     class="checkin-btn">Appointment</span>
                                             </div>
                                         </div>
