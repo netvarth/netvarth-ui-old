@@ -9255,9 +9255,15 @@ button.cust-button-1:disabled {
 .checkin-service-group {
   margin-top: 10px;
 }
+.tel-serv-wrap {
+  word-break: unset;
+}
 @media (max-width: 320px) {
   .form-level-early-hint {
     width: 100% !important;
     height: 100% !important;
+  }
+  .tel-serv-wrap {
+    word-break: break-all !important;
   }
 }
