@@ -585,7 +585,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               // }
               this.locationjson[i]['checkins'] = [];
               if (this.userType === 'consumer') {
-                this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+                this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
             }
@@ -1053,14 +1053,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
-    let is_test_account = null;
-    if (current_provider) {
-      if (current_provider.fields.test_account === '1') {
-        is_test_account = true;
-      } else {
-        is_test_account = false;
-      }
-    }
+    // let is_test_account = null;
+    // if (current_provider) {
+    //   if (current_provider.test_account === '1') {
+    const is_test_account = true;
+    //   } else {
+    //     is_test_account = false;
+    //   }
+    // }
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
@@ -1088,10 +1088,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1124,9 +1124,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         } else {
-          this.showCheckin(current_provider['fields']['location_id1'], current_provider['fields']['place1'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
         }
       }
     });

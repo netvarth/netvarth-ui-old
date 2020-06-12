@@ -215,7 +215,10 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
-      data: waitlist
+      data: {
+        'detail': waitlist,
+        'isFrom': 'checkin'
+      }
     });
 
     this.ratedialogRef.afterClosed().subscribe(result => {

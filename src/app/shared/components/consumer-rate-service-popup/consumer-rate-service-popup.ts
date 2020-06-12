@@ -35,6 +35,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   ) {
     this.waitlist = data.detail;
+    console.log(data);
     this.type = data.isFrom;
     if(this.type == 'checkin'){
       this.uuid = this.waitlist.ynwUuid;

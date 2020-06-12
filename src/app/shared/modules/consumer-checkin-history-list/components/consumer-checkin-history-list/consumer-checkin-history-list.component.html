@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let his_wait of history">
-                <td data-title="Service Provider" class="td1" (click)="providerDetail(his_wait.provider)">
+                <td data-title="Service Provider" class="td1" (click)="providerDetail(his_wait.providerAccount)">
                     <span class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span></td>
                 <td data-title="Service" class="td6">{{his_wait.service.name || '' | capitalizeFirst}}</td>
                 <td data-title="Location" class="td2">{{his_wait.queue.location.place || '' | capitalizeFirst}}</td>

@@ -147,6 +147,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   }
 
   getWaitlistBill(waitlist) {
+    console.log(waitlist);
     const params = {
       account: waitlist.providerAccount.id
     };
@@ -164,7 +165,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
 
   viewBill(checkin, bill_data) {
     if (!this.billdialogRef) {
-      bill_data['passedProvname'] = checkin['provider']['businessName'];
+      bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '50%',
         // panelClass: ['commonpopupmainclass', 'billpopup'],
@@ -173,7 +174,8 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
         autoFocus: true,
         data: {
           checkin: checkin,
-          bill_data: bill_data
+          bill_data: bill_data,
+          isFrom: 'checkin'
         }
       });
 
@@ -218,12 +220,16 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
 
 
   rateService(waitlist) {
+    console.log(waitlist);
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       autoFocus: true,
-      data: waitlist
+      data: {
+        'detail': waitlist,
+        'isFrom': 'checkin'
+      }
     });
 
     this.ratedialogRef.afterClosed().subscribe(result => {
@@ -240,6 +246,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
     }
   }
   providerDetail(provider) {
+    console.log(provider);
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
