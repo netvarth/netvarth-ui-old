@@ -47,6 +47,7 @@ export class CallingModesComponent implements OnInit {
     jalde_q_id;
     serv_provider: any;
     is_started = false;
+    btndisabled = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -60,8 +61,8 @@ export class CallingModesComponent implements OnInit {
         console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
-            this.consumer_fname = this.data.qdata.consumer.firstName;
-            this.consumer_lname = this.data.qdata.consumer.lastName;
+            this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
+            this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
             this.serv_name = this.data.qdata.service.name;
             this.date = this.data.qdata.date;
             this.time = this.data.qdata.checkInTime;
@@ -271,6 +272,7 @@ export class CallingModesComponent implements OnInit {
         this.selectAlrdyWaiting();
     }
     back() {
+        this.btndisabled = false;
         this.step = 1;
     }
     getMeetingDetails() {
@@ -310,9 +312,12 @@ export class CallingModesComponent implements OnInit {
         }
     }
     asktoLaunch() {
+        this.btndisabled = true;
+        this.getMeetingDetails();
         this.step = 6;
     }
     makeStarted() {
+        this.btndisabled = false;
         if (this.data.type === 'checkin') {
             this.changeWaitlistStatus(this.data.qdata, 'STARTED');
             this.step = 1;

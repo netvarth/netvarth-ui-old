@@ -182,7 +182,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       //   mn = mon;
       // }
       // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
-      seldate = this.date_format.transformTofilterDate(this.holdalertSeldate);
+      seldate = this.shared_functions.transformToYMDFormat(this.holdalertSeldate);
     }
     /*if (pagecall === false && this.holdalertSelAck === '' && seldate === '') {
       this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});

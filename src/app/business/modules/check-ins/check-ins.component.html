@@ -1,9 +1,9 @@
 <section>
-  <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+  <app-breadcrumb  (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
-<section class="dashboard content pro-dash" *ngIf="!apiloading">
-  <div class="col-md-12 no-padding-small">
+<section class="dashboard content pro-dash" >
+  <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin">
@@ -52,7 +52,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <ul class="menu">
-                        <li *ngFor="let view of views;let i = index" [(value)]="i"
+                        <li *ngFor="let view of viewsList;let i = index" [(value)]="i"
                           [ngClass]="{'active': (view.id == selectedView.id)}">
                           <a class="pointer-cursor" (click)="handleViewSel(view)">
                             <h4 *ngIf="view.name.length>='27'">
@@ -99,9 +99,9 @@
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
-                    <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
+                    <span *ngIf="!showToken">
                       Walk in</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span>
+                    <span *ngIf="showToken">&nbsp; Token</span>
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -453,16 +453,16 @@
           <div class="dash-list">
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
-              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
+              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0 && !future_loading">
                 {{no_future_checkins}}
               </div>
               <!-- Timeslot disabled queue dashboard -->
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0 && !future_loading">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
                     <div class="info-box-icon">
-                      <div class="tkn pointer-cursor" *ngIf="checkin.token && calculationmode=='NoCalc'"
+                      <div class="tkn pointer-cursor" *ngIf="checkin.token"
                         (click)="goCheckinDetail(checkin)">
                         <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                       </div>
@@ -567,10 +567,10 @@
                   </div>
                 </div>
               </div>
-              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+              <app-common-innerloading-spinner *ngIf="future_loading"></app-common-innerloading-spinner>
               <!-- Timeslot enabled queue dashboard -->
               <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
+                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !future_loading">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                   *ngFor="let slot of availableSlots, let i=index">
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
@@ -679,10 +679,11 @@
             </div>
             <!--History-->
             <div class="col-md-12 history col-xs-12 col-sm-12 history no-padding-small" *ngIf="time_type==3">
-              <div class="no-dta col-md-12" *ngIf="check_in_filtered_list.length === 0">
+              <app-common-innerloading-spinner *ngIf="history_loading"></app-common-innerloading-spinner>
+              <div class="no-dta col-md-12" *ngIf="check_in_filtered_list.length === 0 && !history_loading">
                 {{no_history}}
               </div>
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_filtered_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_filtered_list.length>0 && !history_loading">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_filtered_list, let i=index">
                   <div class="info-box">
@@ -777,10 +778,10 @@
               </div>
             </div>
             <!-- Today-->
-            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0 && !loading">
+            <div class="no-dta col-md-12" *ngIf="time_type==1 && noFilter && queues.length ==0 && !today_loading && !loading">
               <p>{{no_service_cap}}</p>
             </div>
-            <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
+            <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0 && !today_loading">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="labelList">
                   <div class="statuses col-md-12 col-xs-12 col-sm-12"
@@ -850,7 +851,7 @@
                     *ngFor="let checkin of started_checkins_list, let i=index"
                     [class.selected-waitlist]="startedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>
@@ -1047,7 +1048,7 @@
 
                 <!-- Timeslot disabled queue statusboard -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  *ngIf="new_checkins_list.length>0 && showstatus['new'] && !today_loading">
 
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of new_checkins_list, let i=index"
@@ -1055,17 +1056,17 @@
                     <div class="info-box" style="box-shadow:none"
                       [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
-                      <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
-                        <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">
+                      <div class="info-box-icon">
+                        <div class="tkn pointer-cursor" *ngIf="checkin.token && showToken" (click)="goCheckinDetail(checkin)">
                           <ng-container>{{checkin.token}}</ng-container>
                         </div>
-                        <div class="dashboard-wait pointer-cursor" *ngIf="calculationmode!=='NoCalc'"
+                        <div class="dashboard-wait pointer-cursor" *ngIf="!showToken"
                           (click)="goCheckinDetail(checkin)">
                           <ng-container>
                             {{getAppxTime(checkin)}}</ng-container>
                         </div>
                       </div>
-                      <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                      <div class="info-box-content">
                         <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
@@ -1186,7 +1187,7 @@
                     </div>
                   </div>
                 </div>
-                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
@@ -1260,7 +1261,7 @@
                     *ngFor="let checkin of completed_checkins_list, let i=index"
                     [class.selected-waitlist]="completedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token && showToken">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>
@@ -1358,7 +1359,7 @@
                     *ngFor="let checkin of cancelled_checkins_list, let i=index"
                     [class.selected-waitlist]="cancelledwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token && showToken">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>
@@ -1463,7 +1464,7 @@
       </ngx-qrcode>
     </div>
   </div>
+  <div *ngIf="apiloading" style="margin-top: 100px;">
+    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+  </div>
 </section>
-<div *ngIf="apiloading" style="margin-top: 100px">
-  <app-common-innerloading-spinner></app-common-innerloading-spinner>
-</div>

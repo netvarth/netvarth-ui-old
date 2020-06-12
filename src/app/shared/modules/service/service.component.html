@@ -34,17 +34,18 @@
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
-                    <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
+                    <!-- <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span> -->
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
             </div>
             <div class="c-ot" *ngIf="service_data.virtualServiceType">
                 <div class="item">
-                    <span class=" ttle">Tool</span>
+                    <span class=" ttle">Video Call App</span>
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span class=" ttle">Tool ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -180,9 +181,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     class="example-full-width mat-select-virtualservice">
                     <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
                         (selectionChange)="selectServiceTypeHandler(type.value)">
-                        <mat-option [value]="'audioService'">
+                        <!-- <mat-option [value]="'audioService'">
                             Audio
-                        </mat-option>
+                        </mat-option> -->
                         <mat-option [value]="'videoService'">
                             Video
                         </mat-option>
@@ -193,7 +194,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
                 *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="mat-select-virtualsrvcategory">
-                    <mat-label>Select tool</mat-label>
+                    <mat-label>Select Video Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
                         name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">

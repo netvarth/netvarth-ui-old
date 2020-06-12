@@ -8059,9 +8059,19 @@ owl-carousel .bt3.active {
 
 .batchname {
   font-size: 0.8rem !important;
-  margin-top: 5px !important;
+  /* margin-top: 5px !important; */
+  display:inline;
 }
-
+  @media only screen and (max-width: 700px){
+  .batchname{
+  font-size: .5rem !important;
+  }
+  }
+  @media only screen and (max-width: 700px){
+  .example-full-width{
+  font-size: .8rem !important; 
+  }
+  }
 .onlineProfile {
   padding: 10px;
   border: 1px solid #00aef2;
@@ -9271,9 +9281,28 @@ button.cust-button-1:disabled {
 .checkin-service-group {
   margin-top: 10px;
 }
+.tel-serv-wrap {
+  word-break: unset;
+}
 @media (max-width: 320px) {
   .form-level-early-hint {
     width: 100% !important;
     height: 100% !important;
   }
+  .tel-serv-wrap {
+    word-break: break-all !important;
+  }
+}
+.tel-serv-a {
+  color: grey !important;
+}
+.teli-wtsap-a {
+  color: #3c8dbc;
+}
+.know-status-i {
+  padding: 0 !important;
+  padding-left: 10px !important;
+}
+.knw-stat-line-h {
+  line-height: 2;
 }

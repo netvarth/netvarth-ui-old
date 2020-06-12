@@ -188,10 +188,10 @@ export class ProviderReimburseReportComponent implements OnInit {
       api_filter['status-eq'] = this.statusMultiCtrl.toString();
     }
     if (this.filter.from_date != null) {
-      api_filter['reportFromDate-ge'] = this.dateformat.transformTofilterDate(this.filter.from_date);
+      api_filter['reportFromDate-ge'] = this.sharedfunctionObj.transformToYMDFormat(this.filter.from_date);
     }
     if (this.filter.to_date != null) {
-      api_filter['reportEndDate-le'] = this.dateformat.transformTofilterDate(this.filter.to_date);
+      api_filter['reportEndDate-le'] = this.sharedfunctionObj.transformToYMDFormat(this.filter.to_date);
     }
     return api_filter;
   }

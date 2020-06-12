@@ -26,7 +26,8 @@ export class VideoSettingsComponent implements OnInit {
     imoMode = '';
     jaldeeMode = '';
     domain: any;
-
+    virtualCallingMode_status: any;
+    virtualCallingMode_statusstr: string;
     videoModes = {
         // Skype: { value: 'Skype', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
         WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
@@ -60,8 +61,30 @@ export class VideoSettingsComponent implements OnInit {
                 { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getVirtualCallingModesList();
+        this.getGlobalSettingsStatus();
     }
 
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.virtualCallingMode_status = data.virtualService;
+                this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
+            });
+    }
+    handle_virtualCallingModeStatus(event) {
+        const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                }
+            );
+    }
     performActions(action) {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/comm->videocall-settings']);
@@ -87,7 +110,7 @@ export class VideoSettingsComponent implements OnInit {
             });
     }
     triggerChange(resultMode, callingMode) {
-        if (resultMode['value'].actualValue.trim() !== '' ) {
+        if (resultMode['value'].actualValue.trim() !== '') {
             this.updateVideoSettings(resultMode, callingMode);
         } else {
             if (!resultMode.value.enabled) {
@@ -139,19 +162,21 @@ export class VideoSettingsComponent implements OnInit {
         };
         this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
-                console.log(postdata)
-                if(postdata.virtualCallingModes[0].callingMode == "WhatsApp"){
+                if (postdata.virtualCallingModes[0].callingMode === 'WhatsApp') {
                     this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
-                this.getVirtualCallingModesList();
-                }else if(postdata.virtualCallingModes[0].callingMode == "Zoom"){
+                    this.getVirtualCallingModesList();
+                } else if (postdata.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
                     this.getVirtualCallingModesList();
                 }
-                
             },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
+    }
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);
     }
 }

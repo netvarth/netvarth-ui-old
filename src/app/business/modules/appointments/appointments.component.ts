@@ -286,6 +286,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   path = projectConstants.PATH;
   showQR = false;
   gnr_link = 2;
+  appointmentViewList: any =[];
+  viewsList: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -440,12 +442,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         tempView['name'] = 'Default';
         tempView['id'] = 0;
         tempView['customViewConditions'] = {};
-        tempView['customViewConditions'].queues = allActiveQs;
+        tempView['customViewConditions'].schedules = allActiveQs;
         this.selectedView = tempView;
         this.getViews().then(
           (data: any) => {
+            this.appointmentViewList = data
+            for (let i = 0; i < this.appointmentViewList.length; i++) {
+              if (this.appointmentViewList[i].type === 'Appointment') {
+                this.viewsList.push(this.appointmentViewList[i]);
+                console.log(this.viewsList)
+              }
+            }
             this.views = data;
-            this.views.push(tempView);
+            this.viewsList.push(tempView);
             const selected_view = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
             if (selected_view) {
               const viewFilter = this.views.filter(view => view.id === selected_view.id);
@@ -1757,17 +1766,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
-  // apptClicked(type, time?) {
-  //   if (this.queues.length === 0) {
-  //     this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
-  //   } else {
-  //     let slot = '';
-  //     if (time) {
-  //       slot = time;
-  //     }
-  //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
-  //   }
-  // }
   apptClicked(type, time?) {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1776,9 +1774,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, isFrom : 'appointment' } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
     }
   }
+  // apptClicked(type, time?) {
+  //   if (this.queues.length === 0) {
+  //     this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     let slot = '';
+  //     if (time) {
+  //       slot = time;
+  //     }
+  //     this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, isFrom : 'appointment' } });
+  //   }
+  // }
   apptFutureClicked(type, time?) {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1787,7 +1796,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'customers', 'find'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date, isFrom : 'appointment' } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date} });
     }
   }
   searchCustomer(source, appttime) {
@@ -1924,11 +1933,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getViews() {
     const _this = this;
-    const viewfilter = {
-      'type-eq': 'Appointment'
-    };
+    
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getCustomViewList(viewfilter).subscribe(data => {
+      _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);
       }, error => {
         reject();

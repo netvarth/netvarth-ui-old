@@ -1,65 +1,67 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" ></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
-               
+
 <section>
     <div class="copy one col-xs-12 col-sm-12 no-padding">
-       <div class="col-md-6 col-sm-6 col-xs-12">
-            <table id="tblOne" style="width:100%; float:left" >
-                <div class="pay-section card ng-star-inserted">
-                    <div class="row">
-                        <table class="table" >
-                                <thead>
-                                    <tr class="tble-filtr-tr">
-                                       <th>License</th>
-                                       <th >Total</th >
-                                       <th>Used</th>
-                                       <th>Compliance Info </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let data of metrics">
-                                       <td>{{data.metricName}}</td>
-                                       <td>{{data.total }} {{data.unitValue}}</td>
-                                       <td>{{data.used }}  {{metric.unitValue}}</td>
-                                       <td>{{data.ComplainceInfo}}</td>
-                                    </tr>
-                                </tbody>
-                        </table> 
-                     </div>
-                </div>
-            </table>
-       
-        </div>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <table id="tblTwo" style="width:100%; float:left">
-            <div class="pay-section card ng-star-inserted">
-                <div class="row">
-                    <table class="table">
-                       <thead>
-                            <tr class="tble-filtr-tr">
-                                <th>License</th>
-                                <th>Allowed</th>
-                                <th>Used</th>
-                                 <th>Compliance Info </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of metrices">
-                                 <td>{{data.metricName}}</td>
-                                 <td>{{data.isAllowed }} </td>
-                                <td>{{data.isUsed }} </td>
+        <div class="col-md-6 col-sm-12 col-xs-12 no-padding-small">
+            <!-- <table class="" > -->
+            <div class="pay-section card no-padding-small ng-star-inserted responsive-table">
+                <!-- <div class="row"> -->
+                <table class="table width100pc">
+                    <thead>
+                        <tr class="tble-filtr-tr">
+                            <th>License</th>
+                            <th>Total</th>
+                            <th>Used</th>
+                            <th>Compliance Info </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of metrics">
+                            <td>{{data.metricName}}</td>
+                            <td>{{data.total }} {{data.unitValue}}</td>
+                            <td>{{data.used }} {{metric.unitValue}}</td>
                             <td>{{data.ComplainceInfo}}</td>
-                         </tr>
-                        </tbody>
-                    </table>
-            </div>  
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- </div> -->
             </div>
-        </table> 
+            <!-- </table> -->
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12 no-padding-small">
+            <!-- <table id="tblTwo" style="width:100%; float:left"> -->
+            <div class="pay-section card ng-star-inserted responsive-table">
+                <!-- <div class="row"> -->
+                <table class="table width100pc">
+                    <thead>
+                        <tr class="tble-filtr-tr">
+                            <th>License</th>
+                            <th>Allowed</th>
+                            <th>Used</th>
+                            <th>Compliance Info </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of metrices">
+                            <td>{{data.metricName}}</td>
+                            <td class="locate-customer"><i *ngIf="data.isAllowed === true" class="fa fa-check"></i>
+                                <i *ngIf="data.isAllowed === false" class="fa fa-times"></i>
+                            </td>
+                            <td class="locate-customer">
+                                <i *ngIf="data.isUsed === true" class="fa fa-check"></i>
+                                <i *ngIf="data.isUsed === false" class="fa fa-times"></i>
+                            </td>
+                            <td>{{data.ComplainceInfo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- </div>   -->
+            </div>
+            <!-- </table>  -->
+        </div>
     </div>
-    
-</div>
+    <div class="clearfix"></div>
 </section>
-
-

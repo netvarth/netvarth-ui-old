@@ -146,21 +146,21 @@
                     Appointment Schedules</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
-                      <mat-select placeholder="Schedules" [(ngModel)]="selectedSchedules" [multiple]="true">
+                      <mat-select placeholder="Schedules" [(ngModel)]="selectedScheduls" [multiple]="true">
                         <ngx-mat-select-search [formControl]="scheduleMultiFilterCtrl" placeholderLabel="Search schedules">
                         </ngx-mat-select-search>
-                        <mat-option *ngFor=" let schedule of todaysQs" [value]="schedule" (click)="qSelection(schedule.id)">
+                        <mat-option *ngFor=" let schedule of todaysQs" [value]="schedule" (click)="scheduleSelection(schedule.id)">
                           {{schedule.name}}
                           {{schedule.displayschedule[0].dstr}}[{{schedule.displayschedule[0].time}}]
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedQs.length > 0">
+                  <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedScheduls.length > 0">
                     <p>
                       Selected Queues:
                     </p>
-                    <ul *ngFor="let queue of selectedQs">
+                    <ul *ngFor="let queue of selectedScheduls">
                       <li>
                         {{queue.name}}<br>
                         {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]

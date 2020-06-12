@@ -15,9 +15,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     <mat-form-field>
                                         <div class="input-group">
                                             <div class="input-group-prepend mob-prefix">
-                                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                                <span class="input-group-text" style="padding: 15px 10px 0 5px!important;
+                                                font-size: .875rem!important;">{{mob_prefix_cap}}</span>
                                             </div>
-                                            <input matInput type="text" matInput class="form-control"
+                                            <input  type="text" matInput class="form-control"
                                                 (keypress)="isNumeric($event)" id="mobile_number"
                                                 placeholder="{{mobile_cap}} *" formControlName="mobile_number"
                                                 autocomplete="off" maxlength=10>

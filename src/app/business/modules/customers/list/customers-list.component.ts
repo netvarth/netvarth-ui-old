@@ -216,7 +216,7 @@ export class CustomersListComponent implements OnInit {
             api_filter['firstName-eq'] = this.filter.first_name;
         }
         if (this.filter.date != null) {
-            api_filter['dob-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
+            api_filter['dob-eq'] = this.shared_functions.transformToYMDFormat(this.filter.date);
         }
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
