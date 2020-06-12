@@ -310,6 +310,7 @@ export class CallingModesComponent implements OnInit {
         }
     }
     asktoLaunch() {
+        this.getMeetingDetails();
         this.step = 6;
     }
     makeStarted() {

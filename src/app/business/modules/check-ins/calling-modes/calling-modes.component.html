@@ -188,8 +188,8 @@
             (click)="makeStarted()">
             <a style="color:white" target="_blank" [href]="starting_url">Yes</a>
             </button>&nbsp;&nbsp;&nbsp;
-        <button type="button" class="cs-btn bt1" style="background: #f24949;" (click)="back()">
-            <a style="color:white" target="_blank" [href]="starting_url">No</a>
+        <button type="button" class="cs-btn bt1" style="background: #f24949;">
+            <a (click)="back()" style="color:white" target="_blank" [href]="starting_url">No</a>
             </button>
     </mat-dialog-actions>
 
