@@ -99,9 +99,9 @@
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
-                    <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
+                    <span *ngIf="!showToken">
                       Walk in</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span>
+                    <span *ngIf="showToken">&nbsp; Token</span>
                   </a>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -462,7 +462,7 @@
                   *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
                     <div class="info-box-icon">
-                      <div class="tkn pointer-cursor" *ngIf="checkin.token && calculationmode=='NoCalc'"
+                      <div class="tkn pointer-cursor" *ngIf="checkin.token"
                         (click)="goCheckinDetail(checkin)">
                         <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                       </div>
@@ -851,7 +851,7 @@
                     *ngFor="let checkin of started_checkins_list, let i=index"
                     [class.selected-waitlist]="startedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>
@@ -1056,17 +1056,17 @@
                     <div class="info-box" style="box-shadow:none"
                       [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
-                      <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
-                        <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">
+                      <div class="info-box-icon">
+                        <div class="tkn pointer-cursor" *ngIf="checkin.token && showToken" (click)="goCheckinDetail(checkin)">
                           <ng-container>{{checkin.token}}</ng-container>
                         </div>
-                        <div class="dashboard-wait pointer-cursor" *ngIf="calculationmode!=='NoCalc'"
+                        <div class="dashboard-wait pointer-cursor" *ngIf="!showToken"
                           (click)="goCheckinDetail(checkin)">
                           <ng-container>
                             {{getAppxTime(checkin)}}</ng-container>
                         </div>
                       </div>
-                      <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
+                      <div class="info-box-content">
                         <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
@@ -1261,7 +1261,7 @@
                     *ngFor="let checkin of completed_checkins_list, let i=index"
                     [class.selected-waitlist]="completedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token && showToken">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>
@@ -1359,7 +1359,7 @@
                     *ngFor="let checkin of cancelled_checkins_list, let i=index"
                     [class.selected-waitlist]="cancelledwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
-                      <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
+                      <div class="info-box-icon" *ngIf="checkin.token && showToken">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
                           <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
                         </div>

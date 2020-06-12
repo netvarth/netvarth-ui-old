@@ -1,6 +1,6 @@
 <section>
     <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb> 
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content displayboard loc-list users">
@@ -11,52 +11,75 @@
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
                 </div>
+
                 <div class="col-md-12 no-padding ynw-common-form-nm" *ngIf="!api_loading">
+                    <div class="card pos">
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
+                            <label>Teleservice
+                                <span class="ctrl">
+                                    <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                                        (change)="handle_virtualCallingModeStatus($event)">
+                                    </mat-slide-toggle>&nbsp;{{virtualCallingMode_statusstr}}
+                                </span>
+                            </label>
+                            <p class="form-level-settings">Please select and set the preferable way of calling your
+                                customer.<a class="learnmore-pointer" id="customer-help"
+                                    (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
+                                    More</a></p>
+                        </div>
+                    </div>
                     <div class="card no-padding">
                         <div class="copy locd">
                             <!-- <div class="col-md-6"> -->
-                            
-                                <div class="lbl col-sm-12 col-md-7 col-lg-6">
-                                    <div class="mgn-up-20 col-md-12">
-                                        <label>Video Calling Modes
-                                        </label>
-                                        <p class="form-level-settings">Please select and set the preferable way of calling your
-                                            customer.</p>
-                                    </div>
-                                    <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding" *ngFor="let callingMode of videoModes | keyvalue: originalOrder">
-                                        <mat-accordion>
-                                            <mat-expansion-panel>
-                                                <mat-expansion-panel-header class="brd-bt">
-                                                    <mat-panel-title class="block-level"> 
-                                                        {{callingMode.value.displayName}}<br>
-                                                        <span class="form-level-settings">{{callingMode.value.titleHelp}}</span>
-                                                        <!-- {{callingMode.key}} -->
-                                                    </mat-panel-title>
-                                                </mat-expansion-panel-header>
-                                                <div class="col-md-12 mgn-up-10 no-padding">
-                                                    {{callingMode.value.displayName}}  &nbsp; <mat-slide-toggle [disabled]="callingMode.value.actualValue== ''" [(ngModel)]="callingMode.value.enabled"
-                                                        (change)="triggerChange(callingMode, callingMode.key)">
-                                                    </mat-slide-toggle>
-                                                    <mat-form-field>
-                                                        <div class="input-group">
-                                                            <input [(ngModel)]="callingMode.value.actualValue" matInput type="text"
-                                                                class="form-control" placeholder="{{callingMode.value.placeHolder}}"
-                                                                autocomplete="off">
-                                                            <div class="input-group-append">
-                                                                <button class="cs-btn bt3 mgn-up-8"
-                                                                    (click)="updateVideoSettings(callingMode, callingMode.key)"
-                                                                    type="button" [disabled]= "callingMode.value.actualValue == ''">Update</button>
-                                                            </div>
+
+                            <div class="lbl col-sm-12 col-md-7 col-lg-6">
+                                <div class="mgn-up-20 col-md-12">
+                                    <label>Video Calling Modes
+                                    </label>
+                                    <p class="form-level-settings">Please select and set the preferable way of calling
+                                        your
+                                        customer.</p>
+                                </div>
+                                <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding"
+                                    *ngFor="let callingMode of videoModes | keyvalue: originalOrder">
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="brd-bt">
+                                                <mat-panel-title class="block-level">
+                                                    {{callingMode.value.displayName}}<br>
+                                                    <span
+                                                        class="form-level-settings">{{callingMode.value.titleHelp}}</span>
+                                                    <!-- {{callingMode.key}} -->
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="col-md-12 mgn-up-10 no-padding">
+                                                {{callingMode.value.displayName}} &nbsp; <mat-slide-toggle
+                                                    [disabled]="callingMode.value.actualValue== ''"
+                                                    [(ngModel)]="callingMode.value.enabled"
+                                                    (change)="triggerChange(callingMode, callingMode.key)">
+                                                </mat-slide-toggle>
+                                                <mat-form-field>
+                                                    <div class="input-group">
+                                                        <input [(ngModel)]="callingMode.value.actualValue" matInput
+                                                            type="text" class="form-control"
+                                                            placeholder="{{callingMode.value.placeHolder}}"
+                                                            autocomplete="off">
+                                                        <div class="input-group-append">
+                                                            <button class="cs-btn bt3 mgn-up-8"
+                                                                (click)="updateVideoSettings(callingMode, callingMode.key)"
+                                                                type="button"
+                                                                [disabled]="callingMode.value.actualValue == ''">Update</button>
                                                         </div>
-                                                    </mat-form-field>
-                                                </div>
-                                            </mat-expansion-panel>
-                                        </mat-accordion>
-                                    </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
                                 </div>
-                                <div class="lbr col-sm-12 col-md-5 col-lg-6" >
-                                    &nbsp;
-                                </div>
+                            </div>
+                            <div class="lbr col-sm-12 col-md-5 col-lg-6">
+                                &nbsp;
+                            </div>
                         </div>
                     </div>
                 </div>

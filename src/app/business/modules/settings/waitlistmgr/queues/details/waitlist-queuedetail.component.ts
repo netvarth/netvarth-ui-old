@@ -145,7 +145,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         data => {
           this.waitlist_manager = data;
           // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
-          if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
+          if (this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
             this.iftokn = false;

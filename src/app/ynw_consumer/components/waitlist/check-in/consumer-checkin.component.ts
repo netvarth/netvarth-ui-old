@@ -356,7 +356,7 @@ export class ConsumerCheckinComponent implements OnInit {
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
         this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
-        if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
+        if (this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
         } else {
             this.main_heading = this.checkinLabel;
@@ -846,7 +846,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.hideFilterSidebar();
                 break;
             case 2:
-                if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
+                if (this.settingsjson.showTokenId) {
                     this.main_heading = this.get_token_cap;
                 } else {
                     this.main_heading = this.checkinLabel;

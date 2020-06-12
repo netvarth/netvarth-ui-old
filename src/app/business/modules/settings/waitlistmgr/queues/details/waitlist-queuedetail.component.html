@@ -67,7 +67,7 @@
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
                                             </div>
                                             <div class="item"
-                                                *ngIf="queue_data.calculationMode==='NoCalc' && queue_data.showToken">
+                                                *ngIf="queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
                                             </div>
@@ -343,7 +343,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </app-field-error-display>
                             </div>
                             <div class="form-group"
-                                *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'NoCalc' && waitlist_manager.showTokenId">
+                                *ngIf="showAdvancedSettings && waitlist_manager.showTokenId">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"

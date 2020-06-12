@@ -307,11 +307,11 @@
                                                 </ng-container>
                                                 {{for_whom_the_cap}}
                                                 <span
-                                                    *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']">
+                                                    *ngIf="settingsjson['showTokenId']">
                                                     token
                                                 </span>
                                                 <span
-                                                    *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
+                                                    *ngIf="!settingsjson['showTokenId']">{{checkinLabel}}
                                                 </span>
                                                 {{is_beingmade_cap}}
                                             </div>

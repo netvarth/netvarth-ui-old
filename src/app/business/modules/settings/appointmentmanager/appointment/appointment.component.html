@@ -359,14 +359,14 @@
                                                 </ng-container> -->
                                                 <!-- <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}
                                                 </ng-container> -->
-                                                {{for_whom_the_cap}}
-                                                <span
-                                                    *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']">
+                                                {{for_whom_the_cap}} appointment
+                                                <!-- <span
+                                                    *ngIf="settingsjson['showTokenId']">
                                                     token
                                                 </span>
                                                 <span
-                                                    *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
-                                                </span>
+                                                    *ngIf="!settingsjson['showTokenId']">{{checkinLabel}}
+                                                </span> -->
                                                 {{is_beingmade_cap}}
                                             </div>
                                             <div class="member-list">
