@@ -34,7 +34,7 @@
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
-                    <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
+                    <!-- <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span> -->
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
             </div>
@@ -180,9 +180,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     class="example-full-width mat-select-virtualservice">
                     <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
                         (selectionChange)="selectServiceTypeHandler(type.value)">
-                        <mat-option [value]="'audioService'">
+                        <!-- <mat-option [value]="'audioService'">
                             Audio
-                        </mat-option>
+                        </mat-option> -->
                         <mat-option [value]="'videoService'">
                             Video
                         </mat-option>
