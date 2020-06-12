@@ -1291,20 +1291,21 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showServiceDetail(serv, busname) {
-    let service;
-    if (!this.showDepartments) {
-      const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
-      service = serviceDetails[0];
-    } else {
-      service = serv;
-    }
+    // let service;
+    // if (!this.showDepartments) {
+    //   const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
+    //   service = serviceDetails[0];
+    // } else {
+    //   service = serv;
+    // }
+    // console.log(service);
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: {
         bname: busname,
-        serdet: service
+        serdet: serv
       }
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
