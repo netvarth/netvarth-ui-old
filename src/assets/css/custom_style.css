@@ -9273,3 +9273,10 @@ button.cust-button-1:disabled {
 .teli-wtsap-a {
   color: #3c8dbc;
 }
+.know-status-i {
+  padding: 0 !important;
+  padding-left: 10px !important;
+}
+.knw-stat-line-h {
+  line-height: 2;
+}
