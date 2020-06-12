@@ -48,8 +48,13 @@
                         <tbody>
                             <tr *ngFor="let data of metrices">
                                  <td>{{data.metricName}}</td>
-                                 <td>{{data.isAllowed }} </td>
-                                <td>{{data.isUsed }} </td>
+                                 <td class="locate-customer"><i *ngIf="data.isAllowed === true" class="fa fa-check"></i>
+                                    <i *ngIf="data.isAllowed === false" class="fa fa-times"></i>
+                                 </td>
+                                <td class="locate-customer">
+                                    <i *ngIf="data.isUsed === true" class="fa fa-check"></i>
+                                    <i *ngIf="data.isUsed === false" class="fa fa-times"></i>
+                                </td>
                             <td>{{data.ComplainceInfo}}</td>
                          </tr>
                         </tbody>
