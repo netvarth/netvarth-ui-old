@@ -41,28 +41,27 @@
                     <div class="shortcut">
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistingFor">
                         <span class="service">Checkin For :
-                        </span> <span
-                          class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
+                        </span> <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
                           {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                         </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.appmtFor">
-                        <span class="service">Appointent For : </span><span
-                          class="forwhom" *ngFor="let user of statusInfo.appmtFor">
+                        <span class="service">Appointent For : </span><span class="forwhom"
+                          *ngFor="let user of statusInfo.appmtFor">
                           {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                         </span>
                       </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistingFor">
-                        <span class="service">Service : {{statusInfo.service.name | capitalizeFirst}} </span><span *ngIf="statusInfo.service.serviceType == 'virtualService'" ><i class="fa fa-video-camera know-status-i" style="font-size: smaller !important;" aria-hidden="true"></i>
+                      <div class="lt0 knw-stat-line-h">
+                        <span class="service">Service : {{statusInfo.service.name | capitalizeFirst}} </span><span
+                          *ngIf="statusInfo.service.serviceType == 'virtualService'"><i
+                            class="fa fa-video-camera know-status-i" style="font-size: smaller !important;"
+                            aria-hidden="true"></i>
                         </span>
-                      </div>
-                      <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.appmtFor">
-                        <span class="service">Service : {{statusInfo.service.name | capitalizeFirst}} </span><span *ngIf="statusInfo.service.serviceType == 'virtualService'" ><i class="fa fa-video-camera know-status-i" style="font-size: smaller !important;" aria-hidden="true"></i>
-                        </span> 
                       </div>
                       <ng-container
                         *ngIf="statusInfo.estimated_time && (statusInfo.waitlistStatus && (statusInfo.waitlistStatus == 'checkedIn'  || statusInfo.waitlistStatus == 'arrived' || statusInfo.waitlistStatus == 'cancelled'))">
-                        <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.estimated_date=='' && statusInfo.waitlistStatus != 'cancelled'">
+                        <div class="lt0 knw-stat-line-h"
+                          *ngIf="statusInfo.estimated_date=='' && statusInfo.waitlistStatus != 'cancelled'">
                           {{statusInfo.estimated_caption}} <span class="time now">
                             {{statusInfo.estimated_timenow}}</span><span>
                             {{statusInfo.estimated_time}}</span>
@@ -70,19 +69,16 @@
                         <div class="lt0 knw-stat-line-h"
                           *ngIf="statusInfo.estimated_date!='' && (statusInfo.waitlistStatus && statusInfo.waitlistStatus != 'cancelled')">
                           {{statusInfo.estimated_caption}} <span class="time now">
-                            <span *ngIf="statusInfo.estimated_date_type == 'date'">{{statusInfo.estimated_date| date: dateFormatSp }}</span>
+                            <span
+                              *ngIf="statusInfo.estimated_date_type == 'date'">{{statusInfo.estimated_date| date: dateFormatSp }}</span>
                             <span *ngIf="statusInfo.estimated_date_type == 'string'">{{statusInfo.estimated_date}}
                             </span>
                             <span
                               *ngIf="statusInfo.calculationMode != 'NoCalc'">,{{statusInfo.estimated_time}}</span></span>
                           <span> {{statusInfo.estimated_timeslot}}</span>
                         </div>
-                        <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistStatus && statusInfo.waitlistStatus == 'cancelled'">
-                          <div class="lt0">
-                            {{statusInfo.estimated_caption}} <span class="time">{{statusInfo.estimated_date
-                                                        | date: dateFormatSp }},
-                              <span> {{statusInfo.estimated_time}}</span></span>
-                          </div>
+                        <div class="lt0 knw-stat-line-h"
+                          *ngIf="statusInfo.waitlistStatus && statusInfo.waitlistStatus == 'cancelled'">
                           <div class="red">
                             {{statusInfo.cancelled_caption}}
                             <span class="time"> {{statusInfo.cancelled_date | date: dateFormatSp}}
@@ -91,21 +87,14 @@
                         </div>
                       </ng-container>
                       <ng-container
-                        *ngIf="statusInfo  && (statusInfo.apptStatus && statusInfo.apptStatus == 'checkedIn'  || statusInfo.apptStatus == 'Arrived' || statusInfo.apptStatus == 'cancelled')">
-                        <div class="lt0 knw-stat-line-h"
-                          *ngIf="statusInfo.apptStatus != 'cancelled'">
-                          {{statusInfo.estimated_caption}} <span class="time now">
-                            <span *ngIf="statusInfo.estimated_date_type == 'date'">{{statusInfo.estimated_date | date: dateFormatSp }}</span>
-                            <span *ngIf="statusInfo.estimated_date_type == 'string'">{{statusInfo.estimated_date}}
-                            </span></span>
-                          <span> {{statusInfo.estimated_timeslot}}</span>
-                        </div>
-                        <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus == 'cancelled'">
-                          <div class="lt0">
-                            {{statusInfo.estimated_caption}} <span class="time">{{statusInfo.estimated_date  | date: dateFormatSp }},
-                              <span> {{statusInfo.estimated_time}}</span></span>
+                        *ngIf="type=='appt'">
+                        
+                        <div class="lt0 knw-stat-line-h">
+                          <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus != 'Cancelled' && statusInfo.apptStatus != 'Rejected'">
+                            Appointment Time
+                            <span> {{statusInfo.estimated_timeslot}}</span>
                           </div>
-                          <div class="red">
+                          <div class="red" *ngIf="statusInfo.apptStatus == 'Cancelled' || statusInfo.apptStatus == 'Rejected'">
                             {{statusInfo.cancelled_caption}}
                             <span class="time"> {{statusInfo.cancelled_date | date: dateFormatSp}}
                               {{statusInfo.cancelled_time}}</span>
@@ -113,12 +102,12 @@
                         </div>
                       </ng-container>
                       <div class="lt0 knw-stat-line-h"
-                        *ngIf="statusInfo && statusInfo.waitlistStatus && statusInfo.waitlistStatus != 'cancelled' && statusInfo.calculationMode == 'NoCalc' && statusInfo.token">
+                        *ngIf="type=='wl' && statusInfo.waitlistStatus != 'cancelled'">
                         <span *ngIf="statusInfo.personsAhead === 0"> {{first_person}}</span>
-                        <span *ngIf="statusInfo.personsAhead === 1"> <span
-                            class="forwhom">{{statusInfo.personsAhead}} </span>{{one_person_ahead}} </span>
-                        <span *ngIf="statusInfo.personsAhead > 1"> <span
-                            class="forwhom">{{statusInfo.personsAhead}} </span>{{people_ahead}} </span>
+                        <span *ngIf="statusInfo.personsAhead === 1"> <span class="forwhom">{{statusInfo.personsAhead}}
+                          </span>{{one_person_ahead}} </span>
+                        <span *ngIf="statusInfo.personsAhead > 1"> <span class="forwhom">{{statusInfo.personsAhead}}
+                          </span>{{people_ahead}} </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.token">
                         {{token_no}} <span class="token">{{statusInfo.token}} </span>
@@ -126,8 +115,10 @@
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.batchId">
                         Batch: <span class="token">{{statusInfo.batchId}} </span>
                       </div>
-                      <div class="title">Service Provider : 
-                       <span><h3>{{statusInfo.providerAccount.businessName || '' | capitalizeFirst}}</h3></span> 
+                      <div class="title">Service Provider :
+                        <span>
+                          <h3>{{statusInfo.providerAccount.businessName || '' | capitalizeFirst}}</h3>
+                        </span>
                       </div>
                       <div class="location consumr" *ngIf="statusInfo && statusInfo.queue && statusInfo.queue.location">
                         Location :
@@ -140,23 +131,18 @@
                       <div class="location consumr" *ngIf="statusInfo.location">
                         Location :
                         {{statusInfo.location.place || '' | capitalizeFirst}}
-                        <span class="consumr-loc-icon"><a [href]="statusInfo.location.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate">
+                        <span class="consumr-loc-icon"><a [href]="statusInfo.location.googleMapUrl" target="_blank"
+                            class="icon-location" matTooltip="Click to navigate">
                           </a></span>
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.waitlistStatus">
-                        <div class="started-label" *ngIf="statusInfo.waitlistStatus == 'started'">
-                          Status : {{status_started_cap}}
-                        </div>
-                        <div class="done-label" *ngIf="statusInfo.waitlistStatus == 'done'">
-                          Status : {{status_done_cap}}
+                        <div class="done-label">
+                          Status : {{getStatusLabel(statusInfo.waitlistStatus)}}
                         </div>
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.apptStatus">
-                        <div class="started-label" *ngIf="statusInfo.apptStatus == 'started'">
-                          Status : {{status_started_cap}}
-                        </div>
-                        <div class="done-label" *ngIf="statusInfo.apptStatus == 'done'">
-                          Status : {{status_done_cap}}
+                        <div class="done-label">
+                          Status : {{getStatusLabel(statusInfo.apptStatus)}}
                         </div>
                       </div>
                     </div>

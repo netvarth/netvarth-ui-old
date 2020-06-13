@@ -132,28 +132,28 @@ export class CheckYourStatusComponent implements OnInit {
   }
   getApptAppxTime(waitlist) {
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timenow': '', 'timeslot': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
-    if (waitlist.apptStatus !== 'cancelled') {
-        appx_ret.caption = 'Appointment for'; // 'Check-In Time';
-        const waitlist_date = new Date(waitlist.appmtDate);
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const today = new Date(todaydt);
-        today.setHours(0, 0, 0, 0);
-        waitlist_date.setHours(0, 0, 0, 0);
-        if (today.valueOf() < waitlist_date.valueOf()) {
-          appx_ret.date = waitlist.appmtDate;
-          appx_ret.date_type = 'date';
-          const timeSchedules = waitlist.appmtTime.split('-');
-          const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
-          const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
-          appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
-        } else {
-          appx_ret.date = 'Today';
-          appx_ret.date_type = 'string';
-          const timeSchedules = waitlist.appmtTime.split('-');
-          const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
-          const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
-          appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
-        }
+    if (waitlist.apptStatus !== 'Cancelled') {
+      appx_ret.caption = 'Appointment for'; // 'Check-In Time';
+      const waitlist_date = new Date(waitlist.appmtDate);
+      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const today = new Date(todaydt);
+      today.setHours(0, 0, 0, 0);
+      waitlist_date.setHours(0, 0, 0, 0);
+      if (today.valueOf() < waitlist_date.valueOf()) {
+        appx_ret.date = waitlist.appmtDate;
+        appx_ret.date_type = 'date';
+        const timeSchedules = waitlist.appmtTime.split('-');
+        const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
+        const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
+        appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
+      } else {
+        appx_ret.date = 'Today';
+        appx_ret.date_type = 'string';
+        const timeSchedules = waitlist.appmtTime.split('-');
+        const queueStartTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[0]);
+        const queueEndTime = this.shared_functions.convert24HourtoAmPm(timeSchedules[1]);
+        appx_ret.timeslot = queueStartTime + ' - ' + queueEndTime;
+      }
     } else {
       let time = [];
       let time1 = [];
@@ -264,5 +264,9 @@ export class CheckYourStatusComponent implements OnInit {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
         });
+  }
+  getStatusLabel(status) {
+    const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
+    return label_status;
   }
 }
