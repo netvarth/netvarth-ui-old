@@ -9,6 +9,7 @@ import { providersignupRoutingModule } from './providersignup.routing.module';
 import { FormMessageDisplayModule } from '../../modules/form-message-display/form-message-display.module';
 import { ProviderOtpModule } from '../providerotp/providerotp.module';
 import { SalesChannelModule } from '../../modules/saleschannel/saleschannel.module';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     imports: [
        CommonModule,
@@ -20,7 +21,8 @@ import { SalesChannelModule } from '../../modules/saleschannel/saleschannel.modu
        ReactiveFormsModule,
        FormMessageDisplayModule,
        ProviderOtpModule,
-       SalesChannelModule
+       SalesChannelModule,
+       LoadingSpinnerModule
     ],
     declarations: [
         ProvidersignupComponent

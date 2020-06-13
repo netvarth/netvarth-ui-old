@@ -41,7 +41,7 @@ export class VideoSettingsComponent implements OnInit {
     breadcrumbs = [
         { title: 'Settings', url: '/provider/settings' },
         { title: 'Communications And Notifications', url: '/provider/settings/comm' },
-        { title: 'Video Call' }
+        { title: 'Teleservice' }
     ];
     originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return 0;
