@@ -179,7 +179,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
     }
     ngOnDestroy() {
-        this.serviceSubscription.unsubscribe();
+        if (this.serviceSubscription) {
+            this.serviceSubscription.unsubscribe();
+        }
     }
     editService() {
         const serviceActionModel = {};

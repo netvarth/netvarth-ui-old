@@ -17,19 +17,19 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
     @Output() retfromSC = new EventEmitter<any>();
     constructor(private provider_services: ProviderServices,
         private sharedfunctions: SharedFunctions) {
-            this.subscription = this.sharedfunctions.getMessage().subscribe(
-                (message) => {
-                    switch (message.ttype) {
-                        case 'saleschannel':
-                            this.dispObj = message.data;
-                            if (this.dispObj && this.dispObj.action === 'view') {
-                                this.action = this.dispObj.action;
-                                this.findSC_ByScCode(this.dispObj.scCode);
-                            }
-                            break;
-                      }
+        this.subscription = this.sharedfunctions.getMessage().subscribe(
+            (message) => {
+                switch (message.ttype) {
+                    case 'saleschannel':
+                        this.dispObj = message.data;
+                        if (this.dispObj && this.dispObj.action === 'view') {
+                            this.action = this.dispObj.action;
+                            this.findSC_ByScCode(this.dispObj.scCode);
+                        }
+                        break;
                 }
-            );
+            }
+        );
     }
     ngOnInit() {
         if (this.dispObj && this.dispObj.action === 'view') {
@@ -38,7 +38,9 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
         }
     }
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
     handlekeyup(ev) {
         this.scfound = false;
@@ -60,7 +62,7 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
                         this.scfound = true;
                         this.scInfo = data;
                         if (this.dispObj && this.dispObj.action === 'view') {
-                        } else  {
+                        } else {
                             if (this.scInfo.primaryPhoneNo === scCode) {
                                 this.retfromSC.emit(this.scInfo.scId);
                             } else {
@@ -69,7 +71,7 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
                         }
                     },
                     (error) => {
-                        this.sharedfunctions.openSnackBar(error,  {'panelClass': 'snackbarerror'});
+                        this.sharedfunctions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.scfound = false;
                         this.retfromSC.emit(null);
                     }

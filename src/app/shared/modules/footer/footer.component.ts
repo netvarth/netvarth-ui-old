@@ -1,5 +1,5 @@
 
-import {interval as observableInterval,  Observable ,  Subscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
@@ -124,7 +124,9 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
     }
