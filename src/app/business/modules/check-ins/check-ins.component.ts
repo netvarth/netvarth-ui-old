@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -358,34 +358,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           '<i class="fa fa-angle-right" aria-hidden="true"></i>'
         ],
         autoplay: false,
-        // autoplayTimeout: 6000,
-        // autoplaySpeed: 1000,
-        // autoplayHoverPause: true,
         mouseDrag: false,
         touchDrag: true,
         pullDrag: false,
         loop: false,
         autoWidth: true,
-        // margin: 10,
-        // responsiveClass: true,
-        // responsiveBaseElement: '.checkins-owl',
-        // responsive: {
-        //   0: {
-        //     items: 1
-        //   },
-        //   479: {
-        //     items: 3
-        //   },
-        //   768: {
-        //     items: 4
-        //   },
-        //   979: {
-        //     items: 4
-        //   },
-        //   1200: {
-        //     items: 5
-        //   }
-        // }
       };
     });
   }
@@ -405,12 +382,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('sortBy', 'sort_token');
     }
     this.showstatus['new'] = true;
-    // this.route.queryParams.subscribe((qparams) => {
-    //   this.time_type = +qparams.time_type || 1;
-    //   if (this.time_type >= 0) {
-    //     this.setTimeType(this.time_type);
-    //   }
-    // });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.account_type = this.active_user.accountType;
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -523,7 +494,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.initView(this.selectedView).then(
                   () => {
                     this.reloadAPIs();
-                    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+                    this.cronHandle = observableInterval(this.refreshTime * 30000).subscribe(() => {
                       this.reloadAPIs();
                     });
                   }

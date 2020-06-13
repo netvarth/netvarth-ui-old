@@ -58,7 +58,6 @@
 
   }
   function onDeviceReady() {
-    console.log('mani');
     if (typeof FCMPlugin != 'undefined') {
       FCMPlugin.getToken(function (token) {
         console.log(token);

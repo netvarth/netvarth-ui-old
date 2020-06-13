@@ -106,6 +106,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.shared_functions.logout();
         this.stopThisRequest = false;
         this.forceUpdateCalled = false;
       }

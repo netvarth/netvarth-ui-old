@@ -16,8 +16,6 @@ const routes: Routes = [
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
-    { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
-    { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
         canActivate: [AuthGuardProvider]
