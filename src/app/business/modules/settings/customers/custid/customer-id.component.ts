@@ -61,6 +61,9 @@ export class CustomerIdSettingsComponent implements OnInit {
                 if (data.jaldeeIdFormat.patternSettings) {
                     this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
                     this.suffixName = data.jaldeeIdFormat.patternSettings.suffix;
+                } else {
+                    this.prefixName = '';
+                    this.suffixName = '';
                 }
             });
     }
