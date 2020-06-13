@@ -303,7 +303,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     ngOnDestroy() {
-        this.serviceSubscription.unsubscribe();
+        if (this.serviceSubscription) {
+            this.serviceSubscription.unsubscribe();
+        }
     }
     editService() {
         const serviceActionModel = {};

@@ -25,7 +25,7 @@ export class CustomerIdSettingsComponent implements OnInit {
     formats = {
         auto: { value: 'AUTO', displayName: 'Auto' },
         manual: { value: 'MANUAL', displayName: 'Manual' },
-        // pattern: { value: 'PATTERN', displayName: 'Pattern' },
+        pattern: { value: 'PATTERN', displayName: 'Pattern' },
     };
     prefixName;
     suffixName;
@@ -57,21 +57,25 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
                 this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
-                console.log(this.custIdFormat);
                 this.tempCustIdFormat = data.jaldeeIdFormat;
                 if (data.jaldeeIdFormat.patternSettings) {
                     this.prefixName = data.jaldeeIdFormat.patternSettings.prefix;
                     this.suffixName = data.jaldeeIdFormat.patternSettings.suffix;
+                } else {
+                    this.prefixName = '';
+                    this.suffixName = '';
                 }
             });
     }
     formatChanged() {
         if (this.custIdFormat !== this.tempCustIdFormat.customerSeriesEnum) {
             this.inputChanged = true;
-        } else if (this.tempCustIdFormat.customerSeriesEnum === this.formats.auto.value) {
+        } else if (this.tempCustIdFormat.customerSeriesEnum === this.formats.pattern.value) {
             if (this.prefixName !== this.tempCustIdFormat.patternSettings.prefix || this.suffixName !== this.tempCustIdFormat.patternSettings.suffix) {
                 this.inputChanged = true;
             }
+        } else if (this.custIdFormat === 'AUTO') {
+            this.inputChanged = true;
         }
     }
     updateCustIdConfig() {
@@ -79,28 +83,42 @@ export class CustomerIdSettingsComponent implements OnInit {
             'prefix': this.prefixName,
             'suffix': this.suffixName
         };
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': 'Once you switch to manual mode, auto generation of custom id won’t be available anymore. Are you sure you want to continue ?'
-            }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-            if (result) {
-                this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
-                    (data: any) => {
-                        this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
-                        this.inputChanged = false;
-                    },
-                    (error) => {
-                        this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
-                    });
-            } else {
-                this.resetCustIdConfig();
-            }
-        });
+        if (this.custIdFormat === 'AUTO' && (this.prefixName || this.suffixName)) {
+            this.custIdFormat = 'PATTERN';
+        }
+        if (this.custIdFormat === 'MANUAL') {
+            const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Once you switch to manual mode, auto generation of custom id won’t be available anymore. Are you sure you want to continue ?'
+                }
+            });
+            dialogrefd.afterClosed().subscribe(result => {
+                if (result) {
+                    this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
+                        (data: any) => {
+                            this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                            this.inputChanged = false;
+                        },
+                        (error) => {
+                            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                        });
+                } else {
+                    this.resetCustIdConfig();
+                }
+            });
+        } else {
+            this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
+                (data: any) => {
+                    this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                    this.inputChanged = false;
+                },
+                (error) => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                });
+        }
     }
     resetCustIdConfig() {
         this.inputChanged = false;

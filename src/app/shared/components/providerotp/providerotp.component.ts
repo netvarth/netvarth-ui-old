@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,14 +6,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
+import { interval as observableInterval, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-providerotp',
   templateUrl: './providerotp.component.html',
   styleUrls: ['./providerotp.component.css']
 })
-export class ProviderotpComponent implements OnInit {
+export class ProviderotpComponent implements OnInit, OnDestroy, OnChanges {
 
   api_error = null;
   api_success = null;
@@ -56,7 +56,6 @@ export class ProviderotpComponent implements OnInit {
     public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-    console.log (this.submitdata)
     this.createForm();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -90,11 +89,11 @@ export class ProviderotpComponent implements OnInit {
   }
 
   createForm() {
-    
+
     this.otp_form = this.fb.group({
       phone_otp: ['', Validators.compose(
         [Validators.required])]
-        
+
     });
     // this.setMessageType();
   }

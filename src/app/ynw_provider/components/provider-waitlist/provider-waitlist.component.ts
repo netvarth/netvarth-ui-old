@@ -79,7 +79,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
         data => {
-          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment'  || data.ttype === 'future_checkin_status') {
+          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment' || data.ttype === 'future_checkin_status') {
             this.getWaitlistMgr();
           }
         });
@@ -87,7 +87,9 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   getWaitlistMgr() {
     this.loading = true;
@@ -224,7 +226,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
-          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -240,7 +242,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
-          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

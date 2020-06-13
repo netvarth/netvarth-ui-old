@@ -71,8 +71,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             });
     }
     ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.serviceSubscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        if (this.serviceSubscription) {
+            this.serviceSubscription.unsubscribe();
+        }
     }
     ngOnInit() {
         this.initServiceParams();

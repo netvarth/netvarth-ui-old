@@ -192,14 +192,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
   /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-myFunction() {
-  const x = document.getElementById('myTopnav');
-  if (x.className === 'topnav') {
-    x.className += 'responsive';
-  } else {
-    x.className = 'topnav';
+  myFunction() {
+    const x = document.getElementById('myTopnav');
+    if (x.className === 'topnav') {
+      x.className += 'responsive';
+    } else {
+      x.className = 'topnav';
+    }
   }
-}
   hideLearnmore() {
     this.showLearnMore = false;
     this.scrollhideclass.emit(false);
@@ -267,9 +267,13 @@ myFunction() {
     }
   }
   ngOnDestroy() {
-    this.evnt.unsubscribe();
+    if (this.evnt) {
+      this.evnt.unsubscribe();
+    }
     // unsubscribe to ensure no memory leaks
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
     }

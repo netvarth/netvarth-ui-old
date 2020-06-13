@@ -72,8 +72,12 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
             });
     }
     ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.serviceSubscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        if (this.serviceSubscription) {
+            this.serviceSubscription.unsubscribe();
+        }
     }
     ngOnInit() {
         this.initServiceParams();
