@@ -286,7 +286,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   path = projectConstants.PATH;
   showQR = false;
   gnr_link = 2;
-  appointmentViewList: any =[];
+  appointmentViewList: any = [];
   viewsList: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -446,11 +446,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedView = tempView;
         this.getViews().then(
           (data: any) => {
-            this.appointmentViewList = data
+            this.appointmentViewList = data;
             for (let i = 0; i < this.appointmentViewList.length; i++) {
               if (this.appointmentViewList[i].type === 'Appointment') {
                 this.viewsList.push(this.appointmentViewList[i]);
-                console.log(this.viewsList)
               }
             }
             this.views = data;
@@ -1648,7 +1647,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 const labels = [];
@@ -1798,7 +1797,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date} });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, date: this.filter.future_appt_date } });
     }
   }
   searchCustomer(source, appttime) {
@@ -1935,7 +1934,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getViews() {
     const _this = this;
-    
+
     return new Promise(function (resolve, reject) {
       _this.provider_services.getCustomViewList().subscribe(data => {
         resolve(data);

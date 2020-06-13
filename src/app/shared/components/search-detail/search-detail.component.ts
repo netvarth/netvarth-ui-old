@@ -841,11 +841,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
-                    console.log("Appointment List", this.search_data.hits.hit[i].fields.appointmentServiceList);
                   }
                   if (this.search_data.hits.hit[i].fields.donation_services) {
                     this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
-                    console.log("Donation List", this.search_data.hits.hit[i].fields.donationServices);
                     this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
                   }
                 } catch (e) {
@@ -1880,58 +1878,65 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const busname = obj.fields.title;
     // get services details from s3
     let selected_service = null;
-    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    this.shared_functions.getS3Url('provider')
-      .then(
-        res => {
-          const s3url = res;
-          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
-            .subscribe(services => {
-              let servicesList: any = [];
-              servicesList = services;
-              if (origin === 'donationList' || origin === 'serviceListClick') {
-                selected_service = name;
-              }
-              if (origin === 'appointmentList' || origin === 'serviceListClick') {
-                selected_service = name;
-              }
-              if (origin === 'serviceClick' || origin === 'donation') {
-                for (let i = 0; i < servicesList.length; i++) {
-                  if (servicesList[i].departmentId) {
+    if (origin === 'donationList' || origin === 'serviceListClick' || origin === 'appointmentList') {
+      selected_service = name;
+      if (name.serviceGallery) {
+        selected_service.servicegallery = JSON.parse(name.serviceGallery);
+      }
+      if (selected_service !== null) {
+        this.showServiceDetail(selected_service, busname);
+      } else {
+        this.btn_clicked = false;
+      }
+    } else {
+      const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+      this.shared_functions.getS3Url('provider')
+        .then(
+          res => {
+            const s3url = res;
+            this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
+              .subscribe(services => {
+                let servicesList: any = [];
+                servicesList = services;
+
+                if (origin === 'serviceClick' || origin === 'donation') {
+                  for (let i = 0; i < servicesList.length; i++) {
+                    if (servicesList[i].departmentId) {
+                      for (let j = 0; j < servicesList[i].services.length; j++) {
+                        if (servicesList[i].services[j].name === name) {
+                          selected_service = servicesList[i].services[j];
+                          break;
+                        }
+                      }
+                    } else {
+                      if (servicesList[i].name === name) {
+                        selected_service = servicesList[i];
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (origin === 'deptServiceClick') {
+                  for (let i = 0; i < servicesList.length; i++) {
                     for (let j = 0; j < servicesList[i].services.length; j++) {
                       if (servicesList[i].services[j].name === name) {
                         selected_service = servicesList[i].services[j];
                         break;
                       }
                     }
-                  } else {
-                    if (servicesList[i].name === name) {
-                      selected_service = servicesList[i];
-                      break;
-                    }
                   }
                 }
-              }
-              if (origin === 'deptServiceClick') {
-                for (let i = 0; i < servicesList.length; i++) {
-                  for (let j = 0; j < servicesList[i].services.length; j++) {
-                    if (servicesList[i].services[j].name === name) {
-                      selected_service = servicesList[i].services[j];
-                      break;
-                    }
-                  }
+                if (selected_service !== null) {
+                  this.showServiceDetail(selected_service, busname);
+                } else {
+                  this.btn_clicked = false;
                 }
-              }
-              if (selected_service !== null) {
-                this.showServiceDetail(selected_service, busname);
-              } else {
-                this.btn_clicked = false;
-              }
-            },
-              error => {
-                this.btn_clicked = false;
-              });
-        });
+              },
+                error => {
+                  this.btn_clicked = false;
+                });
+          });
+    }
   }
   // departmentClicked(deptName, searchData) {
   //   this.showServices = true;

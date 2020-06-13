@@ -359,18 +359,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
                 if (this.result_data.hits.hit[i].fields.appt_services) {
                   this.result_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.result_data.hits.hit[i].fields.appt_services);
-                  console.log("Appointment List", this.result_data.hits.hit[i].fields.appointmentServiceList);
                 }
                 if (this.result_data.hits.hit[i].fields.donation_services) {
                   this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
-                  console.log("Donation List", this.result_data.hits.hit[i].fields.donationServices);
                   this.result_data.hits.hit[i].fields.donationlength = this.result_data.hits.hit[i].fields.donationServices.length;
                 }
               } catch (e) {
               }
             }
-
-
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
             if (this.locationjson) {
@@ -1221,28 +1217,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   showServiceDetail(serv, busname, type) {
-    let service;
+    // let service;
     let servData;
-    if (type === 'servicedetails') {
-      service = serv;
-    } else {
-      if (!this.showDepartments) {
-        const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
-        service = serviceDetails[0];
-      } else {
-        service = serv;
-      }
-    }
-    if (service.serviceType && service.serviceType === 'donationService') {
+    // if (type === 'servicedetails') {
+    //   service = serv;
+    // } else {
+    //   if (!this.showDepartments) {
+    //     const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
+    //     service = serviceDetails[0];
+    //   } else {
+    //     service = serv;
+    //   }
+    // }
+    if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
         bname: busname,
-        serdet: service,
+        serdet: serv,
         serv_type: 'donation'
       };
     } else {
       servData = {
         bname: busname,
-        serdet: service
+        serdet: serv
       };
     }
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {

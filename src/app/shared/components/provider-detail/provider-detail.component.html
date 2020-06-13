@@ -506,20 +506,10 @@
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
                                                         <span class="sub-title-donate">Donation Services</span>
-                                                        <ul *ngIf="!showDepartments">
-                                                            <li *ngFor="let donationService of donationData"
-                                                                (click)="showServiceDetail(donationService.name, businessjson.businessName)">
-                                                                {{donationService.name}}</li>
-                                                        </ul>
-                                                        <ul *ngIf="showDepartments">
+                                                        <ul>
                                                             <li *ngFor="let donationService of donationData"
                                                                 (click)="showServiceDetail(donationService, businessjson.businessName)">
-                                                                {{donationService.name}}
-                                                                <span
-                                                                    *ngIf="donationService.serviceType == 'virtualService'">
-                                                                    (<i class="fa fa-video-camera cal-mod-font"
-                                                                        aria-hidden="true"></i>)
-                                                                </span></li>
+                                                                {{donationService.name}}</li>
                                                         </ul>
                                                     </div>
                                                 </div>

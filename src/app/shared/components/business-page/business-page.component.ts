@@ -1024,13 +1024,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
 
   }
-  checkinClicked( locid, locname, cdate, chdatereq,obj) {
-    console.log(cdate);
+  checkinClicked(locid, locname, cdate, chdatereq, obj) {
     // this.changedate_req = chdatereq;
     // this.showCheckin(locid, locname, cdate, 'consumer');
-
     // this.current_provider = obj;
-
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
@@ -1041,7 +1038,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  appointmentClicked(locid, locname, cdate, chdatereq,obj) {
+  appointmentClicked(locid, locname, cdate, chdatereq, obj) {
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
@@ -1134,7 +1131,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(locid, locname, curdate, origin?) {
-    console.log(curdate);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
