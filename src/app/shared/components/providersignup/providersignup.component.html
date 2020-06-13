@@ -82,7 +82,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <h2 class="form-title">Select your area of specialization </h2>
                         <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
                             <mat-accordion class="acc-btn acc-doms">
-                                <mat-expansion-panel [expanded]="false" *ngFor="let domain of business_domains"
+                                <mat-expansion-panel [expanded]="domainIndex[i]" *ngFor="let domain of business_domains; let i = index"
                                     [class.active]="domain===selectedDomain">
                                     <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
                                         class="acc-header">
@@ -97,7 +97,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         <ul>
                                             <li *ngFor="let subdomain of domain.subDomains"
                                                 [class.subdomainstyle]="subdomain.subDomain==selectedSubDomain.subDomain"
-                                                (click)="subdomSelection(subdomain,domain)">
+                                                (click)="subdomSelection(subdomain,domain, i)">
                                                 {{subdomain.displayName}} <i class="fa fa-check pull-right"
                                                     *ngIf="subdomain.subDomain==selectedSubDomain.subDomain"></i>
                                             </li>
@@ -195,7 +195,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     </mat-dialog-actions>
                                     <div class="form-group form-button">
                                         <input type="submit" [disabled]="!spForm.valid" name="signup" id="signup"
-                                            class="form-submit" value="join Jaldee" (click)="onPasswordSubmit()">
+                                            class="form-submit" value="join Jaldee"
+                                            (click)="!joinClicked && onPasswordSubmit()">
                                     </div>
                                 </div>
                             </div>
@@ -298,5 +299,6 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                 </div>
             </div>
         </section>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </div>
 </section>

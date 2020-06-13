@@ -91,6 +91,7 @@ export class ProvidersignupComponent implements OnInit {
   subdomainlist: any = [];
   hearus;
   spForm;
+  domainIndex: any = {};
   domainicons: {
     physiciansSurgeons: { help: 'single doctor facility', iconClass: 'allopathy_doci' },
   };
@@ -119,6 +120,8 @@ export class ProvidersignupComponent implements OnInit {
   providerPwd;
   email;
   isValidConfirm_pw = true;
+  joinClicked = false;
+  api_loading = false;
   images = {
     veterinaryPetcare: 'assets/images/home/pet-01.svg',
     finance: 'assets/images/home/bank-01.svg',
@@ -178,6 +181,7 @@ export class ProvidersignupComponent implements OnInit {
           this.business_domains = data;
           this.selectedDomain = this.business_domains[0];
           this.selectedSubDomain = this.selectedDomain.subDomains[0];
+          this.domainIndex[0] = false;
           // this.subdomainlist = this.selectedDomain.subDomains;
           // this.getPackages();
           // this.setDomain(0);
@@ -377,6 +381,8 @@ export class ProvidersignupComponent implements OnInit {
         },
         error => {
           this.actionstarted = false;
+          this.joinClicked = false;
+          this.api_loading = false;
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
@@ -409,6 +415,8 @@ export class ProvidersignupComponent implements OnInit {
   }
   onPasswordSubmit() {
     this.actionstarted = true;
+    this.joinClicked = true;
+    this.api_loading = true;
     this.resetApiErrors();
     if (this.isValidConfirm_pw) {
       this.onOtpSubmit().then(data => {
@@ -417,9 +425,18 @@ export class ProvidersignupComponent implements OnInit {
             this.setPassword();
           },
           (error) => {
+            this.joinClicked = false;
+            this.api_loading = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
-      });
+      },
+        (error) => {
+          this.joinClicked = false;
+          this.api_loading = false;
+        });
+    } else {
+      this.joinClicked = false;
+      this.api_loading = false;
     }
   }
   resetApiErrors() {
@@ -596,9 +613,11 @@ export class ProvidersignupComponent implements OnInit {
   // showotpsection() {
   //   this.active_step = 4;
   // }
-  subdomSelection(subdomain, domain) {
+  subdomSelection(subdomain, domain, i) {
     this.selectedSubDomain = subdomain;
     this.selectedDomain = domain;
+    this.domainIndex = {};
+    this.domainIndex[i] = false;
     // this.active_step = 2;
   }
   saleschannelselection(hearus) {
