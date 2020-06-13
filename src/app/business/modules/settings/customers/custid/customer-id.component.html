@@ -1,7 +1,7 @@
 <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
         (performAction)="performActions($event)"></app-breadcrumb>
-</section> 
+</section>
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
@@ -10,33 +10,42 @@
                     <label>Customer Id Format</label>
                     <p class="form-level-settings">Choose one of the three customer series options.</p>
 
-                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">                        
+                    <mat-radio-group [(ngModel)]='custIdFormat' ngDefaultControl (change)="formatChanged()">
                         <mat-radio-button value="{{formats.manual.value}}"></mat-radio-button>
                         <label for="">{{formats.manual.displayName}}</label><br><br>
-                        <mat-radio-button [disabled]="custIdFormat === formats.manual.value" value="{{formats.auto.value}}"></mat-radio-button>
+                        <mat-radio-button *ngIf="custIdFormat != 'PATTERN'"
+                            [disabled]="custIdFormat === formats.manual.value" value="{{formats.auto.value}}">
+                        </mat-radio-button>
+                        <mat-radio-button *ngIf="custIdFormat == 'PATTERN'"
+                            [disabled]="custIdFormat === formats.manual.value" value="{{formats.pattern.value}}">
+                        </mat-radio-button>
                         <label for="">{{formats.auto.displayName}}</label>
                         <!-- <mat-radio-button value="{{formats.pattern.value}}"></mat-radio-button>
                         <label for="">{{formats.pattern.displayName}}</label><br> -->
                     </mat-radio-group>
 
-                    <div *ngIf="custIdFormat == 'AUTO'" class="mgn-up-10 ynw-common-form-nm">
+                    <div *ngIf="custIdFormat == 'AUTO' || custIdFormat === 'PATTERN'"
+                        class="mgn-up-10 ynw-common-form-nm">
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <mat-form-field>
                                 <input style="padding-top: 20px!important;padding-bottom: 5px !important;" matInput
-                                    placeholder="Prefix" [(ngModel)]="prefixName" autocomplete="off" (keyup)="formatChanged($event)">
+                                    placeholder="Prefix" [(ngModel)]="prefixName" autocomplete="off"
+                                    (keyup)="formatChanged($event)">
                             </mat-form-field>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <mat-form-field>
                                 <input style="padding-top: 20px!important;padding-bottom: 5px !important;" matInput
-                                    placeholder="Suffix" [(ngModel)]="suffixName" autocomplete="off" (keyup)="formatChanged($event)">
+                                    placeholder="Suffix" [(ngModel)]="suffixName" autocomplete="off"
+                                    (keyup)="formatChanged($event)">
                             </mat-form-field>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <br>
                     <div>
-                        <button *ngIf="inputChanged" type="button" (click)="resetCustIdConfig()" class="cs-btn bt2">Reset</button>
+                        <button *ngIf="inputChanged" type="button" (click)="resetCustIdConfig()"
+                            class="cs-btn bt2">Reset</button>
                         &nbsp;
                         <button *ngIf="inputChanged" type="button" (click)="updateCustIdConfig()"
                             class="cs-btn bt1">Update</button>
