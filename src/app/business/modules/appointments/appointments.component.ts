@@ -391,7 +391,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     // if (this.time_type === 1) {
     this.slotIds.toArray().forEach(element => {
-      if (element.nativeElement.innerText === this.availableSlots[0].time) {
+      if (element.nativeElement.innerText === this.getSingleTime(this.availableSlots[0].time)) {
         element.nativeElement.scrollIntoViewIfNeeded();
         return false;
       }
@@ -1062,7 +1062,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
 
-              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+              if (this.availableSlotDetails.availableSlots[i].active) {
                 if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
                   this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
                 }
@@ -1086,7 +1086,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
                 this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
               }
-              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+              if (this.availableSlotDetails.availableSlots[i].active) {
                 if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
                   this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
                 }
