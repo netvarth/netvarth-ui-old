@@ -914,7 +914,13 @@
                             </a>
                             <a class="statusText btn-play pointer-cursor"
                               (click)="changeWaitlistStatus(appt, 'Started')"
-                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived'" [matTooltipClass]="tooltipcls"
+                              *ngIf="!section_new[i] && appt.apptStatus == 'Arrived' && !appt.virtualService" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Start'">
+                              <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(appt, 'Started')"
+                              *ngIf="!section_new[i] && appt.virtualService" [matTooltipClass]="tooltipcls"
                               [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
