@@ -2497,4 +2497,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+}
 }

@@ -347,10 +347,10 @@
                   *ngFor="let slot of availableSlotDetails.availableSlots, let i=index">
                   <div class="col-md-2 col-xs-4 col-sm-2 no-padding ">
                     <mat-chip-list>
-                      <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
+                      <mat-chip #appSlots  class="app-info-box-icon"
                         [class.pointer-cursor]="!isAvailableSlot(slot)" [selected]="!isAvailableSlot(slot)"
                         (click)="!isAvailableSlot(slot) && apptFutureClicked('WALK_IN_APPOINTMENT',slot.time)">
-                        {{slot.time}} </mat-chip>
+                        {{getSingleTime(slot.time)}} </mat-chip>
                     </mat-chip-list>
                   </div>
                   <div class="col-md-10 col-xs-8 col-sm-10 pad-rt-0 no-padding"
@@ -794,10 +794,10 @@
                     [class.selected-waitlist]="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length === 1 && apptSelected[slot.time] && apptSelected[slot.time][0]">
                     <div class="col-md-2 col-xs-4 col-sm-2 no-padding ">
                       <mat-chip-list>
-                        <mat-chip #appSlots style="min-width: 115px !important" class="app-info-box-icon"
+                        <mat-chip #appSlots  class="app-info-box-icon"
                           [selected]="!isAvailableSlot(slot)" [class.pointer-cursor]="!isAvailableSlot(slot)"
                           (click)="!isAvailableSlot(slot) && apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                          {{slot.time}} </mat-chip>
+                          {{getSingleTime(slot.time)}} </mat-chip>
                       </mat-chip-list>
                     </div>
                     <div class="col-md-10 col-xs-8 col-sm-10 pad-rt-0 no-padding"

@@ -76,6 +76,7 @@ export class CustomViewComponent implements OnInit {
             this.viewId = qparams.id;
             this.getDepartments();
             this.getAccountQs();
+            this.getAccountSchedules();
             this.getAccountServices();
             this.provider_label = this.shared_functions.getTerminologyTerm('provider');
             if (this.viewId) {
@@ -325,26 +326,30 @@ export class CustomViewComponent implements OnInit {
             doctorsIds = this.allUsersIds;
         }
 
-        let filter;
+        let filter = {};
             if(departmentIds && departmentIds.length > 0){
-                 filter = {
-                     'department-eq' : departmentIds.toString()
-                };
+                //  filter = {
+                //      'department-eq' : departmentIds.toString()
+                // };
+                filter['department-eq'] = departmentIds.toString();
+                console.log(filter);
             }
             if (doctorsIds && doctorsIds.length > 0){
-                filter = {
-                   'provider-eq': doctorsIds.toString()
-               };
+            //     filter = {
+            //        'provider-eq': doctorsIds.toString()
+            //    };
+            filter['provider-eq'] = doctorsIds.toString();
             }
+            console.log(filter);
         this.provider_services.getUserServicesList(filter)
             .subscribe(
                 data => {
                     this.service_list = data;
                     console.log("Services by dep :", this.service_list)
-                    if (this.selectedUsersId.length === 0 && this.selectedDeptIds.length == 0) {
+                    if (this.selectedUsersId.length === 0 && this.selectedDeptIds.length === 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
-                    console.log(this.service_list)
+                    console.log(this.service_list);
                     this.filterServiicesList = this.service_list;
                 },
                 error => {
@@ -463,9 +468,11 @@ export class CustomViewComponent implements OnInit {
     
     deptSelection(depIds) {
         if (this.selectedDeptIds.indexOf(depIds) === -1) {
+            console.log(depIds);
             this.selectedDeptIds.push(depIds);
             this.getUsers();
         } else {
+            console.log(this.selectedDeptIds);
             this.selectedDeptIds.splice(this.selectedDeptIds.indexOf(depIds), 1);
         }
         this.getServices();
@@ -570,6 +577,7 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getUsers(apiFilter).subscribe(
             (data: any) => {
                 this.users_list = data;
+                console.log(this.users_list);
                 this.filterUsersList = data;
                 for (const user of this.users_list) {
                     if (this.allUsersIds.indexOf(user.id) === -1) {
@@ -577,9 +585,10 @@ export class CustomViewComponent implements OnInit {
                     }
                 }
                 if (!this.customViewDetails.customViewConditions) {
+                        this.getServices();
                         this.getQs();
                         this.getAppointmentSchedules();
-                    this.getServices();
+                    
                 }
             }
         );
