@@ -9290,3 +9290,8 @@ button.cust-button-1:disabled {
 .knw-stat-line-h {
   line-height: 2;
 }
+@media only screen and (max-width: 372px) {
+  .check-status .details {
+    font-size: 0.8rem;
+  }
+}

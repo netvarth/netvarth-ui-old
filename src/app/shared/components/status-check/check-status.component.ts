@@ -132,7 +132,7 @@ export class CheckYourStatusComponent implements OnInit {
   }
   getApptAppxTime(waitlist) {
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timenow': '', 'timeslot': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
-    if (waitlist.apptStatus !== 'Cancelled') {
+    if (waitlist.apptStatus !== 'Cancelled' && waitlist.apptStatus !== 'Rejected') {
       appx_ret.caption = 'Appointment for'; // 'Check-In Time';
       const waitlist_date = new Date(waitlist.appmtDate);
       const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -169,7 +169,11 @@ export class CheckYourStatusComponent implements OnInit {
       time1 = time[2].trim();
       t2 = time1.slice(2);
       appx_ret.cancelled_time = t2;
+      if (waitlist.apptStatus === 'Rejected') {
+        appx_ret.cancelled_caption = 'Rejected on ';
+      } else {
       appx_ret.cancelled_caption = 'Cancelled on ';
+      }
     }
     return appx_ret;
   }

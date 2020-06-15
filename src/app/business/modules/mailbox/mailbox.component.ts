@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription } from 'rxjs';
@@ -57,6 +57,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     clogo: any;
     showImages: any = [];
     openState: any = [];
+    @ViewChildren('msgId') msgIds: QueryList<ElementRef>;
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
@@ -420,5 +421,15 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 this.openState[index] = true;
             });
         }
+        const leng = messages.length;
+        this.scrollToSection(messages[leng - 1]);
+    }
+    scrollToSection(messageList) {
+        this.msgIds.toArray().forEach(element => {
+            if (element.nativeElement.innerHTML.trim() === messageList.message.trim()) {
+                element.nativeElement.scrollIntoViewIfNeeded();
+                return false;
+            }
+        });
     }
 }

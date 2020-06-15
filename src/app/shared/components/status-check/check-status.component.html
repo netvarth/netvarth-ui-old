@@ -28,7 +28,7 @@
                   <i class="fa fa-search pointer-cursor" *ngIf="type=='appt'" (click)="getApptDetails(encId)"></i>
                 </div>
               </div>
-              <div class="outer banner mgn-up-20 mgn-bt-20" *ngIf="statusInfo && foundDetails">
+              <div class="outer banner mgn-up-20 mgn-bt-20 check-status" *ngIf="statusInfo && foundDetails">
                 <div class="item">
                   <div class="header" style="padding: 1px;">
                     <div class="lt">
@@ -40,21 +40,22 @@
                     <!-- <div class="lt"> -->
                     <div class="shortcut">
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.waitlistingFor">
-                        <span class="service">Checkin For :
+                        <span class="service">Checkin For:
                         </span> <span class="forwhom" *ngFor="let user of statusInfo.waitlistingFor">
                           {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                         </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.appmtFor">
-                        <span class="service">Appointent For : </span><span class="forwhom"
+                        <span class="service">Appointment For: </span><span class="forwhom"
                           *ngFor="let user of statusInfo.appmtFor">
                           {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                         </span>
                       </div>
                       <div class="lt0 knw-stat-line-h">
-                        <span class="service">Service : {{statusInfo.service.name | capitalizeFirst}} </span><span
-                          *ngIf="statusInfo.service.serviceType == 'virtualService'"><i
-                            class="fa fa-video-camera know-status-i" style="font-size: smaller !important;"
+                        <span class="service">Service: </span> 
+                        <span class="forwhom">{{statusInfo.service.name | capitalizeFirst}} 
+                            <i *ngIf="statusInfo.service.serviceType == 'virtualService'"
+                            class="fa fa-video-camera know-status-i" style="font-size: smaller !important;padding-left: 0px !important;"
                             aria-hidden="true"></i>
                         </span>
                       </div>
@@ -91,7 +92,7 @@
                         
                         <div class="lt0 knw-stat-line-h">
                           <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus != 'Cancelled' && statusInfo.apptStatus != 'Rejected'">
-                            Appointment Time
+                            Appointment Time:
                             <span> {{statusInfo.estimated_timeslot}}</span>
                           </div>
                           <div class="red" *ngIf="statusInfo.apptStatus == 'Cancelled' || statusInfo.apptStatus == 'Rejected'">
@@ -115,13 +116,13 @@
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.batchId">
                         Batch: <span class="token">{{statusInfo.batchId}} </span>
                       </div>
-                      <div class="title">Service Provider :
+                      <div class="title">Service Provider:
                         <span>
                           <h3>{{statusInfo.providerAccount.businessName || '' | capitalizeFirst}}</h3>
                         </span>
                       </div>
                       <div class="location consumr" *ngIf="statusInfo && statusInfo.queue && statusInfo.queue.location">
-                        Location :
+                        Location:
                         {{statusInfo.queue.location.place || '' | capitalizeFirst}}
                         <span class="consumr-loc-icon"><a *ngIf="statusInfo.queue.location.googleMapUrl" rel="noopener"
                             [href]="statusInfo.queue.location.googleMapUrl" target="_blank" class="icon-location"
@@ -129,7 +130,7 @@
                           </a></span>
                       </div>
                       <div class="location consumr" *ngIf="statusInfo.location">
-                        Location :
+                        Location:
                         {{statusInfo.location.place || '' | capitalizeFirst}}
                         <span class="consumr-loc-icon"><a [href]="statusInfo.location.googleMapUrl" target="_blank"
                             class="icon-location" matTooltip="Click to navigate">
@@ -137,12 +138,12 @@
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.waitlistStatus">
                         <div class="done-label">
-                          Status : {{getStatusLabel(statusInfo.waitlistStatus)}}
+                          Status: {{getStatusLabel(statusInfo.waitlistStatus)}}
                         </div>
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.apptStatus">
                         <div class="done-label">
-                          Status : {{getStatusLabel(statusInfo.apptStatus)}}
+                          Status: {{getStatusLabel(statusInfo.apptStatus)}}
                         </div>
                       </div>
                     </div>
