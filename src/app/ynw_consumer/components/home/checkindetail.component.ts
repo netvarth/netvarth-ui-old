@@ -120,6 +120,7 @@ export class CheckinDetailComponent implements OnInit {
         pass_ob['uuid'] = this.ynwUuid;
         pass_ob['user_id'] = this.ProviderId;
         pass_ob['name'] = this.BusinessName;
+        pass_ob['typeOfMsg'] = 'single';
         this.addNote(pass_ob);
     }
     addNote(pass_ob) {

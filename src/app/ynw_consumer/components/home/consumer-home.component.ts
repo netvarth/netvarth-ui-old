@@ -859,6 +859,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['typeOfMsg'] = 'single';
     if (type === 'appt') {
       pass_ob['appt'] = type;
       pass_ob['uuid'] = waitlist.uid;

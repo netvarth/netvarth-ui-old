@@ -121,6 +121,7 @@ export class ApptDetailComponent implements OnInit {
         pass_ob['user_id'] = this.providerId;
         pass_ob['name'] = this.BusinessName;
         pass_ob['appt'] = 'appt';
+        pass_ob['typeOfMsg'] = 'single';
         this.addNote(pass_ob);
     }
     addNote(pass_ob) {
