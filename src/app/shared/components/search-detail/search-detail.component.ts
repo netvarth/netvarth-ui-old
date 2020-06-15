@@ -17,6 +17,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+import { Image, AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-search-detail',
@@ -170,6 +171,23 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   departServiceList: any = [];
   selectedDepartment;
   appttime_arr: any = [];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -834,6 +852,35 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
+
+
+                this.search_data.hits.hit[i].fields.image_list_popup = [];
+                if (this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0 ||
+                  this.search_data.hits.hit[i].fields.logo) {
+                  let indxval = 0;
+                  if (this.search_data.hits.hit[i].fields.logo) {
+                    const imgobj = new Image(
+                      1,
+                      { // modal
+                        img: this.search_data.hits.hit[i].fields.logo
+                      });
+                    console.log(imgobj);
+                    this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
+                    indxval = 1;
+                  }
+                  for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
+                    const imgobj = new Image(
+                      j + 2,
+                      { // modal
+                        img: this.search_data.hits.hit[i].fields.gallery_thumb_nails[j]
+                      });
+                    console.log(imgobj);
+                    this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
+                  }
+                  console.log(this.search_data.hits.hit[i].fields.image_list_popup);
+                }
+
+
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
@@ -2049,4 +2096,18 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
+  openImageModalRow(image: Image, galleryList) {
+    const index: number = this.getCurrentIndexCustomLayout(image, galleryList);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image, images): number {
+    for (let i = 0; i < images.length; i++) {
+      if (images[i].modal.img === image) {
+        return i;
+      }
+    }
+  }
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
 }

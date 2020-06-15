@@ -269,19 +269,49 @@
                         <div class="top-sect">
                             <div class="tp-l">
                                 <div class="tp1">
-                                    <div class="pro-img" (click)="providerDetClicked(search_result)">
+                                    <!-- <div class="pro-img" (click)="providerDetClicked(search_result)">
                                         <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">
+                                    </div> -->
+                                    <div class="pro-img">
+                                        <ng-container *ngIf="search_result.fields.logo">
+                                            <ng-container>
+                                                <img [src]="search_result.fields.logo" alt=""
+                                                    (click)="openImageModalRow(search_result.fields.image_list_popup[0].modal.img, search_result.fields.image_list_popup)"
+                                                    alt="">
+                                            </ng-container>
+                                        </ng-container>
                                     </div>
-                                    <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
+                                    <!-- <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>
                                             <div class="galbx">
-                                                <div class="overlay" (click)="providerDetClicked(search_result)">
+                                                <div class="overlay" (click)="openImageModalRow(search_result)">
                                                     +{{(search_result.fields.gallery_thumb_nails.length)}}</div>
                                                 <img [src]="search_result.fields.gallery_thumb_nails[0]" alt=""
                                                     style="width:50px;height:auto;">
                                             </div>
                                         </li>
+                                    </ul> -->
+                                    <ul class="gal"
+                                        *ngIf="search_result.fields.gallery_thumb_nails && search_result.fields.gallery_thumb_nails.length > 0">
+                                        <li>
+                                            <div class="galbx">
+                                                <div class="overlay"
+                                                    (click)="openImageModalRow(search_result.fields.gallery_thumb_nails[0], search_result.fields.image_list_popup)">
+                                                    +
+                                                    {{search_result.fields.gallery_thumb_nails.length - 1 }}</div>
+                                                <img [src]="search_result.fields.gallery_thumb_nails[0]" alt=""
+                                                    style="width:50px;height:auto;">
+                                            </div>
+                                        </li>
                                     </ul>
+                                    <ks-modal-gallery
+                                        *ngIf="search_result.fields.image_list_popup && search_result.fields.image_list_popup.length>0"
+                                        [modalImages]="search_result.fields.image_list_popup"
+                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                        (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+
                                     <div class="rating-stars">
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                             <ng-container *ngIf="search_result.fields.rating==.5">
@@ -439,10 +469,11 @@
                                         <span class="icon-first-aid"></span></li>
                                     <li *ngIf="search_result.fields.docambulance_location1==1"
                                         [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
-                                        <li *ngIf="search_result.fields.onlinereports_location1==1"
+                                    <li *ngIf="search_result.fields.onlinereports_location1==1"
                                         [matTooltip]="'Online Reports'"><span class="fa fa-file-pdf-o"></span></li>
-                                        <li *ngIf="search_result.fields.homesamplecollection_location1==1"
-                                        [matTooltip]="'Home Sample Collection'"><span class="fa fa fa-flask"></span></li>
+                                    <li *ngIf="search_result.fields.homesamplecollection_location1==1"
+                                        [matTooltip]="'Home Sample Collection'"><span class="fa fa fa-flask"></span>
+                                    </li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
                                             src="./assets/images/basic.png" alt="Basic"></li>
