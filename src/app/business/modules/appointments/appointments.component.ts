@@ -2502,3 +2502,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.convert24HourtoAmPm(slots[0]);
 }
 }
+
