@@ -79,7 +79,7 @@
                                             <li class="filterli filterDatepicker">
                                                 <mat-form-field class="userfilter">
                                                     <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
-                                                        (blur)="doSearch()">
+                                                        (blur)="doSearch()" style="height: 0px;padding: 2px;">
                                                         <mat-option *ngFor="let user of userTypesFormfill"
                                                             [value]="user">
                                                             {{user}}

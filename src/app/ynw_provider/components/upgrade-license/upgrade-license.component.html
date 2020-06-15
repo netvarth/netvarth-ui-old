@@ -30,9 +30,11 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
+  <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
      <button  type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
     <button  type="submit" mat-button [disabled]="!amForm.valid || api_loading" *ngIf="obtainedUpgradable && upgradablepackages.length>0" class="cs-btn bt1">{{save_btn_cap}}
     </button>
+  </div>
     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
 </mat-dialog-actions>
 
