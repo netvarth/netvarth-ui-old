@@ -175,7 +175,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   }
   performActions(actions) {
     if (actions === 'learnmore') {
-      this.route.navigate(['/provider/' + this.domain + '/check-ins->adjustdelay']);
+      this.route.navigate(['/provider/' + this.domain + '/appointments->schadjustdelay']);
     }
   }
   setDescFocus() {
