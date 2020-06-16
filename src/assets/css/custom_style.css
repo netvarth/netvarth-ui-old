@@ -8384,6 +8384,10 @@ owl-carousel .bt3.active {
   cursor: pointer;
 }
 
+.top-tax {
+  top: 60px !important;
+}
+
 @media only screen and (max-width: 575px) {
   .glbl-setting-h6-small {
     padding-left: 10px;
@@ -8461,6 +8465,9 @@ owl-carousel .bt3.active {
   }
   .glbl-preview {
     display: block;
+  }
+  .top-tax {
+    top: 75px !important;
   }
 }
 
