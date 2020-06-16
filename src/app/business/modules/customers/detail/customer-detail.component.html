@@ -6,6 +6,27 @@
         <div class="col-md-12 no-padding-small ">
             <div class="row">
                 <div class="card p0">
+
+                    <div class="col-md-12 no-padding">
+                        <ul class="nav cust-dash jd-custom-nav">
+                           
+                          <li class="dropdown notifications-menu">
+                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                              data-toggle="dropdown" (click)="findCustomer()">
+                              <i class="fa fa-search pointer-cursor"></i> Find {{customer_label | capitalizeFirst}}
+                            </a>
+                          </li>
+                          <li  *ngIf="viewCustomer" class="dropdown notifications-menu">
+                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                              data-toggle="dropdown" (click)="editCustomer()">
+                              <i class="fa fa-pencil"></i> Edit 
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+
+
+
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -200,12 +221,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                             </form>
                         </div>
                         <div class="class = lbr col-sm-12 col-md-4 col-lg-4">
-                            <div class="col-md-12  mgn-up-20 ">
+                            <!-- <div class="col-md-12  mgn-up-20 ">
                                 <button class="cs-btn bt3 width-100 mgn-up-20" (click)="findCustomer()">Find {{customer_label}}</button>
                             </div>
                             <div *ngIf="viewCustomer" class="col-md-12  mgn-up-20 ">
                                 <button class="cs-btn bt3 width-100 mgn-up-20" (click)="editCustomer()">Edit {{customer_label}}</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
