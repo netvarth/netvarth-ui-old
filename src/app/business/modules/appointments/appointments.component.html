@@ -383,7 +383,7 @@
                             </span>
                             <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
                               *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
-                              <i class="icon-note"></i>
+                              <i class="icon-note tspace"></i>
                             </span>
                             <!-- <span *ngIf="appt.virtualService && getVirtualServiceCount(appt.virtualService)"
                               [matTooltip]="'calling modes'" class="pull-left cnote icon-btn1 pointer-cursor"
@@ -402,7 +402,7 @@
                             </span>
                           </div>
                         </div>
-                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
+                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right tel-serv-flex">
                           <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Send message'" (click)="addConsumerInboxMessage('single', appt)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
@@ -895,7 +895,7 @@
                               </span>
                             </div>
                           </div>
-                          <div class="col-md-5 col-xs-5 p0 info-box-icon-right ">
+                          <div class="col-md-5 col-xs-5 p0 info-box-icon-right tel-serv-flex">
                             <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0 && appt.service.serviceType != 'virtualService'"
                               (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                               <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
