@@ -290,6 +290,12 @@ export class CustomersListComponent implements OnInit {
         };
         this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
     }
+    viewCustomer(customer) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'view' }
+        };
+        this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    }
     searchCustomer() {
         const navigationExtras: NavigationExtras = {
             queryParams: {

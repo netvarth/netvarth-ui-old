@@ -156,8 +156,11 @@
                   </button>
                 </span>
                 <mat-menu #appMenu="matMenu">
+                  <button mat-menu-item (click)="viewCustomer(customer)">
+                    View
+                  </button>
                   <button mat-menu-item (click)="editCustomer(customer)">
-                    View/Edit
+                    Edit
                   </button>
                 </mat-menu>
               </td>
