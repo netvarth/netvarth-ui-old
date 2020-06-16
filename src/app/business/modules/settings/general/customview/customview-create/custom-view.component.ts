@@ -189,6 +189,7 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.providerQs = data;
+                    console.log(this.providerQs);
                 });
     }
     getAccountSchedules() {
@@ -199,6 +200,7 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.providerSds = data;
+                    console.log(this.providerSds);
                 });
     }
     getAccountServices() {
@@ -217,7 +219,7 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 data => {
                     this.customViewDetails = data;
-                    console.log(this.customViewDetails)
+                   // console.log(this.customViewDetails)
                     this.customViewName = this.customViewDetails.name;
                     this.customViewFor = this.customViewDetails.type;
                     this.selectedDepartments = [];
@@ -332,7 +334,7 @@ export class CustomViewComponent implements OnInit {
                 //      'department-eq' : departmentIds.toString()
                 // };
                 filter['department-eq'] = departmentIds.toString();
-                console.log(filter);
+               // console.log(filter);
             }
             if (doctorsIds && doctorsIds.length > 0){
             //     filter = {
@@ -340,16 +342,16 @@ export class CustomViewComponent implements OnInit {
             //    };
             filter['provider-eq'] = doctorsIds.toString();
             }
-            console.log(filter);
+           // console.log(filter);
         this.provider_services.getUserServicesList(filter)
             .subscribe(
                 data => {
                     this.service_list = data;
-                    console.log("Services by dep :", this.service_list)
+                   // console.log("Services by dep :", this.service_list)
                     if (this.selectedUsersId.length === 0 && this.selectedDeptIds.length === 0) {
                         this.service_list = this.service_list.concat(this.providerServices);
                     }
-                    console.log(this.service_list);
+                   // console.log(this.service_list);
                     this.filterServiicesList = this.service_list;
                 },
                 error => {
@@ -399,6 +401,8 @@ export class CustomViewComponent implements OnInit {
         let doctorsIds;
         if (this.selectedUsersId.length > 0) {
             doctorsIds = this.selectedUsersId;
+        }else {
+            doctorsIds = this.allUsersIds;
         }
         
             let filter = {};
@@ -410,12 +414,11 @@ export class CustomViewComponent implements OnInit {
             this.provider_services.getProviderSchedules(filter)
                 .subscribe(
                     (data) => {
-                        console.log(data);
+                       // console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                        // this.scheduledQs = [];
                         allQs = data;
-                        console.log(allQs);
                         // const server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
                         // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         // const today = new Date(todaydt);
@@ -468,11 +471,9 @@ export class CustomViewComponent implements OnInit {
     
     deptSelection(depIds) {
         if (this.selectedDeptIds.indexOf(depIds) === -1) {
-            console.log(depIds);
             this.selectedDeptIds.push(depIds);
             this.getUsers();
         } else {
-            console.log(this.selectedDeptIds);
             this.selectedDeptIds.splice(this.selectedDeptIds.indexOf(depIds), 1);
         }
         this.getServices();
@@ -577,7 +578,7 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getUsers(apiFilter).subscribe(
             (data: any) => {
                 this.users_list = data;
-                console.log(this.users_list);
+               // console.log(this.users_list);
                 this.filterUsersList = data;
                 for (const user of this.users_list) {
                     if (this.allUsersIds.indexOf(user.id) === -1) {
@@ -616,13 +617,14 @@ export class CustomViewComponent implements OnInit {
                 qids.push({ 'id': id.id });
             }
         }
+        const sheduleids = [];
         if (this.selectedScheduleIds.length !== 0) {
             for (const id of this.selectedScheduleIds) {
-                qids.push({ 'id': id });
+                sheduleids.push({ 'id': id });
             }
         } else {
             for (const id of this.todaysQs) {
-                qids.push({ 'id': id.id });
+                sheduleids.push({ 'id': id.id });
             }
         }
         let customViewInput;
@@ -646,7 +648,7 @@ export class CustomViewComponent implements OnInit {
                     'departments': depids,
                     'users': userids,
                     'services': servicesids,
-                    'schedules': qids
+                    'schedules': sheduleids
                 },
                 'type': this.customViewFor
             };

@@ -373,6 +373,7 @@ export class CustomerDetailComponent implements OnInit {
                     },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.disableButton = false;
                     });
 
         }
