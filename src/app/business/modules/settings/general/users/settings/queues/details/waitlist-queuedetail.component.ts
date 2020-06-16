@@ -305,7 +305,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     // get the list of services
     getProviderServices() {
         this.api_loading1 = true;
-        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId };
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId ,'serviceType-neq': 'donationService'};
         this.provider_services.getProviderServices(filter)
             .subscribe(data => {
                 this.services_list = data;
