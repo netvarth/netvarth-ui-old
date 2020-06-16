@@ -199,9 +199,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumb_moreoptions: any = [];
   apis_loaded = false;
   breadcrumbs_init = [{ title: 'Check-ins' }];
+  breadcrumbs_tokn = [{ title: 'Tokens' }];
   noFilter = true;
   arr: any = [];
   breadcrumbs = this.breadcrumbs_init;
+  breadcrumb_tkn = this.breadcrumbs_tokn;
   server_date;
   isServiceBillable = true;
   subscription: Subscription;

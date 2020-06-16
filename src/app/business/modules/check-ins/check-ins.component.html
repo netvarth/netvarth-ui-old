@@ -1,5 +1,7 @@
 <section>
-  <app-breadcrumb  (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+  <app-breadcrumb *ngIf="showToken" (performAction)="performActions($event)" [breadcrumbs]="breadcrumb_tkn"
+    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb *ngIf="!showToken" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section class="dashboard content pro-dash" >
