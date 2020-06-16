@@ -109,6 +109,8 @@ export class VeterinaryComponent implements OnInit {
   showbusiness = false;
   showserviceprovider = false;
   showcorporate = false;
+  showappointmentphonein = false;
+  showschdelay = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -372,8 +374,14 @@ export class VeterinaryComponent implements OnInit {
       }
      }
     
-     if (parentContent === 'appointments' && childContent === 'appointments') {
+     if (parentContent === 'appointments') {
       this.showdbappointments = true;
+      if(childContent === 'appointment-phonein'){
+        this.showappointmentphonein = true;
+      }
+      if (childContent === 'schadjustdelay') {
+        this.showschdelay = true;
+      }
    }
    if (parentContent === 'donations' && childContent === 'donations') {
     this.showdbdonations = true;

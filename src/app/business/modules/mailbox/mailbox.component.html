@@ -59,7 +59,7 @@
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
-                                                            {{inbox.message}}
+                                                            <div #msgId> {{inbox.message}} </div>
                                                             <div class="attach" style="display: flex;"
                                                                 *ngIf="inbox.attachments"
                                                                 (click)="showImagesection(childIndex)">

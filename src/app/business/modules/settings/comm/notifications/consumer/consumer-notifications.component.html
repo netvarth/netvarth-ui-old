@@ -33,11 +33,12 @@
                         in line via SMS/Email/Notifications</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <div class="form-group col-md-3 col-xs-7 col-sm-4">
+                  <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
                       <input matInput min="0" max="1000" type="text" [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_WL');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        <div class="mgn-up-5" *ngIf="!earlyWLNotificatonSettings.personsAhead" style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
                       <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -69,7 +70,7 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['EARLY_WL']" (click)="changeNotificationSettings('EARLY_WL')" type="button"
+                  <button *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead" (click)="changeNotificationSettings('EARLY_WL')" type="button"
                     mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
@@ -198,6 +199,7 @@
                       <input matInput min="0" max="1000" type="text" [(ngModel)]="earlyAPPTNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                        <div class="mgn-up-5" *ngIf="!earlyAPPTNotificatonSettings.personsAhead" style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
                       <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -229,7 +231,7 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['EARLY_APPT']" (click)="changeNotificationSettings('EARLY_APPT')" type="button"
+                  <button *ngIf="showButton['EARLY_APPT'] && earlyAPPTNotificatonSettings.personsAhead" (click)="changeNotificationSettings('EARLY_APPT')" type="button"
                     mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>

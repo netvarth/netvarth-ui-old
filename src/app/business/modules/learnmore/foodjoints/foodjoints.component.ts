@@ -104,6 +104,8 @@ export class FoodJointComponent implements OnInit {
   showlocation = false;
   showlocationAmenities = false;
   showbusiness: boolean;
+  showappointmentphonein = false;
+  showschdelay = false;
  
   constructor(
     private activated_route: ActivatedRoute,
@@ -362,8 +364,14 @@ export class FoodJointComponent implements OnInit {
       }
      }
     
-     if (parentContent === 'appointments' && childContent === 'appointments') {
+     if (parentContent === 'appointments') {
       this.showdbappointments = true;
+      if(childContent === 'appointment-phonein'){
+        this.showappointmentphonein = true;
+      }
+      if (childContent === 'schadjustdelay') {
+        this.showschdelay = true;
+      }
    }
    if (parentContent === 'donations' && childContent === 'donations') {
     this.showdbdonations = true;

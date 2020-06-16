@@ -391,7 +391,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     // if (this.time_type === 1) {
     this.slotIds.toArray().forEach(element => {
-      if (element.nativeElement.innerText === this.availableSlots[0].time) {
+      if (element.nativeElement.innerText === this.getSingleTime(this.availableSlots[0].time)) {
         element.nativeElement.scrollIntoViewIfNeeded();
         return false;
       }
@@ -812,7 +812,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (selQdetails) {
             this.servicesCount = selQdetails[0].services.length;
           }
-        } else {
+        } else if (this.queues[0]){
           this.selQId = this.queues[0].id;
           this.servicesCount = this.queues[0].services.length;
           if (this.time_type === 1) {
@@ -845,7 +845,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const Mfilter = this.setFilterForApi();
       if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
         this.selQId = this.shared_functions.getitemFromGroupStorage('appt_selQ');
-      } else {
+      } else if (this.queues[0]){
         this.selQId = this.queues[0].id;
       }
       const selQ = this.queues.filter(q => q.id === this.selQId);
@@ -935,7 +935,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (!this.selQId) {
       if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
         this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
-      } else {
+      } else if (this.queues[0]){
         this.selQId = this.queues[0].id;
       }
       const selQ = this.queues.filter(q => q.id === this.selQId);
@@ -1062,7 +1062,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
 
-              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+              if (this.availableSlotDetails.availableSlots[i].active) {
                 if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
                   this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
                 }
@@ -1086,7 +1086,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots === '0') {
                 this.unAvailableSlots.push(this.availableSlotDetails.availableSlots[i]);
               }
-              if (this.availableSlotDetails.availableSlots[i].noOfAvailbleSlots !== '0' && this.availableSlotDetails.availableSlots[i].active) {
+              if (this.availableSlotDetails.availableSlots[i].active) {
                 if (this.availableSlots.indexOf(this.availableSlotDetails.availableSlots[i]) === -1) {
                   this.availableSlots.push(this.availableSlotDetails.availableSlots[i]);
                 }
@@ -2495,4 +2495,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.shared_functions.convert24HourtoAmPm(slots[0]);
 }
+}
+

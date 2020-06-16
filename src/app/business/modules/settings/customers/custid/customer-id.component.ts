@@ -92,7 +92,7 @@ export class CustomerIdSettingsComponent implements OnInit {
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
                 disableClose: true,
                 data: {
-                    'message': 'Once you switch to manual mode, auto generation of custom id won’t be available anymore. Are you sure you want to continue ?'
+                    'message': 'Once you switch to manual mode, auto generation of customer id won’t be available anymore. Are you sure you want to continue ?'
                 }
             });
             dialogrefd.afterClosed().subscribe(result => {

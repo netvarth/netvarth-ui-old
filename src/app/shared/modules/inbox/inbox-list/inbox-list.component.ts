@@ -46,6 +46,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
+    console.log(this.messages);
     if (this.fromsource === 'provider_checkin_detail' ||
       this.fromsource === 'consumer_checkin_detail') {
       this.hide_reply_button = true;
@@ -87,12 +88,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   replyMessage(message) {
-
+ 
     const pass_ob = {};
     let name = null;
-
     let source = this.usertype + '-';
     if (message.waitlistId) {
+      console.log(message);
       source = source + 'waitlist';
       pass_ob['uuid'] = 'h_' + message.waitlistId;
     } else {
@@ -109,6 +110,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     pass_ob['type'] = 'reply';
     pass_ob['terminologies'] = this.terminologies;
     pass_ob['name'] = name;
+    pass_ob['typeOfMsg'] = 'single';
 
     this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',

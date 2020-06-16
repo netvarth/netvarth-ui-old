@@ -257,6 +257,8 @@ export class AppointmentComponent implements OnInit {
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
         this.createForm();
+        const user = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
         this.get_token_cap = Messages.GET_TOKEN;
@@ -275,6 +277,11 @@ export class AppointmentComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
     }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.router.navigate(['/provider/' + this.domain + '/appointments->appointment-phonein']);
+        }
+        }
     createForm() {
         this.searchForm = this.fb.group({
             search_input: ['', Validators.compose([Validators.required])]
