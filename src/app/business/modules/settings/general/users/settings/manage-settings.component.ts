@@ -187,6 +187,7 @@ export class ManageSettingsComponent implements OnInit {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    
   }
 
   getUser() {
@@ -246,8 +247,28 @@ export class ManageSettingsComponent implements OnInit {
     }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/' + this.domain + '/general->' + mod]);
+    if(mod === 'notifications')
+    {
+    this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
+    }
+    else if(mod === 'settings-services' || mod == 'settings-time_windows')
+    {
+      this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
+    }
+    else if(mod === 'schedules')
+    {
+      this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
+    }
+    else if(mod === 'nonworking')
+    {
+      this.routerobj.navigate(['/provider/' + this.domain + '/general->' + mod]);
+    }
+    else
+    {
+      this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+    }
   }
+
   getScheduleCount() {
     // this.loading = true;
     const filter = { 'provider-eq': this.userId };

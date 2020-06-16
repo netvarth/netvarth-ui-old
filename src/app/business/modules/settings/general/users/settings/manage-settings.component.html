@@ -8,7 +8,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoOnlineProfile()">
                         <h2>Online Profile</h2>
-                        <span class="form-level-settings">Add and manage services here.</span>
+                        <span class="form-level-settings">Add and manage services here.<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('jaldeeonline', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
@@ -16,7 +19,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="services()">
                         <h2>Services ({{service_count}})</h2>
-                        <span class="form-level-settings">Add and manage services here.</span>
+                        <span class="form-level-settings">Add and manage services here.<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('settings-services', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
@@ -24,7 +30,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="Queues()">
                         <h2>Queues ({{queues_count}})</h2>
-                        <span class="form-level-settings">Add and manage your queues here.</span>
+                        <span class="form-level-settings">Add and manage your queues here.<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('settings-time_windows', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
@@ -32,7 +41,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="schedules()">
                         <h2>Schedules ({{schedules_count}})</h2>
-                        <span class="form-level-settings">Add and manage your schedules here.</span>
+                        <span class="form-level-settings">Add and manage your schedules here.<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('schedules', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
@@ -40,7 +52,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="NonWorkingDay()">
                         <h2>Non Working Day/Hour</h2>
-                        <span class="form-level-settings">Manage your non working days here.</span>
+                        <span class="form-level-settings">Manage your non working days here.<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('nonworking', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
@@ -48,7 +63,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="Notifications()">
                         <h2>Notifications</h2>
-                        <span class="form-level-settings">Manage notification settings here</span>
+                        <span class="form-level-settings">Manage notification settings here<a class="learnmore-pointer"
+                            id="customer-help"
+                            (click)="learnmore_clicked('notifications', $event)">Learn
+                            More</a></span>
                     </span>
                 </div>
             </div>
