@@ -1138,7 +1138,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.locationjson[0].virtualServices
+        tel_serv_stat: this.businessjson.virtualServices
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
@@ -1150,7 +1150,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.locationjson[0].virtualServices
+        tel_serv_stat: this.businessjson.virtualServices
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
