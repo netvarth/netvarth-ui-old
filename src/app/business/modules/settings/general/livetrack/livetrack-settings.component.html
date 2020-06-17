@@ -1,5 +1,5 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"  (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content w-manager settings comn-cls">
@@ -11,10 +11,13 @@
                             <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}
-                        </label>                        
-                        <div class="form-level-settings" *ngIf="livetrack_status"> Enable "Live Track" here.<a class="learnmore-pointer"
+                             <div class="form-level-settings"> Enable "Live Track" here.<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
                                 More</a></div>
+                        </label>                        
+                        <!-- <div class="form-level-settings" *ngIf="livetrack_status"> Enable "Live Track" here.<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
+                                More</a></div> -->
                         <!-- <div class="form-level-settings" *ngIf="!livetrack_status"> Enable "Accept Appointments" here.<a class="learnmore-pointer"
                             id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
                                     More</a></div> -->

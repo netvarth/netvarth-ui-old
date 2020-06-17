@@ -26,6 +26,7 @@ export class CommSettingsComponent implements OnInit {
     provider_label = '';
     cust_domain_name = '';
     provider_domain_name = '';
+    breadcrumb_moreoptions: any = []; 
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -39,6 +40,7 @@ export class CommSettingsComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.getGlobalSettingsStatus();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(
@@ -53,6 +55,11 @@ export class CommSettingsComponent implements OnInit {
     gotoVideoSettings() {
         this.router.navigate(['provider', 'settings', 'comm', 'video']);
     }
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.router.navigate(['/provider/' + this.domain + '/comm']);
+        }
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/comm->' + mod]);

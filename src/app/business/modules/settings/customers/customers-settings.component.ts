@@ -20,6 +20,7 @@ export class CustomersSettingsComponent implements OnInit {
         }
     ];
     domain: any;
+    breadcrumb_moreoptions: any = []; 
     constructor(private router: Router,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -28,10 +29,16 @@ export class CustomersSettingsComponent implements OnInit {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector; 
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     gotoCustomerIdSettings() {
         this.router.navigate(['provider', 'settings', 'customers', 'custid']);
     } 
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.router.navigate(['/provider/' + this.domain + '/customers']);
+        }
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/customers->' + mod]);
