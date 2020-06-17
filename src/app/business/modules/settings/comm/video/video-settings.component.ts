@@ -28,6 +28,7 @@ export class VideoSettingsComponent implements OnInit {
     domain: any;
     virtualCallingMode_status: any;
     virtualCallingMode_statusstr: string;
+    // callingmodes: any = [];
     videoModes = {
         // Skype: { value: 'Skype', displayName: 'Skype', placeHolder: 'Skype ID', titleHelp: 'Configure Skype Settings', actualValue: '', enabled: false },
         WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
@@ -162,13 +163,39 @@ export class VideoSettingsComponent implements OnInit {
         };
         this.provider_services.addVirtualCallingModes(postdata).subscribe(
             (data) => {
-                if (postdata.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                // this.callingmodes = postdata.virtualCallingModes;
+                // for (let i = 0; i < this.callingmodes.length; i++){
+                //     if (this.callingmodes[i].callingMode === 'WhatsApp'){
+                //         this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                //         this.getVirtualCallingModesList();
+                //     }else if (this.callingmodes[i].callingMode === 'Zoom') {
+                //         this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                //         this.getVirtualCallingModesList();
+                //     }
+                // }
+                if (callingMode === 'WhatsApp'){
                     this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
                     this.getVirtualCallingModesList();
-                } else if (postdata.virtualCallingModes[0].callingMode === 'Zoom') {
+                }else if (callingMode === 'Zoom') {
                     this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
                     this.getVirtualCallingModesList();
                 }
+                // for (let callingmodes of postdata.virtualCallingModes) {
+                //     if (callingmodes.callingMode === 'WhatsApp'){
+                //         this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                //         this.getVirtualCallingModesList();
+                //     }else if (callingmodes.callingMode === 'Zoom') {
+                //         this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                //         this.getVirtualCallingModesList();
+                //     }
+                // }
+                // if (postdata.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                //     this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                //     this.getVirtualCallingModesList();
+                // } else if (postdata.virtualCallingModes[0].callingMode === 'Zoom') {
+                //     this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                //     this.getVirtualCallingModesList();
+                // }
             },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
