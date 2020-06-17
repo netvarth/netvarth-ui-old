@@ -2,8 +2,8 @@ export const projectConstants = {
   GOOGLEAPIKEY: 'AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM',
   PERPAGING_LIMIT: 10,
   CONSUMER_DASHBOARD_REFRESH_TIME: 300, // seconds
-  INBOX_REFRESH_TIME: 30, // seconds
-  ALERT_REFRESH_TIME: 30, // seconds
+  INBOX_REFRESH_TIME: 300, // seconds
+  ALERT_REFRESH_TIME: 300, // seconds
   SMALL_DEVICE_BOUNDARY: 991,
   PROVIDER_SMALL_DEVICE_BOUNDARY: 767,
   searchpass_criteria: {
@@ -632,6 +632,6 @@ export const projectConstants = {
     BOTIM: 'Botim',
     IMO: 'Imo'
   },
-  PATH: 'http://' + window.location.host + '/'
+  PATH: 'https://' + window.location.host + '/'
 
 };
