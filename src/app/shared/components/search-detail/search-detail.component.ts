@@ -868,7 +868,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
                     indxval = 1;
                   }
-                  if (this.search_data.hits.hit[i].fields.gallery_thumb_nails){
+                  if (this.search_data.hits.hit[i].fields.gallery_thumb_nails) {
                   for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
                     const imgobj = new Image(
                       j + 2,
