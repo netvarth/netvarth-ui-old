@@ -267,7 +267,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </div>
                 </ng-container>
             </div>
-            <div class="form-group glbl-preview" *ngIf="subdomainsettings.serviceBillable && is_donation">
+            <div class="form-group glbl-preview" *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
                     <mat-form-field>
                         <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"

@@ -150,13 +150,42 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.is_virtual_serv = true;
                                 }
                                 if (!this.subdomainsettings.serviceBillable) {
-                                    this.serviceForm.setValue({
-                                        'name': this.service_data['name'] || this.serviceForm.get('name').value,
-                                        'description': this.service_data['description'] || this.serviceForm.get('description').value,
-                                        'department': this.service_data['department'] || this.serviceForm.get('department').value,
-                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                        'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
-                                    });
+                                    if (this.service_data.serviceType === 'donationService') {
+                                        this.serviceForm.setValue({
+                                            'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                            'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'department': this.service_data['department'] || this.serviceForm.get('department').value,
+                                            'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
+                                            'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
+                                            'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                            'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
+                                            'minDonationAmount': this.service_data['minDonationAmount'] || this.serviceForm.get('minDonationAmount').value || '0',
+                                            'maxDonationAmount': this.service_data['maxDonationAmount'] || this.serviceForm.get('maxDonationAmount').value || '0',
+                                            'multiples': this.service_data['multiples'] || this.serviceForm.get('multiples').value || '0',
+                                            'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
+                                                this.service_data['minPrePaymentAmount'] !== 0
+                                            ) ? true : false,
+                                            'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                        });
+                                    } else {
+                                        this.serviceForm.setValue({
+                                            'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                            'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                            'department': this.service_data['department'] || this.serviceForm.get('department').value,
+                                            'serviceType': this.service_data['serviceType'] || this.serviceForm.get('serviceType').value,
+                                            'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
+                                            'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                        });
+                                    }
+                                    if (this.service_data.serviceType === 'virtualService') {
+                                        this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
+                                        this.tool_id = this.service_data.virtualCallingModes[0].value;
+                                        this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
+                                    }
+
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
                                         this.serviceForm.setValue({
@@ -247,9 +276,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceHandler(event) {
-        this.serviceForm.get('virtualServiceType').setValue('');
         this.serv_type = event;
         if (event === 'virtualService') {
+            this.serviceForm.get('virtualServiceType').setValue('');
             this.is_virtual_serv = true;
             this.is_physical = 1;
         } else {
@@ -348,9 +377,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (!this.subdomainsettings.serviceBillable) {
                 form_data.bType = 'Waitlist';
                 form_data['totalAmount'] = 0;
-                form_data['minDonationAmount'] = 0;
-                form_data['maxDonationAmount'] = 0;
-                form_data['multiples'] = 0;
+             //   form_data['minDonationAmount'] = 0;
+            //    form_data['maxDonationAmount'] = 0;
+             //   form_data['multiples'] = 0;
                 form_data['isPrePayment'] = false;
                 form_data['taxable'] = false;
             } else {
@@ -487,12 +516,34 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             }
         } else {
-            this.serviceForm = this.fb.group({
-                name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-                description: ['', Validators.compose([Validators.maxLength(500)])],
-                department: ['', Validators.compose([Validators.maxLength(500)])],
-                notification: [false]
-            });
+            if (this.is_donation === true) {
+                this.serviceForm = this.fb.group({
+                    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                    description: ['', Validators.compose([Validators.maxLength(500)])],
+                    department: ['', Validators.compose([Validators.maxLength(500)])],
+                    serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    serviceDuration: [''],
+                    totalAmount: [0],
+                    minDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    maxDonationAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    multiples: [0, Validators.compose([Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                    isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                    taxable: [false],
+                    notification: [false],
+                    livetrack: [false]
+                });
+            } else {
+                this.serviceForm = this.fb.group({
+                    name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                    description: ['', Validators.compose([Validators.maxLength(500)])],
+                    department: ['', Validators.compose([Validators.maxLength(500)])],
+                    serviceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
+                    notification: [false],
+                    livetrack: [false]
+                });
+            }
         }
         if (this.action === 'add') {
             if (this.subdomainsettings.serviceBillable) { this.changePrepayment(); }
