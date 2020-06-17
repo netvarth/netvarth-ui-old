@@ -9,7 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';

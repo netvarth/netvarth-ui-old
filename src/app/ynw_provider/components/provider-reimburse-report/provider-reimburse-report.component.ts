@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { RequestForComponent } from '../request-for/request-for.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';

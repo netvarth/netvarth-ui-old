@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { MatDialog } from '@angular/material';

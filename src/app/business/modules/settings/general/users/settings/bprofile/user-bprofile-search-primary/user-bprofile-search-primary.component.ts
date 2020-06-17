@@ -7,7 +7,7 @@ import { FormMessageDisplayService } from '../../../../../../../../shared/module
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { SharedServices } from '../../../../../../../../shared/services/shared-services';
 
 @Component({

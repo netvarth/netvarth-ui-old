@@ -9,7 +9,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
@@ -206,6 +206,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
+    console.log(projectConstants);
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');

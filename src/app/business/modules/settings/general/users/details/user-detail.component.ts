@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import * as moment from 'moment';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';

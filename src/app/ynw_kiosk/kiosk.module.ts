@@ -24,7 +24,7 @@ import { ReportasArrivedComponent } from './components/reportas-arrived/reportas
 import { SharedServices } from '../shared/services/shared-services';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { KioskServices } from './services/kiosk-services.service';
-import { projectConstants } from '../shared/constants/project-constants';
+import { projectConstants } from '../app.component';
 
 
 import 'hammerjs';

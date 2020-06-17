@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
@@ -182,6 +182,7 @@ export class HomeComponent implements OnInit {
       const saveddate = new Date(bdate);
       if (bconfig.bdata) {
         const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        console.log('domain:' + projectConstants.DOMAINLIST_APIFETCH_HOURS);
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;

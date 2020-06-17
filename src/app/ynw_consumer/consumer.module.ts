@@ -35,7 +35,7 @@ import { AddMembersHolderComponent } from './components/add-members-holder/add-m
 import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-manage-privacy.component';
 
 
-import { projectConstants } from '../shared/constants/project-constants';
+import { projectConstants } from '../app.component';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';

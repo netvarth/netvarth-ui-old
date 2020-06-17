@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';

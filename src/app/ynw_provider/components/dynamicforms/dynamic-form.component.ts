@@ -7,7 +7,7 @@ import { FormControlService } from './form-control.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-dynamic-form',

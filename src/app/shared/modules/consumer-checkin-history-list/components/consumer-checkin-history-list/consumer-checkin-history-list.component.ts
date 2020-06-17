@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } 
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';

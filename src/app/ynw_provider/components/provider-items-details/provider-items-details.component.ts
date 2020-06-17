@@ -9,7 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderItemComponent } from '../add-provider-item/add-provider-item.component';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { AddProviderItemImageComponent } from '../add-provider-item-image/add-provider-item-image.component';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-provider-items-details',

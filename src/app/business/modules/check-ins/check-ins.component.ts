@@ -1,7 +1,7 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { Messages } from '../../../shared/constants/project-messages';

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';

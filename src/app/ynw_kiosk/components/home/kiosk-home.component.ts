@@ -6,7 +6,7 @@ import { DOCUMENT } from '@angular/common';
 import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({

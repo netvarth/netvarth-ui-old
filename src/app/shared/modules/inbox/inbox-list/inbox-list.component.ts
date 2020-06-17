@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { InboxServices } from '../inbox.service';
 import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
 

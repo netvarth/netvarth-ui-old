@@ -7,7 +7,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',

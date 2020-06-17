@@ -16,7 +16,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';

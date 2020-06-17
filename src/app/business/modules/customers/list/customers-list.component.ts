@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddProviderCustomerComponent } from '../../check-ins/add-provider-customer/add-provider-customer.component';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { projectConstants } from '../../shared/constants/project-constants';
+import { projectConstants } from '../../app.component';
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
 

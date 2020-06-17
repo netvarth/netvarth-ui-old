@@ -10,7 +10,7 @@ import { LoginComponent } from '../../components/login/login.component';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';

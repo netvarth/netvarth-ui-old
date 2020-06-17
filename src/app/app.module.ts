@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -18,7 +18,7 @@ import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { CheckInModule } from './shared/modules/check-in/check-in.module';
 import { ConsumerCheckinHistoryListModule } from './shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
-import { AppComponent } from './app.component';
+import { AppComponent, projectConstants } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
@@ -41,7 +41,6 @@ import { FormMessageDisplayModule } from './shared/modules/form-message-display/
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { ProviderDetailService } from './shared/components/provider-detail/provider-detail.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
-import { projectConstants } from './shared/constants/project-constants';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
@@ -49,7 +48,6 @@ import { CouponsComponent } from './shared/components/coupons/coupons.component'
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
-import { PhomeComponent } from './shared/components/phome/phome.component';
 import { AboutJaldeeModule } from './shared/modules/about-jaldee/about-jaldee.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
@@ -69,8 +67,12 @@ import { SetPasswwordModule } from './shared/components/set-password-form/set-pa
 import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
+import { GlobalService } from './shared/services/global-service';
+import { GlobalFunctions } from './shared/functions/global-functions';
 
-
+export function init_app(globalService: GlobalService) {
+  return () => globalService.load();
+}
 
 @NgModule({
   declarations: [
@@ -159,11 +161,14 @@ import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module'
       multi: true
     },
     SharedServices,
+    GlobalFunctions,
+    GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
     SearchDetailServices,
     ProviderDetailService,
     Title,
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';

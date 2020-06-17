@@ -1,6 +1,6 @@
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';

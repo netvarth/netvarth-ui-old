@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';

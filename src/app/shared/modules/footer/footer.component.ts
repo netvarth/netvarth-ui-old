@@ -4,7 +4,7 @@ import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 @Component({
   selector: 'app-footer',

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';

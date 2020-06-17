@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';

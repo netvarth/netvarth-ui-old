@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-provider-auditlogs',

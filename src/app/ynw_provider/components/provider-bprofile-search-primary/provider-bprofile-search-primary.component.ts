@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 

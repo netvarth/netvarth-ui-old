@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../modules/form-message-display
 import { SharedServices } from '../../../services/shared-services';
 import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';

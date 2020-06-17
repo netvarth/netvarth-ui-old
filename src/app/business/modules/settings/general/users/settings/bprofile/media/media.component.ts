@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, ButtonType } from 'angular-modal-gallery';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';

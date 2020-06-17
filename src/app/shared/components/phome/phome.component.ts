@@ -5,7 +5,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';

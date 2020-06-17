@@ -6,7 +6,7 @@ import { SharedServices } from '../../services/shared-services';
 import { MatDialog } from '@angular/material';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-forgot-password-app',

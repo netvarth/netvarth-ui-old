@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -68,7 +68,7 @@ export class AdminLoginComponent implements OnInit {
           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
           this.api_loading = false;
           this.router.navigate(['home']);
-          // this.dialogRef.close();j
+          // this.dialogRef.close();
           setTimeout(() => {
           }, projectConstants.TIMEOUT_DELAY_SMALL);
         },

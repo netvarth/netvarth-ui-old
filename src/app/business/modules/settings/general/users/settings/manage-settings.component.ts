@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';

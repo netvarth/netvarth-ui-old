@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SignUpComponent } from '../../components/signup/signup.component';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';

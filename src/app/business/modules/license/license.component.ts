@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
 import * as moment from 'moment';

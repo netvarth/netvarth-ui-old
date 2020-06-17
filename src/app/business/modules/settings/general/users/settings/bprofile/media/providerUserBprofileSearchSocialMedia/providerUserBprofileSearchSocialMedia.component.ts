@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Messages } from '../../../../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../../app.component';
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MatDialog } from '@angular/material';
 import { DOCUMENT } from '@angular/common';

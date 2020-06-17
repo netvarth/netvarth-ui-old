@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { MatDialog } from '@angular/material';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';

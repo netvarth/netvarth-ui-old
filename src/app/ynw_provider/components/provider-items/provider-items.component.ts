@@ -6,7 +6,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderItemComponent } from '../add-provider-item/add-provider-item.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-provider-items',

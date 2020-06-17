@@ -93,7 +93,6 @@ export const projectConstants = {
     { name: 'colors', items: ['TextColor', 'BGColor'] },
     { name: 'tools', items: ['Maximize', 'ShowBlocks'] },
     { name: 'others', items: ['-'] }
-
   ],
   DISPLAY_DATE_FORMAT: 'DD/MM/YYYY',
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',
@@ -635,3 +634,4 @@ export const projectConstants = {
   PATH: 'https://' + window.location.host + '/'
 
 };
+
