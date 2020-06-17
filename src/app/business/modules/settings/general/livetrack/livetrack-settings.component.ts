@@ -25,6 +25,7 @@ export class LiveTrackSettingsComponent implements OnInit {
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
+    breadcrumb_moreoptions: any = []; 
     domain;
     constructor(private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
@@ -35,11 +36,16 @@ export class LiveTrackSettingsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getLiveTrackStatus ();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
-
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
+        }
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);
+        this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
       }
     getLiveTrackStatus() {
         this.provider_services.getGlobalSettings().subscribe(

@@ -23,7 +23,7 @@ export class DonationMgrComponent implements OnInit {
   donations_statusstr: string;
   donations_status: any;
   cause_count: any = 0;
-
+  breadcrumb_moreoptions: any = []; 
   constructor(private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -34,6 +34,7 @@ export class DonationMgrComponent implements OnInit {
     this.getCauseCount();
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
   getCauseCount() {
     const filter = { 'scope-eq': 'account', 'serviceType-eq': 'donationService' };
@@ -69,7 +70,11 @@ export class DonationMgrComponent implements OnInit {
         this.shared_functions.sendMessage({ 'ttype': 'donationStatus', donationStatus: this.donations_status });
       });
   }
-
+  performActions(action) {
+    if (action === 'learnmore') {
+      this.router.navigate(['/provider/' + this.domain + '/donationmanager']);
+    }
+  }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/donationmanager->' + mod]);
