@@ -855,7 +855,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
 
                 this.search_data.hits.hit[i].fields.image_list_popup = [];
-                if (this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0 ||
+                if (this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0  ||
                   this.search_data.hits.hit[i].fields.logo) {
                   let indxval = 0;
                   if (this.search_data.hits.hit[i].fields.logo) {
@@ -868,6 +868,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
                     indxval = 1;
                   }
+                  if (this.search_data.hits.hit[i].fields.gallery_thumb_nails){
                   for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
                     const imgobj = new Image(
                       j + 2,
@@ -877,6 +878,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     console.log(imgobj);
                     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
                   }
+                }
                   console.log(this.search_data.hits.hit[i].fields.image_list_popup);
                 }
 
