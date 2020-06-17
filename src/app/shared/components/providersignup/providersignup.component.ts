@@ -289,7 +289,11 @@ export class ProvidersignupComponent implements OnInit {
           this.active_step = 3;
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
-          this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+          if (user_details.userProfile.email) {
+            this.shared_functions.openSnackBar('OTP is sent to Your email id');
+          } else if (user_details.userProfile.primaryMobileNo) {
+            this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+          }
           if (!source) {
             this.createpasswordform();
           }
@@ -420,7 +424,7 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    if (this.otp !== null) {
+    if (this.otp) {
       if (this.isValidConfirm_pw) {
         this.onOtpSubmit().then(data => {
           this.saveReferralInfo().then(
