@@ -572,7 +572,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         t2 = time1.slice(2);
         appx_ret.cancelled_time = t2;
       }
-      appx_ret.cancelled_caption = 'Cancelled on ';
+      if (appointment.apptStatus === 'Rejected') {
+        appx_ret.cancelled_caption = 'Rejected on ';
+      } else {
+        appx_ret.cancelled_caption = 'Cancelled on ';
+      }
     }
     return appx_ret;
   }
