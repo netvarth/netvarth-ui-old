@@ -1222,12 +1222,19 @@ export class ConsumerCheckinComponent implements OnInit {
         this.shared_services.getServicesByLocationId(locid)
             .subscribe(data => {
                 if (this.tele_srv_stat === '1' || this.tele_srv_stat === 'true') {
-                    this.servicesjson = data;
+                    // this.servicesjson = data;
+                    for (const i in data) {
+                        if (data[i].serviceType !== 'donationService') {
+                            this.servicesjson.push(data[i]);
+                            this.serviceslist.push(data[i]);
+                        }
+                    }
                 } else {
                     this.servicesjson = [];
                     for (const i in data) {
-                        if (data[i].serviceType !== 'virtualService') {
+                        if (data[i].serviceType !== 'virtualService' && data[i].serviceType !== 'donationService') {
                             this.servicesjson.push(data[i]);
+                            this.serviceslist.push(data[i]);
                         }
                     }
                 }

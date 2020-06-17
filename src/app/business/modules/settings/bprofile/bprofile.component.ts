@@ -273,6 +273,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
       customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
@@ -290,7 +291,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getBusinessConfiguration();
     this.getProviderLocations();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
+    // this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
@@ -898,6 +899,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   buyAdwords() {
     this.routerobj.navigate(['provider', 'settings', 'license']);
+  }
+  performActions(action) {
+    if (action === 'learnmore') {
+      this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
+    }
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
