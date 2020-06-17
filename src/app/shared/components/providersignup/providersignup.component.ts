@@ -322,6 +322,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   onOtpSubmit() {
     this.actionstarted = true;
+    this.joinClicked = false;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
       this.shared_services.OtpSignUpProviderValidate(this.otp)
@@ -333,6 +334,7 @@ export class ProvidersignupComponent implements OnInit {
           },
           error => {
             this.actionstarted = false;
+            this.joinClicked = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
@@ -418,25 +420,31 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    if (this.isValidConfirm_pw) {
-      this.onOtpSubmit().then(data => {
-        this.saveReferralInfo().then(
-          () => {
-            this.setPassword();
-          },
+    if (this.otp !== null) {
+      if (this.isValidConfirm_pw) {
+        this.onOtpSubmit().then(data => {
+          this.saveReferralInfo().then(
+            () => {
+              this.setPassword();
+            },
+            (error) => {
+              this.joinClicked = false;
+              this.api_loading = false;
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+        },
           (error) => {
             this.joinClicked = false;
             this.api_loading = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
-      },
-        (error) => {
-          this.joinClicked = false;
-          this.api_loading = false;
-        });
+      } else {
+        this.joinClicked = false;
+        this.api_loading = false;
+      }
     } else {
       this.joinClicked = false;
       this.api_loading = false;
+      this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
     }
   }
   resetApiErrors() {
