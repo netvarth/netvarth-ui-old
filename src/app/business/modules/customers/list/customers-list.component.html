@@ -145,7 +145,8 @@
               <td class="three hidden-xs hidden-sm">
                 <span *ngIf="customer.email" class="pad-rt-5"><i
                   class="fa fa-envelope"></i>&nbsp;{{customer.email}}</span>
-                  <span *ngIf="customer.jaldeeId" class="pad-rt-5">{{customer_label | capitalizeFirst}} Id: {{customer.jaldeeId}}</span>
+                  <span>  </span>
+                  <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}} Id:</b> {{customer.jaldeeId}}</span>
                   <span *ngIf="customer.lastVisitedDate">Last visited on
                     {{customer.lastVisitedDate | date: dateFormat }}</span>
               </td>
