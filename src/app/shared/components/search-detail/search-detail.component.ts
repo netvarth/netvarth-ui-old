@@ -852,37 +852,30 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
-
-
-                this.search_data.hits.hit[i].fields.image_list_popup = [];
-                if (this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0  ||
-                  this.search_data.hits.hit[i].fields.logo) {
-                  let indxval = 0;
-                  if (this.search_data.hits.hit[i].fields.logo) {
-                    const imgobj = new Image(
-                      1,
-                      { // modal
-                        img: this.search_data.hits.hit[i].fields.logo
-                      });
-                    console.log(imgobj);
-                    this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
-                    indxval = 1;
-                  }
-                  if (this.search_data.hits.hit[i].fields.gallery_thumb_nails) {
-                  for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
-                    const imgobj = new Image(
-                      j + 2,
-                      { // modal
-                        img: this.search_data.hits.hit[i].fields.gallery_thumb_nails[j]
-                      });
-                    console.log(imgobj);
-                    this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
-                  }
-                }
-                  console.log(this.search_data.hits.hit[i].fields.image_list_popup);
-                }
-
-
+                // this.search_data.hits.hit[i].fields.image_list_popup = [];
+                // if ((this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0) ||
+                //   this.search_data.hits.hit[i].fields.logo) {
+                //   let indxval = 0;
+                //   if (this.search_data.hits.hit[i].fields.logo) {
+                //     const imgobj = new Image(
+                //       1,
+                //       { // modal
+                //         img: this.search_data.hits.hit[i].fields.logo
+                //       });
+                //     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
+                //     indxval = 1;
+                //   }
+                //   if (this.search_data.hits.hit[i].fields.gallery_thumb_nails && this.search_data.hits.hit[i].fields.gallery_thumb_nails.length > 0) {
+                //   for (let j = 0; j < this.search_data.hits.hit[i].fields.gallery_thumb_nails.length; j++) {
+                //     const imgobj = new Image(
+                //       j + 2,
+                //       { // modal
+                //         img: this.search_data.hits.hit[i].fields.gallery_thumb_nails[j]
+                //       });
+                //     this.search_data.hits.hit[i].fields.image_list_popup.push(imgobj);
+                //   }
+                // }
+                // }
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
