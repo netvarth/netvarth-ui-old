@@ -9305,3 +9305,14 @@ button.cust-button-1:disabled {
     font-size: 0.8rem;
   }
 }
+.consumer-pay .th.one{
+  font-size: 0.75rem;
+}
+.consumer-pay .amount{
+  font-weight: 600;
+}
+.consumer-pay .accname {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3c8dbc;
+}

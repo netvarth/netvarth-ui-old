@@ -422,6 +422,10 @@ export class SharedServices {
     const url = 'consumer/payment';
     return this.servicemeta.httpGet(url);
   }
+  getConsumerPaymentById(id) {
+    const url = 'consumer/payment/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   providerPayment(data) {
     const url = 'provider/payment';
     return this.servicemeta.httpPost(url, data);
