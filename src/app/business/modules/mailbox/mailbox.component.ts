@@ -3,7 +3,7 @@ import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';

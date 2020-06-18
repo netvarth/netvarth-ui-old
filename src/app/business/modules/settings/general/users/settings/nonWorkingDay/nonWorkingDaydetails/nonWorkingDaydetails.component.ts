@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';

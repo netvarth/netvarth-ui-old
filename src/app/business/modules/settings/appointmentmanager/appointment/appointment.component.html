@@ -321,7 +321,7 @@
                                     <span class="ln-hgt-40">{{item.name}}</span>
                                 </div>
                                 <div class="col-md-5">
-                                    <span class="mbt">
+                                    <span class="mbt" style="top:0">
                                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                             <mat-icon>more_vert</mat-icon>
                                         </button>
@@ -439,7 +439,7 @@
                                                 (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                                 placeholder="{{note_placeholder}}"></textarea>
                                         </mat-form-field>
-                                        <div class="col-md-12 no-padding mgn-up-10">
+                                        <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
                                             <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
                                                 (click)="handleGoBack(1)">
                                                 Cancel

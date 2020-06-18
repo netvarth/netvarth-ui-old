@@ -1,20 +1,39 @@
-import { Component, OnInit, AfterContentInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { JaldeeSseService } from './shared/services/jaldee-sse-service';
-import { base_url } from './shared/constants/urls';
-import { SharedFunctions } from './shared/functions/shared-functions';
+import { SharedServices } from './shared/services/shared-services';
+import { GlobalService } from './shared/services/global-service';
+export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
-  public isShowingRouteLoadIndicator: boolean;
   title = 'app';
   constructor(private jadeeSseService: JaldeeSseService,
-    private shared_functions: SharedFunctions) { }
+    private shared_services: SharedServices,
+    private globalService: GlobalService) { }
 
   ngOnInit() {
+    projectConstants = this.globalService.getGlobalConstants();
+    // GOOGLEAPIKEY
+    // this.shared_services.getS3Url().then(
+    //   (s3Url: any) => {
+    //     console.log(s3Url);
+    //     this.shared_services.getUIConfig(s3Url).subscribe(
+    //       (config: any) => {
+    //         // console.log(config);
+    //         projectConstantsGlobal = config;
+    //         console.log(projectConstantsGlobal);
+    //         this.isShowingRouteLoadIndicator = true;
+    //       },
+    //       (error) => {
+    //         console.log(error);
+    //       }
+
+    //     );
+    //   }
+    // );
     // const isProvider = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
     // const user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     // if (isProvider === 'true' && user) {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
   selector: 'app-provider-customers',

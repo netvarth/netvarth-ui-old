@@ -1,7 +1,6 @@
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-
 <section>
   <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
@@ -19,8 +18,8 @@
               <div class="tp" *ngIf="waitlist_data">
                 <div class="item"><span class="ttle">{{name_cap}}</span>
                   <span>
-                    {{waitlist_data.consumer.userProfile.firstName | capitalizeFirst}}
-                    {{waitlist_data.consumer.userProfile.lastName | capitalizeFirst}}</span></div>
+                    {{waitlist_data.providerConsumer.firstName | capitalizeFirst}}
+                    {{waitlist_data.providerConsumer.lastName | capitalizeFirst}}</span></div>
                 <div class="item">
                   <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data) && pdtype !== 2">{{getAppxTime(waitlist_data,
                     true)}}:</span>

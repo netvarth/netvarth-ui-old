@@ -63,6 +63,7 @@ export class GeneralSettingsComponent implements OnInit {
         this.getDepartmentsCount();
         this.getDomainSubdomainSettings();
         this.getBusinessConfiguration();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     goLocation() {
         this.router.navigate(['provider', 'settings', 'general', 'locations']);
@@ -88,6 +89,11 @@ export class GeneralSettingsComponent implements OnInit {
     gotoLabels() {
         this.router.navigate(['provider', 'settings', 'general', 'labels']);
     }
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.router.navigate(['/provider/' + this.domain + '/general']);
+        }
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/general->' + mod]);

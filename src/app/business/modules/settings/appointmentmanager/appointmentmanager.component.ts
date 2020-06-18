@@ -36,6 +36,7 @@ export class AppointmentmanagerComponent implements OnInit {
     futureDateApptlist = false;
     apptlist_statusstr = 'Off';
     futureapptlist_statusstr = 'off';
+    breadcrumb_moreoptions: any = []; 
 
     constructor(
         private router: Router,
@@ -53,6 +54,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.getServiceCount();
         this.getSchedulesCount();
         this.getApptlistMgr();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     }
@@ -68,6 +70,11 @@ export class AppointmentmanagerComponent implements OnInit {
     // gotoAppointments(){
     //     this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointment']);
     // }
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager']);
+        }
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);

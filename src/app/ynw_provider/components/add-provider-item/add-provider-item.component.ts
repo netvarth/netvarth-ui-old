@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { Messages } from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({

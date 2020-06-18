@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -15,7 +15,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
 import { HeaderModule } from './shared/modules/header/header.module';
-import { AppComponent } from './app.component';
+import { AppComponent, projectConstants } from './app.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
@@ -32,7 +32,6 @@ import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
-import { projectConstants } from './shared/constants/project-constants';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
@@ -53,6 +52,9 @@ import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module'
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 
+export function init_app(globalService: GlobalService) {
+  return () => globalService.load();
+}
 
 
 @NgModule({
@@ -124,9 +126,12 @@ import { ConsumerPaymentmodeComponent } from './shared/components/consumer-payme
       multi: true
     },
     SharedServices,
+    GlobalFunctions,
+    GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
     Title,
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

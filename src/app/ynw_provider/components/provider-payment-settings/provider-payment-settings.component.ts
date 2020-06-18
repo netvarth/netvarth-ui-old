@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Router, ActivatedRoute } from '@angular/router';

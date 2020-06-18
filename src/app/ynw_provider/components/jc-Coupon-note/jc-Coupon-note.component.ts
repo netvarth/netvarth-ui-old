@@ -1,6 +1,6 @@
 import { OnInit, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Component({
     selector: 'app-jc-Coupon-note',

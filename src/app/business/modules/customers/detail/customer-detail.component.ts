@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
@@ -69,6 +69,7 @@ export class CustomerDetailComponent implements OnInit {
     customidFormat;
     loading = false;
     haveMobile = true;
+    viewCustomer = false;
     customerId;
     customer;
     customerName;
@@ -86,6 +87,14 @@ export class CustomerDetailComponent implements OnInit {
             (params) => {
                 this.customerId = params.id;
                 this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+                this.breadcrumbs_init = [
+                    
+                    {
+                        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1),
+                        url: 'provider/customers'
+                    }
+                   
+                ];
                 if (this.customerId) {
                     if (this.customerId === 'add') {
                         const breadcrumbs = [];
@@ -105,6 +114,7 @@ export class CustomerDetailComponent implements OnInit {
                                 this.getCustomers(this.customerId).then(
                                     (customer) => {
                                         this.customer = customer;
+                                        console.log(customer);
                                         this.customerName = this.customer[0].firstName;
 
                                         if (this.action === 'edit') {
@@ -116,6 +126,7 @@ export class CustomerDetailComponent implements OnInit {
                                                 title: this.customerName
                                             });
                                             this.breadcrumbs = breadcrumbs;
+                                            this.viewCustomer = false;
                                             this.createForm();
                                         } else if (this.action === 'view') {
                                             const breadcrumbs = [];
@@ -126,6 +137,8 @@ export class CustomerDetailComponent implements OnInit {
                                                 title: this.customerName
                                             });
                                             this.breadcrumbs = breadcrumbs;
+                                            this.viewCustomer = true;
+
                                         }
                                     }
                                 );
@@ -360,6 +373,7 @@ export class CustomerDetailComponent implements OnInit {
                     },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.disableButton = false;
                     });
 
         }
@@ -460,5 +474,11 @@ export class CustomerDetailComponent implements OnInit {
             }
         };
         this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+    }
+    editCustomer() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['/provider/customers/' + this.customer[0].id], navigationExtras);
     }
 }

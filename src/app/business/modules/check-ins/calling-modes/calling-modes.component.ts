@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 

@@ -6,10 +6,64 @@
         <div class="col-md-12 no-padding-small ">
             <div class="row">
                 <div class="card p0">
+
+                    <div class="col-md-12 no-padding">
+                        <ul class="nav cust-dash jd-custom-nav">
+                           
+                          <li class="dropdown notifications-menu">
+                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                              data-toggle="dropdown" (click)="findCustomer()">
+                              <i class="fa fa-search pointer-cursor"></i> Find {{customer_label | capitalizeFirst}}
+                            </a>
+                          </li>
+                          <li  *ngIf="viewCustomer" class="dropdown notifications-menu">
+                            <a class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                              data-toggle="dropdown" (click)="editCustomer()">
+                              <i class="fa fa-pencil"></i> Edit 
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+
+
+
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-9 col-lg-9">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                            <form *ngIf="!loading" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 mgn-bt-20"
+                                *ngIf="viewCustomer">
+                                <div *ngIf="customer[0].firstName" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Name:</b></div>
+                                    <div>{{customer[0].firstName}} {{customer[0].lastName}}</div>
+                                </div>
+                                <div *ngIf="customer[0].jaldeeId" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Customer Id:</b></div>
+                                    <div>{{customer[0].jaldeeId}}</div>
+                                </div>
+                                <div *ngIf="customer[0].email" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Email:</b></div>
+                                    <div>{{customer[0].email}}</div>
+                                </div>
+                                <div *ngIf="customer[0].phoneNo" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>PhoneNo:</b></div>
+                                    <div>{{customer[0].phoneNo}}</div>
+                                </div>
+                                <div *ngIf="customer[0].gender" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Gender:</b></div>
+                                    <div>{{customer[0].gender}}</div>
+                                </div>
+                                <div *ngIf="customer[0].dob" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>Dob</b></div>
+                                    <div>{{customer[0].dob}}</div>
+                                </div>
+                                <div *ngIf="customer[0].address" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
+                                    <div><b>PhoneNo:</b></div>
+                                    <div>{{customer[0].address}}</div>
+                                </div>
+                            </div>
+                            
+                            <form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="form-group mobile-field" *ngIf="haveMobile">
                                     <mat-form-field>
@@ -68,6 +122,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             class="createcheckinstyle">Click here</u></i>
                                 </div>
                             </div>
+                            
                             
                                 <div class="form-group"
                                     *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
@@ -165,10 +220,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 </div>
                             </form>
                         </div>
-                        <div class="lbr col-sm-12 col-md-3 col-lg-3">
-                            <div class="col-md-12  mgn-up-20 ">
+                        <div class="class = lbr col-sm-12 col-md-4 col-lg-4">
+                            <!-- <div class="col-md-12  mgn-up-20 ">
                                 <button class="cs-btn bt3 width-100 mgn-up-20" (click)="findCustomer()">Find {{customer_label}}</button>
                             </div>
+                            <div *ngIf="viewCustomer" class="col-md-12  mgn-up-20 ">
+                                <button class="cs-btn bt3 width-100 mgn-up-20" (click)="editCustomer()">Edit {{customer_label}}</button>
+                            </div> -->
                         </div>
                     </div>
                 </div>

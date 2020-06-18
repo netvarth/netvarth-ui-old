@@ -3,7 +3,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material';
 import { ProviderLicenceInvoiceDetailComponent } from '../../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { NavigationExtras, Router } from '@angular/router';
 // import { SOURCE } from '@angular/core/src/di/injector';
 

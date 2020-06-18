@@ -95,8 +95,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             });
     }
     getServices() {
+        const filter = {};
+        filter['provider-eq'] = this.userId;
         this.api_loading = true;
-        this.provider_services.getUserServicesList(this.userId)
+        this.provider_services.getUserServicesList(filter)
             .subscribe(
                 data => {
                     this.service_list = data;

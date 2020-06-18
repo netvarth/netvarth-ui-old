@@ -1,9 +1,9 @@
 export const projectConstants = {
   GOOGLEAPIKEY: 'AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM',
   PERPAGING_LIMIT: 10,
-  CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
-  INBOX_REFRESH_TIME: 30, // seconds
-  ALERT_REFRESH_TIME: 30, // seconds
+  CONSUMER_DASHBOARD_REFRESH_TIME: 300, // seconds
+  INBOX_REFRESH_TIME: 300, // seconds
+  ALERT_REFRESH_TIME: 300, // seconds
   SMALL_DEVICE_BOUNDARY: 991,
   PROVIDER_SMALL_DEVICE_BOUNDARY: 767,
   searchpass_criteria: {
@@ -93,7 +93,6 @@ export const projectConstants = {
     { name: 'colors', items: ['TextColor', 'BGColor'] },
     { name: 'tools', items: ['Maximize', 'ShowBlocks'] },
     { name: 'others', items: ['-'] }
-
   ],
   DISPLAY_DATE_FORMAT: 'DD/MM/YYYY',
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',

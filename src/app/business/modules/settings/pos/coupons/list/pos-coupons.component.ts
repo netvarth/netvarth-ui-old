@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 
 @Component({

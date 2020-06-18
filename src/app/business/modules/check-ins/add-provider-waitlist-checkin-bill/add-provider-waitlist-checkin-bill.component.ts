@@ -6,7 +6,7 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';

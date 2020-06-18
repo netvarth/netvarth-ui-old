@@ -5,7 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';

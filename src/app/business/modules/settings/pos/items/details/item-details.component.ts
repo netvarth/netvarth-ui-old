@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';

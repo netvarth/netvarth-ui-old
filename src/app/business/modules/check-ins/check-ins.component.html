@@ -1,5 +1,7 @@
 <section>
-  <app-breadcrumb  (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+  <app-breadcrumb *ngIf="showToken" (performAction)="performActions($event)" [breadcrumbs]="breadcrumb_tkn"
+    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb *ngIf="!showToken" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section class="dashboard content pro-dash" >
@@ -502,7 +504,7 @@
                             </span>
                             <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor"
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
-                              <i class="icon-note"></i>
+                              <i class="icon-note tspace"></i>
                             </span>
                             <!-- <span
                               *ngIf="checkin.waitlistStatus !== 'cancelled' && checkin.virtualService && getVirtualServiceCount(checkin.virtualService)"
@@ -522,7 +524,7 @@
                             </span>
                           </div>
                         </div>
-                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
+                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right tel-serv-flex">
                           <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Send message'" (click)="addConsumerInboxMessage('single', checkin)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
@@ -633,7 +635,7 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
+                      <div class="col-md-5 col-xs-5 p0 info-box-icon-right tel-serv-flex">
                         <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Send message'"
                           (click)="addConsumerInboxMessage('single', timeSlotCheckins[slot][0])">

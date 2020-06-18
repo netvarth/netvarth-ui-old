@@ -6,11 +6,16 @@ import { ServiceMeta } from './service-meta';
 import { AlertPromise } from 'selenium-webdriver';
 @Injectable()
 export class SharedServices {
+
   licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
+  }
+  getUIConfig(s3Url: any, UTCstring) {
+    const url = s3Url + '/UIConfig/config.json?modifiedDate=' + UTCstring;
+    return this.servicemeta.httpGet(url);
   }
   adminLogin(body) {
     return this.servicemeta.httpPost('superadmin/login', body);
@@ -732,5 +737,23 @@ export class SharedServices {
   getApptMeetingDetails(mode, uuid) {
     const path = 'provider/appointment/' + uuid + '/meetingDetails/' + mode;
     return this.servicemeta.httpGet(path);
+  }
+  getS3Url(src?) {
+    const promise = new Promise((resolve, reject) => {
+      if (localStorage.getItem('s3Url')) {
+        resolve(localStorage.getItem('s3Url'));
+      } else {
+        this.gets3url(src)
+          .subscribe(
+            data => {
+              localStorage.setItem('s3Url', data.toString());
+              resolve(data);
+            },
+            error => {
+              reject(error);
+            });
+      }
+    });
+    return promise;
   }
 }

@@ -6,7 +6,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { SignUpComponent } from '../signup/signup.component';
 
 @Component({

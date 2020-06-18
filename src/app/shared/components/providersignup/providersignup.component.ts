@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
@@ -289,7 +289,11 @@ export class ProvidersignupComponent implements OnInit {
           this.active_step = 3;
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
-          this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+          if (user_details.userProfile.email) {
+            this.shared_functions.openSnackBar('OTP is sent to Your email id');
+          } else if (user_details.userProfile.primaryMobileNo) {
+            this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+          }
           if (!source) {
             this.createpasswordform();
           }
@@ -322,6 +326,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   onOtpSubmit() {
     this.actionstarted = true;
+    this.joinClicked = false;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
       this.shared_services.OtpSignUpProviderValidate(this.otp)
@@ -333,6 +338,7 @@ export class ProvidersignupComponent implements OnInit {
           },
           error => {
             this.actionstarted = false;
+            this.joinClicked = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
@@ -420,25 +426,31 @@ export class ProvidersignupComponent implements OnInit {
     this.joinClicked = true;
     this.api_loading = true;
     this.resetApiErrors();
-    if (this.isValidConfirm_pw) {
-      this.onOtpSubmit().then(data => {
-        this.saveReferralInfo().then(
-          () => {
-            this.setPassword();
-          },
+    if (this.otp) {
+      if (this.isValidConfirm_pw) {
+        this.onOtpSubmit().then(data => {
+          this.saveReferralInfo().then(
+            () => {
+              this.setPassword();
+            },
+            (error) => {
+              this.joinClicked = false;
+              this.api_loading = false;
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+        },
           (error) => {
             this.joinClicked = false;
             this.api_loading = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
-      },
-        (error) => {
-          this.joinClicked = false;
-          this.api_loading = false;
-        });
+      } else {
+        this.joinClicked = false;
+        this.api_loading = false;
+      }
     } else {
       this.joinClicked = false;
       this.api_loading = false;
+      this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
     }
   }
   resetApiErrors() {

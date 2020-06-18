@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { GoogleMapComponent } from '../../../../../../ynw_provider/components/googlemap/googlemap.component';
 import { MatDialog } from '@angular/material';

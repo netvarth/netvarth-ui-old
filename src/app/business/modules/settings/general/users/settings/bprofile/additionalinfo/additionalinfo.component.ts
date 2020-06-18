@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { QuestionService } from '../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 @Component({
     selector: 'app-useradditionalinfo',

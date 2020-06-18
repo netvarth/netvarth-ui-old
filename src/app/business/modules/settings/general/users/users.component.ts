@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../app.component';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';

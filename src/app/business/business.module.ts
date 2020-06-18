@@ -17,7 +17,7 @@ import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provide
 import { ProviderResolver } from '../ynw_provider/services/provider-resolver.service';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { projectConstants } from '../shared/constants/project-constants';
+import { projectConstants } from '../app.component';
 import { ProviderFaqModule } from './modules/faq/provider-faq.module';
 import { BusinessComponent } from './business.component';
 import { ProviderCustomersComponent } from '../ynw_provider/components/provider-customers/provider-customers.component';

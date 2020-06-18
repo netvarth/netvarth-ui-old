@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../../../../ynw_provider/services/pro
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../app.component';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

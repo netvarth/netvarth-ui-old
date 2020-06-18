@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { FormBase } from './form-base';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 
 @Injectable()
 export class FormControlService {

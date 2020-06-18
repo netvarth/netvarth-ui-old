@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { projectConstants } from '../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../app.component';
 
 @Component({
     selector: 'app-apply-label',

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { projectConstants } from '../../../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../../../app.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';

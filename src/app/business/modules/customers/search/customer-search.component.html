@@ -10,7 +10,7 @@
                         <div class="lbl col-sm-12 col-md-10 col-lg-10">
                             <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
                                 <div class="form-group col-md-12 mgn-up-10 sc-frm no-padding">
-                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding">
+                                    <div class="col-md-9 col-xs-10 col-sm-10 no-padding glbl-seting-heder">
                                         <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
                                             <mat-form-field>
                                                 <input matInput placeholder="Enter Phone Number/Id/email" type="text"
@@ -18,7 +18,7 @@
                                                     (keypress)="findCustomer(searchForm.value, $event)">
                                             </mat-form-field>
                                         </div>
-                                        <div class="col-md-2 col-xs-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2 col-xs-10 no-padding">
                                             <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
                                         searchCustomer(searchForm.value,selectedMode)"></i> -->
                                         <div class="col-md-12">

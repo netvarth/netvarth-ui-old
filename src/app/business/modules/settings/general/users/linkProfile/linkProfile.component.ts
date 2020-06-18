@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { projectConstants } from '../../../../../../app.component';
 @Component({
     selector: 'app-linkprofile',
     templateUrl: './linkProfile.component.html'

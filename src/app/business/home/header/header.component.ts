@@ -4,12 +4,14 @@ import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Title } from '@angular/platform-browser';
 import { HttpHandler, HttpHeaders } from '@angular/common/http';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { GlobalService } from '../../../shared/services/global-service';
+import { global } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-header',
@@ -33,7 +35,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   bsector = '';
   bsubsector = '';
   blogo = '';
-  refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  refreshTime;
   enable_disable;
   iswiz = false; // is true when active page is wizard
   qAvailability;
@@ -48,7 +50,10 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
-    private titleService: Title) {
+    private titleService: Title,
+    private globalService: GlobalService) {
+    this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
+    console.log('refresh Time :' + this.refreshTime);
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -131,9 +136,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.reloadHandler();
     this.getBusinessdetFromLocalstorage();
     this.enable_disable = Messages.ENBLE_DISABLE_TOOLTIP.replace('[waitlist]', this.waitlist_label);
-    // this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
-    //   this.reloadHandler();
-    // });
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
+      this.reloadHandler();
+    });
   }
   ngOnDestroy() {
     if (this.cronHandle) {

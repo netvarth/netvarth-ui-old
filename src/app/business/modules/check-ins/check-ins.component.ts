@@ -1,7 +1,7 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChildren, ElementRef, QueryList } from '@angular/core';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -200,9 +200,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumb_moreoptions: any = [];
   apis_loaded = false;
   breadcrumbs_init = [{ title: 'Check-ins' }];
+  breadcrumbs_tokn = [{ title: 'Tokens' }];
   noFilter = true;
   arr: any = [];
   breadcrumbs = this.breadcrumbs_init;
+  breadcrumb_tkn = this.breadcrumbs_tokn;
   server_date;
   isServiceBillable = true;
   subscription: Subscription;

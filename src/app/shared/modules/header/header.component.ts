@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 

@@ -1467,6 +1467,5 @@ export class SharedFunctions {
     const y = newdate.getFullYear();
     const date1 = y + '-' + mm + '-' + dd;
     return date1 ;
-    
   }
 }
