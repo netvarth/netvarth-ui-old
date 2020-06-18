@@ -1509,4 +1509,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'checkin', 'track', uid], navigationExtras);
 
   }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.shared_functions.convert24HourtoAmPm(slots[0]);
+}
 }
