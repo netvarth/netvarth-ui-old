@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -86,7 +87,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     ineditMode = true;
     isJaldeeAccount: Boolean = true;
     optJaldeeAccount;
-    maxcnt100 = projectConstants.VALIDATOR_MAX100;
+    maxcnt100 = projectConstantsLocal.VALIDATOR_MAX100;
     maxcnt15 = 15;
     maxcnt11 = 11;
     activeLicPkg;
@@ -376,9 +377,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const postData = { 'dcOrCcOrNb': false, 'payTm': false, 'payU': false };
         const postData = {};
         // postData['onlinePayment'] = this.paystatus;
-        const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
-        const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+        const numbercntpattern = projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (source === 'payTm') {
             postData['payTm'] = true;
             // this.paytmBlur();
@@ -488,9 +489,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      * function called when control lost from paytm field
      */
     paytmBlur() {
-        const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
-        const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+        const numbercntpattern = projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmmobile)) {
                 this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKNUM') };
@@ -504,7 +505,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     paytmMidBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmMerchantId)) {
                 this.errorExist = true;
@@ -513,7 +514,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     paytmMkeyBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmMerchantKey)) {
                 this.errorExist = true;
@@ -522,7 +523,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     paytmwebsitewebBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmWebsiteWeb)) {
                 this.errorExist = true;
@@ -532,7 +533,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
 
     paytmwebsiteAppBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmWebsiteApp)) {
                 this.errorExist = true;
@@ -542,7 +543,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
 
     paytmindustrytypeBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmIndustryType)) {
                 this.errorExist = true;
@@ -551,8 +552,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     panCardBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.pannumber)) {
             this.errorExist = true;
             this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PAN') };
@@ -565,8 +566,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     ifscBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const alphanumericpattern = projectConstants.VALIDATOR_ALPHANUMERIC;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.bankifsc)) {
             this.errorExist = true;
             this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSC') };
@@ -579,8 +580,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     panNameBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         if (this.panname.length > this.maxcnt100) {
             this.errorExist = true;
             this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
@@ -593,8 +594,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     acholderNameBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         if (this.bankacname.length > this.maxcnt100) {
             this.errorExist = true;
             this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
@@ -607,8 +608,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     bankAcnumberBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
         if (blankpattern.test(this.bankacnumber)) {
             this.errorExist = true;
             this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO') };
@@ -620,8 +621,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     bankNameBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         if (this.bankname.length > this.maxcnt100) {
             this.errorExist = true;
             this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
@@ -634,8 +635,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     bankBranchBlur() {
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
-        const charonly = projectConstants.VALIDATOR_CHARONLY;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
+        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         if (this.bankbranch.length > this.maxcnt100) {
             this.errorExist = true;
             this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };

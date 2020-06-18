@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
-import { projectConstants } from '../constants/project-constants';
+import { projectConstants } from '../../app.component';
 import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
@@ -138,8 +138,8 @@ export class SharedFunctions {
       this.shared_service.ProviderLogin(post_data)
         .subscribe(
           data => {
-            resolve(data);
             this.setLoginData(data, post_data, 'provider');
+            resolve(data);
             this.router.navigate(['/provider']);
           },
           error => {

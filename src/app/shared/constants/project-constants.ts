@@ -1,4 +1,4 @@
-export const projectConstants = {
+export const projectConstantsLocal = {
   GOOGLEAPIKEY: 'AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM',
   PERPAGING_LIMIT: 10,
   CONSUMER_DASHBOARD_REFRESH_TIME: 300, // seconds
@@ -254,7 +254,6 @@ export const projectConstants = {
   TOOLTIP_FEMALE: 'Female',
   VALIDATOR_BLANK_FALSE: /^((?!\s{2,}).)*$/,
   VALIDATOR_BLANK: /^\s*$/,
-  // VALIDATOR_URL: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
   VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   VALIDATOR_NUMBERONLY: /^\d+$/,
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
@@ -264,8 +263,6 @@ export const projectConstants = {
   VALIDATOR_ALPHANUMERIC: /^[a-zA-Z0-9\s]+$/,
   VALIDATOR_ALPHANUMERIC_HYPHEN: /^[a-zA-Z0-9-]*$/,
   VALIDATOR_ALPHANUMERIC_DOT: /^[a-zA-Z0-9"':;,-.%]*$/,
-  // VALIDATOR_CHARONLY: /^[a-zA-Z][a-zA-Z ]+$/,
-  // VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
   VALIDATOR_EMAIL: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
   VALIDATOR_NUMBER_COMMA: /^[0-9\,]+$/,
   VALIDATOR_MAX6: 6, // max char count

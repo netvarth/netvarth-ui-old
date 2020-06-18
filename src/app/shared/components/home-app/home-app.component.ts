@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
 import { SignUpComponent } from '../signup/signup.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-home-app',
@@ -74,7 +75,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
         [Validators.required,
         Validators.maxLength(10),
         Validators.minLength(10),
-        Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+        Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       password: ['', Validators.compose([Validators.required])]
 
     });

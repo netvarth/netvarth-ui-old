@@ -7,6 +7,7 @@ import { FormMessageDisplayService } from '../../../../../../../../shared/module
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-usernonworkingdaydetails',
@@ -34,7 +35,7 @@ export class UsernonWorkingDaydetailsComponent implements OnInit {
   meridian = true;
   api_loading = true;
   api_loading1 = true;
-  maxcharDesc = projectConstants.VALIDATOR_MAX100;
+  maxcharDesc = projectConstantsLocal.VALIDATOR_MAX100;
 
   breadcrumbs_init = [
     {

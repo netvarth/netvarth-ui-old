@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { FormBase } from './form-base';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Injectable()
 export class FormControlService {
@@ -48,7 +49,7 @@ export class FormControlService {
     }
 
     if (question.type === 'url') {
-      validators.push(Validators.pattern(projectConstants.VALIDATOR_URL));
+      validators.push(Validators.pattern(projectConstantsLocal.VALIDATOR_URL));
       this.createError(question, 'pattern',
       'Please enter a valid URL');
     }

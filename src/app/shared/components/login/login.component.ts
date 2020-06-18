@@ -6,6 +6,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -74,8 +75,8 @@ export class LoginComponent implements OnInit {
       //   [
       //   Validators.maxLength(10),
       //   Validators.minLength(10),
-      //   Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      emailId: ['', Validators.pattern(projectConstants.VALIDATOR_MOBILE_AND_EMAIL)],
+      //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      emailId: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
       password: ['', Validators.compose([Validators.required])],
     });
   }

@@ -49,10 +49,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location
-  )  {  
-       
-  }
-
+  )  {}
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();

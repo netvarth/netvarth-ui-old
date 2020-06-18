@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, NavigationExtras } from '@angular/router';
@@ -49,7 +50,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     selected_location = null;
     selectedQlocation = null;
     capacitylimit = projectConstants.QTY_MAX_VALUE;
-    parallellimit = projectConstants.VALIDATOR_MAX150;
+    parallellimit = projectConstantsLocal.VALIDATOR_MAX150;
     start_hour;
     start_min;
     amOrPm;

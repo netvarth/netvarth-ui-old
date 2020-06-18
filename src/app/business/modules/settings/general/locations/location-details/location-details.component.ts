@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { AddProviderWaitlistLocationsComponent } from '../../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-location-details',
@@ -129,10 +130,10 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     }
     createForm() {
         this.amForm = this.fb.group({
-            locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],
+            locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_BLANK_FALSE)])],
             locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-            loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-            loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
+            loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
+            loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
             locmapurl: [{ value: '', disabled: true }]
         });
         if (this.action === 'edit') {
@@ -414,7 +415,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             }
         } else {
             const curlabel = form_data.locname;
-            const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
+            const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
             const result2 = pattern2.test(curlabel);
             if (result2) {
                 this.shared_Functionsobj.openSnackBar(Messages.BPROFILE_LOCNAME_BLANK, { 'panelClass': 'snackbarerror' }); // 'Phone label should not be blank';

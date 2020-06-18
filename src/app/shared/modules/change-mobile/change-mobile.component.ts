@@ -5,7 +5,8 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-change-mobile',
@@ -57,7 +58,7 @@ export class ChangeMobileComponent implements OnInit {
         [Validators.required,
         Validators.maxLength(10),
         Validators.minLength(10),
-        Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
+        Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
     });
     this.getProfile();
   }

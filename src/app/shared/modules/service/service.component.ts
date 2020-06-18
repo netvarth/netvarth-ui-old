@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 // import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ServicesService } from './services.service';
 import { Subscription } from 'rxjs';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { FormMessageDisplayService } from '../form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -15,6 +15,7 @@ import { SharedServices } from '../../services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -25,7 +26,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     @Input() serviceFrom;
     @Input() source;
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
-    number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
+    number_pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
     end_cause_notify_cap = '';
     service_cap = Messages.PRO_SERVICE_CAP;

@@ -88,7 +88,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
   }
   replyMessage(message) {
- 
     const pass_ob = {};
     let name = null;
     let source = this.usertype + '-';

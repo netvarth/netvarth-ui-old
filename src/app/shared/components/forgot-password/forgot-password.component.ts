@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 export class ForgotPasswordModel {
   constructor(
@@ -67,7 +68,7 @@ export class ForgotPasswordComponent {
           [Validators.required,
           Validators.maxLength(10),
           Validators.minLength(10),
-          Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
+          Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
       });
         break;
     }

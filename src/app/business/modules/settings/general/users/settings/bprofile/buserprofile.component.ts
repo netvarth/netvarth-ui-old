@@ -11,6 +11,7 @@ import { FormMessageDisplayService } from '../../../../../../../shared/modules/f
 import { SharedServices } from '../../../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { DOCUMENT } from '@angular/common';
+import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-buserprofile',
@@ -346,7 +347,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
   // Method to handle the add / edit for bprofile
   onSubmit(form_data) {
-    const blankpatterm = projectConstants.VALIDATOR_BLANK;
+    const blankpatterm = projectConstantsLocal.VALIDATOR_BLANK;
     form_data.bname = form_data.bname.trim();
     if (blankpatterm.test(form_data.bname)) {
       this.api_error = 'Please enter the business name';

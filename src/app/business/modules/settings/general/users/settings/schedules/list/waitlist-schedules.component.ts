@@ -9,6 +9,7 @@ import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/sha
 import { SharedServices } from '../../../../../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-userwaitlist-schedules',
@@ -52,7 +53,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     selected_location = null;
     selectedQlocation = null;
     capacitylimit = projectConstants.QTY_MAX_VALUE;
-    parallellimit = projectConstants.VALIDATOR_MAX150;
+    parallellimit = projectConstantsLocal.VALIDATOR_MAX150;
     start_hour;
     start_min;
     amOrPm;

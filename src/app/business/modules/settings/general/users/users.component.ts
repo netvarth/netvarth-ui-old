@@ -6,6 +6,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
 
@@ -254,7 +255,7 @@ export class BranchUsersComponent implements OnInit {
             api_filter['userType-eq'] = this.filter.userType;
         }
         if (this.filter.primaryMobileNo !== '') {
-            const pattern = projectConstants.VALIDATOR_NUMBERONLY;
+            const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
             const mval = pattern.test(this.filter.primaryMobileNo);
             if (mval) {
                 api_filter['primaryMobileNo-eq'] = this.filter.primaryMobileNo;

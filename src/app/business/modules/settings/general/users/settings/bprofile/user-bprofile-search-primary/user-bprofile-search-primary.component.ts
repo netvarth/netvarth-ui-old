@@ -8,6 +8,7 @@ import { ProviderServices } from '../../../../../../../../ynw_provider/services/
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstants } from '../../../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { SharedServices } from '../../../../../../../../shared/services/shared-services';
 
 @Component({
@@ -118,7 +119,7 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
 
     // Method to handle the add / edit for bprofile
     onSubmit(form_data) {
-        const blankpatterm = projectConstants.VALIDATOR_BLANK;
+        const blankpatterm = projectConstantsLocal.VALIDATOR_BLANK;
         form_data.bname = form_data.bname.trim();
         if (blankpatterm.test(form_data.bname)) {
             this.api_error = 'Please enter the business name';

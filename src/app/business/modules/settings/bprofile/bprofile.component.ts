@@ -16,6 +16,7 @@ import { ProviderBprofileSearchPrimaryComponent } from '../../../../ynw_provider
 import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 declare let cordova: any;
 @Component({
   selector: 'app-bprofile',
@@ -275,7 +276,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
-      customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
+      customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
     });
 
     this.getLicenseDetails();

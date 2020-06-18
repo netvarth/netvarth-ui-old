@@ -10,6 +10,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import * as moment from 'moment';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -405,9 +406,9 @@ export class CustomerSearchComponent implements OnInit {
 
         if (!this.haveMobile) {
             this.amForm = this.fb.group({
-                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
                 gender: [''],
                 address: ['']
@@ -416,11 +417,11 @@ export class CustomerSearchComponent implements OnInit {
         } else {
             this.amForm = this.fb.group({
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
-                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                customer_id: ['',Validators.compose([ Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                customer_id: ['',Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
                 gender: [''],
                 address: ['']
@@ -633,14 +634,14 @@ export class CustomerSearchComponent implements OnInit {
         this.form_data = null;
         this.create_new = false;
         let post_data = {};
-        const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
+        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.search_input);
         if (isEmail) {
             mode = 'email';
         } else {
-            const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
             const isNumber = phonepattern.test(form_data.search_input);
-            const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
             const isCount10 = phonecntpattern.test(form_data.search_input);
             if (isNumber && isCount10) {
                 mode = 'phone';

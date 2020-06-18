@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -28,8 +29,8 @@ export class AddProviderDiscountsComponent implements OnInit {
   parent_id;
   valueCaption = 'Enter value *';
   maxDiscountValue;
-  maxChars = projectConstants.VALIDATOR_MAX50;
-  maxNumbers = projectConstants.VALIDATOR_MAX9;
+  maxChars = projectConstantsLocal.VALIDATOR_MAX50;
+  maxNumbers = projectConstantsLocal.VALIDATOR_MAX9;
   curtype = 'Fixed';
   api_loading = true;
   api_loading1 = true;

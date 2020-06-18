@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -136,7 +137,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   onSubmit(form_data) {
     this.resetApiErrors();
-    const blankvalidate = projectConstants.VALIDATOR_BLANK;
+    const blankvalidate = projectConstantsLocal.VALIDATOR_BLANK;
     if (blankvalidate.test(form_data.message)) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
     } else {

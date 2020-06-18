@@ -51,6 +51,8 @@ import { SetPasswwordModule } from './shared/components/set-password-form/set-pa
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { GlobalService } from './shared/services/global-service';
+import { GlobalFunctions } from './shared/functions/global-functions';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -131,7 +133,8 @@ export function init_app(globalService: GlobalService) {
     SharedFunctions,
     FormMessageDisplayService,
     Title,
-    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService, GlobalFunctions
+    ], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
