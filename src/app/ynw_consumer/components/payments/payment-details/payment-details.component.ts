@@ -74,3 +74,4 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.showRefund = !this.showRefund;
     }
 }
+
