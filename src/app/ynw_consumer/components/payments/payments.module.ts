@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { ConsumerPaymentDetailsComponent } from './payment-details/payment-details.component';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     declarations: [
         ConsumerPaymentsComponent,
@@ -16,7 +17,8 @@ import { ConsumerPaymentDetailsComponent } from './payment-details/payment-detai
         BreadCrumbModule,
         CommonModule,
         SharedModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        LoadingSpinnerModule
     ],
     exports: [
         ConsumerPaymentsComponent

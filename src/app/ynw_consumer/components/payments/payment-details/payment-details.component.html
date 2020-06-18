@@ -6,10 +6,10 @@
         <div class="container">
             <div class="row">
                 <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
-                    <!-- <div class="card" *ngIf="!api_loading">
+                    <div class="card" *ngIf="api_loading">
                         <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </div> -->
-                    <div class="card">
+                    </div>
+                    <div class="card" *ngIf="!api_loading">
                         <div class="c-details">
                             <div class="bk-ctrl">
                                 <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">Go

@@ -12,6 +12,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
     payments: any = [];
     breadcrumbs;
     showRefund = false;
+    api_loading = false;
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         public locationobj: Location,
@@ -19,6 +20,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
 
         this.activated_route.params.subscribe(
             (qParams) => {
+                this.api_loading = true;
                 if (qParams.id) {
                     this.getPayments(qParams.id);
                 }
@@ -46,6 +48,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerPaymentById(id).subscribe(
             (payments) => {
                 this.payments = payments;
+                this.api_loading = false;
             }
         );
     }
