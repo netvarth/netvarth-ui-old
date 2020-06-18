@@ -250,8 +250,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
                     for (let i = 0; i < this.departments.length; i++) {
                         if (this.displayBoardData.qBoardConditions.departments[j].departmentId === this.departments[i].departmentId) {
-                            this.deptMultiCtrl.push(this.departments[i]);
-                            this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                            if (this.deptMultiCtrl.indexOf(this.departments[i]) === -1) {
+                                this.deptMultiCtrl.push(this.departments[i]);
+                                }
+                                if (this.deptIds.indexOf(this.displayBoardData.qBoardConditions.departments[j].departmentId) === -1) {
+                                this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                                }
                         }
                     }
                     if (j < this.displayBoardData.qBoardConditions.departments.length) {
@@ -459,7 +463,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     data => {
                         this.deptObj = data;
                         for (let i = 0; i < this.deptObj.departments.length; i++) {
-                            if (this.deptObj.departments[i].departmentStatus === 'ACTIVE') {
+                            if (this.deptObj.departments[i].departmentStatus === 'ACTIVE' && this.departments.indexOf(this.deptObj.departments[i]) === -1) {
                                 this.departments.push(this.deptObj.departments[i]);
                             }
                         }
@@ -620,8 +624,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.queues.length; j++) {
                 for (let i = 0; i < this.display_schedule.length; i++) {
                     if (this.displayBoardData.qBoardConditions.queues[j].id === this.display_schedule[i].id) {
+                        if (this.qMultiCtrl.indexOf(this.display_schedule[i]) === -1) {
                         this.qMultiCtrl.push(this.display_schedule[i]);
+                        }
+                        if (this.qIds.indexOf(this.displayBoardData.qBoardConditions.queues[j].id) === -1) {
                         this.qIds.push(this.displayBoardData.qBoardConditions.queues[j].id);
+                        }
                     }
                 }
             }
@@ -644,8 +652,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.providers.length; j++) {
                 for (let i = 0; i < this.users.length; i++) {
                     if (this.displayBoardData.qBoardConditions.providers[j].id === this.users[i].id) {
-                        this.userMultiCtrl.push(this.users[i]);
-                        this.userIds.push(this.displayBoardData.qBoardConditions.providers[j].id);
+                        if (this.userMultiCtrl.indexOf(this.users[i]) === -1) {
+                            this.userMultiCtrl.push(this.users[i]);
+                            }
+                            if (this.userIds.indexOf(this.displayBoardData.qBoardConditions.providers[j].id) === -1) {
+                            this.userIds.push(this.displayBoardData.qBoardConditions.providers[j].id);
+                            }
                     }
                 }
                 if (j < this.displayBoardData.qBoardConditions.providers.length) {
@@ -667,8 +679,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.services.length; j++) {
                 for (let i = 0; i < this.services_list.length; i++) {
                     if (this.displayBoardData.qBoardConditions.services[j].id === this.services_list[i].id) {
-                        this.servMultiCtrl.push(this.services_list[i]);
-                        this.serviceIds.push(this.displayBoardData.qBoardConditions.services[j].id);
+                        if (this.servMultiCtrl.indexOf(this.services_list[i]) === -1) {
+                            this.servMultiCtrl.push(this.services_list[i]);
+                            }
+                            if (this.serviceIds.indexOf(this.displayBoardData.qBoardConditions.services[j].id) === -1) {
+                            this.serviceIds.push(this.displayBoardData.qBoardConditions.services[j].id);
+                            }
                     }
                 }
                 if (j < this.displayBoardData.qBoardConditions.services.length) {
