@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -35,7 +36,7 @@ export class HolidayDetailsComponent implements OnInit {
   meridian = true;
   api_loading = true;
   api_loading1 = true;
-  maxcharDesc = projectConstants.VALIDATOR_MAX100;
+  maxcharDesc = projectConstantsLocal.VALIDATOR_MAX100;
 
   breadcrumbs_init = [
     {

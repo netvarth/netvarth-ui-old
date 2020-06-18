@@ -10,7 +10,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from './searchfields';
 import * as locationjson from '../../../../assets/json/locations.json';
 import * as metrojson from '../../../../assets/json/metros_capital.json';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }

@@ -6,6 +6,7 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-pos-coupondetail',
@@ -25,8 +26,8 @@ export class PosCouponDetailComponent implements OnInit {
   api_error = null;
   api_success = null;
   valueCaption = 'Enter value';
-  maxChars = projectConstants.VALIDATOR_MAX50;
-  maxNumbers = projectConstants.VALIDATOR_MAX6;
+  maxChars = projectConstantsLocal.VALIDATOR_MAX50;
+  maxNumbers = projectConstantsLocal.VALIDATOR_MAX6;
   curtype = 'Fixed';
   maxlimit = projectConstants.PRICE_MAX_VALUE;
   api_loading = true;
@@ -115,7 +116,7 @@ export class PosCouponDetailComponent implements OnInit {
     this.amForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      coupValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+      coupValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
       calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 

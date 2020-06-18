@@ -4,7 +4,7 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({
     'selector': 'app-jaldee-department',
     'templateUrl': './department.component.html'
@@ -19,8 +19,8 @@ export class DepartmentComponent implements OnInit, OnChanges {
     isfocused = false;
     dept_data;
     cancel_btn = Messages.CANCEL_BTN;
-    maxcharDept_name = projectConstants.VALIDATOR_MAX100_DEPT_NME;
-    maxcharDept_code = projectConstants.VALIDATOR_MAX15_DEPT_CDE;
+    maxcharDept_name = projectConstantsLocal.VALIDATOR_MAX100_DEPT_NME;
+    maxcharDept_code = projectConstantsLocal.VALIDATOR_MAX15_DEPT_CDE;
     button_title = 'Save';
     constructor(
         private fb: FormBuilder,

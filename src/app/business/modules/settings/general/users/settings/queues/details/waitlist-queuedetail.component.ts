@@ -9,6 +9,7 @@ import { projectConstants } from '../../../../../../../../app.component';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-userwaitlist-queuedetail',
@@ -69,7 +70,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     activeQueues: any = [];
     loc_name;
     capacitylimit = projectConstants.QTY_MAX_VALUE;
-    parallellimit = projectConstants.VALIDATOR_MAX150;
+    parallellimit = projectConstantsLocal.VALIDATOR_MAX150;
     show_dialog = false;
     disableButton = false;
     SelService: any = [];

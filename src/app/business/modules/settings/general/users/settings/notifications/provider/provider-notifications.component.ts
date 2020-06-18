@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../../../../../app.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -197,14 +198,14 @@ export class ProviderNotificationUserComponent implements OnInit {
     }
     if (this.notifyphonenumber !== '') {
       const curphone = this.notifyphonenumber;
-      const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
-      const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
@@ -231,7 +232,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     }
     if (this.notifyemail !== '') {
       const curemail = this.notifyemail.trim();
-      const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
@@ -257,14 +258,14 @@ export class ProviderNotificationUserComponent implements OnInit {
     }
     if (this.notifycanclphonenumber !== '') {
       const curphone1 = this.notifycanclphonenumber;
-      const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
-      const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
@@ -290,7 +291,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     }
     if (this.notifycanclemail !== '') {
       const curemail1 = this.notifycanclemail.trim();
-      const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';

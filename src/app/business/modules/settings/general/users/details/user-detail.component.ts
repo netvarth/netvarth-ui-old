@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html'
@@ -139,12 +140,12 @@ export class BranchUserDetailComponent implements OnInit {
     }
     createForm() {
         this.userForm = this.fb.group({
-            first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-            last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+            last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: [''],
-            phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERCOUNT10)])],
+            phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
-            email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+            email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [],
             selectedDepartment: [],

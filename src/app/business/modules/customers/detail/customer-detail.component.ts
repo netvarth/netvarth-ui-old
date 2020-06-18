@@ -8,6 +8,7 @@ import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-customer-detail',
@@ -209,9 +210,9 @@ export class CustomerDetailComponent implements OnInit {
     createForm() {
         if (!this.haveMobile) {
             this.amForm = this.fb.group({
-                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
                 gender: [''],
                 address: ['']
@@ -220,11 +221,11 @@ export class CustomerDetailComponent implements OnInit {
         } else {
             this.amForm = this.fb.group({
                 mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
-                Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+                Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
                 customer_id: [''],
-                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-                email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+                first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+                email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
                 gender: [''],
                 address: ['']
@@ -407,14 +408,14 @@ export class CustomerDetailComponent implements OnInit {
         this.form_data = null;
         this.create_new = false;
         let post_data = {};
-        const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
+        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.mobile_number);
         if (isEmail) {
             mode = 'email';
         } else {
-            const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
             const isNumber = phonepattern.test(form_data.mobile_number);
-            const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
             const isCount10 = phonecntpattern.test(form_data.mobile_number);
             if (isNumber && isCount10) {
                 mode = 'phone';

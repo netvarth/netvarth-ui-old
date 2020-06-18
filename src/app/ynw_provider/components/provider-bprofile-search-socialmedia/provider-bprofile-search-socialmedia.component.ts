@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
@@ -132,7 +133,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
   saveSocial() {
     this.resetApiErrors();
     const curlabel = this.socialurl;
-    const pattern = new RegExp(projectConstants.VALIDATOR_URL);
+    const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
     const result = pattern.test(curlabel);
     if (!result) {
       this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';

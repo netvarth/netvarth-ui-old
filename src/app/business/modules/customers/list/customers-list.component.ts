@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -222,7 +223,7 @@ export class CustomersListComponent implements OnInit {
             api_filter['email-eq'] = this.filter.email;
         }
         if (this.filter.mobile !== '') {
-            const pattern = projectConstants.VALIDATOR_NUMBERONLY;
+            const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
             const mval = pattern.test(this.filter.mobile);
             if (mval) {
                 api_filter['phoneNo-eq'] = this.filter.mobile;

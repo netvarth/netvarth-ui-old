@@ -9,6 +9,7 @@ import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -304,14 +305,14 @@ export class ProviderCheckinComponent implements OnInit {
         this.form_data = null;
         this.create_new = false;
         let post_data = {};
-        const emailPattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
+        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.search_input);
         if (isEmail) {
             mode = 'email';
         } else {
-            const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
             const isNumber = phonepattern.test(form_data.search_input);
-            const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
             const isCount10 = phonecntpattern.test(form_data.search_input);
             if (isNumber && isCount10) {
                 mode = 'phone';
@@ -534,9 +535,9 @@ export class ProviderCheckinComponent implements OnInit {
         this.resetApiErrors();
         this.resetApi();
         const curphone = this.selected_phone;
-        const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
-        const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const result1 = pattern1.test(curphone);
         if (this.selected_phone === '') {
             this.phoneerror = Messages.BPROFILE_PHONENO;
@@ -998,10 +999,10 @@ export class ProviderCheckinComponent implements OnInit {
     handleSaveMember() {
         this.resetApi();
         let derror = '';
-        const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
-        const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
-        const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
-        const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+        const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
+        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const blankpattern = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
         if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
             derror = 'Please enter a valid first name';
         }
@@ -1153,7 +1154,7 @@ export class ProviderCheckinComponent implements OnInit {
     validatorPartysize(pVal) {
         this.resetApi();
         let errmsg = '';
-        const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
+        const numbervalidator = projectConstantsLocal.VALIDATOR_NUMBERONLY;
         this.enterd_partySize = pVal;
         if (!numbervalidator.test(pVal)) {
             errmsg = 'Please enter a valid party size';

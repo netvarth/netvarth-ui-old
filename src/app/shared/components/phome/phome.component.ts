@@ -288,7 +288,7 @@ scrollToTop() {
       //   [Validators.required,
       //   Validators.maxLength(10),
       //   Validators.minLength(10),
-      //   Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+      //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       emailId: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])]
     });

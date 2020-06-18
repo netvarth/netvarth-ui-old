@@ -199,7 +199,7 @@ export class DonationsComponent implements OnInit {
         //     api_filter['email-eq'] = this.filter.email;
         // }
         // if (this.filter.mobile !== '') {
-        //     const pattern = projectConstants.VALIDATOR_NUMBERONLY;
+        //     const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
         //     const mval = pattern.test(this.filter.mobile);
         //     if (mval) {
         //         api_filter['primaryMobileNo-eq'] = this.filter.mobile;

@@ -4,6 +4,7 @@ import { projectConstants } from '../../../../../../../../../app.component';
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { projectConstantsLocal } from '../../../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provideruserbprofilesearch-socialmedia',
@@ -138,7 +139,7 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
   saveSocial() {
     this.resetApiErrors();
     const curlabel = this.socialurl;
-    const pattern = new RegExp(projectConstants.VALIDATOR_URL);
+    const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
     const result = pattern.test(curlabel);
     if (!result) {
       this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';

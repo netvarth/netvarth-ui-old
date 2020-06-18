@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -82,8 +83,8 @@ export class ProvidertaxSettingsComponent implements OnInit {
                 });
     }
     taxfieldValidation(setmsgs?) {
-        const floatpattern = projectConstants.VALIDATOR_FLOAT;
-        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        const floatpattern = projectConstantsLocal.VALIDATOR_FLOAT;
+        const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         this.errorExist = false;
         if (!floatpattern.test(this.taxpercentage)) {
             this.errorExist = true;

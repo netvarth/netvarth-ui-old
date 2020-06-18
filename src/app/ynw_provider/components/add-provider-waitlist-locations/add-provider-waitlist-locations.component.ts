@@ -5,6 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -126,10 +127,10 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   createForm() {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
-        locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],
+        locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_BLANK_FALSE)])],
         locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-        loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-        loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
+        loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
+        loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
         locmapurl: [{ value: '', disabled: true }]
       });
     } else {
@@ -140,10 +141,10 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         });
       } else {
         this.amForm = this.fb.group({
-          locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],
+          locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_BLANK_FALSE)])],
           locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-          loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-          loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
+          loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
+          loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)])],
           locmapurl: [{ value: '', disabled: true }]
         });
       }
@@ -238,7 +239,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       }
     } else {
       const curlabel = form_data.locname;
-      const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
@@ -345,7 +346,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       }
     } else {
       const curlabel = form_data.locname;
-      const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';

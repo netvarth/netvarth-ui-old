@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -261,8 +262,8 @@ export class ConsumerDonationComponent implements OnInit {
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
-            Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-            first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+            first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         });
     }
     getWaitlistMgr() {
@@ -324,9 +325,9 @@ export class ConsumerDonationComponent implements OnInit {
         this.resetApiErrors();
         this.resetApi();
         const curphone = this.selected_phone;
-        const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
-        const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const result1 = pattern1.test(curphone);
         if (this.selected_phone === '') {
             this.phoneerror = Messages.BPROFILE_PHONENO;
@@ -656,10 +657,10 @@ export class ConsumerDonationComponent implements OnInit {
     handleSaveMember() {
         this.resetApi();
         let derror = '';
-        const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
-        const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
-        const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
-        const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+        const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
+        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const blankpattern = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
         if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
             derror = 'Please enter a valid first name';
         }

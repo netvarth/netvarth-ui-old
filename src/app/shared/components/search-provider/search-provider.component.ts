@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { Messages } from '../../constants/project-messages';

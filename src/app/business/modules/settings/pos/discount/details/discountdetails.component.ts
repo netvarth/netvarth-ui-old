@@ -6,6 +6,7 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-details',
@@ -27,8 +28,8 @@ export class DiscountDetailsComponent implements OnInit {
   parent_id;
   valueCaption = 'Enter value *';
   maxDiscountValue;
-  maxChars = projectConstants.VALIDATOR_MAX50;
-  maxNumbers = projectConstants.VALIDATOR_MAX9;
+  maxChars = projectConstantsLocal.VALIDATOR_MAX50;
+  maxNumbers = projectConstantsLocal.VALIDATOR_MAX9;
   curtype = 'Fixed';
   api_loading = true;
   api_loading1 = true;
@@ -118,9 +119,9 @@ export class DiscountDetailsComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      // description: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_ALPHANUMERIC_DOT), Validators.maxLength(this.maxChars)])],
+      // description: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_DOT), Validators.maxLength(this.maxChars)])],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      discValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+      discValue: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
       calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 

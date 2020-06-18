@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { projectConstants } from '../../../../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class AddServiceComponent implements OnInit, OnDestroy {
     number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
-    number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
+    number_pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
     end_service_notify_cap = '';
     service_cap = Messages.PRO_SERVICE_CAP;
     description_cap = Messages.DESCRIPTION_CAP;

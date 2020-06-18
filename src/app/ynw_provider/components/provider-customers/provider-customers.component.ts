@@ -3,6 +3,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-customers',
@@ -181,7 +182,7 @@ export class ProviderCustomersComponent implements OnInit {
     }
 
     if (this.filter.mobile !== '') {
-      const pattern = projectConstants.VALIDATOR_NUMBERONLY;
+      const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
       const mval = pattern.test(this.filter.mobile);
       if (mval) {
         api_filter['primaryMobileNo-eq'] = this.filter.mobile;

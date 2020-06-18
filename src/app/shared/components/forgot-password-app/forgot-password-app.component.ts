@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-forgot-password-app',
@@ -56,7 +57,7 @@ export class ForgotPasswordAppComponent {
           [Validators.required,
           Validators.maxLength(10),
           Validators.minLength(10),
-          Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])]
+          Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
       });
         break;
     }

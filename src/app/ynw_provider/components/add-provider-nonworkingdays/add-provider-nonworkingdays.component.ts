@@ -6,6 +6,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 
 @Component({
@@ -35,7 +36,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
   meridian = true;
   api_loading = true;
   api_loading1 = true;
-  maxcharDesc = projectConstants.VALIDATOR_MAX100;
+  maxcharDesc = projectConstantsLocal.VALIDATOR_MAX100;
   constructor(
     public dialogRef: MatDialogRef<AddProviderNonworkingdaysComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

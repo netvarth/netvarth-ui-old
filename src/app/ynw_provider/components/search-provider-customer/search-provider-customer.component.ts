@@ -5,6 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
@@ -57,7 +58,7 @@ export class SearchProviderCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.blankPattern = projectConstants.VALIDATOR_BLANK;
+    this.blankPattern = projectConstantsLocal.VALIDATOR_BLANK;
     this.createForm();
     this.frm_create_customer_cap_one = Messages.FRM_LEVEL_CREATE_CUSTOMER_MSG_ONE.replace('[customer]', this.customer_label);
     this.frm_create_customer_cap_two = Messages.FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO.replace('[customer]', this.customer_label);
@@ -67,8 +68,8 @@ export class SearchProviderCustomerComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       mobile_number: ['', Validators.compose([Validators.maxLength(10),
-      Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      first_last_name: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      first_last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
     });
   }
 

@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
@@ -42,10 +43,10 @@ export class AddProviderItemComponent implements OnInit {
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
-  maxChars = projectConstants.VALIDATOR_MAX50;
-  maxCharslong = projectConstants.VALIDATOR_MAX500;
-  maxNumbers = projectConstants.VALIDATOR_MAX10;
-  max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
+  maxChars = projectConstantsLocal.VALIDATOR_MAX50;
+  maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
+  maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
+  max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
   api_loading = true;
   api_loading1 = true;
   disableButton = false;
@@ -80,8 +81,8 @@ export class AddProviderItemComponent implements OnInit {
         shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
         displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
-        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
-        // price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)]), Validators.maxLength(projectConstants.VALIDATOR_MAX10)] // ,
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+        // price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT)]), Validators.maxLength(projectConstantsLocal.VALIDATOR_MAX10)] // ,
         /*file: ['', Validators.compose([Validators.required])],*/
         // caption: ['Itempic']
       });
@@ -91,7 +92,7 @@ export class AddProviderItemComponent implements OnInit {
         shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
         displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
         taxable: [false, Validators.compose([Validators.required])],
-        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+        price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
       });
     }
     if (this.data.type === 'edit') {

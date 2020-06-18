@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
-import { projectConstants } from '../constants/project-constants';
+import { projectConstants } from '../../app.component';
 import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';

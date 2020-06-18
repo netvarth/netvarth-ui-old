@@ -4,6 +4,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-add-members-holder',
@@ -62,9 +63,9 @@ export class AddMembersHolderComponent implements OnInit {
     this.disableButton = true;
     this.resetApi();
     let derror = '';
-    const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
-    const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
-    const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
+    const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+    const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
 
     if (!namepattern.test(this.addmemberobj.lname) || this.addmemberobj.lname.trim() === '') {
       derror = Messages.LASTNAME_INVAL_MSG;

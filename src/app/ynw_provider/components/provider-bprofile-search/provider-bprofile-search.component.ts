@@ -23,6 +23,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
@@ -286,7 +287,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
-      customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
+      customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
     });
     this.getSpokenLanguages();
     this.getLicenseDetails();

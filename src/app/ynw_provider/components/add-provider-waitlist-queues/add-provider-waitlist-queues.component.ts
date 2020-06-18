@@ -6,6 +6,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -65,7 +66,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   multipeLocAllowed = false;
   loc_name;
   capacitylimit = projectConstants.QTY_MAX_VALUE;
-  parallellimit = projectConstants.VALIDATOR_MAX150;
+  parallellimit = projectConstantsLocal.VALIDATOR_MAX150;
   show_dialog = false;
   disableButton = false;
   department: any;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
 @Component({

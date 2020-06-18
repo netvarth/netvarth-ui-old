@@ -10,6 +10,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ViewChild } from '@angular/core';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
@@ -102,7 +103,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   amForm: FormGroup;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
-  number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
+  number_pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
   service;
   payment_settings: any = [];
   payment_loading = false;
@@ -308,9 +309,9 @@ export class ProviderbWizardComponent implements OnInit {
         break;
       case 2:
         let latlon_Exists = false;
-        const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
-        const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
-        const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
+        const blankpattern = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
+        const floatpattern = new RegExp(projectConstantsLocal.VALIDATOR_FLOAT);
+        const urlpattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         let latexists = false;
         let lonexists = false;
         // validating the fields if they are entered

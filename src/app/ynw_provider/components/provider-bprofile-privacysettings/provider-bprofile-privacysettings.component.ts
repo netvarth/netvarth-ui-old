@@ -5,6 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 @Component({
   selector: 'app-provider-privacy-settings-add',
@@ -142,20 +143,20 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
         return;
       }
       const curlabel = this.phonelabel;
-      const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
         this.api_error = Messages.BPROFILE_PRIVACY_PHONELABEL_REQ; // 'Phone label should not be blank';
         return;
       }
       const curphone = this.phonenumber;
-      const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
         this.api_error = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
         return;
       }
-      const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
         this.api_error = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
@@ -194,14 +195,14 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
         return;
       }
       const curlabel = this.emaillabel;
-      const pattern1 = new RegExp(projectConstants.VALIDATOR_BLANK);
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result1 = pattern1.test(curlabel);
       if (result1) {
         this.api_error = Messages.BPROFILE_PRIVACY_EMAILLABEL_REQ; // 'Email label should not be blank';
         return;
       }
       const curemail = this.emailemailid;
-      const pattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result = pattern.test(curemail);
       if (!result) {
         this.api_error = Messages.BPROFILE_PRIVACY_EMAIL_INVALID; // 'Please enter a valid email id';

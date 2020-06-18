@@ -10,6 +10,7 @@ import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-providersignup',
@@ -211,9 +212,9 @@ export class ProvidersignupComponent implements OnInit {
   createForm() {
     this.signupForm = this.fb.group({
       phonenumber: ['', Validators.compose(
-        [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      first_name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      first_name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       selectedDomainIndex: [''],
       selectedSubDomains: [0],
       package_id: [''],
@@ -240,9 +241,9 @@ export class ProvidersignupComponent implements OnInit {
       case 1: this.signupForm = this.fb.group({
         is_provider: ['true'],
         phonenumber: [this.loginId, Validators.compose(
-          [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-        first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-        last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+          [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         selectedDomainIndex: [{ value: '', disabled: true }, Validators.compose([Validators.required])],
         selectedSubDomains: [{ value: 0, disabled: true }, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],

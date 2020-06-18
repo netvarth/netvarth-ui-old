@@ -7,6 +7,7 @@ import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
@@ -97,10 +98,10 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.getWaitlistManager();
-    this.blankPattern = projectConstants.VALIDATOR_BLANK;
-    this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
-    this.namePattern = projectConstants.VALIDATOR_CHARONLY;
-    this.numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
+    this.blankPattern = projectConstantsLocal.VALIDATOR_BLANK;
+    this.phonePattern = projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10;
+    this.namePattern = projectConstantsLocal.VALIDATOR_CHARONLY;
+    this.numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
     this.customer_found = false;
     this.customerDet = [];
     this.customerDispDet.id = '';
