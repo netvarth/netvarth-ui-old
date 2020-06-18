@@ -5,9 +5,11 @@ import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { ConsumerPaymentDetailsComponent } from './payment-details/payment-details.component';
 @NgModule({
     declarations: [
-        ConsumerPaymentsComponent
+        ConsumerPaymentsComponent,
+        ConsumerPaymentDetailsComponent
     ],
     imports: [
         ConsumerPaymentsRoutingModule,

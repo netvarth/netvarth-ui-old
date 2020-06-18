@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-consumer-payments',
@@ -18,6 +19,7 @@ export class ConsumerPaymentsComponent implements OnInit {
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
     constructor(public shared_functions: SharedFunctions,
+        private router: Router,
         private shared_services: SharedServices) {
 
     }
@@ -56,8 +58,10 @@ export class ConsumerPaymentsComponent implements OnInit {
         this.shared_services.getConsumerPayments().subscribe(
             (payments) => {
                 this.payments = payments;
-                console.log(this.payments);
             }
         );
+    }
+    gotoPayment(id) {
+        this.router.navigate(['consumer', 'payments', id]);
     }
 }
