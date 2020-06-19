@@ -9332,3 +9332,8 @@ button.cust-button-1:disabled {
   font-size: 1rem;
   color: #3c8dbc;
 }
+.consumer-pay .proname {
+  text-align: initial !important;
+  padding: 10px !important;
+  margin-left: 20px !important;
+}

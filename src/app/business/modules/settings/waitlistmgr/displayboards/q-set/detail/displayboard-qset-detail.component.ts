@@ -317,6 +317,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             }];
         }
     }
+    labelClick(label) {
+        if (this.labelMultiCtrl.indexOf(label) === -1 && this.labelList[label.label]) {
+            delete this.labelList[label.label];
+        }
+    }
     onSubmit() {
         this.setStatusboardValue();
         let name = '';

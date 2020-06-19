@@ -458,18 +458,20 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             } else {
                 full_phone = checkin.phoneNumber;
             }
-            const phLength = full_phone.length;
-            const tele = [];
-            if (phLength === 10) {
-                for (let i = 0; i < phLength; i++) {
-                    if (i < 6) {
-                        tele[i] = full_phone[i].replace(/^\d+$/, '*');
-                    } else {
-                        tele[i] = full_phone[i];
+            if (full_phone) {
+                const phLength = full_phone.length;
+                const tele = [];
+                if (phLength === 10) {
+                    for (let i = 0; i < phLength; i++) {
+                        if (i < 6) {
+                            tele[i] = full_phone[i].replace(/^\d+$/, '*');
+                        } else {
+                            tele[i] = full_phone[i];
+                        }
                     }
-                }
-                for (let i = 0; i < phLength; i++) {
-                    fieldValue += tele[i];
+                    for (let i = 0; i < phLength; i++) {
+                        fieldValue += tele[i];
+                    }
                 }
             }
         } else {

@@ -114,7 +114,8 @@
         <div class="clearfix"></div>
 
         <div class="step2 mgn-up-20" *ngIf="step ===2">
-            <div class="form-group col-md-12 col-sm-12 col-xs-12" *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
+            <div class="form-group col-md-12 col-sm-12 col-xs-12"
+                *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Department</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -262,7 +263,8 @@
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
                             noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
-                        <mat-option *ngFor="let label of providerLabelsList" [value]="label">
+                        <mat-option *ngFor="let label of providerLabelsList" [value]="label"
+                            (click)="labelClick(label)">
                             {{label.displayName}}
                         </mat-option>
                     </mat-select>

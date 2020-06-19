@@ -53,6 +53,7 @@ export class CustomViewComponent implements OnInit {
     schedulestoDisplay: any = [];
     selectedScheduls: any = [];
     selectedScheduleIds: any = [];
+    waitlistMngr: any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -74,6 +75,7 @@ export class CustomViewComponent implements OnInit {
         private provider_services: ProviderServices) {
         this.activated_route.queryParams.subscribe((qparams) => {
             this.viewId = qparams.id;
+            this.getWaitlistMgr();
             this.getDepartments();
             this.getAccountQs();
             this.getAccountSchedules();
@@ -308,6 +310,7 @@ export class CustomViewComponent implements OnInit {
                 (data: any) => {
                     this.isDepartments = true;
                     this.departments = data.departments;
+                    console.log(this.departments)
                     this.filterDepList = data.departments;
                 },
                 error => {
@@ -315,6 +318,14 @@ export class CustomViewComponent implements OnInit {
                     this.isDepartments = false;
                 }
             );
+    }
+    getWaitlistMgr() {
+        this.provider_services.getWaitlistMgr()
+            .subscribe(
+                data => {
+                   this.waitlistMngr  = data
+                   console.log(this.waitlistMngr);
+                });
     }
     getServices() {
         let doctorsIds;
