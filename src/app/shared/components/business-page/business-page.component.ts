@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
-import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
@@ -917,7 +916,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   communicateHandler() {
     const providforCommunicate = this.provider_bussiness_id;
     // check whether logged in as consumer
-
     if (this.sharedFunctionobj.checkLogin()) {
       this.showCommunicate(providforCommunicate);
     } else { // show consumer login
@@ -952,9 +950,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         name: this.businessjson.businessName
       }
     });
-
     this.commdialogRef.afterClosed().subscribe(() => {
-
     });
   }
   getFavProviders(mod?) {
@@ -1005,7 +1001,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
   }
   doRemoveFav() {
-
     this.remdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1014,37 +1009,40 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         'message': 'Do you want to remove this provider from your favourite list?'
       }
     });
-
     this.remdialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.handle_Fav('remove');
       }
-
     });
-
   }
-  checkinClicked(locid, locname, cdate, chdatereq, obj) {
-    // this.changedate_req = chdatereq;
-    // this.showCheckin(locid, locname, cdate, 'consumer');
-    // this.current_provider = obj;
+  checkinClicked(locid, locname, cdate, chdatereq) {
+    const current_provider = {
+      'id': locid,
+      'place': locname,
+      'cdate': cdate
+    };
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.showCheckin(locid, locname, cdate, 'consumer');
     } else if (this.userType === '') {
-      const passParam = { callback: '', current_provider: obj };
+      const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);
     }
   }
 
-  appointmentClicked(locid, locname, cdate, chdatereq, obj) {
+  appointmentClicked(locid, locname, cdate, chdatereq) {
+    const current_provider = {
+      'id': locid,
+      'place': locname,
+      'cdate': cdate
+    };
     this.changedate_req = chdatereq;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.showAppointment(locid, locname, cdate, 'consumer');
     } else if (this.userType === '') {
-      const passParam = { callback: 'appointment', current_provider: obj };
+      const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
     }
   }
@@ -1086,10 +1084,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1122,9 +1120,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
         } else {
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['estimatedtime_det']['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
         }
       }
     });
