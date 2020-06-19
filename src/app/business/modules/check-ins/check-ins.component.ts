@@ -731,7 +731,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  getTodayCheckinCount(Mfilter = null) {
+  getTodayCheckinCount(Mfilter = null) { 
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
