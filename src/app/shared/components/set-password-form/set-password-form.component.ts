@@ -19,7 +19,7 @@ export class SetPasswordFormComponent implements OnInit {
   submit_cap = Messages.SUBMIT_CAP;
   set_password_msg = '';
   passworddialogRef;
-  isValidConfirm_pw = false;
+  isValidConfirm_pw = true;
   customer = '';
   spForm;
   @Input() type;
@@ -69,7 +69,9 @@ export class SetPasswordFormComponent implements OnInit {
     }, 500);
   }
   doOnPasswordSubmit(value) {
-    this.retonPasswordSubmit.emit(value);
+    if (this.isValidConfirm_pw) {
+      this.retonPasswordSubmit.emit(value);
+    }
   }
 
   doResetApiErrors() {
@@ -81,14 +83,20 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   keyPressed(ev) {
+    if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
+      this.isValidConfirm_pw = true;
+    } else {
+      this.isValidConfirm_pw = false;
+    }
     if (ev.keyCode === 13) {
-      this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
+      // this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
       if (this.spForm.valid) {
         this.doOnPasswordSubmit(this.spForm.value);
       }
-    } else {
-      this.resetError(ev);
     }
+    //  else {
+    //   this.resetError(ev);
+    // }
   }
 
   resetError(ev) {
