@@ -688,6 +688,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selQIds.length > 0) {
         Mfilter['queue-eq'] = this.selQIds.toString();
       }
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -715,6 +716,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selQIds.length > 0) {
         Mfilter['queue-eq'] = this.selQIds.toString();
       }
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -1198,6 +1200,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selected_location && this.selected_location.id) {
       api_filter['location-eq'] = this.selected_location.id;
     }
+    api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     return api_filter;
   }
   setPaginationFilter(api_filter) {

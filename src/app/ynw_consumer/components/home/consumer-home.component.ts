@@ -349,7 +349,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     const params = {
-      'waitlistStatus-neq': 'failed'
+      'waitlistStatus-neq': 'failed,prepaymentPending'
     };
     this.consumer_services.getWaitlist(params)
       .subscribe(
@@ -403,9 +403,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.waitlists[i].cancelled_caption = retval.cancelled_caption;
             this.waitlists[i].cancelled_date = retval.cancelled_date;
             this.waitlists[i].cancelled_time = retval.cancelled_time;
-            if (waitlist.waitlistStatus === 'prepaymentPending') {
-              this.waitlists[i].counter = this.prepaymentCounter(waitlist);
-            }
+            // if (waitlist.waitlistStatus === 'prepaymentPending') {
+            //   this.waitlists[i].counter = this.prepaymentCounter(waitlist);
+            // }
             i++;
           }
           this.loadcomplete.waitlist = true;
@@ -472,7 +472,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getApptlist() {
     this.pollingApptSet = [];
     this.loadcomplete.appointment = false;
-    const params = { 'apptStatus-neq': 'failed' };
+    const params = { 'apptStatus-neq': 'failed,prepaymentPending' };
     this.consumer_services.getApptlist(params)
       .subscribe(
         data => {
@@ -524,9 +524,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.appointments[i].cancelled_caption = retval.cancelled_caption;
             this.appointments[i].cancelled_date = retval.cancelled_date;
             this.appointments[i].cancelled_time = retval.cancelled_time;
-            if (appointment.apptStatus === 'prepaymentPending') {
-              this.appointments[i].counter = this.prepaymentCounterAppt(appointment);
-            }
+            // if (appointment.apptStatus === 'prepaymentPending') {
+            //   this.appointments[i].counter = this.prepaymentCounterAppt(appointment);
+            // }
             i++;
           }
           this.loadcomplete.appointment = true;
