@@ -229,13 +229,15 @@ export class DepartmentDetailComponent implements OnInit {
         this.srvcArry = [];
         // this.srvcArry = this.services_all.filter(item1 =>
         //     !this.defaultdepartmentservice.some(item2 => (item2.id === item1.id)))
-        ///   this.srvcArry = this.defaultdepartmentservice;
+        ///   this.srvcArry = this.defaultdepartmentservice; 
+        console.log(this.defaultdepartmentservice);
         this.serviceArray = this.defaultdepartmentservice;
         for (const serv of this.serviceArray) {
             if (serv.serviceType !== 'donationService' && serv.status !== 'INACTIVE') {
                 this.srvcArry.push(serv);
             }
         }
+        console.log(this.srvcArry);
         // this.showAllServices = true;
     }
     addnewClick() {
@@ -290,6 +292,7 @@ export class DepartmentDetailComponent implements OnInit {
                     this.deptObj = data;
                     this.departments = this.deptObj['departments'];
                     this.defaultdepartmentservice = [];
+                    console.log(this.servicesjson);
                     for (let i = 0; i < this.servicesjson.length; i++) {
                         for (let j = 0; j < this.departments.length; j++) {
                             if (this.departments[j].isDefault) {
@@ -305,6 +308,7 @@ export class DepartmentDetailComponent implements OnInit {
                             }
                         }
                     }
+                    console.log(this.defaultdepartmentservice);
                     this.editLocationServices();
                 },
                 error => {

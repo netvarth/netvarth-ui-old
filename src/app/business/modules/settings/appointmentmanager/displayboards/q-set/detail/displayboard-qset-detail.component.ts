@@ -761,6 +761,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.sortByFieldsList = new Object();
         this.sortByFieldsList[field] = 'asc';
     }
+    labelClick(label) {
+        if (this.labelMultiCtrl.indexOf(label) === -1 && this.labelList[label.label]) {
+            delete this.labelList[label.label];
+        }
+    }
     getDisplayboardCount() {
         let layout_list: any = [];
         this.provider_services.getDisplayboardsAppointment()
