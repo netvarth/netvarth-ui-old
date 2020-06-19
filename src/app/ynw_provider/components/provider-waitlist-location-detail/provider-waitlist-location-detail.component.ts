@@ -51,7 +51,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         },
         {
             title: 'Locations',
-            url: '/provider/settings/q-manager/locations'
+            url: '/provider/settings/general/locations'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
