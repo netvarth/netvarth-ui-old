@@ -702,6 +702,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['schedule-eq'] = queueid;
       }
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -726,6 +727,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid && queueid.length > 0) {
         Mfilter['schedule-eq'] = queueid.toString();
       }
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -750,7 +752,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (queueid) {
         Mfilter['schedule-eq'] = queueid;
       }
-      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
       no_filter = true;
     }
     return new Promise((resolve) => {
@@ -1320,7 +1322,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.filter.future_appt_date != null && this.time_type === 2) {
         api_filter['date-eq'] = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
-        api_filter['apptStatus-neq'] = 'failed';
+       // api_filter['apptStatus-neq'] = 'failed';
       }
     }
     if (this.time_type !== 2) {
@@ -1346,11 +1348,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.filter.gender !== '') {
         api_filter['gender-eq'] = this.filter.gender;
-      }
+      } 
     }
     if (this.selected_location && this.selected_location.id) {
       api_filter['location-eq'] = this.selected_location.id;
     }
+    api_filter['apptStatus-neq'] = 'failed,prepaymentPending';
     return api_filter;
   }
   setPaginationFilter(api_filter) {

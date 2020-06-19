@@ -164,7 +164,7 @@ export class ReligiousComponent implements OnInit {
     this.menu(parentContent, childContent);
   }
   menu(parentContent, childContent?) {
-    if (parentContent === 'jaldee online') {
+    if (parentContent === 'jaldeeonline') {
       this.showprofilesearch = true;
       if (childContent === 'public-search') {
         this.showpublic = true;
@@ -215,6 +215,7 @@ export class ReligiousComponent implements OnInit {
         this.showgallery = true;
       }
     }
+
 
     if(parentContent === 'general'){
       this.showgeneral = true;
