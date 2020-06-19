@@ -138,6 +138,7 @@ export class SharedFunctions {
       this.shared_service.ProviderLogin(post_data)
         .subscribe(
           data => {
+            this.setitemonLocalStorage('jld', post_data.password);
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
             this.router.navigate(['/provider']);
