@@ -1,4 +1,17 @@
 .lgo img {width: 100px !important}
+.logo-mini img {
+  width: 40px;
+    height: 40px;
+    margin-top: 5px;
+}
+@media (min-width: 768px) {
+.sidebar-mini.sidebar-collapse .main-header .navbar {
+     margin-left: 0px !important; 
+}
+.main-header .navbar {
+  margin-left: 0px !important;
+}
+}
 .parent-cont {
   background: url(../images/mobile/mobile.jpg) !important;
   background-repeat : no-repeat !important;

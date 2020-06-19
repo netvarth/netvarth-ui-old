@@ -333,14 +333,14 @@ export class SharedFunctions {
 
   public showlogoicon(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return '../../assets/images/no_image_icon.png';
+      return './assets/images/no_image_icon.png';
     } else {
       return logo;
     }
   }
   public showitemimg(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return 'assets/images/no_image_icon.png';
+      return './assets/images/no_image_icon.png';
     } else {
       return logo;
     }

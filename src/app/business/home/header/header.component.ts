@@ -121,7 +121,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
+      this.blogo = bdetails.logo || './assets/images/img-null.svg';
     }
   }
   ngOnInit() {
