@@ -136,7 +136,7 @@ export class FoodJointComponent implements OnInit {
           }
         } else {
           this.child = 'public-search';
-          this.parent = 'jaldee online';
+          this.parent = 'jaldeeonline';
         }
         this.handleScroll(this.child, this.parent);
       });
@@ -162,7 +162,7 @@ export class FoodJointComponent implements OnInit {
     this.menu(parentContent, childContent);
   }
   menu(parentContent, childContent?) {
-    if (parentContent === 'jaldee online') {
+    if (parentContent === 'jaldeeonline') {
       this.showprofilesearch = true;
       if (childContent === 'public-search') {
         this.showpublic = true;
