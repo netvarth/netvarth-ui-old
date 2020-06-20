@@ -445,7 +445,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     onSubmit(form_data) {
         if (!form_data.qname.replace(/\s/g, '').length) {
             const error = 'Please enter queue name';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         const selser: any = [];
@@ -477,7 +477,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
             const error = 'Please select the days';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             // Numeric validation

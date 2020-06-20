@@ -96,7 +96,7 @@ export class GlobalSettingsComponent implements OnInit {
                 if (this.displayboard_data['headerSettings']) {
                     this.headerSettings['title1'] = this.displayboard_data['headerSettings']['title1'];
                 }
-                if (this.displayboard_data['headerSettings']) {
+                if (this.displayboard_data['footerSettings'] && this.displayboard_data['footerSettings']['title1']) {
                     this.footerSettings['title1'] = this.displayboard_data['footerSettings']['title1'];
                 }
                 if (this.displayboard_data.logoSettings) {
