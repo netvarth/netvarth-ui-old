@@ -376,7 +376,7 @@
                           </div>
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="appt.apptBy == 'CONSUMER'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
+                              [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip"> 
                             </span>
                             <span class="fa fa-phone phone-in-icon "
                               *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
@@ -653,6 +653,8 @@
                               <span class="icon-cloud icon-btn1 tspace" *ngIf="appt.apptBy == 'CONSUMER'"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                               </span>
+                              <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                              </span>
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="appt.apptStatus == 'Arrived'"></span>
                               <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="appt.consumerNote"
@@ -841,12 +843,14 @@
                               <div *ngIf="appt.batchId" class="info-box-text batchname service">
                                 Batch: {{appt.batchId}}
                               </div>
-                              <div>
+                              <div> 
                                 <span class="icon-cloud icon-btn1 tspace" *ngIf="appt.apptBy == 'CONSUMER'"
                                   [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                                 </span>
                                 <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                   *ngIf="appt.apptStatus == 'Arrived'"></span>
+                                  <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                                  </span>
                                 <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
                                   *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                   <i class="icon-note"></i>
@@ -874,6 +878,8 @@
                               </span>
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="appt.apptStatus == 'Arrived'"></span>
+                                <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                                </span>
                               <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor"
                                 *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
@@ -1049,6 +1055,8 @@
                               <span class="icon-cloud icon-btn1 tspace" *ngIf="appt.apptBy == 'CONSUMER'"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                               </span>
+                              <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                              </span>
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="appt.apptStatus == 'Arrived'"></span>
                               <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="appt.consumerNote"
@@ -1148,6 +1156,8 @@
                               </span>
                               <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status icon-btn1 "
                                 *ngIf="appt.apptStatus == 'Arrived'"></span>
+                                <span class="fa fa-phone phone-in-icon " *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                                </span>
                               <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="appt.consumerNote"
                                 (click)="showConsumerNote(appt)">
                                 <i class="icon-note"></i>
