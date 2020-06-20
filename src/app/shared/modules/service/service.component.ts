@@ -110,6 +110,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tool_instruct: any;
     default_instruct: any;
     is_lvtrack_enable = false;
+    users_list;
+    providerId: any;
+    provider: { id: any; };
+    departId: any;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -327,7 +331,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.end_cause_notify_cap = Messages.DONATION_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
         this.getGlobalSettings();
-
+        this.getUsers();
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -415,6 +419,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
             //  form_data['virtualServiceType'] = this.serv_mode;
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
+            }
+            if (this.providerId) {
+                this.provider = {
+                    'id' : this.providerId
+                };
+                form_data['provider'] = this.provider;
             }
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
@@ -624,5 +634,21 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.getVirtualCallingModesList();
                 }
             });
+    }
+    getUsers() {
+        const filter = { 'userType-eq': 'PROVIDER' };
+        if (this.departId) {
+            filter['departmentId-eq'] = this.departId.toString();
+        }
+        this.provider_services.getUsers(filter).subscribe(data => {
+            this.users_list = data;
+        });
+    }
+    selectUserHandler(value) {
+        this.providerId = value;
+    }
+    selectDeptHandler(value) {
+        this.departId = value;
+        this.getUsers();
     }
 }

@@ -44,8 +44,10 @@
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp
+                        Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom
+                        ID</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -75,7 +77,7 @@
                 </div>
             </div>
             <div class="c-ot m0" *ngIf="!is_donation">
-                <div class="item"  *ngIf="subdomainsettings.serviceBillable">
+                <div class="item" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
@@ -155,7 +157,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
                 <mat-form-field>
-                    <mat-select formControlName="department" placeholder="Choose Department *">
+                    <mat-select #deptlist
+                    (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department" placeholder="Choose Department *">
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
                             {{dept.departmentName | capitalizeFirst}}
                         </mat-option>
@@ -223,6 +226,16 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
+            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add'">
+                <mat-form-field class="example-full-width">
+                    <mat-select  placeholder="Select user" #userlist
+                        (selectionChange)="selectUserHandler(userlist.value)">
+                        <mat-option *ngFor="let usr of users_list" [value]="usr.id">
+                            {{usr.firstName}} {{usr.lastName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
                 <ng-container class="example-full-width">
                     <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
@@ -267,7 +280,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </div>
                 </ng-container>
             </div>
-            <div class="form-group glbl-preview" *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
+            <div class="form-group glbl-preview"
+                *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
                     <mat-form-field>
                         <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"
@@ -324,9 +338,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
             </div>
             <div class="mgn-bt-20">
-            <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
-                style="font-size: 1.1rem;">
-                Additional Info</a>
+                <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
+                    style="font-size: 1.1rem;">
+                    Additional Info</a>
                 <div class="settings_info">
                     Service price, Live tracking and more</div>
             </div>
