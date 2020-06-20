@@ -35,10 +35,12 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-4 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text" [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
+                      <input matInput min="0" max="1000" type="text"
+                        [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_WL');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                        <div class="mgn-up-5" *ngIf="!earlyWLNotificatonSettings.personsAhead" style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                      <div class="mgn-up-5" *ngIf="wltstPersonsahead && !earlyWLNotificatonSettings.personsAhead"
+                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
                       <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -70,8 +72,9 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead" (click)="changeNotificationSettings('EARLY_WL')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead"
+                    (click)="changeNotificationSettings('EARLY_WL')" type="button" mat-button
+                    class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -99,12 +102,13 @@
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalWLNotificationSettings.pushNotification" (change)="showSubmit('PREFINAL_WL')">
+                        [(ngModel)]="prefinalWLNotificationSettings.pushNotification"
+                        (change)="showSubmit('PREFINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['PREFINAL_WL']" (click)="changeNotificationSettings('PREFINAL_WL')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['PREFINAL_WL']" (click)="changeNotificationSettings('PREFINAL_WL')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -131,8 +135,8 @@
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalWLNotificationSettings.pushNotification"
-                        (change)="showSubmit('FINAL_WL')">
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="finalWLNotificationSettings.pushNotification" (change)="showSubmit('FINAL_WL')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
@@ -169,8 +173,8 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['WAITLISTADD']" (click)="changeNotificationSettings('WAITLISTADD')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['WAITLISTADD']" (click)="changeNotificationSettings('WAITLISTADD')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -196,10 +200,12 @@
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-3 col-xs-7 col-sm-4">
                     <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text" [(ngModel)]="earlyAPPTNotificatonSettings.personsAhead"
+                      <input matInput min="0" max="1000" type="text"
+                        [(ngModel)]="earlyAPPTNotificatonSettings.personsAhead"
                         placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
                         (keypress)="showSubmit('EARLY_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                        <div class="mgn-up-5" *ngIf="!earlyAPPTNotificatonSettings.personsAhead" style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
+                      <div class="mgn-up-5" *ngIf="!earlyAPPTNotificatonSettings.personsAhead && apptPersonsahead"
+                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
                       <span>
                         <ul class="info-lst form-level-early-hint">
                           <li style="padding-top: 6px;">
@@ -226,13 +232,14 @@
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyAPPTNotificatonSettings.pushNotification"
-                        (change)="showSubmit('EARLY_APPT')">
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="earlyAPPTNotificatonSettings.pushNotification" (change)="showSubmit('EARLY_APPT')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['EARLY_APPT'] && earlyAPPTNotificatonSettings.personsAhead" (click)="changeNotificationSettings('EARLY_APPT')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['EARLY_APPT'] && earlyAPPTNotificatonSettings.personsAhead"
+                    (click)="changeNotificationSettings('EARLY_APPT')" type="button" mat-button
+                    class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -260,12 +267,13 @@
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
                       <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalAPPTNotificationSettings.pushNotification" (change)="showSubmit('PREFINAL_APPT')">
+                        [(ngModel)]="prefinalAPPTNotificationSettings.pushNotification"
+                        (change)="showSubmit('PREFINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['PREFINAL_APPT']" (click)="changeNotificationSettings('PREFINAL_APPT')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['PREFINAL_APPT']" (click)="changeNotificationSettings('PREFINAL_APPT')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -292,13 +300,14 @@
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalAPPTNotificationSettings.pushNotification"
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="finalAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FINAL_APPT')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['FINAL_APPT']" (click)="changeNotificationSettings('FINAL_APPT')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['FINAL_APPT']" (click)="changeNotificationSettings('FINAL_APPT')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
@@ -325,13 +334,15 @@
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="apptAddNotificationSettings.pushNotification"
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="apptAddNotificationSettings.pushNotification"
                         (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD', 'APPOINTMENT')" type="button"
-                    mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['APPOINTMENTADD']"
+                    (click)="changeNotificationSettings('APPOINTMENTADD', 'APPOINTMENT')" type="button" mat-button
+                    class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
               <div class="clearfix"></div>
