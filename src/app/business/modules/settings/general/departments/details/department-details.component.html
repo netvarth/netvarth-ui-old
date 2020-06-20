@@ -20,7 +20,8 @@
                                     <div style="margin-bottom: 20px">
                                         <div style="display:flex; margin-bottom: 10px; margin-top: 5px">
                                             <b *ngIf="showServc"> Services Under Department</b>
-                                            <span *ngIf="!showAllServices && dept_services && dept_services.length > 0 && srvcArry.length != 0 && !dept_default"
+                                            <span
+                                                *ngIf="!showAllServices && dept_services && dept_services.length > 0 && srvcArry.length != 0 && !dept_default"
                                                 style="color: #00aef2; background:#fafafa; padding-left:10px;float:right; margin-top:-3px; font-size:1.25rem"
                                                 (click)="addnewClick()"><i
                                                     *ngIf="srvcArry.length!=0 && !dept_data.isDefault"
@@ -44,7 +45,7 @@
                                                             {{service.name}}</mat-option>
                                                     </div>
                                                     <div class="actiondiv btn_align">
-                                                        <button class="cs-btn bt3" style="margin-right:10px" mat-button
+                                                        <button class="cs-btn bt2" style="margin-right:10px"
                                                             (click)="cancelAssignServices()">Cancel</button>
                                                         <button class="cs-btn bt3" mat-button
                                                             (click)="assignServices(deptServices.value)">Save</button>
