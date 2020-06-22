@@ -341,7 +341,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Additional Info</a>
-                <div class="settings_info">
+                <div class="settings_info" *ngIf="!is_donation"> 
                     Service price, Live tracking and more</div>
             </div>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
