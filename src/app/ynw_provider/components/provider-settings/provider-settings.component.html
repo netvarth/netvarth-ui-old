@@ -94,6 +94,8 @@
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> -->
                                         </span>
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                                class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
                                         <p class="settings_info">{{frm_search_cap}}</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
@@ -106,7 +108,9 @@
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> --></span>
                                         </span>
-                                        <p class="settings_info">Enable this to get online visibility.</p>
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                                class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                                <p class="settings_info">Enable this to get online visibility.</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a></li>
                                 <!-- <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
@@ -213,6 +217,8 @@
                                 <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{qs_cap}}
                                             <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
+                                            <p *ngIf="queues_count == 0"
+                                            class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Queues are not created</p>
                                         <p class="settings_info">Add and manage your queues here</p>
                                     </a>
                                 </li>
@@ -285,6 +291,8 @@
                                 <li (click)="redirecTo('schedules')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{schedules_cap}}<span
                                                 class="pull-right badge bg-blue">{{schedules_count}}</span></span>
+                                                <p *ngIf="schedules_count == 0"
+                                            class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are not created</p>
                                         <p class="settings_info">Manage your schedules here</p>
                                     </a>
                                 </li>
