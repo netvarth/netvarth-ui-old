@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -163,30 +163,38 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   }
 
   viewBill(checkin, bill_data) {
-    if (!this.billdialogRef) {
-      bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
-      this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-        width: '50%',
-        // panelClass: ['commonpopupmainclass', 'billpopup'],
-        panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
-        disableClose: true,
-        autoFocus: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data,
-          isFrom: 'checkin'
-        }
-      });
+    // if (!this.billdialogRef) {
+    //   bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
+    //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
+    //     width: '50%',
+    //     // panelClass: ['commonpopupmainclass', 'billpopup'],
+    //     panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
+    //     disableClose: true,
+    //     autoFocus: true,
+    //     data: {
+    //       checkin: checkin,
+    //       bill_data: bill_data,
+    //       isFrom: 'checkin'
+    //     }
+    //   });
 
-      this.billdialogRef.afterClosed().subscribe(result => {
-        if (result === 'makePayment') {
-          this.makePayment(checkin, bill_data);
-        }
-        if (this.billdialogRef) {
-          this.billdialogRef = null;
-        }
-      });
-    }
+    //   this.billdialogRef.afterClosed().subscribe(result => {
+    //     if (result === 'makePayment') {
+    //       this.makePayment(checkin, bill_data);
+    //     }
+    //     if (this.billdialogRef) {
+    //       this.billdialogRef = null;
+    //     }
+    //   });
+    // }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: checkin.ynwUuid,
+        accountId: checkin.providerAccount.id,
+        source: 'provider_history'
+      }
+    };
+    this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
   }
   makePayment(checkin, bill_data) {
     this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {

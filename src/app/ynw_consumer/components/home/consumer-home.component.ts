@@ -349,7 +349,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     const params = {
-      'waitlistStatus-neq': 'failed,prepaymentPending' 
+      'waitlistStatus-neq': 'failed,prepaymentPending'
     };
     this.consumer_services.getWaitlist(params)
       .subscribe(
@@ -1074,21 +1074,38 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, type) {
-    if (!this.billdialogRef) {
-      this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-        width: '40%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
-        disableClose: true,
-        data: {
-          checkin: checkin,
-          isFrom: type
+    // if (!this.billdialogRef) {
+    //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
+    //     width: '40%',
+    //     panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
+    //     disableClose: true,
+    //     data: {
+    //       checkin: checkin,
+    //       isFrom: type
+    //     }
+    //   });
+    //   this.billdialogRef.afterClosed().subscribe(result => {
+    //     if (this.billdialogRef) {
+    //       this.billdialogRef = null;
+    //     }
+    //   });
+    // }
+    if (type === 'appointment') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: checkin.uid,
+          accountId: checkin.providerAccount.id
         }
-      });
-      this.billdialogRef.afterClosed().subscribe(result => {
-        if (this.billdialogRef) {
-          this.billdialogRef = null;
+      };
+      this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: checkin.ynwUuid,
+          accountId: checkin.providerAccount.id
         }
-      });
+      };
+      this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
     }
   }
   getMapUrl(latitude, longitude) {
@@ -1512,5 +1529,5 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getSingleTime(slot) {
     const slots = slot.split('-');
     return this.shared_functions.convert24HourtoAmPm(slots[0]);
-}
+  }
 }

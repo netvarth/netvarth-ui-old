@@ -14,13 +14,15 @@ import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcru
 import { ConsumerAppointmentLiveTrackComponent } from './livetrack/livetrack.component';
 import { ConsumerAppointmentPaymentComponent } from './payment/payment.component';
 import { ConsumerAppointmentHistoryComponent } from './history/appointment-history.component';
+import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment-bill.component';
 
 @NgModule({
     declarations: [
         ConsumerAppointmentComponent,
         ConsumerAppointmentPaymentComponent,
         ConsumerAppointmentLiveTrackComponent,
-        ConsumerAppointmentHistoryComponent
+        ConsumerAppointmentHistoryComponent,
+        ConsumerAppointmentBillComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -38,4 +40,4 @@ import { ConsumerAppointmentHistoryComponent } from './history/appointment-histo
     ],
     exports: [ConsumerAppointmentComponent]
 })
-export class ConsumerAppointmentModule {}
+export class ConsumerAppointmentModule { }

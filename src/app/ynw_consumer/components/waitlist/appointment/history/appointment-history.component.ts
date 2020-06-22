@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../services/consumer-services.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -76,7 +76,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     this.getAppointmentHistory();
   }
 
-  
+
 
   getAppointmentHistoryCount() {
     this.consumer_services.getAppointmentHistoryCount()
@@ -142,30 +142,38 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
   }
 
   viewBill(checkin, bill_data) {
-    if (!this.billdialogRef) {
-      bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
-      this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-        width: '50%',
-        // panelClass: ['commonpopupmainclass', 'billpopup'],
-        panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
-        disableClose: true,
-        autoFocus: true,
-        data: {
-          checkin: checkin,
-          bill_data: bill_data,
-          isFrom: 'appointment'
-        }
-      });
+    // if (!this.billdialogRef) {
+    //   bill_data['passedProvname'] = checkin['providerAccount']['businessName'];
+    //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
+    //     width: '50%',
+    //     // panelClass: ['commonpopupmainclass', 'billpopup'],
+    //     panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
+    //     disableClose: true,
+    //     autoFocus: true,
+    //     data: {
+    //       checkin: checkin,
+    //       bill_data: bill_data,
+    //       isFrom: 'appointment'
+    //     }
+    //   });
 
-      this.billdialogRef.afterClosed().subscribe(result => {
-        if (result === 'makePayment') {
-          this.makePayment(checkin, bill_data);
-        }
-        if (this.billdialogRef) {
-          this.billdialogRef = null;
-        }
-      });
-    }
+    //   this.billdialogRef.afterClosed().subscribe(result => {
+    //     if (result === 'makePayment') {
+    //       this.makePayment(checkin, bill_data);
+    //     }
+    //     if (this.billdialogRef) {
+    //       this.billdialogRef = null;
+    //     }
+    //   });
+    // }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uuid: checkin.uid,
+        accountId: checkin.providerAccount.id,
+        source: 'history'
+      }
+    };
+    this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
   }
   makePayment(checkin, bill_data) {
     this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
@@ -204,8 +212,8 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       disableClose: true,
       autoFocus: true,
       data: {
-        'detail':waitlist,
-        'isFrom':'appointment'
+        'detail': waitlist,
+        'isFrom': 'appointment'
       }
     });
 
@@ -222,15 +230,15 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       return false;
     }
   }
-  getAppointmentHistory () {
+  getAppointmentHistory() {
     this.consumer_services.getAppointmentHistory()
-    .subscribe(
-      data => {
-        this.history = data;
-        // console.log("Appointments",this.history)
+      .subscribe(
+        data => {
+          this.history = data;
+          // console.log("Appointments",this.history)
         },
-      error => {
-      }
-    );
+        error => {
+        }
+      );
   }
 }

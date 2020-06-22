@@ -15,13 +15,15 @@ import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
 import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
+import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.component';
 
 @NgModule({
     declarations: [
         ConsumerCheckinComponent,
         ConsumerPaymentComponent,
         ConsumerLiveTrackComponent,
-        ConsumerCheckinHistoryComponent
+        ConsumerCheckinHistoryComponent,
+        ConsumerCheckinBillComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -40,4 +42,4 @@ import { PagerModule } from '../../../../shared/modules/pager/pager.module';
     ],
     exports: [ConsumerCheckinComponent]
 })
-export class ConsumerCheckinModule {}
+export class ConsumerCheckinModule { }

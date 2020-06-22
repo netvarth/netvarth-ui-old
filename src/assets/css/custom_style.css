@@ -9321,3 +9321,13 @@ button.cust-button-1:disabled {
   padding: 10px !important;
   margin-left: 20px !important;
 }
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price,
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .servlist .name,
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .itemlist .name {
+  flex-basis: 40% !important;
+}
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .servlist .price,
+.cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .itemlist .price {
+  flex-basis: 50% !important;
+}
