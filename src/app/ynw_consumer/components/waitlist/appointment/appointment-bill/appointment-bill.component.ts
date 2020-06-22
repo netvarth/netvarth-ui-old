@@ -108,7 +108,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                 this.accountId = params.accountId;
                 this.uuid = params.uuid;
                 this.source = params.source;
-                this.getWaitlist();
+                this.getAppointment();
                 if (this.source === 'history') {
                     this.breadcrumbs = [
                         {
@@ -139,16 +139,16 @@ export class ConsumerAppointmentBillComponent implements OnInit {
 
     ngOnInit() {
     }
-    getWaitlist() {
+    getAppointment() {
         const params = {
             account: this.accountId
         };
-        this.consumer_services.getWaitlistDetail(this.uuid, params)
+        this.consumer_services.getAppointmentDetail(this.uuid, params)
             .subscribe(
                 data => {
                     this.checkin = data;
                     this.getCouponList();
-                    this.getWaitlistBill();
+                    this.getAppointmentBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
                 });
@@ -193,7 +193,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     showJCWorkbench() {
         this.showJCouponSection = true;
     }
-    getWaitlistBill() {
+    getAppointmentBill() {
         const params = {
             account: this.accountId
         };
@@ -357,7 +357,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
                 (billInfo => {
                     this.bill_data = billInfo;
-                    this.getWaitlistBill();
+                    this.getAppointmentBill();
                     this.clearJCoupon();
                     resolve();
                 },

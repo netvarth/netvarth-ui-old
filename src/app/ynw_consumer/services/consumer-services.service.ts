@@ -152,4 +152,8 @@ export class ConsumerServices {
   getAppointmentHistoryCount() {
     return this.servicemeta.httpGet('consumer/appointment/history/count');
   }
+  getAppointmentDetail(uuid, params) {
+    const path = 'consumer/appointment/' + uuid;
+    return this.servicemeta.httpGet(path, null, params);
+  }
 }
