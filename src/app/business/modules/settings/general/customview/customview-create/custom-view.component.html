@@ -7,7 +7,7 @@
       <div class="w-dta">
         <div class="row">
           <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
-            <div class=" row no-padding">
+            <div class="row no-padding">
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="ynw-common-form-nm" *ngIf="!loading">
                 <div class="form-group col-md-6 mgn-lt-20">
@@ -17,13 +17,11 @@
                   </mat-form-field>
                 </div>
                 <div class="form-group col-md-12">
-
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Custom View For
                   </label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor">
-                        
                         <mat-option [value]="'Waitlist'">
                           Check-in/Token
                         </mat-option>
@@ -34,17 +32,16 @@
                     </mat-form-field>
                   </div>
                 </div>
-                  <div *ngIf="waitlistMngr.filterByDept" class="form-group col-md-12">
-
+                <div *ngIf="waitlistMngr.filterByDept" class="form-group col-md-12">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Department</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                       <mat-select placeholder="Departments" [(ngModel)]="selectedDepartments" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
-                          placeholderLabel="Search departments"></ngx-mat-select-search>
+                        <ngx-mat-select-search [formControl]="deptMultiFilterCtrl" placeholderLabel="Search departments"
+                          noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
                         <mat-option *ngFor=" let dept of departments" [value]="dept"
-                          (click)="deptSelection(dept.departmentId)">
+                          (click)="setDeptIds(dept.departmentId)">
                           {{dept.departmentName}}
                         </mat-option>
                       </mat-select>
@@ -63,22 +60,27 @@
                 </div>
                 <div class="form-group col-md-12" *ngIf="isDepartments">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                    {{provider_label || capitalizeFirst}}</label>
+                    {{provider_label | capitalizeFirst}}s</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
-                      <mat-select placeholder="{{provider_label}}s" [(ngModel)]="selectedUsers" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search {{provider_label}}s">
+                    <mat-form-field *ngIf="filterUsersList.length > 0">
+                      <mat-select placeholder="{{provider_label | capitalizeFirst}}s" [(ngModel)]="selectedUsers" [multiple]="true">
+                        <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
+                          placeholderLabel="Search {{provider_label}}s"
+                          noEntriesFoundLabel="no matching {{provider_label}} found">
                         </ngx-mat-select-search>
                         <mat-option *ngFor=" let doctor of users_list" [value]="doctor"
-                          (click)="userSelection(doctor.id)">
+                          (click)="setUsersIds(doctor.id)">
                           {{doctor.firstName}} {{doctor.lastName}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="filterUsersList.length === 0">
+                      No {{provider_label}}s
+                    </div>
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUsers.length > 0">
                     <p>
-                      Selected Doctors:
+                      Selected {{provider_label}}s:
                     </p>
                     <ul *ngFor="let users of selectedUsers">
                       <li>
@@ -91,16 +93,19 @@
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Services</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="filterServiicesList.length > 0">
                       <mat-select placeholder="Services" [(ngModel)]="selectedServices" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
-                          placeholderLabel="Search services"></ngx-mat-select-search>
-                        <mat-option *ngFor=" let service of service_list" [value]="service"
-                          (click)="serviceSelection(service.id)">
+                        <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl" placeholderLabel="Search services"
+                          noEntriesFoundLabel="no matching service found"></ngx-mat-select-search>
+                        <mat-option *ngFor="let service of service_list" [value]="service"
+                          (click)="setServiceIds(service.id)">
                           {{service.name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="filterServiicesList.length === 0">
+                      No services
+                    </div>
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedServices.length > 0">
                     <p>
@@ -113,20 +118,25 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12" *ngIf ="customViewFor == 'Waitlist'">
+                <div class="form-group col-md-12" *ngIf="customViewFor == 'Waitlist'">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Queues</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="queuestoDisplay.length > 0 && serviceQCount !== 0">
                       <mat-select placeholder="Queues" [(ngModel)]="selectedQs" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues">
+                        <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
+                          noEntriesFoundLabel="no matching queue found">
                         </ngx-mat-select-search>
-                        <mat-option *ngFor=" let queue of qstoDisplay" [value]="queue" (click)="qSelection(queue.id)">
+                        <mat-option *ngFor="let queue of qstoDisplay" [value]="queue"
+                          (click)="queueSelection(queue.id)">
                           {{queue.name}}
                           {{queue.displayschedule[0].dstr}}[{{queue.displayschedule[0].time}}]
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="queuestoDisplay.length === 0 || serviceQCount === 0">
+                      No queues
+                    </div>
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedQs.length > 0">
                     <p>
@@ -140,21 +150,26 @@
                     </ul>
                   </div>
                 </div>
-
-                <div class="form-group col-md-12" *ngIf ="customViewFor == 'Appointment'">
-                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                    Appointment Schedules</label>
+                <div class="form-group col-md-12" *ngIf="customViewFor == 'Appointment'">
+                  <label class="col-form-label mgn-bt-10" style="margin-left: 20px">
+                    Choose Schedules</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <mat-form-field>
+                    <mat-form-field *ngIf="schedulestoDisplay.length > 0 && serviceScheduleCount !== 0">
                       <mat-select placeholder="Schedules" [(ngModel)]="selectedScheduls" [multiple]="true">
-                        <ngx-mat-select-search [formControl]="scheduleMultiFilterCtrl" placeholderLabel="Search schedules">
+                        <ngx-mat-select-search [formControl]="scheduleMultiFilterCtrl"
+                          placeholderLabel="Search schedules" noEntriesFoundLabel="no matching schedule found">
                         </ngx-mat-select-search>
-                        <mat-option *ngFor=" let schedule of todaysQs" [value]="schedule" (click)="scheduleSelection(schedule.id)">
+                        <mat-option *ngFor=" let schedule of todaysQs" [value]="schedule"
+                          (click)="scheduleSelection(schedule.id)">
                           {{schedule.name}}
                           {{schedule.displayschedule[0].dstr}}[{{schedule.displayschedule[0].time}}]
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text"
+                      *ngIf="schedulestoDisplay.length === 0 || serviceScheduleCount === 0">
+                      No schedules
+                    </div>
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedScheduls.length > 0">
                     <p>
@@ -168,67 +183,16 @@
                     </ul>
                   </div>
                 </div>
-
-
-
-
                 <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20" style="display: inline-flex;">
                   <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;&nbsp;
                   <button mat-button type="submit" class="cs-btn bt1" (click)="createCustomView()">Save</button>
                 </div>
               </div>
-
-              <!-- <div class="col-md-6">
-                              <div class="pay-section left">
-                                  <div class="lc22">
-                                    <div class="lc2-1 lcd custom-help">
-                                        <mat-chip-list class="primary" aria-label="Color selection" *ngFor=" let depName of departments">
-                                            <mat-chip  [selected]="selectedDepts.indexOf(depName.departmentId) !== -1" (click) = "depSelected(depName.departmentId)">
-                                              {{depName.departmentName}}
-                                            </mat-chip>
-                                        </mat-chip-list>
-                                    </div>
-                                   </div>                          
-                              </div>
-                              <div class="pay-section left">
-                                  <div class="lc22">
-                                    <div class="lc2-1 lcd custom-help">
-                                        <mat-chip-list  aria-label="Color selection" *ngFor=" let doctors of users_list">
-                                            <mat-chip  class="primary" [selected]="selectedDocts.indexOf(doctors.id) !==-1"  (click) = "doctorSelected(doctors.id)">
-                                              {{doctors.firstName | capitalizeFirst}} {{doctors.lastName | capitalizeFirst}}
-                                            </mat-chip>
-                                          </mat-chip-list>
-                                    </div>
-                                   </div>                          
-                              </div>
-                              <div class="pay-section left">
-                                <div class="lc22">
-                                  <div class="lc2-1 lcd custom-help">
-                                    <mat-chip-list class="primary" aria-label="Color selection" *ngFor=" let serNames of service_list">
-                                      <mat-chip (click) = "servSelected(serNames.id)"  [selected]="selectedServices.indexOf(serNames.id) !== -1">
-                                        {{serNames.name}}
-                                      </mat-chip>
-                                    </mat-chip-list>
-                                  </div>
-                                 </div>                          
-                            </div>
-                            <div class="pay-section left">
-                              <div class="lc22">
-                                <div class="lc2-1 lcd custom-help">
-                                  <mat-chip-list class="primary" aria-label="Color selection" *ngFor=" let queues of qstoDisplay">
-                                    <mat-chip (click) = "selectedQs(queues.id)" [selected]="selectedQueues.indexOf(queues.id) !== -1">
-                                      {{queues.name}}<br>
-                                      {{queues.displayschedule[0].dstr}}[{{queues.displayschedule[0].time}}]
-                                    </mat-chip>
-                                  </mat-chip-list>
-                                </div>
-                               </div>                          
-                          </div>                                 
-                         </div>                              -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="clearfix"></div>
 </section>

@@ -86,13 +86,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     userList: any = [];
     userIds: any = [];
     serviceScheduleCount;
+    provider_label = '';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
         private router: Router,
         private shared_Functionsobj: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions
-    ) { }
+    ) {
+        this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
+    }
     ngOnInit() {
         this.getBussinessProfile();
         this.deptMultiFilterCtrl.valueChanges
@@ -640,7 +643,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             }
         }
     }
-    setServiceIds(service, ev) {
+    setServiceIds(service) {
+        this.qMultiCtrl = [];
         const index = this.serviceIds.indexOf(service);
         if (index === -1) {
             this.serviceIds.push(service);
@@ -652,7 +656,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     departmentSelection() {
         this.servMultiCtrl = [];
         this.qMultiCtrl = [];
-
         if (this.actionparam === 'edit' && this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
             for (let j = 0; j < this.displayBoardData.qBoardConditions.providers.length; j++) {
                 for (let i = 0; i < this.users.length; i++) {
@@ -667,7 +670,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
                 if (j < this.displayBoardData.qBoardConditions.providers.length) {
                     this.userSelection();
-
                     this.getProviderServices();
                     this.getProviderQueues();
                 }
@@ -675,9 +677,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         } else {
             this.userSelection();
         }
-
-
-
     }
     userSelection() {
         if (this.actionparam === 'edit' && this.displayBoardData.qBoardConditions.services && this.displayBoardData.qBoardConditions.services.length > 0) {
@@ -700,7 +699,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.serviceSelection();
         }
     }
-    setDeptIds(dept, ev) {
+    setDeptIds(dept) {
+        this.userMultiCtrl = [];
+        this.userIds = [];
+        this.servMultiCtrl = [];
+        this.qMultiCtrl = [];
         const index = this.deptIds.indexOf(dept);
         if (index === -1) {
             this.deptIds.push(dept);
@@ -709,9 +712,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
         this.getUsers();
         this.getProviderServices();
+        this.getProviderQueues();
     }
 
     setUsersIds(userId) {
+        this.servMultiCtrl = [];
+        this.qMultiCtrl = [];
         const index = this.userIds.indexOf(userId);
         if (index === -1) {
             this.userIds.push(userId);
