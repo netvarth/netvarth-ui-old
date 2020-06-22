@@ -208,6 +208,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   allservices;
   appttime_arr: any = [];
   apptServicesjson: any = [];
+  tempservicejson;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -372,7 +373,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.locationjson) {
               for (const i in this.locationjson) {
                 this.results_data = this.locationjson[i];
-                console.log(this.locationjson[i].fields.donationlength)
               }
             }
             // this.search_data = this.result_data.hits.hit;
@@ -497,11 +497,31 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'services': {
-            this.servicesjson = res;
+            if (!this.businessjson.virtualServices) {
+              this.servicesjson = [];
+              this.tempservicejson = res;
+              for (let i = 0; i < this.tempservicejson.length; i++) {
+                if (this.tempservicejson[i].serviceType !== 'virtualService') {
+                  this.servicesjson.push(this.tempservicejson[i]);
+                }
+              }
+            } else {
+              this.servicesjson = res;
+            }
             break;
           }
           case 'apptServices': {
-            this.apptServicesjson = res;
+            if (!this.businessjson.virtualServices) {
+              this.apptServicesjson = [];
+              this.tempservicejson = res;
+              for (let i = 0; i < this.tempservicejson.length; i++) {
+                if (this.tempservicejson[i].serviceType !== 'virtualService') {
+                  this.apptServicesjson.push(this.tempservicejson[i]);
+                }
+              }
+            } else {
+              this.apptServicesjson = res;
+            }
             break;
           }
           case 'gallery': {
