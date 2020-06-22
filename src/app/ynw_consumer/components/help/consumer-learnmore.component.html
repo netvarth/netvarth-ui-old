@@ -18,6 +18,8 @@
                                 <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'refine')}"><a (click)="menuclicked('refine')">Refine Search </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'claim')}"><a (click)="menuclicked('claim')">Claim My Business </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'checkin')}"><a (click)="menuclicked('checkin')">Consumer Checkin </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'appointments')}"><a (click)="menuclicked('appointments')">Consumer Appointment </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'donations')}"><a (click)="menuclicked('donations')">Consumer Donation </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'profile')}"><a (click)="menuclicked('profile')">Consumer Profile </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'dashboard')}"><a (click)="menuclicked('dashboard')">Consumer Dashboard </a></li>
                                 <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'verified')}"><a (click)="menuclicked('verified')">Jaldee Verified Levels</a></li>
@@ -39,10 +41,14 @@
 </mat-expansion-panel-header>
           <div class="helpcontent">
           <ol class="ol-normal">
-          <li>Doctor</li>
-          <li>Dentist</li>
+          <li>Doctor/Clinic</li>
+          <li>Dentist/Dental Clinic</li>
           <li>Alternative Medicine Practitioner</li>
-          <li>Hospital</li>
+          <li>Hospital/Nursing Home</li>
+          <li>Dental Hospital</li>
+          <li>Alternative Medicine Hospital</li>
+          <li>Laboratory</li>
+          <li>Pharmacy</li>
           </ol>
           </div>
 </mat-expansion-panel>
@@ -104,13 +110,13 @@
         </mat-expansion-panel-header>
         <div class="helpcontent">
         <ol class="ol-normal">
-        <li>Restaurant</li>
+        <li>Restaurants/bar/fastfood</li>
         <li>Caterer</li>
         <li>Home Baker</li>
         <li>Bakery</li>
         <li>Juice Parlour</li>
-         <li>Ice Cream Parlour</li>
-         <li>Home Food</li>
+        <li>Ice Cream Parlour</li>
+        <li>Home Food</li>
         <li>Coffee Shop</li>
         <li>Sweet Shop</li>
         </ol>
@@ -154,11 +160,38 @@
 </mat-expansion-panel-header>
 <div class="helpcontent">
 <ol class="ol-normal">
-<li>Veterinary Doctor</li>
+<li>Veterinary Doctor/Veterinary Clinic</li>
 <li>Pet Care</li>
+<li>Veterinary Hospital</li>
 </ol>
 </div>
 </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+   <mat-panel-title><span class="helpcontent">Supermarket/Grocery</span></mat-panel-title>
+   </mat-expansion-panel-header>
+   <div class="helpcontent">
+   <ol class="ol-normal">
+   <li>Grocery Shops</li>
+   <li>Supermarket</li>
+   <li>Hypermarket</li>
+   </ol>
+   </div>
+   </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+   <mat-panel-title><span class="helpcontent">Other/Miscellaneous</span></mat-panel-title>
+   </mat-expansion-panel-header>
+   <div class="helpcontent">
+   <ol class="ol-normal">
+   <li>Miscellaneous</li>
+   </ol>
+   </div>
+   </mat-expansion-panel>
 </mat-accordion>
 <br>
 <span>Next to the search bar is the “More Options Icon” where a consumer can narrow down the search results using the following filters:</span>
@@ -197,7 +230,18 @@
 
 </ul>
 </section>
-
+<section class="helpcontent" *ngIf="activeMenu == 'appointments'">
+    <h6>Consumer Appointments</h6>
+    <ul class="ul-normal abc">
+        <li>Coming Soon...</li>
+    </ul>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'donations'">
+    <h6>Consumer Donations</h6>
+    <ul class="ul-normal abc">
+        <li>Coming Soon...</li>
+    </ul>
+</section>
 <section class="helpcontent" *ngIf="activeMenu == 'checkin'">
     <h6>Consumer Checkin</h6>
 <li>It is an easy way to check-in online for the services offered by a provider registered with Jaldee.com.
@@ -321,7 +365,16 @@
     <h6>Consumer Dashboard</h6>
 <span>A consumer login is redirected to the dashboard initially. Here a consumer can search for the service providers, set up the profile and view the status of current check-ins, My favorites and History of check-ins.</span>
 <ul class="ul-normal abc">
-<li><strong>Active Check-ins</strong><br> A consumer can track the status of the services checked-in for. If the provider has generated a bill for the services rendered, it will be displayed here and can be paid from here itself. A consumer can rate the services by giving stars. This will let the providers get instant feedback on the services they offer.</li>
+<li><strong>Active Appointments</strong><br></li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Checkins</strong><br> A consumer can track the status of the services checked-in for. If the provider has generated a bill for the services rendered, it will be displayed here and can be paid from here itself. A consumer can rate the services by giving stars. This will let the providers get instant feedback on the services they offer.</li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Donations</strong><br> </li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Payments</strong><br> </li>
 </ul>
 <ul class="ul-normal abc">
 <li><strong>My Favourites</strong><br> A consumer’s own Service by default comes under My Favourites. Apart from that, when a consumer adds a provider to favorites, it gets listed here.</li>
