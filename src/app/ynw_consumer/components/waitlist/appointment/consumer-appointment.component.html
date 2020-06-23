@@ -421,7 +421,7 @@
                                 <ng-container *ngIf="action=='note'">
                                     <div class="col-md-12 mgn-bt-20">
                                         <mat-form-field>
-                                            <textarea matInput class="form-control" #consumernote
+                                            <textarea matInput class="form-control" [(ngModel)]="consumerNote" #consumernote
                                                 (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                                 placeholder="{{note_placeholder}}"></textarea>
                                         </mat-form-field>
@@ -562,7 +562,7 @@
                         <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
                             <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
-                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add / Edit
                                 Note</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('email')">Add /
                                 Change Email</button>
