@@ -210,7 +210,7 @@
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['queue']" *ngIf="time_type === 3"
                         (click)="filterClicked('queue')" class="anchorbutton remMarginRight genMarginLeft"
-                        name="service_window" id="btn_service_window_filter_id"><span>{{service_window_cap}}</span></a>
+                        name="service_window" id="btn_service_window_filter_id"><span>Schedules</span></a>
                       <mat-form-field *ngIf="time_type !== 1 && filters['queue']">
                         <mat-select [(value)]="filter.queue" #Fqueue>
                           <mat-option (click)="setFilterData('queue', 'all')" [value]="'all'">

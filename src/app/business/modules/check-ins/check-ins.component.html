@@ -312,9 +312,9 @@
                       <mat-option (click)="setFilterData('queue', 'all')" [value]="'all'">
                         {{all_cap}}
                       </mat-option>
-                      <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)"
+                      <mat-option *ngFor="let queue of queues" (click)="setFilterData('queue', queue.id)"
                         [value]="queue.id">
-                        <span class="time_label">{{queue.displayschedule.time}}</span>
+                        <span class="time_label">{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                         <span class="dashboard-qname"> [{{queue.name}}]</span>
                       </mat-option>
                     </mat-select>
