@@ -856,4 +856,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.payEmail = '';
         this.payEmail1 = '';
     }
+    isNumeric(evt) {
+        return this.sharedFunctionobj.isNumeric(evt);
+    }
 }

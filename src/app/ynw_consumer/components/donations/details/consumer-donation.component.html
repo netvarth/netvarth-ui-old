@@ -64,7 +64,7 @@
                                 <div class="form-group m0">
                                     <mat-form-field>
                                         <input class="form-control number-ip" matInput
-                                            placeholder="&#8377; Enter Amount" [(ngModel)]="donationAmount">
+                                            placeholder="&#8377; Enter Amount" [(ngModel)]="donationAmount" (keypress)="isNumeric($event)">
                                     </mat-form-field>
                                 </div>
                             </div>
