@@ -132,7 +132,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-        this.routerobj.navigate(['/provider/' + this.domain + '/downpanel']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/auditlog']);
     }
 }
   selectCategory() {

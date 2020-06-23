@@ -4375,6 +4375,24 @@
                     
                     <!-- next -->
                     <mat-accordion>
+                            <mat-expansion-panel [expanded]='showauditlog'>
+                                <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title class="accordion-title" (click)="menu('auditlog')">
+                                        Activity Log
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                        <span> Here the provider can view the activities done
+                                            by
+                                            him/her.
+                                            The details appear with a date and time stamp. It also shows the actions
+                                            completed
+                                            by
+                                            the provider along with a little description.</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    <mat-accordion>
                         <mat-expansion-panel [expanded]='showlicense'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('license')">
@@ -5182,17 +5200,7 @@
                             provided notifications. Here a provider can learn about new coupons or any
                             other such
                             information directly from Jaldee Super admin.</li>
-                        <li><strong>Activity Log :</strong> Here the provider can view the activities done
-                            by
-                            him/her.
-                            The details appear with a date and time stamp. It also shows the actions
-                            completed
-                            by
-                            the provider along with a little description.</li>
-                        <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps
-                            the provider
-                            to
-                            enable check-in, if disabled or to disable the check-in, if enabled.</li>
+                       
                         <li><strong>License Details :</strong> Here the provider can see the current
                             License
                             version
@@ -5202,6 +5210,9 @@
                             view the license history, its usage, payment history and upgrade the current
                             License
                             package.</li>
+                            <li><strong>Messages:</strong> Here the provider can view the messages .
+                            </li>
+                           
                     </ul>
                 </ul>
             </div>

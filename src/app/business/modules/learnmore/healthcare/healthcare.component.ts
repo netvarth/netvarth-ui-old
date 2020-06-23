@@ -112,6 +112,7 @@ export class HealthCareComponent implements OnInit {
   showbusiness = false;
   showappointmentphonein = false;
   showschdelay = false;
+  showauditlog = false;
   
   
   constructor(
@@ -408,7 +409,9 @@ export class HealthCareComponent implements OnInit {
     if (parentContent === 'customer' && childContent === 'customer') {
         this.showcustomer = true;
     }
-
+    if (parentContent === 'auditlog' && childContent === 'auditlog') {
+      this.showauditlog = true;
+    }
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }

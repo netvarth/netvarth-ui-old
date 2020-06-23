@@ -107,6 +107,7 @@ export class FinanceComponent implements OnInit {
   showcorporate = false;
   showappointmentphonein = false;
   showschdelay = false;
+  showauditlog = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -396,6 +397,9 @@ export class FinanceComponent implements OnInit {
   }
 
 }  
+  if (parentContent === 'auditlog' && childContent === 'auditlog') {
+    this.showauditlog = true;
+    }
     if (parentContent === 'customer' && childContent === 'customer') {
         this.showcustomer = true;
     }
