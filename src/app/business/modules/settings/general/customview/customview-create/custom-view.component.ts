@@ -110,6 +110,13 @@ export class CustomViewComponent implements OnInit {
             .subscribe(() => {
                 this.filterSchedulebySearch();
             });
+        setTimeout(() => {
+            if (this.viewId) {
+                this.getView(this.viewId);
+            } else {
+                this.loading = false;
+            }
+        }, 1000);
     }
     getProviderServices() {
         return new Promise((resolve) => {
@@ -221,11 +228,6 @@ export class CustomViewComponent implements OnInit {
                         }
                     }
                     this.queuestoDisplay = this.qstoDisplay;
-                    if (this.viewId) {
-                        this.getView(this.viewId);
-                    } else {
-                        this.loading = false;
-                    }
                 });
     }
     getView(viewId) {
@@ -309,7 +311,6 @@ export class CustomViewComponent implements OnInit {
                         }
                     }
                 }
-                console.log(this.selectedServices);
                 if (j < this.customViewDetails.customViewConditions.services.length) {
                     if (this.customViewFor === 'Appointment') {
                         this.apptServiceSelection();
@@ -507,11 +508,6 @@ export class CustomViewComponent implements OnInit {
                         }
                     }
                     this.schedulestoDisplay = this.todaysQs;
-                    if (this.viewId) {
-                        this.getView(this.viewId);
-                    } else {
-                        this.loading = false;
-                    }
                 },
                 (error) => {
                 });
