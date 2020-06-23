@@ -1355,6 +1355,14 @@ export class ConsumerAppointmentComponent implements OnInit {
                         for (const list of this.waitlist_for) {
                             list['apptTime'] = this.apptTime;
                         }
+                    } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
+                        this.showApptTime = true;
+                        for (let i = 0; i < this.queuejson.length; i++)  {
+                            if (this.queuejson[this.sel_queue_indx].id === this.queuejson[i].id) {
+                                this.queuejson.splice(i, 1);
+                            }
+                        }
+                        this.handleQueueSelection(this.queuejson[0], 0);
                     } else {
                         this.showApptTime = false;
                     }
