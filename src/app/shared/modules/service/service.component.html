@@ -97,7 +97,8 @@
             </div>
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
-                    <span class="ttle">{{serv_status}}</span>
+                    <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
+                    <span *ngIf="is_donation" class="ttle">Cause Status</span>
                     <span>
                         <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" [(ngModel)]="servstatus"
                             (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
