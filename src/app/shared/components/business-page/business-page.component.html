@@ -473,15 +473,15 @@
                                             </div>
                                         </div>
                                         <!-- <div class="bottom-sect pdetail"
-                                            *ngIf="results_data.donation_status == 1 && results_data.donation_services">
+                                        *ngIf="businessjson.donationFundRaising && donationData.length > 0 && businessjson.onlinePresence">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
                                                         <span class="sub-title-donate">Donation Services</span>
                                                         <ul>
                                                             <li
-                                                                *ngFor="let donationService of results_data.donation_services">
-                                                                {{donationService}}</li>
+                                                                *ngFor="let donationService of donationData">
+                                                                {{donationService.name}}</li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -492,7 +492,8 @@
                                                     (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                                     class="checkin-btn">Pay</span>
                                             </div>
-                                        </div> -->
+                                        </div>  -->
+                                    
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
