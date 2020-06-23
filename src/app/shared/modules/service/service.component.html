@@ -10,7 +10,7 @@
                 {{service_data.description | capitalizeFirst}}
             </div>
             <div class="c-ot">
-                <div class="item" *ngIf="departmentName">
+                <div class="item" *ngIf="departmentName && !is_donation">
                     <span class="ttle">Department Name</span>
                     <span>{{departmentName}}</span>
                 </div>
@@ -226,7 +226,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
-            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add'">
+            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add' && !is_donation">
                 <mat-form-field class="example-full-width">
                     <mat-select  placeholder="Select user" #userlist
                         (selectionChange)="selectUserHandler(userlist.value)">
