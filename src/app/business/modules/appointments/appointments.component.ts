@@ -288,6 +288,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gnr_link = 2;
   appointmentViewList: any = [];
   viewsList: any = [];
+  consumr_id: any;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -2439,6 +2440,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getFutureAppointmentsCount();
   }
   showCallingModes(modes, action) {
+    if (!modes.consumer) {
+      this.consumr_id = modes.providerConsumer.id;
+    } else {
+      this.consumr_id = modes.consumer.id;
+    }
     // this.changeWaitlistStatus(modes, action);
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
@@ -2447,7 +2453,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         modes: modes.virtualService,
         uuid: modes.uid,
-        consumerid: modes.consumer.id,
+        consumerid: this.consumr_id,
         qdata: modes,
         type: 'appt'
       }

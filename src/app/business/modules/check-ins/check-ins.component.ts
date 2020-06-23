@@ -299,6 +299,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   history_loading = false;
   checkinViewList: any = [];
   viewsList: any = [];
+  consumr_id: any;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -829,6 +830,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           if (this.grouped_list && this.grouped_list['checkedIn']) {
             this.new_checkins_list = this.grouped_list['checkedIn'].slice();
+            console.log(this.new_checkins_list)
           }
           if (this.grouped_list && this.grouped_list['arrived']) {
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
@@ -2316,6 +2318,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.getFutureCheckinCount();
   }
   showCallingModes(modes, action) {
+    if (!modes.consumer) {
+      this.consumr_id = modes.providerConsumer.id;
+    } else {
+      this.consumr_id = modes.consumer.id;
+    }
     // this.changeWaitlistStatus(modes, action);
     this.notedialogRef = this.dialog.open(CallingModesComponent, {
       width: '50%',
@@ -2324,7 +2331,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         modes: modes.virtualService,
         uuid: modes.ynwUuid,
-        consumerid: modes.consumer.id,
+        consumerid: this.consumr_id,
         qdata: modes,
         type: 'checkin'
       }
