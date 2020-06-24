@@ -120,7 +120,7 @@ export class CustomViewComponent implements OnInit {
     }
     getProviderServices() {
         return new Promise((resolve) => {
-            const params = { 'status-eq': 'ACTIVE', 'serviceType-eq': 'physicalService' };
+            const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
             if (this.selectedUsersId && this.selectedUsersId.length > 0) {
                 params['provider-eq'] = this.selectedUsersId.toString();
             }
