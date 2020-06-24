@@ -107,6 +107,7 @@ export class FoodJointComponent implements OnInit {
   showappointmentphonein = false;
   showschdelay = false;
   showauditlog = false;
+  showalert = false;
  
   constructor(
     private activated_route: ActivatedRoute,
@@ -389,10 +390,12 @@ export class FoodJointComponent implements OnInit {
 
 }   
 
-  if (parentContent === 'auditlog' && childContent === 'auditlog') {
+    if (parentContent === 'auditlog' && childContent === 'auditlog') {
       this.showauditlog = true;
-  }
-
+    }
+    if (parentContent === 'alert' && childContent === 'alert') {
+      this.showalert = true;
+      }
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }

@@ -109,6 +109,7 @@ export class ProfessionalCareComponent implements OnInit {
   showappointmentphonein = false;
   showschdelay = false;
   showauditlog = false;
+  showalert = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -386,10 +387,12 @@ export class ProfessionalCareComponent implements OnInit {
   }
 
 }  
-  if (parentContent === 'auditlog' && childContent === 'auditlog') {
+    if (parentContent === 'auditlog' && childContent === 'auditlog') {
     this.showauditlog = true;
-  }
-
+    }
+    if (parentContent === 'alert' && childContent === 'alert') {
+      this.showalert = true;
+      }
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }

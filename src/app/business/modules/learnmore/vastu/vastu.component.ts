@@ -108,6 +108,7 @@ export class VastuComponent implements OnInit {
   showappointmentphonein = false;
   showschdelay = false;
   showauditlog = false;
+  showalert = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -391,6 +392,9 @@ export class VastuComponent implements OnInit {
     if (parentContent === 'auditlog' && childContent === 'auditlog') {
       this.showauditlog = true;
     }
+    if (parentContent === 'alert' && childContent === 'alert') {
+      this.showalert = true;
+      }
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }
