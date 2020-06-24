@@ -112,16 +112,16 @@ export class VideoSettingsComponent implements OnInit {
     }
     triggerChange(resultMode, callingMode) {
         if (resultMode['value'].actualValue.trim() !== '') {
-            this.updateVideoSettings(resultMode, callingMode);
+            this.updateVideoSettings(resultMode, callingMode, 'statuschange');
         } else {
             if (!resultMode.value.enabled) {
-                this.updateVideoSettings(resultMode, callingMode);
+                this.updateVideoSettings(resultMode, callingMode, 'statuschange');
             } else {
                 this.videoModes[callingMode].enabled = false;
             }
         }
     }
-    updateVideoSettings(resultMode, callingMode) {
+    updateVideoSettings(resultMode, callingMode, statuschange?) {
         const virtualCallingModes = [];
 
         // Object.keys(this.videoModes).forEach(key => {
@@ -173,11 +173,28 @@ export class VideoSettingsComponent implements OnInit {
                 //         this.getVirtualCallingModesList();
                 //     }
                 // }
-                if (callingMode === 'WhatsApp'){
-                    this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                if (callingMode === 'WhatsApp') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Whatsapp mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+                    } else {
+                        this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                    }
                     this.getVirtualCallingModesList();
-                }else if (callingMode === 'Zoom') {
-                    this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                } else if (callingMode === 'Zoom') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Zoom mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                    }
                     this.getVirtualCallingModesList();
                 }
                 // for (let callingmodes of postdata.virtualCallingModes) {
