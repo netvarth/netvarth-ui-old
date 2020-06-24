@@ -200,7 +200,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   mode;
   isItem;
   source;
-
+  pos = false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -247,6 +247,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.bname = bdetails.bn || '';
     }
     this.getPaymentSettings();
+    this.getPos();
     this.getJaldeeActiveCoupons();
     this.getCoupons();
     this.getDiscounts();
@@ -295,6 +296,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
   }
 
   getCheckinDetails() {

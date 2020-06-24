@@ -424,7 +424,8 @@
                           <i class="icon-note" style="font-size: smaller;"></i> <span> Private Note </span>
                         </a>
                         <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                          *ngIf="pos && appt.apptStatus != 'prepaymentPending' && !appt.parentUuid"
+                          *ngIf="appt.apptStatus != 'prepaymentPending' && !appt.parentUuid
+                          && (pos || (!pos && appt.service.isPrePayment && appt.appointmentMode === 'ONLINE_APPOINTMENT'))"
                           (click)="viewBillPage('future', appt)">
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
@@ -529,7 +530,8 @@
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                      *ngIf="pos && appt.apptStatus != 'prepaymentPending' && !appt.parentUuid"
+                      *ngIf="appt.apptStatus != 'prepaymentPending' && !appt.parentUuid
+                      && (pos || (!pos && appt.service.isPrePayment && appt.appointmentMode === 'ONLINE_APPOINTMENT'))"
                       (click)="viewBillPage('history', appt)">
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
@@ -606,7 +608,8 @@
                   <div class="statuslink " *ngIf="startedApptSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                   <div class="statuslink "
-                    *ngIf="startedApptSelection===1 && pos && selectedAppt['started'].apptStatus != 'prepaymentPending' && !selectedAppt['started'].parentUuid"
+                    *ngIf="startedApptSelection===1 && selectedAppt['started'].apptStatus != 'prepaymentPending' && !selectedAppt['started'].parentUuid
+                    && (pos || (!pos && selectedAppt['started'].service.isPrePayment && selectedAppt['started'].appointmentMode === 'ONLINE_APPOINTMENT'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedApptSelection===1" [matTooltip]="'Private Note'">
@@ -776,7 +779,8 @@
                   <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Print'">
                     <i class="fa fa-print" (click)="printAppt('new')"></i> </div>
                   <div class="statuslink "
-                    *ngIf="apptSelection===1 && pos && selectedAppt['new'].apptStatus != 'prepaymentPending' && !selectedAppt['new'].parentUuid"
+                    *ngIf="apptSelection===1 && selectedAppt['new'].apptStatus != 'prepaymentPending' && !selectedAppt['new'].parentUuid
+                    && (pos || (!pos && selectedAppt['new'].service.isPrePayment && selectedAppt['new'].appointmentMode === 'ONLINE_APPOINTMENT'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
                   <div class="statuslink " *ngIf="apptSelection===1" [matTooltip]="'Private Note'">
@@ -1010,7 +1014,8 @@
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>
                   <div class="statuslink "
-                    *ngIf="completedApptSelection===1 && pos && selectedAppt['completed'].apptStatus != 'prepaymentPending' && !selectedAppt['completed'].parentUuid"
+                    *ngIf="completedApptSelection===1 && selectedAppt['completed'].apptStatus != 'prepaymentPending' && !selectedAppt['completed'].parentUuid
+                    && (pos || (!pos && selectedAppt['completed'].service.isPrePayment && selectedAppt['completed'].appointmentMode === 'ONLINE_APPOINTMENT'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('completed')"></i> </div>
                   <div class="statuslink " *ngIf="completedApptSelection===1" [matTooltip]="'Private Note'">
@@ -1109,7 +1114,8 @@
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i>
                   </div>
                   <div class="statuslink "
-                    *ngIf="cancelledApptSelection===1 && pos && selectedAppt['cancelled'].apptStatus != 'prepaymentPending' && !selectedAppt['cancelled'].parentUuid"
+                    *ngIf="cancelledApptSelection===1 && selectedAppt['cancelled'].apptStatus != 'prepaymentPending' && !selectedAppt['cancelled'].parentUuid
+                    && (pos || (!pos && selectedAppt['cancelled'].service.isPrePayment && selectedAppt['cancelled'].appointmentMode === 'ONLINE_APPOINTMENT'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('cancelled')"></i> </div>
                   <div class="statuslink " *ngIf="cancelledApptSelection===1" [matTooltip]="'Private Note'">

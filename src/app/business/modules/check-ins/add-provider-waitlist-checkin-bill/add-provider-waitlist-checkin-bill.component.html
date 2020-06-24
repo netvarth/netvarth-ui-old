@@ -52,7 +52,7 @@
 											</div>
 										</div>
 										<ng-container *ngIf="bill_data.billStatus!='Settled'">
-											<div class="workbench mat-form-field-wrapper">
+											<div class="workbench mat-form-field-wrapper" *ngIf="pos">
 												<ng-container
 													*ngIf="(!showAddItemsec && showAddItemMenuSection) || showAddItemsec || showJCouponSection">
 													<div class="section-two">
@@ -530,7 +530,7 @@
 															</div>
 														</div>
 														<div class="more"
-															*ngIf="!source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
+															*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' || 
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -551,7 +551,7 @@
 															</mat-menu>
 														</div>
 														<div class="more"
-															*ngIf="source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' || 
+															*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' || 
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -654,7 +654,7 @@
 												currency:'&#8377; '}}</div>
 															</div>
 														</div>
-														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
+														<div class="more" *ngIf="bill_data.billStatus!='Settled' && pos">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -901,7 +901,7 @@
 										</div>
 
 
-										<div class="actiondiv bill_btns">
+										<div class="actiondiv bill_btns" *ngIf="pos">
 											<ng-container *ngIf="showPayWorkBench">
 												<div class="section-two pay-wb" style="display: flex;">
 													<div class="add-serv-item edit-row service no-padding">

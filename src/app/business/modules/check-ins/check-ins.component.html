@@ -548,7 +548,8 @@
                       <i class="icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      *ngIf="checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid
+                      && (pos || (!pos && checkin.service.minPrePaymentAmount && checkin.waitlistMode === 'ONLINE_CHECKIN'))"
                       (click)="viewBillPage('future', checkin)">
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
@@ -759,7 +760,8 @@
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      *ngIf="checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid
+                      && (pos || (!pos && checkin.service.minPrePaymentAmount && checkin.waitlistMode === 'ONLINE_CHECKIN'))"
                       (click)="viewBillPage('history', checkin)">
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
@@ -837,7 +839,8 @@
                   <div class="statuslink " *ngIf="startedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                   <div class="statuslink "
-                    *ngIf="startedwaitlistSelection===1 && pos && selectedCheckin['started'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['started'].parentUuid"
+                    *ngIf="startedwaitlistSelection===1 && selectedCheckin['started'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['started'].parentUuid
+                    && (pos || (!pos && selectedCheckin['started'].service.minPrePaymentAmount && selectedCheckin['started'].waitlistMode === 'ONLINE_CHECKIN'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('started')"></i> </div>
                   <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Private Note'">
@@ -1029,7 +1032,8 @@
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Print'">
                     <i class="fa fa-print" (click)="printCheckin('new')"></i> </div>
                   <div class="statuslink "
-                    *ngIf="waitlistSelection===1 && pos && selectedCheckin['new'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['new'].parentUuid"
+                    *ngIf="waitlistSelection===1 && selectedCheckin['new'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['new'].parentUuid
+                    && (pos || (!pos && selectedCheckin['new'].service.minPrePaymentAmount && selectedCheckin['new'].waitlistMode === 'ONLINE_CHECKIN'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Private Note'">
@@ -1247,7 +1251,8 @@
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>
                   <div class="statuslink "
-                    *ngIf="completedwaitlistSelection===1 && pos && selectedCheckin['completed'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['completed'].parentUuid"
+                    *ngIf="completedwaitlistSelection===1 && selectedCheckin['completed'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['completed'].parentUuid
+                    && (pos || (!pos && selectedCheckin['completed'].service.minPrePaymentAmount && selectedCheckin['completed'].waitlistMode === 'ONLINE_CHECKIN'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('completed')"></i> </div>
                   <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Private Note'">
@@ -1345,7 +1350,8 @@
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i>
                   </div>
                   <div class="statuslink "
-                    *ngIf="cancelledwaitlistSelection===1 && pos && selectedCheckin['cancelled'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['cancelled'].parentUuid"
+                    *ngIf="cancelledwaitlistSelection===1 && selectedCheckin['cancelled'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['cancelled'].parentUuid
+                    && (pos || (!pos && selectedCheckin['cancelled'].service.minPrePaymentAmount && selectedCheckin['cancelled'].waitlistMode === 'ONLINE_CHECKIN'))"
                     [matTooltip]="'Bill'">
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('cancelled')"></i> </div>
                   <div class="statuslink " *ngIf="cancelledwaitlistSelection===1" [matTooltip]="'Private Note'">
