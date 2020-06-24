@@ -271,7 +271,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                *ngIf="bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
+                                                *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                 <div class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                     <span class="">Payment Options</span>
                                                 </div>
@@ -286,6 +286,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div *ngIf ="paidStatus == 'true'"  >
+                                            <!-- <div style="padding-bottom: 10px"><b> {{bill_data.totalAmountPaid |
+                                            currency:'&#8377; '}}</b></div>  -->
+                                        <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br><br>
+                                            <div class="ivc">
+                                                <div class="pay-det-row">
+                                                        <span><b>Payment Gateway:</b> <span>{{this.pGateway}}</span></span>
+                                                </div> 
+                                                <div class="pay-det-row">
+                                                        <span><b> Payment Ref Id:</b> <span>{{razorpay_payment_id}}</span></span>
+                                                </div> 
+                                                <div class="pay-det-row">
+                                                        <span><b> Transaction Id:</b> <span>{{razorpay_order_id}}</span></span>
+                                                </div> 
+                                            </div>              
+                                        </div>
                                 </div>
                             </div>
                         </div>

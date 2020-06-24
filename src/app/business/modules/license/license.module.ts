@@ -21,6 +21,7 @@ import { licenseusageComponent } from './licenseusage/licenseusage.component';
 import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
 import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
+import { PaymentComponent } from './payments/licensepayment.component';
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { ViewPrevStatementComponent } from './statements/viewprevstatement.compo
         ProviderBprofileSearchAdwordsComponent,
         LicenseComponent,
         AddonsComponent,
+        PaymentComponent,
         ProviderPaymentHistoryComponent,
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,

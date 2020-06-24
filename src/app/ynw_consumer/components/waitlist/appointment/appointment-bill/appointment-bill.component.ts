@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -10,10 +10,17 @@ import { DOCUMENT } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
+import { RazorpayService } from '../../../../../shared/components/razorpay/razorpay.service';
+import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
+import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpay.model';
+import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
-    templateUrl: './appointment-bill.component.html'
+    templateUrl: './appointment-bill.component.html',
+    providers: [RazorpayService,
+        WindowRefService]
+
 })
 export class ConsumerAppointmentBillComponent implements OnInit {
     @ViewChild('itemservicesearch', { static: false }) item_service_search;
@@ -94,6 +101,14 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     pid;
     breadcrumbs;
     source;
+    pGateway: any;
+    razorModel: any;
+    origin: string;
+    public paidStatus: boolean;
+    checkIn_type: any;
+    razorpay_order_id: any;
+    razorpay_payment_id: any;
+    razorpayDetails: any = [];
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -101,13 +116,28 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         public _sanitizer: DomSanitizer,
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
-        @Inject(DOCUMENT) public document
+        @Inject(DOCUMENT) public document,
+        public razorpayService: RazorpayService,
+        public prefillmodel: RazorpayprefillModel,
+        public winRef: WindowRefService,
+        private cdRef: ChangeDetectorRef,
     ) {
         this.activated_route.queryParams.subscribe(
             params => {
-                this.accountId = params.accountId;
-                this.uuid = params.uuid;
-                this.source = params.source;
+                if (params.accountId) {
+                    this.accountId = params.accountId;
+                }
+                if (params.paidStatus) {
+                    this.paidStatus = params.paidStatus;
+                }
+                if (params.uuid) {
+                    this.uuid = params.uuid;
+
+                }
+                if (params.source) {
+                    this.source = params.source;
+                }
+
                 this.getAppointment();
                 if (this.source === 'history') {
                     this.breadcrumbs = [
@@ -134,6 +164,15 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                         }
                     ];
                 }
+                if (params.type) {
+                    this.checkIn_type = params.type;
+                }
+                   if (params.details) {
+                    this.razorpayDetails = JSON.parse(params.details);
+                    this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
+                    this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
+                    this.cdRef.detectChanges();
+              }
             });
     }
 
@@ -288,12 +327,18 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             this.gateway_redirection = true;
             this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
-                    data => {
-                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        setTimeout(() => {
-                            this.document.getElementById('payuform').submit();
-                        }, 2000);
+                    (data: any) => {
+                        this.origin = 'consumer';
+                        this.pGateway = data.paymentGateway;
+                        if (this.pGateway === 'RAZORPAY') {
+                            this.paywithRazorpay(data);
+                        } else {
+                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                            setTimeout(() => {
+                                this.document.getElementById('payuform').submit();
+                            }, 2000);
+                        }
                     },
                     error => {
                         this.resetApiError();
@@ -316,7 +361,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             this.gateway_redirection = true;
             this.sharedServices.consumerPayment(this.pay_data)
                 .subscribe(
-                    data => {
+                    (data: any) => {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
                         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                         setTimeout(() => {
@@ -330,6 +375,14 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                 );
         }
     }
+    paywithRazorpay(data: any) {
+        this.razorModel = new Razorpaymodel(this.prefillmodel);
+        this.razorModel.key = data.razorpayId;
+        this.razorModel.amount = data.amount;
+        this.razorModel.order_id = data.orderId;
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+    }
+
     resetApiError() {
         this.api_success = null;
     }

@@ -1094,7 +1094,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.uid,
-          accountId: checkin.providerAccount.id
+          accountId: checkin.providerAccount.id,
+          type : 'appointment',
+          'paidStatus': false
         }
       };
       this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
@@ -1102,7 +1104,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.ynwUuid,
-          accountId: checkin.providerAccount.id
+          accountId: checkin.providerAccount.id,
+          type : 'waitlist',
+          'paidStatus': false
         }
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
@@ -1500,7 +1504,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.appointments = data;
-          console.log("Appointments", this.appointments)
+          console.log("Appointments", this.appointments);
         },
         error => {
         }

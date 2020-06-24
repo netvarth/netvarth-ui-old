@@ -10,6 +10,7 @@ import { DOCUMENT } from '@angular/common';
 // import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { JsonAdaptor } from '@syncfusion/ej2-data';
 
 @Component({
   selector: 'app-statements',
@@ -98,6 +99,7 @@ export class StatementsComponent implements OnInit {
   var: any;
   temp1;
   mergestatement: any;
+
 
   constructor(
     public dialogRef: MatDialogRef<StatementsComponent>,
@@ -333,15 +335,24 @@ export class StatementsComponent implements OnInit {
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0) {
       this.payment_loading = true;
-      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'details': this.pay_data,
-          'origin': 'provider'
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'details': JSON.stringify(this.pay_data),
+          'origin': 'provider',
+          'paidStatus': false
         }
-      });
+      };
+      this.router.navigate(['provider', 'license', 'payments'], navigationExtras);
+      // const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      //   width: '50%',
+      //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     'details': this.pay_data,
+      //     'origin': 'provider',
+      //   }
+      // });
+      // dialogrefd.close();
     }
   }
   getgst() {

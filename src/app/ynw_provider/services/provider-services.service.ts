@@ -590,6 +590,10 @@ export class ProviderServices {
       const url = 'provider/payment';
       return this.servicemeta.httpPost(url, data);
    }
+   providerPaymentStatus(data) {
+      const url = 'provider/payment/status';
+      return this.servicemeta.httpPost(url , data);
+   }
    acknowledgeAlert(id) {
       return this.servicemeta.httpPut('provider/alerts/' + id);
    }

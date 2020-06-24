@@ -9331,3 +9331,16 @@ button.cust-button-1:disabled {
 .cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .itemlist .price {
   flex-basis: 50% !important;
 }
+.center{
+  margin-left: auto;
+  margin-right: auto;  
+}
+.cc-dc-nb-change .cs-btn {
+  height: 30px !important;
+  line-height: 12px !important;
+  padding: 6px 10px !important;
+  text-transform: none !important;
+  font-size: .75rem !important;
+  margin-right: 10px !important;
+}
+

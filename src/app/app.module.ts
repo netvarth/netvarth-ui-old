@@ -69,6 +69,9 @@ import { CheckYourStatusComponent } from './shared/components/status-check/check
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { GlobalFunctions } from './shared/functions/global-functions';
+import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
+import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
+
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -97,7 +100,7 @@ export function init_app(globalService: GlobalService) {
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
-    JdnComponent
+    JdnComponent,
     // PhomeComponent,
   ],
   entryComponents: [
@@ -155,6 +158,8 @@ export function init_app(globalService: GlobalService) {
     AuthGuardHome,
     AuthGuardLogin,
     ServiceMeta,
+    Razorpaymodel,
+    RazorpayprefillModel,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,

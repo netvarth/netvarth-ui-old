@@ -8,6 +8,8 @@ import { licenseusageComponent } from './licenseusage/licenseusage.component';
 import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
 import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
+import { PaymentComponent } from './payments/licensepayment.component';
+
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -39,8 +41,12 @@ const routes: Routes = [
         component: licenseusageComponent
       },
       {
-        path:'viewstatement',
+        path: 'viewstatement',
         component: ViewPrevStatementComponent
+      },
+      {
+        path: 'payments',
+        component: PaymentComponent
       }
     ]
   },
