@@ -719,7 +719,7 @@ export class ConsumerCheckinComponent implements OnInit {
             'queue': {
                 'id': this.sel_queue_id
             },
-            'date': this.sharedFunctionobj.transformToYMDFormat(this.sel_checkindate),
+            'date': this.sel_checkindate,
             'service': {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
@@ -763,6 +763,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     addCheckInConsumer(post_Data) {
         this.api_loading = true;
+        console.log(post_Data);
         this.shared_services.addCheckin(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
