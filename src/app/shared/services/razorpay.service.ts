@@ -1,26 +1,33 @@
 import { Injectable, Component, NgZone } from '@angular/core';
-import { WindowRefService } from '../../services/windowRef.service';
-import { Razorpaymodel } from './razorpay.model';
-import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../functions/shared-functions';
-import { Router, NavigationExtras } from '@angular/router';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { ConsumerPaymentmodeComponent } from '../consumer-paymentmode/consumer-paymentmode.component';
-import { SharedServices } from '../../services/shared-services';
+// import { WindowRefService } from '../../services/windowRef.service';
+// import { Razorpaymodel } from './razorpay.model';
+// import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+// import { SharedFunctions } from '../../functions/shared-functions';
+// import { Router, NavigationExtras } from '@angular/router';
+// import { MatDialogRef, MatDialog } from '@angular/material';
+// import { ConsumerPaymentmodeComponent } from '../consumer-paymentmode/consumer-paymentmode.component';
+// import { SharedServices } from '../../services/shared-services';
 import { BehaviorSubject } from 'rxjs';
-@Component({
-   providers: [WindowRefService]
-  })
+import { WindowRefService } from './windowRef.service';
+import { Router, NavigationExtras } from '@angular/router';
+import { SharedServices } from './shared-services';
+import { SharedFunctions } from '../functions/shared-functions';
+import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
+import { Razorpaymodel } from '../components/razorpay/razorpay.model';
+import { MatDialog, MatDialogRef } from '@angular/material';
+// import { ConsumerPaymentmodeComponent } from '../components/consumer-paymentmode/consumer-paymentmode.component';
+
+
 @Injectable()
 // tslint:disable-next-line: component-class-suffix
 export class RazorpayService {
   status_check: any;
-  private paidStatus = new BehaviorSubject<boolean>(false);
+  private paidStatus = new BehaviorSubject<string>('false');
   currentStatus = this.paidStatus.asObservable();
 
 
     constructor(
-      public dialogRef: MatDialogRef<ConsumerPaymentmodeComponent>,
+      // public dialogRef: MatDialogRef<ConsumerPaymentmodeComponent>,
       public dialog: MatDialog,
         public  winRef: WindowRefService,
         private router: Router,
@@ -31,7 +38,7 @@ export class RazorpayService {
          private ngZone: NgZone
         ) { }
 
-  changePaidStatus(value: boolean) {
+  changePaidStatus(value: string) {
     this.paidStatus.next(value);
     console.log(value);
   }
@@ -67,11 +74,8 @@ export class RazorpayService {
 
                   if ( checkin_type === 'appointment') {
                     this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
-                    // this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
                   } else if (checkin_type === 'waitlist') {
                     this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
-
-                    // this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
                   }
                   }
           });

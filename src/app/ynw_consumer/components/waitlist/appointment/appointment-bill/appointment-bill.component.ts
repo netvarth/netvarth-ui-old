@@ -10,16 +10,14 @@ import { DOCUMENT } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
-import { RazorpayService } from '../../../../../shared/components/razorpay/razorpay.service';
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
 import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpay.model';
 import { WindowRefService } from '../../../../../shared/services/windowRef.service';
+import { RazorpayService } from '../../../../../shared/services/razorpay.service';
 
 @Component({
     selector: 'app-consumer-appointment-bill',
-    templateUrl: './appointment-bill.component.html',
-    providers: [RazorpayService,
-        WindowRefService]
+    templateUrl: './appointment-bill.component.html'
 
 })
 export class ConsumerAppointmentBillComponent implements OnInit {
@@ -104,7 +102,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     pGateway: any;
     razorModel: any;
     origin: string;
-    public paidStatus: boolean;
+    paidStatus = 'false';
     checkIn_type: any;
     razorpay_order_id: any;
     razorpay_payment_id: any;

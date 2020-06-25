@@ -1,19 +1,17 @@
 import { Component, Inject, ChangeDetectorRef, NgZone, OnInit } from '@angular/core';
 import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RazorpayService } from '../../../../shared//components/razorpay/razorpay.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
+import { RazorpayService } from '../../../../shared/services/razorpay.service';
 
 @Component({
   selector: 'app-payments',
-  templateUrl: './licensepayment.component.html',
-  providers: [RazorpayService ,
-              WindowRefService]
+  templateUrl: './licensepayment.component.html'
 })
 export class PaymentComponent implements OnInit {
   payment_popup = null;
@@ -38,7 +36,7 @@ export class PaymentComponent implements OnInit {
   orderid: any;
   razorpay_payment_id: any;
   razorpay_order_id: any;
-  public paidStatus: boolean;
+  paidStatus = 'false';
   razorpay_signature: any;
 
   constructor(

@@ -71,6 +71,8 @@ import { GlobalService } from './shared/services/global-service';
 import { GlobalFunctions } from './shared/functions/global-functions';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
+import { WindowRefService } from './shared/services/windowRef.service';
+import { RazorpayService } from './shared/services/razorpay.service';
 
 
 export function init_app(globalService: GlobalService) {
@@ -160,6 +162,8 @@ export function init_app(globalService: GlobalService) {
     ServiceMeta,
     Razorpaymodel,
     RazorpayprefillModel,
+    WindowRefService,
+    RazorpayService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,
