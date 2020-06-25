@@ -184,9 +184,10 @@
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group queue-selection">
-                                <label class="labelstyle">{{schedule_cap}}</label><a
+                                <label class="labelstyle">{{schedule_cap}}</label>
+                                <!-- <a
                                     class="link exstschdlesze pointer-cursor"
-                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a>
+                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a> -->
                                 <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
                                     <ul class="item">
                                         <li *ngFor="let schedule of this.activeQueues"><span
