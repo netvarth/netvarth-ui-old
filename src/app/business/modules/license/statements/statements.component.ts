@@ -208,12 +208,14 @@ export class StatementsComponent implements OnInit {
       .subscribe(
         data => {
           this.invoice = data;
+          console.log(this.invoice);
           if (this.invoice.creditDebitJson) {
-            this.credt_debtJson = JSON.parse(this.invoice.creditDebitJson);
+            this.credt_debtJson = this.invoice.creditDebitJson;
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
           }
           if (this.invoice.discount) {
-            this.licenseDiscounts = JSON.parse(this.invoice.discount);
+            console.log(this.invoice.discount);
+            this.licenseDiscounts = this.invoice.discount;
             this.licenseDiscounts.discount.forEach(discountObj => {
               this.latestInvoiceDiscount.push(discountObj);
               this.discounts.push(discountObj);
@@ -241,7 +243,7 @@ export class StatementsComponent implements OnInit {
           });
         }
         if (object.discount) {
-          const licenseDiscounts = JSON.parse(object.discount);
+          const licenseDiscounts = object.discount;
           licenseDiscounts.discount.forEach(discountObj => {
             this.discounts.push(discountObj);
           });

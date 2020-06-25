@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute ,NavigationExtras} from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -39,6 +39,7 @@ export class ViewPrevStatementComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private providerServices: ProviderServices,
         public shared_functions: SharedFunctions,
+        private router: Router,
         private dialog: MatDialog,
     ) {
         this.activated_route.queryParams.subscribe(
@@ -64,10 +65,11 @@ export class ViewPrevStatementComponent implements OnInit {
             this.pay_data.uuid = this.invoice.ynwUuid;
             this.pay_data.refno = this.invoice.invoiceRefNumber;
             if (this.invoice.creditDebitJson) {
+                this.credt_debtJson = this.invoice.creditDebitJson;
                 this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
             }
             if (this.invoice.discount) {
-                this.licenseDiscounts = JSON.parse(this.invoice.discount);
+                this.licenseDiscounts = this.invoice.discount;
                 this.licenseDiscounts.discount.forEach(discountObj => {
                     this.latestInvoiceDiscount.push(discountObj);
                 });
@@ -153,4 +155,17 @@ export class ViewPrevStatementComponent implements OnInit {
                 () => {
                 });
     }
+    previousRefstmt(mergeinvoicerefno) {
+        console.log(mergeinvoicerefno);
+        this.showPreviousDue = false;
+        this.credt_debtJson = null;
+        this.credt_debtDetls = '';
+        this.latestInvoiceDiscount = [];
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            InvoiceRefNo: mergeinvoicerefno
+          }
+        };
+        this.router.navigate(['provider', 'license', 'viewstatement'], navigationExtras);
+      }
 }
