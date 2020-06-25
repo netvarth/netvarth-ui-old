@@ -472,15 +472,14 @@
                                                     class="checkin-btn">Appointment</span>
                                             </div>
                                         </div>
-                                        <!-- <div class="bottom-sect pdetail"
-                                        *ngIf="businessjson.donationFundRaising && donationData.length > 0 && businessjson.onlinePresence">
+                                         <div class="bottom-sect pdetail"
+                                        *ngIf="businessjson.donationFundRaising && businessjson.onlinePresence && donationServicesjson.length >= 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
-                                                        <span class="sub-title-donate">Donation Services</span>
+                                                        <span class="sub-title-donate">Donation Service(s)</span>
                                                         <ul>
-                                                            <li
-                                                                *ngFor="let donationService of donationData">
+                                                            <li *ngFor="let donationService of donationServicesjson" (click)="showServiceDetail(donationService, businessjson.businessName,'servicedetails')">
                                                                 {{donationService.name}}</li>
                                                         </ul>
                                                     </div>
@@ -490,9 +489,9 @@
                                             <div class="bottom-actions-root">
                                                 <span
                                                     (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                                    class="checkin-btn">Pay</span>
+                                                    class="checkin-btn">Donate</span>
                                             </div>
-                                        </div>  -->
+                                        </div>  
                                     
                                     </div>
                                 </mat-expansion-panel>

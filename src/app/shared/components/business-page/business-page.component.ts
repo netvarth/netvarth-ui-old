@@ -203,7 +203,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   results_data;
   appttime_arr: any = [];
   apptServicesjson: any = [];
-  donationData;
+  donationServicesjson: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -318,6 +318,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('services', true);
           this.getbusinessprofiledetails_json('apptServices', true);
           this.getbusinessprofiledetails_json('jaldeediscount', true);
+          this.getbusinessprofiledetails_json('donationServices', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -431,10 +432,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
-            // this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
-            //   .subscribe((data) => {
-            //     this.donationData = data;
-            //   });
 
             // if (this.businessjson.claimStatus === 'Claimed') {
             // this.getProviderDepart(this.provider_bussiness_id);
@@ -629,6 +626,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.virtualfieldsCombinedjson.length > 0) {
               this.showVirtualfieldsSection = true;
             }
+            break;
+          }
+          case 'donationServices': {
+            this.donationServicesjson = res;
+            console.log(this.donationServicesjson)
             break;
           }
           case 'jaldeediscount':
@@ -1293,6 +1295,19 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showServiceDetail(serv, busname) {
+    let servData;
+    if (serv.serviceType && serv.serviceType === 'donationService') {
+      servData = {
+        bname: busname,
+        serdet: serv,
+        serv_type: 'donation'
+      };
+    } else {
+      servData = {
+        bname: busname,
+        serdet: serv
+      };
+    }
     // let service;
     // if (!this.showDepartments) {
     //   const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
@@ -1304,10 +1319,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
-      data: {
-        bname: busname,
-        serdet: serv
-      }
+      data: servData
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
     });
