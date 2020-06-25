@@ -2076,8 +2076,18 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         });
   }
   payClicked(search_result) {
-    const ids = search_result.id.split('-');
-    this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
+    this.current_provider = search_result;
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (usertype === 'consumer') {
+      const ids = search_result.id.split('-');
+      this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
+    } else if (usertype === '') {
+      const passParam = { callback: '', current_provider: search_result };
+      this.doLogin('donation', 'consumer', passParam);
+    }
+
+    // const ids = search_result.id.split('-');
+    // this.showDonation(ids[1], false, 'consumer', search_result.fields.unique_id, ids[0]);
   }
   showDonation(locid, curdate, origin, unique_id, accountId) {
     const navigationExtras: NavigationExtras = {
