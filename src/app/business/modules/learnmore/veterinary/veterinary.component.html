@@ -5553,16 +5553,15 @@
     
     <!-- next -->
     
-   
     <mat-accordion>
-        <mat-expansion-panel [expanded]='false'>
+        <mat-expansion-panel [expanded]='showprofile'>
             <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="handleScroll('profile', 'profile')">
+                <mat-panel-title class="accordion-title" (click)="menu('providerprofile')">
                     Doctor Profile
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="helpcontent">
-                <h6>doctor PROFILE</h6>
+                <h6>Doctor PROFILE</h6>
                 <span>The doctor profile is a collection of settings and information associated with a
                     business
                     owner. The system creates a doctor profile at the time of registration. The profile

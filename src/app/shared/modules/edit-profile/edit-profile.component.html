@@ -1,5 +1,5 @@
 <section [ngClass]="{'container': curtype=='consumer'}">
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section [ngClass]="{'container': curtype=='consumer'}">
     <div class="content see-pages">

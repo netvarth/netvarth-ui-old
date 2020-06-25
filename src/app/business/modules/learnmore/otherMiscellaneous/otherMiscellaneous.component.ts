@@ -107,10 +107,11 @@ export class OtherMiscellaneousComponent implements OnInit {
     showbusiness = false;
     showserviceprovider = false;
     showcorporate = false;
-  showappointmentphonein = false;
-  showschdelay = false;
-  showauditlog = false;
-  showalert = false;
+    showappointmentphonein = false;
+    showschdelay = false;
+    showauditlog = false;
+    showalert = false;
+    showprofile = false;
     constructor(
       private activated_route: ActivatedRoute,
       private shared_functions: SharedFunctions,
@@ -397,7 +398,9 @@ export class OtherMiscellaneousComponent implements OnInit {
       if (parentContent === 'inbox' && childContent === 'inbox') {
         this.showinbox = true;
      }
-     
+     if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+      this.showprofile = true;
+    }
       if (parentContent === 'downpanel' && childContent === 'downpanel') {
         this.showdownpanel = true;
     }

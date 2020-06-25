@@ -110,6 +110,7 @@ export class ProfessionalCareComponent implements OnInit {
   showschdelay = false;
   showauditlog = false;
   showalert = false;
+  showprofile = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -148,6 +149,8 @@ export class ProfessionalCareComponent implements OnInit {
     this._location.back();
   }
   scroll() {
+
+
   }
   public triggerScrollTo(destination) {
     const config: ScrollToConfigOptions = {
@@ -400,7 +403,9 @@ export class ProfessionalCareComponent implements OnInit {
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }
-   
+    if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+    this.showprofile = true;
+  }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
     }

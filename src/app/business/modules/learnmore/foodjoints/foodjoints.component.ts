@@ -108,6 +108,7 @@ export class FoodJointComponent implements OnInit {
   showschdelay = false;
   showauditlog = false;
   showalert = false;
+  showprofile = false;
  
   constructor(
     private activated_route: ActivatedRoute,
@@ -403,7 +404,9 @@ export class FoodJointComponent implements OnInit {
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }
-   
+   if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+    this.showprofile = true;
+  }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
     }

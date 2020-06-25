@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -47,6 +48,8 @@ export class EditProfileComponent implements OnInit {
   emailerror = null;
   email1error = null;
   confrmshow = false;
+  domain;
+  breadcrumb_moreoptions: any = [];
   breadcrumbs_init = [
     {
       title: Messages.USER_PROF_CAP,
@@ -63,6 +66,8 @@ export class EditProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
     this.editProfileForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -83,7 +88,6 @@ export class EditProfileComponent implements OnInit {
     }
     this.maxalloweddate = this.tday.getFullYear() + '-' + dispmonth + '-' + this.tday.getDate();
   }
-
   getProfile(typ) {
     this.loading = true;
 
@@ -102,6 +106,7 @@ export class EditProfileComponent implements OnInit {
             });
             this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
           } else if (typ === 'provider') {
+            this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
             this.editProfileForm.setValue({
               first_name: data['basicInfo']['firstName'] || null,
               last_name: data['basicInfo']['lastName'] || null,
@@ -118,6 +123,11 @@ export class EditProfileComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+  performActions(action) {
+    if (action === 'learnmore') {
+      this.router.navigate(['/provider/' + this.domain + '/providerprofile']);
+    }
   }
   onSubmit(sub_data) {
     let date_format = null;
