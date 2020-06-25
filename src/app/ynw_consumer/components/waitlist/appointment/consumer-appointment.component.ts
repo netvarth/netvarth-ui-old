@@ -25,7 +25,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
     enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
     have_note_click_here = '';
-    not_accepted_for_this_date = Messages.NOT_ACCEPTED_THIS_DATE_CAP;
+    not_accepted_for_this_date = Messages.NOT_ACCEPTED_THIS_DATE_CAP1;
     service_needs_prepayment = Messages.NEEDS_PREPAYMENT_FOR_CAP;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
     no_pay_modes_avail_cap = Messages.NO_PAY_MODES_AVAIL_CAP;
@@ -353,6 +353,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
+        console.log(this.checkinLabel);
         this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
@@ -495,6 +496,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;

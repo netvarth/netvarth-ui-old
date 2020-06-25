@@ -183,7 +183,7 @@
                                             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']"
                                                 class="width-100" [items]="queuejson">
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
-                                                    [selected]="queue.id === queuejson[this.sel_queue_indx].id"
+                                                    [selected]="queue.id === queuejson[sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">
                                                     <span>{{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
                                                     </span></mat-chip>
@@ -324,7 +324,7 @@
                         </ng-container>
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
-                        <ng-container *ngIf="this.checkinLabel && queuejson.length > 0">
+                        <ng-container *ngIf="checkinLabel && queuejson.length > 0">
                             <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
                                     [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
                                     [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>
