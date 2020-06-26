@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -51,6 +52,7 @@ export class DepartmentsComponent implements OnInit {
         this.account_type = user.accountType;
         this.getWaitlistMgr();
         this.getDepartmentsCount();
+        this.getDepartments();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -73,13 +75,22 @@ export class DepartmentsComponent implements OnInit {
         } else {
             this.message = 'Assigned services are removed from the departments';
         }
+        let params = {};
+        if (this.departments.length === 0) {
+            params = {
+                'message': this.message,
+                'filterByDept': this.filterbydepartment
+            };
+        } else {
+            params = {
+                'message': this.message
+            };
+        }
         this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
-            data: {
-                'message': this.message
-            }
+            data: params
         });
         this.removeitemdialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -88,6 +99,9 @@ export class DepartmentsComponent implements OnInit {
                     .subscribe(
                         () => {
                             this.getWaitlistMgr();
+                            if (result.deptName) {
+                                this.getDepartments(result.deptName);
+                            }
                         },
                         error => {
                             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -97,6 +111,39 @@ export class DepartmentsComponent implements OnInit {
             }
         });
     }
+    getDepartments(deptName?) {
+        this.loading = false;
+        this.provider_services.getDepartments()
+            .subscribe(
+                data => {
+                    this.departments = data;
+                    if (deptName) {
+                        const params = {
+                            'departmentName': deptName,
+                            'departmentDescription': this.departments.departments[0].departmentDescription,
+                            'departmentCode': this.departments.departments[0].departmentCode,
+                            'id': this.departments.departments[0].departmentId
+                        };
+                        this.updateDepartment(params);
+                    }
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+    updateDepartment(post_data) {
+        this.provider_services.updateDepartment(post_data)
+            .subscribe(
+                () => {
+                    // this.getDepartmentDetails();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    }
+
     getWaitlistMgr() {
         this.provider_services.getWaitlistMgr()
             .subscribe(

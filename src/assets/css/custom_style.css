@@ -9343,4 +9343,9 @@ button.cust-button-1:disabled {
   font-size: .75rem !important;
   margin-right: 10px !important;
 }
-
+.dept-input {
+  width: 50%;
+  margin-left: 150px;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
