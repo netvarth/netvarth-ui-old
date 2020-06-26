@@ -374,10 +374,16 @@ export class ConsumerAppointmentBillComponent implements OnInit {
         }
     }
     paywithRazorpay(data: any) {
+        this.prefillmodel.name = data.consumerName;
+        this.prefillmodel.email = data.ConsumerEmail;
+        this.prefillmodel.contact = data.consumerPhoneumber;
         this.razorModel = new Razorpaymodel(this.prefillmodel);
         this.razorModel.key = data.razorpayId;
         this.razorModel.amount = data.amount;
         this.razorModel.order_id = data.orderId;
+        this.razorModel.name = data.providerName;
+        this.razorModel.description = data.description;
+        // this.razorModel.image = data.jaldeeLogo;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
     }
 

@@ -119,10 +119,15 @@ export class PaymentComponent implements OnInit {
           });
         }
   paywithRazorpay(pData: any ) {
+    this.prefillmodel.name = pData.providerName;
+    this.prefillmodel.email = pData.ConsumerEmail;
+    this.prefillmodel.contact = pData.consumerPhoneumber;
     this.razorModel = new Razorpaymodel(this.prefillmodel);
     this.razorModel.key = pData.razorpayId;
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
+    this.razorModel.description = pData.description;
+    this.razorModel.name = pData.providerName;
     this.razorpayService.payWithRazor(this.razorModel , this.origin );
   }
 

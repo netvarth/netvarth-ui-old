@@ -797,7 +797,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 // this.router.navigate(['consumer']);
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { account_id: this.account_id }
+                    queryParams: { account_id: this.account_id  ,
+                                   type_check : 'appt_prepayment'}
                 };
                 if (this.sel_ser_det.isPrePayment) {
                     this.router.navigate(['consumer', 'appointment', 'payment', this.trackUuid], navigationExtras);
