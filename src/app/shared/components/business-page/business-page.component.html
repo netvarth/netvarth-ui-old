@@ -34,14 +34,14 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="rating-stars">
+                                        <!-- <div class="rating-stars">
                                             <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
                                                 src="./assets/images/star.svg" alt="" />
                                             <img class="ratingstar" *ngIf="ratingenabledHalf"
                                                 src="./assets/images/star-half.svg" alt="" />
                                             <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
                                                 src="./assets/images/star-disabled.svg" alt="" />
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                                         [modalImages]="image_list_popup"
@@ -55,9 +55,9 @@
                                             
                                             " *ngIf="jdnlength > 0" (click)="openJdn()" [matTooltip]="jdnTooltip"><img
                                                     height="35" width="35" src="./assets/images/JDN.png"></span></h3>
-                                        <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
+                                        <!-- <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
                                             | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
-                                            capitalizeFirst}})</span>
+                                            capitalizeFirst}})</span> -->
 
                                         <div class="clr">
                                             <div class="pro-desc">
@@ -128,9 +128,9 @@
                                             class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
 
-                                    <li *ngIf="userType !== 'provider'"><span class="icon-history"
+                                    <!-- <li *ngIf="userType !== 'provider'"><span class="icon-history"
                                             (click)="redirectToHistory()">{{history_cap}}</span>
-                                    </li>
+                                    </li> -->
                                     <li *ngIf="!isInFav && userType !== 'provider'"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav && userType !== 'provider'"><span class="icon-favourite-filled"
@@ -563,4 +563,8 @@
     </div>
     <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
         reserved.</span>
+        <span> <a class="logo">
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg pull-right"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
+          </a></span>
 </footer>
