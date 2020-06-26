@@ -496,14 +496,22 @@ export class ProviderServices {
       const url = 'provider/waitlist/' + waitlist_id + '/' + action;
       return this.servicemeta.httpPut(url, message);
    }
-   getInvoicesWithStatus(status = 'NotPaid', filter = {}) {
-      const url = 'provider/license/invoices/' + status + '/status';
+   getInvoicesWithStatus(filter = {}) {
+      const url = 'provider/license/invoice/payment/history';
       return this.servicemeta.httpGet(url, null, filter);
    }
-   getInvoicesWithStatusCount(status = 'NotPaid', filter = {}) {
-      const url = 'provider/license/invoices/' + status + '/count';
-      return this.servicemeta.httpGet(url, null, filter);
+   // getInvoicesWithStatus(status = 'NotPaid', filter = {}) {
+   //    const url = 'provider/license/invoices/' + status + '/status';
+   //    return this.servicemeta.httpGet(url, null, filter);
+   // }
+   getInvoicesWithStatusCount() {
+      const url = 'provider/license/invoice/payment/history/count';
+      return this.servicemeta.httpGet(url);
    }
+   // getInvoicesWithStatusCount(status = 'NotPaid', filter = {}) {
+   //    const url = 'provider/license/invoices/' + status + '/count';
+   //    return this.servicemeta.httpGet(url, null, filter);
+   // }
    getInvoiceStatus(filter) {
       const url = 'provider/license/invoice';
       return this.servicemeta.httpGet(url, null, filter);

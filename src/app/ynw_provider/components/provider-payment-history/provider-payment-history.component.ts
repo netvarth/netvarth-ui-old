@@ -57,7 +57,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   }
 
   getPaymentHistoryCount() {
-    this.provider_servicesobj.getInvoicesWithStatusCount('Paid')
+    this.provider_servicesobj.getInvoicesWithStatusCount()
       .subscribe(
         (data: any) => {
           this.pagination.totalCnt = data;
@@ -70,7 +70,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
   getPaymentHistory() {
     const api_filter = this.setPaginationFilter();
-    this.provider_servicesobj.getInvoicesWithStatus('Paid', api_filter)
+    this.provider_servicesobj.getInvoicesWithStatus(api_filter)
       .subscribe(data => {
         this.payment_history = data;
       },

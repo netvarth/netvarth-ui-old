@@ -179,7 +179,7 @@
             <div class="appthistory">
               <ul class="c-history">
                 <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
-                  <div class="time">{{history.time}}</div>
+                  <div class="time">{{history.date}} {{history.time}}</div>
                   <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
