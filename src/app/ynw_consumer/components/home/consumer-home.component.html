@@ -535,9 +535,9 @@
                                         <div class="location consumr" *ngIf="donation.location.place">
                                             {{donation.location.place || '' | capitalizeFirst}}
                                             <span class="consumr-loc-icon"><a
-                                                    *ngIf="donation.location.latitude && donation.location.longitude"
+                                                    *ngIf="donation.location.lattitude && donation.location.longitude"
                                                     rel="noopener"
-                                                    [href]="getMapUrl(donation.location.latitude, donation.location.longitude)"
+                                                    [href]="getMapUrl(donation.location.lattitude, donation.location.longitude)"
                                                     target="_blank" class="icon-location"
                                                     matTooltip="Click to navigate">
                                                 </a></span>
