@@ -5,6 +5,10 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpay.model';
+import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
+import { RazorpayService } from '../../../../../shared/services/razorpay.service';
+import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 
 @Component({
     selector: 'app-consumer-payment',
@@ -30,13 +34,21 @@ export class ConsumerPaymentComponent implements OnInit {
     payment_popup: any;
     pid: any;
     status: any;
+    pGateway: any;
+    razorModel: Razorpaymodel;
+    origin: string;
+    checkIn_type: any;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         @Inject(DOCUMENT) public document,
-        public _sanitizer: DomSanitizer
+        public _sanitizer: DomSanitizer,
+        public razorpayService: RazorpayService,
+        public prefillmodel: RazorpayprefillModel,
+        public winRef: WindowRefService,
+        // private cdRef: ChangeDetectorRef,
     ) {
         this.route.params.subscribe(
             params => {
@@ -44,6 +56,7 @@ export class ConsumerPaymentComponent implements OnInit {
             });
         this.route.queryParams.subscribe(
             params => {
+                this.checkIn_type = params.type_check;
                 this.accountId = params.account_id;
                 this.pid = params.pid;
             });
@@ -120,7 +133,12 @@ export class ConsumerPaymentComponent implements OnInit {
         this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
         console.log(this.waitlistDetails);
         this.shared_services.consumerPayment(this.waitlistDetails)
-            .subscribe(pData => {
+            .subscribe((pData: any) => {
+                this.origin = 'consumer';
+                this.pGateway = pData.paymentGateway;
+                if (this.pGateway === 'RAZORPAY') {
+                    this.paywithRazorpay(pData);
+                } else {
                 if (pData['response']) {
                     this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
@@ -134,9 +152,22 @@ export class ConsumerPaymentComponent implements OnInit {
                 } else {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                 }
+            }
             },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    paywithRazorpay(pData: any) {
+        this.prefillmodel.name = pData.consumerName;
+        this.prefillmodel.email = pData.ConsumerEmail;
+        this.prefillmodel.contact = pData.consumerPhoneumber;
+        this.razorModel = new Razorpaymodel(this.prefillmodel);
+        this.razorModel.key = pData.razorpayId;
+        this.razorModel.amount = pData.amount;
+        this.razorModel.order_id = pData.orderId;
+        this.razorModel.name = pData.providerName;
+        this.razorModel.description = pData.description;
+        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type );
     }
 }

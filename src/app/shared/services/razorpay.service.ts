@@ -50,6 +50,8 @@ export class RazorpayService {
         const options = razorModel;
         options.handler = ((response, error) => {
           options.response = response;
+          console.log(response);
+          console.log(options.response);
           const dataToSend: FormData = new FormData();
           dataToSend.append ('razorpay_payment_id', response.razorpay_payment_id);
           dataToSend.append ('razorpay_order_id', response.razorpay_order_id);
@@ -76,6 +78,12 @@ export class RazorpayService {
                     this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
                   } else if (checkin_type === 'waitlist') {
                     this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+                  } else if (checkin_type === 'checkin_prepayment') {
+                    this.ngZone.run(() => this.router.navigate(['consumer']));
+                    // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+                  } else if (checkin_type === 'appt_prepayment') {
+                    // this.router.navigate(['consumer']);
+                    this.ngZone.run(() => this.router.navigate(['consumer']));
                   }
                   }
           });

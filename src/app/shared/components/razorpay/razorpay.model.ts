@@ -10,8 +10,8 @@ export class Razorpaymodel {
     amount: string;
     order_id: string;
     currency = 'INR';
-    name = 'Jaldee Soft Pvt Ltd';
-    description = 'Test transaction';
+    name: string;
+    description: string;
     image: string;
     prefill = this.razorprefillmodel;
     modal: {
