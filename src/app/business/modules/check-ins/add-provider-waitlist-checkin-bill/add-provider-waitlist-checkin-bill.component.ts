@@ -1230,13 +1230,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   confirmSettleBill() {
-    if (this.amountpay > 0) {
+    if (this.amountpay > 0 || this.bill_data.amountDue < 0) {
+      let msg = '';
+      if (this.bill_data.amountDue < 0) {
+        msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
+      } else {
+        msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
+      }
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+          'message': msg
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
