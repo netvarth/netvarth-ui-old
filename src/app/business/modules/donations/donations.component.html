@@ -16,8 +16,32 @@
                 </i>
               </a>
             </li>
+
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                <i class="icon-location" [matTooltipClass]="tooltipcls"
+                [matTooltip]="'Change location'">
+                </i>
+              </a>
+            </li> 
+          
           </ul>
         </div>
+        <aside class="filterSidebar" *ngIf="show_loc">
+          <section class="sidebar sidebar-bottom">
+            <ul class="sidebar-menu">
+              <div class="filterTextinput">
+                  <li class="filterli" *ngFor="let location of locations;let i = index" [(value)]="i">
+                    <a class="pointer-cursor" (click)="getDonationsList('true',location.id)">
+                      <span class="donate-loc" *ngIf="location.place.length>='27'">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</span>
+                      <span class="donate-loc" *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</span>
+                    </a>
+                  </li>
+              </div>
+            </ul>
+          </section>
+        </aside>
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
           <section class="sidebar sidebar-bottom">

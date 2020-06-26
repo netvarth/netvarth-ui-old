@@ -59,6 +59,8 @@ export class DonationsComponent implements OnInit {
     customer_label = '';
     donations_count;
     selectedcustomersformsg: any;
+    show_loc = false;
+    locations: any;
     constructor(private provider_services: ProviderServices,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -77,6 +79,7 @@ export class DonationsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getDonationsList(true);
+        this.getLocationList();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     filterClicked(type) {
@@ -98,10 +101,13 @@ export class DonationsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/donations']);
         }
     }
-    getDonationsList(from_oninit = false) {
+    getDonationsList(from_oninit = false, loc_id?) {
         let filter = this.setFilterForApi();
         filter ['donationStatus-eq'] = 'SUCCESS';
-        // filter ['sort_date'] = 'desc';
+        if (loc_id) {
+            filter ['location-eq'] = loc_id;
+            this.show_loc = false;
+        }
         this.getDonationsCount(filter)
             .then(
                 result => {
@@ -217,6 +223,7 @@ export class DonationsComponent implements OnInit {
         }
     }
     showFilterSidebar() {
+        this.show_loc = false;
         this.filter_sidebar = true;
     }
     hideFilterSidebar() {
@@ -242,5 +249,16 @@ export class DonationsComponent implements OnInit {
                 }
             }
         }
+    }
+    getLocationList() {
+          this.provider_services.getProviderLocations()
+            .subscribe((data: any) => {
+                this.locations = data;
+            }
+            );
+        }
+    showFilterLocation() {
+        this.filter_sidebar = false;
+        this.show_loc = !this.show_loc;
     }
 }
