@@ -7,6 +7,7 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 // import { MatMenuModule } from '@angular/material/menu';
 // import { MatIconModule } from '@angular/material/icon';
+import { LazyModule } from '../../modules/lazy-load/lazy.module';
 
 import { HeaderComponent } from './header.component';
 import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
@@ -20,7 +21,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         MaterialModule,
         SearchModule,
         SearchPopularMoreoptionsModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        LazyModule
         // MatMenuModule,
         //  MatIconModule
     ],

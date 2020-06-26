@@ -8,7 +8,7 @@
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
-            <div class="lgo col-md-3 col-xs-5 pull-left">
+            <div  *ngIf = "source !== 'business'" class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
         </div>
         <div *ngIf="includedfrom =='phome'" class="pull-right">
@@ -49,19 +49,19 @@
             </div>
             <div class="lg-opt ml-auto" *ngIf="shared_functions.checkLogin() && provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
-                    <div class="pro-pic" *ngIf="blogo!='' && headercls!='itl-steps'">
+                    <div class="pro-pic" *ngIf="blogo!='' && headercls!='itl-steps' && source !== 'business'">
                         <img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" />
                     </div>
-                    <div class="mn-title" *ngIf="headercls=='dashb'">
+                    <div class="mn-title" *ngIf="headercls=='dashb' && source !== 'business'">
                         <span class="title-bn">{{bname | capitalizeFirst}}</span>
                         <span class="title-ps">{{bsector | capitalizeFirst }} <span
                                 *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
-                    <div class="mn-title wizardmode" *ngIf="headercls=='itl-steps'">
+                    <div class="mn-title wizardmode" *ngIf="headercls=='itl-steps' && source !== 'business'">
                         <span class="title-ps">{{bsector | capitalizeFirst }} <span
                                 *ngIf="bsubsector!=''">({{bsubsector | capitalizeFirst}})</span></span>
                     </div>
-                    <div class="inbx" (click)="inboxiconClick()" *ngIf="headercls=='dashb'">
+                    <div class="inbx" (click)="inboxiconClick()" *ngIf="headercls=='dashb' && source !== 'business'">
                         <div class="ot-bx" [matTooltipClass]="tooltipcls" [matTooltip]="inboxiconTooltip">
                             <div class="noti-no" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}
                             </div>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="lgmem">
-                    <span class="lgin">
+                    <span class="lgin" *ngIf = "source !== 'business'">
                         <i *ngIf="qAvailability && qAvailability.availableNow" class="fa fa-circle avail"></i><i
                             *ngIf="qAvailability && !qAvailability.availableNow"
                             class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}
@@ -205,15 +205,26 @@
     <div class="container">
         <div class="col-md-22 col-xs-12 col-sm-12" style="padding:15px 0;">
             <div class="tp-1">
-                <div class="tp-l lgo"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
+                <div class="tp-l lgo" *ngIf = "source !== 'business'"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
                 </div>
                 <div class="tp-r">
                     <div class="tc1">
                         <div class="topsignouter">
+                            <!-- <button *ngIf = "source == 'business'" class="sgn">Play Store</button>
+                            <button *ngIf = "source == 'business'" class="jn">App Store</button> -->
+                            <div *ngIf = "source == 'business'" class="app-btn">
+                                <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
+                                  <img [lazySrc]="images.jaldee_playstore" lazySrcVisible="visible"
+                                    alt="Download Business app from Google Play"></a> &nbsp;
+                                <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee" class="app-btn2">
+                                  <img [lazySrc]="images.jaldee_appstore" lazySrcVisible="visible"
+                                    alt="Download Business app from App Store">
+                                </a>
+                              </div>
                             <button class="sgn" (click)="doLogin('consumer')"
-                                *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button> <button class="jn"
                                 (click)="doSignup('consumer')"
-                                *ngIf="!shared_functions.checkLogin()">{{join_cap}}</button>
+                                *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{join_cap}}</button>
                             <ng-container *ngIf="ctype=='consumer'">
                                 <div class="bnps">
                                     <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
@@ -279,7 +290,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
+                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin() && source !== 'business' "><b
                                 style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                                 (click)="providerLinkClicked()">{{click_here_cap}}</button>
@@ -328,7 +339,7 @@
                         </b></span><span style="color: red"> to Upgrade License.</span></span>
             </p>
             <p style="width: 100%; text-align: left;"
-                *ngIf="active_license !== 'Gold - FREE Trial 45 days' && active_license !== 'Diamond'">
+                *ngIf="active_license !== 'Gold - FREE Trial 45 days' && active_license !== 'Diamond' && source !== 'business'">
                 Your current license is
                 <i style="color:red">{{active_license}}.</i><span *ngIf="account_type === 'INDEPENDENT_SP'"><span
                         (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
