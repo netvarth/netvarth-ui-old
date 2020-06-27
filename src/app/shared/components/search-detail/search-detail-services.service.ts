@@ -47,4 +47,34 @@ export class SearchDetailServices {
         const path = 'provider/claim/' + id;
         return this.servicemetaobj.httpPost(path);
     }
+    getUserApptTime(prov_arr) {
+      let str = '';
+      for (let i = 0; i < prov_arr.length; i++) {
+        if (str !== '') {
+          str += '%2C'; // comma
+        }
+        str += prov_arr[i];
+      }
+      if (str === '') {
+        return null;
+      }
+  
+      const path = 'provider/appointment/schedule/nextAvailableSchedule/' + str;
+      return this.servicemetaobj.httpGet(path);
+    }
+    getUserEstimatedWaitingTime(prov_arr) {
+      let str = '';
+      for (let i = 0; i < prov_arr.length; i++) {
+        if (str !== '') {
+          str += '%2C'; // comma
+        }
+        str += prov_arr[i];
+      }
+      if (str === '') {
+        return null;
+      }
+  
+      const path = 'provider/waitlist/queues/providerWaitingTime/' + str;
+      return this.servicemetaobj.httpGet(path);
+    }
 }
