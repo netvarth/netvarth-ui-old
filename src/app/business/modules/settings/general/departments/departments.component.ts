@@ -36,6 +36,7 @@ export class DepartmentsComponent implements OnInit {
     filterbydepartment = false;
     removeitemdialogRef;
     message;
+    message1;
     deptstatusstr = 'Off';
     departmentCount;
     constructor(public router: Router,
@@ -70,18 +71,22 @@ export class DepartmentsComponent implements OnInit {
                 });
     }
     doRemoveservice() {
-        if (this.filterbydepartment) {
-            this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
-        } else {
-            this.message = 'Assigned services are removed from the departments';
-        }
+        this.message = 'Assigned services are removed from the departments';
         let params = {};
         if (this.departments.length === 0) {
+            if (this.filterbydepartment) {
+                this.message = 'To enable department feature, first create a department of your choice.';
+                this.message1 = 'Once department is created, all the existing services will be assigned  under the newly created department which you can later reassign with your choice.';
+            }
             params = {
                 'message': this.message,
+                'message1': this.message1,
                 'filterByDept': this.filterbydepartment
             };
         } else {
+            if (this.filterbydepartment) {
+                this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the \'Default\' department for customer visibility or add new departments and assign respective services';
+            }
             params = {
                 'message': this.message
             };
