@@ -193,7 +193,7 @@ img::-moz-selection {
   display: flex;
   align-items: center;
   margin-left: 15px;
-  width: 90% !important
+  /* width: 90% !important */
 }
 
 .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
@@ -9343,11 +9343,10 @@ button.cust-button-1:disabled {
   font-size: .75rem !important;
   margin-right: 10px !important;
 }
-.dept-input {
-  width: 50%;
-  margin-left: 150px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+@media (min-width: 768px) {
+  .dept-input {
+    margin-left: 150px;
+  }
 }
 .donate-loc {
   padding: 0;

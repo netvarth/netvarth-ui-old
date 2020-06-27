@@ -121,7 +121,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   taxabletotal = 0;
   tottaxvalue = 0;
   totpaid = 0;
-  curSelItm = { indx: 0, typ: '', qty: 1 };
+  curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   bname;
   selectedItemService;
   showPaidlist = false;
@@ -604,7 +604,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.actiontype = null;
     this.showAddItemsec = false;
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   }
   getAddedServcOrItem(name) {
     if (name) {
@@ -652,6 +652,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
     }
     return itemId;
+  }
+  getSelectedItemPrice(itemName) {
+    let itemPrice = 0;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].displayName === itemName) {
+        itemPrice = this.items[i].price;
+        break;
+      }
+    }
+    return itemPrice;
   }
   /**
    * Toggle Item Discount/Coupon Section
@@ -761,7 +771,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   itemServiceSelected(type, name) {
 
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
 
     if (type === 'Services') {
       this.selectedItemService = name;
@@ -773,6 +783,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.curSelItm.indx = this.getSelectedItemId(name);
       this.curSelItm.typ = 'Items';
       this.curSelItm.qty = 1;
+      this.curSelItm.price = this.getSelectedItemPrice(name);
     }
   }
   /**
@@ -835,10 +846,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
-
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
+      if (this.actiontype !== 'adjustItem') {
+      data['price'] = this.curSelItm.price;
+      }
       if (this.curSelItm.qty === 0) {
         action = 'removeItem';
       }
@@ -854,7 +867,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         });
     }
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   }
   /**
    * Remove a particular Service from the bill

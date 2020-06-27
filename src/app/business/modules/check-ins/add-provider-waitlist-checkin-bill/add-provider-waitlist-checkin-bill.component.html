@@ -159,6 +159,20 @@
 																			</mat-form-field>
 																		</span>
 																	</div>
+																	<div *ngIf="curSelItm.typ === 'Items' && actiontype !== 'adjustItem'"
+																		class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
+																		<span class="label">Price</span> <span
+																			class="number">
+																			<mat-form-field class="example-full-width">
+																				<input type="text" min="0" matInput
+																					aria-label="Number" maxlength="5"
+																					(keypress)="isNumeric($event)"
+																					max="100000"
+																					(keyup)="isvalid($event)" matInput
+																					[(ngModel)]="curSelItm.price">
+																			</mat-form-field>
+																		</span>
+																	</div>
 																</div>
 																<div class="spr col-md-4 col-sm-4">
 																	<button class="cs-btn bt1"
@@ -654,7 +668,8 @@
 												currency:'&#8377; '}}</div>
 															</div>
 														</div>
-														<div class="more" *ngIf="bill_data.billStatus!='Settled' && pos">
+														<div class="more"
+															*ngIf="bill_data.billStatus!='Settled' && pos">
 															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
@@ -958,8 +973,7 @@
 												<button type="button" mat-button class="cs-btn bt1 print"
 													*ngIf="bill_data.billStatus=='Settled'"
 													(click)="emailBill()">{{email_bill_cap}}</button>
-												<button type="button" mat-button
-													class="d-lg-block cs-btn bt1 print"
+												<button type="button" mat-button class="d-lg-block cs-btn bt1 print"
 													*ngIf="bill_data.billStatus=='Settled'"
 													(click)="printMe()">Print</button>
 
