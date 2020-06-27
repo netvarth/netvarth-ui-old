@@ -3,9 +3,11 @@
 <div mat-dialog-content>
   <p> {{data.message}} </p>
 </div>
-<div *ngIf="data.filterByDept" class="dept-input">
+<div *ngIf="data.filterByDept" class="col-md-12 col-sm-12 col-xs-12">
+  <div class="col-md-6 col-sm-6 dept-input"> 
   <input type="text" class="form-control" id="mobile_number" placeholder="Department name *" [(ngModel)]="deptName"
     autocomplete="off">
+  </div>
 </div>
 <div mat-dialog-content *ngIf="data.message1">
   <p> {{data.message1}} </p>
