@@ -139,9 +139,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     if (this.page_source === 'pro-details') {
       this.routerobj.navigate(['searchdetail', this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id } });
     } else {
-    this.routerobj.navigate([this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id} });
+      this.routerobj.navigate([this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id } });
+    }
   }
-}
   getUserWaitingTime(provids, user) {
     if (provids.length > 0) {
       const post_provids: any = [];
@@ -442,8 +442,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           case 'businessProfile': {
             this.businessjson = res;
             if (this.domainList && this.domainList.bdata) {
-            const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
-            this.subDomainList = dom[0].subDomains;
+              const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
+              this.subDomainList = dom[0].subDomains;
             }
             this.getbusinessprofiledetails_json('location', true);
             break;
@@ -586,7 +586,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         switch (section) {
           case 'providerBusinessProfile': {
             user['bProfile'] = res;
-            this.api_loading = false;
             user['ratingenabledCnt'] = this.businessjson.avgRating || 0;
             if (user['ratingenabledCnt'] > 0) {
               user['ratingenabledCnt'] = this.shared_functions.ratingRounding(user['ratingenabledCnt']);
@@ -609,6 +608,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             }
             const subDom = this.subDomainList.filter(subdomain => subdomain.id === res.userSubdomain);
             user['bProfile']['userSubSector'] = subDom[0];
+            this.api_loading = false;
             break;
           }
           case 'providerservices': {

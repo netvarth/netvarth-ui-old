@@ -49,7 +49,6 @@
                                         (buttonBeforeHook)="onButtonBeforeHook($event)"
                                         (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
                                     <div class="tp2" *ngIf="businessjson">
-                                        <!-- <div class="ynw-verified"></div> -->
                                         <h3>{{businessjson.businessName | capitalizeFirst}} <span
                                                 class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0"
                                                 (click)="openJdn()" [matTooltip]="jdnTooltip"><img height="35"
@@ -57,7 +56,6 @@
                                         <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
                                             | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
                                             capitalizeFirst}})</span>
-
                                         <div class="clr">
                                             <div class="pro-desc">
                                                 <span *ngIf="bNameStart!=''"

@@ -17,7 +17,7 @@ import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -204,6 +204,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   appttime_arr: any = [];
   apptServicesjson: any = [];
   donationServicesjson: any = [];
+  userId;
+  domainList: any = [];
+  subDomainList: any = [];
+  businessid;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -212,10 +216,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     private routerobj: Router,
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
-    public router: Router
-  ) { }
+    public router: Router,
+    private locationobj: Location
+  ) {
+    this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
+  }
 
   ngOnInit() {
+    this.api_loading = true;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
@@ -257,6 +265,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     // this.getInboxUnreadCnt();
+    this.activaterouterobj.queryParams.subscribe(qparams => {
+      if (qparams.userId) {
+        this.userId = qparams.userId;
+      }
+      if (qparams.pId) {
+        this.businessid = qparams.pId;
+      }
+    });
     this.activaterouterobj.paramMap
       .subscribe(params => {
         // this.provider_id = params.get('id');
@@ -310,15 +326,18 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .then(
         res => {
           this.s3url = res;
-          this.getbusinessprofiledetails_json('businessProfile', true);
+          if (this.userId) {
+            this.getbusinessprofiledetails_json('location', true);
+          } else {
+            this.getbusinessprofiledetails_json('businessProfile', true);
+            this.getbusinessprofiledetails_json('virtualFields', true);
+            this.getbusinessprofiledetails_json('services', true);
+            this.getbusinessprofiledetails_json('apptServices', true);
+          }
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
-          this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
-          this.getbusinessprofiledetails_json('services', true);
-          this.getbusinessprofiledetails_json('apptServices', true);
           this.getbusinessprofiledetails_json('jaldeediscount', true);
-          this.getbusinessprofiledetails_json('donationServices', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -425,6 +444,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.api_loading = false;
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
@@ -546,9 +566,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
+            if (this.userId) {
+              this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerVirtualFields', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerservices', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerApptServices', this.userId, true);
+            }
             this.location_exists = true;
             let schedule_arr: any = [];
             const locarr = [];
+            const wait_locarr = [];
+            const appt_locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
               const place = this.locationjson[i].place;
@@ -590,9 +618,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
+              appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+              wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
             }
-            this.getWaitingTime(locarr);
-            this.getApptTime(locarr);
+            if (this.userId) {
+              this.getUserWaitingTime(wait_locarr);
+              this.getUserApptTime(appt_locarr);
+            } else {
+              this.getWaitingTime(locarr);
+              this.getApptTime(locarr);
+            }
             break;
           }
           case 'terminologies': {
@@ -630,7 +665,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'donationServices': {
             this.donationServicesjson = res;
-            console.log(this.donationServicesjson)
             break;
           }
           case 'jaldeediscount':
@@ -657,6 +691,249 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+  private getUserWaitingTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getUserEstimatedWaitingTime(post_provids_locid)
+        .subscribe(data => {
+          this.waitlisttime_arr = data;
+          if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
+            this.waitlisttime_arr = [];
+          }
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          let locindx;
+          const check_dtoday = new Date(dtoday);
+          let cdate;
+          for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+            this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
+            this.locationjson[locindx]['estimatedtime_det'] = [];
+            if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+              this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
+              this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
+              this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
+              this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
+              this.locationjson[locindx]['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
+              this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+              this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
+              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                this.locationjson[locindx]['availableToday'] = true;
+              } else {
+                this.locationjson[locindx]['availableToday'] = false;
+              }
+              if (!this.locationjson[locindx]['opennow']) {
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                } else {
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
+                this.locationjson[locindx]['estimatedtime_det']['nextAvailDate'] = this.locationjson[locindx]['estimatedtime_det']['date'] + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              } else {
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                } else {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
+                  // this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                }
+              }
+            } else {
+              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
+            }
+            if (this.waitlisttime_arr[i]['message']) {
+              this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
+            }
+
+          }
+        });
+    }
+  }
+  getUserApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getUserApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            if (provids_locid[i]) {
+              locindx = provids_locid[i].locindx;
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
+          }
+        });
+    }
+  }
+  getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getUserbusinessprofiledetails_json(this.provider_id, userId, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        switch (section) {
+          case 'providerBusinessProfile': {
+            this.socialMedialist = [];
+            this.businessjson = res;
+            const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
+            this.subDomainList = dom[0].subDomains;
+            const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
+            this.businessjson['serviceSubSector'] = subDom[0];
+            this.branch_id = this.businessjson.branchId;
+            this.account_Type = this.businessjson.accountType;
+            this.business_exists = true;
+            this.provider_bussiness_id = this.businessjson.id;
+            if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+              if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+                this.bLogo = this.businessjson.logo.url + '?' + new Date();
+                this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+              }
+            } else {
+              this.bLogo = '';
+            }
+            this.image_list_popup = [];
+            if (this.galleryjson.length > 0) {
+              for (let i = 0; i < this.galleryjson.length; i++) {
+                const imgobj = new Image(
+                  i,
+                  { // modal
+                    img: this.galleryjson[i].url,
+                    description: this.galleryjson[i].caption || ''
+                  });
+                this.image_list_popup.push(imgobj);
+              }
+            }
+            if (this.businessjson.specialization) {
+              this.specializationslist = this.businessjson.specialization;
+            }
+            if (this.businessjson.socialMedia) {
+              this.socialMedialist = this.businessjson.socialMedia;
+            }
+            if (this.businessjson.emails) {
+              this.emaillist = this.businessjson.emails;
+            }
+            if (this.businessjson.phoneNumbers) {
+              this.phonelist = this.businessjson.phoneNumbers;
+            }
+            const holdbName = this.businessjson.businessDesc || '';
+            const maxCnt = 120;
+            if (holdbName.length > maxCnt) {
+              this.bNameStart = holdbName.substr(0, maxCnt);
+              this.bNameEnd = holdbName.substr(maxCnt, holdbName.length);
+            } else {
+              this.bNameStart = holdbName;
+            }
+            this.ratingenabledCnt = this.businessjson.avgRating || 0;
+            if (this.ratingenabledCnt > 0) {
+              this.ratingenabledCnt = this.sharedFunctionobj.ratingRounding(this.ratingenabledCnt);
+            }
+            const ratingenabledInt = parseInt(this.ratingenabledCnt.toString(), 10);
+            if (ratingenabledInt < this.ratingenabledCnt) {
+              this.ratingenabledHalf = true;
+              this.ratingenabledCnt = ratingenabledInt;
+              this.ratingdisabledCnt = 5 - (ratingenabledInt + 1);
+            } else {
+              this.ratingdisabledCnt = 5 - ratingenabledInt;
+            }
+            this.ratingenabledArr = [];
+            this.ratingdisabledArr = [];
+            for (let i = 0; i < this.ratingenabledCnt; i++) {
+              this.ratingenabledArr.push(i);
+            }
+            for (let i = 0; i < this.ratingdisabledCnt; i++) {
+              this.ratingdisabledArr.push(i);
+            }
+            this.api_loading = false;
+            break;
+          }
+          case 'providerVirtualFields': {
+            this.virtualfieldsjson = res;
+            this.virtualfieldsCombinedjson = [];
+            this.virtualfieldsDomainjson = [];
+            this.virtualfieldsSubdomainjson = [];
+            if (this.virtualfieldsjson.domain) {
+              this.virtualfieldsDomainjson = this.sortVfields(this.virtualfieldsjson.domain);
+            }
+            if (this.virtualfieldsjson.subdomain) {
+              this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
+            }
+
+            if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
+            } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson;
+            } else if (!this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
+              this.virtualfieldsCombinedjson = this.virtualfieldsDomainjson;
+            }
+            if (this.virtualfieldsCombinedjson.length > 0) {
+              this.showVirtualfieldsSection = true;
+            }
+            break;
+          }
+          case 'providerservices': {
+            this.servicesjson = res[0].services;
+            break;
+          }
+          case 'providerApptServices': {
+            this.apptServicesjson = res[0].services;
+            break;
+          }
+        }
+      },
+        () => {
+        });
   }
   sortVfields(dataF) {
     let temp;
@@ -827,29 +1104,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
   }
 
-  getServicesByDepartment(location, dept) {
-    // const servicesByDept: any = [];
-    // for (let i = 0; i < location['services'].length; i++) {
-    //   if (location['services'][i].department === dept.departmentId) {
-    //     servicesByDept.push(location['services'][i]);
-    //   }
-    // }
-    // this.services = servicesByDept;
-    // this.deptlist = this.groubedByTeam[dept.departmentName];
-    const service = this.servicesjson.filter(dpt => dpt.departmentId === dept.departmentId);
-    this.services = service[0].services;
-    this.deptlist = this.groubedByTeam[dept];
-    this.selectedDepartment = service[0];
-    // if (this.deptlist) {
-    this.showServices = true;
-    // } else {
-    //   this.showServices = false;
-    // }
-    // return this.groubedByTeam[dept.departmentName];
+  getServicesByDepartment(dept) {
+    this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
   }
 
   backtoDetails() {
-    this.showServices = false;
+    this.locationobj.back();
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {

@@ -1,5 +1,5 @@
-<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
-  [source]="source">
+<app-header *ngIf="page_source === 'pro-details'" [headerTitle]="'Header'" (searchclick)="handlesearchClick()"
+  [passedDomain]="domain" [passedkwdet]="kwdet" [source]="source">
 </app-header>
 <section class="content pro_details">
   <div class="container">
