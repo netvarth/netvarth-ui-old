@@ -250,9 +250,9 @@ export class ProviderSharedFuctions {
             this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
           },
           error => {
-            waitlist.disableDonebtn = false;
-            waitlist.disableStartbtn = false;
-            waitlist.disableArrivedbtn = false;
+            // waitlist.disableDonebtn = false;
+            // waitlist.disableStartbtn = false;
+            // waitlist.disableArrivedbtn = false;
             const errMsg = error.error.replace('[checkedIn]', 'checked-in');
             this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
             reject();

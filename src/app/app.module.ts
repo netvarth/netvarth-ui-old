@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -69,11 +69,11 @@ import { CheckYourStatusComponent } from './shared/components/status-check/check
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
 import { GlobalFunctions } from './shared/functions/global-functions';
+import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
-
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -102,7 +102,7 @@ export function init_app(globalService: GlobalService) {
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
-    JdnComponent,
+    JdnComponent
     // PhomeComponent,
   ],
   entryComponents: [
@@ -178,6 +178,7 @@ export function init_app(globalService: GlobalService) {
     ProviderDetailService,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
