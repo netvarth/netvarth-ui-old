@@ -725,13 +725,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (hisPage) {
         this.filter = hFilter;
         this.pagination.startpageval = hisPage;
-        this.shared_functions.removeitemfromLocalStorage('appthP');
-        this.shared_functions.removeitemfromLocalStorage('appthPFil');
+        this.shared_functions.removeitemFromGroupStorage('appthP');
+        this.shared_functions.removeitemFromGroupStorage('appthPFil');
         chkSrc = false;
       }
     } else {
-      this.shared_functions.removeitemfromLocalStorage('appthP');
-      this.shared_functions.removeitemfromLocalStorage('appthPFil');
+      this.shared_functions.removeitemFromGroupStorage('appthP');
+      this.shared_functions.removeitemFromGroupStorage('appthPFil');
     }
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
@@ -765,13 +765,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.time_type = time_type;
     this.shared_functions.setitemToGroupStorage('apptType', this.time_type);
     if (time_type !== 3) {
-      this.shared_functions.removeitemfromLocalStorage('appthP');
-      this.shared_functions.removeitemfromLocalStorage('appthPFil');
       this.resetPaginationData();
     } else {
       const selectedView = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
       console.log(this.getQIdsFromView(selectedView));
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.getQIdsFromView(selectedView));
+      this.selQidsforHistory = this.getQIdsFromView(selectedView);
+      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
     }
     const stype = this.shared_functions.getitemFromGroupStorage('pdStyp');
     if (stype) {
@@ -1288,8 +1287,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   resetPaginationData() {
     this.filter.page = 1;
     this.pagination.startpageval = 1;
-    this.shared_functions.removeitemfromLocalStorage('appthP');
-    this.shared_functions.removeitemfromLocalStorage('appthPFil');
+    this.shared_functions.removeitemFromGroupStorage('appthP');
+    this.shared_functions.removeitemFromGroupStorage('appthPFil');
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
@@ -2337,15 +2336,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
-    this.shared_functions.setitemonLocalStorage('appt-selectedview', view);
+    this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     this.initView(this.selectedView, 'reloadAPIs');
 
   }
   clearApptIdsFromStorage () {
-    this.shared_functions.removeitemfromLocalStorage('appt_history_selQ');
-    this.shared_functions.removeitemfromLocalStorage('appt_future_selQ');
-    this.shared_functions.removeitemfromLocalStorage('appt_selQ');
-     this.shared_functions.removeitemfromLocalStorage('appt-selectedView');
+    this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
+    this.shared_functions.removeitemFromGroupStorage('appt_future_selQ');
+    this.shared_functions.removeitemFromGroupStorage('appt_selQ');
+     this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
+     this.resetPaginationData();
+     alert('hi');
   }
 }
