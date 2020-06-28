@@ -522,7 +522,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectLocationFromCookies(cookie_location_id) {
     this.locationSelected(this.selectLocationFromCookie(cookie_location_id)).then(
       (schedules: any) => {
-        this.initViews(schedules, 'changeLocation').then(
+        this.initViews(schedules, '').then(
           (view) => {
             this.initView(view, 'changeLocation');
           }
