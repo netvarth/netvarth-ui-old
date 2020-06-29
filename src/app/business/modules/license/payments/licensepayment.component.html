@@ -19,21 +19,21 @@
                               </div>
                          </div>
     
-                         <div  *ngIf ="paidStatus == 'true'"  >
-                          <div style="padding-bottom: 10px"><b>&#8377; {{prepayAmount}}</b></div> 
-                            <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i>
-                            <br><br>
-                              <table>
-                                <tr>
-                                  <td>Payment Id</td>
-                                  <td style="padding-left: 50px;">{{razorpay_payment_id}}</td>
-                                </tr>
-                                <br>
-                                <tr>
-                                  <td>Transaction Id</td>
-                                  <td style="padding-left: 50px;">{{razorpay_order_id}}</td>
-                                </tr>
-                              </table>                          
+                         <div  *ngIf ="paidStatus == 'true'">
+                            <div style="padding-bottom: 10px"><b>&#8377; {{prepayAmount}}</b></div> 
+                            <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br><br>
+                                <div class="ivc">
+                                    <div class="pay-det-row">
+                                            <span><b>Payment Gateway:</b>&nbsp;<span>{{this.pGateway}}</span></span>
+                                    </div> 
+                                    <div class="pay-det-row">
+                                            <span><b> Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                                    </div> 
+                                    <div class="pay-det-row">
+                                            <span><b> Transaction Id:</b>&nbsp; <span>{{razorpay_order_id}}</span></span>
+                                    </div> 
+                                </div>              
+                          
                          </div>                   
                         </div>
                     </div>
