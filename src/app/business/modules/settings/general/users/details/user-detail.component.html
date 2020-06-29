@@ -34,7 +34,7 @@
                                 </div>
                                 <form [formGroup]="userForm" (ngSubmit)="userForm.valid &&
 onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
-                                    <div class="col-md-6 col-sm-6 col-xs-12 " *ngIf="type !== 'ADMIN'">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12 " *ngIf="type !== 'ADMIN'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select formControlName="selectedUserType"
@@ -44,17 +44,10 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                         {{user}}
                                                     </mat-option>
                                                 </mat-select>
-                                                <!-- <mat-label>Usertype</mat-label>
-            <mat-select formControlName ="selectedUserType" (selectionChange)="onUserSelect($event)">
-                    <mat-option value="CONSUMER">Consumer</mat-option>
-                    <mat-option value="ASSISTANT">Assistant</mat-option>
-                    <mat-option value="ADMIN">Admin</mat-option>
-                    <mat-option value="PROVIDER">Provider</mat-option>
-            </mat-select> -->
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <div class="clearfix"></div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <mat-form-field>
@@ -99,7 +92,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
                                     <div class="clearfix"></div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="add_ress"
@@ -118,8 +111,8 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="clearfix"></div> -->
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="state"
@@ -127,7 +120,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </mat-form-field>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group mobile-field" style="width: 100%">
                                             <mat-form-field>
@@ -153,6 +146,21 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             </app-field-error-display>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="email"
+                                                    formControlName="email" placeholder="Email(user@xyz.com)"
+                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
+                                                    oncut="return false" ondrag="return false"
+                                                    ondrop="return false">
+                                            </mat-form-field>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
+                                                [errorMsg]="emailerror">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
 
                                     <div class="clearfix"></div>
 
@@ -172,7 +180,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         </app-field-error-display>
     </div>
 </div> -->
-                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showPrvdrFields">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showPrvdrFields">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select placeholder="{{select_subdomain_cap}}" subdom
@@ -180,7 +188,6 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     <mat-option *ngFor="let subdomain of subDomains; let i = index"
                                                         [value]="subdomain.id">
                                                         {{subdomain.displayName}}
-                                                        <!-- {{subdomain_displayname[subdomain.id]}} -->
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
@@ -188,6 +195,19 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                     *ngIf="subdomainerror != null && !fed_service.isFieldValid(userForm,'selectedSubDomain')"
                                                     [errorMsg]="subdomainerror">
                                                 </app-field-error-display>{{subdomainerror}}
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12 " *ngIf="type !== 'ADMIN'">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-select formControlName="selectedUserType"
+                                                    placeholder="Choose Usertype *"
+                                                    (selectionChange)="onUserSelect($event)">
+                                                    <mat-option *ngFor="let user of userTypesFormfill" [value]="user">
+                                                        {{user}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12"
@@ -213,8 +233,9 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
                                     </div>
+                                    
                                     <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="email"
@@ -226,6 +247,20 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
                                                     [errorMsg]="emailerror">
+                                                </app-field-error-display>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-form-label" for="gender">{{gender_cap}} </label>
+                                                <mat-radio-group formControlName="gender">
+                                                    <mat-radio-button class="mgright50" value="male">{{male_cap}}
+                                                    </mat-radio-button>
+                                                    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+                                                </mat-radio-group>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(userForm,'gender')"
+                                                    errorMsg="Please select the gender.">
                                                 </app-field-error-display>
                                             </div>
                                         </div>
@@ -242,20 +277,6 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                 <app-field-error-display
                                                     [displayError]="fed_service.isFieldValid(userForm,'dob')"
                                                     errorMsg="Please select the date of birth.">
-                                                </app-field-error-display>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-form-label" for="gender">{{gender_cap}} </label>
-                                                <mat-radio-group formControlName="gender">
-                                                    <mat-radio-button class="mgright50" value="male">{{male_cap}}
-                                                    </mat-radio-button>
-                                                    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
-                                                </mat-radio-group>
-                                                <app-field-error-display
-                                                    [displayError]="fed_service.isFieldValid(userForm,'gender')"
-                                                    errorMsg="Please select the gender.">
                                                 </app-field-error-display>
                                             </div>
                                         </div>
