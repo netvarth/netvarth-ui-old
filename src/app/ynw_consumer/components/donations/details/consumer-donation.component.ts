@@ -12,6 +12,10 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
+import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
+import { RazorpayService } from '../../../../shared/services/razorpay.service';
+import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
+import { WindowRefService } from '../../../../shared/services/windowRef.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html'
@@ -188,6 +192,10 @@ export class ConsumerDonationComponent implements OnInit {
     slots;
     freeSlots: any = [];
     donorName: any;
+    razorModel: Razorpaymodel;
+    checkIn_type: any;
+    origin: string;
+    pGateway: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -197,7 +205,10 @@ export class ConsumerDonationComponent implements OnInit {
         public provider_services: ProviderServices,
         public datastorage: CommonDataStorageService,
         @Inject(DOCUMENT) public document,
-        public _sanitizer: DomSanitizer) {
+        public _sanitizer: DomSanitizer,
+        public razorpayService: RazorpayService,
+        public prefillmodel: RazorpayprefillModel,
+        public winRef: WindowRefService ) {
         this.route.queryParams.subscribe(
             params => {
                 console.log(params);
@@ -475,8 +486,14 @@ export class ConsumerDonationComponent implements OnInit {
                 this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
                 this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_d');
                 this.shared_services.consumerPayment(payInfo)
-                    .subscribe(pData => {
-                        if (pData['response']) {
+                .subscribe((pData: any) => {
+                    this.checkIn_type = 'donations';
+                    this.origin = 'consumer';
+                    this.pGateway = pData.paymentGateway;
+                    if (this.pGateway === 'RAZORPAY') {
+                        this.paywithRazorpay(pData);
+                       } else {
+                    if (pData['response']) {
                             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                             setTimeout(() => {
@@ -489,6 +506,7 @@ export class ConsumerDonationComponent implements OnInit {
                         } else {
                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                         }
+                    }
                     },
                         error => {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -497,6 +515,18 @@ export class ConsumerDonationComponent implements OnInit {
                 error => {
                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    paywithRazorpay(pData: any) {
+        this.prefillmodel.name = pData.consumerName;
+        this.prefillmodel.email = pData.ConsumerEmail;
+        this.prefillmodel.contact = pData.consumerPhoneumber;
+        this.razorModel = new Razorpaymodel(this.prefillmodel);
+        this.razorModel.key = pData.razorpayId;
+        this.razorModel.amount = pData.amount;
+        this.razorModel.order_id = pData.orderId;
+        this.razorModel.name = pData.providerName;
+        this.razorModel.description = pData.description;
+        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type );
     }
     addEmail() {
         this.resetApiErrors();

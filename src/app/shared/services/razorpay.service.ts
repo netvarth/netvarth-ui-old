@@ -63,17 +63,20 @@ export class RazorpayService {
           console.log(usertype);
           console.log(checkin_type);
           if (usertype === 'consumer') {
-            console.log('in');
             this.sharedServices.consumerPaymentStatus(dataToSend)
             .subscribe(
                 data => {
                   this.status_check = data;
                 if ( this.status_check === 'success' ) {
-
                   if ( checkin_type === 'appointment') {
+                    this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                     this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
                   } else if (checkin_type === 'waitlist') {
+                    this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                     this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
+                  } else if (checkin_type === 'donations') {
+                    this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                    this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));
                   } else if (checkin_type === 'checkin_prepayment') {
                         console.log(livetrack);
                         if (livetrack === true) {
@@ -84,7 +87,6 @@ export class RazorpayService {
                           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                           this.ngZone.run(() => this.router.navigate(['consumer']));
                         }
-                    // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
                   } else if (checkin_type === 'appt_prepayment') {
                     console.log(livetrack);
                     if (livetrack === true) {
@@ -95,7 +97,6 @@ export class RazorpayService {
                       this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                       this.ngZone.run(() => this.router.navigate(['consumer']));
                     }
-                    // this.router.navigate(['consumer']);
                   }
                   }
           });
