@@ -9799,3 +9799,7 @@ td.chkWth, th.chkWth {
   font-size: 15px;
   position: relative;
 }
+.donate-sel-loc {
+  color: #3c8dbc !important;
+  font-weight: 800;
+}

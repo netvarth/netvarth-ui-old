@@ -61,6 +61,7 @@ export class DonationsComponent implements OnInit {
     selectedcustomersformsg: any;
     show_loc = false;
     locations: any;
+    selected_loc_id: any;
     constructor(private provider_services: ProviderServices,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -117,6 +118,9 @@ export class DonationsComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.donations = data;
+                                if (loc_id) {
+                                    this.selected_loc_id = loc_id;
+                                }
                                 this.loadComplete = true;
                             },
                             error => {
