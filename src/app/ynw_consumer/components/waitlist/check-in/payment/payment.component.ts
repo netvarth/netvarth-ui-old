@@ -29,6 +29,7 @@ export class ConsumerPaymentComponent implements OnInit {
     ];
     breadcrumb_moreoptions: any = [];
     activeWt: any;
+    livetrack: any;
     prepaymentAmount: number;
     waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
     payment_popup: any;
@@ -67,6 +68,7 @@ export class ConsumerPaymentComponent implements OnInit {
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
+                this.livetrack = this.activeWt.service.livetrack;
                 this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.waitlistingFor.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
@@ -168,6 +170,6 @@ export class ConsumerPaymentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type );
+        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type ,  this.livetrack  ,  this.accountId , this.uuid );
     }
 }

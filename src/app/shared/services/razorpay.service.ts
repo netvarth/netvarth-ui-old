@@ -1,12 +1,4 @@
 import { Injectable, Component, NgZone } from '@angular/core';
-// import { WindowRefService } from '../../services/windowRef.service';
-// import { Razorpaymodel } from './razorpay.model';
-// import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-// import { SharedFunctions } from '../../functions/shared-functions';
-// import { Router, NavigationExtras } from '@angular/router';
-// import { MatDialogRef, MatDialog } from '@angular/material';
-// import { ConsumerPaymentmodeComponent } from '../consumer-paymentmode/consumer-paymentmode.component';
-// import { SharedServices } from '../../services/shared-services';
 import { BehaviorSubject } from 'rxjs';
 import { WindowRefService } from './windowRef.service';
 import { Router, NavigationExtras } from '@angular/router';
@@ -15,6 +7,7 @@ import { SharedFunctions } from '../functions/shared-functions';
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 import { Razorpaymodel } from '../components/razorpay/razorpay.model';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { Messages } from '../constants/project-messages';
 // import { ConsumerPaymentmodeComponent } from '../components/consumer-paymentmode/consumer-paymentmode.component';
 
 
@@ -32,6 +25,7 @@ export class RazorpayService {
         public  winRef: WindowRefService,
         private router: Router,
         public sharedServices: SharedServices,
+        // public sharedfunctionObj: SharedFunctions,
         public shared_functions: SharedFunctions,
         private provider_servicesobj: ProviderServices,
          public razorpayModel: Razorpaymodel,
@@ -42,7 +36,7 @@ export class RazorpayService {
     this.paidStatus.next(value);
     console.log(value);
   }
-    payWithRazor(razorModel , usertype , checkin_type? ) {
+    payWithRazor(razorModel , usertype , checkin_type? , livetrack? , account_id?  , uuid?) {
         //   theme: {
         //     color: '#F37254'
         //   }
@@ -61,7 +55,9 @@ export class RazorpayService {
           const navigationExtras: NavigationExtras = {
             queryParams: {
               'details': JSON.stringify(options.response),
-              'paidStatus': true
+              'paidStatus': true,
+              account_id: account_id,
+              uuid: uuid
             }
           };
           console.log(usertype);
@@ -79,11 +75,27 @@ export class RazorpayService {
                   } else if (checkin_type === 'waitlist') {
                     this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras));
                   } else if (checkin_type === 'checkin_prepayment') {
-                    this.ngZone.run(() => this.router.navigate(['consumer']));
+                        console.log(livetrack);
+                        if (livetrack === true) {
+                          console.log(uuid);
+                          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'track' , uuid ] , navigationExtras));
+                        } else {
+                          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                          this.ngZone.run(() => this.router.navigate(['consumer']));
+                        }
                     // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
                   } else if (checkin_type === 'appt_prepayment') {
+                    console.log(livetrack);
+                    if (livetrack === true) {
+                      console.log(uuid);
+                      this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                      this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'track' , uuid ] , navigationExtras));
+                    } else {
+                      this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                      this.ngZone.run(() => this.router.navigate(['consumer']));
+                    }
                     // this.router.navigate(['consumer']);
-                    this.ngZone.run(() => this.router.navigate(['consumer']));
                   }
                   }
           });

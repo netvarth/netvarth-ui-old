@@ -38,6 +38,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
     checkIn_type: any;
     origin: string;
     pGateway: any;
+    livetrack: any;
 
     constructor(public router: Router,
         public route: ActivatedRoute,
@@ -66,6 +67,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
             (wailist: any) => {
                 this.activeWt = wailist;
                 console.log(this.activeWt);
+                this.livetrack = this.activeWt.service.livetrack;
                 this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.appmtFor.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
@@ -166,7 +168,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
            this.razorModel.order_id = pData.orderId;
            this.razorModel.name = pData.providerName;
            this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type );
+        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type ,  this.livetrack  ,  this.accountId , this.uuid);
     }
 
 }
