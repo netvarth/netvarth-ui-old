@@ -23,7 +23,7 @@
                                                 class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
                                         <p class="settings_info">Set up your locations here</p>
                                     </a></li>
-                                <li *ngIf="accountType!=='BRANCH_SP'" (click)="redirecTo('departments')"><a
+                                <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')"><a
                                         class="pointer-cursor"><span class="lnk setings">Departments
                                             <span *ngIf="filterbydepartment"
                                                 class="pull-right badge bg-blue">{{departmentCount}}</span>
