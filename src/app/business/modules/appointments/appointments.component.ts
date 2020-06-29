@@ -241,6 +241,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   pos = false;
   showRejected = false;
   historyCheckins: any = [];
+  apiloading = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,

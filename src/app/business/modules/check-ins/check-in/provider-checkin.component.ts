@@ -1225,6 +1225,8 @@ export class ProviderCheckinComponent implements OnInit {
                         this.selected_user = this.users[0];
                         this.handleUserSelection(this.selected_user);
                     } else {
+                        this.selected_user = null;
+                        this.selectedUser = null;
                         for (let i = 0; i < this.departmentlist['departments'].length; i++) {
                             if (obj === this.departmentlist['departments'][i].departmentId) {
                                 this.services = this.departmentlist['departments'][i].serviceIds;
