@@ -296,9 +296,9 @@ export class HomeComponent implements OnInit {
   //   this.routerobj.navigate(['/waitlist-details/ecid']);
   // }
   knowCheckinStatus () {
-    this.routerobj.navigate(['wl/status/new']);
+    this.routerobj.navigate(['status/new']);
   }
-  knowApptStatus () {
-    this.routerobj.navigate(['appt/status/new']);
-  }
+  // knowApptStatus () {
+  //   this.routerobj.navigate(['appt/status/new']);
+  // }
 }

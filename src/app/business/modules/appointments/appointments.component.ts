@@ -2171,7 +2171,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   qrCodegeneration(valuetogenerate) {
-    this.qr_value = this.path + 'appt/status/' + valuetogenerate.appointmentEncId;
+    this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
     this.showQR = true;
   }
   findCurrentActiveQueue(ques) {
