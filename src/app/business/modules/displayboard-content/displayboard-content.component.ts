@@ -176,8 +176,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             this.glogo = logoObj['url'];
                         }
                         this.gPosition = displayboard_data.logoSettings['position'];
-                        this.gLogoWidth = displayboard_data.logoSettings['width'];
-                        this.gLogoHeight = displayboard_data.logoSettings['height'];
+                        if (displayboard_data.logoSettings.height && displayboard_data.logoSettings.width) {
+                            this.gLogoWidth = displayboard_data.logoSettings['width'];
+                            this.gLogoHeight = displayboard_data.logoSettings['height'];
+                        } else {
+                            this.gLogoWidth = '100';
+                            this.gLogoHeight = '100';
+                        }
                     }
                     this.getStatusboard(this.inputStatusboards[this.showIndex]);
                     this.cronHandle = observableInterval(this.inputStatusboards[this.showIndex].sbInterval * 1000).subscribe(() => {
@@ -203,8 +208,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             this.blogo = logoObj['url'];
                         }
                         this.position = displayboard_data.logoSettings['position'];
-                        this.bLogoWidth = displayboard_data.logoSettings['width'];
-                        this.bLogoHeight = displayboard_data.logoSettings['height'];
+                        if (displayboard_data.logoSettings.height && displayboard_data.logoSettings.width) {
+                            this.bLogoWidth = displayboard_data.logoSettings['width'];
+                            this.bLogoHeight = displayboard_data.logoSettings['height'];
+                        } else {
+                            this.bLogoWidth = '100';
+                            this.bLogoHeight = '100';
+                        }
                     }
                     const layoutPosition = displayboard_data.layout.split('_');
                     this.boardRows = layoutPosition[0];
