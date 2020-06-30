@@ -590,7 +590,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoManageQueue() {
         if (this.locationExists) {
             if (this.serviceFrom === 'userlevel') {
-                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
+                this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues']);
             } else if (this.source === 'appt') {
                 this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
             } else {
