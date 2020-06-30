@@ -777,10 +777,7 @@
             </mat-accordion>
         </div> -->
     </div>
-    <div *ngIf="api_loading">
-        You are being redirecting to home page now
-            <app-common-innerloading-spinner>
+    <app-common-innerloading-spinner *ngIf="api_loading">
     </app-common-innerloading-spinner>
-    </div>
 </section>
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
