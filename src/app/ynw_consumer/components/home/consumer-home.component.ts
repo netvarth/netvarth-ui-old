@@ -1,7 +1,7 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
@@ -157,12 +157,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   rupee_symbol = '₹';
   appttime_arr: any = [];
   api_error: any;
+  api_loading = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
     @Inject(DOCUMENT) public document,
+    private activated_route: ActivatedRoute,
     public _sanitizer: DomSanitizer) {
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
+        this.api_loading = true;
+        setTimeout(() => {
+          this.api_loading = false;
+        }, 8000);
+      }
+    });
   }
   // public carouselOne: NgxCarousel;
   public carouselOne;
@@ -1095,7 +1105,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams: {
           uuid: checkin.uid,
           accountId: checkin.providerAccount.id,
-          type : 'appointment',
+          type: 'appointment',
           'paidStatus': false
         }
       };
@@ -1105,7 +1115,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams: {
           uuid: checkin.ynwUuid,
           accountId: checkin.providerAccount.id,
-          type : 'waitlist',
+          type: 'waitlist',
           'paidStatus': false
         }
       };

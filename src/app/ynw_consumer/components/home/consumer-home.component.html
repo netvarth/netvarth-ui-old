@@ -2,11 +2,11 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section class="container ">
-    <div class="content consumer-dash">
+    <div class="content consumer-dash" *ngIf="!api_loading">
         <div class="card c-checkins">
             <h2><span>Active Appointments
                     <ng-container *ngIf="appointments && appointments.length>0">({{appointments.length}})</ng-container>
-                    </span>
+                </span>
             </h2>
             <div *ngIf="appointments.length == 0" class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                 <p>No current Appointments available</p>
@@ -84,11 +84,11 @@
                                     <div class="lt0"
                                         *ngIf="appointment.apptStatus == 'Cancelled' || appointment.apptStatus == 'Rejected'">
                                         <div class="lt0">
-                                                    {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
+                                            {{appointment.estimated_caption}} <span class="time">{{appointment.estimated_date
                                                 | date: dateFormatSp }},
-                                                        <span style="display: flex">
-                                                            {{getSingleTime(appointment.estimated_time)}}</span></span>
-                                                </div>
+                                                <span style="display: flex">
+                                                    {{getSingleTime(appointment.estimated_time)}}</span></span>
+                                        </div>
                                         <div class="red">
                                             {{appointment.cancelled_caption}}
                                             <span class="time">
@@ -252,7 +252,7 @@
             <div class="col-md-12 mgn-up-10 mgn-bt-10"><a class="pointer-cursor underline"
                     (click)="gotoApptmentHistory()">Go to History</a></div>
         </div>
-        
+
         <div class="card c-checkins">
             <mat-accordion>
                 <mat-expansion-panel class="no-padding">
@@ -776,6 +776,11 @@
                 </mat-expansion-panel>
             </mat-accordion>
         </div> -->
+    </div>
+    <div *ngIf="api_loading">
+        You are being redirecting to home page now
+            <app-common-innerloading-spinner>
+    </app-common-innerloading-spinner>
     </div>
 </section>
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
