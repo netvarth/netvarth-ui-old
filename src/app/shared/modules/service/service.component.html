@@ -204,9 +204,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
                             <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic tool-pading"
                                 aria-hidden="true"></i>
-                            <!-- <i *ngIf="mode.callingMode === 'Skype'" class="fa fa-skype skype-ic tool-pading" aria-hidden="true"></i> -->
+                            <!-- <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile" aria-hidden="true"></i>     -->
                             <img *ngIf="mode.callingMode === 'Zoom'" class="tool-pading"
                                 src="https://img.icons8.com/color/14/000000/zoom.png" />
+                            <!-- <img *ngIf="mode.callingMode === 'GoogleMeet'" src="https://img.icons8.com/ultraviolet/14/000000/video-message.png"/> -->
                             {{mode.callingMode}}
                         </mat-option>
                     </mat-select>
