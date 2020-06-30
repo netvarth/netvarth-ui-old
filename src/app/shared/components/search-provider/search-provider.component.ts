@@ -533,6 +533,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         }
       },
         () => {
+          if (section === 'departmentProviders') {
+            this.api_loading = false;
+          }
         }
       );
   }
