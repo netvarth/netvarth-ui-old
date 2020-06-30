@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges, DoCheck } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
@@ -116,9 +116,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
   }
   ngOnChanges() {
-
   }
-
 
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -306,7 +304,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     return (type === 'consumer') ? 'false' : 'true';
   }
 
-
   getServiceByLocationid(locid, passedIndx) {
     this.shared_service.getServicesByLocationId(locid)
       .subscribe(data => {
@@ -457,33 +454,37 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             break;
           }
           case 'departmentProviders': {
-            const user = res.filter(dpt => dpt.departmentId === JSON.parse(this.departmentId));
-            this.usersList = user[0].users;
-            this.showService = false;
-            if (this.usersList.length === 0) {
-              this.showService = true;
-              this.api_loading = false;
-            } else {
-              for (let i = 0; i < this.usersList.length; i++) {
-                const waitTimearr = [];
-                const apptTimearr = [];
-                this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
-                this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
-                this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
-                apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
-                waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
-                this.getUserWaitingTime(waitTimearr, this.usersList[i]);
-                this.getUserApptTime(apptTimearr, this.usersList[i]);
+            if (res) {
+              const user = res.filter(dpt => dpt.departmentId === JSON.parse(this.departmentId));
+              this.usersList = user[0].users;
+              this.showService = false;
+              if (this.usersList.length === 0) {
+                this.showService = true;
+                this.api_loading = false;
+              } else {
+                for (let i = 0; i < this.usersList.length; i++) {
+                  const waitTimearr = [];
+                  const apptTimearr = [];
+                  this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
+                  this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
+                  this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
+                  waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
+                  this.getUserWaitingTime(waitTimearr, this.usersList[i]);
+                  this.getUserApptTime(apptTimearr, this.usersList[i]);
+                }
               }
             }
             break;
           }
           case 'services': {
             this.servicesJson = res;
-            const service = this.servicesJson.filter(dpt => dpt.departmentId === JSON.parse(this.departmentId));
-            this.services = [];
-            this.selectedDepartment = service[0];
-            this.services = service[0].services;
+            if (this.servicesJson) {
+              const service = this.servicesJson.filter(dpt => dpt.departmentId === JSON.parse(this.departmentId));
+              this.services = [];
+              this.selectedDepartment = service[0];
+              this.services = service[0].services;
+            }
             break;
           }
           case 'coupon': {
@@ -615,11 +616,15 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             break;
           }
           case 'providerservices': {
-            user['wtlstservices'] = res[0].services;
+            if (res[0] && res[0].services) {
+              user['wtlstservices'] = res[0].services;
+            }
             break;
           }
           case 'providerApptServices': {
-            user['apptServices'] = res[0].services;
+            if (res[0] && res[0].services) {
+              user['apptServices'] = res[0].services;
+            }
             break;
           }
         }

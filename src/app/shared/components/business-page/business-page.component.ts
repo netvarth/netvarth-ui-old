@@ -928,11 +928,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             break;
           }
           case 'providerservices': {
-            this.servicesjson = res[0].services;
+            if (res[0] && res[0].services) {
+              this.servicesjson = res[0].services;
+            }
             break;
           }
           case 'providerApptServices': {
-            this.apptServicesjson = res[0].services;
+            if (res[0] && res[0].services) {
+              this.apptServicesjson = res[0].services;
+            }
             break;
           }
         }

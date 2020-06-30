@@ -820,7 +820,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             // } else {
             //   this.servicesjson = res;
             // }
-            this.servicesjson = res[0].services;
+            if (res[0] && res[0].services) {
+              this.servicesjson = res[0].services;
+            }
             break;
           }
           case 'providerApptServices': {
@@ -835,7 +837,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             // } else {
             //   this.apptServicesjson = res;
             // }
-            this.apptServicesjson = res[0].services;
+            if (res[0] && res[0].services) {
+              this.apptServicesjson = res[0].services;
+            }
             break;
           }
         }
@@ -1161,7 +1165,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   doRemoveFav() {
-
     this.remdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1170,15 +1173,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         'message': 'Do you want to remove this provider from your favourite list?'
       }
     });
-
     this.remdialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.handle_Fav('remove');
       }
-
     });
-
   }
   checkinClicked(locid, locname, cdate, chdatereq) {
     this.changedate_req = chdatereq;
