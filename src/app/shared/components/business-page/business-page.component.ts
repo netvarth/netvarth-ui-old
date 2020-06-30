@@ -208,6 +208,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   domainList: any = [];
   subDomainList: any = [];
   businessid;
+  departmentId;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -272,6 +273,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.pId) {
         this.businessid = qparams.pId;
       }
+      if (qparams.deptId) {
+        this.departmentId = qparams.deptId;
+      }
     });
     this.activaterouterobj.paramMap
       .subscribe(params => {
@@ -333,6 +337,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('virtualFields', true);
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
+            this.getbusinessprofiledetails_json('donationServices', true);
           }
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -1404,7 +1409,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.businessjson.virtualServices
+        tel_serv_stat: this.businessjson.virtualServices,
+        dept: this.departmentId,
+        user: this.userId
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
@@ -1416,7 +1423,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.businessjson.virtualServices
+        tel_serv_stat: this.businessjson.virtualServices,
+        dept: this.departmentId,
+        user: this.userId
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);

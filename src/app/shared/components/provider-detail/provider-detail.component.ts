@@ -214,6 +214,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   businessid;
   domainList: any = [];
   subDomainList: any = [];
+  departmentId;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -258,6 +259,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.pId) {
         this.businessid = qparams.pId;
+      }
+      if (qparams.deptId) {
+        this.departmentId = qparams.deptId;
       }
     });
   }
@@ -1188,7 +1192,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.businessjson.virtualServices
+        tel_serv_stat: this.businessjson.virtualServices,
+        dept: this.departmentId,
+        user: this.userId
       }
     };
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
@@ -1205,7 +1211,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        tel_serv_stat: this.businessjson.virtualServices
+        tel_serv_stat: this.businessjson.virtualServices,
+        dept: this.departmentId,
+        user: this.userId
       }
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);

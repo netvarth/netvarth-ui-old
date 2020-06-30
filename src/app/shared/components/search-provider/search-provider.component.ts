@@ -137,9 +137,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
   providerDetClicked(obj) {
     if (this.page_source === 'pro-details') {
-      this.routerobj.navigate(['searchdetail', this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id } });
+      this.routerobj.navigate(['searchdetail', this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id, deptId: this.departmentId } });
     } else {
-      this.routerobj.navigate([this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id } });
+      this.routerobj.navigate([this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id, deptId: this.departmentId } });
     }
   }
   getUserWaitingTime(provids, user) {

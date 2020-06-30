@@ -6,25 +6,27 @@
 <div class="quick-question" *ngIf="appstore"><a
         href="https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1" target="_blank"><span>DOWNLOAD ON APP
             STORE</span></a></div> -->
-            <header [class]="headercls">
-                <div class="container">
-                    <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
-                        <div class="tp-r">
-                            <div class="tc1">
-                                <div class="topsignouter">
-                                    <div class="app-btn">
-                                        <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
-                                          <img src="assets/images/home/app_btn1.png" alt="Download Jaldee app from App Store"></a> &nbsp;
-                                        <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee" class="app-btn2">
-                                          <img src="assets/images/home/app_btn2.png" alt="Download Jaldee app from Google Play">
-                                        </a>
-                                      </div>
-                                </div>
-                            </div>
+<header [class]="headercls">
+    <div class="container">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="tp-r">
+                <div class="tc1">
+                    <div class="topsignouter">
+                        <div class="app-btn">
+                            <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
+                                <img src="assets/images/home/app_btn1.png" alt="Download Jaldee app from App Store"></a>
+                            &nbsp;
+                            <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
+                                class="app-btn2">
+                                <img src="assets/images/home/app_btn2.png" alt="Download Jaldee app from Google Play">
+                            </a>
                         </div>
                     </div>
                 </div>
-            </header>
+            </div>
+        </div>
+    </div>
+</header>
 <section class="content pro_details">
     <div class="container">
         <div class="row">
@@ -153,14 +155,11 @@
                                     <!-- <li *ngIf="userType !== 'provider'"><span class="icon-history"
                                             (click)="redirectToHistory()">{{history_cap}}</span>
                                     </li> -->
-                                    <li *ngIf="!isInFav"><span
-                                            class="fav icon-favourite"
+                                    <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
-                                    <li *ngIf="isInFav"><span
-                                            class="icon-favourite-filled"
+                                    <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
-                                    <li><span class="icon-message"
-                                            (click)="communicateHandler()"
+                                    <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
