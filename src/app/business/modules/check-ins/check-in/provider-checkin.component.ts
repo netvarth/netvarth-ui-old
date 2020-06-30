@@ -358,6 +358,7 @@ export class ProviderCheckinComponent implements OnInit {
             );
     }
     initCheckIn() {
+        const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
@@ -395,35 +396,35 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.getWaitlistMgr().then(
             () => {
-                this.setTerminologyLabels();
-                this.getBussinessProfileApi()
+                _this.setTerminologyLabels();
+                _this.getBussinessProfileApi()
                     .then(
                         (data: any) => {
-                            this.account_id = data.id;
-                            this.domain = data.serviceSector.domain;
-                            this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
-                            if (this.domain === 'foodJoints') {
-                                this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                                this.note_placeholder = 'Item No Item Name Item Quantity';
+                            _this.account_id = data.id;
+                            _this.domain = data.serviceSector.domain;
+                            _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
+                            if (_this.domain === 'foodJoints') {
+                                _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                                _this.note_placeholder = 'Item No Item Name Item Quantity';
                             } else {
-                                this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                this.note_placeholder = 'Add Note';
+                                _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                                _this.note_placeholder = 'Add Note';
                             }
-                            this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
+                            _this.shared_services.getServicesByLocationId(_this.sel_loc).subscribe(
                                 (services: any) => {
-                                    this.servicesjson = services;
-                                    this.serviceslist = services;
+                                    _this.servicesjson = services;
+                                    _this.serviceslist = services;
                                     // this.sel_ser_det = [];
-                                    if (this.servicesjson.length > 0) {
+                                    if (_this.servicesjson.length > 0) {
                                         //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                                         //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
                                         //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        this.initDepartments(this.account_id).then(
+                                        _this.initDepartments(_this.account_id).then(
                                             () => {
-                                                this.handleDeptSelction(this.selected_dept);
+                                                _this.handleDeptSelction(_this.selected_dept);
                                             },
                                             () => {
-                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
                                             }
                                         );
                                     }

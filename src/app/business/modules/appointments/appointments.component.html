@@ -196,13 +196,17 @@
                           </a>
                           <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showRejected"
                             [matTooltip]="'Reject'">
-                            <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
+                            <i class="fa fa-trash-o" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showArrived"
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
-                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
+                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
+                            [matTooltip]="'Undo'">
+                            <i class="fa fa-undo" (click)="changeWaitlistStatus()"></i>
+                          </a>
+                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
                             [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
                               <ul class="nav navbar-nav">
@@ -286,7 +290,7 @@
                     <tr *ngIf="slotSelected[slotIndex]" class="brd-tp">
                       <td colspan="4" class="nopadding-td">
                         <div class="table-responsive width100pc">
-                          <table class="table tbl-qboard childDetails">
+                          <table class="table tbl-qboard childDetails child-tbl-color">
                             <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
                               <tr>
                                 <td class="chkWth"><input
@@ -429,7 +433,7 @@
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
-                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
+                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
                             [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
                               <ul class="nav navbar-nav">

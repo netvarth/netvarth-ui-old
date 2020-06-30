@@ -37,16 +37,21 @@ export class CheckYourStatusComponent implements OnInit {
     private shared_functions: SharedFunctions) {
     this.activated_route.params.subscribe(
       qparams => {
-        this.type = qparams.type;
+        // this.type = qparams.type;
         if (qparams.id !== 'new') {
           this.encId = qparams.id;
-        }
-        if (this.type === 'wl') {
-          this.placeText = 'Check-in Id';
+          if (this.encId.split('-')[0] === 'c') {
+            this.type = 'wl';
+          }
+          if (this.type === 'wl') {
+            this.placeText = 'Check-in Id';
+          } else {
+            this.placeText = 'Appointment Id';
+          }
         } else {
-          this.placeText = 'Appointment Id';
+          this.placeText = 'Enter Id';
         }
-        console.log(this.type);
+        // console.log(this.type);
         console.log(this.encId);
       });
   }
@@ -176,6 +181,13 @@ export class CheckYourStatusComponent implements OnInit {
       }
     }
     return appx_ret;
+  }
+  getDetails (encId) {
+    if (encId.split('-')[0] === 'c') {
+      this.getWLDetails(encId);
+    } else {
+      this.getApptDetails(encId);
+    }
   }
   getWLDetails(encId) {
     this.foundDetails = false;

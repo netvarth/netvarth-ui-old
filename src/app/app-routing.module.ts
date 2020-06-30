@@ -42,7 +42,7 @@ const routes: Routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
-    { path: ':type/status/:id', component: CheckYourStatusComponent },
+    { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
     // { path: '**', redirectTo: 'not-found' }

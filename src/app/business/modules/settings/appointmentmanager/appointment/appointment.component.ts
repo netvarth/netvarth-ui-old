@@ -75,10 +75,10 @@ export class AppointmentComponent implements OnInit {
     checkindisablemsg = '';
     pass_loc;
     sel_queue_id;
-    //sel_queue_waitingmins;
-   // sel_queue_servicetime = '';
-    //sel_queue_name;
-    //sel_queue_timecaption;
+    // sel_queue_waitingmins;
+    // sel_queue_servicetime = '';
+    // sel_queue_name;
+    // sel_queue_timecaption;
     sel_queue_indx;
     sel_queue_det;
     sel_queue_personaahead = 0;
@@ -232,9 +232,9 @@ export class AppointmentComponent implements OnInit {
                 this.slotTime = qparams.timeslot;
                 this.comingSchduleId = qparams.scheduleId;
             }
-            if(qparams.date) {
+            if (qparams.date) {
                 this.sel_checkindate = moment(qparams.date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-                
+
             }
         });
     }
@@ -284,7 +284,7 @@ export class AppointmentComponent implements OnInit {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/appointments->appointment-phonein']);
         }
-        }
+    }
     createForm() {
         this.searchForm = this.fb.group({
             search_input: ['', Validators.compose([Validators.required])]
@@ -373,7 +373,7 @@ export class AppointmentComponent implements OnInit {
                 }
             );
     }
-    initAppointment() { 
+    initAppointment() {
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
@@ -394,10 +394,10 @@ export class AppointmentComponent implements OnInit {
 
         const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
         console.log(loc);
-        this.sel_loc = loc;
-        if(this.sel_checkindate == undefined){
+        this.sel_loc = loc.id;
+        if (this.sel_checkindate === undefined) {
             this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-        } 
+        }
         console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -645,7 +645,7 @@ export class AppointmentComponent implements OnInit {
                     } else {
                         this.sel_queue_indx = -1;
                         this.sel_queue_id = 0;
-                        
+
                     }
                 });
         }
@@ -928,7 +928,7 @@ export class AppointmentComponent implements OnInit {
         caption = 'Confirm';
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName, ) {
+    handleOneMemberSelect(id, firstName, lastName) {
         this.resetApi();
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
@@ -1410,7 +1410,7 @@ export class AppointmentComponent implements OnInit {
                     console.log(this.freeSlots);
                     console.log(this.comingSchduleId);
                     if (this.freeSlots.length > 0) {
-                       // this.showSubq = 0;
+                        // this.showSubq = 0;
                         this.showApptTime = true;
                         if (this.comingSchduleId === '') {
                             this.apptTime = this.freeSlots[0].time;
@@ -1420,7 +1420,7 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             console.log(this.queuejson[this.sel_queue_indx].id);
 
-                            if (this.queuejson[this.sel_queue_indx].id == this.comingSchduleId) {
+                            if (this.queuejson[this.sel_queue_indx].id === this.comingSchduleId) {
                                 console.log('scheduleid');
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
@@ -1440,7 +1440,7 @@ export class AppointmentComponent implements OnInit {
                         }
                     } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
                         this.showApptTime = true;
-                        for (let i = 0; i < this.queuejson.length; i++)  {
+                        for (let i = 0; i < this.queuejson.length; i++) {
                             if (this.queuejson[this.sel_queue_indx].id === this.queuejson[i].id) {
                                 this.queuejson.splice(i, 1);
                             }

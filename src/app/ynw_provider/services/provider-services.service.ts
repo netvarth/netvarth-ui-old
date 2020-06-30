@@ -411,7 +411,7 @@ export class ProviderServices {
       const url = 'provider/waitlist/today?' + filter;
       return this.servicemeta.httpGet(url, null, null);
    }
-   getHistroryWaitlist(filter = {}) {
+   getHistoryWaitlist(filter = {}) {
       const url = 'provider/waitlist/history';
       return this.servicemeta.httpGet(url, null, filter);
    }

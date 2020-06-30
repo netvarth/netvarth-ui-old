@@ -9260,6 +9260,9 @@ owl-carousel .bt3.active {
 .table.tbl-qboard.childDetails {
   margin-bottom: 20px !important;
 }
+.table.tbl-qboard.childDetails.child-tbl-color {
+  background: #f0f0f0 !important;
+}
 
 .chkins-sect .table.tbl-qboard>tbody>tr>td {
   padding-top: 10px !important;
@@ -9798,6 +9801,27 @@ td.chkWth, th.chkWth {
   color: #444444;
   font-size: 15px;
   position: relative;
+}
+
+.circle-token {
+  background: #eee;
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 15px;
+    padding: 10px 0px 10px 0px;
+}
+.queue-t {
+  font-size: 11px;
+}
+@media (max-width:768px) {
+  .td-four {
+    white-space: pre-wrap !important;
+  }
+  .td-four i:first-child {
+    margin-bottom: 15px !important;
+  }
 }
 .donate-sel-loc {
   color: #3c8dbc !important;

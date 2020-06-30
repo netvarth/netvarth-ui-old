@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angu
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
-import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -1071,6 +1070,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptsChecked = {};
     this.chkSlotInput = {};
     this.selectedAppt = [];
+    this.apptSingleSelection = false;
+    this.apptMultiSelection = false;
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
@@ -1841,7 +1842,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   addConsumerInboxMessage() {
     const _this = this;
     const appts = [];
-    if (!this.isBatch) {
+    if (!this.isBatch  || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appts.push(_this.appointmentsChecked[apptIndex]);
       });
@@ -1876,7 +1877,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appt) {
       appmt = appt;
     } else {
-      if (!this.isBatch) {
+      if (!this.isBatch  || this.time_type === 3) {
         Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
           appmt = _this.appointmentsChecked[apptIndex];
         });
@@ -1926,7 +1927,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   goToCheckinDetails() {
     const _this = this;
-    if (!this.isBatch) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         const checkin = _this.appointmentsChecked[apptIndex];
         _this.router.navigate(['provider', 'appointments', checkin.uid]);
@@ -1943,7 +1944,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   addProviderNote(source, waitlist?) {
     const _this = this;
     let checkin;
-    if (!this.isBatch) {
+    if (!this.isBatch  || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         checkin = _this.appointmentsChecked[apptIndex];
         _this.addnotedialogRef = _this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
@@ -2002,7 +2003,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   smsAppt() {
     const _this = this;
-    if (!this.isBatch) {
+    if (!this.isBatch  || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         _this.provider_services.smsAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
           () => {
@@ -2030,7 +2031,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   emailAppt() {
     const _this = this;
-    if (!this.isBatch) {
+    if (!this.isBatch  || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         _this.provider_services.emailAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
           () => {
@@ -2059,7 +2060,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   printAppt() {
     const _this = this;
     let appt;
-    if (!this.isBatch) {
+    if (!this.isBatch  || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appt = _this.appointmentsChecked[apptIndex];
       });
@@ -2138,10 +2139,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       printWindow.print();
     });
   }
-  viewBillPage(source, checkin?) {
+  viewBillPage() {
     const _this = this;
     let checkin_details;
-    if (!this.isBatch) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         checkin_details = _this.appointmentsChecked[apptIndex];
         _this.provider_services.getWaitlistBill(checkin_details.uid).subscribe(
@@ -2193,7 +2194,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
-    };
+    }
     return selindx;
   }
   locateCustomerMsg(details) {
@@ -2323,7 +2324,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selected_location) {
       this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location.id);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     return new Promise(function (resolve, reject) {
       _this.getSchedules('all').then(
         (queues: any) => {
@@ -2348,6 +2349,5 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.removeitemFromGroupStorage('appt_selQ');
      this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
      this.resetPaginationData();
-     alert('hi');
   }
 }

@@ -26,6 +26,7 @@
                 <div class="col-md-2 col-xs-2 col-sm-2">
                   <i class="fa fa-search pointer-cursor" *ngIf="type=='wl'" (click)="getWLDetails(encId)"></i>
                   <i class="fa fa-search pointer-cursor" *ngIf="type=='appt'" (click)="getApptDetails(encId)"></i>
+                  <i class="fa fa-search pointer-cursor" *ngIf="type!='appt' && type!='wl'" (click)="getDetails(encId)"></i>
                 </div>
               </div>
               <div class="outer banner mgn-up-20 mgn-bt-20 check-status" *ngIf="statusInfo && foundDetails">

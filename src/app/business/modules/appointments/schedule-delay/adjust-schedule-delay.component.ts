@@ -58,7 +58,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   queuejson: any = [];
   sel_ser;
   sel_ser_det: any = [];
-  //sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  // sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
   sel_checkindate;
   sortBy = 'sort_token';
   check_in_list: any = [];
@@ -110,7 +110,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     //   this.closePopup('error');
     // }
     const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
-    this.sel_loc = loc;
+    this.sel_loc = loc.id;
     this.getBussinessProfileApi()
       .then(
         (data: any) => {
@@ -134,16 +134,16 @@ export class AdjustscheduleDelayComponent implements OnInit {
                   }
                 );
               }
-              
+
 
             });
         }
-        
+
       );
-      setTimeout(() => {
-        this.getScheduleDelay(this.queuejson[0].id);
+    setTimeout(() => {
+      this.getScheduleDelay(this.queuejson[0].id);
     }, 1000);
-      
+
 
 
 
@@ -171,7 +171,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
-    
+
   }
   performActions(actions) {
     if (actions === 'learnmore') {
@@ -411,7 +411,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.provider_services.getScheduleDelay(queue_id)
       .subscribe(
         data => {
-           console.log(data);
+          console.log(data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
         },
@@ -472,7 +472,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
 
   getTodayAppointments(queueid) {
     const Mfilter = this.setFilterForApi(queueid);
-    //Mfilter[this.sortBy] = 'asc';
+    // Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayApptlist(Mfilter)
       .subscribe(
         data => {
@@ -497,22 +497,22 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
 
   }
-   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+  getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
-      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid,accountid)
+      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
         .subscribe(data => {
           this.queuejson = data;
           console.log(this.queuejson);
           if (this.queuejson.length === 1) {
-              this.getTodayAppointments(this.queuejson[0].id);
-        }
+            this.getTodayAppointments(this.queuejson[0].id);
+          }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
-              this.amForm.get('queueControl').setValue(this.queuejson[0].id);
-              this.getTodayAppointments(this.queuejson[0].id);
+            this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+            this.getTodayAppointments(this.queuejson[0].id);
           }
-         
+
         });
     }
   }
