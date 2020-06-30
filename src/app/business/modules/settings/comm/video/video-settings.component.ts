@@ -35,9 +35,14 @@ export class VideoSettingsComponent implements OnInit {
         // Hangouts: { value: 'Hangouts', displayName: 'Hangouts', placeHolder: 'Hangouts ID', titleHelp: 'Configure Hangouts Settings', actualValue: '', enabled: false },
         // Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         // Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
-        Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
-        // Viber: { value: 'Viber', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
+        Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false }
+        // GoogleMeet: { value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
+        // }
     };
+    // voiceModes = {
+    //     WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
+    //     Phone: { value: 'Phone', displayName: 'Phone', placeHolder: 'Phone number', titleHelp: 'Configure Phone Settings', actualValue: '', enabled: false }
+    // };
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         { title: 'Settings', url: '/provider/settings' },
