@@ -2194,8 +2194,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selQId && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
         (data: any) => {
-          this.slotsForQ = data.availableSlots;
-          console.log(this.slotsForQ);
+          for (let i = 0; i < data.availableSlots.length; i++) {
+            if (data.availableSlots[i].active && data.availableSlots[i].noOfAvailbleSlots !== '0') {
+              if (this.slotsForQ.indexOf(data.availableSlots[i]) === -1) {
+                this.slotsForQ.push(data.availableSlots[i]);
+              }
+            }
+          }
+          // this.slotsForQ = data.availableSlots;
         });
     }
   }

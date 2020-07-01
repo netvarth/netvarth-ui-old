@@ -411,6 +411,15 @@
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead>
                     <tr>
+                      <td colspan="5" *ngIf="showSlotsN">
+                        <mat-chip-list class="apptm-in-chip">
+                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
+                            [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                            {{getSingleTime(slot.time)}}</mat-chip>
+                        </mat-chip-list>
+                      </td>
+                    </tr>
+                    <tr>
                       <th class="chkWth">
                         <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
                           [checked]="chkSelectAppointments" (change)="selectAllAppoinments()"
@@ -460,13 +469,12 @@
                             <i class="fa icon-note" (click)="addProviderNote()"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && this.activeAppointment.apptStatus == 'Confirmed' && !this.activeAppointment.virtualService && time_type != 2"
+                            *ngIf="apptSingleSelection && activeAppointment.apptStatus == 'Confirmed' && !activeAppointment.virtualService"
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && (time_type == 1 && this.activeAppointment.apptStatus !== 'Completed' && this.activeAppointment.apptStatus !== 'Confirmed') || 
-                        (time_type == 2 && (this.activeAppointment.apptStatus === 'Cancelled' || this.activeAppointment.apptStatus === 'Rejected'))"
+                            *ngIf="apptSingleSelection && activeAppointment.apptStatus !== 'Completed' && activeAppointment.apptStatus !== 'Confirmed' && !activeAppointment.virtualService"
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
@@ -524,7 +532,7 @@
                     </tr>
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
-                    <tr>
+                    <!-- <tr>
                       <td colspan="5" *ngIf="showSlotsN">
                         <mat-chip-list class="apptm-in-chip">
                           <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
@@ -532,7 +540,7 @@
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
                       </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td colspan="5">
                         No Appointments Found
