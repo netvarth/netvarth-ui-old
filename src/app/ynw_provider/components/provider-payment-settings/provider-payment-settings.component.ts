@@ -104,7 +104,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     jPay_Billing = false;
     upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
   
-  
     breadcrumbs = [
         {
             title: 'Settings',
