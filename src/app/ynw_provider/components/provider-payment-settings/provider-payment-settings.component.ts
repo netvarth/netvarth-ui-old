@@ -14,6 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class ProviderPaymentSettingsComponent implements OnInit {
 
+    
     jaldee_account_cap = Messages.PAY_SET_JALDEE_ACCOUNT_CAP;
     my_own_account_cap = Messages.PAY_SET_MY_OWN_ACCOUNT_CAP;
     pay_if_mail_verified_cap = Messages.PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP;
@@ -81,6 +82,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     gstnumber;
     paytmverified = false;
     payuverified = false;
+    razorpayVerified =false;
     tabid = 0;
     emailidVerified = false;
     profileQueryExecuted = false;
@@ -236,6 +238,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
     initPaymentSettings(paySettings, type, mode?) {
+        console.log(paySettings);
+        console.log(type);
+        console.log(mode);
+        
+        
+        
         if (mode !== undefined) {
             if (mode === 'paytm') {
                 this.paystatus = paySettings.onlinePayment || false;
@@ -276,6 +284,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.bankactype = paySettings.accountType || '';
             this.paytmverified = paySettings.payTmVerified || false;
             this.payuverified = paySettings.payUVerified || false;
+            this.razorpayVerified = paySettings.razorpayVerified || false;
+            
             if (type === 0) {
                 this.paytmenabled = paySettings.payTm || false;
                 this.ccenabled = paySettings.dcOrCcOrNb || false;
@@ -300,7 +310,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             let panelclass = '';
             let params;
             const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
-            if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)) {
+            if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)|| (this.ccenabled && !this.razorpayVerified)) {
                 showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN');
                 panelclass = 'snackbarnormal'; // 'snackbarerror';
                 params = { 'duration': duration, 'panelClass': panelclass };
