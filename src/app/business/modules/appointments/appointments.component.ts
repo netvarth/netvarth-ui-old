@@ -237,6 +237,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gnr_link = 2;
   loading = true;
   showArrived = false;
+  showUndo = false;
   pos = false;
   showRejected = false;
   historyCheckins: any = [];
@@ -332,7 +333,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           _this.views.push(tempView);
           let selected_view;
-          if (source  === 'changeLocation') {
+          if (source === 'changeLocation') {
           } else {
             selected_view = _this.shared_functions.getitemFromGroupStorage('appt-selectedView');
           }
@@ -573,7 +574,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     );
   }
-  getQIdsFromView (view) {
+  getQIdsFromView(view) {
     const qIds = [];
     if (view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
       for (let i = 0; i < view.customViewConditions.schedules.length; i++) {
@@ -640,14 +641,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isBatch = false;
       }
     } else if (this.activeSchedules.length > 0) {
-    // if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ') && this.shared_functions.getitemFromGroupStorage('appt_history_selQ').length !== 0) {
-    //   this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
-    // } else {
-    // }
+      // if (this.shared_functions.getitemFromGroupStorage('appt_history_selQ') && this.shared_functions.getitemFromGroupStorage('appt_history_selQ').length !== 0) {
+      //   this.selQidsforHistory = this.shared_functions.getitemFromGroupStorage('appt_history_selQ');
+      // } else {
+      // }
       if (this.time_type === 3) {
         const qIds = this.getQIdsFromView(view);
         this.selQidsforHistory = qIds;
-       this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
+        this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
       this.selQId = this.findCurrentActiveQueue(this.activeSchedules);
       // this.selQId = this.activeSchedules[0].id;
@@ -1171,7 +1172,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let selQs = [];
     if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
-       selQs = this.activeSchedules.filter(q => q.id === this.selQId);
+      selQs = this.activeSchedules.filter(q => q.id === this.selQId);
     }
     if (selQs.length > 0) {
       this.selQId = selQs[0].id;
@@ -1769,6 +1770,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (appt.apptStatus === 'Confirmed' && !appt.virtualService) {
         this.showArrived = true;
       }
+      if (appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed' && !appt.virtualService) {
+        this.showUndo = true;
+      }
       if (appt.billStatus && appt.billStatus === 'Settled') {
         this.showRejected = false;
       }
@@ -1785,6 +1789,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selAllSlots = false;
       this.showArrived = false;
       this.showRejected = true;
+      this.showUndo = false;
     }
     this.setSelections();
   }
@@ -1844,7 +1849,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   addConsumerInboxMessage() {
     const _this = this;
     const appts = [];
-    if (!this.isBatch  || this.time_type === 3) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appts.push(_this.appointmentsChecked[apptIndex]);
       });
@@ -1879,7 +1884,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (appt) {
       appmt = appt;
     } else {
-      if (!this.isBatch  || this.time_type === 3) {
+      if (!this.isBatch || this.time_type === 3) {
         Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
           appmt = _this.appointmentsChecked[apptIndex];
         });
@@ -1946,7 +1951,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   addProviderNote(source, waitlist?) {
     const _this = this;
     let checkin;
-    if (!this.isBatch  || this.time_type === 3) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         checkin = _this.appointmentsChecked[apptIndex];
         _this.addnotedialogRef = _this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
@@ -2005,7 +2010,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   smsAppt() {
     const _this = this;
-    if (!this.isBatch  || this.time_type === 3) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         _this.provider_services.smsAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
           () => {
@@ -2033,7 +2038,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   emailAppt() {
     const _this = this;
-    if (!this.isBatch  || this.time_type === 3) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         _this.provider_services.emailAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
           () => {
@@ -2062,7 +2067,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   printAppt() {
     const _this = this;
     let appt;
-    if (!this.isBatch  || this.time_type === 3) {
+    if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appt = _this.appointmentsChecked[apptIndex];
       });
@@ -2189,9 +2194,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selQId && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
         (data: any) => {
-        this.slotsForQ = data.availableSlots;
-        console.log(this.slotsForQ);
-      });
+          this.slotsForQ = data.availableSlots;
+          console.log(this.slotsForQ);
+        });
     }
   }
   findCurrentActiveQueue(ques) {
@@ -2363,11 +2368,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.initView(this.selectedView, 'reloadAPIs');
 
   }
-  clearApptIdsFromStorage () {
+  clearApptIdsFromStorage() {
     this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
     this.shared_functions.removeitemFromGroupStorage('appt_future_selQ');
     this.shared_functions.removeitemFromGroupStorage('appt_selQ');
-     this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
-     this.resetPaginationData();
+    this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
+    this.resetPaginationData();
   }
 }

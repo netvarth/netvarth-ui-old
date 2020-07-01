@@ -780,10 +780,15 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.consumerNoteAndFileSave(retUUID);
                 }
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+                const member = [];
+                for (const memb of this.waitlist_for) {
+                    member.push(memb.firstName + ' ' + memb.lastName);
+                }
                 const navigationExtras: NavigationExtras = {
                     queryParams: {
                         account_id: this.account_id,
-                        type_check: 'checkin_prepayment'
+                        type_check: 'checkin_prepayment',
+                        members: member
                     }
                 };
                 if (this.sel_ser_det.isPrePayment) {
@@ -920,6 +925,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     }
                 }
             }
+        }
+        if (this.sel_ser_det && this.sel_ser_det.minPrePaymentAmount) {
+            this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
         }
     }
     ismoreMembersAllowedtopush() {

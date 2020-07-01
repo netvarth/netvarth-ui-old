@@ -81,12 +81,12 @@
                   </a>
                 </li>
                 <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
-                  <a (click)="showsheAdjustDelay()"
+                  <a (click)="showAdjustDelay()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
-                  
+
                 </li>
               </ul>
             </div>
@@ -96,9 +96,10 @@
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeSchedules">
-                <button class="item cust-button-3" [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
+                <button class="item cust-button-3"
+                  [ngClass]="{active: isQueueSelected(schedule.id)?true:false, disabled: schedule.apptState === 'ENABLED'?false:true}"
                   (click)="viewQClicked(schedule)" *ngFor="let schedule of activeSchedules;let i = index">
-                  {{schedule.name}}<br/>
+                  {{schedule.name}}<br />
                   {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}
                 </button>
               </owl-carousel>
@@ -139,33 +140,36 @@
               (click)="viewStatusFilterBtnClicked('cancelled', time_type)">
               Cancelled ({{cancelled_count}})
             </button>
-            <button class="cust-button-2 tme" *ngIf="time_type==2"><mat-datepicker-toggle matSuffix [for]="picker">
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <input readonly matInput type="text" [(ngModel)]="filter.future_appt_date" [matDatepicker]="picker"
-              [min]="tomorrowDate" #futuredate  (dateChange)="getFutureAppointments()">
-          </button>
+            <button class="cust-button-2 tme" *ngIf="time_type==2">
+              <mat-datepicker-toggle matSuffix [for]="picker">
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <input readonly matInput type="text" [(ngModel)]="filter.future_appt_date" [matDatepicker]="picker"
+                [min]="tomorrowDate" #futuredate (dateChange)="getFutureAppointments()">
+            </button>
           </div>
         </div>
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive" *ngIf="!loading && time_type!=3 && isBatch ">
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
+                *ngIf="!loading && time_type!=3 && isBatch ">
                 <table class="table tbl-qboard" style="width: 100%;">
                   <thead>
                     <tr>
                       <td colspan="5" *ngIf="showSlotsN">
                         <mat-chip-list class="apptm-in-chip">
                           <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
-                              [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                              {{getSingleTime(slot.time)}}</mat-chip>
-                      </mat-chip-list>
+                            [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                            {{getSingleTime(slot.time)}}</mat-chip>
+                        </mat-chip-list>
                       </td>
                     </tr>
                     <tr>
-                      <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots" type="checkbox"
-                        class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" /></th>
-                      <th colspan="3">                        
+                      <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots"
+                          type="checkbox" class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" />
+                      </th>
+                      <th colspan="3">
                         <div class="pull-left">
                           <a class="icon-action pointer-cursor icon-size2" [matTooltip]="'Refresh'">
                             <i class="fa fa-refresh" (click)="refresh()"></i>
@@ -211,15 +215,15 @@
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection"
+                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showUndo"
                             [matTooltip]="'Undo'">
-                            <i class="fa fa-undo" (click)="changeWaitlistStatus()"></i>
+                            <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
-                          </a> 
-                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
-                            [matTooltip]="'Labels'">
+                          </a>
+                          <a ngbDropdown class="icon-action pointer-cursor icon-size1"
+                            *ngIf="apptSingleSelection && time_type!=3" [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
                               <ul class="nav navbar-nav">
                                 <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
@@ -231,11 +235,13 @@
                                       <ul class="menu"
                                         style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                         <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                          <ul class="menu" style="overflow: hidden;max-height:none;font-weight: normal;">
+                                          <ul class="menu"
+                                            style="overflow: hidden;max-height:none;font-weight: normal;">
                                             <li *ngFor="let value of label.valueSet">
                                               <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                                 (click)="changeLabelvalue(label.label, value.value)">
-                                                {{value.shortValue}} {{label.label}}<i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                                {{value.shortValue}} {{label.label}}<i class="fa fa-check"
+                                                  *ngIf="value.selected"></i></a>
                                             </li>
                                           </ul>
                                         </li>
@@ -264,15 +270,17 @@
                   <tbody *ngFor="let slot of availableSlotDetails.availableSlots, let slotIndex=index">
                     <tr class="parentRow" [ngClass]="{greenb: timeSlotAppts[slot.time]?true:false}">
                       <td class="chkWth">
-                        <input [(ngModel)]="chkSlotInput[slotIndex]"
-                          [checked]="this.slotsChecked[slotIndex]" type="checkbox" class="ckbx pull-left"
-                          [disabled]="!timeSlotAppts[slot.time]" (change)="slotCheckSelected(slotIndex, slot)" />
+                        <input [(ngModel)]="chkSlotInput[slotIndex]" [checked]="this.slotsChecked[slotIndex]"
+                          type="checkbox" class="ckbx pull-left" [disabled]="!timeSlotAppts[slot.time]"
+                          (change)="slotCheckSelected(slotIndex, slot)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div class="parent-name pull-left"
                           [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
                           (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
-                          <span >{{getSingleTime(slot.time)}}<span *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot"> [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span></span>
+                          <span>{{getSingleTime(slot.time)}}<span
+                              *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot">
+                              [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span></span>
                         </div>
                       </td>
                       <td class="title td-two-full"
@@ -285,7 +293,9 @@
                         </div>
                       </td>
                       <td class="">
-                        <a class="statusText btn-play pointer-cursor" *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" (click)="changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0].batchId)"
+                        <a class="statusText btn-play pointer-cursor"
+                          *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
+                          (click)="changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0].batchId)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
@@ -293,9 +303,12 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Reject'">
                           <i class="fa fa-trash"></i> <span *ngIf="!small_device_display"> Reject</span>
                         </a> -->
-                        <a class="statusText btn-play pointer-cursor" *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0].batchId)"
+                        <a class="statusText btn-play pointer-cursor"
+                          *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
+                          (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0].batchId)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                          <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display"> Complete</span>
+                          <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">
+                            Complete</span>
                         </a>
                       </td>
                     </tr>
@@ -306,19 +319,21 @@
                             <tbody *ngFor="let appt of timeSlotAppts[slot.time], let apptIndex=index">
                               <tr>
                                 <td class="chkWth"><input
-                                  [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
-                                  type="checkbox" class="ckbx pull-left"
-                                  (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
+                                    [checked]="apptsChecked && apptsChecked[slotIndex] && apptsChecked[slotIndex][apptIndex]"
+                                    type="checkbox" class="ckbx pull-left"
+                                    (change)="apptRowSelected(slotIndex, apptIndex, appt, slot.time)" /></td>
                                 <td class="parent-selection parent-title td-one">
                                   <div class="bold pull-left pointer-cursor" (click)="goCheckinDetail(appt)">
                                     {{appt.appmtFor[0].firstName}}
                                     {{appt.appmtFor[0].lastName}}</div>
                                 </td>
                                 <td class="title td-two">
-                                  <div class="col-md-12 col-xs-12 col-sm-12 info-box-text service no-padding mgn-up-3" *ngIf="servicesCount>1">{{appt.service.name}}
+                                  <div class="col-md-12 col-xs-12 col-sm-12 info-box-text service no-padding mgn-up-3"
+                                    *ngIf="servicesCount>1">{{appt.service.name}}
                                   </div>
-                                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
-                                    <span class="checkin-label mgn-rt-10" *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
+                                  <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                    <span class="checkin-label mgn-rt-10"
+                                      *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                                   </div>
                                   <!-- <div *ngIf="appt.batchId" class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-3 bold">
                                     Batch: {{appt.batchId}}
@@ -330,8 +345,8 @@
                                       [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                                     </span>
                                     <span class="fa fa-phone phone-in-icon"
-                                    *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
-                                  </span>
+                                      *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
+                                    </span>
                                     <span title="{{arrived_upper}}"
                                       class="pull-left icon-arrived checkin_status icon-btn1 mgn-rt-10"
                                       *ngIf="appt.apptStatus == 'Arrived'"></span>
@@ -375,9 +390,11 @@
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                     <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                                   </a>
-                                  <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'" (click)="changeWaitlistStatus('Completed',appt)"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
-                                    <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display"> {{done_cap}} </span>
+                                  <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
+                                    (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'Complete'">
+                                    <i class="fa fa-check-circle" style="color: green;"></i> <span
+                                      *ngIf="!small_device_display"> {{done_cap}} </span>
                                   </a>
                                 </td>
                               </tr>
@@ -389,13 +406,15 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive" *ngIf="!loading && (!isBatch || this.time_type == 3)">
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
+                *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead>
                     <tr>
                       <th class="chkWth">
-                        <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
-                          (change)="selectAllAppoinments()" [(ngModel)]="chkSelectAppointments" />
+                        <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
+                          [checked]="chkSelectAppointments" (change)="selectAllAppoinments()"
+                          [(ngModel)]="chkSelectAppointments" />
                       </th>
                       <th colspan="4" class="childActionBar" style="padding-left: 5px;">
                         <div class="pull-left">
@@ -441,15 +460,26 @@
                             <i class="fa icon-note" (click)="addProviderNote()"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
+                            *ngIf="apptSingleSelection && this.activeAppointment.apptStatus == 'Confirmed' && !this.activeAppointment.virtualService && time_type != 2"
+                            [matTooltip]="'Mark as Arrived'">
+                            <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
+                          </a>
+                          <a class="icon-action pointer-cursor icon-size1"
+                            *ngIf="apptSingleSelection && (time_type == 1 && this.activeAppointment.apptStatus !== 'Completed' && this.activeAppointment.apptStatus !== 'Confirmed') || 
+                        (time_type == 2 && (this.activeAppointment.apptStatus === 'Cancelled' || this.activeAppointment.apptStatus === 'Rejected'))"
+                            [matTooltip]="'Undo'">
+                            <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
+                          </a>
+                          <a class="icon-action pointer-cursor icon-size1"
                             *ngIf="apptSingleSelection && this.activeAppointment && (this.activeAppointment.apptStatus=='Arrived' || this.activeAppointment.apptStatus=='Confirmed')"
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
-                          </a>                           
-                          <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
-                            [matTooltip]="'Labels'">
+                          </a>
+                          <a ngbDropdown class="icon-action pointer-cursor icon-size1"
+                            *ngIf="apptSingleSelection && time_type!=3" [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
                               <ul class="nav navbar-nav">
                                 <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
@@ -461,11 +491,13 @@
                                       <ul class="menu"
                                         style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                         <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                          <ul class="menu" style="overflow: hidden;max-height:none;font-weight: normal;">
+                                          <ul class="menu"
+                                            style="overflow: hidden;max-height:none;font-weight: normal;">
                                             <li *ngFor="let value of label.valueSet">
                                               <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                                 (click)="changeLabelvalue(label.label, value.value)">
-                                                {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                                {{value.shortValue}} <i class="fa fa-check"
+                                                  *ngIf="value.selected"></i></a>
                                             </li>
                                           </ul>
                                         </li>
@@ -493,15 +525,15 @@
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
-                      <td colspan="5" *ngIf="showSlotsN" >
+                      <td colspan="5" *ngIf="showSlotsN">
                         <mat-chip-list class="apptm-in-chip">
                           <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
-                              [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                              {{getSingleTime(slot.time)}}</mat-chip>
-                      </mat-chip-list>
+                            [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                            {{getSingleTime(slot.time)}}</mat-chip>
+                        </mat-chip-list>
                       </td>
                     </tr>
-                    <tr >
+                    <tr>
                       <td colspan="5">
                         No Appointments Found
                       </td>
@@ -510,19 +542,23 @@
                   <tbody *ngFor="let appt of check_in_filtered_list, let i=index">
                     <tr>
                       <td class="chkWth">
-                        <input [checked]="chkAppointments[i]"
-                        type="checkbox" class="ckbx pull-left" (change)="chkAptHistoryClicked(i, appt)" />
+                        <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
+                          (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
                       <td class="parent-selection parent-title">
-                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type==3">{{appt.appmtDate | date: display_dateFormat}}</div>
-                        <div class="pull-left mgn-lt-5 date greenc bold"  *ngIf="time_type==1">{{getSingleTime(appt.appmtTime)}}</div>
-                        <div class="bold pull-left mgn-lt-10 name pointer-cursor" (click)="goCheckinDetail(appt)">{{appt.appmtFor[0].firstName}}
+                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type==3">
+                          {{appt.appmtDate | date: display_dateFormat}}</div>
+                        <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type==1">
+                          {{getSingleTime(appt.appmtTime)}}</div>
+                        <div class="bold pull-left mgn-lt-10 name pointer-cursor" (click)="goCheckinDetail(appt)">
+                          {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
                       </td>
                       <td class="title">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="checkin-label mgn-rt-10" *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
+                          <span class="checkin-label mgn-rt-10"
+                            *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
                       <td class="">
@@ -537,14 +573,12 @@
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span title="{{arrived_upper}}"
-                            class="pull-left icon-arrived checkin_status mgn-rt-10"
+                          <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived'"></span>
-                          <span [matTooltip]="cust_note_tooltip"
-                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.consumerNote"
-                            (click)="showConsumerNote(appt)">
+                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
-                          </span>                          
+                          </span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="" style="font-size: smaller;">
@@ -552,7 +586,7 @@
                           </span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="pos">
-                          <span data-title="Payment Status" class="payment" >
+                          <span data-title="Payment Status" class="payment">
                             <ng-container *ngIf="appt.paymentStatus">
                               <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyPaid'"><span
                                   class="text">{{partially_paid_cap}}</span></span>
@@ -565,7 +599,8 @@
                         </div>
                       </td>
                       <td class="q-actions">
-                        <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0 && time_type == 1"
+                        <a class="statusText btn-play pointer-cursor"
+                          *ngIf="board_count > 0 && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
                             *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
@@ -574,8 +609,14 @@
                           <span *ngIf="!small_device_display && !appt.callingStatus">
                             &nbsp;Call</span>
                         </a>
+                        <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Arrived', appt)"
+                        *ngIf="appt.apptStatus == 'Confirmed' && !appt.virtualService && time_type != 2"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <i class="icon-arrived"></i> <span *ngIf="!small_device_display"> Arrived</span>
+                      </a> -->
+
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Started', appt)"
-                          *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && !appt.virtualService"
+                          *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && !appt.virtualService && time_type != 2"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
@@ -584,6 +625,13 @@
                           <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">
                             {{done_cap}}</span>
                         </a>
+                        <!-- <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Confirmed', appt)"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to Confirmed'" 
+                        *ngIf="(time_type == 1 && appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed') || 
+                        (time_type == 2 && (appt.apptStatus === 'Cancelled' || appt.apptStatus === 'Rejected'))">
+                        <i class="fa fa-undo" style="color: green;"></i> <span *ngIf="!small_device_display">
+                          Confirmed</span>
+                      </a> -->
                       </td>
                     </tr>
                   </tbody>

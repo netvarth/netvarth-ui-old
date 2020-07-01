@@ -39,7 +39,7 @@ export class ConsumerPaymentComponent implements OnInit {
     razorModel: Razorpaymodel;
     origin: string;
     checkIn_type: any;
-
+    members;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -60,6 +60,7 @@ export class ConsumerPaymentComponent implements OnInit {
                 this.checkIn_type = params.type_check;
                 this.accountId = params.account_id;
                 this.pid = params.pid;
+                this.members = params.members;
             });
     }
 
@@ -67,9 +68,8 @@ export class ConsumerPaymentComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
-                console.log(this.activeWt);
                 this.livetrack = this.activeWt.service.livetrack;
-                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.waitlistingFor.length;
+                this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.members.length;
                 this.waitlistDetails = {
                     'amount': this.prepaymentAmount,
                     'paymentMode': null,
@@ -141,20 +141,20 @@ export class ConsumerPaymentComponent implements OnInit {
                 if (this.pGateway === 'RAZORPAY') {
                     this.paywithRazorpay(pData);
                 } else {
-                if (pData['response']) {
-                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                    setTimeout(() => {
-                        if (paymentMode === 'DC') {
-                            this.document.getElementById('payuform').submit();
-                        } else {
-                            this.document.getElementById('paytmform').submit();
-                        }
-                    }, 2000);
-                } else {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                    if (pData['response']) {
+                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                        setTimeout(() => {
+                            if (paymentMode === 'DC') {
+                                this.document.getElementById('payuform').submit();
+                            } else {
+                                this.document.getElementById('paytmform').submit();
+                            }
+                        }, 2000);
+                    } else {
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                    }
                 }
-            }
             },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -170,6 +170,6 @@ export class ConsumerPaymentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type ,  this.livetrack  ,  this.accountId , this.uuid );
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.livetrack, this.accountId, this.uuid);
     }
 }
