@@ -241,6 +241,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showRejected = false;
   historyCheckins: any = [];
   apiloading = false;
+  showSlotsN = false;
+  slotsForQ: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2173,6 +2175,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   qrCodegeneration(valuetogenerate) {
     this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
     this.showQR = true;
+  }
+  showSlots() {
+    this.showSlotsN = !this.showSlotsN;
+    let date;
+    this.slotsForQ = [];
+    if (this.time_type === 1) {
+      date = this.shared_functions.transformToYMDFormat(this.server_date);
+    }
+    if (this.time_type === 2) {
+      date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
+    }
+    if (this.selQId && date) {
+      this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
+        (data: any) => {
+        this.slotsForQ = data.availableSlots;
+        console.log(this.slotsForQ);
+      });
+    }
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
