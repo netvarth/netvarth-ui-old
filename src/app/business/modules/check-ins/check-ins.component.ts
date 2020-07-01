@@ -732,7 +732,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  getTodayCheckinCount(Mfilter = null) { 
+  getTodayCheckinCount(Mfilter = null) {
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
@@ -830,7 +830,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           if (this.grouped_list && this.grouped_list['checkedIn']) {
             this.new_checkins_list = this.grouped_list['checkedIn'].slice();
-            console.log(this.new_checkins_list)
           }
           if (this.grouped_list && this.grouped_list['arrived']) {
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
@@ -1550,8 +1549,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                const labels = [];
-                checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                  const labels = [];
+                  Object.keys(this.historyCheckins[i].label).forEach(key => {
+                    labels.push(this.historyCheckins[i].label[key]);
+                  });
+                  checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                }
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';

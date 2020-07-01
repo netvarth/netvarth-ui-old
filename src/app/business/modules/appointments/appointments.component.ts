@@ -2304,8 +2304,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].appmtTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].appmtFor[0].firstName + ' ' + this.historyCheckins[i].appmtFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                const labels = [];
-                checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                  const labels = [];
+                  Object.keys(this.historyCheckins[i].label).forEach(key => {
+                    labels.push(this.historyCheckins[i].label[key]);
+                  });
+                  checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                }
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';

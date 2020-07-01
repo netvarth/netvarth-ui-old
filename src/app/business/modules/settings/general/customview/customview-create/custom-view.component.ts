@@ -534,17 +534,29 @@ export class CustomViewComponent implements OnInit {
         );
     }
     createCustomView() {
-        const depids = [];
-        for (const id of this.selectedDeptIds) {
-            depids.push({ 'departmentId': id });
+        let depids = [];
+        if (this.selectedDeptIds.length > 0) {
+            for (const id of this.selectedDeptIds) {
+                depids.push({ 'departmentId': id });
+            }
+        } else {
+            depids = null;
         }
-        const userids = [];
-        for (const id of this.selectedUsersId) {
-            userids.push({ 'id': id });
+        let userids = [];
+        if (this.selectedUsersId.length > 0) {
+            for (const id of this.selectedUsersId) {
+                userids.push({ 'id': id });
+            }
+        } else {
+            userids = null;
         }
-        const servicesids = [];
-        for (const id of this.selectedServiceids) {
-            servicesids.push({ 'id': id });
+        let servicesids = [];
+        if (this.selectedServiceids.length > 0) {
+            for (const id of this.selectedServiceids) {
+                servicesids.push({ 'id': id });
+            }
+        } else {
+            servicesids = null;
         }
         const qids = [];
         if (this.selectedQIds.length !== 0) {
