@@ -91,13 +91,13 @@
                                                 <div
                                                     *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'">
                                                     <mat-form-field class="example-full-width">
+                                                        <span class="glyphicon glyphicon-search" style="float:right;"></span>
                                                         <input matInput autocomplete="off"
                                                             [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
                                                             (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)"
                                                             (blur)="handleTextrefinefieldBlur($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
-                                                    </mat-form-field>
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </div>
+                                                           </mat-form-field>
+                                                   </div>
 
                                                 <div
                                                     *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender'">
