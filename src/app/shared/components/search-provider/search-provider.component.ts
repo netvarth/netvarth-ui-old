@@ -630,6 +630,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         }
       },
         () => {
+          if (section === 'providerBusinessProfile') {
+            this.api_loading = false;
+          }
         });
   }
 
