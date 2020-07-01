@@ -103,6 +103,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     jPay_Billing = false;
     upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
+    
 
     breadcrumbs = [
         {

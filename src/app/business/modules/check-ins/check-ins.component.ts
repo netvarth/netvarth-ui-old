@@ -916,7 +916,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       result => {
         this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
-        this.provider_services.getHistroryWaitlist(Mfilter)
+        this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
               this.new_checkins_list = [];
@@ -1524,7 +1524,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getHistoryCheckinCount(Mfilter);
     promise.then(
       result => {
-        this.provider_services.getHistroryWaitlist(Mfilter)
+        this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
               this.historyCheckins = data;
