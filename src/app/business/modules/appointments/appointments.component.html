@@ -154,6 +154,15 @@
                 <table class="table tbl-qboard" style="width: 100%;">
                   <thead>
                     <tr>
+                      <td colspan="5" *ngIf="showSlotsN">
+                        <mat-chip-list class="apptm-in-chip">
+                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
+                              [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                              {{getSingleTime(slot.time)}}</mat-chip>
+                      </mat-chip-list>
+                      </td>
+                    </tr>
+                    <tr>
                       <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots" type="checkbox"
                         class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" /></th>
                       <th colspan="3">                        
@@ -206,6 +215,9 @@
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus()"></i>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                            <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
+                          </a> 
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
                             [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
@@ -433,6 +445,9 @@
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                            <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
+                          </a>                           
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && time_type!=3"
                             [matTooltip]="'Labels'">
                             <span class="navbar-custom-menu" style="position: absolute;">
@@ -478,6 +493,15 @@
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
+                      <td colspan="5" *ngIf="showSlotsN" >
+                        <mat-chip-list class="apptm-in-chip">
+                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
+                              [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                              {{getSingleTime(slot.time)}}</mat-chip>
+                      </mat-chip-list>
+                      </td>
+                    </tr>
+                    <tr >
                       <td colspan="5">
                         No Appointments Found
                       </td>

@@ -9657,7 +9657,9 @@ td.chkWth, th.chkWth {
   position: relative;
 }
 
-.tbl-qboard .fa-comments-o, .tbl-qboard .fa-eye, .tbl-qboard .fa-newspaper-o, .tbl-qboard .fa-print, .tbl-qboard .fa-envelope-o, .tbl-qboard .fa-refresh {
+.tbl-qboard .fa-comments-o, .tbl-qboard .fa-eye, .tbl-qboard .fa-calendar-plus-o, 
+.tbl-qboard .fa-newspaper-o, .tbl-qboard .fa-print, .tbl-qboard .fa-envelope-o, 
+.tbl-qboard .fa-refresh {
   position: relative;
   top: 2px;
 }
@@ -9667,7 +9669,7 @@ td.chkWth, th.chkWth {
   position: relative;
 }
 
-.tbl-qboard .icon-note {
+.tbl-qboard .icon-note,  {
   top: 3px;
   position: relative;
 }
@@ -9830,4 +9832,13 @@ td.chkWth, th.chkWth {
 .buisnessPageJaldeeLogo {
   width: 90px;
   height: 30px;
+}
+
+.apptm-in-chip .apptslotW{
+  width: 85px !important;
+  font-size: .75rem !important;
+  text-align: center !important;
+  border-radius: .5px !important;
+  border: 1px solid black !important;
+  background-color: white !important;
 }

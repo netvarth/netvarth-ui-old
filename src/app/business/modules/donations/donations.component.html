@@ -67,6 +67,37 @@
                   <mat-datepicker #picker></mat-datepicker>
                 </li>
               </div>
+              <!-- <span class="inl-blk filtr">
+                <a [class.button_filter]="filters['service']" (click)="filterClicked('service')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="services"
+                  id="btn_services_filter_id"><span>{{services_cap}}</span></a>
+                <mat-form-field *ngIf="filters['service']">
+                  <mat-select [(value)]="filter.service">
+                    <mat-option (click)="setFilterData('service', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let service of services" (click)="setFilterData('service', service.id)"
+                      [value]="service.id">
+                      {{service.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span> -->
+              <div>
+                <!-- <label class="filterHeaders">Services</label>
+                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                </li> 
+                <mat-checkbox *ngFor="let services of donationServices" [checked]= "check_status"  (click)="setFilterData(
+                  'service',services.id)" [value]="services.id" >
+                {{services.name}}</mat-checkbox> -->
+                <label class="filterHeaders">Services</label>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let services of donationServices" [(ngModel)]="filter.service" [checked]= "check_status" (click)="doSearch()" 
+                          [value]="services.value" >
+                            {{services.name}}</mat-checkbox>
+                    </li>
+                
+            </div>
               <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
