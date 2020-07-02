@@ -114,6 +114,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     providerId: any;
     provider: { id: any; };
     departId: any;
+    include_audio = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -605,6 +606,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
+                console.log(this.vcallmodes)
+                console.log(this.serv_mode)
                 if (this.serv_mode && this.serv_mode === 'audioService') {
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode === 'Phone') {
@@ -621,6 +624,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE') {
                             this.telemodes.push(this.vcallmodes[i]);
+                        }
+                        if (this.vcallmodes[i].callingMode === 'Phone') {
+                            this.include_audio = true;
+                        } else {
+                            this.include_audio = false;
                         }
                     }
                 }
