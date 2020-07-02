@@ -123,6 +123,8 @@
                                                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic tool-pading"></i>
                                                         <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="tool-pading"
                                                         src="https://img.icons8.com/color/20/000000/zoom.png" />
+                                                        <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/20/000000/video-message.png"/>
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i> 
                                                     {{serv.name | capitalizeFirst}}
                                                 </mat-option>
                                             </mat-select>
@@ -139,17 +141,14 @@
                                                 <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
                                                 </div>
-                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode">
                                                     {{mode.instructions}}
                                                 </div>
                                                 <div class="input-section mgn-bt-15 desfont"
-                                                *ngIf="mode.callingMode === 'WhatsApp'">
+                                                *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                     class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
-                                                <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
-                                                    src="https://img.icons8.com/color/18/000000/zoom.png" />
-                                                    <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile" aria-hidden="true"></i>
-                                                    <img *ngIf="mode.callingMode === 'GoogleMeet'" src="https://img.icons8.com/ultraviolet/14/000000/video-message.png"/>
+                                                    <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile fa-lg call-icon" aria-hidden="true"></i>
                                                 </span>
                                                     <span> <input *ngIf="!showInputSection" (keypress)="isNumeric($event)" 
                                                     class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" placeholder=""

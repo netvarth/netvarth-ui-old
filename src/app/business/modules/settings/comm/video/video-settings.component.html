@@ -41,8 +41,8 @@
                                         customer.</p>
                                 </div>
                                 <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding"
-                                    *ngFor="let callingMode of videoModes | keyvalue: originalOrder">
-                                    <mat-accordion>
+                                    *ngFor="let callingMode of videoModes| keyvalue: originalOrder;let i=index ">
+                                    <mat-accordion *ngIf="i != 3"> 
                                         <mat-expansion-panel>
                                             <mat-expansion-panel-header class="brd-bt">
                                                 <mat-panel-title class="block-level">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     
-                    <!-- <div class="card no-padding">
+                    <div class="card no-padding">
                         <div class="copy locd">
                             <div class="lbl col-sm-12 col-md-7 col-lg-6">
                                 <div class="mgn-up-20 col-md-12">
@@ -92,8 +92,8 @@
                                     <p class="form-level-settings">Please select and set the preferable way of calling your customer.</p>
                                 </div>
                                 <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding"
-                                    *ngFor="let callingMode of voiceModes | keyvalue: originalOrder">
-                                    <mat-accordion>
+                                    *ngFor="let callingMode of videoModes | keyvalue: originalOrder;let i=index" [ngClass]="{'glbl-seting-img-smal': (i!=3)}">
+                                    <mat-accordion *ngIf="i===3">
                                         <mat-expansion-panel>
                                             <mat-expansion-panel-header class="brd-bt">
                                                 <mat-panel-title class="block-level">
@@ -131,7 +131,7 @@
                                 &nbsp;
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     
                 </div>
             </div>

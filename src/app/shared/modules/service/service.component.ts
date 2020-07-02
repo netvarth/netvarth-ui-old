@@ -605,9 +605,23 @@ export class ServiceComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
-                for (let i = 0; i < this.vcallmodes.length; i++) {
-                    if (this.vcallmodes[i].status === 'ACTIVE') {
-                        this.telemodes.push(this.vcallmodes[i]);
+                if (this.serv_mode && this.serv_mode === 'audioService') {
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode === 'Phone') {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
+                    }
+                } else if (this.serv_mode && this.serv_mode === 'videoService') {
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode !== 'Phone') {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE') {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
                     }
                 }
                 if (this.telemodes.length === 0) {
