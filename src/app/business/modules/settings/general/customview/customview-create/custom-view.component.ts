@@ -335,7 +335,9 @@ export class CustomViewComponent implements OnInit {
     }
     setServiceIds(service) {
         this.selectedQs = [];
+        this.selectedQIds = [];
         this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
         const index = this.selectedServiceids.indexOf(service);
         if (index === -1) {
             this.selectedServiceids.push(service);

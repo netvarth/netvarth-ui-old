@@ -1082,6 +1082,7 @@ hideFilterSidebar() {
     this.selectedAppt = [];
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
+    this.chkAppointments = {};
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
