@@ -244,6 +244,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apiloading = false;
   showSlotsN = false;
   slotsForQ: any = [];
+  filter_sidebar = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -313,6 +314,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
   }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+}
+hideFilterSidebar() {
+    this.filter_sidebar = false;
+}
   initViews(schedules, source?) {
     const _this = this;
     this.views = [];
