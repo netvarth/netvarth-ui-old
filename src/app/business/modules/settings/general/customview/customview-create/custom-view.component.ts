@@ -253,9 +253,13 @@ export class CustomViewComponent implements OnInit {
                                 }
                             }
                             if (j < this.customViewDetails.customViewConditions.departments.length) {
-                                this.departmentSelection();
                                 this.getUsers();
-                                this.getProviderServices();
+                                if (this.customViewDetails.customViewConditions.users && this.customViewDetails.customViewConditions.users.length > 0) {
+                                    this.getProviderServices();
+                                }
+                                setTimeout(() => {
+                                    this.departmentSelection();
+                                }, 500);
                             }
                         }
                     } else {
@@ -284,13 +288,15 @@ export class CustomViewComponent implements OnInit {
                     }
                 }
                 if (j < this.customViewDetails.customViewConditions.users.length) {
-                    this.userSelection();
                     this.getProviderServices();
                     if (this.customViewFor === 'Appointment') {
                         this.getAppointmentSchedules();
                     } else {
                         this.getAccountQs();
                     }
+                    setTimeout(() => {
+                        this.userSelection();
+                    }, 500);
                 }
             }
         } else {
@@ -354,8 +360,11 @@ export class CustomViewComponent implements OnInit {
         this.selectedUsers = [];
         this.selectedUsersId = [];
         this.selectedServices = [];
+        this.selectedServiceids = [];
         this.selectedQs = [];
+        this.selectedQIds = [];
         this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
         const index = this.selectedDeptIds.indexOf(dept);
         if (index === -1) {
             this.selectedDeptIds.push(dept);
@@ -373,8 +382,11 @@ export class CustomViewComponent implements OnInit {
 
     setUsersIds(userId) {
         this.selectedServices = [];
+        this.selectedServiceids = [];
         this.selectedQs = [];
+        this.selectedQIds = [];
         this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
         const index = this.selectedUsersId.indexOf(userId);
         if (index === -1) {
             this.selectedUsersId.push(userId);
@@ -390,6 +402,7 @@ export class CustomViewComponent implements OnInit {
     }
     checkinServiceSelection() {
         this.selectedQs = [];
+        this.selectedQIds = [];
         this.qstoDisplay = [];
         if (this.selectedServices && this.selectedServices.length > 0) {
             for (let i = 0; i < this.selectedServices.length; i++) {
@@ -424,7 +437,8 @@ export class CustomViewComponent implements OnInit {
     }
 
     apptServiceSelection() {
-        this.selectedQs = [];
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
         this.todaysQs = [];
         if (this.selectedServices && this.selectedServices.length > 0) {
             for (let i = 0; i < this.selectedServices.length; i++) {
