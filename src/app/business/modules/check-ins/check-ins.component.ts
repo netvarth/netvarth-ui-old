@@ -220,6 +220,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   departments: any = [];
   settings;
   addnotedialogRef;
+  showArrived = false;
+  showUndo = false;
+  showRejected = false;
+  breadcrumbs_init = {};
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -330,6 +334,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.settings = data;
         this.calculationmode = this.settings.calculationMode;
         this.showToken = this.settings.showTokenId;
+        if (this.showToken) {
+          this.breadcrumbs_init = [{ title: 'Tokens' }];
+        } else {
+          this.breadcrumbs_init = [{ title: 'Check-ins' }];
+        }
       }, () => {
       });
   }
@@ -660,6 +669,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedAppt = [];
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
+    this.chkAppointments = {};
   }
   loadApiSwitch(source) {
     // this.resetAll();
@@ -714,13 +724,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   chkAptHistoryClicked(index, appt) {
+    console.log(this.time_type);
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
+      console.log(appt);
+      if (this.time_type === 1 && appt.waitlistStatus === 'checkedIn' && !appt.virtualService) {
+        this.showArrived = true;
+      }
+      if (this.time_type !== 3 && appt.waitlistStatus !== 'done' && appt.waitlistStatus !== 'checkedIn' && !appt.virtualService) {
+        this.showUndo = true;
+      }
+      if (appt.billStatus && appt.billStatus === 'Settled') {
+        this.showRejected = false;
+      }
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
+      this.showArrived = false;
+      this.showRejected = true;
+      this.showUndo = false;
     }
     this.setApptSelections();
   }
@@ -801,9 +825,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.noFilter = true;
               }
               // if (this.selQIds) {
-                this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
-                console.log(this.check_in_filtered_list);
-                this.setFutureCounts(this.futureAppointments);
+              this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
+              console.log(this.check_in_filtered_list);
+              this.setFutureCounts(this.futureAppointments);
               // }
               // this.loading = false;
             },
@@ -1522,14 +1546,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_details = _this.appointmentsChecked[apptIndex];
     });
     console.log(checkin_details);
-    _this.provider_services.getWaitlistBill(checkin_details.ynwUuid).subscribe(
-      () => {
-        _this.router.navigate(['provider', 'bill', checkin_details.ynwUuid], { queryParams: { source: 'appt' } });
-      },
-      error => {
-        _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
+    this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
+      .subscribe(
+        data => {
+          this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   learnmore_clicked(action) {
     if (action === 'learnmore') {
@@ -1669,8 +1694,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                const labels = [];
-                checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                  const labels = [];
+                  Object.keys(this.historyCheckins[i].label).forEach(key => {
+                    labels.push(this.historyCheckins[i].label[key]);
+                  });
+                  checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
+                }
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
@@ -1786,5 +1816,34 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const checkin = _this.appointmentsChecked[apptIndex];
       _this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
     });
+  }
+  changeWaitlistStatus(action, wtlst?) {
+    let waitlist;
+    const _this = this;
+    if (wtlst) {
+      waitlist = wtlst;
+    } else {
+      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+        waitlist = _this.appointmentsChecked[apptIndex];
+      });
+    }
+    if (action === 'DONE') {
+      waitlist.disableDonebtn = true;
+    }
+    if (action === 'STARTED') {
+      waitlist.disableStartbtn = true;
+    }
+    if (action === 'REPORT') {
+      waitlist.disableArrivedbtn = true;
+    }
+    this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
+  }
+  changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+      .then(
+        result => {
+          this.loadApiSwitch(result);
+        }
+      );
   }
 }
