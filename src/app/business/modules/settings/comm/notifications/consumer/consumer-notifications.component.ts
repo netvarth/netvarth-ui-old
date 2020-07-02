@@ -54,19 +54,24 @@ export class ConsumerNotificationsComponent implements OnInit {
   okCancelStatus = false;
   earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
   earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: '' };
+  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  prefinalDONATNotificationSettings = { eventType: 'PREFINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  finalDONATNotificationSettings = { eventType: 'FINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false ,'DONATIONSERVICE' : false};
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
   apptPersonsahead;
+  donatPersonsahead ;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -167,6 +172,19 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
         this.cSettings['FINAL_APPT'] = true;
         this.finalAPPTNotificationSettings = notificationObj;
+      }  else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['DONATIONSERVICE'] = true;
+        this.donatAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['EARLY_APPT'] = true;
+        this.earlyDONATNotificatonSettings = notificationObj;
+        this.donatPersonsahead = (notificationObj['personsAhead']) ? true : false;
+      } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['PREFINAL_APPT'] = true;
+        this.prefinalDONATNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['FINAL_APPT'] = true;
+        this.finalDONATNotificationSettings = notificationObj;
       }
     });
   }
@@ -197,6 +215,8 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
+    } else if (type === 'DONATIONSERVICE') {
+      activeInput = this.finalDONATNotificationSettings;
     }
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(

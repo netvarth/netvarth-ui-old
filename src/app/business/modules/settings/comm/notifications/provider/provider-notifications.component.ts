@@ -707,7 +707,7 @@ export class ProviderNotificationsComponent implements OnInit {
     if (!this.selDonatnNotify) {
       this.donateem_arr = [];
       this.donateph_arr = [];
-      this.donatePush = false;
+      this.donatePush = false; 
     }
     this.savechekinNotification_json.resourceType = 'DONATION';
     this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
