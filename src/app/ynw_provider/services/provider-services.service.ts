@@ -916,6 +916,20 @@ export class ProviderServices {
       const url = 'provider/account/settings/smsCount';
       return this.servicemeta.httpGet(url);
    }
+   getUserConsumerNotificationSettings(filter) {
+      // const url = 'provider/consumerNotification/settings/' + id;
+      // return this.servicemeta.httpGet(url);
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   saveUserConsumerNotificationSettings(data) {
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateUserConsumerNotificationSettings(data) {
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpPut(url, data);
+   }
    getConsumerNotificationSettings() {
       const url = 'provider/consumerNotification/settings';
       return this.servicemeta.httpGet(url);

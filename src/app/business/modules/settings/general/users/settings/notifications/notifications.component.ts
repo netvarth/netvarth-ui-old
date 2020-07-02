@@ -88,9 +88,9 @@ export class NotificationsUserComponent implements OnInit {
                 this.breadcrumbs = breadcrumbs;
             });
     }
-    // gotoConsumer() {
-    //     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'notifications', 'consumer']);
-    // }
+    gotoConsumer() {
+        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'notifications', 'consumer'], this.userId);
+    }
     gotoProvider() {
         this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'notifications', 'provider'], this.userId);
     }
