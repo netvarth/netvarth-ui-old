@@ -145,6 +145,24 @@
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
+                                    <li *ngIf="!isInFav && !userId">
+                                        <a class='like-button' (click)="handle_Fav('add')">
+                                            <span class='like-icon'>
+                                              <div class='heart-animation-1'></div>
+                                              <div class='heart-animation-2'></div>
+                                            </span>
+                                            {{add_to_fav_cap}}
+                                          </a>
+                                    </li>
+                                    <li *ngIf="isInFav && !userId">
+                                        <a class='like-button' (click)="doRemoveFav()">
+                                            <span class='like-icon'>
+                                              <div class='heart-animation-1'></div>
+                                              <div class='heart-animation-2'></div>
+                                            </span>
+                                            {{rem_from_fav_cap}}
+                                          </a>
+                                    </li>
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -155,10 +173,12 @@
                                     <!-- <li *ngIf="userType !== 'provider'"><span class="icon-history"
                                             (click)="redirectToHistory()">{{history_cap}}</span>
                                     </li> -->
-                                    <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
+                                   
+                                    
+                                    <!-- <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
-                                            (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
+                                            (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li> -->
                                     <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
                                 </ul>
