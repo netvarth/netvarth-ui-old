@@ -10169,3 +10169,16 @@ a {
             transform: translate(2px, -18px) rotate(-25deg);
   }
 }
+.textcenter {
+  text-align: center;
+}
+.pay {
+  height: auto;
+  background: transparent;
+  border: 1px solid #00aef2;
+  padding: 5px 15px;
+  color: #00aef2;
+  font-size: .75rem;
+  font-weight: 600;
+  border-radius: 5px;   
+}

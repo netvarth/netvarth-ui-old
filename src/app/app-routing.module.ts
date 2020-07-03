@@ -11,6 +11,7 @@ import { AdminLoginComponent } from './shared/components/admin/login/login.compo
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { ConsumerJoinComponent } from './ynw_consumer/components/consumer-join/join.component';
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
+import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -45,6 +46,7 @@ const routes: Routes = [
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
+    { path: 'pay/:id', component: PaymentLinkComponent },
     // { path: '**', redirectTo: 'not-found' }
 ];
 @NgModule({

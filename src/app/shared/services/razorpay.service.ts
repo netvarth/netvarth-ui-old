@@ -77,6 +77,9 @@ export class RazorpayService {
                 } else if (checkin_type === 'donations') {
                   this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                   this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));
+                } else if (checkin_type === 'payment_link') {
+                  console.log(checkin_type);
+                this.ngZone.run(() => this.router.navigate([ 'pay' , livetrack] , navigationExtras));
                 } else if (checkin_type === 'checkin_prepayment') {
                   console.log(livetrack);
                   if (livetrack === true) {

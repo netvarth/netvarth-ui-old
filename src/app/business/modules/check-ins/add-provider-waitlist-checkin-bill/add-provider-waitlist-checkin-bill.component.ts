@@ -14,6 +14,7 @@ import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/c
 import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { ConfirmPatmentLinkComponent } from '../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -201,6 +202,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   isItem;
   source;
   pos = false;
+  emailId: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -282,6 +284,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          this.emailId = this.checkin.providerConsumer.email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -308,6 +311,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -1266,6 +1270,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       this.settleBill();
     }
+  }
+  paymentlink() {
+    const dialogrefd = this.dialog.open(ConfirmPatmentLinkComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        mobilenumber: this.bill_data.billFor.alternativePhoneNo,
+        emailId: this.emailId,
+        // mobilenumber : this.checkin.waitlistPhoneNumber,
+        uuid : this.uuid
+      }
+    });
   }
 
   changeDate(time) {

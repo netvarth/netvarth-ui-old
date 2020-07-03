@@ -1475,4 +1475,16 @@ export class ProviderServices {
    getAccountSchedules(filter?) {
       return this.servicemeta.httpGet('provider/appointment/schedule', null, filter);
    }
+   Paymentlink(data) {
+      const url = 'provider/payment/paylink/generate';
+      return this.servicemeta.httpPost(url, data);
+   }
+   Paymentlinkcheck(uuid) {
+      const url = 'consumer/bill/pay/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   linkPayment(data) {
+      const url = 'provider/payment/paylink/order/create';
+      return this.servicemeta.httpPost(url, data);
+   }
 }

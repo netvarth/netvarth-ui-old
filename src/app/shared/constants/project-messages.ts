@@ -198,6 +198,7 @@ export const Messages = {
   'PROVIDER_BILL_EMAIL': 'Bill emailed successfully',
   'PROVIDER_BILL_PAYMENT': 'Payment completed successfully',
   'PROVIDER_BILL_PAYMENT_SELFPAY': 'Notification has been sent to the consumer',
+  'PROVIDER_BILL_PAYMENT_link': 'Link has been sent to the consumer',
   'PROVIDER_BILL_SETTLE_CONFIRM': 'Do you want to settle this bill?',
   'PROVIDER_ALERT_ACK_SUCC': 'Acknowledged Successfully',
   'CHECKIN_SUCC': 'You have [waitlisted] successfully',
