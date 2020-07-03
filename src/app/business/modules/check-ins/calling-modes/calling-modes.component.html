@@ -30,7 +30,7 @@
                     </button>
                 </div>
                 <div *ngIf="callingModes === 'Phone'">
-                    <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
+                    <button  (click)="asktoLaunch()" class="disabled cs-btn bt1">
                         <i class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>
                         <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Call</a>
                     </button>
