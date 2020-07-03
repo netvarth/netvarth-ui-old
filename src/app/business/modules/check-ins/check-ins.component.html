@@ -495,7 +495,8 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allAgeSlected" (change)="setFilterDataCheckbox('age', 'all', $event)">
+                                    <mat-checkbox [checked]="allAgeSlected"
+                                      (change)="setFilterDataCheckbox('age', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -519,7 +520,8 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allGenderSlected" (change)="setFilterDataCheckbox('gender', 'all', $event)">
+                                    <mat-checkbox [checked]="allGenderSlected"
+                                      (change)="setFilterDataCheckbox('gender', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -538,11 +540,13 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allServiceSelected" (change)="setFilterDataCheckbox('service', 'all', $event)">
+                                    <mat-checkbox [checked]="allServiceSelected"
+                                      (change)="setFilterDataCheckbox('service', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox *ngFor="let service of services" [checked]="allServiceSelected || filterService.indexOf(service.id) !== -1"
+                                    <mat-checkbox *ngFor="let service of services"
+                                      [checked]="allServiceSelected || filterService.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
                                       {{service.name}}</mat-checkbox>
                                   </li>
@@ -552,12 +556,14 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected" (change)="setFilterDataCheckbox('waitlist_status', 'all', $event)">
+                                    <mat-checkbox [checked]="allApptStatusSelected"
+                                      (change)="setFilterDataCheckbox('waitlist_status', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let appt_status of check_in_statuses_filter">
-                                    <mat-checkbox [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
+                                    <mat-checkbox
+                                      [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
                                       (change)="setFilterDataCheckbox('waitlist_status', appt_status.value, $event)">
                                       {{appt_status.displayName}}</mat-checkbox>
                                   </li>
@@ -567,12 +573,14 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected" (change)="setFilterDataCheckbox('waitlist_status', 'all', $event)">
+                                    <mat-checkbox [checked]="allApptStatusSelected"
+                                      (change)="setFilterDataCheckbox('waitlist_status', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let appt_status of future_check_in_statuses_filter">
-                                    <mat-checkbox [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
+                                    <mat-checkbox
+                                      [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
                                       (change)="setFilterDataCheckbox('waitlist_status', appt_status.value, $event)">
                                       {{appt_status.displayName}}</mat-checkbox>
                                   </li>
@@ -582,12 +590,14 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allPayStatusSelected" (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                                    <mat-checkbox [checked]="allPayStatusSelected"
+                                      (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let pay_status of payStatusList">
-                                    <mat-checkbox [checked]="allPayStatusSelected || paymentStatuses.indexOf(pay_status.pk) !== -1"
+                                    <mat-checkbox
+                                      [checked]="allPayStatusSelected || paymentStatuses.indexOf(pay_status.pk) !== -1"
                                       (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
                                       {{pay_status.value}}</mat-checkbox>
                                   </li>
@@ -597,7 +607,8 @@
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('waitlistMode', 'all', $event)">
+                                    <mat-checkbox [checked]="allModeSelected"
+                                      (change)="setFilterDataCheckbox('waitlistMode', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
