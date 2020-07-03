@@ -115,7 +115,7 @@ export class ProviderNotificationUserComponent implements OnInit {
           url: '/provider/settings/general/users/' + this.userId + '/settings/notifications'
         });
         breadcrumbs.push({
-          title: 'Provider'
+          title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
         });
         this.breadcrumbs = breadcrumbs;
       });

@@ -113,7 +113,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
           url: '/provider/settings/general/users/' + this.userId + '/settings/notifications'
         });
         breadcrumbs.push({
-          title: 'Consumer'
+          title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
         });
         this.breadcrumbs = breadcrumbs;
       });
