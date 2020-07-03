@@ -16,7 +16,18 @@
                                 <span class="editbt" (click)="addEditProviderQueue()"
                                     *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
-                                    <div class="row col-sm-12 padleft">
+                                        <div class="row col-sm-12 padleft" style="display: flex;">
+                                                <h4>{{queue_data.name | capitalizeFirst}}</h4>
+                                                <span class="tspace">
+                                                    <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
+                                                        (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
+                                                </span>
+                                                <span class='greenc mgn-lt-5'
+                                                    *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
+                                                <span class='disabled mgn-lt-5'
+                                                    *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
+                                            </div>
+                                    <!-- <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
                                         <span class="tspace">
                                             <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
@@ -28,7 +39,7 @@
                                             *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
                                         <span class='disabled'
                                             *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
-                                    </div>
+                                    </div> -->
                                     <div class="row col-sm-12 workpading">
                                         <div class="c-ot row col-sm-12">
                                             <div class="item schedule"
