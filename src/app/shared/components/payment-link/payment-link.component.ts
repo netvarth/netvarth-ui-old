@@ -255,7 +255,8 @@ export class PaymentLinkComponent implements OnInit {
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
-      'purpose': 'prePayment'
+      'purpose': 'prePayment',
+      'source': 'Desktop'
         };
     this.provider_services.linkPayment(postdata)
     .subscribe((data: any) => {
