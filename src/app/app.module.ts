@@ -74,6 +74,8 @@ import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
+import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -102,7 +104,8 @@ export function init_app(globalService: GlobalService) {
     ConsumerPaymentmodeComponent,
     ManageProviderComponent,
     CheckYourStatusComponent,
-    JdnComponent
+    PaymentLinkComponent,
+    JdnComponent,
     // PhomeComponent,
   ],
   entryComponents: [

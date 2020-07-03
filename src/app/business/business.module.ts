@@ -47,6 +47,7 @@ import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/con
 import { CustomerModule } from './modules/customer/customer.module';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderErrorMesagePopupComponent } from './modules/provider-error-message-popup/provider-error-message-popup.component';
+import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 
 @NgModule({
     declarations: [
@@ -69,6 +70,7 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
         ProviderMembersComponent,
         AddProviderMemberComponent,
         ConfirmPaymentBoxComponent,
+        ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent
     ],
@@ -98,6 +100,7 @@ import { ProviderErrorMesagePopupComponent } from './modules/provider-error-mess
         ConfirmBoxComponent,
         AddProviderMemberComponent,
         ConfirmPaymentBoxComponent,
+        ConfirmPatmentLinkComponent,
         ProviderWaitlistCheckInCancelPopupComponent,
         ProviderErrorMesagePopupComponent
     ],
