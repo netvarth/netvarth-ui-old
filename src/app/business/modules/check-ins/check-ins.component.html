@@ -88,188 +88,9 @@
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown notifications-menu pull-right">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
-                    <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip">
-                    </i>
-                  </a>
-                </li>
-                <aside class="filterSidebar" *ngIf="filter_sidebar">
-                  <section class="sidebar sidebar-bottom">
-                    <div class="filterClosebtn">
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                      <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
-                    </div>
-                    <ul class="sidebar-menu">
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
-                        </li>
-                      </div>
-                      <div class="filterTextinput">
-                        <li class="filterli">
-                          <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
-                        </li>
-                      </div>
-                      <div class="filterTextinput" *ngIf="time_type == 3">
-                        <li class="filterli">
-                          <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile (blur)="doSearch()"
-                            (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
-                            class="filterTextbox" placeholder="Phone Number">
-                        </li>
-                      </div>
-                      <div *ngIf="time_type == 3">
-                        <label class="filterHeaders">Age Group</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox>
-                                    kids</mat-checkbox>
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox>
-                                Adults</mat-checkbox>
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox>
-                            Senior citizen</mat-checkbox>
-                    </li>
-                      </div>
-                      <div *ngIf="time_type == 3">
-                        <label class="filterHeaders">Gender</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox>
-                                    Male</mat-checkbox>
-                            </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox>
-                                Female</mat-checkbox>
-                        </li>
-                      </div>
-                      <div *ngIf="time_type == 3">
-                        <label class="filterHeaders">Schedules</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox>
-                                    Schedule 1</mat-checkbox>
-                            </li>
-                      </div>
-                      <div>
-                        <label class="filterHeaders">Services</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox>
-                                    Service 1</mat-checkbox>
-                            </li>
-                      </div>
-                      <div *ngIf="time_type !== 1">
-                        <label class="filterHeaders">Status</label>
-                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                        </li>
-                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                  <mat-checkbox>
-                                    Checked-in</mat-checkbox>
-                            </li>
-                            <li *ngIf="time_type !== 2"  class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox>
-                                Arrived</mat-checkbox>
-                        </li>
-                        <li *ngIf="time_type !== 2" class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox>
-                             Started</mat-checkbox>
-                        </li>
-                        <li *ngIf="time_type !== 2" class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox>
-                            Completed</mat-checkbox>
-                    </li>
-                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                      <mat-checkbox>
-                        Cancelled</mat-checkbox>
+                  
                 </li>
                 
-                        </div>
-                        <div *ngIf="time_type == 3">
-                          <label class="filterHeaders">Payment Status</label>
-                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                          </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox>
-                                      All</mat-checkbox>
-                              </li>
-                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox>
-                                  Not Paid</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                              <mat-checkbox>
-                               Partially Paid</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox>
-                             Fully Paid</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox>
-                             Refund</mat-checkbox>
-                          </li>
-                          </div>
-
-                      <div>
-                      <label class="filterHeaders">Checkin Mode</label>
-                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                      </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox>
-                                  All</mat-checkbox>
-                          </li>
-                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                            <mat-checkbox>
-                              Walk-in</mat-checkbox>
-                      </li>
-                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox>
-                           Phone-In</mat-checkbox>
-                      </li>
-                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                        <mat-checkbox>
-                         Online</mat-checkbox>
-                      </li>
-                      </div>
-                      <div class="filterTextinput" *ngIf="time_type == 3">
-                        <li class="filterli filterDatepicker">
-                          <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
-                            #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
-                          <mat-datepicker-toggle matSuffix [for]="picker">
-                          </mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </li>
-                      </div>
-                      <div class="filterTextinput" *ngIf="time_type == 3">
-                        <li class="filterli filterDatepicker">
-                          <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
-                            #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
-                          <mat-datepicker-toggle matSuffix [for]="picker">
-                          </mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </li>
-                      </div>
-                      <!-- <div class="filterTextinput" *ngIf="time_type !== 1">
-                        <li class="filterli filterDatepicker">
-                          <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                            (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
-                        </li>
-                      </div> -->
-                    </ul>
-                  </section>
-                </aside>
               </ul>
             </div>
           </nav>
@@ -630,6 +451,192 @@
                               </ul>
                             </span>
                           </a>
+                        </div>
+                        <div>
+                          <div class="pull-right">
+                            <a class="icon-action pointer-cursor icon-size1" data-toggle="control-sidebar">
+                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip">
+                              </i>
+                            </a>
+                          </div>
+                          
+                          <aside class="filterSidebar" *ngIf="filter_sidebar">
+                            <section class="sidebar sidebar-bottom">
+                              <div class="filterClosebtn">
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                              </div>
+                              <ul class="sidebar-menu">
+                                <div class="filterTextinput">
+                                  <li class="filterli">
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput">
+                                  <li class="filterli">
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile (blur)="doSearch()"
+                                      (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
+                                      class="filterTextbox" placeholder="Phone Number">
+                                  </li>
+                                </div>
+                                <div *ngIf="time_type == 3">
+                                  <label class="filterHeaders">Age Group</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox>
+                                              kids</mat-checkbox>
+                                      </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <mat-checkbox>
+                                          Adults</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox>
+                                      Senior citizen</mat-checkbox>
+                              </li>
+                                </div>
+                                <div *ngIf="time_type == 3">
+                                  <label class="filterHeaders">Gender</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox>
+                                              Male</mat-checkbox>
+                                      </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <mat-checkbox>
+                                          Female</mat-checkbox>
+                                  </li>
+                                </div>
+                                <div *ngIf="time_type == 3">
+                                  <label class="filterHeaders">Schedules</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox>
+                                              Schedule 1</mat-checkbox>
+                                      </li>
+                                </div>
+                                <div>
+                                  <label class="filterHeaders">Services</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox>
+                                              Service 1</mat-checkbox>
+                                      </li>
+                                </div>
+                                <div *ngIf="time_type !== 1">
+                                  <label class="filterHeaders">Status</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox>
+                                              Checked-in</mat-checkbox>
+                                      </li>
+                                      <li *ngIf="time_type !== 2"  class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <mat-checkbox>
+                                          Arrived</mat-checkbox>
+                                  </li>
+                                  <li *ngIf="time_type !== 2" class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox>
+                                       Started</mat-checkbox>
+                                  </li>
+                                  <li *ngIf="time_type !== 2" class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox>
+                                      Completed</mat-checkbox>
+                              </li>
+                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                <mat-checkbox>
+                                  Cancelled</mat-checkbox>
+                          </li>
+                          
+                                  </div>
+                                  <div *ngIf="time_type == 3">
+                                    <label class="filterHeaders">Payment Status</label>
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                              <mat-checkbox>
+                                                All</mat-checkbox>
+                                        </li>
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                          <mat-checkbox>
+                                            Not Paid</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <mat-checkbox>
+                                         Partially Paid</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox>
+                                       Fully Paid</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox>
+                                       Refund</mat-checkbox>
+                                    </li>
+                                    </div>
+          
+                                <div>
+                                <label class="filterHeaders">Checkin Mode</label>
+                                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                          <mat-checkbox>
+                                            All</mat-checkbox>
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                      <mat-checkbox>
+                                        Walk-in</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox>
+                                     Phone-In</mat-checkbox>
+                                </li>
+                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                  <mat-checkbox>
+                                   Online</mat-checkbox>
+                                </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli filterDatepicker">
+                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli filterDatepicker">
+                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                                      #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </li>
+                                </div>
+                                <!-- <div class="filterTextinput" *ngIf="time_type !== 1">
+                                  <li class="filterli filterDatepicker">
+                                    <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                                      (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
+                                  </li>
+                                </div> -->
+                              </ul>
+                            </section>
+                          </aside>
                         </div>
                       </th>
                     </tr>
