@@ -431,6 +431,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+    if (this.showSlotsN) {
+      this.showSlots('show');
+    }
     this.loadApiSwitch('reloadAPIs');
   }
   setSystemDate() {
@@ -2341,8 +2344,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qr_value = this.path + 'status/' + valuetogenerate.appointmentEncId;
     this.showQR = true;
   }
-  showSlots() {
-    this.showSlotsN = !this.showSlotsN;
+  showSlots(show?) {
+    if (!show) {
+      this.showSlotsN = !this.showSlotsN;
+    }
     let date;
     this.slotsForQ = [];
     if (this.time_type === 1) {
