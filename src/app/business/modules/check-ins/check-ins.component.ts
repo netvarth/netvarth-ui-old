@@ -12,6 +12,8 @@ import { filter, pairwise } from 'rxjs/operators';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { CallingModesComponent } from './calling-modes/calling-modes.component';
+import { KeyValue } from '@angular/common';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -237,6 +239,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   allAgeSlected = false;
   genderList: any = [];
   filterService: any = [];
+  consumr_id: any;
+  notedialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2003,4 +2007,33 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
   }
+
+  showCallingModes(modes, action) {
+    console.log(modes)
+    if (!modes.consumer) {
+      this.consumr_id = modes.providerConsumer.id;
+    } else {
+      this.consumr_id = modes.consumer.id;
+    }
+    // this.changeWaitlistStatus(modes, action);
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes.virtualService,
+        uuid: modes.ynwUuid,
+        consumerid: this.consumr_id,
+        qdata: modes,
+        type: 'checkin'
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
+  originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+    return 0;
+}
 }

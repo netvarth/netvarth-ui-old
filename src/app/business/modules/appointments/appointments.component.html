@@ -830,6 +830,12 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
+                        <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(appt, 'Started')">
+                        <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                        <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
+                        <span *ngIf="!small_device_display">Teleservice</span>
+                      </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">

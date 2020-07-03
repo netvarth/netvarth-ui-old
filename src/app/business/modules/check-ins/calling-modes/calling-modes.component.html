@@ -17,10 +17,22 @@
                         <span style="padding-left: 20px;">Launch WhatsApp</span>
                     </button>
                 </div>
-                <div *ngIf="callingModes !== 'WhatsApp'">
+                <div *ngIf="callingModes === 'Zoom'">
                     <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
                         <img src="https://img.icons8.com/color/16/000000/zoom.png" />
                         <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Zoom</a>
+                    </button>
+                </div>
+                <div *ngIf="callingModes === 'GoogleMeet'">
+                    <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
+                        <img class="tool-pading" src="https://img.icons8.com/ultraviolet/16/000000/video-message.png"/>
+                        <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Google Meet</a>
+                    </button>
+                </div>
+                <div *ngIf="callingModes === 'Phone'">
+                    <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
+                        <i class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>
+                        <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Call</a>
                     </button>
                 </div>
                 <div class="coupon-outer">

@@ -258,6 +258,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   service_list: any = [];
   allServiceSelected = false;
   services: any = [];
+  consumr_id: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2062,33 +2063,33 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     _this.provider_shared_functions.changeWaitlistStatus(_this, appmt, action, 'appt');
   }
-  showCallingModes(action) {
-    const _this = this;
-    let checkin;
-    _this.changeWaitlistStatus(action);
-    Object.keys(_this.apptsChecked).forEach(slotIndex => {
-      Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-        checkin = _this.apptsChecked[slotIndex][apptIndex];
-      });
-    });
-    _this.provider_shared_functions.changeWaitlistStatus(_this, checkin, action, 'appt');
-    _this.notedialogRef = _this.dialog.open(CallingModesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        modes: checkin.virtualService,
-        uuid: checkin.uid,
-        consumerid: checkin.consumer.id,
-        qdata: checkin,
-        type: 'appt'
-      }
-    });
-    _this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
-  }
+  // showCallingModes(action) {
+  //   const _this = this;
+  //   let checkin;
+  //   _this.changeWaitlistStatus(action);
+  //   Object.keys(_this.apptsChecked).forEach(slotIndex => {
+  //     Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
+  //       checkin = _this.apptsChecked[slotIndex][apptIndex];
+  //     });
+  //   });
+  //   _this.provider_shared_functions.changeWaitlistStatus(_this, checkin, action, 'appt');
+  //   _this.notedialogRef = _this.dialog.open(CallingModesComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       modes: checkin.virtualService,
+  //       uuid: checkin.uid,
+  //       consumerid: checkin.consumer.id,
+  //       qdata: checkin,
+  //       type: 'appt'
+  //     }
+  //   });
+  //   _this.notedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
+  //     }
+  //   });
+  // }
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
@@ -2561,5 +2562,29 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         () => { }
       );
+  }
+  showCallingModes(modes, action) {
+    if (!modes.consumer) {
+      this.consumr_id = modes.providerConsumer.id;
+    } else {
+      this.consumr_id = modes.consumer.id;
+    }
+    // this.changeWaitlistStatus(modes, action);
+    this.notedialogRef = this.dialog.open(CallingModesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        modes: modes.virtualService,
+        uuid: modes.ynwUuid,
+        consumerid: this.consumr_id,
+        qdata: modes,
+        type: 'appt'
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

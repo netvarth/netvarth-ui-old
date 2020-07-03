@@ -736,6 +736,14 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
+                        <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
+                              <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                              <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
+                              <!-- <img *ngIf="(checkin.virtualService | keyvalue: originalOrder) === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/18/000000/video-message.png"/> -->
+                              <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
+                              <span *ngIf="!small_device_display">Teleservice</span>
+                            </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                           *ngIf="checkin.waitlistStatus == 'started'">
