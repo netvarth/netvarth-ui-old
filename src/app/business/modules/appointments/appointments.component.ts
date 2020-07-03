@@ -1143,6 +1143,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getTodayAppointmentsCount(Mfilter);
     promise.then(
       result => {
+        this.chkSelectAppointments = false;
         this.provider_services.getTodayAppointments(Mfilter)
           .subscribe(
             (data: any) => {
