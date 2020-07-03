@@ -79,6 +79,9 @@ export class BranchUserDetailComponent implements OnInit {
     dept: any;
     subDom;
     deptLength;
+    subsector;
+    sector;
+    selectedsubDomain: any = [];
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -112,6 +115,8 @@ export class BranchUserDetailComponent implements OnInit {
         }
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.subsector = user.subSector;
+        this.sector = user.sector;
         if (bConfig && bConfig.bdata) {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
@@ -137,6 +142,34 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
+        this.selectedsubDomain = [];
+        for (const subdomain of this.subDomains) {
+        if (this.sector === 'healthCare') {
+                if (this.subsector === 'hospital') {
+                    if (subdomain.subDomain === 'physiciansSurgeons') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                } else if (this.subsector === 'dentalHosp') {
+                    if (subdomain.subDomain === 'dentists') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                } else if (this.subsector === 'alternateMedicineHosp') {
+                    if (subdomain.subDomain === 'alternateMedicinePractitioners') {
+                        this.selectedsubDomain.push(subdomain);
+                    }
+                }
+                
+            }
+            else if (this.sector === 'personalCare') {
+                if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                }  else if (subdomain.subDomain === this.subsector) {
+                    this.selectedsubDomain.push(subdomain);
+                } 
+            }
+        } 
     }
     createForm() {
         this.userForm = this.fb.group({
@@ -214,6 +247,10 @@ export class BranchUserDetailComponent implements OnInit {
 
     }
     onSubmit(input) {
+        
+        console.log(this.selectedsubDomain[0].id);
+        console.log(this.subsector);
+        console.log(this.subDomains);
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -256,7 +293,7 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
            // post_data1['subdomain'] = input.selectedSubDomain;
-           post_data1['subdomain'] = this.subDomains[0].id || 0;
+           post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
