@@ -86,7 +86,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     appointmentMode: 'all',
     queue: 'all',
     service: 'all',
-    appt_status: 'all',
+    apptStatus: 'all',
     payment_status: 'all',
     check_in_start_date: null,
     check_in_end_date: null,
@@ -94,8 +94,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
     future_appt_date: null,
-    age: '',
-    gender: ''
+    age: 'all',
+    gender: 'all'
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -104,7 +104,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     appointmentMode: false,
     queue: false,
     service: false,
-    appt_status: false,
+    apptStatus: false,
     payment_status: false,
     check_in_start_date: false,
     check_in_end_date: false,
@@ -218,7 +218,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   appointmentModes = [
     { mode: 'WALK_IN_APPOINTMENT', value: 'Walk in Appointment' },
-    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone Appointment' },
+    { mode: 'PHONE_IN_APPOINTMENT', value: 'Phone in Appointment' },
     { mode: 'ONLINE_APPOINTMENT', value: 'Online Appointment' },
   ];
   notedialogRef;
@@ -245,6 +245,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showSlotsN = false;
   slotsForQ: any = [];
   filter_sidebar = false;
+  apptModes: any = [];
+  paymentStatuses: any = [];
+  apptStatuses: any = [];
+  ageGroups: any = [];
+  allModeSelected = false;
+  allPayStatusSelected = false;
+  allApptStatusSelected = false;
+  allGenderSlected = false;
+  allAgeSlected = false;
+  genderList: any = [];
+  service_list: any = [];
+  allServiceSelected = false;
+  services: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -313,13 +326,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getLabel();
     this.getDisplayboardCount();
     this.getLocationList();
+    this.getServices();
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
-}
-hideFilterSidebar() {
+  }
+  hideFilterSidebar() {
     this.filter_sidebar = false;
-}
+  }
   initViews(schedules, source?) {
     const _this = this;
     this.views = [];
@@ -688,7 +702,7 @@ hideFilterSidebar() {
       appointmentMode: false,
       queue: false,
       service: false,
-      appt_status: false,
+      apptStatus: false,
       payment_status: false,
       check_in_start_date: false,
       check_in_end_date: false,
@@ -703,7 +717,7 @@ hideFilterSidebar() {
       appointmentMode: 'all',
       queue: 'all',
       service: 'all',
-      appt_status: 'all',
+      apptStatus: 'all',
       payment_status: 'all',
       check_in_start_date: null,
       check_in_end_date: null,
@@ -711,8 +725,8 @@ hideFilterSidebar() {
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
       future_appt_date: null,
-      age: '',
-      gender: ''
+      age: 'all',
+      gender: 'all'
     };
     this.statusMultiCtrl = [];
   }
@@ -761,6 +775,7 @@ hideFilterSidebar() {
   }
   setTimeType(time_type) {
     this.statusMultiCtrl = [];
+    this.hideFilterSidebar();
     this.resetCheckList();
     if (time_type === 2) {
       this.getTomorrowDate();
@@ -778,7 +793,6 @@ hideFilterSidebar() {
       this.resetPaginationData();
     } else {
       const selectedView = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
-      console.log(this.getQIdsFromView(selectedView));
       this.selQidsforHistory = this.getQIdsFromView(selectedView);
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
     }
@@ -1123,7 +1137,6 @@ hideFilterSidebar() {
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    console.log(Mfilter);
     const promise = this.getTodayAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1332,14 +1345,14 @@ hideFilterSidebar() {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
-    if (this.filter.service !== 'all') {
-      api_filter['service-eq'] = this.filter.service;
+    if (this.services.length > 0 && this.filter.service !== 'all') {
+      api_filter['service-eq'] = this.services.toString();
     }
-    if (this.statusMultiCtrl.length > 0) {
-      api_filter['apptStatus-eq'] = this.statusMultiCtrl.join(',');
+    if (this.apptStatuses.length > 0 && this.filter.apptStatus !== 'all') {
+      api_filter['apptStatus-eq'] = this.apptStatuses.toString();
     }
-    if (this.filter.appointmentMode !== 'all') {
-      api_filter['appointmentMode-eq'] = this.filter.appointmentMode;
+    if (this.apptModes.length > 0 && this.filter.appointmentMode !== 'all') {
+      api_filter['appointmentMode-eq'] = this.apptModes.toString();
     }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
@@ -1358,23 +1371,38 @@ hideFilterSidebar() {
       }
     }
     if (this.time_type === 3) {
-      if (this.filter.payment_status !== 'all') {
-        api_filter['paymentStatus-eq'] = this.filter.payment_status;
+      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+        api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
-      if (this.filter.age !== '') {
+      if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
         const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
-        if (this.filter.age === 'kids') {
+        if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') === -1) {
           api_filter['dob-ge'] = kids;
-        } else if (this.filter.age === 'adults') {
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
           api_filter['dob-le'] = kids;
           api_filter['dob-ge'] = adults;
-        } else if (this.filter.age === 'senior') {
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
           api_filter['dob-le'] = adults;
+        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
+          api_filter['dob-ge'] = adults;
+        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
+          api_filter['dob-le'] = adults;
+          api_filter['dob-ge'] = kids;
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') !== -1) {
+          api_filter['dob-le'] = kids;
         }
+        // if (this.filter.age === 'kids') {
+        //   api_filter['dob-ge'] = kids;
+        // } else if (this.filter.age === 'adults') {
+        //   api_filter['dob-le'] = kids;
+        //   api_filter['dob-ge'] = adults;
+        // } else if (this.filter.age === 'senior') {
+        //   api_filter['dob-le'] = adults;
+        // }
       }
-      if (this.filter.gender !== '') {
-        api_filter['gender-eq'] = this.filter.gender;
+      if (this.genderList.length > 0 && this.filter.gender !== 'all') {
+        api_filter['gender-eq'] = this.genderList.toString();
       }
     }
     if (this.selected_location && this.selected_location.id) {
@@ -1389,14 +1417,16 @@ hideFilterSidebar() {
   }
   doSearch() {
     this.labelSelection();
+    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
-      || this.filter.check_in_end_date !== null || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
+      || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   getSingleTime(slot) {
@@ -1648,7 +1678,7 @@ hideFilterSidebar() {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'appointmentMode') {
         this.filter[type] = 'all';
-      } else if (type === 'appt_status') {
+      } else if (type === 'apptStatus') {
         this.statusMultiCtrl = [];
       } else {
         this.filter[type] = '';
@@ -1838,6 +1868,113 @@ hideFilterSidebar() {
   setFilterData(type, value) {
     this.filter[type] = value;
     this.resetPaginationData();
+    this.doSearch();
+  }
+  setFilterDataCheckbox(type, value, event) {
+    this.filter[type] = value;
+    this.resetPaginationData();
+    if (type === 'age') {
+      if (value === 'all') {
+        this.ageGroups = [];
+        if (event.checked) {
+          this.allAgeSlected = true;
+        } else {
+          this.allAgeSlected = false;
+        }
+      } else {
+        const indx = this.ageGroups.indexOf(value);
+        if (indx === -1) {
+          this.ageGroups.push(value);
+        } else {
+          this.ageGroups.splice(indx, 1);
+        }
+      }
+    }
+    if (type === 'gender') {
+      if (value === 'all') {
+        this.genderList = [];
+        if (event.checked) {
+          this.allGenderSlected = true;
+        } else {
+          this.allGenderSlected = false;
+        }
+      } else {
+        const indx = this.genderList.indexOf(value);
+        if (indx === -1) {
+          this.genderList.push(value);
+        } else {
+          this.genderList.splice(indx, 1);
+        }
+      }
+    }
+    if (type === 'appointmentMode') {
+      if (value === 'all') {
+        this.apptModes = [];
+        if (event.checked) {
+          this.allModeSelected = true;
+        } else {
+          this.allModeSelected = false;
+        }
+      } else {
+        const indx = this.apptModes.indexOf(value);
+        if (indx === -1) {
+          this.apptModes.push(value);
+        } else {
+          this.apptModes.splice(indx, 1);
+        }
+      }
+    }
+    if (type === 'paymentStatus') {
+      if (value === 'all') {
+        this.paymentStatuses = [];
+        if (event.checked) {
+          this.allPayStatusSelected = true;
+        } else {
+          this.allPayStatusSelected = false;
+        }
+      } else {
+        const indx = this.paymentStatuses.indexOf(value);
+        if (indx === -1) {
+          this.paymentStatuses.push(value);
+        } else {
+          this.paymentStatuses.splice(indx, 1);
+        }
+      }
+    }
+    if (type === 'apptStatus') {
+      if (value === 'all') {
+        this.apptStatuses = [];
+        if (event.checked) {
+          this.allApptStatusSelected = true;
+        } else {
+          this.allApptStatusSelected = false;
+        }
+      } else {
+        const indx = this.apptStatuses.indexOf(value);
+        if (indx === -1) {
+          this.apptStatuses.push(value);
+        } else {
+          this.apptStatuses.splice(indx, 1);
+        }
+      }
+    }
+    if (type === 'service') {
+      if (value === 'all') {
+        this.services = [];
+        if (event.checked) {
+          this.allServiceSelected = true;
+        } else {
+          this.allServiceSelected = false;
+        }
+      } else {
+        const indx = this.services.indexOf(value);
+        if (indx === -1) {
+          this.services.push(value);
+        } else {
+          this.services.splice(indx, 1);
+        }
+      }
+    }
     this.doSearch();
   }
   showConsumerNote(checkin) {
@@ -2393,5 +2530,15 @@ hideFilterSidebar() {
     this.shared_functions.removeitemFromGroupStorage('appt_selQ');
     this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
     this.resetPaginationData();
+  }
+  getServices() {
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getServicesList(filter1)
+      .subscribe(
+        data => {
+          this.service_list = data;
+        },
+        () => { }
+      );
   }
 }

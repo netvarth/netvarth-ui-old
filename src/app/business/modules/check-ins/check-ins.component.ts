@@ -86,8 +86,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
     futurecheckin_date: null,
-    age: '',
-    gender: ''
+    age: 'all',
+    gender: 'all'
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -224,6 +224,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showUndo = false;
   showRejected = false;
   breadcrumbs_init = {};
+  apptModes: any = [];
+  paymentStatuses: any = [];
+  apptStatuses: any = [];
+  ageGroups: any = [];
+  allModeSelected = false;
+  allPayStatusSelected = false;
+  allApptStatusSelected = false;
+  service_list: any = [];
+  allServiceSelected = false;
+  allGenderSlected = false;
+  allAgeSlected = false;
+  genderList: any = [];
+  filterService: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -267,7 +280,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   waitlistModes = [
     { mode: 'WALK_IN_CHECKIN', value: 'Walk in Check-in' },
-    { mode: 'PHONE_CHECKIN', value: 'Phone Check-in' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in Check-in' },
     { mode: 'ONLINE_CHECKIN', value: 'Online Check-in' },
   ];
   @HostListener('window:resize', ['$event'])
@@ -352,6 +365,131 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         () => { }
       );
+  }
+  setFilterDataCheckbox(type, value, event) {
+    this.filter[type] = value;
+    this.resetPaginationData();
+    if (type === 'gender') {
+      if (value === 'all') {
+        this.genderList = [];
+        if (event.checked) {
+          this.allGenderSlected = true;
+        } else {
+          this.allGenderSlected = false;
+        }
+      } else {
+        const indx = this.genderList.indexOf(value);
+        if (indx === -1) {
+          this.genderList.push(value);
+        } else {
+          this.genderList.splice(indx, 1);
+        }
+      }
+      if (this.genderList.length === 0) {
+        this.filter['gender'] = 'all';
+      }
+    }
+    if (type === 'age') {
+      if (value === 'all') {
+        this.ageGroups = [];
+        if (event.checked) {
+          this.allAgeSlected = true;
+        } else {
+          this.allAgeSlected = false;
+        }
+      } else {
+        const indx = this.ageGroups.indexOf(value);
+        if (indx === -1) {
+          this.ageGroups.push(value);
+        } else {
+          this.ageGroups.splice(indx, 1);
+        }
+      }
+      if (this.ageGroups.length === 0) {
+        this.filter['age'] = 'all';
+      }
+    }
+    if (type === 'waitlistMode') {
+      if (value === 'all') {
+        this.apptModes = [];
+        if (event.checked) {
+          this.allModeSelected = true;
+        } else {
+          this.allModeSelected = false;
+        }
+      } else {
+        const indx = this.apptModes.indexOf(value);
+        if (indx === -1) {
+          this.apptModes.push(value);
+        } else {
+          this.apptModes.splice(indx, 1);
+        }
+      }
+      if (this.apptModes.length === 0) {
+        this.filter['waitlistMode'] = 'all';
+      }
+    }
+    if (type === 'payment_status') {
+      if (value === 'all') {
+        this.paymentStatuses = [];
+        if (event.checked) {
+          this.allPayStatusSelected = true;
+        } else {
+          this.allPayStatusSelected = false;
+        }
+      } else {
+        const indx = this.paymentStatuses.indexOf(value);
+        if (indx === -1) {
+          this.paymentStatuses.push(value);
+        } else {
+          this.paymentStatuses.splice(indx, 1);
+        }
+      }
+      if (this.paymentStatuses.length === 0) {
+        this.filter['payment_status'] = 'all';
+      }
+    }
+    if (type === 'waitlist_status') {
+      if (value === 'all') {
+        this.apptStatuses = [];
+        if (event.checked) {
+          this.allApptStatusSelected = true;
+        } else {
+          this.allApptStatusSelected = false;
+        }
+      } else {
+        const indx = this.apptStatuses.indexOf(value);
+        if (indx === -1) {
+          this.apptStatuses.push(value);
+        } else {
+          this.apptStatuses.splice(indx, 1);
+        }
+      }
+      if (this.apptStatuses.length === 0) {
+        this.filter['waitlist_status'] = 'all';
+      }
+    }
+    if (type === 'service') {
+      if (value === 'all') {
+        this.filterService = [];
+        if (event.checked) {
+          this.allServiceSelected = true;
+        } else {
+          this.allServiceSelected = false;
+        }
+      } else {
+        const indx = this.filterService.indexOf(value);
+        if (indx === -1) {
+          this.filterService.push(value);
+        } else {
+          this.filterService.splice(indx, 1);
+        }
+      }
+      if (this.filterService.length === 0) {
+        this.filter['service'] = 'all';
+      }
+    }
+    this.doSearch();
   }
   getDisplayboardCount() {
     let layout_list: any = [];
@@ -547,7 +685,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch(source);
   }
   getQIdsFromView(view) {
-    console.log(view);
     const qIds = [];
     if (view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
@@ -724,11 +861,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   chkAptHistoryClicked(index, appt) {
-    console.log(this.time_type);
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
-      console.log(appt);
       if (this.time_type === 1 && appt.waitlistStatus === 'checkedIn' && !appt.virtualService) {
         this.showArrived = true;
       }
@@ -818,7 +953,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
-              console.log(this.futureAppointments);
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
@@ -826,7 +960,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               // if (this.selQIds) {
               this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
-              console.log(this.check_in_filtered_list);
               this.setFutureCounts(this.futureAppointments);
               // }
               // this.loading = false;
@@ -897,6 +1030,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setTimeType(time_type) {
     this.statusMultiCtrl = [];
+    this.hideFilterSidebar();
     this.resetCheckList();
     if (time_type === 2) {
       this.getTomorrowDate();
@@ -1200,18 +1334,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
-    if (this.filter.service !== 'all') {
-      api_filter['service-eq'] = this.filter.service;
+    if (this.filterService.length > 0 && this.filter.service !== 'all') {
+      api_filter['service-eq'] = this.filterService.toString();
     }
-    if (this.filter.waitlistMode !== 'all') {
-      api_filter['waitlistMode-eq'] = this.filter.waitlistMode;
+    if (this.apptStatuses.length > 0 && this.filter.waitlist_status !== 'all') {
+      api_filter['waitlistStatus-eq'] = this.apptStatuses.toString();
+    }
+    if (this.apptModes.length > 0 && this.filter.waitlistMode !== 'all') {
+      api_filter['waitlistMode-eq'] = this.apptModes.toString();
     }
     // if (this.filter.waitlist_status !== 'all') {
     //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
     // }
-    if (this.statusMultiCtrl.length > 0) {
-      api_filter['waitlistStatus-eq'] = this.statusMultiCtrl.join(',');
-    }
     if (this.time_type !== 1) {
       if (this.filter.check_in_start_date != null) {
         // api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
@@ -1231,23 +1365,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
-      if (this.filter.payment_status !== 'all') {
-        api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
+      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+        api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }
-      if (this.filter.age !== '') {
+      if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
         const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
-        if (this.filter.age === 'kids') {
+        if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') === -1) {
           api_filter['dob-ge'] = kids;
-        } else if (this.filter.age === 'adults') {
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
           api_filter['dob-le'] = kids;
           api_filter['dob-ge'] = adults;
-        } else if (this.filter.age === 'senior') {
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
           api_filter['dob-le'] = adults;
+        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') === -1) {
+          api_filter['dob-ge'] = adults;
+        } else if (this.ageGroups.indexOf('kids') !== -1 && this.ageGroups.indexOf('adults') === -1 && this.ageGroups.indexOf('senior') !== -1) {
+          api_filter['dob-le'] = adults;
+          api_filter['dob-ge'] = kids;
+        } else if (this.ageGroups.indexOf('kids') === -1 && this.ageGroups.indexOf('adults') !== -1 && this.ageGroups.indexOf('senior') !== -1) {
+          api_filter['dob-le'] = kids;
         }
       }
-      if (this.filter.gender !== '') {
-        api_filter['gender-eq'] = this.filter.gender;
+      if (this.genderList.length > 0 && this.filter.gender !== 'all') {
+        api_filter['gender-eq'] = this.genderList.toString();
       }
     }
     if (this.selected_location && this.selected_location.id) {
@@ -1264,15 +1405,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.labelSelection();
+    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl || this.statusMultiCtrl.length > 0) {
+      || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.waitlist_status !== 'all') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   setFilterDateMaxMin() {
@@ -1319,8 +1462,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
       futurecheckin_date: null,
-      age: '',
-      gender: ''
+      age: 'all',
+      gender: 'all'
     };
     this.statusMultiCtrl = [];
   }
@@ -1545,7 +1688,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
       checkin_details = _this.appointmentsChecked[apptIndex];
     });
-    console.log(checkin_details);
     this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
       .subscribe(
         data => {
