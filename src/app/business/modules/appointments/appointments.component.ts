@@ -1861,9 +1861,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   clearFilter() {
     this.resetFilter();
     this.resetLabelFilter();
+    this.resetFilterValues();
     this.filterapplied = false;
     this.loadApiSwitch('doSearch');
     this.setFilterDateMaxMin();
+  }
+  resetFilterValues() {
+    this.ageGroups = [];
+    this.genderList = [];
+    this.services = [];
+    this.apptStatuses = [];
+    this.paymentStatuses = [];
+    this.apptModes = [];
+    this.allAgeSlected = false;
+    this.allGenderSlected = false;
+    this.allServiceSelected = false;
+    this.allApptStatusSelected = false;
+    this.allPayStatusSelected = false;
+    this.allModeSelected = false;
   }
   setFilterData(type, value) {
     this.filter[type] = value;

@@ -91,13 +91,14 @@
                                                 <div
                                                     *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'">
                                                     <mat-form-field class="example-full-width">
-                                                        <span class="glyphicon glyphicon-search" style="float:right;"></span>
+                                                        <span class="glyphicon glyphicon-search"
+                                                            style="float:right;"></span>
                                                         <input matInput autocomplete="off"
                                                             [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
                                                             (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)"
                                                             (blur)="handleTextrefinefieldBlur($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
-                                                           </mat-form-field>
-                                                   </div>
+                                                    </mat-form-field>
+                                                </div>
 
                                                 <div
                                                     *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum' || refine_data.dataType=='Gender'">
@@ -370,10 +371,14 @@
                                     <div
                                         *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
                                         <b>{{search_result.fields.branch_name}}</b></div>
-                                    <div *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['branchSpCount']"
+                                    <!-- <div *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['branchSpCount']"
                                         class="pointer-cursor" (click)="providerDetClicked(search_result)">
                                         <b>{{search_result.fields['estimatedtime_det']['branchSpCount']}}
                                             {{provider_label}} </b>
+                                    </div> -->
+                                    <div *ngIf="search_result.fields.userCount" class="">
+                                        <b>{{search_result.fields.userCount}}
+                                            {{search_result.fields.provider_label}} </b>
                                     </div>
                                     <span
                                         *ngIf="search_result.fields.place1">{{search_result.fields.place1 | capitalizeFirst }}
