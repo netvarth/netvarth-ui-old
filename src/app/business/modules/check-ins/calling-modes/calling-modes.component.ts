@@ -126,9 +126,6 @@ export class CallingModesComponent implements OnInit {
         this.getMeetingDetails();
     }
     selectHeadsup() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         if (this.callingModes === 'WhatsApp') {
             // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
             this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready';

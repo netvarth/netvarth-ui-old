@@ -701,8 +701,14 @@ export class ConsumerAppointmentComponent implements OnInit {
         // for (let i = 0; i < this.callingModes.length; i++) {
         if (this.callingModes !== '') {
             this.is_wtsap_empty = false;
+            console.log(this.callingModes)
+            console.log(this.sel_ser_det)
             if (this.sel_ser_det.serviceType === 'virtualService') {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                } else {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
             if (this.sel_ser_det.serviceType === 'virtualService') {
@@ -741,9 +747,16 @@ export class ConsumerAppointmentComponent implements OnInit {
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
                     post_Data['virtualService'] = this.virtualServiceArray;
-                } else {
-                    post_Data['virtualService'] = {};
+                } else if (i === 'GoogleMeet') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Zoom') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Phone') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
                 }
+                // else {
+                //     post_Data['virtualService'] = {};
+                // }
             }
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
