@@ -30,9 +30,13 @@
                     </button>
                 </div>
                 <div *ngIf="callingModes === 'Phone'">
-                    <button  (click)="asktoLaunch()" class="disabled cs-btn bt1">
+                    <button *ngIf="!is_web" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}"  (click)="asktoLaunch()">
+                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                        <a class="tspace teli-wtsap-a">Call this number</a>
+                    </button>
+                    <button *ngIf="is_web" class="cs-btn bt2 disabled">
                         <i class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>
-                        <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Call</a>
+                        <span style="padding-left: 20px;">Call this number</span>
                     </button>
                 </div>
                 <div class="coupon-outer">
@@ -197,7 +201,11 @@
             (click)="makeStarted()">
             <a style="color:white" target="_blank" [href]="starting_url">Yes</a>
             </button>&nbsp;&nbsp;&nbsp;
-            <a (click)="back()" style="color:white" target="_blank" [href]="starting_url">
+            <a *ngIf="callingModes !== 'Phone'" (click)="back()" style="color:white" target="_blank" [href]="starting_url">
+                <button type="button" class="cs-btn bt1" style="background: #f24949;">No
+                </button>
+            </a>
+            <a *ngIf="callingModes === 'Phone'" (click)="back()" style="color:white" target="_blank" [href]="'tel:' + starting_url">
                 <button type="button" class="cs-btn bt1" style="background: #f24949;">No
                 </button>
             </a>
