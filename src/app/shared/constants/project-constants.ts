@@ -629,6 +629,19 @@ export const projectConstantsLocal = {
     BOTIM: 'Botim',
     IMO: 'Imo'
   },
+  BUSINESS_PROFILE_WEIGHTAGE :{
+    BUSINESS_NAME : {"Name" :"BUSINESS_NAME","value" :5 },
+    BUSINESS_DESCRIPTION : {"Name" :"BUSINESS_DESCRIPTION","value" :5 },
+    BASE_LOCATION :{"Name" :"BASE_LOCATION","value" :10 },
+    LOCATION_SCHEDULE :{"Name" :"LOCATION_SCHEDULE","value" :10 },
+    SPECIALIZATION :{"Name" :"SPECIALIZATION","value" :5 },
+    LANGUAGES_KNOWN :{"Name" :"LANGUAGES_KNOWN","value" :5 },
+    SOCIAL_MEDIA : {"Name" :"SOCIAL_MEDIA","value" :5 },
+    MEDIA_GALLERY : {"Name" :"GALLERY","value" :5 },
+    PRIVACY_PHONE_NUMBER:{"Name" :"PRIVACY_PHONE_NUMBER","value" :5 },
+    PRIVACY_EMAILS:{"Name" :"PRIVACY_EMAILS","value" :5 },
+    ADDITIONAL_INFO :{"Name" :"ADDITIONAL_INFO","value" :35 },
+  },
   PATH: 'https://' + window.location.host + '/'
 
 };

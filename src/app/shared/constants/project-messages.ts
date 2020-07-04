@@ -1484,5 +1484,15 @@ export const Messages = {
   'GENERALSETTINGS': 'General',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
-  'SCHEDULENAME_CAP': 'Title for Schedule *'
+  'SCHEDULENAME_CAP': 'Title for Schedule *',
+  //New business profile revamp
+  'PROFILE_STRENGTH_CAP':'Profile Strength',
+  'PROFILE_INCOMPLETE_CAP':' Incomplete',
+  'PROFILE_MINIMALLY_COMPLETE_CAP':'Minimally Complete',
+  'PROFILE_COMPLETE_CAP':'Fully Complete',
+  'THREE_QUATERES_COMPLETE_CAP':'Three Quarters Complete',
+  'BTN_TEXT_COMPLETE_YOUR_PROFILE':'Complete Your Profile',
+  'BTN_TEXT_STRENGTHEN_YOUR_PROFILE':'Strengthen Your Profile',
+  'BTN_TEXT_MANAGE_YOUR_PROFILE':'Manage Your Profile',
+
 };

@@ -437,8 +437,9 @@
                                     </div>
                                 </div>
                             </mat-radio-group>
+                       
                             <div class="actiondiv"
-                                *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable' && (payuverified || paytmverified)) || (isJaldeeAccount && optJaldeeAccount==='disable' && (payuverified || paytmverified))">
+                                *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable' && (payuverified ||paytmverified || razorpayVerified)) || (isJaldeeAccount && optJaldeeAccount==='disable' && (payuverified  || paytmverified || razorpayVerified))">
                                 <button type="button" mat-button class="cs-btn bt1"
                                     (click)="saveAccountPaymentSettings(optJaldeeAccount)">{{save_btn_cap}}</button>
                             </div>

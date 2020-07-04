@@ -35,7 +35,7 @@
                             </div> -->
                             <!-- <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3"> -->
                             <div class="card p0">
-                                <div class="pubs card w-dta bprof">
+                                <!-- <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2>{{public_search_cap}}
@@ -60,44 +60,64 @@
                                         {{frm_public_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
-                                </div>
+                                </div> -->
 
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2>Business profile
                                             </h2>
-                                            <span class="status">{{current_status_cap}} -
-                                                <span class="on" *ngIf="onlinepresence_status">{{on_cap}}</span>
-                                                <span class="off" *ngIf="!onlinepresence_status">{{off_cap}}</span>
-                                            </span>
+
                                         </div>
-                                        <div class="ct-r ml-auto">
+
+                                        <!-- <div class="ct-r ml-auto">
                                             <button class="cs-btn bt3 off" *ngIf="onlinepresence_status"
                                                 (click)="confirm_opsearchStatus()">{{turn_off_cap}}</button>
                                             <button class="cs-btn bt3 on" *ngIf="!onlinepresence_status"
                                                 (click)="confirm_opsearchStatus()">{{turn_on_cap}}</button>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <p class="form-level-settings" *ngIf="!onlinepresence_status">
+                                    <!-- <p class="form-level-settings" *ngIf="!onlinepresence_status">
                                         {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a></p>
                                     <p class="form-level-settings" *ngIf="onlinepresence_status">
                                         {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
-                                            More</a></p>
+                                            More</a> </p> -->
+
+                                    <div class="col-md-10 ct-l">
+                                        <span style="font-size:12px;">{{profile_strength_cap}} - {{getBusinessProfileWeightageText()}}
+
+                                        </span>
+                                        <br>
+                                        <span style="font-weight:bold;">{{weightageValue}} %
+                                            <button class="btn btn-primary" style="float:right;margin:10px">{{bprofile_btn_text}}</button>
+                                        </span>
+
+                                        <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar>
+                                    </div>
+
                                 </div>
+
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Link</h2>
+                                            <h2>Jaldee Online
+                                                <span>
+                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="handle_jaldeeOnlineStatus($event)">
+                                                    </mat-slide-toggle>
+                                                    &nbsp;{{jaldee_online_status_str}}</span>
+                                            </h2>
+                                            <br>
+                                            <span style="color:red;font-weight:bold">Your Patients cannot able to see u online,please enable jaldee </span>
+
                                         </div>
                                     </div>
-                                    <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
+                                    <!-- <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
                                             id="customer-help"
                                             (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
-                                            More</a></p>
+                                            More</a></p> -->
 
 
                                     <div *ngIf="!bProfile.customId && !is_customized">
@@ -105,46 +125,71 @@
                                             <div class="sblinks">
                                                 <ul class="sbl">
                                                     <li class="acc-url-li">
-                                                        <span class="custid" rel="noopener"
-                                                            target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
+                                                        <!-- <span class="custid" rel="noopener"
+                                                            target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span> -->
+                                                        <span class=""> Here is your QR Code</span>
                                                         <span class="busns-id">
+
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor"
-                                                                    (click)="copyInputMessage(bProfile.accEncUid)"
-                                                                    [matTooltip]="'Copy link'"></i>
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
                                                             </span>
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                                    (click)="qrCodegenerateOnlineID(bProfile.accEncUid)"
-                                                                    [matTooltip]="'Generate QR code'"></i>
+                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                             </span>
-                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
                                                                 <button class="btn-primary-n" (click)="customizeId()">
                                                                     <a>
                                                                         Customize ID
                                                                     </a>
                                                                 </button>
-                                                            </span>
+                                                            </span> -->
                                                         </span>
+                                                        <br>
+
 
                                                     </li>
+                                                    <span style="color:red"> Inactive</span>
+
+                                                    <li class="acc-url-li">
+
+                                                        <span class=""> Here is your Jaldee Link :-</span>
+                                                        <span class="busns-id">
+
+                                                            <span class="custid" rel="noopener" target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                            </span>
+                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                                <button class="btn-primary-n" (click)="customizeId()">
+                                                                    <a>
+                                                                        Customize ID
+                                                                    </a>
+                                                                </button>
+                                                            </span> -->
+                                                        </span>
+                                                        <br>
+
+
+                                                    </li>
+                                                    <span style="color:red"> Inactive</span>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
-                                        <div><i (click)="closeOnlineQR()"
-                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
-                                                aria-hidden="true"></i></div>
+                                        <div>
+                                            <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i>
+                                        </div>
                                         <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
-                                                [qrc-value]="qr_value">
+                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
-                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
-                                                        style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn">
+                                                <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                                    <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+                                            </button>
                                             <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
                                             &nbsp;&nbsp;&nbsp;
                                             <button (click)="closeOnlineQR()">close</button> -->
@@ -152,22 +197,16 @@
                                     </div>
 
                                     <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                                        <form [formGroup]="customForm"
-                                            class="ynw-common-form-nm change-mob-style custId-flex-form"
-                                            *ngIf="editMode==1 || editMode==0">
+                                        <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form" *ngIf="editMode==1 || editMode==0">
                                             <div class="form-group custId-flex">
                                                 <mat-form-field class="custId-ip-wdth">
-                                                    <input matInput type="text" minlength="4" maxlength="25"
-                                                        class="form-control" autocomplete="off" value="www.jaldee.com/"
+                                                    <input matInput type="text" minlength="4" maxlength="25" class="form-control" autocomplete="off" value="www.jaldee.com/"
                                                         [readonly]="true" style="color: #a5a2a2;">
                                                 </mat-form-field>
                                                 <mat-form-field>
-                                                    <input matInput type="text" minlength="4" maxlength="25"
-                                                        class="form-control custId-ip-max-wdth" id="customid"
-                                                        formControlName="customid" autocomplete="off">
-                                                    <app-field-error-display
-                                                        [displayError]="fed_service.isFieldValid(customForm,'customid')"
-                                                        [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
+                                                    <input matInput type="text" minlength="4" maxlength="25" class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
+                                                        autocomplete="off">
+                                                    <app-field-error-display [displayError]="fed_service.isFieldValid(customForm,'customid')" [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
                                                                     {
                                                                     'required' : 'Please enter your Custom Business ID',
                                                                     'minlength' : 'Minimum 4 characters are required',
@@ -179,11 +218,8 @@
 
                                             </div>
                                             <div class="form-group custId-btns">
-                                                <button (click)="cancelCusUpdt()"
-                                                    class="cs-btn bt2 custId-btn-bt2">Cancel</button>
-                                                <button (click)="add_updateCustomId(customForm.value)" mat-button
-                                                    [disabled]="!customForm.valid"
-                                                    class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                                                <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
+                                                <button (click)="add_updateCustomId(customForm.value)" mat-button [disabled]="!customForm.valid" class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
                                             </div>
 
                                         </form>
@@ -193,34 +229,25 @@
                                             <div class="sblinks">
                                                 <ul class="sbl">
                                                     <li class="acc-url-li">
-                                                        <span class="custid" rel="noopener"
-                                                            target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
+                                                        <span class="custid" rel="noopener" target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
                                                         <span class="busns-id">
-                                                            <span class="custid custId-icon"><i
-                                                                    class="fa fa-copy custId-cursor"
-                                                                    (click)="copyInputMessage(bProfile.customId)"
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)"
                                                                     [matTooltip]="'Copy link'"></i>
                                                             </span>
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                                    (click)="qrCodegenerateCustID(bProfile.customId)"
-                                                                    [matTooltip]="'Generate QR code'"></i>
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr" (click)="qrCodegenerateCustID(bProfile.customId)" [matTooltip]="'Generate QR code'"></i>
                                                             </span>
                                                             <span class="custid" style="padding-left: 40px;">
-                                                                <button type="button" mat-icon-button
-                                                                    [matMenuTriggerFor]="menu">
+                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                     <mat-icon>more_vert</mat-icon>
                                                                 </button>
                                                                 <mat-menu #menu="matMenu">
-                                                                    <button type="button"
-                                                                        (click)="editCustomId(bProfile.customId)"
-                                                                        mat-menu-item>
+                                                                    <button type="button" (click)="editCustomId(bProfile.customId)" mat-menu-item>
                                                                         <i class="icon-edit"></i>
                                                                         <span>{{edit_cap}}</span>
                                                                     </button>
-                                                                    <button type="button"
-                                                                        (click)="deleteCustomId(bProfile.customId)"
-                                                                        mat-menu-item>
+                                                                    <button type="button" (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
                                                                         <i class="icon-delete"></i>
                                                                         <span>{{delete_btn}}</span>
                                                                     </button>
@@ -234,18 +261,19 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
-                                        <div><i (click)="closeCustomQR()"
-                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
-                                                aria-hidden="true"></i></div>
+                                        <div>
+                                            <i (click)="closeCustomQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i>
+                                        </div>
                                         <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
-                                                [qrc-value]="qr_value">
+                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
-                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
-                                                        style="padding-right: 2px;"></i>Download</a></button>
+                                            <button class="ngx-qr-btn">
+                                                <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                                    <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+                                            </button>
                                         </div>
                                         <!-- <div class="custId-prnt">
                                             <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
@@ -256,11 +284,53 @@
 
 
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
-                                        <div class="duration instantQ"
-                                            *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                                        <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
                                             You are not allowed to do this operation. Please upgrade license package
                                         </div>
                                     </div>
+
+                                </div>
+
+
+
+                                <div class="pubs card w-dta bprof">
+                                    <div class="ctrl">
+                                        <div class="ct-l">
+                                            <h2>List my profile on Jaldee.com
+                                                <span>
+                                                    <mat-slide-toggle [(ngModel)]="profile_status" (change)="handle_profileStatus($event)">
+                                                    </mat-slide-toggle>
+                                                    &nbsp;{{profile_status_str}} </span>
+                                            </h2>
+                                            <br>
+                                            <span style="color:red;font-weight:bold">Your profile is not listed in jaldee.com</span>
+
+                                        </div>
+
+                                        <!-- <div class="ct-r ml-auto">
+                                            <button class="cs-btn bt3 off" *ngIf="onlinepresence_status"
+                                                (click)="confirm_opsearchStatus()">{{turn_off_cap}}</button>
+                                            <button class="cs-btn bt3 on" *ngIf="!onlinepresence_status"
+                                                (click)="confirm_opsearchStatus()">{{turn_on_cap}}</button>
+                                        </div> -->
+                                    </div>
+                                    <!-- <p class="form-level-settings" *ngIf="!onlinepresence_status">
+                                        {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
+                                            (click)="learnmore_clicked('business-profile', $event)">Learn
+                                            More</a></p>
+                                    <p class="form-level-settings" *ngIf="onlinepresence_status">
+                                        {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
+                                            (click)="learnmore_clicked('business-profile', $event)">Learn
+                                            More</a> </p> -->
+
+                                    <!-- <div class="col-md-10 ct-l">
+                                                <span style="font-size:12px;">{{profile_strength_cap}} - {{getBusinessProfileWeightageText()}}
+                                                       
+                                                </span><br>
+                                                <span style="font-weight:bold;">{{weightageValue}} %  <button class="btn btn-primary" style="float:right">{{bprofile_btn_text}}</button></span>
+            
+                                                    <mat-progress-bar class="properties" mode="determinate" [value]= "weightageValue"></mat-progress-bar>
+                                                    </div> -->
 
                                 </div>
 
@@ -270,13 +340,13 @@
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100">
                                             <mat-panel-title class="block-level">
-                                                {{profile_summary_cap}} <i
-                                                    *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                                {{profile_summary_cap}}
+                                                <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
                                                     class="req-flds-cap">*required fields missing</i>
-                                                <p class="form-level-settings">{{frm_profile_name_cap}}<a
-                                                        class="learnmore-pointer" id="customer-help"
-                                                        (click)="learnmore_clicked('basic-information', $event)">Learn
-                                                        More</a></p>
+                                                <p class="form-level-settings">{{frm_profile_name_cap}}
+                                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More
+                                                    </a>
+                                                </p>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="cd-t">
@@ -287,11 +357,13 @@
                                             <div class="basic-i" *ngIf="normal_basicinfo_show==2">
                                                 <div class="warning">
                                                     <i data-icon="m"></i>
-                                                    <p><span>{{have_not_add_cap}}<b>{{name_cap}} &
-                                                                {{description_cap}}.</b>
-                                                        </span> </p>
-                                                    <span class="cs-btn bt3"
-                                                        (click)="showBPrimary()">{{add_it_cap}}</span>
+                                                    <p>
+                                                        <span>{{have_not_add_cap}}
+                                                            <b>{{name_cap}} & {{description_cap}}.
+                                                            </b>
+                                                        </span>
+                                                    </p>
+                                                    <span class="cs-btn bt3" (click)="showBPrimary()">{{add_it_cap}}</span>
                                                     <p class="smlft">* {{to_turn_search}}</p>
                                                 </div>
                                             </div>
@@ -300,60 +372,88 @@
                                                     <span class="editbt" (click)="showBPrimary()"></span>
                                                     <div class="bi-l" *ngIf="blogo">
                                                         <div class="pro-pic" [class.yes]="profimg_exists">
-                                                            <div class="pro-pic-img"><img [src]="showimg()" alt=""
-                                                                    *ngIf="blogo[0] && blogo[0].url"></div>
-                                                            <input #logofile type="file" accept="image/*"
-                                                                style="display:none;"
-                                                                (change)="imageSelect(logofile,$event)">
-                                                            <div class="add"><span
-                                                                    (click)="logofile.click()">{{add_cap}} <br />
-                                                                    {{profile_pic_cap}}</span></div>
+                                                            <div class="pro-pic-img">
+                                                                <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
+                                                            </div>
+                                                            <input #logofile type="file" accept="image/*" style="display:none;" (change)="imageSelect(logofile,$event)">
+                                                            <div class="add">
+                                                                <span (click)="logofile.click()">{{add_cap}}
+                                                                    <br /> {{profile_pic_cap}}
+                                                                </span>
+                                                            </div>
                                                             <div class="change">
-                                                                <span class="change-pic"
-                                                                    (click)="logofile.click()">{{change_cap}}
+                                                                <span class="change-pic" (click)="logofile.click()">{{change_cap}}
                                                                     <br /> {{pic_cap}}</span>
-                                                                <span class="del-pic"
-                                                                    (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
+                                                                <span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="bi-r">
                                                         <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
-                                                        <p class="profile-des-p"
-                                                            [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc
-                                                                        | capitalizeFirst}}
+                                                        <p class="profile-des-p" [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc | capitalizeFirst}}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="cd-b">
-                                            <div class="loc-i">
-                                                <div class="warning" *ngIf="normal_locationinfo_show==1">
-                                                    <app-innerloading-spinner spinnerParams="loadingParams">
-                                                    </app-innerloading-spinner>
-                                                </div>
-                                                <div class="warning" *ngIf="normal_locationinfo_show==2">
-                                                    <i data-icon="m"></i>
-                                                    <p><span>{{have_not_add_cap}}</span> <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
-                                                    <span class="cs-btn bt3"
-                                                        (click)="addLocation()">{{add_it_cap}}</span>
-                                                    <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
-                                                    </p>
-                                                </div>
-                                                <div class="warning" *ngIf="normal_locationinfo_show==4">
-                                                    <i data-icon="m"></i>
-                                                    <p><span><strong>{{base_loc_det_cap}}.</strong></span></p>
-                                                    <p><span>{{please_use_cap}} <strong>{{edit_cap}}
-                                                                {{location_cap}}</strong>
-                                                            {{btn_to_compl_cap}}.</span></p>
-                                                    <span class="cs-btn bt3" (click)="editLocation()">{{edit_cap}}
-                                                        {{location_cap}}</span>
-                                                    <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
-                                                    </p>
-                                                </div>
-                                                <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
-                                                    <!-- <div class="title">
+
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="true">
+                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                        <span class="mat-content">
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                            Location
+                                                                <!--bindings={}-->
+                                                                <p class="form-level-settings">Manage your business location details here.
+                                                                    <a class="learnmore-pointer"
+                                                                        id="customer-help">Learn More</a>
+                                                                </p>
+                                                            </mat-panel-title>
+                                                        </span>
+                                                        <!--bindings={
+                                                    "ng-reflect-ng-if": "true"
+                                                  }-->
+                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                            style="transform: rotate(180deg);"></span> -->
+                                                    </mat-expansion-panel-header>
+
+                                                    <div class="loc-i">
+                                                        <div class="warning" *ngIf="normal_locationinfo_show==1">
+                                                            <app-innerloading-spinner spinnerParams="loadingParams">
+                                                            </app-innerloading-spinner>
+                                                        </div>
+                                                        <div class="warning" *ngIf="normal_locationinfo_show==2">
+                                                            <i data-icon="m"></i>
+                                                            <p>
+                                                                <span>{{have_not_add_cap}}</span>
+                                                                <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
+                                                            <span class="cs-btn bt3" (click)="addLocation()">{{add_it_cap}}</span>
+                                                            <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="warning" *ngIf="normal_locationinfo_show==4">
+                                                            <i data-icon="m"></i>
+                                                            <p>
+                                                                <span>
+                                                                    <strong>{{base_loc_det_cap}}.</strong>
+                                                                </span>
+                                                            </p>
+                                                            <p>
+                                                                <span>{{please_use_cap}}
+                                                                    <strong>{{edit_cap}} {{location_cap}}
+                                                                    </strong>
+                                                                    {{btn_to_compl_cap}}.</span>
+                                                            </p>
+                                                            <span class="cs-btn bt3" (click)="editLocation()">{{edit_cap}} {{location_cap}}
+                                                            </span>
+                                                            <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
+                                                            <!-- <div class="title">
                                                         <h3>{{working_hours_cap}}</h3>
                                                         <span class="form-level-settings">{{frm_working_hr_cap}}<a
                                                                 class="learnmore-pointer" id="customer-help"
@@ -361,47 +461,48 @@
                                                                 More</a>
                                                         </span>
                                                     </div> -->
-                                                </div>
-                                                <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
-                                                    <span (click)="editLocation()" class="editbt"></span>
-                                                    <div class="title">
+                                                        </div>
+                                                        <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
+
+                                                            <!-- <div class="title">
                                                         <h3>{{location_cap}}</h3>
                                                         <span class="form-level-settings">{{frm_loc_cap}}<a
                                                                 class="learnmore-pointer" id="customer-help"
                                                                 (click)="learnmore_clicked('location', $event)">Learn
                                                                 More</a>
                                                         </span>
-                                                    </div>
-                                                    <div class="copy">
-                                                        <div class="cop-l" *ngIf="loc_list.length>0">
-                                                            <h4>{{base_loc.place | capitalizeFirst}} <a rel="noopener"
-                                                                    [href]="base_loc.googleMapUrl" target="_blank"
-                                                                    class="icon-location"
-                                                                    matTooltip="Click to navigate"></a>
-                                                            </h4>
-                                                            <span>{{base_loc.address | capitalizeFirst}}</span>
-                                                            <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
-                                                                {{pin_cap}} : {{base_loc.pinCode}}
-                                                            </span>
-                                                        </div>
-                                                        <div class="cop-r" *ngIf="loc_list.length>0">
-                                                            <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                                                <li>You can add more locations under <a
-                                                                        routerLink="/provider/settings/general/locations">settings</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="locSchedule time_align">
-                                                        <span class="sub-title">{{loca_hours}}</span>
-                                                        <ul *ngIf="display_schedule.length > 0">
-                                                            <li *ngFor="let schedule of display_schedule">
-                                                                <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
-                                                                    class="time">{{schedule.time}}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- <div class="whrs" >
+                                                    </div> -->
+                                                            <div class="copy">
+                                                                <span (click)="editLocation()" class="editbt"></span>
+                                                                <div class="cop-l" *ngIf="loc_list.length>0">
+                                                                    <h4>{{base_loc.place | capitalizeFirst}}
+                                                                        <a rel="noopener"
+                                                                            [href]="base_loc.googleMapUrl" target="_blank" class="icon-location"
+                                                                            matTooltip="Click to navigate"></a>
+                                                                    </h4>
+                                                                    <span>{{base_loc.address | capitalizeFirst}}</span>
+                                                                    <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
+                                                                        {{pin_cap}} : {{base_loc.pinCode}}
+                                                                    </span>
+                                                                </div>
+                                                                <div class="cop-r" *ngIf="loc_list.length>0">
+                                                                    <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                                                        <li>You can add more locations under
+                                                                            <a routerLink="/provider/settings/general/locations">settings</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="locSchedule time_align">
+                                                                <span class="sub-title">{{loca_hours}}</span>
+                                                                <ul *ngIf="display_schedule.length > 0">
+                                                                    <li *ngFor="let schedule of display_schedule">
+                                                                        <span class="day">{{schedule.dstr}}&nbsp;:</span>
+                                                                        <span class="time">{{schedule.time}}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <!-- <div class="whrs" >
                                                         <span class="sub-title time_align"><b>General Business hours</b></span>
                                                         <ul  *ngIf="display_schedule.length > 0">
                                                             <li *ngFor="let schedule of display_schedule">
@@ -410,66 +511,111 @@
                                                             </li>
                                                         </ul>
                                                     </div> -->
-                                                    <!-- <ul class="whrs" *ngIf="display_schedule.length > 0">
+                                                            <!-- <ul class="whrs" *ngIf="display_schedule.length > 0">
                                                         <li *ngFor="let schedule of display_schedule">
                                                             <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
                                                                 class="time">{{schedule.time}}</span>
                                                         </li>
                                                     </ul> -->
-                                                    <ng-container *ngIf="display_schedule.length == 0">
-                                                        <div class="no-dta">
-                                                            <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
-                                                            <span class="cs-btn bt3"
-                                                                (click)="change_schedulepopup()">{{add_it_cap}}</span>
-                                                        </div>
-                                                    </ng-container>
-                                                    <div class="copy block-level">
-                                                        <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')"
-                                                                class="editbt"
-                                                                *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
-                                                        </h5>
-                                                        <p class="form-level-settings">{{frm_loc_amen_cap}}<a
-                                                                class="learnmore-pointer" id="customer-help"
-                                                                (click)="learnmore_clicked('locationAmenities', $event)">Learn
-                                                                More</a>
-                                                        </p>
-                                                    </div>
-                                                    <ng-container
-                                                        *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
-                                                        <div class="copy">
-                                                            <ul class="amt-list">
-                                                                <li [matTooltip]="park_type + ' parking'"
-                                                                    [class]="badgeIcons['parkingtype']['class']"
-                                                                    *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
-                                                                </li>
-                                                                <li [matTooltip]="'24 Hours Open'"
-                                                                    [class]="badgeIcons['24hour']['class']"
-                                                                    *ngIf="bProfile.baseLocation.open24hours"></li>
-                                                                <ng-container
-                                                                    *ngIf="bProfile.baseLocation.locationVirtualFields">
-                                                                    <ng-container
-                                                                        *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
-                                                                        <li [matTooltip]="badge_map_arr[locvirtual]"
-                                                                            *ngIf="badgeIcons[locvirtual]"
-                                                                            [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
+                                                            <ng-container *ngIf="display_schedule.length == 0">
+                                                                <div class="no-dta">
+                                                                    <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
+                                                                    <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="copy block-level">
+                                                                <h5>{{loc_amenities_cap}}
+                                                                    <span (click)="editLocation('badge')"
+                                                                        class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
+                                                                </h5>
+                                                                <p class="form-level-settings">{{frm_loc_amen_cap}}
+                                                                    <a class="learnmore-pointer" id="customer-help"
+                                                                        (click)="learnmore_clicked('locationAmenities', $event)">Learn More
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+                                                            <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
+                                                                <div class="copy">
+                                                                    <ul class="amt-list">
+                                                                        <li [matTooltip]="park_type + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
                                                                         </li>
-                                                                    </ng-container>
-                                                                </ng-container>
-                                                            </ul>
+                                                                        <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
+                                                                        <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
+                                                                            <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
+                                                                                <li [matTooltip]="badge_map_arr[locvirtual]" *ngIf="badgeIcons[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
+                                                                                </li>
+                                                                            </ng-container>
+                                                                        </ng-container>
+                                                                    </ul>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="normal_locationamenities_show==2">
+                                                                <div class="warning">
+                                                                    <i data-icon="m"></i>
+                                                                    <p>
+                                                                        <span>{{have_not_add_cap}}</span>
+                                                                        <strong>{{loc_amenities_cap}}</strong>
+                                                                    </p>
+                                                                    <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_cap}}</span>
+                                                                </div>
+                                                            </ng-container>
                                                         </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="normal_locationamenities_show==2">
-                                                        <div class="warning">
-                                                            <i data-icon="m"></i>
-                                                            <p><span>{{have_not_add_cap}}</span>
-                                                                <strong>{{loc_amenities_cap}}</strong></p>
-                                                            <span class="cs-btn bt3"
-                                                                (click)="editLocation('badge')">{{add_it_cap}}</span>
-                                                        </div>
-                                                    </ng-container>
-                                                </div>
-                                            </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
                                         </div>
+                                        <!-- specialization-->
+                                        <div class="cd-b">
+
+
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="true">
+                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                        <span class="mat-content">
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title"> Specilization
+                                                                <!--bindings={}-->
+                                                                <p class="form-level-settings">Mention your specilization here
+                                                                    <a class="learnmore-pointer"
+                                                                        id="customer-help">Learn More</a>
+                                                                </p>
+                                                            </mat-panel-title>
+                                                        </span>
+                                                        <!--bindings={
+                                                    "ng-reflect-ng-if": "true"
+                                                  }-->
+                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                            style="transform: rotate(180deg);"></span> -->
+                                                    </mat-expansion-panel-header>
+
+                                                    <div class="card p0 w-dta active">
+
+                                                        <span class="editbt" (click)="handleSpecialization()"></span>
+
+
+                                                        <div class="no-dta" *ngIf="normal_specilization_show==1">
+                                                            <app-innerloading-spinner spinnerParams="loadingParams">
+                                                            </app-innerloading-spinner>
+                                                        </div>
+                                                        <div class="no-dta" *ngIf="normal_specilization_show==2">
+                                                            <p>{{have_not_add_cap}} {{special_cap}}.</p>
+                                                            <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                        </div>
+                                                        <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                                                            <span class="editbt" (click)="handleSpecialization()"></span>
+                                                            <div *ngFor="let spec of bProfile.specialization">
+                                                                {{getSpecializationName(spec)}}
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+
+                                        </div>
+
+
                                     </mat-expansion-panel>
                                 </mat-accordion>
                             </div>
@@ -634,27 +780,28 @@
                             <div class="card p0">
                                 <div class="pubs card adwds w-dta">
                                     <h2>{{adowrds_cap}}
-                                        <span (click)="addAdwords()" class="addbt cs-btn bt8"
-                                            *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
-                                    <p class="form-level-settings">{{frm_adword_cap}}<a class="learnmore-pointer"
-                                            id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn
-                                            More</a></p>
+                                        <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span>
+                                    </h2>
+                                    <p class="form-level-settings">{{frm_adword_cap}}
+                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn More
+                                        </a>
+                                    </p>
                                     <app-common-innerloading-spinner *ngIf="adword_loading">
                                     </app-common-innerloading-spinner>
                                     <div class="ad-tble" *ngIf="!adword_loading && adwordsmaxcount > 0">
                                         <div class="ad-l">
-                                            You can have upto<b> {{adwordsmaxcount}} </b> <a class="learnmore-pointer"
-                                                matTooltip="Go to Jaldee Search Keywords"
+                                            You can have upto
+                                            <b> {{adwordsmaxcount}} </b>
+                                            <a class="learnmore-pointer" matTooltip="Go to Jaldee Search Keywords"
                                                 routerLink="/provider/license/keywords">Jaldee Search Keywords </a>
                                         </div>
                                         <div class="ad-r">
-                                            <span
-                                                *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span>
-                                            <span class="mre" *ngIf="adwords_remaining>0"><a
-                                                    routerLink="/provider/license/keywords">+{{adwords_remaining}}
-                                                    {{more_cap}}</a></span>
-                                            <span (click)="addAdwords()" class="addbt cs-btn bt8"
-                                                *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
+                                            <span *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span>
+                                            <span class="mre" *ngIf="adwords_remaining>0">
+                                                <a routerLink="/provider/license/keywords">+{{adwords_remaining}} {{more_cap}}
+                                                </a>
+                                            </span>
+                                            <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
                                         </div>
                                     </div>
                                     <div class="ad-l" *ngIf="!adword_loading && adwordsmaxcount <= 0">
@@ -663,27 +810,24 @@
                                 </div>
                                 <div class="pubs card adwds w-dta">
                                     <div class="cd-b veifyLevel">
-                                        <span
-                                            *ngIf="bProfile && bProfile.verifyLevel =='NONE'">{{verified_level_change}}.
+                                        <span *ngIf="bProfile && bProfile.verifyLevel =='NONE'">{{verified_level_change}}.
                                         </span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'"><img height="80"
-                                                width="70" src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'"><img height="80"
-                                                width="70" src="./assets/images/BasicPlsOrg.png"
-                                                alt="Basic Plus"></span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'"><img height="80"
-                                                width="70" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'"
-                                            class="bold">{{verified_level_basic}}. </span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'"
-                                            class="bold">{{verified_level_basicplus}}. </span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'"
-                                            class="bold">{{verified_level_premium}}. </span>
-                                        <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'"
-                                            class="form-level-settings">{{frm_verified_cap}}<a class="learnmore-pointer"
-                                                id="verified-levels"
-                                                (click)="learnmore_clicked('verified-levels', $event)">Learn
-                                                More</a></span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">
+                                            <img height="80" width="70" src="./assets/images/BasicOrg.png" alt="Basic">
+                                        </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'">
+                                            <img height="80" width="70" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
+                                        </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'">
+                                            <img height="80" width="70" src="./assets/images/PremiumOrg.png" alt="Advanced">
+                                        </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="bold">{{verified_level_basic}}. </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="bold">{{verified_level_basicplus}}. </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="bold">{{verified_level_premium}}. </span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'" class="form-level-settings">{{frm_verified_cap}}
+                                            <a class="learnmore-pointer" id="verified-levels" (click)="learnmore_clicked('verified-levels', $event)">Learn More
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -694,11 +838,14 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
-                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields
-                                missing</i></h2>
-                        <span class="form-level-settings">{{frm_specialization_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn
-                                More</a></span>
+                        <h2>Specializations
+                            <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                            </i>
+                        </h2>
+                        <span class="form-level-settings">{{frm_specialization_cap}}
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -706,12 +853,13 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAdditionalInfo()">
                         <h2>
-                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                class="req-flds-cap">*required fields missing</i>
+                            Additional Info
+                            <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>
                         </h2>
-                        <span class="form-level-settings">{{frm_additional_cap}} <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn
-                                More</a></span>
+                        <span class="form-level-settings">{{frm_additional_cap}}
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -719,9 +867,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
                         <h2>Languages Known</h2>
-                        <span class="form-level-settings">{{frm_lang_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('languages-known', $event)">Learn
-                                More</a></span>
+                        <span class="form-level-settings">{{frm_lang_cap}}
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('languages-known', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -729,9 +878,10 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPrivacy()">
                         <h2>Privacy</h2>
-                        <span class="form-level-settings">{{frm_privacy_cap}} <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn
-                                More</a></span>
+                        <span class="form-level-settings">{{frm_privacy_cap}}
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -740,9 +890,9 @@
                     <span class="b-link" (click)="gotoMedia()">
                         <h2>Gallery & Social Media</h2>
                         <span class="form-level-settings">{{frm_gallery_cap}},{{frm_social_cap}}
-                            <a class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('your-social-media', $event)">Learn
-                                More</a></span>
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>
@@ -751,9 +901,9 @@
                     <span class="b-link" (click)="gotoJaldeeIntegration()">
                         <h2>Jaldee.com Integration</h2>
                         <span class="form-level-settings">integration help
-                            <a class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('jaldee.com-integration', $event)">Learn
-                                More</a></span>
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('jaldee.com-integration', $event)">Learn More
+                            </a>
+                        </span>
                     </span>
                 </div>
             </div>

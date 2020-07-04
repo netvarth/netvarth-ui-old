@@ -17,13 +17,20 @@ import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/
 import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { Subscription } from 'rxjs';
+import { AddProviderBprofileSpecializationsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html'
+
+
 })
 
 export class BProfileComponent implements OnInit, OnDestroy {
+ 
+  weightageValue: number;
+  businessProfile_weightageArray: any[];
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
@@ -90,6 +97,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
+  profile_strength_cap=Messages.PROFILE_STRENGTH_CAP;
+  profile_incomplete_cap= Messages.PROFILE_INCOMPLETE_CAP;
+  minimally_complete_cap=Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
+  fully_complete_cap= Messages.PROFILE_COMPLETE_CAP;
+  three_quaters_complete_cap=Messages.THREE_QUATERES_COMPLETE_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
@@ -243,7 +255,20 @@ export class BProfileComponent implements OnInit, OnDestroy {
   is_customized = false;
   licence_warn = false;
   adword_loading = true;
-  constructor(private provider_services: ProviderServices,
+  subscription: Subscription ;
+  bprofile_btn_text='Complete Your Profile';
+  profile_status_str='off';
+  jaldee_online_status_str='off';
+
+  //specilization
+
+
+  specialization_arr: any = [];
+  special_cap = Messages.BPROFILE_SPECIAL_CAP;
+  specialization_title = '';
+  specialdialogRef;
+  normal_specilization_show = 1;
+    constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -265,7 +290,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   ngOnInit() {
+   
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -301,7 +329,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
-    // this.getLicensemetrics();
+   this.subscription= this.provider_datastorage.getWeightageArray().subscribe(result =>{
+      this.businessProfile_weightageArray=result;
+      console.log(this.businessProfile_weightageArray);
+      this.weightageValue=this.calculateWeightage(result);
+      console.log(this.weightageValue);
+      
+    }
+      
+    )
+          // this.getLicensemetrics();
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -319,6 +356,44 @@ export class BProfileComponent implements OnInit, OnDestroy {
     if (this.adworddialogRef) {
       this.adworddialogRef.close();
     }
+    this.subscription.unsubscribe();
+  }
+  calculateWeightage(data){
+    var total = 0;
+    if (data != null && data.length > 0) {      
+      data.forEach(x => total += x.value);
+    }
+    return total;
+
+  }
+
+  getBusinessProfileWeightageText() {
+    let businessProfileWeightageText='';
+    let weightage=this.weightageValue;
+    if(weightage <10){
+        businessProfileWeightageText=this.profile_incomplete_cap;
+        this.bprofile_btn_text=Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+        return businessProfileWeightageText;
+     }else if
+        (weightage >10 && weightage <= 50){
+        businessProfileWeightageText= this.minimally_complete_cap;
+        this.bprofile_btn_text=Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+        return businessProfileWeightageText;
+        
+       }else if(weightage >50){
+         console.log('inisde');
+         businessProfileWeightageText=this.three_quaters_complete_cap;
+         this.bprofile_btn_text=Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+         return businessProfileWeightageText;
+       }
+       else if
+       (weightage==100) {
+        businessProfileWeightageText= this.fully_complete_cap;
+        this.bprofile_btn_text=Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+        return businessProfileWeightageText;
+         
+       }
+   
   }
 
   getLicensemetrics() {
@@ -440,6 +515,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .then(
         data => {
           this.bProfile = data;
+          this.getWeightagesOfAllSections(this.bProfile)
+         
+          console.log('bprofile...'+ JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
@@ -454,6 +532,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
                 this.multipeLocationAllowed = true;
               }
             }
+            
           }
           const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
@@ -540,6 +619,22 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
         }
       );
+  }
+
+  getWeightagesOfAllSections(bprofile){
+    let businessProfileData=bprofile;
+ 
+    this.provider_services.getGalleryImages()
+    .subscribe(
+        data => {
+            console.log(data);
+            businessProfileData = { ...businessProfileData,media : data};
+             this.provider_datastorage.setBusinessProfileWeightage(businessProfileData);
+            console.log(businessProfileData);
+            console.log(JSON.stringify(businessProfileData));
+            
+           // this.provider_datastorage.addMediaToWeightage(data);
+        });
   }
   getBussinessProfileApi() {
     const _this = this;
@@ -1053,4 +1148,81 @@ export class BProfileComponent implements OnInit, OnDestroy {
   gotoAdditionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
   }
+
+  //specilization
+
+  initSpecializations() {
+    this.bProfile = [];
+    this.getBussinessProfileApi()
+        .then(
+            data => {
+                this.bProfile = data;
+                this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+                this.specialization_title = (data['serviceSubSector']['displayName']) ?
+                    data['serviceSubSector']['displayName'] : '';
+                if (this.bProfile.specialization) {
+                    if (this.bProfile.specialization.length > 0) {
+                        this.normal_specilization_show = 3;
+                    } else {
+                        this.normal_specilization_show = 2;
+                    }
+                } else {
+                    this.normal_specilization_show = 2;
+                }
+            });
+}
+getSpecializations(domain, subdomain) {
+    this.provider_services.getSpecializations(domain, subdomain)
+        .subscribe(data => {
+            this.specialization_arr = data;
+        });
+}
+getSpecializationName(n) {
+    for (let i = 0; i < this.specialization_arr.length; i++) {
+        if (this.specialization_arr[i].name === n) {
+            return this.specialization_arr[i].displayName;
+        }
+    }
+}
+
+  handleSpecialization() {
+    let holdselspec;
+    if (this.bProfile && this.bProfile.specialization) {
+        holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+    } else {
+        holdselspec = [];
+    }
+
+    const bprof = holdselspec;
+    const special = this.specialization_arr;
+    this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+        disableClose: true,
+        autoFocus: false,
+        data: {
+            selspecializations: bprof,
+            specializations: special
+        }
+    });
+    
+    this.specialdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            if (result['mod'] === 'reloadlist') {
+                // this.getBusinessProfile();
+                this.bProfile = result['data'];
+                this.initSpecializations();
+                if (this.bProfile && this.bProfile.selspecializations) {
+                    if (this.bProfile.selspecializations.length > 0) {
+                        this.normal_specilization_show = 3;
+                    } else {
+                        this.normal_specilization_show = 2;
+                    }
+                } else {
+                    this.normal_specilization_show = 2;
+                }
+            }
+        }
+    });
+}
 }

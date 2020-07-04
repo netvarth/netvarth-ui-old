@@ -79,7 +79,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private data_storage:ProviderDataStorageService
     ) { }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -195,6 +196,11 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.provider_services.getGalleryImages()
             .subscribe(
                 data => {
+                    console.log(data);
+                    console.log(JSON.stringify(data));
+                    this.data_storage.addMediaToWeightage(data);
+
+                    
                     this.image_list = data;
                 },
                 () => {
