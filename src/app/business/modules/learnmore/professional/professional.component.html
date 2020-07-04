@@ -2134,6 +2134,34 @@
                                                         departments to your
                                                         profile, choose one from
                                                         the drop down menu.</li>
+                                                        <li><strong>Choose Type :</strong> </li>
+                                                        <mat-accordion>
+                                                                <mat-expansion-panel [expanded]="true">
+                                                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                                        <mat-panel-title>
+                                                                            <span class="helpcontent">Type :Teleservice</span>
+                                                                        </mat-panel-title>
+                                                                    </mat-expansion-panel-header>
+                                                                        <div class="helpcontent">
+                                                                            <ul class="ul-normal">
+                                                                                <li><strong>How to set up a teleservice for your business?</strong><br><strong>Note:</strong> </li>
+                                                                                <li><strong>You will be able to create a teleservice only if you have switched on your “Teleservice” option.
+                                                                                </strong></li>
+                                                                                <li><strong>Make sure you have activated a medium such as Whatsapp, Google Meet, Skype or through phone call.</strong></li> 
+                                                                                            <ol>
+                                                                                            <li>Select <strong>SERVICES</strong> from <strong>JALDEE QMANAGER OR APPOINTMENT MANAGER.</strong></li>
+                                                                                            <li>Click on <strong>ADD SERVICES</strong> at the top.</li>
+                                                                                            <li>Fill in the details - Service name, Service Description, Estimated Duration etc. </li>
+                                                                                            <li>Select <strong>“Teleservice”</strong> as TYPE.</li>
+                                                                                            <li><strong>SELECT MODE</strong> as <strong>Audio</strong> or <strong>Video</strong> from the drop down list.</li>   
+                                                                                            <li><strong>SELECT VIDEO CALL APP</strong> from the drop down list. </li>
+                                                                                             <li>You can edit the <strong>ZOOM LINK</strong> if there are any changes in the default Zoom ID/Whatsapp Number/ Skype ID/ Google Meet link.</li>
+                                                                                            <li>Now, Click on <strong>SAVE</strong> to add the teleservices to your services.</li>
+                                                                                            </ol> 
+                                                                                        </ul>
+                                                                        </div>
+                                                                </mat-expansion-panel>
+                                                            </mat-accordion>   
                                                     <li><strong>Estimated Duration (min) :</strong> Enter the minimum
                                                         time (in
                                                         minutes)
@@ -3826,77 +3854,99 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent"
-                                                        (click)="handleScroll('virtualcallingmode', 'comm')">Teleservice
-                                                        ON</span>
+                                                        (click)="handleScroll('virtualcallingmode', 'comm')">JALDEE TELESERVICE
+                                                        </span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                              <div class="helpcontent">
-                                                <section>
-                                                        <span>In this section, a provider can select the Teleservice
-                                                            ON mode with which he/she wishes
-                                                            to
-                                                          enable/disable Teleservice
-                                                          ON/OFF  here.
+                                                 <section>
+                                                    
+                                                        <strong>What is Jaldee Teleservice?</strong>
+                                                   
+                                                        <br>
+                                                        <span>Teleservice promotes social distancing and allows you to communicate with the customers remotely via 
+                                                            various digital platforms like Zoom, Google Meet, WhatsApp as well as Skype.
                                                         </span>
                                                 </section>
                                                 <section>
                                                         <ul class="ul-normal">
-                                                            <li>To enable video call, a provider has to switch
-                                                                on the
-                                                                "Teleservice
-                                                                ON" mode. Initially, this is set to off mode.</li>
+                                                            <li>To <strong>enable the Teleservice</strong>, you can switch on the toggle button. </li>
                                                         </ul>
                                                 </section>
-                                                <section>
-                                                    <ul class="ul-normal">
-                                                        <li>If true, the provider is available for video calling. 
-                                                            if false he is not available for virtual mode communication.</li>
-                                                    </ul>
-                                            </section>
-                                             </div>
-                                        </mat-expansion-panel>
-                                </mat-accordion>
-                                <mat-accordion> 
-                                    <mat-expansion-panel [expanded]="showvideocallmode && showvirtualcallingmodes">
+                                        <mat-accordion> 
+                                    <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"
-                                                    (click)="handleScroll('videocall-settings', 'comm')">Video Call Settings</span>
+                                                <span>Video Calling Service</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                          <div class="helpcontent">
                                                 <section>
-                                                        <span>In this section, a provider can add the mode for video call with which he/she wishes
-                                                            to
-                                                            Configure Customers video call preferences here. 
-                                                        </span>
-                                                </section>
+                                                       
+                                                           <strong>How to activate your video calling service?
+                                                            </strong>
+                                                            <br>
+                                                   
+                                                           <span>Switching on the Teleservice to control your <strong>Video calling modes</strong> and <strong>Audio calling modes</strong>.
+                                                             </span>
+                                                   </section>
                                                 <section>
-                                                    <span>
-                                                        To set up Customersvideo call preferences, a provider has to select
-                                                            the
-                                                                " video Call" options.
-                                                        </span>
-                                                </section>
-                                                <section>
-                                                    <span>
-                                                       Video Call settings contains six checkboxes .Choose one of the six video call checkbox options.
-                                                    </span>
-                                                </section>  
-                                                    <section>
-                                                        <ul>
-                                                            <li>Skype</li>
-                                                            <li>Whatsapp</li>
-                                                            <li>Hangouts</li>
-                                                            <li>Botim</li>
-                                                            <li>IMO</li>
-                                                            <li>Jaldee Integrated Video</li>
+                                                    <strong><u>VIDEO CALLING MODES</u></strong><br>
+                                                    <ol>
+                                                        <li><strong>WHATSAPP</strong><br>To configure your Whatsapp video call</li>
+                                                        <ul> 
+                                                            <li>Enter your Whatsapp mobile number.</li>
+                                                            <li>Click on <strong>UPDATE.</strong></li>
+                                                            <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
                                                         </ul>
-                                                    </section>
-                                         </div>
+                                                    
+                                                            <li><strong>ZOOM
+                                                                </strong><br>To configure your Zoom video call</li>
+                                                            <ul> 
+                                                                    <li>Enter your Zoom ID URL.<br>
+                                                                            For example, “https://zoom.us/j/3814640655?pwd=Z0JEVHMzeVpJVBPd3Nndz09”
+                                                                            </li>
+                                                                    <li>Click on  <strong>UPDATE.</strong></li>
+                                                                    <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
+                                                            </ul>
+
+                                                          
+                                                                    <li><strong>GOOGLE MEET</strong><br>Comingsoon..</li></ol>
+                                                                </section> 
+                                                                <section>
+                                                                        <strong><u>AUDIO CALLING MODES</u></strong><br>
+                                                                        <ol>
+                                                                            <li><strong>WHATSAPP</strong><br>To configure your Whatsapp audio call</li>
+                                                                            <ul> 
+                                                                                <li>Enter your Whatsapp mobile number.</li>
+                                                                                <li>Click on  <strong>UPDATE.</strong></li>
+                                                                                <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
+                                                                            </ul>
+                                                                            
+                                                                                <li><strong>SKYPE
+                                                                                    </strong><br>To configure your  Skype audio call</li>                                                                              
+                                                                                <ul> 
+                                                                                        <li>Enter your Skype ID.</li>
+                                                                                        <li>Click on <strong>UPDATE.</strong></li>
+                                                                                        <li>Now, you’ll be able to <strong> SWITCH ON THE TOGGLE BUTTON </strong>of Skype.</li>
+                                                                                </ul>
+                                                                               
+                                                                                        <li><strong>MOBILE CALL</strong><br>To configure your normal mobile audio call</li>
+                                                                                                                                                                      
+                                                                                        <ul> 
+                                                                                                <li>Enter your Mobile number.</li>                                                                                                 
+                                                                                                <li>Click on <strong>UPDATE.</strong></li>
+                                                                                                <li>Now, you’ll be able to <strong> SWITCH ON THE TOGGLE BUTTON </strong>of Mobile call.</li>
+                                                                                        </ul>
+                                                                                        </ol>
+                                                                                    </section>     
+                                                           </div>
                                     </mat-expansion-panel>
                             </mat-accordion>
+                        </div>
+                    </mat-expansion-panel>
+            </mat-accordion>
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="shownotifications && showvirtualcallingmodes">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -4806,6 +4856,54 @@
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                            <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Teleservice Call</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                            <div class="helpcontent">
+                                                                <ul class="ul-normal">
+                                                                    <li><strong>How to initiate a teleservice call?
+                                                                    </strong><br>
+                                                                    After receiving a check-in/appointment, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
+                                                                </strong>
+                                                                    </li>
+                                                                    <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                                    <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
+                    
+                                                                        <ul class="normal-abc">
+                                                                            <li><strong>Launch the service - </strong> Click on<strong> “Launch”</strong> to launch the respective application.
+                                                                           <br>After the pop-up appears,<br>
+                                                                            Respond “YES”, if you want to change the status of the customer into STARTED.<br> 
+                                                                            Respond “NO”, if you want the customer to remain in NEW.
+                                                                            </li>
+                                                                            <li><strong>Reminder -</strong>  Click on <strong>“Reminder”</strong> to send a reminder message to the customer by 
+                                                                            <ul class="normal-abc">
+                                                                                <li>SMS</li>  
+                                                                                <li>App Notifications</li>
+                                                                                 <li>E-Mail</li>  
+                                                                            </ul>
+                                                                            </li>
+                                                                            <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting for you!”</strong> to notify that you are waiting for  the customer to join the video/audio call. 
+                                                                                <ul class="normal-abc">
+                                                                                        <li>SMS</li>  
+                                                                                        <li>App Notifications</li>
+                                                                                         <li>E-Mail</li>  
+                                                                                    </ul>
+                                                                                    <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                                         <ul class="normal-abc">
+                                                                                                <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                                                </li>  
+                                                                                                <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
+                                                                                            </ul> 
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                             <!-- next -->

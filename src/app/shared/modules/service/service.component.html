@@ -30,7 +30,7 @@
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class=" ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
-                    <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
+                    <span *ngIf="service_data.serviceType==='physicalService'">Onsiteservice</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
@@ -176,7 +176,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             Teleservice
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
-                            Physical Service
+                            Onsite Service
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
