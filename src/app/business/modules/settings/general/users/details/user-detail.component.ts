@@ -121,9 +121,9 @@ export class BranchUserDetailComponent implements OnInit {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
                     for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
-                        if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
+                     //  if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
                             this.subDomains.push(bConfig.bdata[i].subDomains[j]);
-                        }
+                      //  }
                     }
                     break;
                 }
@@ -142,6 +142,7 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
+        console.log(this.subDomains);
         this.selectedsubDomain = [];
         for (const subdomain of this.subDomains) {
         if (this.sector === 'healthCare') {
