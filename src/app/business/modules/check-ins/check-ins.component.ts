@@ -2009,7 +2009,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showCallingModes(modes, action) {
-    console.log(modes)
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {

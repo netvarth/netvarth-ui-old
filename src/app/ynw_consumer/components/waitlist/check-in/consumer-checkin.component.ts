@@ -705,8 +705,6 @@ export class ConsumerCheckinComponent implements OnInit {
         // for (let i = 0; i < this.callingModes.length; i++) {
         if (this.callingModes !== '') {
             this.is_wtsap_empty = false;
-            console.log(this.callingModes)
-            console.log(this.sel_ser_det)
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
@@ -740,7 +738,6 @@ export class ConsumerCheckinComponent implements OnInit {
             'coupons': this.selected_coupons
         };
         if (this.sel_ser_det.serviceType === 'virtualService') {
-            console.log(this.virtualServiceArray)
             // tslint:disable-next-line:forin
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
