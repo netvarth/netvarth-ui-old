@@ -10191,3 +10191,8 @@ a {
 .linkpagestyle {
 text-align: center;
 }
+.linkexpired{
+  padding: 30px;
+  font-weight: bold;
+  text-align: center;
+}

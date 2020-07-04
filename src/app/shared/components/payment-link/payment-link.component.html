@@ -5,7 +5,7 @@
             <div class="linkpagestyle">
               <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-             <div class="content comn-cls"  >     
+             <div class="content comn-cls">     
              <div *ngIf ="paidStatus == 'false'">
                 <section>
                    <div class="content settings">
@@ -22,13 +22,12 @@
                                                 <span  style="text-align: left;">Pay To</span>
                                                 <span class="lnk "><p class=" setings textcenter">{{bname | capitalizeFirst}}</p></span>
                                                 <p class="textcenter"><span> {{this.location}}</span><br>{{billtime}},{{billdate}}</p>
-                                                <h2 class="textcenter"> Rs.{{this.amountDue}}/-</h2> <br>
-                                                <h2 class="textcenter"><button class="pay" (click)="pay()"><h2>pay</h2></button></h2> <br>
+                                                <h2 class="textcenter"> Rs.{{this.amountDue}}/-</h2>
+                                                <h2 class="textcenter"><button class="pay" (click)="pay()"><h2>pay</h2></button></h2>
                                              </li>
                                              <li>
                                               <a class="learnmore-pointer" (click)="billview()"> <p class="textcenter"> View bill</p></a>
-                                             </li>
-                                              <li>
+                                             </li>                                            
                                                  <div class="col-md-12 no-padding-small" *ngIf="showbill">
                                                             <div class="w-dta">
                                                               <div class="row">
@@ -38,7 +37,7 @@
                                                                       <div class="bill-section-content" id="receipt">
                                                                         <div class="bill-wrapper ">
                                                                          
-                                                                            <div class="bill-header" style="padding-top: 40px;">
+                                                                            <div class="bill-header">
                                                                               <div class="section-one" >
                                                                                   <h3>{{bname | capitalizeFirst}}</h3>
                                                                                   <div class="details">
@@ -248,7 +247,7 @@
                                                                     </div>
                                                                   </div>
                                                  </div>
-                                               </li>
+                                            
                                             </ul>
                                         </div>
                                     </div>
@@ -272,8 +271,10 @@
                            <span><b>Transaction Id:</b>&nbsp;<span>{{razorpay_order_id}}</span></span>
                         </div> 
                     </div>       
-                </div>            
+             </div>            
            </div>
+           <!-- <div class="linkexpired"  *ngIf="bill_data.amountDue == 0" >This Link has expired </div> -->
+           
         </div>
        </div>
      </header>

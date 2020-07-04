@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
@@ -16,7 +16,7 @@ import { Razorpaymodel } from '../razorpay/razorpay.model';
     'templateUrl': './payment-link.component.html'
   })
 
-export class PaymentLinkComponent implements OnInit {
+export class PaymentLinkComponent implements OnInit , OnChanges {
   api_loading: boolean;
   genid;
   isCheckin;
@@ -132,25 +132,28 @@ export class PaymentLinkComponent implements OnInit {
           }
           console.log(this.genid);
         });
-        this.activated_route.queryParams.subscribe (qparams => {
-          this.data = qparams;
-          console.log(this.data);
-          this.razorpayDetails = JSON.parse(this.data.details);
-          console.log(this.razorpayDetails);
-          this.razorpayService.changePaidStatus(this.data.paidStatus);
-          this.razorpayService.currentStatus.subscribe( status => {
-           this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
-           this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
-           this.razorpay_signature = this.razorpayDetails.razorpay_signature;
-           this.paidStatus = status;
-           console.log(this.paidStatus);
-           console.log(this.razorpay_order_id);
-           console.log(this.razorpay_payment_id);
-           console.log(this.razorpay_signature);
-           this.cdRef.detectChanges();
-          // this.router.navigate(['/']);
-           });
+    }
+    ngOnChanges() {
+      this.activated_route.queryParams.subscribe (qparams => {
+        this.data = qparams;
+        console.log(this.data);
+        this.razorpayDetails = JSON.parse(this.data.details);
+        console.log(this.razorpayDetails);
+        this.razorpayService.changePaidStatus(this.data.paidStatus);
+        this.razorpayService.currentStatus.subscribe( status => {
+         this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
+         this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
+         this.razorpay_signature = this.razorpayDetails.razorpay_signature;
+         this.paidStatus = status;
+         console.log(this.paidStatus);
+         console.log(this.razorpay_order_id);
+         console.log(this.razorpay_payment_id);
+         console.log(this.razorpay_signature);
+        //  this.cdRef.detectChanges();
+        // this.router.navigate(['/']);
          });
+       });
+
     }
   ngOnInit() {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
@@ -256,7 +259,8 @@ export class PaymentLinkComponent implements OnInit {
       'uuid': this.genid,
       'amount': this.amountDue,
       'purpose': 'prePayment',
-      'source': 'Desktop'
+      'source': 'Desktop',
+      'paymentMode': 'DC'
         };
     this.provider_services.linkPayment(postdata)
     .subscribe((data: any) => {
