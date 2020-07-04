@@ -175,7 +175,7 @@ export class AppointmentComponent implements OnInit {
     notes = false;
     attachments = false;
     users = [];
-    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     customerid: any;
     showEditView = false;
     slots;

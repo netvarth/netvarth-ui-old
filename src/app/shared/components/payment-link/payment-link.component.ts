@@ -2,9 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
-// import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../constants/project-messages';
-import { JcCouponNoteComponent } from '../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RazorpayService } from '../../services/razorpay.service';
 import { RazorpayprefillModel } from '../razorpay/razorpayprefill.model';
@@ -12,11 +10,11 @@ import { WindowRefService } from '../../services/windowRef.service';
 import { Razorpaymodel } from '../razorpay/razorpay.model';
 
 @Component({
-    'selector': 'app-payment-link.component',
-    'templateUrl': './payment-link.component.html'
-  })
+  'selector': 'app-payment-link.component',
+  'templateUrl': './payment-link.component.html'
+})
 
-export class PaymentLinkComponent implements OnInit , OnChanges {
+export class PaymentLinkComponent implements OnInit {
   api_loading: boolean;
   genid;
   isCheckin;
@@ -55,7 +53,6 @@ export class PaymentLinkComponent implements OnInit , OnChanges {
   status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
-//   coupon_notes = projectConstants.COUPON_NOTES;
   api_error = null;
   api_success = null;
   checkin = null;
@@ -114,47 +111,22 @@ export class PaymentLinkComponent implements OnInit , OnChanges {
   providername: any;
   description: any;
 
-  constructor(private shared_services: SharedServices,
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
+  constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     public sharedfunctionObj: SharedFunctions,
     public sharedServices: SharedServices,
-    private shared_functions: SharedFunctions,
     public razorpayService: RazorpayService,
     public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService) {
-      this.activated_route.params.subscribe(
-        qparams => {
-          if (qparams.id !== 'new') {
-            this.genid = qparams.id;
-          }
-          console.log(this.genid);
-        });
-    }
-    ngOnChanges() {
-      this.activated_route.queryParams.subscribe (qparams => {
-        this.data = qparams;
-        console.log(this.data);
-        this.razorpayDetails = JSON.parse(this.data.details);
-        console.log(this.razorpayDetails);
-        this.razorpayService.changePaidStatus(this.data.paidStatus);
-        this.razorpayService.currentStatus.subscribe( status => {
-         this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
-         this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
-         this.razorpay_signature = this.razorpayDetails.razorpay_signature;
-         this.paidStatus = status;
-         console.log(this.paidStatus);
-         console.log(this.razorpay_order_id);
-         console.log(this.razorpay_payment_id);
-         console.log(this.razorpay_signature);
-        //  this.cdRef.detectChanges();
-        // this.router.navigate(['/']);
-         });
-       });
-
-    }
+    this.activated_route.params.subscribe(
+      qparams => {
+        if (qparams.id !== 'new') {
+          this.genid = qparams.id;
+        }
+        console.log(this.genid);
+      });
+  }
   ngOnInit() {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     console.log(this.isCheckin);
@@ -166,43 +138,38 @@ export class PaymentLinkComponent implements OnInit , OnChanges {
   }
   getuuid() {
     this.provider_services.Paymentlinkcheck(this.genid)
-    .subscribe(
-      data => {
-        console.log(data);
-        this.bill_data = data;
-        if (this.bill_data = data) {
-          this.firstname = this.bill_data.billFor.firstName;
-          this.netRate = this.bill_data.netRate;
-          this.amountDue = this.bill_data.amountDue;
-          this.location = this.bill_data.accountProfile.location.place;
-          this.billPaymentStatus = this.bill_data.billPaymentStatus;
-          this.uuid = this.bill_data.uuid;
-          this.accountId = this.bill_data.id;
-          console.log(this.uuid);
-          console.log(this.billPaymentStatus);
-          console.log(this.location);
-          console.log(this.netRate);
-          console.log(this.firstname);
-        }
-
-       for (let i = 0; i < this.bill_data.discount.length; i++) {
-          if (this.bill_data.discount[i].displayNote) {
-            this.discountDisplayNotes = true;
+      .subscribe(
+        data => {
+          console.log(data);
+          this.bill_data = data;
+          if (this.bill_data = data) {
+            this.firstname = this.bill_data.billFor.firstName;
+            this.netRate = this.bill_data.netRate;
+            this.amountDue = this.bill_data.amountDue;
+            this.location = this.bill_data.accountProfile.location.place;
+            this.billPaymentStatus = this.bill_data.billPaymentStatus;
+            this.uuid = this.bill_data.uuid;
+            this.accountId = this.bill_data.id;
           }
+
+          for (let i = 0; i < this.bill_data.discount.length; i++) {
+            if (this.bill_data.discount[i].displayNote) {
+              this.discountDisplayNotes = true;
+            }
+          }
+          if (this.bill_data.displayNotes || this.discountDisplayNotes) {
+            this.billNoteExists = true;
+          }
+          if (this.bill_data.amountDue < 0) {
+            this.refund_value = Math.abs(this.bill_data.amountDue);
+          }
+          this.getBillDateandTime();
+        },
+        error => {
+        },
+        () => {
         }
-        if (this.bill_data.displayNotes || this.discountDisplayNotes) {
-          this.billNoteExists = true;
-        }
-        if (this.bill_data.amountDue < 0) {
-          this.refund_value = Math.abs(this.bill_data.amountDue);
-        }
-        this.getBillDateandTime();
-      },
-      error => {
-      },
-      () => {
-      }
-    );
+      );
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
@@ -261,17 +228,16 @@ export class PaymentLinkComponent implements OnInit , OnChanges {
       'purpose': 'prePayment',
       'source': 'Desktop',
       'paymentMode': 'DC'
-        };
+    };
     this.provider_services.linkPayment(postdata)
-    .subscribe((data: any) => {
-         console.log('success');
+      .subscribe((data: any) => {
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
         this.pGateway = data.paymentGateway;
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
         }
-    });
+      });
   }
   paywithRazorpay(data: any) {
     this.prefillmodel.name = data.consumerName;
@@ -283,75 +249,20 @@ export class PaymentLinkComponent implements OnInit , OnChanges {
     this.razorModel.order_id = data.orderId;
     this.razorModel.name = data.providerName;
     this.razorModel.description = data.description;
-    console.log(this.genid);
-
-    this.razorpayService.payWithRazor(this.razorModel , this.origin , this.checkIn_type ,  this.genid);
+    this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
+      (response: any) => {
+        console.log(response);
+        if (response !== 'failure') {
+          this.paidStatus = 'true';
+          this.razorpay_order_id = response.razorpay_order_id;
+          this.razorpay_payment_id = response.razorpay_payment_id;
+          // this.razorpay_signature = response.razorpay_signature;
+        } else {
+          this.paidStatus = 'false';
+        }
+      }
+    );
   }
-  // paywithRazorpay(data: any) {
-  //    this.consumername = data.consumerName;
-  //    this.consumeremail = data.ConsumerEmail;
-  //    this.consumerphonenumnber = data.consumerPhoneumber;
-  //    this.razorModel = new Razorpaymodel(this.prefillmodel);
-  //    this.razorpayid = data.razorpayId;
-  //    this.amount = data.amount;
-  //    this.orderid = data.orderId;
-  //    this.providername = data.providerName;
-  //    this.description = data.description;
-  //   const options: any = {
-  //     key: this.razorpayid,
-  //     amount: this.amount, // amount should be in paise format to display Rs 1255 without decimal point
-  //     currency: 'INR',
-  //     name:     this.providername , // company name or product name
-  //     description: this.description,  // product description
-  //     image: '', // company logo or product image
-  //     order_id: this.orderid, // order_id created by you in backend
-  //     prefill: {
-  //       "name": this.consumername ,
-  //       "contact": this.consumerphonenumnber,
-  //       "email":  this.consumeremail,
-  //     },
-  //     theme: {
-  //       color: '#F37254'
-  //     }
-  //   };
-  //   options.handler = ((response, error) => {
-  //     options.response = response;
-  //     const dataToSend: FormData = new FormData();
-  //     dataToSend.append ('razorpay_payment_id', response.razorpay_payment_id);
-  //     dataToSend.append ('razorpay_order_id', response.razorpay_order_id);
-  //     dataToSend.append ('razorpay_signature', response.razorpay_signature);
-  //     dataToSend.append ('status' , 'SUCCESS');
-  //     dataToSend.append ('txnid' , '' );
-  //     this.razorpay_order_id = response.razorpay_order_id;
-  //     this.razorpay_payment_id = response.razorpay_payment_id;
-  //     this.razorpay_signature = response.razorpay_signature;
-  //     console.log(options.response);
-  //     console.log( this.razorpay_order_id );
-  //     this.sharedServices.consumerPaymentStatus(dataToSend)
-  //     .subscribe(( data: any) => {
-  //           console.log(data);
-  //           'paidStatus': true,
-  //           this.status_check = data.sucess;
-  //           if ( this.status_check = 'sucess' ||  this.status_check === 'success' || (response.razorpay_order_id != null || response.razorpay_order_id  != undefined ) {
-  //             this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUC'));
-  //           }
-  //     console.log(data);
-  //   }
-  //   );
-  //     // call your backend api to verify payment signature & capture transaction
-  //   });
-  //   // options.modal.ondismiss = (() => {
-  //   //   // handle the case when user closes the form while transaction is in progress
-  //   //   console.log('Transaction cancelled.');
-  //   // });
-  //   const rzp = new this.winRef.nativeWindow.Razorpay(options);
-  //   rzp.open();
-
-  // }
-
-
-
-
   billview() {
     this.showbill = true;
   }

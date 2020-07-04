@@ -1,4 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
+
+
+
+
+ import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -259,6 +263,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allServiceSelected = false;
   services: any = [];
   consumr_id: any;
+  topHeight = 200;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -305,6 +310,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.small_device_display = false;
     }
   }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    const header = document.getElementById('childActionBar');
+    console.log(window.pageYOffset);
+    console.log(window.screen.height);
+    console.log(window.screen.availHeight);
+    if (window.pageYOffset >= this.topHeight) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+    if (window.pageYOffset >= window.screen.height) {
+      return false;
+    }
+  }
   ngOnInit() {
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
@@ -331,6 +351,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
+    const sidebar = document.getElementsByClassName('sidebar-bottom');
+    console.log(sidebar);
+    if (sidebar) {
+      const height = window.screen.height;
+      sidebar[0].setAttribute('height', height.toString());
+    }
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
@@ -340,7 +366,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.views = [];
     return new Promise(function (resolve, reject) {
       const tempView = {};
-      tempView['name'] = 'Default';
+      tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].schedules = schedules;
@@ -525,7 +551,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSchedulesFromView(view, schedules) {
     const qs = [];
-    if (view && view.name !== 'Default') {
+    if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < schedules.length; i++) {
         for (let j = 0; j < view.customViewConditions.schedules.length; j++) {
           if (schedules[i].id === view.customViewConditions.schedules[j].id) {

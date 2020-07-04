@@ -175,7 +175,7 @@ export class ProviderCheckinComponent implements OnInit {
     notes = false;
     attachments = false;
     users = [];
-    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     customerid: any;
     callingMode;
     virtualServiceArray;
@@ -822,7 +822,7 @@ export class ProviderCheckinComponent implements OnInit {
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'waitlistMode': this.checkinType
         };
-        if (this.selectedUser && this.selectedUser.firstName !== 'None') {
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {

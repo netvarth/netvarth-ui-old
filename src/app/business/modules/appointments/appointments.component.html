@@ -7,7 +7,7 @@
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card p0 w-dta">
-        <header class="main-header dash chkin">
+        <header class="main-header dash chkin" id="apptsHeader">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu width100pc">
               <ul class="nav navbar-nav width100pc">
@@ -99,7 +99,7 @@
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeSchedules && activeSchedules.length > 0">
+        <div class="head mgn-up-5 mgn-bt-5" id="apptsSchedules" *ngIf="activeSchedules && activeSchedules.length > 0">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']" [items]="activeSchedules">
@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="selected_location">
+        <div class="head mgn-up-5 mgn-bt-5" id="apptsTimeTypes" *ngIf="selected_location">
           <div class="col-md-5 col-xs-12 col-sm-12 no-padding wl-tp-cont1" style="display: flex;">
             <button class="cust-button-1" [ngClass]="{'active': time_type==1}" (click)="setTimeType(1)">
               {{today_cap}} ({{today_waitlist_count}})
@@ -162,17 +162,7 @@
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
                 *ngIf="!loading && time_type!=3 && isBatch ">
                 <table class="table tbl-qboard" style="width: 100%;">
-                  <thead>
-                    <tr>
-                      <td colspan="5" *ngIf="showSlotsN">
-                        <mat-chip-list class="apptm-in-chip">
-                          <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
-                            *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
-                            (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                            {{getSingleTime(slot.time)}}</mat-chip>
-                        </mat-chip-list>
-                      </td>
-                    </tr>
+                  <thead id="childActionBar" class="childActionBar">
                     <tr>
                       <th class="chkWth"><input style="margin-left: -3px; margin-top: 6px;" [(ngModel)]="selAllSlots"
                           type="checkbox" class="ckbx pull-left" (click)="selectAllSlots()" [checked]="selAllSlots" />
@@ -227,7 +217,7 @@
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
                           </a>
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1"
@@ -273,6 +263,16 @@
                           </a>
                         </div>
                       </th>
+                    </tr>
+                    <tr>
+                      <td colspan="5" *ngIf="showSlotsN">
+                        <mat-chip-list class="apptm-in-chip">
+                          <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
+                            *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
+                            (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                            {{getSingleTime(slot.time)}}</mat-chip>
+                        </mat-chip-list>
+                      </td>
                     </tr>
                   </thead>
                   <tbody *ngFor="let slot of availableSlotDetails.availableSlots, let slotIndex=index">
@@ -417,16 +417,7 @@
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead>
-                    <tr>
-                      <td colspan="5" *ngIf="showSlotsN">
-                        <mat-chip-list class="apptm-in-chip">
-                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
-                            [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
-                            {{getSingleTime(slot.time)}}</mat-chip>
-                        </mat-chip-list>
-                      </td>
-                    </tr>
+                  <thead id="childActionBar">                    
                     <tr>
                       <th class="chkWth">
                         <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
@@ -491,7 +482,7 @@
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
                           </a>
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1"
@@ -732,6 +723,15 @@
                         </div>
                       </th>
                     </tr>
+                    <tr>
+                      <td colspan="5" *ngIf="showSlotsN">
+                        <mat-chip-list class="apptm-in-chip">
+                          <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
+                            [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
+                            {{getSingleTime(slot.time)}}</mat-chip>
+                        </mat-chip-list>
+                      </td>
+                    </tr>
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <!-- <tr>
@@ -749,7 +749,7 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngFor="let appt of check_in_filtered_list, let i=index">
+                  <tbody class="dynamic-content" *ngFor="let appt of check_in_filtered_list, let i=index">
                     <tr>
                       <td class="chkWth">
                         <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"

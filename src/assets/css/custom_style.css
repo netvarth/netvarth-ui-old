@@ -9247,11 +9247,11 @@ owl-carousel .bt3.active {
 .parentRow .parent-name {
   padding-top: 3px !important;
 }
-
-.childActionBar {
-  height: 35px !important;
+ 
+#childActionBar {
+  /* height: 35px !important; */
+  z-index: 1 !important;
 }
-
 .chkins-sect .icon-action {
   padding: 0px 5px 0px 10px!important;
   color: #000;
@@ -9449,15 +9449,15 @@ button.cust-button-1:hover:not([disabled])>*, button.cust-button-2:hover:not([di
   transform: scale(0.975);
 }
 
-button.cust-button-1:focus:not(:active), button.cust-button-2:focus:not(:active), button.cust-button-3:focus:not(:active) {
+/* button.cust-button-1:focus:not(:active), button.cust-button-2:focus:not(:active), button.cust-button-3:focus:not(:active) {
   -webkit-animation: active 0.9s alternate infinite;
   animation: active 0.9s alternate infinite;
   outline: none;
-}
+} */
 
-button.cust-button-1:active:not([disabled]), button.cust-button-2:active:not([disabled]), button.cust-button-3:active:not([disabled]) {
+/* button.cust-button-1:active:not([disabled]), button.cust-button-2:active:not([disabled]), button.cust-button-3:active:not([disabled]) {
   box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
-}
+} */
 
 button.cust-button-1:active:not([disabled])>*, button.cust-button-2:active:not([disabled])>*, button.cust-button-3:active:not([disabled])>* {
   -webkit-transform: scale(0.95);
@@ -9835,7 +9835,7 @@ td.chkWth, th.chkWth {
 }
 
 .apptm-in-chip .apptslotW{
-  width: 85px !important;
+  width: 90px !important;
   font-size: .75rem !important;
   text-align: center !important;
   border-radius: .5px !important;
@@ -10169,6 +10169,7 @@ a {
             transform: translate(2px, -18px) rotate(-25deg);
   }
 }
+
 .textcenter {
   text-align: center;
 }
@@ -10195,4 +10196,17 @@ text-align: center;
   padding: 30px;
   font-weight: bold;
   text-align: center;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .dynamic-content {
+  padding-top: 50px;
+}
+
+.filterSidebar {
+  position: fixed !important;
 }

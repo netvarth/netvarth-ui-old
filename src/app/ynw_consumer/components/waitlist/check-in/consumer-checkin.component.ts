@@ -109,7 +109,7 @@ export class ConsumerCheckinComponent implements OnInit {
     maxsize;
     isFuturedate = false;
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     fromKiosk = false;
@@ -759,7 +759,7 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.apptTime) {
             post_Data['appointmentTime'] = this.apptTime;
         }
-        if (this.selectedUser && this.selectedUser.firstName !== 'None') {
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {

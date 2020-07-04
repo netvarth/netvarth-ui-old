@@ -1485,5 +1485,8 @@ export const Messages = {
   'GENERALSETTINGS': 'General',
   'APPOINTMNT_SUCC': 'Appointment created successfully',
   'DONATE_SUCC': 'Donated successfully',
-  'SCHEDULENAME_CAP': 'Title for Schedule *'
+  'SCHEDULENAME_CAP': 'Title for Schedule *',
+
+  'DEFAULTVIEWCAP': 'My View',
+  'NOUSERCAP': 'Global Services'
 };

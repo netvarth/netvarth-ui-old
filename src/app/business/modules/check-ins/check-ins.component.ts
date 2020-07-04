@@ -225,6 +225,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showArrived = false;
   showUndo = false;
   showRejected = false;
+  apiloading = false;
   breadcrumbs_init = {};
   apptModes: any = [];
   paymentStatuses: any = [];
@@ -571,7 +572,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.views = [];
     return new Promise(function (resolve, reject) {
       const tempView = {};
-      tempView['name'] = 'Default';
+      tempView['name'] = Messages.DEFAULTVIEWCAP;
       tempView['id'] = 0;
       tempView['customViewConditions'] = {};
       tempView['customViewConditions'].queues = queues;
@@ -626,7 +627,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQsFromView(view, queues) {
     const qs = [];
-    if (view && view.name !== 'Default') {
+    if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < queues.length; i++) {
         for (let j = 0; j < view.customViewConditions.queues.length; j++) {
           if (queues[i].id === view.customViewConditions.queues[j].id) {

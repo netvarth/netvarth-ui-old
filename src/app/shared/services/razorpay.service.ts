@@ -36,6 +36,38 @@ export class RazorpayService {
     this.paidStatus.next(value);
     console.log(value);
   }
+
+  payBillWithoutCredentials(razorModel) {
+    const self = this;
+    console.log('here');
+    return new Promise(function (resolve) {
+      const options = razorModel;
+      options.handler = ((response, error) => {
+        options.response = response;
+        console.log(response);
+        console.log(options.response);
+        const dataToSend: FormData = new FormData();
+        dataToSend.append('razorpay_payment_id', response.razorpay_payment_id);
+        dataToSend.append('razorpay_order_id', response.razorpay_order_id);
+        dataToSend.append('razorpay_signature', response.razorpay_signature);
+        dataToSend.append('status', 'SUCCESS');
+        dataToSend.append('txnid', '');
+        self.sharedServices.consumerPaymentStatus(dataToSend).subscribe(
+          (data: any) => {
+            if (data === 'success') {
+              resolve(response);
+            } else {
+              resolve ('failure');
+            }
+          },
+          () => {
+            resolve('failure');
+          });
+      });
+      const rzp = new self.winRef.nativeWindow.Razorpay(options);
+      rzp.open();
+    });
+  }
   payWithRazor(razorModel, usertype, checkin_type?, livetrack?, account_id?, uuid?) {
     //   theme: {
     //     color: '#F37254'

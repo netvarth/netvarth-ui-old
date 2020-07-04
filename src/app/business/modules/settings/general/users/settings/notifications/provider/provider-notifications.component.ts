@@ -29,6 +29,7 @@ export class ProviderNotificationUserComponent implements OnInit {
 
     },
   ];
+  mode_of_notify = '';
   breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
@@ -89,6 +90,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    // this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     this.activatedRoot.params.subscribe(params => {
       this.userId = + params.id;
       this.getUser();
