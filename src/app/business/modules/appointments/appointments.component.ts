@@ -2564,6 +2564,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   showCallingModes(modes, action) {
+    console.log(modes)
     if (!modes.consumer) {
       this.consumr_id = modes.providerConsumer.id;
     } else {
@@ -2576,7 +2577,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         modes: modes.virtualService,
-        uuid: modes.ynwUuid,
+        uuid: modes.uid,
         consumerid: this.consumr_id,
         qdata: modes,
         type: 'appt'
