@@ -192,9 +192,6 @@ export class CallingModesComponent implements OnInit {
         }
     }
     chkinTeleserviceJoinLink() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         const uuid_data = {
             'mode': this.callingModes
         };
@@ -209,9 +206,6 @@ export class CallingModesComponent implements OnInit {
             });
     }
     apptTeleserviceJoinLink() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         const uuid_data = {
             'mode': this.callingModes
         };
@@ -280,7 +274,6 @@ export class CallingModesComponent implements OnInit {
         if (this.data.type === 'checkin') {
             this.shared_services.getWaitlstMeetingDetails(this.callingModes, this.data.uuid).
                 subscribe((meetingdata) => {
-                    console.log(meetingdata)
                     this.meetlink_data = meetingdata;
                     this.starting_url = this.meetlink_data.startingUl;
                     this.temp_msglink = this.meetlink_data.startingUl;
