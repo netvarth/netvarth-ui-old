@@ -115,6 +115,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     provider: { id: any; };
     departId: any;
     include_audio = false;
+    selectedUser = '0';
+    defaultOption = {
+        'id': '0',
+        'firstName': 'Global',
+        'lastName' : 'Service'
+    };
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -421,7 +427,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            if (this.providerId) {
+            if (this.providerId && this.providerId !== '0') {
                 this.provider = {
                     'id' : this.providerId
                 };
@@ -665,6 +671,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
+            this.users_list.push(this.defaultOption);
         });
     }
     selectUserHandler(value) {

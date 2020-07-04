@@ -229,7 +229,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add' && !is_donation">
                 <mat-form-field class="example-full-width">
-                    <mat-select  placeholder="Select user" #userlist
+                    <mat-select [(value)]="selectedUser"  placeholder="Select user" #userlist
                         (selectionChange)="selectUserHandler(userlist.value)">
                         <mat-option *ngFor="let usr of users_list" [value]="usr.id">
                             {{usr.firstName}} {{usr.lastName}}
