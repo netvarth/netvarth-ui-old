@@ -627,6 +627,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         }
                         if (this.vcallmodes[i].callingMode === 'Phone') {
                             this.include_audio = true;
+                            break;
                         } else {
                             this.include_audio = false;
                         }
