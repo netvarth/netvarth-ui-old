@@ -138,7 +138,8 @@ export class ConsumerCheckinComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-
+   
+    providerlabel = '';
     userData: any = [];
     userEmail;
     userPhone;
@@ -216,7 +217,8 @@ export class ConsumerCheckinComponent implements OnInit {
         public route: ActivatedRoute,
         public dateformat: DateFormatPipe,
         public provider_services: ProviderServices,
-        public datastorage: CommonDataStorageService) {
+        public datastorage: CommonDataStorageService,
+        ) {
         this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
@@ -232,6 +234,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.selectedDeptParam = params.dept;
                 this.selectedUserParam = params.user;
             });
+          
     }
     ngOnInit() {
         // this.breadcrumbs = [
@@ -239,6 +242,7 @@ export class ConsumerCheckinComponent implements OnInit {
         //         title: 'Checkin'
         //     }
         // ];
+       
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -361,6 +365,7 @@ export class ConsumerCheckinComponent implements OnInit {
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
         this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
+        this.providerlabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('provider'));
         if (this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
         } else {
