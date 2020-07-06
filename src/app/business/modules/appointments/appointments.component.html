@@ -217,7 +217,8 @@
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
-                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1"
+                            [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
                           </a>
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1"
@@ -265,7 +266,7 @@
                       </th>
                     </tr>
                     <tr *ngIf="showSlotsN">
-                      <td colspan="5" >
+                      <td colspan="5">
                         <mat-chip-list class="apptm-in-chip">
                           <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
                             *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
@@ -287,8 +288,8 @@
                           [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
                           (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
                           <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
-                              *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot">
-                              [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span>
+                            *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot">
+                            [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span>
                         </div>
                       </td>
                       <td class="title td-two-full"
@@ -417,7 +418,7 @@
               <div id="contentDiv" class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar">                    
+                  <thead id="childActionBar">
                     <tr>
                       <th class="chkWth">
                         <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
@@ -482,7 +483,8 @@
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
-                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1" [matTooltip]="'Choose slot'">
+                          <a *ngIf="time_type!=3" class="icon-action pointer-cursor icon-size1"
+                            [matTooltip]="'Choose slot'">
                             <i class="fa fa-calendar-plus-o" (click)="showSlots()"></i>
                           </a>
                           <a ngbDropdown class="icon-action pointer-cursor icon-size1"
@@ -533,7 +535,7 @@
                               [matTooltip]="filtericonTooltip">
                             </i>
                           </a>
-                          <aside  class="filterSidebar" *ngIf="filter_sidebar">
+                          <aside class="filterSidebar" *ngIf="filter_sidebar">
                             <section id="filterContainer" class="sidebar sidebar-bottom">
                               <div class="filterClosebtn">
                                 <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
@@ -545,22 +547,21 @@
                               <ul class="sidebar-menu">
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox"
-                                      placeholder="Phone Number">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
+                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <div *ngIf="time_type == 3">
@@ -603,7 +604,7 @@
                                       Male</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allGenderSlected || genderList.indexOf('male') !== -1"
+                                    <mat-checkbox [checked]="allGenderSlected || genderList.indexOf('female') !== -1"
                                       (change)="setFilterDataCheckbox('gender', 'female', $event)">
                                       Female</mat-checkbox>
                                   </li>
@@ -664,14 +665,14 @@
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                     <mat-checkbox [checked]="allPayStatusSelected"
-                                      (change)="setFilterDataCheckbox('paymentStatus', 'all', $event)">
+                                      (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let pay_status of payStatusList">
                                     <mat-checkbox
                                       [checked]="allPayStatusSelected || paymentStatuses.indexOf(pay_status.pk) !== -1"
-                                      (change)="setFilterDataCheckbox('paymentStatus', pay_status.pk, $event)">
+                                      (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
                                       {{pay_status.value}}</mat-checkbox>
                                   </li>
                                 </div>
@@ -831,11 +832,12 @@
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(appt, 'Started')">
-                        <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                          (click)="showCallingModes(appt, 'Started')">
+                          <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                         <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
-                        <span *ngIf="!small_device_display">Teleservice</span>
-                      </a>
+                          <span *ngIf="!small_device_display">Teleservice</span>
+                        </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">
@@ -888,8 +890,8 @@
   </div>
   <div class="clearfix"></div>
   <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
-    <button >
-        <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
+    <button>
+      <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
     </button>
   </div>
 </section>

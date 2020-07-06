@@ -1471,7 +1471,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.labelSelection();
-    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
@@ -1480,8 +1479,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filterapplied = false;
     }
-    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
+  }
+  keyPressed(event) {
+    if (event.keyCode === 13) {
+      this.doSearch();
+    }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');
@@ -1993,7 +1996,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    if (type === 'paymentStatus') {
+    if (type === 'payment_status') {
       if (value === 'all') {
         this.paymentStatuses = [];
         if (event.checked) {
