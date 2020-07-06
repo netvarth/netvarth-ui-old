@@ -20,8 +20,7 @@ export class DonationsComponent implements OnInit {
     filter = {
         first_name: '',
         date: null,
-        mobile: '',
-        email: '',
+        service: '',
         page_count: projectConstants.PERPAGING_LIMIT,
         page: 1
     }; // same in resetFilter Fn
@@ -66,6 +65,7 @@ export class DonationsComponent implements OnInit {
     show_loc = false;
     locations: any;
     selected_loc_id: any;
+    services: any = [];
     constructor(private provider_services: ProviderServices,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -154,6 +154,16 @@ export class DonationsComponent implements OnInit {
     
     //     }
     // }
+    setFilterDataCheckbox(type, value, event) {
+        this.filter[type] = value;
+        const indx = this.services.indexOf(value);
+        if (indx === -1) {
+          this.services.push(value);
+        } else {
+          this.services.splice(indx, 1);
+        }
+        this.doSearch();
+    }
     getDonationsList(from_oninit = false, loc_id?) {
         let filter = this.setFilterForApi();
         filter ['donationStatus-eq'] = 'SUCCESS';
@@ -187,7 +197,7 @@ export class DonationsComponent implements OnInit {
             );
     }
     clearFilter() {
-        this.check_status = false;
+        this.services = [];
         this.resetFilter();
         this.filterapplied = false;
         this.getDonationsList(true);
@@ -220,7 +230,7 @@ export class DonationsComponent implements OnInit {
     }
     doSearch() {
         this.getDonationsList();
-        if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+        if (this.filter.first_name || this.filter.date || this.filter.service ) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -230,14 +240,12 @@ export class DonationsComponent implements OnInit {
         this.filters = {
             'first_name': false,
             'date': false,
-            'mobile': false,
-            'email': false
+            'service': false
         };
         this.filter = {
             first_name: '',
             date: null,
-            mobile: '',
-            email: '',
+            service: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
@@ -253,23 +261,15 @@ export class DonationsComponent implements OnInit {
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.first_name !== '') {
-            api_filter['jaldeeConsumer-eq'] = this.filter.first_name;
+            api_filter['firstName-eq'] = this.filter.first_name;
         }
         if (this.filter.date != null) {
             api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
         }
-        if (this.filter.email !== '') {
-            api_filter['email-eq'] = this.filter.email;
-        }
-        if (this.filter.mobile !== '') {
-            const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
-            const mval = pattern.test(this.filter.mobile);
-            if (mval) {
-                api_filter['primaryMobileNo-eq'] = this.filter.mobile;
-            } else {
-                this.filter.mobile = '';
-            }
-        }
+        if (this.services.length > 0 ) {
+            api_filter['service-eq'] = this.services.toString();
+          }
+        
         return api_filter;
     }
     focusInput(ev, input) {

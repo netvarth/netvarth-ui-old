@@ -55,7 +55,7 @@
               <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="Name">
                 </li>
               </div>
               <div class="filterTextinput">
@@ -92,13 +92,13 @@
                 {{services.name}}</mat-checkbox> -->
                 <label class="filterHeaders">Services</label>
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox *ngFor="let services of donationServices" [(ngModel)]="filter.service" [checked]= "check_status" (click)="doSearch()" 
-                          [value]="services.value" >
-                            {{services.name}}</mat-checkbox>
+                          <mat-checkbox *ngFor="let service of donationServices"  [checked]= "services.indexOf(service.id) !== -1" 
+                          (change)="setFilterDataCheckbox('service', service.id, $event)" >
+                            {{service.name}}</mat-checkbox>
                     </li>
                 
             </div>
-              <div class="filterTextinput">
+              <!-- <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
                     (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox"
@@ -110,7 +110,7 @@
                   <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
                     (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                 </li>
-              </div>
+              </div> -->
             </ul>
           </section>
         </aside>
@@ -139,7 +139,7 @@
                               capitalizeFirst}}</span>
                         </div>
                         <div class="td one">
-                          <span *ngIf="donation.donor.firstName">{{donation.donor.firstName}}</span>
+                          <span *ngIf="donation.consumer.userProfile.firstName">{{donation.consumer.userProfile.firstName}}</span>
                         </div>
                         <div class="td three"> <span class="amt"></span> {{donation.donationAmount |
         currency:'&#8377; ' }}
