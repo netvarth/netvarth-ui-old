@@ -3,7 +3,7 @@
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section class="dashboard content pro-dash">
-  <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
+  <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin">
@@ -345,7 +345,7 @@
           <div class="dash-list">
             <div class="chkins-sect m0">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
-                *ngIf="!loading && (!isBatch || this.time_type == 3)">
+                *ngIf="!loading && (this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead>
                     <tr>
@@ -472,22 +472,21 @@
                               <ul class="sidebar-menu">
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
-                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox"
-                                      placeholder="Phone Number">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
+                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <div *ngIf="time_type == 3">
@@ -737,13 +736,14 @@
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
-                              <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                          (click)="showCallingModes(checkin, 'STARTED')">
+                          <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
-                              <!-- <img *ngIf="(checkin.virtualService | keyvalue: originalOrder) === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/18/000000/video-message.png"/> -->
-                              <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
-                              <span *ngIf="!small_device_display">Teleservice</span>
-                            </a>
+                          <!-- <img *ngIf="(checkin.virtualService | keyvalue: originalOrder) === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/18/000000/video-message.png"/> -->
+                          <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
+                          <span *ngIf="!small_device_display">Teleservice</span>
+                        </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                           *ngIf="checkin.waitlistStatus == 'started'">
@@ -774,8 +774,8 @@
         </ngx-qrcode>
       </div>
     </div>
-    <div *ngIf="apiloading" style="margin-top: 100px;">
+    <!-- <div *ngIf="apiloading" style="margin-top: 100px;">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
-    </div>
+    </div> -->
   </div>
 </section>

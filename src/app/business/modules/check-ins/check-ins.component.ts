@@ -1425,7 +1425,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.labelSelection();
-    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
@@ -1435,7 +1434,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filterapplied = false;
     }
-    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   setFilterDateMaxMin() {
@@ -2035,5 +2033,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
-}
+  }
+  keyPressed(event) {
+    if (event.keyCode === 13) {
+      this.doSearch();
+    }
+  }
 }
