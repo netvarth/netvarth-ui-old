@@ -53,11 +53,11 @@
                                     <ng-container>
                                         <mat-form-field *ngIf="users.length == 1">
                                             <input matInput *ngFor="let user of users" [readonly]="true"
-                                                placeholder="{{providerlabel}}"
+                                                placeholder="Providers"
                                                 value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
                                         </mat-form-field>
                                         <mat-form-field *ngIf="users.length > 1">
-                                            <mat-select placeholder="Select {{providerlabel}}" [ngModel]="selected_user" #usersel
+                                            <mat-select placeholder="Select Provider" [ngModel]="selected_user" #usersel
                                                 (selectionChange)="handleUserSelection(usersel.value)">
                                                 <mat-option *ngFor="let user of users" [value]="user">
                                                     {{user.firstName}} {{user.lastName}}
