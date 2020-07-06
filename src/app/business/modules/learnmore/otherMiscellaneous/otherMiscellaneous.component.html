@@ -1645,7 +1645,7 @@
                                                     <li><strong>Choose Department :</strong> If already added
                                                         departments to your profile, choose one from the drop down menu.
                                                     </li>
-                                                    <li><strong>Choose Type :</strong> </li>
+                                                    <li><strong>Choose Type : </strong>Choose type of service from the drop down menu.Onsiteservice or Teleservice.</li>
                                                     <mat-accordion>
                                                             <mat-expansion-panel [expanded]="true">
                                                                 <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
@@ -1660,7 +1660,7 @@
                                                                             </strong></li>
                                                                             <li><strong>Make sure you have activated a medium such as Whatsapp, Google Meet, Skype or through phone call.</strong></li> 
                                                                                         <ol>
-                                                                                        <li>Select <strong>SERVICES</strong> from <strong>JALDEE QMANAGER OR APPOINTMENT MANAGER.</strong></li>
+                                                                                        <li>Select <strong>SERVICES</strong> from <strong>JALDEE QMANAGER .</strong></li>
                                                                                         <li>Click on <strong>ADD SERVICES</strong> at the top.</li>
                                                                                         <li>Fill in the details - Service name, Service Description, Estimated Duration etc. </li>
                                                                                         <li>Select <strong>“Teleservice”</strong> as TYPE.</li>
@@ -2105,6 +2105,34 @@
                                                                             <li><strong>Choose Department :</strong> If already added
                                                                                 departments to your profile, choose one from the drop down menu.
                                                                             </li>
+                                                                            <li><strong>Choose Type : </strong>Choose type of service from the drop down menu.Onsiteservice or Teleservice.  </li>
+                                                                            <mat-accordion>
+                                                                                    <mat-expansion-panel [expanded]="true">
+                                                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                                                            <mat-panel-title>
+                                                                                                <span class="helpcontent">Type :Teleservice</span>
+                                                                                            </mat-panel-title>
+                                                                                        </mat-expansion-panel-header>
+                                                                                            <div class="helpcontent">
+                                                                                                <ul class="ul-normal">
+                                                                                                    <li><strong>How to set up a teleservice for your business?</strong><br><strong>Note:</strong> </li>
+                                                                                                    <li><strong>You will be able to create a teleservice only if you have switched on your “Teleservice” option.
+                                                                                                    </strong></li>
+                                                                                                    <li><strong>Make sure you have activated a medium such as Whatsapp, Google Meet, Skype or through phone call.</strong></li> 
+                                                                                                                <ol>
+                                                                                                                <li>Select <strong>SERVICES</strong> from <strong>JALDEE APPOINTMENT .</strong></li>
+                                                                                                                <li>Click on <strong>ADD SERVICES</strong> at the top.</li>
+                                                                                                                <li>Fill in the details - Service name, Service Description, Estimated Duration etc. </li>
+                                                                                                                <li>Select <strong>“Teleservice”</strong> as TYPE.</li>
+                                                                                                                <li><strong>SELECT MODE</strong> as <strong>Audio</strong> or <strong>Video</strong> from the drop down list.</li>   
+                                                                                                                <li><strong>SELECT VIDEO CALL APP</strong> from the drop down list. </li>
+                                                                                                                 <li>You can edit the <strong>ZOOM LINK</strong> if there are any changes in the default Zoom ID/Whatsapp Number/ Skype ID/ Google Meet link.</li>
+                                                                                                                <li>Now, Click on <strong>SAVE</strong> to add the teleservices to your services.</li>
+                                                                                                                </ol> 
+                                                                                                            </ul>
+                                                                                            </div>
+                                                                                    </mat-expansion-panel>
+                                                                                </mat-accordion>
                                                                             <li><strong>Estimated Duration (min) :</strong> Enter the minimum
                                                                                 time (in minutes)
                                                                                 required to complete the mentioned service.</li>
@@ -4166,6 +4194,54 @@
                                                                 <li>Click the <strong>“Save“</strong> button to confirm the adjustments.</li>
                                                             </ol>
                                                         </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Teleservice Call</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                            <div class="helpcontent">
+                                                                <ul class="ul-normal">
+                                                                    <li><strong>How to initiate a teleservice call?
+                                                                    </strong><br>
+                                                                    After receiving an appointment, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
+                                                                </strong>
+                                                                    </li>
+                                                                    <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                                    <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
+                    
+                                                                        <ul class="normal-abc">
+                                                                            <li><strong>Launch the service - </strong> Click on<strong> “Launch”</strong> to launch the respective application.
+                                                                           <br>After the pop-up appears,<br>
+                                                                            Respond “YES”, if you want to change the status of the customer into STARTED.<br> 
+                                                                            Respond “NO”, if you want the customer to remain in NEW.
+                                                                            </li>
+                                                                            <li><strong>Reminder -</strong>  Click on <strong>“Reminder”</strong> to send a reminder message to the customer by 
+                                                                            <ul class="normal-abc">
+                                                                                <li>SMS</li>  
+                                                                                <li>App Notifications</li>
+                                                                                 <li>E-Mail</li>  
+                                                                            </ul>
+                                                                            </li>
+                                                                            <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting for you!”</strong> to notify that you are waiting for  the customer to join the video/audio call. 
+                                                                                <ul class="normal-abc">
+                                                                                        <li>SMS</li>  
+                                                                                        <li>App Notifications</li>
+                                                                                         <li>E-Mail</li>  
+                                                                                    </ul>
+                                                                                    <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                                         <ul class="normal-abc">
+                                                                                                <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                                                </li>  
+                                                                                                <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
+                                                                                            </ul> 
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                     </mat-expansion-panel>
                                                 </mat-accordion>
                                                     </mat-expansion-panel>
