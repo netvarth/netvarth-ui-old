@@ -742,8 +742,8 @@
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
                               <i class="fa meet-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
                               <i class="fa zoom-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                              <i class="fa fa-phone" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
-                              <i class="fa fa-whatsapp whtsap-ic" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                              <i class="fa fa-phone tool-pading" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                              <i class="fa fa-whatsapp whtsap-ic tool-pading" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                               <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                               <span *ngIf="!small_device_display">Teleservice</span>
                             </a>

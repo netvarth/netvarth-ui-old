@@ -836,8 +836,8 @@
                           (click)="showCallingModes(appt, 'Started')">
                           <i class="fa meet-icon" *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
                           <i class="fa zoom-icon" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
-                          <i class="fa fa-phone" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                          <i class="fa fa-phone tool-pading" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                          <i class="fa fa-whatsapp whtsap-ic tool-pading" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                           <span *ngIf="!small_device_display">Teleservice</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
