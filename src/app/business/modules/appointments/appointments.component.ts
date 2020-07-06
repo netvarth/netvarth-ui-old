@@ -2664,4 +2664,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   scrollToTop() {
     this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+  getVirtualMode(virtualService) {
+    return Object.keys(virtualService)[0];
+  }
 }

@@ -1,6 +1,6 @@
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router, NavigationExtras, RoutesRecognized } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -150,7 +150,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselOne;
   account_type;
   active_user;
-  breadcrumb_moreoptions: any = [];
   domain;
   cust_note_tooltip;
   customerMsg = '';
@@ -226,7 +225,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showUndo = false;
   showRejected = false;
   apiloading = false;
-  breadcrumbs_init = {};
+  breadcrumbs_init = [];
+  breadcrumb_moreoptions: any = [];
   apptModes: any = [];
   paymentStatuses: any = [];
   apptStatuses: any = [];
@@ -242,6 +242,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterService: any = [];
   consumr_id: any;
   notedialogRef: any;
+  @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
+  windowScrolled: boolean;
+  topHeight = 200;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -301,7 +304,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.small_device_display = false;
     }
   }
+  @HostListener('window:scroll', ['$event'])
+  scrollHandler() {
+    const header = document.getElementById('childActionBar');
+    if (header) {
+      if (window.pageYOffset >= (this.topHeight + 50)) {
+        header.classList.add('sticky');
+        console.log('sticky');
+      } else {
+        header.classList.remove('sticky');
+        console.log('non sticky');
+      }
 
+    }
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
   ngOnInit() {
     // this.apiloading = true;
     this.breadcrumb_moreoptions = {
@@ -674,6 +695,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
       this.activeQs = groupbyQs['ENABLED'];
     }
+    console.log(this.activeQs);
+    const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
+    console.log(activeQ);
     if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
       this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
     }
@@ -682,12 +706,42 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
     } else {
+      if (this.time_type !== 1) {
       this.selQIds = this.getActiveQIdsFromView(view);
       this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
       this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      } else {
+        this.selQIds = [];
+        this.selQIds.push(activeQ.id);
+        this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      }
     }
     this.loadApiSwitch(source);
+  }
+  findCurrentActiveQueue(ques) {
+    let selindx = 0;
+    const cday = new Date();
+    const currentday = (cday.getDay() + 1);
+    const curtime = this.provider_shared_functions.formatTime(cday.getHours(), cday.getMinutes());
+    // const curtime = '21:00:00';
+    let stime;
+    let etime;
+    const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
+    const curtimeforchk = new Date(tday + ' ' + curtime);
+    for (let i = 0; i < ques.length; i++) {
+      for (let j = 0; j < ques[i].queueSchedule.repeatIntervals.length; j++) {
+        const pday = Number(ques[i].queueSchedule.repeatIntervals[j]);
+        if (currentday === pday) {
+          stime = new Date(tday + ' ' + this.provider_shared_functions.AMHourto24(ques[i].queueSchedule.timeSlots[0].sTime));
+          etime = new Date(tday + ' ' + this.provider_shared_functions.AMHourto24(ques[i].queueSchedule.timeSlots[0].eTime));
+          if ((curtimeforchk.getTime() >= stime.getTime()) && (curtimeforchk.getTime() <= etime.getTime())) {
+            selindx = i;
+            return selindx;
+          }
+        }
+      }
+    }
+    return selindx;
   }
   getQIdsFromView(view) {
     const qIds = [];
@@ -898,11 +952,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selQIds) {
       Mfilter['queue-eq'] = this.selQIds;
       this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+      // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+      // this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
     }
-    this.resetPaginationData();
-    this.pagination.startpageval = 1;
+    // this.resetPaginationData();
+    // this.pagination.startpageval = 1;
     // this.pagination.totalCnt = 0; // no need of pagination in today
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
@@ -919,6 +973,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+              console.log(this.check_in_filtered_list);
             },
             () => {
               // this.load_waitlist = 1;
@@ -945,14 +1000,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let Mfilter = this.setFilterForApi();
     if (this.selQIds) {
       Mfilter['queue-eq'] = this.selQIds;
-      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+      // this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
       this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
     }
     const promise = this.getFutureWLCount(Mfilter);
     promise.then(
       result => {
-        this.pagination.totalCnt = result;
+        // this.pagination.totalCnt = result;
         Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
@@ -1427,6 +1482,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.labelSelection();
+    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
@@ -1436,6 +1492,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filterapplied = false;
     }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   setFilterDateMaxMin() {
@@ -2036,9 +2093,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
-  keyPressed(event) {
+    keyPressed(event) {
     if (event.keyCode === 13) {
       this.doSearch();
     }
+  }
+  scrollToTop() {
+    this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  getVirtualMode(virtualService) {
+    // Object.keys(virtualService)[0];
+    return Object.keys(virtualService)[0];
   }
 }

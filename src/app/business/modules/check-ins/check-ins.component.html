@@ -1,9 +1,9 @@
-<section>
+<section #chekinSection>
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs_init"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section class="dashboard content pro-dash">
-  <div class="col-md-12 no-padding-small">
+  <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
         <header class="main-header dash chkin">
@@ -345,7 +345,7 @@
           <div class="dash-list">
             <div class="chkins-sect m0">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
-                *ngIf="!loading && (this.time_type == 3)">
+                *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead>
                     <tr>
@@ -472,21 +472,22 @@
                               <ul class="sidebar-menu">
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
                                       class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
                                       class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
-                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                      (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
+                                      (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox"
+                                      placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <div *ngIf="time_type == 3">
@@ -652,7 +653,7 @@
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
-                      <td colspan="5">
+                      <td colspan="5" class="no-appt">
                         No Check-ins Found
                       </td>
                     </tr>
@@ -669,7 +670,7 @@
                         <div class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type==1 && checkin.token">
                           {{checkin.token}}</div>
                         <div class="bold pull-left mgn-lt-10 name pointer-cursor"
-                          [ngClass]="{'mgn-up-10' : (checkin.token?true:false)}" (click)="goCheckinDetail(checkin)">
+                          [ngClass]="{'mgn-up-10' : (time_type==1 && checkin.token?true:false)}" (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
                       </td>
@@ -725,25 +726,27 @@
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
-                            Calling</span>
+                            </span>
                           <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
                           <span *ngIf="!small_device_display && !checkin.callingStatus">
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')  && time_type!=2"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
-                          (click)="showCallingModes(checkin, 'STARTED')">
-                          <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(checkin, 'STARTED')">
+                              <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
-                          <!-- <img *ngIf="(checkin.virtualService | keyvalue: originalOrder) === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/18/000000/video-message.png"/> -->
-                          <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
-                          <span *ngIf="!small_device_display">Teleservice</span>
-                        </a>
+                              <i class="fa meet-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
+                              <i class="fa zoom-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
+                              <i class="fa fa-phone" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                              <i class="fa fa-whatsapp whtsap-ic" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                              <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
+                              <span *ngIf="!small_device_display">Teleservice</span>
+                            </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                           *ngIf="checkin.waitlistStatus == 'started'">
@@ -753,9 +756,9 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tfoot>
+                  <tfoot *ngIf="time_type == 3">
                     <tr>
-                      <td colspan="5">
+                      <td colspan="5"  >
                         <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
                           [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
                           [curpage]="pagination.startpageval"></app-pager>
@@ -774,8 +777,14 @@
         </ngx-qrcode>
       </div>
     </div>
-    <!-- <div *ngIf="apiloading" style="margin-top: 100px;">
+    <div *ngIf="apiloading" style="margin-top: 100px;">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
-    </div> -->
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
+    <button >
+        <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
+    </button>
   </div>
 </section>
