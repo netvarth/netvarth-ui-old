@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { from } from 'rxjs';
 
 
 @Component({
@@ -110,8 +111,17 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     this.pay_link.uuid = this.uuid;
     this.pay_link.phNo = form_data.mobile_number;
     this.pay_link.email = form_data.email_id;
-    this.pay_link.emailNotification = 'true';
-    this.pay_link.smsNotification = 'true';
+
+    if (form_data.mobile_number) {
+      this.pay_link.smsNotification = 'true';
+    } else {
+      this.pay_link.smsNotification = 'false';
+    }
+    if (form_data.email_id) {
+      this.pay_link.emailNotification = 'true';
+    } else {
+      this.pay_link.emailNotification = 'false';
+    }
     this.provider_services.Paymentlink(this.pay_link)
     .subscribe((pData: any) => {
       console.log(pData);
