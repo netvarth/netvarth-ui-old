@@ -19,13 +19,15 @@
                 </div>
                 <div *ngIf="callingModes === 'Zoom'">
                     <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
-                        <img class="tool-pading" src="https://img.icons8.com/color/16/000000/zoom.png" />
+                        <!-- <img class="tool-pading" src="https://img.icons8.com/color/16/000000/zoom.png" /> -->
+                        <i class="fa zoom-icon"></i>
                         <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Zoom</a>
                     </button>
                 </div>
                 <div *ngIf="callingModes === 'GoogleMeet'">
                     <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
-                        <img class="tool-pading" src="https://img.icons8.com/ultraviolet/16/000000/video-message.png"/>
+                        <!-- <img class="tool-pading" src="https://img.icons8.com/ultraviolet/16/000000/video-message.png"/> -->
+                        <i class="fa meet-icon"></i>
                         <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Google Meet</a>
                     </button>
                 </div>
