@@ -45,6 +45,23 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
   private _refreshSubject: Subject<any> = new Subject<any>();
 
+  private _ifSessionExpiredN() {
+    this._refreshSubject.subscribe({
+      complete: () => {
+        this._refreshSubject = new Subject<any>();
+      }
+    });
+    if (this._refreshSubject.observers.length === 1) {
+      const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      if (activeuser) {
+        this.shared_services.ProviderLogout().subscribe(this._refreshSubject);
+      } else {
+        this.shared_services.ConsumerLogout().subscribe(this._refreshSubject);
+      }
+    }
+    return this._refreshSubject;
+  }
+
   private _ifSessionExpired() {
     this._refreshSubject.subscribe({
       complete: () => {
@@ -146,19 +163,20 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
-               this.shared_functions.doLogout().then (
-                 () => {
-                   this.router.navigate(['/']);
-                 }
-               );
+              // const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
+              //  this.shared_functions.doLogout().then (
+              //    () => {
+              //      this.router.navigate(['/']);
+              //    }
+              //  );
               // return EMPTY;
-              // return this._ifSessionExpired().pipe(
-              //   switchMap(() => {
-              //     return next.handle(this.updateHeader(req, url));
-              //   })
-              // );
-               return EMPTY;
+              return this._ifSessionExpiredN().pipe(
+                switchMap(() => {
+                  // return next.handle(this.updateHeader(req, url));
+                  return EMPTY;
+                })
+              );
+               // return EMPTY;
               // return throwError(error);
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);

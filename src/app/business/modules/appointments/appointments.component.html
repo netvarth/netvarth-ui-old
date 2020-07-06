@@ -288,7 +288,8 @@
                           [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
                           (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
                           <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
-                            *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot">
+                            *ngIf="batchEnabled && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
+                            class="slot">
                             [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span>
                         </div>
                       </td>
@@ -388,16 +389,29 @@
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                     <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
                                       *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
-                                      Calling</span>
+                                    </span>
                                     <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
                                     <span *ngIf="!small_device_display && !appt.callingStatus">
                                       &nbsp;Call</span>
                                   </a>
                                   <a class="statusText btn-play pointer-cursor"
                                     (click)="changeWaitlistStatus('Started', appt)"
-                                    *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && !appt.virtualService) && time_type!=2"
+                                    *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                     <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                                  </a>
+                                  <a class="statusText btn-play pointer-cursor"
+                                    *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
+                                    (click)="showCallingModes(appt, 'Started')">
+                                    <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                                    <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                    <i class="fa fa-phone"
+                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                    <i class="fa fa-whatsapp whtsap-ic"
+                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                    <span *ngIf="!small_device_display">Teleservice</span>
                                   </a>
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
                                     (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
@@ -468,18 +482,15 @@
                             [matTooltip]="'Private Note'">
                             <i class="fa icon-note" (click)="addProviderNote()"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && showArrived"
+                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showArrived"
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && showUndo"
+                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showUndo"
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && showRejected"
+                          <a class="icon-action pointer-cursor icon-size1" *ngIf="apptSingleSelection && showRejected"
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
@@ -831,13 +842,16 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
+                        <a class="statusText btn-play pointer-cursor"
+                          *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
-                          <i class="fa meet-icon" *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                          <i class="fa zoom-icon" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
-                          <i class="fa fa-phone tool-pading" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic tool-pading" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"*ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                          <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                          <i class="fa fa-whatsapp whtsap-ic" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                           <span *ngIf="!small_device_display">Teleservice</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"

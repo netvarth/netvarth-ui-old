@@ -5811,6 +5811,7 @@ li.separator.setsplit {
   color: black;
   font-weight: 500;
   margin-left: 5px !important;
+  display: inline-block;
 }
 
 .btn-more {
@@ -9840,9 +9841,6 @@ td.chkWth, th.chkWth {
   .td-four {
     white-space: pre-wrap !important;
   }
-  .td-four i:first-child {
-    margin-bottom: 15px !important;
-  }
 }
 
 .donate-sel-loc {
@@ -10301,13 +10299,13 @@ a {
   content: url(../images/zoom.png);
   top: 3px;
   position: relative;
-  padding-right: 5px;
-  width: 18px;
+  padding-right: 1px;
+  width: 15px;
 }
 .meet-icon {
   content: url(../images/meet.png);
   top: 3px;
   position: relative;
-  padding-right: 5px;
-  width: 18px;
+  padding-right: 1px;
+  width: 15px;
 }

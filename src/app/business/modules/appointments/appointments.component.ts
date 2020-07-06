@@ -264,6 +264,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
+  batchEnabled = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -445,6 +446,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQId = q.id;
         this.servicesCount = q.services.length;
         this.selQCapacity = q.parallelServing;
+        this.batchEnabled = q.batchEnabled;
         if (this.selQCapacity > 1) {
           this.isBatch = true;
         } else {
@@ -648,6 +650,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (selQdetails.length > 0) {
         this.servicesCount = selQdetails[0].services.length;
         this.selQCapacity = this.activeSchedules[0].parallelServing;
+        this.batchEnabled = this.activeSchedules[0].batchEnable;
         if (this.selQCapacity > 1) {
           this.isBatch = true;
         } else {
@@ -659,6 +662,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
         this.servicesCount = selQ.services.length;
         this.selQCapacity = selQ.parallelServing;
+        this.batchEnabled = selQ.batchEnable;
         if (this.selQCapacity > 1) {
           this.isBatch = true;
         } else {
@@ -671,6 +675,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (selQdetails && selQdetails.length !== 0) {
         this.servicesCount = selQdetails[0].services.length;
         this.selQCapacity = this.activeSchedules[0].parallelServing;
+        this.batchEnabled = this.activeSchedules[0].batchEnable;
         if (this.selQCapacity > 1) {
           this.isBatch = true;
         } else {
@@ -682,6 +687,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
         this.servicesCount = selQ.services.length;
         this.selQCapacity = selQ.parallelServing;
+        this.batchEnabled = selQ.batchEnable;
         if (this.selQCapacity > 1) {
           this.isBatch = true;
         } else {
@@ -704,6 +710,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.selQId = this.activeSchedules[0].id;
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
+      this.batchEnabled = this.activeSchedules[0].batchEnable;
       if (this.selQCapacity > 1) {
         this.isBatch = true;
       } else {
@@ -1157,6 +1164,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       this.servicesCount = selQs[0].services.length;
       this.selQCapacity = selQs[0].parallelServing;
+      this.batchEnabled = selQs[0].batchEnable;
       if (this.selQCapacity > 1) {
         this.isBatch = true;
       } else {
@@ -1167,6 +1175,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
+      this.batchEnabled = this.activeSchedules[0].batchEnable;
       if (this.selQCapacity > 1) {
         this.isBatch = true;
       } else {
@@ -1256,6 +1265,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
       this.servicesCount = selQs[0].services.length;
       this.selQCapacity = selQs[0].parallelServing;
+      this.batchEnabled = selQs[0].batchEnable;
       if (this.selQCapacity > 1) {
         this.isBatch = true;
       } else {
@@ -1266,6 +1276,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
+      this.batchEnabled = this.activeSchedules[0].batchEnable;
       if (this.selQCapacity > 1) {
         this.isBatch = true;
       } else {
