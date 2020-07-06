@@ -202,6 +202,30 @@ export class VideoSettingsComponent implements OnInit {
                         this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
                     }
                     this.getVirtualCallingModesList();
+                } else if (callingMode === 'GoogleMeet') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Google Meet mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Google Meet added successfully', { 'panelclass': 'snackbarerror' });
+                    }
+                    this.getVirtualCallingModesList();
+                } else if (callingMode === 'Phone') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Phone ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Phone added successfully', { 'panelclass': 'snackbarerror' });
+                    }
+                    this.getVirtualCallingModesList();
                 }
                 // for (let callingmodes of postdata.virtualCallingModes) {
                 //     if (callingmodes.callingMode === 'WhatsApp'){
