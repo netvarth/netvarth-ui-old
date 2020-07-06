@@ -5,35 +5,36 @@
             <div class="linkpagestyle">
               <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-             <div class="content comn-cls">     
+             <div class="content comn-cls" *ngIf="bill_data.amountDue > 0">     
              <div *ngIf ="paidStatus == 'false'">
                 <section>
                    <div class="content settings">
                       <div class="row">
-                           <div class="col-md-12 no-padding  " >
+                           <div class="col-md-12 no-padding">
                               <div class="linkpage">
                                  <div class="box box-widget widget-user-2">
                                      <div><h4 style="text-align: center;"> Jaldee Pay</h4></div>
                                         <div class="box-footer no-padding">
-                                           <ul class="nav nav-stacked set-block-1"><br>
+                                           <ul class="nav nav-stacked"><br>
                                             <span class="lnk setings"> <p style="text-align: center;"> Dear {{this.firstname}} ,Welcome to Jaldee PAY <br> Your contactless Bill is ready</p></span>
                                             <li></li> 
                                              <li>
                                                 <span  style="text-align: left;">Pay To</span>
-                                                <span class="lnk "><p class=" setings textcenter">{{bname | capitalizeFirst}}</p></span>
+                                                <span class="lnk "><p class=" setings textcenter">{{this.businessname}}</p></span>
                                                 <p class="textcenter"><span> {{this.location}}</span><br>{{billtime}},{{billdate}}</p>
                                                 <h2 class="textcenter"> Rs.{{this.amountDue}}/-</h2>
                                                 <h2 class="textcenter"><button class="pay" (click)="pay()"><h2>pay</h2></button></h2>
                                              </li>
                                              <li>
                                               <a class="learnmore-pointer" (click)="billview()"> <p class="textcenter"> View bill</p></a>
-                                             </li>                                            
-                                                 <div class="col-md-12 no-padding-small" *ngIf="showbill">
+                                             </li>  
+                                            </ul>                                          
+                                            <div class="col-md-12 no-padding-small" *ngIf="showbill">
                                                             <div class="w-dta">
                                                               <div class="row">
                                                                 <div class="copy one" style="width: 100%">
                                                                   <!-- <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8"> -->
-                                                                    <div class="card bill-section">
+                                                                    <div class="linkpagepadding bill-section">
                                                                       <div class="bill-section-content" id="receipt">
                                                                         <div class="bill-wrapper ">
                                                                          
@@ -212,12 +213,6 @@
                                                                                                         currency:'&#8377; '}}</div>
                                                                                                 </div>
                                                                                               </div>
-                                      <!--                       
-                                                                                                <div class="c-row one two-col" *ngIf="bill_data.amountDue < 0">
-                                                                                                    <div class="name">Refundable Amount</div>
-                                                                                                    <div class="price">{{refund_value |
-                                                                                  currency:'&#8377; '}}</div>
-                                                                                                </div> -->
                                                                                             </div>
                                                                                         </div>
                                                                                        
@@ -246,9 +241,7 @@
                                                                       </div>
                                                                     </div>
                                                                   </div>
-                                                 </div>
-                                            
-                                            </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -258,11 +251,11 @@
                 </section>
              </div>   
              <div style="text-align: center;" *ngIf ="paidStatus == 'true'" >
-                  <div style="padding-bottom: 10px"><b>&#8377;  100</b></div> 
+                  <div style="padding-bottom: 10px"><b>&#8377;{{this.amountDue}}</b></div> 
                    <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br>
                     <div  style="font-size:14px;" class="ivc">
                       <div class="pay-det-row">
-                           <span><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
+                           <span style="padding-right: 60px;"><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
                        </div> 
                        <div class="pay-det-row">
                            <span><b>Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
@@ -273,7 +266,7 @@
                     </div>       
              </div>            
            </div>
-           <!-- <div class="linkexpired"  *ngIf="bill_data.amountDue == 0" >This Link has expired </div> -->
+           <div class="linkexpired"  *ngIf="bill_data.amountDue == 0" >This Link has expired </div>
            
         </div>
        </div>

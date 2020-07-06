@@ -110,6 +110,7 @@ export class PaymentLinkComponent implements OnInit {
   paidStatus = 'false';
   providername: any;
   description: any;
+  businessname: any;
 
   constructor(
     public provider_services: ProviderServices,
@@ -143,6 +144,7 @@ export class PaymentLinkComponent implements OnInit {
           console.log(data);
           this.bill_data = data;
           if (this.bill_data = data) {
+            this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
             this.netRate = this.bill_data.netRate;
             this.amountDue = this.bill_data.amountDue;
