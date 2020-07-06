@@ -10290,15 +10290,15 @@ a {
 
 .zoom-icon {
   content: url(../images/zoom.png);
-  top: 5px;
+  top: 3px;
   position: relative;
-  padding-right: 2px;
-  width: 15px;
+  padding-right: 5px;
+  width: 18px;
 }
 .meet-icon {
   content: url(../images/meet.png);
   top: 3px;
   position: relative;
-  padding-right: 2px;
-  width: 15px;
+  padding-right: 5px;
+  width: 18px;
 }
