@@ -961,6 +961,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
       result => {
+        this.chkSelectAppointments = false;
         this.provider_services.getTodayWaitlist(Mfilter)
           .subscribe(
             (data: any) => {

@@ -469,17 +469,17 @@
                             <i class="fa icon-note" (click)="addProviderNote()"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && activeAppointment.apptStatus == 'Confirmed' && !activeAppointment.virtualService"
+                            *ngIf="apptSingleSelection && showArrived"
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && activeAppointment.apptStatus !== 'Completed' && activeAppointment.apptStatus !== 'Confirmed' && !activeAppointment.virtualService"
+                            *ngIf="apptSingleSelection && showUndo"
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && this.activeAppointment && (this.activeAppointment.apptStatus=='Arrived' || this.activeAppointment.apptStatus=='Confirmed')"
+                            *ngIf="apptSingleSelection && showRejected"
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>

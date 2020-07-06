@@ -1905,10 +1905,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
+      if (this.time_type === 1 && appt.apptStatus === 'Confirmed' && !appt.virtualService) {
+        this.showArrived = true;
+      }
+      if (this.time_type !== 3 && appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed' && !appt.virtualService) {
+        this.showUndo = true;
+      }
+      if (appt.billStatus && appt.billStatus === 'Settled') {
+        this.showRejected = false;
+      }
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
+      this.selAllSlots = false;
+      this.showArrived = false;
+      this.showRejected = true;
+      this.showUndo = false;
     }
     this.setApptSelections();
   }
