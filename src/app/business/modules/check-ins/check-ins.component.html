@@ -170,7 +170,7 @@
                   <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Flname)"
                     class="genTextHeight" [(ngModel)]="filter.last_name" [hidden]="!filters['last_name']">
                 </span>
-                <span class="inl-blk filtr">
+                <!-- <span class="inl-blk filtr">
                   <a [class.button_filter]="filters['age']" *ngIf="time_type === 3" (click)="filterClicked('age')"
                     class="anchorbutton remMarginRight genMarginLeft" name="service_window"
                     id="btn_service_window_filter_id"><span>Age group</span></a>
@@ -202,7 +202,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                </span>
+                </span> -->
                 <span class="inl-blk filtr">
                   <a [class.button_filter]="filters['phone_number']" *ngIf="time_type == 3"
                     (click)="filterClicked('phone_number')" class="anchorbutton remMarginRight genMarginLeft"
@@ -347,7 +347,7 @@
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead>
+                  <thead id="childActionBar">
                     <tr>
                       <th class="chkWth">
                         <input *ngIf="check_in_filtered_list.length != 0" type="checkbox" class="ckbx pull-left"
@@ -451,17 +451,15 @@
                               </ul>
                             </span>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                            <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="filtericonTooltip">
+                            </i>
+                          </a>
                         </div>
                         <div>
-                          <div class="pull-right">
-                            <a class="icon-action pointer-cursor icon-size1" data-toggle="control-sidebar">
-                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="filtericonTooltip">
-                              </i>
-                            </a>
-                          </div>
                           <aside class="filterSidebar" *ngIf="filter_sidebar">
-                            <section class="sidebar sidebar-bottom">
+                            <section id="filterContainer" class="sidebar sidebar-bottom">
                               <div class="filterClosebtn">
                                 <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
                                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -490,7 +488,7 @@
                                       placeholder="Phone Number">
                                   </li>
                                 </div>
-                                <div *ngIf="time_type == 3">
+                                <!-- <div *ngIf="time_type == 3">
                                   <label class="filterHeaders">Age Group</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
@@ -534,7 +532,7 @@
                                       (change)="setFilterDataCheckbox('gender', 'female', $event)">
                                       Female</mat-checkbox>
                                   </li>
-                                </div>
+                                </div> -->
                                 <div *ngIf="services.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -742,8 +740,8 @@
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
                               <i class="fa meet-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
                               <i class="fa zoom-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                              <i class="fa fa-phone tool-pading" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
-                              <i class="fa fa-whatsapp whtsap-ic tool-pading" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                              <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                              <i class="fa fa-whatsapp whtsap-ic" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                               <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
                               <span *ngIf="!small_device_display">Teleservice</span>
                             </a>

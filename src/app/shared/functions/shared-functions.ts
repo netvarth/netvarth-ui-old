@@ -1473,8 +1473,8 @@ export class SharedFunctions {
       const sidebar = document.getElementById('filterContainer');
       console.log(sidebar);
       if (sidebar) {
-        const height = window.screen.height + 'px';
-        sidebar.setAttribute('style', 'overflow:scroll;height:' + height);
+        const height = (window.screen.height - 200) + 'px';
+        sidebar.setAttribute('style', 'overflow:auto;height:' + height);
       }
     }, 500);
   }
