@@ -78,7 +78,7 @@ export class IntegrationSettingsComponent implements OnInit {
         this.provider_services.setJaldeeIntegration(data)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Jaldee.com for Mob App ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.shared_functions.openSnackBar('Integration of walk-ins with Jaldee.com ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getJaldeeIntegrationSettings();
                 },
                 error => {
