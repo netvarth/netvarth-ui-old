@@ -616,7 +616,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 console.log(this.serv_mode)
                 if (this.serv_mode && this.serv_mode === 'audioService') {
                     for (let i = 0; i < this.vcallmodes.length; i++) {
-                        if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode === 'Phone') {
+                        if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
                             this.telemodes.push(this.vcallmodes[i]);
                         }
                     }
