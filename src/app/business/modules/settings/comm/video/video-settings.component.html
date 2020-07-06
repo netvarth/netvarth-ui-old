@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding"
                                     *ngFor="let callingMode of videoModes| keyvalue: originalOrder;let i=index ">
-                                    <mat-accordion *ngIf="i != 3"> 
+                                    <mat-accordion *ngIf="i !== 3 && i !== 4"> 
                                         <mat-expansion-panel>
                                             <mat-expansion-panel-header class="brd-bt">
                                                 <mat-panel-title class="block-level">
@@ -92,8 +92,8 @@
                                     <p class="form-level-settings">Please select and set the preferable way of calling your customer.</p>
                                 </div>
                                 <div class="col-md-12 mgn-up-10 mgn-bt-10 vid-set no-padding"
-                                    *ngFor="let callingMode of videoModes | keyvalue: originalOrder;let i=index" [ngClass]="{'glbl-seting-img-smal': (i!=3)}">
-                                    <mat-accordion *ngIf="i===3">
+                                    *ngFor="let callingMode of videoModes | keyvalue: originalOrder;let i=index" [ngClass]="{'glbl-seting-img-smal': (i===1)||(i===2)}">
+                                    <mat-accordion *ngIf="i===3 || i===0">
                                         <mat-expansion-panel>
                                             <mat-expansion-panel-header class="brd-bt">
                                                 <mat-panel-title class="block-level">
