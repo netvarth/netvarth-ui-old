@@ -403,6 +403,18 @@ export class ProviderSharedFuctions {
   getActiveQueues() {
     return this.activeQueues;
   }
+  formatTime (hours, minutes) {
+    let sHours = hours.toString();
+    let sMinutes = minutes.toString();
+    if (hours < 10) {
+      sHours = '0' + sHours;
+    }
+    if (minutes < 10) {
+      sMinutes = '0' + sMinutes;
+    }
+    const time24 = sHours + ':' + sMinutes + ':00';
+    return time24;
+  }
   AMHourto24(time12) {
     const time = time12;
     let hours = Number(time.match(/^(\d+)/)[1]);

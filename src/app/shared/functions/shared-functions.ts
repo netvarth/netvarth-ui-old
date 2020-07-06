@@ -1468,4 +1468,14 @@ export class SharedFunctions {
     const date1 = y + '-' + mm + '-' + dd;
     return date1 ;
   }
+  setFilter() {
+    setTimeout(() => {
+      const sidebar = document.getElementById('filterContainer');
+      console.log(sidebar);
+      if (sidebar) {
+        const height = window.screen.height + 'px';
+        sidebar.setAttribute('style', 'overflow:scroll;height:' + height);
+      }
+    }, 500);
+  }
 }

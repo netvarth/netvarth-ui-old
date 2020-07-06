@@ -1,8 +1,4 @@
-
-
-
-
- import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, QueryList, ElementRef, ViewChildren, ViewChild } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -18,6 +14,7 @@ import { CallingModesComponent } from '../check-ins/calling-modes/calling-modes.
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -264,9 +261,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   services: any = [];
   consumr_id: any;
   topHeight = 200;
+  @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
+  @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
+  windowScrolled: boolean;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
+    private _scrollToService: ScrollToService,
     private router: Router,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
@@ -313,16 +314,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     const header = document.getElementById('childActionBar');
-    console.log(window.pageYOffset);
-    console.log(window.screen.height);
-    console.log(window.screen.availHeight);
-    if (window.pageYOffset >= this.topHeight) {
+    if (window.pageYOffset >= (this.topHeight + 50)) {
       header.classList.add('sticky');
+      console.log('sticky');
     } else {
       header.classList.remove('sticky');
+      console.log('non sticky');
     }
-    if (window.pageYOffset >= window.screen.height) {
-      return false;
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+      this.windowScrolled = true;
+    } else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
     }
   }
   ngOnInit() {
@@ -351,12 +353,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
-    const sidebar = document.getElementsByClassName('sidebar-bottom');
-    console.log(sidebar);
-    if (sidebar) {
-      const height = window.screen.height;
-      sidebar[0].setAttribute('height', height.toString());
-    }
+    this.shared_functions.setFilter();
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
@@ -969,6 +966,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
+  getActiveTimeSlot(slots) {
+    const curDate = new Date();
+    const curTime = curDate.getHours() + ':' + curDate.getMinutes();
+    let activeTime = '';
+    console.log(slots);
+    if (slots && slots.length > 1) {
+      activeTime = slots[0].time.split('-')[0];
+      console.log(slots);
+      for (let indx = 0; indx < slots.length; indx++) {
+        console.log(slots[indx].time);
+        if (slots[indx].time.split('-')[0] > curTime) {
+          break;
+        }
+        activeTime = this.getSingleTime(slots[indx].time);
+      }
+    }
+    return activeTime;
+  }
   /**
    * @param action Scheduled/Started/Cancelled/Completed
    * @param type Today/Future/History
@@ -1195,6 +1210,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               this.loading = false;
+              setTimeout(() => {
+                const activeTimeSlot = this.getActiveTimeSlot(this.availableSlotDetails.availableSlots);
+                if (activeTimeSlot !== '') {
+                  this.scrollToSection(activeTimeSlot);
+                  console.log(activeTimeSlot);
+                }
+              }, 500);
+
             });
       });
   }
@@ -2402,7 +2425,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let selindx = 0;
     const cday = new Date();
     const currentday = (cday.getDay() + 1);
-    const curtime = cday.getHours() + ':' + cday.getMinutes() + ':00';
+    const curtime = this.provider_shared_functions.formatTime(cday.getHours(), cday.getMinutes());
     let stime;
     let etime;
     const tday = cday.getFullYear() + '-' + (cday.getMonth() + 1) + '-' + cday.getDate();
@@ -2415,6 +2438,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           etime = new Date(tday + ' ' + this.provider_shared_functions.AMHourto24(ques[i].apptSchedule.timeSlots[0].eTime));
           if ((curtimeforchk.getTime() >= stime.getTime()) && (curtimeforchk.getTime() <= etime.getTime())) {
             selindx = i;
+            return selindx;
           }
         }
       }
@@ -2612,5 +2636,29 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') {
       }
     });
+  }
+  scrollToSection(curTime) {
+    // if (this.time_type === 2) {
+    //   this.slotIds.toArray().forEach(element => {
+    //     if (element.nativeElement.innerText === this.futureUnAvailableSlots[0]) {
+    //       element.nativeElement.scrollIntoViewIfNeeded();
+    //       return false;
+    //     }
+    //   });
+    // }
+    // if (this.time_type === 1) {
+    console.log(this.slotIds);
+    this.slotIds.toArray().forEach(element => {
+      console.log(curTime);
+      console.log(element.nativeElement.innerText + '----' + this.getSingleTime(curTime));
+      if (element.nativeElement.innerText === curTime) {
+        element.nativeElement.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'start' });
+        return false;
+      }
+    });
+    // }
+  }
+  scrollToTop() {
+    this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }

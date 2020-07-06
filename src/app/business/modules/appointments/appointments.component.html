@@ -1,4 +1,4 @@
-<section>
+<section #apptSection>
   <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
@@ -264,8 +264,8 @@
                         </div>
                       </th>
                     </tr>
-                    <tr>
-                      <td colspan="5" *ngIf="showSlotsN">
+                    <tr *ngIf="showSlotsN">
+                      <td colspan="5" >
                         <mat-chip-list class="apptm-in-chip">
                           <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
                             *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
@@ -286,9 +286,9 @@
                         <div class="parent-name pull-left"
                           [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
                           (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
-                          <span>{{getSingleTime(slot.time)}}<span
+                          <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
                               *ngIf="timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" class="slot">
-                              [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span></span>
+                              [Batch: {{timeSlotAppts[slot.time][0].batchId}}]</span>
                         </div>
                       </td>
                       <td class="title td-two-full"
@@ -414,7 +414,7 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
+              <div id="contentDiv" class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar">                    
@@ -533,8 +533,8 @@
                               [matTooltip]="filtericonTooltip">
                             </i>
                           </a>
-                          <aside class="filterSidebar" *ngIf="filter_sidebar">
-                            <section class="sidebar sidebar-bottom">
+                          <aside  class="filterSidebar" *ngIf="filter_sidebar">
+                            <section id="filterContainer" class="sidebar sidebar-bottom">
                               <div class="filterClosebtn">
                                 <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
                                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -744,7 +744,7 @@
                       </td>
                     </tr> -->
                     <tr>
-                      <td colspan="5">
+                      <td colspan="5" class="no-appt">
                         No Appointments Found
                       </td>
                     </tr>
@@ -887,4 +887,9 @@
     </div>
   </div>
   <div class="clearfix"></div>
+  <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
+    <button >
+        <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
+    </button>
+  </div>
 </section>
