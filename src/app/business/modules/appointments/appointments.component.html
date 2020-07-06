@@ -827,11 +827,11 @@
                       </a> -->
 
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Started', appt)"
-                          *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && !appt.virtualService && time_type != 2"
+                          *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService"
+                        <a class="statusText btn-play pointer-cursor" *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
                           <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>

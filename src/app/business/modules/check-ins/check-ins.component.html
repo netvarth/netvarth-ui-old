@@ -731,11 +731,11 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && !checkin.virtualService && time_type!=2"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')  && time_type!=2"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService"
+                        <a class="statusText btn-play pointer-cursor" *ngIf="checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(checkin, 'STARTED')">
                           <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>
