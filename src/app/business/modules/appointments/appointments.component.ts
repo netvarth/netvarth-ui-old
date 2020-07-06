@@ -314,12 +314,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     const header = document.getElementById('childActionBar');
-    if (window.pageYOffset >= (this.topHeight + 50)) {
-      header.classList.add('sticky');
-      console.log('sticky');
-    } else {
-      header.classList.remove('sticky');
-      console.log('non sticky');
+    if (header) {
+      if (window.pageYOffset >= (this.topHeight + 50)) {
+        header.classList.add('sticky');
+        console.log('sticky');
+      } else {
+        header.classList.remove('sticky');
+        console.log('non sticky');
+      }
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
       this.windowScrolled = true;
@@ -1480,6 +1482,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filterapplied = false;
     }
     this.loadApiSwitch('doSearch');
+    this.shared_functions.setFilter();
   }
   keyPressed(event) {
     if (event.keyCode === 13) {
@@ -1905,10 +1908,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
+      if (this.time_type === 1 && appt.apptStatus === 'Confirmed' && !appt.virtualService) {
+        this.showArrived = true;
+      }
+      if (this.time_type !== 3 && appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed' && !appt.virtualService) {
+        this.showUndo = true;
+      }
+      if (appt.billStatus && appt.billStatus === 'Settled') {
+        this.showRejected = false;
+      }
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
+      this.selAllSlots = false;
+      this.showArrived = false;
+      this.showRejected = true;
+      this.showUndo = false;
     }
     this.setApptSelections();
   }
@@ -1921,6 +1937,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFilterValues();
     this.filterapplied = false;
     this.loadApiSwitch('doSearch');
+    this.shared_functions.setFilter();
     this.setFilterDateMaxMin();
   }
   resetFilterValues() {

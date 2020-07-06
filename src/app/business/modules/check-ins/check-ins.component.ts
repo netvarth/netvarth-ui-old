@@ -961,6 +961,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const promise = this.getTodayWLCount(Mfilter);
     promise.then(
       result => {
+        this.chkSelectAppointments = false;
         this.provider_services.getTodayWaitlist(Mfilter)
           .subscribe(
             (data: any) => {
@@ -1348,6 +1349,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFilterValues();
     this.filterapplied = false;
     this.loadApiSwitch('doSearch');
+    this.shared_functions.setFilter();
     this.setFilterDateMaxMin();
   }
   resetFilterValues() {
@@ -1492,8 +1494,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.filterapplied = false;
     }
-    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
+    this.shared_functions.setFilter();
   }
   setFilterDateMaxMin() {
     this.filter_date_start_min = null;
@@ -1810,6 +1812,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
+    this.shared_functions.setFilter();
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;

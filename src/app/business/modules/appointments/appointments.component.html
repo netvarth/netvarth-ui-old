@@ -469,17 +469,17 @@
                             <i class="fa icon-note" (click)="addProviderNote()"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && activeAppointment.apptStatus == 'Confirmed' && !activeAppointment.virtualService"
+                            *ngIf="apptSingleSelection && showArrived"
                             [matTooltip]="'Mark as Arrived'">
                             <i class="icon-arrived" (click)="changeWaitlistStatus('Arrived')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && activeAppointment.apptStatus !== 'Completed' && activeAppointment.apptStatus !== 'Confirmed' && !activeAppointment.virtualService"
+                            *ngIf="apptSingleSelection && showUndo"
                             [matTooltip]="'Undo'">
                             <i class="fa fa-undo" (click)="changeWaitlistStatus('Confirmed')"></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size1"
-                            *ngIf="apptSingleSelection && this.activeAppointment && (this.activeAppointment.apptStatus=='Arrived' || this.activeAppointment.apptStatus=='Confirmed')"
+                            *ngIf="apptSingleSelection && showRejected"
                             [matTooltip]="'Reject'">
                             <i class="fa fa-trash" (click)="changeWaitlistStatus('Rejected')"></i>
                           </a>
@@ -528,13 +528,13 @@
                               </ul>
                             </span>
                           </a>
-                        </div>
-                        <div class="pull-right">
-                          <a class="icon-action pointer-cursor icon-size1" data-toggle="control-sidebar">
+                          <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
                             <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                               [matTooltip]="filtericonTooltip">
                             </i>
                           </a>
+                        </div>
+                        <div class="pull-right">
                           <aside class="filterSidebar" *ngIf="filter_sidebar">
                             <section id="filterContainer" class="sidebar sidebar-bottom">
                               <div class="filterClosebtn">
@@ -564,7 +564,7 @@
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
-                                <div *ngIf="time_type == 3">
+                                <!-- <div *ngIf="time_type == 3">
                                   <label class="filterHeaders">Age Group</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
@@ -608,7 +608,7 @@
                                       (change)="setFilterDataCheckbox('gender', 'female', $event)">
                                       Female</mat-checkbox>
                                   </li>
-                                </div>
+                                </div> -->
                                 <div *ngIf="service_list.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">

@@ -9703,14 +9703,14 @@ td.chkWth, th.chkWth {
 
 @media (min-width:530px) {
   .tbl-qboard .td-one {
-    width: 40% !important;
+    width: 38% !important;
     white-space: pre-wrap !important;
   }
   .tbl-qboard .td-two-full {
     width: 40% !important;
   }
   .tbl-qboard .td-two {
-    width: 30% !important;
+    width: 25% !important;
   }
   .tbl-qboard .td-three {
     width: 10% !important;
@@ -9726,7 +9726,7 @@ td.chkWth, th.chkWth {
 
 @media (min-width:530px) and (max-width:1288px) {
   .tbl-qboard .td-two {
-    width: 28% !important;
+    width: 25% !important;
   }
 }
 
@@ -9743,9 +9743,11 @@ td.chkWth, th.chkWth {
   }
   .tbl-qboard .td-two {
     width: 100px !important;
+    white-space: pre-wrap !important;
   }
   .tbl-qboard .td-three {
     width: 60px !important;
+    white-space: pre-wrap !important;
   }
 }
 
@@ -9762,6 +9764,9 @@ td.chkWth, th.chkWth {
   }
   .tbl-qboard .td-three {
     width: 40px !important;
+  }
+  .table.tbl-qboard>tbody>tr>td {
+    padding: 3px !important;
   }
 }
 
@@ -10290,15 +10295,15 @@ a {
 
 .zoom-icon {
   content: url(../images/zoom.png);
-  top: 5px;
+  top: 3px;
   position: relative;
-  padding-right: 2px;
-  width: 15px;
+  padding-right: 5px;
+  width: 18px;
 }
 .meet-icon {
   content: url(../images/meet.png);
   top: 3px;
   position: relative;
-  padding-right: 2px;
-  width: 15px;
+  padding-right: 5px;
+  width: 18px;
 }
