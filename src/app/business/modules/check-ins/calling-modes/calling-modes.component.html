@@ -183,7 +183,7 @@
                     aria-hidden="true"></i>Back</button>
         </div>
         <div class="example-full-width" style="padding-top: 30px;text-align: center;">
-            Video call completed? <br> Change <span *ngIf="data.type === 'checkin'">Checkin</span> <span *ngIf="data.type === 'appt'">Appointment</span> status to completed?
+          <span *ngIf="callingModes === 'Phone'">Audio</span><span *ngIf="callingModes !== 'Phone'">Video</span> call completed? <br> Change <span *ngIf="data.type === 'checkin'">Checkin</span> <span *ngIf="data.type === 'appt'">Appointment</span> status to completed?
         </div>
     </mat-dialog-content>
     <mat-dialog-actions style="padding-left: 30%;">
