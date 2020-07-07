@@ -227,7 +227,7 @@ export class PaymentLinkComponent implements OnInit {
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
-      'purpose': 'prePayment',
+      'purpose': 'billPayment',
       'source': 'Desktop',
       'paymentMode': 'DC'
     };
