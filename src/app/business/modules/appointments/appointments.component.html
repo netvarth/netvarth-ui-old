@@ -651,23 +651,6 @@
                                       {{appt_status.displayName}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type === 2">
-                                  <label class="filterHeaders">Appointment Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected"
-                                      (change)="setFilterDataCheckbox('apptStatus', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let appt_status of future_check_in_statuses_filter">
-                                    <mat-checkbox
-                                      [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
-                                      (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
-                                      {{appt_status.displayName}}</mat-checkbox>
-                                  </li>
-                                </div>
                                 <div *ngIf="time_type == 3">
                                   <label class="filterHeaders">Payment Status</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
