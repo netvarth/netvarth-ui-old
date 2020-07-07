@@ -265,6 +265,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   batchEnabled = false;
+  consumerTrackstatus = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1373,6 +1374,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
       });
+      if (this.activeAppointment.apptStatus === 'Confirmed' && this.activeAppointment.jaldeeApptDistanceTime && this.activeAppointment.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.activeAppointment.jaldeeStartTimeType === 'ONEHOUR' || this.activeAppointment.jaldeeStartTimeType === 'AFTERSTART')) {
+        this.consumerTrackstatus = true;
+      } else {
+        this.consumerTrackstatus = false;
+      }
     } else if (totalAppointmentsSelected > 1) {
       this.apptMultiSelection = true;
     }
@@ -2143,6 +2149,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     _this.provider_shared_functions.changeWaitlistStatus(_this, appmt, action, 'appt');
   }
+
+  
   // showCallingModes(action) {
   //   const _this = this;
   //   let checkin;
@@ -2499,8 +2507,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   locateCustomer(source) {
-    const waitlistData = this.selectedAppt[source];
-    this.provider_services.getCustomerTrackStatusforAppointment(waitlistData.uid).subscribe(data => {
+    const _this = this;
+    let appt;
+    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+      appt = _this.appointmentsChecked[apptIndex];
+    });
+    this.provider_services.getCustomerTrackStatusforAppointment(appt.uid).subscribe(data => {
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {

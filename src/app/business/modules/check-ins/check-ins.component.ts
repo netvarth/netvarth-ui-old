@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { CallingModesComponent } from './calling-modes/calling-modes.component';
 import { KeyValue } from '@angular/common';
+import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -242,6 +243,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterService: any = [];
   consumr_id: any;
   notedialogRef: any;
+  locateCustomerdialogRef;
+  trackDetail: any = [];
+  consumerTrackstatus = false;
   @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 200;
@@ -1085,6 +1089,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
       });
+      if (this.activeAppointment.waitlistStatus === 'checkedIn' && this.activeAppointment.jaldeeWaitlistDistanceTime && this.activeAppointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.activeAppointment.jaldeeStartTimeType === 'ONEHOUR' || this.activeAppointment.jaldeeStartTimeType === 'AFTERSTART')) {
+        this.consumerTrackstatus = true;
+      } else {
+        this.consumerTrackstatus = false;
+      }
     } else if (totalAppointmentsSelected > 1) {
       this.apptMultiSelection = true;
     }
@@ -1816,6 +1825,44 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
+  }
+
+  locateCustomer(source) {
+    const _this = this;
+    let appt;
+    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+      appt = _this.appointmentsChecked[apptIndex];
+    });
+    this.provider_services.getCustomerTrackStatus(appt.ynwUuid).subscribe(data => {
+      this.trackDetail = data;
+      this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+      this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          message: this.customerMsg
+        }
+      });
+      this.locateCustomerdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+        }
+      });
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  locateCustomerMsg(details) {
+    if (details && details.jaldeeDistance) {
+      const distance = details.jaldeeDistance.distance;
+      const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+      const travelTime = details.jaldeelTravelTime.travelTime;
+      const hours = Math.floor(travelTime / 60);
+      const mode = details.jaldeelTravelTime.travelMode;
+      const minutes = travelTime % 60;
+      return this.provider_shared_functions.getLiveTrackMessage(distance, unit, hours, minutes, mode);
+    }
   }
   // getBussinessProfileApi() {
   //   const _this = this;

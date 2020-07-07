@@ -377,6 +377,10 @@
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailCheckin()"></i>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
+                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
+                          <i class="fa fa-location-arrow"></i>
+                        </a>
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Print'">
                             <i class="fa fa-print" (click)="printCheckin()"></i>

@@ -185,6 +185,10 @@
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailAppt()"></i>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
+                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
+                          <i class="fa fa-location-arrow"></i>
+                        </a>
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection"
                             [matTooltip]="'Print'">
                             <i class="fa fa-print" (click)="printAppt()"></i>
@@ -459,7 +463,11 @@
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailAppt()"></i>
-                          </a>
+                          </a> 
+                          <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
+                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
+                          <i class="fa fa-location-arrow"></i>
+                        </a>
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Print'">
                             <i class="fa fa-print" (click)="printAppt()"></i>
@@ -618,7 +626,7 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
-                                <div *ngIf="service_list.length > 0">
+                                <div *ngIf="service_list.length > 0"> 
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
