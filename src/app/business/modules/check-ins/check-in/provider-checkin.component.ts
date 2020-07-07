@@ -578,7 +578,7 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
-                    if (serv.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                    if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo;
                         this.wtsapmode = this.customer_data.phoneNo;
                     }

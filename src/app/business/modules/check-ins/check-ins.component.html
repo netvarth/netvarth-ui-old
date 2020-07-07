@@ -566,23 +566,6 @@
                                       {{appt_status.displayName}}</mat-checkbox>
                                   </li>
                                 </div>
-                                <div *ngIf="time_type === 1">
-                                  <label class="filterHeaders">Check-in Status</label>
-                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allApptStatusSelected"
-                                      (change)="setFilterDataCheckbox('waitlist_status', 'all', $event)">
-                                      All</mat-checkbox>
-                                  </li>
-                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                    *ngFor="let appt_status of future_check_in_statuses_filter">
-                                    <mat-checkbox
-                                      [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
-                                      (change)="setFilterDataCheckbox('waitlist_status', appt_status.value, $event)">
-                                      {{appt_status.displayName}}</mat-checkbox>
-                                  </li>
-                                </div>
                                 <div *ngIf="time_type == 3">
                                   <label class="filterHeaders">Payment Status</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -601,7 +584,7 @@
                                   </li>
                                 </div>
                                 <div>
-                                  <label class="filterHeaders">Appointment Mode</label>
+                                  <label class="filterHeaders">Check-in Mode</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -718,9 +701,9 @@
                           </span>
                         </div>
                       </td>
-                      <td class="q-actions td-four">
+                      <td class="q-actions td-four custId-flex">
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="board_count > 0 && time_type == 1 && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
+                          *ngIf="board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
@@ -740,10 +723,10 @@
                               <img *ngIf="!getVirtualServiceCount(checkin.virtualService)" src="https://img.icons8.com/color/18/000000/zoom.png" /> -->
                               <i class="fa meet-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'GoogleMeet'"></i>
                               <i class="fa zoom-icon" *ngIf="getVirtualMode(checkin.virtualService) === 'Zoom'"></i>
-                              <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
-                              <i class="fa fa-whatsapp whtsap-ic" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
+                              <i class="fa fa-phone" *ngIf="getVirtualMode(checkin.virtualService) === 'Phone'"></i>
+                              <i class="fa fa-whatsapp whtsap-ic" *ngIf="getVirtualMode(checkin.virtualService) === 'WhatsApp'"></i>
                               <!-- <i *ngIf="" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>  -->
-                              <span *ngIf="!small_device_display">Teleservice</span>
+                              <span [ngClass]="{'dash': !small_device_display?true:false}" *ngIf="!small_device_display">Teleservice</span>
                             </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('DONE', checkin)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
