@@ -342,7 +342,7 @@
                                     {{appt.appmtFor[0].lastName}}</div>
                                 </td>
                                 <td class="title td-two">
-                                  <div class="col-md-12 col-xs-12 col-sm-12 info-box-text service no-padding mgn-up-3"
+                                  <div class="col-md-12 col-xs-12 col-sm-12 service no-padding mgn-up-3"
                                     *ngIf="servicesCount>1">{{appt.service.name}}
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -388,7 +388,7 @@
                                     </span>
                                   </div>
                                 </td>
-                                <td class="q-actions td-four custId-flex">
+                                <td class="q-actions td-four">
                                   <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0 && time_type==1 "
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                     <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
@@ -626,7 +626,7 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
-                                <div *ngIf="service_list.length > 0"> 
+                                <div *ngIf="service_list.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
