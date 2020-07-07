@@ -52,12 +52,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
     });
     if (this._refreshSubject.observers.length === 1) {
-      const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
-      if (activeuser) {
-        this.shared_services.ProviderLogout().subscribe(this._refreshSubject);
-      } else {
-        this.shared_services.ConsumerLogout().subscribe(this._refreshSubject);
-      }
+      this.shared_functions.doLogout().then(
+        (refreshSubject: any) => {
+          this._refreshSubject.next(refreshSubject);
+        }
+      );
     }
     return this._refreshSubject;
   }
@@ -88,6 +87,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'mUniqueId': ynw_user.mUniqueId
       };
       const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      // this.shared_functions.doLogout().then(
+      //   (refreshSubject: any) => {
+      //     this._refreshSubject.next(refreshSubject);
+      //   }
+      // );
       if (activeuser) {
         this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
       } else {
@@ -173,6 +177,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return this._ifSessionExpiredN().pipe(
                 switchMap(() => {
                   // return next.handle(this.updateHeader(req, url));
+                  this.router.navigate(['/']);
                   return EMPTY;
                 })
               );
