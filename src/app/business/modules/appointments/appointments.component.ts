@@ -266,6 +266,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   windowScrolled: boolean;
   batchEnabled = false;
   consumerTrackstatus = false;
+  slotsloading = false;
+  showNoSlots: boolean;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2439,6 +2441,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showSlotsN = !this.showSlotsN;
     }
     let date;
+    this.slotsloading = true;
     this.slotsForQ = [];
     if (this.time_type === 1) {
       date = this.shared_functions.transformToYMDFormat(this.server_date);
@@ -2446,22 +2449,31 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type === 2) {
       date = this.shared_functions.transformToYMDFormat(this.filter.future_appt_date);
     }
+    this.showNoSlots = true;
     if (this.selQId && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
         (data: any) => {
           // console.log('Available Slots');
-          // console.log(data);
           for (let i = 0; i < data.availableSlots.length; i++) {
+            console.log(data.availableSlots[i]);
             if (data.availableSlots[i].active && data.availableSlots[i].noOfAvailbleSlots !== '0') {
             // if (data.availableSlots[i].noOfAvailbleSlots !== '0') {
               if (this.slotsForQ.indexOf(data.availableSlots[i]) === -1) {
                 this.slotsForQ.push(data.availableSlots[i]);
                // console.log(this.slotsForQ);
+               this.showNoSlots = false;
               }
             }
           }
+          console.log(this.showNoSlots);
           // this.slotsForQ = data.availableSlots;
+        }, () => {
+
+        }, () => {
+          this.slotsloading = false;
         });
+    } else {
+      this.slotsloading = false;
     }
   }
   findCurrentActiveQueue(ques) {

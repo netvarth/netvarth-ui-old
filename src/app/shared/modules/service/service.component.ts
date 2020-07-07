@@ -612,8 +612,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
-                console.log(this.vcallmodes)
-                console.log(this.serv_mode)
                 if (this.serv_mode && this.serv_mode === 'audioService') {
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
@@ -627,15 +625,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         }
                     }
                 } else {
+                    this.include_audio = false;
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE') {
                             this.telemodes.push(this.vcallmodes[i]);
                         }
                         if (this.vcallmodes[i].callingMode === 'Phone') {
                             this.include_audio = true;
-                            break;
-                        } else {
-                            this.include_audio = false;
                         }
                     }
                 }

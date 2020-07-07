@@ -270,13 +270,14 @@
                       </th>
                     </tr>
                     <tr *ngIf="showSlotsN">
-                      <td colspan="5">
-                        <mat-chip-list class="apptm-in-chip">
+                      <td colspan="5" [ngClass]="{'no-appt': showNoSlots}">
+                        <mat-chip-list class="apptm-in-chip" *ngIf="!slotsloading && slotsForQ.length!=0">
                           <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
                             *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
                             (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
+                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>
@@ -408,12 +409,14 @@
                                     *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                                     (click)="showCallingModes(appt, 'Started')">
-                                    <i class="fa meet-icon"
+                                    <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
-                                    <i class="fa fa-phone" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                                    <i class="fa fa-whatsapp whtsap-ic" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
-                                    <span [ngClass]="{'dash': !small_device_display?true:false}" *ngIf="!small_device_display">Teleservice</span>
+                                    <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                    <i class="fa fa-phone"
+                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                    <i class="fa fa-whatsapp whtsap-ic"
+                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                    <span *ngIf="!small_device_display">Teleservice</span>
                                   </a>
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
                                     (click)="changeWaitlistStatus('Completed',appt)" [matTooltipClass]="tooltipcls"
@@ -724,13 +727,14 @@
                         </div>
                       </th>
                     </tr>
-                    <tr>
-                      <td colspan="5" *ngIf="showSlotsN">
-                        <mat-chip-list class="apptm-in-chip">
+                    <tr *ngIf="showSlotsN">
+                      <td colspan="5" [ngClass]="{'no-appt':showNoSlots}">
+                        <mat-chip-list class="apptm-in-chip" *ngIf="!slotsloading && slotsForQ.length > 0">
                           <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
                             [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>
                         </mat-chip-list>
+                        <span *ngIf="!slotsloading && showNoSlots">No Available Slots</span>
                       </td>
                     </tr>
                   </thead>
@@ -814,8 +818,7 @@
                           *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
-                            *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop
-                            Calling</span>
+                            *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop</span>
                           <i class="fa fa-phone" *ngIf="!appt.callingStatus" style="color: green;"></i>
                           <span *ngIf="!small_device_display && !appt.callingStatus">
                             &nbsp;Call</span>
