@@ -34,6 +34,10 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 })
 
 export class BProfileComponent implements OnInit, OnDestroy {
+
+  profile_status;
+
+  jaldee_online_status;
  //social media and gallery
 
  frm_social_cap = '';
@@ -155,6 +159,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   minimally_complete_cap=Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
   fully_complete_cap= Messages.PROFILE_COMPLETE_CAP;
   three_quaters_complete_cap=Messages.THREE_QUATERES_COMPLETE_CAP;
+  //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
+ // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
@@ -309,8 +315,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   adword_loading = true;
   subscription: Subscription ;
   bprofile_btn_text='Complete Your Profile';
-  profile_status_str='off';
-  jaldee_online_status_str='off';
+  profile_status_str='';
+  jaldee_online_status_str='';
   //mandatory fields
   domain_fields;
   domain_questions = [];
@@ -474,6 +480,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
     return total;
 
   }
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
 
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText='';
@@ -536,6 +545,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
+          this.jaldee_online_status_str=(this.public_search === true) ? 'on' : 'off';
+           this.jaldee_online_status=this.public_search;
+          // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
         },
         () => {
@@ -553,8 +565,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
         });
   }
   confirm_searchStatus() {
+  
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+       // this.getPublicSearch();
     } else {
       this.handle_searchstatus();
     }
@@ -566,18 +580,45 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.handle_jaldeeOnlinePresence();
     }
   }
+  //regular button
   handle_searchstatus() {
+    console.log('inside');
+    //const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
+        //this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
+       // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
         this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
-        this.getPublicSearch();
+       // this.getJaldeeOnlineStatus();
+       this.getPublicSearch();
+        
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //this.getJaldeeOnlineStatus();
         this.getPublicSearch();
       });
   }
+
+  // //without toggle
+  // handle_searchstatus(event) {
+  //   const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
+  //  // const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
+  //   this.provider_services.updatePublicSearch(is_jaldee_online)
+  //     .subscribe(() => {
+  //      // const status = (this.normal_search_active === true) ? 'disable' : 'enable';
+  //       this.shared_functions.openSnackBar('Public Search ' + is_jaldee_online + 'd successfully', { ' panelclass': 'snackbarerror' });
+  //      // this.getJaldeeOnlineStatus();
+  //       this.getPublicSearch();
+        
+  //     }, error => {
+  //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       //this.getJaldeeOnlineStatus();
+  //       this.getPublicSearch();
+  //     });
+  // }
+
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
@@ -586,12 +627,18 @@ export class BProfileComponent implements OnInit, OnDestroy {
         // this.jaldeeintegration_status = data.onlinePresence;
         // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        this.profile_status=this.onlinepresence_status ? true :false;
+        this.profile_status_str=this.profile_status ?'On':'Off';
         // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
     );
   }
   handle_jaldeeOnlinePresence() {
+    console.log('triggered');
     const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
+   
+    // this.businessProfile_status=(is_check==='Disable'? false: true);
+    // this.businessProfile_status_str=(this.businessProfile_status===true? 'On':'Off');
     const data = {
       'onlinePresence': !this.onlinepresence_status
     };
@@ -1284,6 +1331,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         .then(
             data => {
                 this.bProfile = data;
+                this.getWeightagesOfAllSections(this.bProfile);
                 this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
                 this.specialization_title = (data['serviceSubSector']['displayName']) ?
                     data['serviceSubSector']['displayName'] : '';
@@ -1411,6 +1459,8 @@ getDomainVirtualFields() {
     .then(
       data => {
         this.domain_fields = data['fields'];
+        console.log(this.domain_fields);
+        
         this.domain_questions = data['questions'] || [];
         this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
       }
@@ -1659,6 +1709,7 @@ setLanguages() {
       .then(
           data => {
               this.bProfile = data;
+              this.getWeightagesOfAllSections(this.bProfile);
               if (this.bProfile.languagesSpoken) {
                   if (this.bProfile.languagesSpoken.length > 0) {
                       this.normal_language_show = 3;

@@ -36,6 +36,7 @@ export class ConfirmBoxComponent implements OnInit {
         this.showError = true;
       }
     } else {
+     // data={'data':data};
       this.dialogRef.close(data);
     }
   }

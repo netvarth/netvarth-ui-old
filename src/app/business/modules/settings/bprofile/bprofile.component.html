@@ -92,29 +92,59 @@
                                         </span>
                                         <br>
                                         <span style="font-weight:bold;">{{weightageValue}} %
-                                            <button class="btn btn-primary" style="float:right;margin:10px">{{bprofile_btn_text}}</button>
+                                            <button (click)="scroll(basicInfoSection)" class="btn btn-primary" style="float:right;margin:10px">{{bprofile_btn_text}}</button>
                                         </span>
-
-                                        <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar>
+                                         
+                                        <div class="progress" style="height: 15px;">
+                                                <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        <!-- <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar> -->
                                     </div>
 
                                 </div>
 
+
+                                
+
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Online
-                                                <span>
-                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="handle_jaldeeOnlineStatus($event)">
+                                            <h2>Jaldee Online 
+<!--                                                
+                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="handle_searchstatus($event)">
                                                     </mat-slide-toggle>
-                                                    &nbsp;{{jaldee_online_status_str}}</span>
-                                            </h2>
+                                                    &nbsp;{{jaldee_online_status_str}} -->
+                                                 
+                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                    </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
+                                                    <!-- <span class="status">{{current_status_cap}} -
+                                                        <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
+                                                        <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
+                                              
+                                             
+                                                <!-- <div class="ct-r ml-auto">
+                                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active"
+                                                        (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
+                                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active"
+                                                        (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
+                                                </div> -->
+                                            
+                                            <p class="form-level-settings" *ngIf="!normal_search_active">
+                                                {{frm_public_search_cap}}<a class="learnmore-pointer" id="customer-help"
+                                                    (click)="learnmore_clicked('public-search', $event)">Learn
+                                                    More</a></p>
+                                            <p class="form-level-settings" *ngIf="normal_search_active">
+                                                {{frm_public_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
+                                                    (click)="learnmore_clicked('public-search', $event)">Learn
+                                                    More</a></p>
+                                           
                                             <br>
-                                            <span style="color:red;font-weight:bold">Your Patients cannot able to see u online,please enable jaldee </span>
+                                            <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status">Your Patients cannot able to see u online,please enable jaldee </span>
+                                            <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status">Your Patients can see u online by clicking jaldee link or scanning QR code</span>
 
                                         </div>
                                     </div>
-                                    <!-- <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
+                                    <!-- <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"{{jaldee_turn_on_or_off_cap}}
                                             id="customer-help"
                                             (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
                                             More</a></p> -->
@@ -148,7 +178,9 @@
 
 
                                                     </li>
-                                                    <span style="color:red"> Inactive</span>
+                                                   
+                                                    <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status"> <i class="fa fa-power-off" style="font-size:20px;color:red"></i> Inactive</span>
+                                                    <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status"> <i class="fa fa-power-off" style="font-size:20px;color:green"></i> Active</span>
 
                                                     <li class="acc-url-li">
 
@@ -159,19 +191,20 @@
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                             </span>
-                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
-                                                                <button class="btn-primary-n" (click)="customizeId()">
+                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                                <button class="btn-default-n" (click)="customizeId()">
                                                                     <a>
                                                                         Customize ID
                                                                     </a>
                                                                 </button>
-                                                            </span> -->
+                                                            </span>
                                                         </span>
                                                         <br>
 
 
                                                     </li>
-                                                    <span style="color:red"> Inactive</span>
+                                                    <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status"> <i class="fa fa-power-off" style="font-size:24px;color:red"></i> Inactive</span>
+                                                    <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status"> <i class="fa fa-power-off" style="font-size:24px;color:green"></i> Active</span>
                                                 </ul>
                                             </div>
                                         </div>
@@ -295,12 +328,13 @@
                                         <div class="ct-l">
                                             <h2>List my profile on Jaldee.com
                                                 <span>
-                                                    <mat-slide-toggle [(ngModel)]="profile_status" (change)="handle_profileStatus($event)">
+                                                    <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
                                                     </mat-slide-toggle>
                                                     &nbsp;{{profile_status_str}} </span>
                                             </h2>
                                             <br>
-                                            <span style="color:red;font-weight:bold">Your profile is not listed in jaldee.com</span>
+                                            <span style="color:red;font-weight:bold" *ngIf="!profile_status">Your profile is not listed in jaldee.com</span>
+                                            <span style="color:green;font-weight:bold" *ngIf="profile_status">Your profile is listed in jaldee.com</span>
 
                                         </div>
 
@@ -332,7 +366,7 @@
                                 </div>
 
                             </div>
-                            <div class="card p0 w-dta active">
+                            <div class="card p0 w-dta active" #basicInfoSection>
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100">
@@ -395,14 +429,16 @@
                                         <div class="cd-b">
 
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel [expanded]="false">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                Location
-                                                                <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                                                <span style="font-size:15px;">
+                                                                    Location
+                                                                    <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                                                </span>
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Manage your business location details here.
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -561,14 +597,16 @@
 
 
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel [expanded]="false">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title"> Specilization
-                                                                <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                                </i>
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                <span style="font-size:15px;"> Specilization
+                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    </i>
+                                                                </span>
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Mention your specilization here
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -608,50 +646,91 @@
                                         <!--mandatory fields -->
                                         <div class="cd-b">
 
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
+                                            <!-- <mat-accordion>
+                                                <mat-expansion-panel [expanded]="false">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title"> Mandatory Fields
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title"><span style="font-size:15px;"> Mandatory Fields
                                                                 <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                                </i>
-                                                                <!--bindings={}-->
+                                                                </i></span>
+                                                                bindings={}
                                                                 <p class="form-level-settings">Mention your specilization here
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
                                                                 </p>
                                                             </mat-panel-title>
                                                         </span>
-                                                        <!--bindings={
+                                                        bindings={
                                                                 "ng-reflect-ng-if": "true"
                                                               }-->
-                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
-                                                                        style="transform: rotate(180deg);"></span> -->
-                                                    </mat-expansion-panel-header>
+                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                                        style="transform: rotate(180deg);"></span> 
+                                                    </mat-expansion-panel-header> -->
 
 
-                                                    <!-- Virtual fields -->
-                                                    <div class="acc-cont" *ngFor="let fields of domain_fields">
+                                            <!-- Virtual fields -->
 
-
-                                                        <div *ngIf="fields.mandatory">
-
-                                                            <ng-container>
-                                                                <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
-                                                                    <mat-expansion-panel [expanded]="fields['value']" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
+                                                                                           <!-- 
                                                                         <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                                                                            <mat-panel-title>
-                                                                                {{fields.displayName}}
+                                                                            <mat-panel-title><span style="font-size:15px;">
+                                                                                {{fields.displayName}}</span>
                                                                                 <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
                                                                             </mat-panel-title>
                                                                             <mat-panel-description class="acc-plus-btn">
                                                                                 <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
                                                                                     <mat-icon>{{add_circle_outline}}</mat-icon>
                                                                                 </button>
-                                                                            </mat-panel-description>
-                                                                        </mat-expansion-panel-header>
+                                                                            </mat-panel-description> -->
+                                                                <!-- </mat-expansion-panel-header> -->
 
+
+                                                                                      <!-- 
+                                                                <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
+                                                                    <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
+                                                                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                                                            <mat-panel-title>
+                                                                                {{fields.displayName}}
+                                                                                <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                                               
+                                                                            </mat-panel-title> -->
+
+                                                                        <!-- 
+                                                                            <mat-panel-description class="acc-plus-btn">
+                                                                                <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
+                                                                                    <mat-icon>{{add_circle_outline}}</mat-icon>
+                                                                                </button>
+                                                                            </mat-panel-description> -->
+                                            <div class="acc-cont" *ngFor="let fields of domain_fields">
+
+
+                                                <div *ngIf="fields.mandatory">
+                                               
+
+                                                    <ng-container>
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+                                                                <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                                    role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                                                                    aria-controls="cdk-accordion-child-0" aria-expanded="true"
+                                                                    aria-disabled="false" style="height: 64px;">
+                                                                    <span class="mat-content">
+                                                                        <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                            <span style="font-size:15px;"> {{fields.displayName}}
+                                                                            </span>
+                                                                            <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                                        </mat-panel-title>
+                                            
+                                                                    </span>
+
+                                                                    <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted" style="transform: rotate(180deg);"></span>
+                                                                </mat-expansion-panel-header>
+                                                                <div class="card p0 w-dta active">
+                                                                    <div class="no-dta" *ngIf="!fields['value']">
+                                                                        <span (click)="addDynamicField(fields, 'domain_questions')" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                                    </div>
+
+                                                                    <div class="special-dta" ngIf="fields['value']">
                                                                         <ng-container [ngSwitch]="fields.dataType">
                                                                             <ng-container *ngSwitchCase="'TEXT'">
                                                                                 <div class="cont-btn">
@@ -791,36 +870,54 @@
                                                                                 </div>
                                                                             </ng-container>
                                                                         </ng-container>
-                                                                    </mat-expansion-panel>
-                                                                </mat-accordion>
-                                                            </ng-container>
-                                                        </div>
+
+
+                                                                    </div>
 
 
 
+                                                                </div>
+
+                                                            </mat-expansion-panel>
+                                                        </mat-accordion>
+                                                    </ng-container>
+                                                </div>
+
+                                            </div>
 
 
 
-                                                    </div>
+                                            <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                                <div *ngIf="fields.mandatory">
+                                                    <ng-container>
 
-                                                    <div class="acc-cont" *ngFor="let fields of subdomain_fields">
-                                                        <div *ngIf="fields.mandatory">
-                                                            <ng-container>
-                                                                <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
-                                                                    <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
-                                                                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                                                                            <mat-panel-title>
-                                                                                {{fields.displayName}}
-                                                                                <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
-                                                                                <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
-                                                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2 weeks </span>
-                                                                            </mat-panel-title>
-                                                                            <mat-panel-description class="acc-plus-btn">
-                                                                                <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
-                                                                                    <mat-icon>{{add_circle_outline}}</mat-icon>
-                                                                                </button>
-                                                                            </mat-panel-description>
-                                                                        </mat-expansion-panel-header>
+
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+
+                                                                <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                                    role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                                                                    aria-controls="cdk-accordion-child-0" aria-expanded="true"
+                                                                    aria-disabled="false" style="height: 64px;">
+
+                                                                    <span class="mat-content">
+                                                                        <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                            <span style="font-size:15px;"> {{fields.displayName}}
+                                                                            </span>
+                                                                            <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                                        </mat-panel-title>
+                                                                        </span>
+                                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted" style="transform: rotate(180deg);"></span> -->
+
+                                                  
+                                                                </mat-expansion-panel-header>
+
+                                                                <div class="card p0 w-dta active">
+                                                                    <div class="no-dta" *ngIf="!fields['value']">
+                                                                        <span (click)="addDynamicField(fields, 'subdomain_questions')" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                                    </div>
+
+                                                                    <div class="special-dta" *ngIf="fields['value']">
 
                                                                         <ng-container [ngSwitch]="fields.dataType">
 
@@ -964,18 +1061,20 @@
                                                                                 </div>
                                                                             </ng-container>
                                                                         </ng-container>
-                                                                    </mat-expansion-panel>
-                                                                </mat-accordion>
-                                                            </ng-container>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-expansion-panel>
+                                                        </mat-accordion>
+                                                    </ng-container>
 
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                            </div>
 
-
+                                            <!-- 
                                                 </mat-expansion-panel>
 
 
-                                            </mat-accordion>
+                                            </mat-accordion> -->
 
 
                                         </div>
@@ -984,14 +1083,16 @@
 
 
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel [expanded]="false">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title"> Gallery and Social Media
-                                                                <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                                </i>
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                <span style="font-size:15px;">Gallery and Social Media
+                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    </i>
+                                                                </span>
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Mention your specilization here
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -1014,10 +1115,9 @@
                                                                         <mat-expansion-panel [expanded]="true">
                                                                             <mat-expansion-panel-header class="min100">
                                                                                 <mat-panel-title class="block-level">
-                                                                                    {{gallery_cap}}
+                                                                                        <span style="font-size:15px;">{{gallery_cap}}</span>
                                                                                     <p class="form-level-settings">{{frm_gallery_cap}}
-                                                                                        <a class="learnmore-pointer"
-                                                                                            id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)">Learn More
+                                                                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)">Learn More
                                                                                         </a>
                                                                                     </p>
                                                                                 </mat-panel-title>
@@ -1038,10 +1138,9 @@
                                                                         <mat-expansion-panel [expanded]="true">
                                                                             <mat-expansion-panel-header class="min100">
                                                                                 <mat-panel-title class="block-level">
-                                                                                    {{social_media_cap}}
+                                                                                        <span style="font-size:15px;">{{social_media_cap}}</span>
                                                                                     <p class="form-level-settings">{{frm_social_cap}}
-                                                                                        <a class="learnmore-pointer"
-                                                                                            id="customer-help" (click)="learnmore_clicked('your-social-media', $event)">Learn More
+                                                                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)">Learn More
                                                                                         </a>
                                                                                     </p>
                                                                                 </mat-panel-title>
@@ -1093,54 +1192,54 @@
 
                                         </div>
                                         <div class="cd-b">
-                                                <mat-accordion>
-                                                        <mat-expansion-panel [expanded]="true">
-                                                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                                                role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                                                aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                                                <span class="mat-content">
-                                                                    <mat-panel-title class="block-level mat-expansion-panel-header-title">Languages Known
-                                                                        <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                                        </i>
-                                                                        <!--bindings={}-->
-                                                                        <p class="form-level-settings">Mention your languages here
-                                                                            <a class="learnmore-pointer" id="customer-help">Learn More</a>
-                                                                        </p>
-                                                                    </mat-panel-title>
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="false">
+                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                        <span class="mat-content">
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                <span style="font-size:15px;">Languages Known
+                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    </i>
                                                                 </span>
-                                                                <!--bindings={
+                                                                <!--bindings={}-->
+                                                                <p class="form-level-settings">Mention your languages here
+                                                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                                </p>
+                                                            </mat-panel-title>
+                                                        </span>
+                                                        <!--bindings={
                                                                 "ng-reflect-ng-if": "true"
                                                               }-->
-                                                                <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
                                                                         style="transform: rotate(180deg);"></span> -->
-                                                            </mat-expansion-panel-header>
-                                                <div class="row">
+                                                    </mat-expansion-panel-header>
+                                                    <div class="row">
                                                         <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
                                                             <div class="card p0 w-dta active">
-                                                               
-                                                                        <div class="no-dta" *ngIf="normal_language_show==1">
-                                                                            <app-innerloading-spinner spinnerParams="loadingParams">
-                                                                            </app-innerloading-spinner>
-                                                                        </div>
-                                                                        <div class="no-dta" *ngIf="normal_language_show==2">
-                                                                            <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
-                                                                            <span (click)="handleSpokenLanguages()"
-                                                                                class="cs-btn bt3">{{add_it_cap}}</span>
-                                                                        </div>
-                                    
-                                                                        <div class="lang-dta"
-                                                                            *ngIf="normal_language_show==3 && languages_arr.length > 0">
-                                                                            <span class="editbt" (click)="handleSpokenLanguages()"></span>
-                                                                            <div *ngFor="let lang of bProfile.languagesSpoken">
-                                                                                {{getlanguageName(lang)}}
-                                                                            </div>
-                                                                        </div>
-                                                               
+
+                                                                <div class="no-dta" *ngIf="normal_language_show==1">
+                                                                    <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                    </app-innerloading-spinner>
+                                                                </div>
+                                                                <div class="no-dta" *ngIf="normal_language_show==2">
+                                                                    <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                                                    <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                                </div>
+
+                                                                <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
+                                                                    <span class="editbt" (click)="handleSpokenLanguages()"></span>
+                                                                    <div *ngFor="let lang of bProfile.languagesSpoken">
+                                                                        {{getlanguageName(lang)}}
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </mat-expansion-panel>
-                                                    </mat-accordion>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
 
                                         </div>
 
@@ -1260,7 +1359,7 @@
                     </span>
                 </div>
             </div> -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPrivacy()">
                         <h2>Privacy</h2>
@@ -1270,7 +1369,7 @@
                         </span>
                     </span>
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoMedia()">

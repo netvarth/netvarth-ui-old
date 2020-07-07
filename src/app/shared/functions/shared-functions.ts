@@ -614,11 +614,11 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Turn off" public search, You will not be visible online in Jaldee.com.';
+      msg = 'If you " Turn off" Jaldee Online, You will not be visible online in Jaldee.com.';
       // msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
-      msg = '"Turn On" the Public Search?';
+      msg = '"Turn On" Jaldee Online?';
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -632,17 +632,20 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
         ob.handle_searchstatus();
+      }else{
+        ob.getPublicSearch();
       }
     });
   }
   confirmOPSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Turn off" Business profile, Your profile will not be visible online at Jaldee.com.';
+      msg = 'If you "Turn off" List my profile in jaldee.com, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
-      msg = '"Turn On" the Business profile?';
+      msg = '"Turn On" List my profile in jaldee.com?';
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -657,6 +660,9 @@ export class SharedFunctions {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         ob.handle_jaldeeOnlinePresence();
+      }
+      else{
+        ob.getJaldeeIntegrationSettings();
       }
     });
   }
