@@ -15,6 +15,7 @@
                                 <thead>
                                     <tr>
                                         <th class="th1">Service provider</th>
+                                        <th> Service for</th>
                                         <th class="th6">Service</th>
                                         <th class="th2">Location</th>
                                         <!-- <th class="th3">Date/Time</th> -->
@@ -30,6 +31,8 @@
                                             <span
                                                 class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                         </td>
+                                        <td data-title="Servicefor">
+                                            {{his_wait.appmtFor[0].firstName || '' | capitalizeFirst}} {{his_wait.appmtFor[0].lastName || '' | capitalizeFirst}}</td>
                                         <td data-title="Service" class="td6">
                                             {{his_wait.service.name || '' | capitalizeFirst}}</td>
                                         <td data-title="Location" class="td2">
