@@ -80,12 +80,11 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic tool-pading"></i>
-                                                    <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="tool-pading"
-                                                    src="https://img.icons8.com/color/20/000000/zoom.png" />
-                                                    <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="tool-pading" src="https://img.icons8.com/ultraviolet/20/000000/video-message.png"/>
-                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i> 
-                                                    {{serv.name | capitalizeFirst}}
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"></i>
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                                    <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile fa-lg pad-rt-5" aria-hidden="true"></i> 
+                                                   <span class="dash">{{serv.name | capitalizeFirst}}</span> 
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
