@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class ProviderPaymentSettingsComponent implements OnInit {
 
-    
+
     jaldee_account_cap = Messages.PAY_SET_JALDEE_ACCOUNT_CAP;
     my_own_account_cap = Messages.PAY_SET_MY_OWN_ACCOUNT_CAP;
     pay_if_mail_verified_cap = Messages.PAY_SET_ONLY_IF_MAIL_VERIFIED_CAP;
@@ -82,7 +82,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     gstnumber;
     paytmverified = false;
     payuverified = false;
-    razorpayVerified =false;
+    razorpayVerified = false;
     tabid = 0;
     emailidVerified = false;
     profileQueryExecuted = false;
@@ -103,7 +103,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     jPay_Billing = false;
     upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
-  
+
     breadcrumbs = [
         {
             title: 'Settings',
@@ -241,9 +241,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         console.log(paySettings);
         console.log(type);
         console.log(mode);
-        
-        
-        
+
+
+
         if (mode !== undefined) {
             if (mode === 'paytm') {
                 this.paystatus = paySettings.onlinePayment || false;
@@ -285,7 +285,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.paytmverified = paySettings.payTmVerified || false;
             this.payuverified = paySettings.payUVerified || false;
             this.razorpayVerified = paySettings.razorpayVerified || false;
-            
+
             if (type === 0) {
                 this.paytmenabled = paySettings.payTm || false;
                 this.ccenabled = paySettings.dcOrCcOrNb || false;
@@ -310,7 +310,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             let panelclass = '';
             let params;
             const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
-            if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified)|| (this.ccenabled && !this.razorpayVerified)) {
+            if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified) || (this.ccenabled && !this.razorpayVerified)) {
                 showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN');
                 panelclass = 'snackbarnormal'; // 'snackbarerror';
                 params = { 'duration': duration, 'panelClass': panelclass };
@@ -669,24 +669,25 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
             pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
         }
-        this.provider_services.getLicenseMetadata().subscribe(data => {
-            this.licenseMetadata = data;
-            for (let i = 0; i < this.licenseMetadata.length; i++) {
-                if (this.licenseMetadata[i].pkgId === pkgId) {
-                    for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-                        if (this.licenseMetadata[i].metrics[k].id === 6) {
-                            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-                                this.jPay_Billing = true;
-                                return;
-                            } else {
-                                this.jPay_Billing = false;
-                                return;
-                            }
+        // this.provider_services.getLicenseMetadata().subscribe(data => {
+        this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+        // this.licenseMetadata = data;
+        for (let i = 0; i < this.licenseMetadata.length; i++) {
+            if (this.licenseMetadata[i].pkgId === pkgId) {
+                for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+                    if (this.licenseMetadata[i].metrics[k].id === 6) {
+                        if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                            this.jPay_Billing = true;
+                            return;
+                        } else {
+                            this.jPay_Billing = false;
+                            return;
                         }
                     }
                 }
             }
-        });
+        }
+        // });
         setTimeout(() => {
             this.api_loading = false;
         }, 1000);

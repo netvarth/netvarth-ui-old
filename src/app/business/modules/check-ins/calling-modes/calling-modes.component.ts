@@ -64,7 +64,7 @@ export class CallingModesComponent implements OnInit {
             this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
             this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
             this.serv_name = this.data.qdata.service.name;
-            this.date = this.data.qdata.date;
+            this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
             this.time = this.data.qdata.checkInTime;
             this.serv_provider = this.data.qdata.providerAccount.businessName;
             this.location = this.data.qdata.queue.location.address;
@@ -76,7 +76,7 @@ export class CallingModesComponent implements OnInit {
         } else {
             this.consumer_fname = this.data.qdata.appmtFor[0].userName;
             this.serv_name = this.data.qdata.service.name;
-            this.date = this.data.qdata.appmtDate;
+            this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
             this.time = this.data.qdata.appmtTime;
             this.serv_provider = this.data.qdata.providerAccount.businessName;
             this.location = this.data.qdata.location.address;

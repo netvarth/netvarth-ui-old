@@ -327,24 +327,25 @@ export class BProfileComponent implements OnInit, OnDestroy {
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
-    this.provider_services.getLicenseMetadata().subscribe(data => {
-      this.licenseMetadata = data;
-      for (let i = 0; i < this.licenseMetadata.length; i++) {
-        if (this.licenseMetadata[i].pkgId === pkgId) {
-          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-            if (this.licenseMetadata[i].metrics[k].id === 13) {
-              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-                this.showCustomId = true;
-                return;
-              } else {
-                this.showCustomId = false;
-                return;
-              }
+    // this.provider_services.getLicenseMetadata().subscribe(data => {
+    this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+    // this.licenseMetadata = data;
+    for (let i = 0; i < this.licenseMetadata.length; i++) {
+      if (this.licenseMetadata[i].pkgId === pkgId) {
+        for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+          if (this.licenseMetadata[i].metrics[k].id === 13) {
+            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+              this.showCustomId = true;
+              return;
+            } else {
+              this.showCustomId = false;
+              return;
             }
           }
         }
       }
-    });
+    }
+    // });
   }
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');

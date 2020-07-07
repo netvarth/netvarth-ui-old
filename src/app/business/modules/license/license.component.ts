@@ -327,32 +327,33 @@ export class LicenseComponent implements OnInit, OnDestroy {
             );
     }
     getLicenseMetaData() {
-        this.provider_servicesobj.getLicenseMetadata()
-            .subscribe(
-                data => {
-                    this.all_license_metadata = data;
-                    const license_meta = {};
-                    this.license_upgarde_sub = {};
-                    for (const meta of this.all_license_metadata) {
-                        if (this.currentlicense_details && this.currentlicense_details['accountLicense']) {
-                            if (meta['pkgId'] === this.currentlicense_details['accountLicense']['licPkgOrAddonId']) {
-                                this.grandTotal = meta['price'] * 12;
-                                this.appliedDiscount = this.grandTotal * (this.annualdiscount / 100);
-                                this.netTotal = this.grandTotal - this.appliedDiscount;
-                                if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
-                                    this.showAmounts = false;
-                                } else {
-                                    this.showAmounts = true;
-                                }
-                                return false;
-                            }
-                        }
+        // this.provider_servicesobj.getLicenseMetadata()
+        //     .subscribe(
+        //         data => {
+        this.all_license_metadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+        // this.all_license_metadata = data;
+        const license_meta = {};
+        this.license_upgarde_sub = {};
+        for (const meta of this.all_license_metadata) {
+            if (this.currentlicense_details && this.currentlicense_details['accountLicense']) {
+                if (meta['pkgId'] === this.currentlicense_details['accountLicense']['licPkgOrAddonId']) {
+                    this.grandTotal = meta['price'] * 12;
+                    this.appliedDiscount = this.grandTotal * (this.annualdiscount / 100);
+                    this.netTotal = this.grandTotal - this.appliedDiscount;
+                    if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
+                        this.showAmounts = false;
+                    } else {
+                        this.showAmounts = true;
                     }
-                },
-                error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    return false;
                 }
-            );
+            }
+        }
+        //     },
+        //     error => {
+        //         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     }
+        // );
     }
     updateSubscription(value) {
         this.provider_servicesobj.changeLicenseSubscription(value)
