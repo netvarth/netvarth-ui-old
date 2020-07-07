@@ -601,7 +601,7 @@
                                   </li>
                                 </div>
                                 <div>
-                                  <label class="filterHeaders">Appointment Mode</label>
+                                  <label class="filterHeaders">Check-in Mode</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -720,7 +720,7 @@
                       </td>
                       <td class="q-actions td-four custId-flex">
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="board_count > 0 && time_type == 1 && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
+                          *ngIf="board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                           (click)="callingWaitlist(checkin)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                           <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
                             *ngIf="!small_device_display && checkin.callingStatus">&nbsp; Stop
