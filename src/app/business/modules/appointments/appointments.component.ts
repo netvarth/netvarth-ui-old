@@ -318,10 +318,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
-        console.log('sticky');
+        // console.log('sticky');
       } else {
         header.classList.remove('sticky');
-        console.log('non sticky');
+        // console.log('non sticky');
       }
     }
     if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
@@ -979,12 +979,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const curDate = new Date();
     const curTime = curDate.getHours() + ':' + curDate.getMinutes();
     let activeTime = '';
-    console.log(slots);
+    // console.log(slots);
     if (slots && slots.length > 1) {
       activeTime = slots[0].time.split('-')[0];
-      console.log(slots);
+      // console.log(slots);
       for (let indx = 0; indx < slots.length; indx++) {
-        console.log(slots[indx].time);
+        // console.log(slots[indx].time);
         if (slots[indx].time.split('-')[0] > curTime) {
           break;
         }
@@ -1225,7 +1225,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 const activeTimeSlot = this.getActiveTimeSlot(this.availableSlotDetails.availableSlots);
                 if (activeTimeSlot !== '') {
                   this.scrollToSection(activeTimeSlot);
-                  console.log(activeTimeSlot);
+                  // console.log(activeTimeSlot);
                 }
               }, 500);
 
@@ -2441,10 +2441,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selQId && date) {
       this.provider_services.getAppointmentSlotsByDate(this.selQId, date).subscribe(
         (data: any) => {
+          // console.log('Available Slots');
+          // console.log(data);
           for (let i = 0; i < data.availableSlots.length; i++) {
             if (data.availableSlots[i].active && data.availableSlots[i].noOfAvailbleSlots !== '0') {
+            // if (data.availableSlots[i].noOfAvailbleSlots !== '0') {
               if (this.slotsForQ.indexOf(data.availableSlots[i]) === -1) {
                 this.slotsForQ.push(data.availableSlots[i]);
+               // console.log(this.slotsForQ);
               }
             }
           }
@@ -2678,10 +2682,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //   });
     // }
     // if (this.time_type === 1) {
-    console.log(this.slotIds);
     this.slotIds.toArray().forEach(element => {
-      console.log(curTime);
-      console.log(element.nativeElement.innerText + '----' + this.getSingleTime(curTime));
       if (element.nativeElement.innerText === curTime) {
         element.nativeElement.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'start' });
         return false;
