@@ -10313,3 +10313,13 @@ a {
 .vid-ic-pd {
   padding: 5px 7px 5px 8px !important;
 }
+ .On{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: #00cc96;
+}
+ .Off{
+  font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: #f24949;
+}

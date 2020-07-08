@@ -9,10 +9,11 @@
                 <div class="card p0 ynw-common-form-nm jdn-pg">
                     <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 no-padding">
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 ">
-                            <label style="display: flex">Enable SMS Notifications&nbsp;&nbsp;
-                                <mat-slide-toggle class="example-margin" [(ngModel)]="smsGlobalStatus"
+                            <label style="display: flex">Enable SMS Notifications -&nbsp;
+                                <span class="{{smsGlobalStatusStr}}">{{smsGlobalStatusStr}}</span>
+                                <!-- <mat-slide-toggle class="example-margin" [(ngModel)]="smsGlobalStatus"
                                     (change)="handleGlobalSMSSettings($event)">
-                                </mat-slide-toggle>
+                                </mat-slide-toggle> -->
                             </label>
                         </div>
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 " style="padding-bottom: 10px;">
