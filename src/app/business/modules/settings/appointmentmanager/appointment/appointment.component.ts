@@ -826,7 +826,7 @@ export class AppointmentComponent implements OnInit {
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
-            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
+            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
                     this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
