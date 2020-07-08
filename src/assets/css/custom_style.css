@@ -10252,6 +10252,11 @@ a {
   min-height: auto !important;
 }
 
+.linkstyle{
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .linkdisplay{
   display: flex;
   }

@@ -678,9 +678,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     if (this.licenseMetadata[i].metrics[k].id === 6) {
                         if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
                             this.jPay_Billing = true;
+                            this.api_loading = false;
                             return;
                         } else {
                             this.jPay_Billing = false;
+                            this.api_loading = false;
                             return;
                         }
                     }
