@@ -10309,3 +10309,7 @@ a {
   padding-right: 1px;
   width: 15px;
 }
+
+.vid-ic-pd {
+  padding: 5px 7px 5px 8px !important;
+}

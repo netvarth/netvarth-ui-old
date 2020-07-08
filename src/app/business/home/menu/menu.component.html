@@ -83,16 +83,6 @@
       <!-- </ul> -->
       <!-- </li> -->
       <li class="treeview">
-        <!-- <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()" routerLinkActive="active-lnk">
-          <i class="fa fa-check-circle"></i>
-          <span> Token/Check-ins</span>
-        </a> -->
-        <a class="pointer-cursor" (click)="menuClick('checkin');closeMenu()" routerLinkActive="active-lnk">
-          <i class="fa fa-check-circle"></i>
-          <span> Token/Check-ins</span>
-        </a>
-      </li>
-      <li class="treeview">
         <!-- <a *ngIf="appointment" class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
           routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
@@ -103,7 +93,16 @@
           <span> Appointments</span>
         </a>
       </li>
-     
+      <li class="treeview">
+        <!-- <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()" routerLinkActive="active-lnk">
+          <i class="fa fa-check-circle"></i>
+          <span> Token/Check-ins</span>
+        </a> -->
+        <a class="pointer-cursor" (click)="menuClick('checkin');closeMenu()" routerLinkActive="active-lnk">
+          <i class="fa fa-check-circle"></i>
+          <span> Token/Check-ins</span>
+        </a>
+      </li>
       <li class="treeview" >
         <a *ngIf="donationstatus" class="pointer-cursor"  routerLink="donations" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-stack fa-inr"></i>

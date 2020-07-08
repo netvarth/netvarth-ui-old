@@ -405,17 +405,17 @@
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                     <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                                   </a>
-                                  <a class="statusText btn-play pointer-cursor"
+                                  <a class="statusText btn-play pointer-cursor" [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                                     *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                                     (click)="showCallingModes(appt, 'Started')">
-                                    <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                                    <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                    <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
                                     <i class="fa fa-phone"
-                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
                                     <i class="fa fa-whatsapp whtsap-ic"
-                                    [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                                     <span *ngIf="!small_device_display">Teleservice</span>
                                   </a>
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
@@ -760,7 +760,7 @@
                         <input [checked]="chkAppointments[i]" type="checkbox" class="ckbx pull-left"
                           (change)="chkAptHistoryClicked(i, appt)" />
                       </td>
-                      <td class="parent-selection parent-title">
+                      <td class="parent-selection parent-title td-one">
                         <div class="pull-left mgn-lt-5 date" *ngIf="time_type==3">
                           {{appt.appmtDate | date: display_dateFormat}}</div>
                         <div class="pull-left mgn-lt-5 date greenc bold" *ngIf="time_type==1">
@@ -769,14 +769,14 @@
                           {{appt.appmtFor[0].firstName}}
                           {{appt.appmtFor[0].lastName}}</div>
                       </td>
-                      <td class="title">
+                      <td class="title td-two">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">{{appt.service.name}}</div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="checkin-label mgn-rt-10"
                             *ngFor="let label of appt.label | keyvalue">{{label.value}}</span>
                         </div>
                       </td>
-                      <td class="">
+                      <td class="td-three">
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="icon-cloud mgn-rt-10" *ngIf="appt.apptBy == 'CONSUMER'"
                             [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
@@ -813,7 +813,7 @@
                           </span>
                         </div>
                       </td>
-                      <td class="q-actions">
+                      <td class="q-actions td-four">
                         <a class="statusText btn-play pointer-cursor"
                           *ngIf="board_count > 0 && !appt.virtualService &&time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                           (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
@@ -834,7 +834,7 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor"
+                        <a class="statusText btn-play pointer-cursor" [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                           *ngIf="appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
