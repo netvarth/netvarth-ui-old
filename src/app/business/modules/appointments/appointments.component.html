@@ -309,17 +309,17 @@
                       </td>
                       <td class="">
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
+                          *ngIf="statusAction =='new' && time_type!=2 && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
                           (click)="changeApptStatusByBatch('Started', timeSlotAppts[slot.time][0].batchId)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <!-- <a class="statusText btn-play pointer-cursor" *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0" (click)="changeApptStatusByBatch('Cancelled', timeSlotAppts[slot.time][0].batchId)"
+                        <a class="statusText btn-play pointer-cursor" *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled" (click)="cancelBatchAppt(timeSlotAppts[slot.time][0].batchId)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Reject'">
                           <i class="fa fa-trash"></i> <span *ngIf="!small_device_display"> Reject</span>
-                        </a> -->
+                        </a>
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
+                          *ngIf="statusAction =='started' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0  && timeSlotAppts[slot.time][0].batchId && batchEnabled"
                           (click)="changeApptStatusByBatch('Completed', timeSlotAppts[slot.time][0].batchId)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span *ngIf="!small_device_display">

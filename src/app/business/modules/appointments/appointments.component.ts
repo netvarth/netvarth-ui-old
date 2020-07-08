@@ -15,6 +15,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../check-ins/ad
 import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-customer.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -1151,9 +1152,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptsChecked = {};
     this.chkSlotInput = {};
     this.selectedAppt = [];
+    this.setApptSelections();
+    this.chkSelectAppointments = false;
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.chkAppointments = {};
+    this.selAllSlots = false;
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
@@ -1883,6 +1887,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.apptsChecked[slotIndex] = {};
     }
     if (!this.apptsChecked[slotIndex][apptIndex]) {
+      this.showRejected = true;
       this.apptsChecked[slotIndex][apptIndex] = appt;
       if (appt.apptStatus === 'Confirmed' && !appt.virtualService) {
         this.showArrived = true;
@@ -2119,10 +2124,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  changeApptStatusByBatch(action, batchId) {
-    const post_data = {
+  changeApptStatusByBatch(action, batchId, result?) {
+    let post_data = {
       date: new Date()
     };
+    if (result) {
+      post_data = result;
+      post_data['date'] = new Date();
+    }
     this.provider_services.changeAppointmentStatusByBatch(batchId, action, post_data).subscribe(
       () => {
         this.refresh();
@@ -2130,6 +2139,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
+  }
+  cancelBatchAppt(batchId) {
+    const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        isBatch: true,
+        type: 'appt'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result && result.cancelReason || result.rejectReason) {
+        this.changeApptStatusByBatch('Rejected', batchId, result);
+      }
+    });
   }
   changeWaitlistStatus(action, appt?) {
     const _this = this;
@@ -2152,7 +2178,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.provider_shared_functions.changeWaitlistStatus(_this, appmt, action, 'appt');
   }
 
-  
   // showCallingModes(action) {
   //   const _this = this;
   //   let checkin;
@@ -2457,11 +2482,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           for (let i = 0; i < data.availableSlots.length; i++) {
             console.log(data.availableSlots[i]);
             if (data.availableSlots[i].active && data.availableSlots[i].noOfAvailbleSlots !== '0') {
-            // if (data.availableSlots[i].noOfAvailbleSlots !== '0') {
+              // if (data.availableSlots[i].noOfAvailbleSlots !== '0') {
               if (this.slotsForQ.indexOf(data.availableSlots[i]) === -1) {
                 this.slotsForQ.push(data.availableSlots[i]);
-               // console.log(this.slotsForQ);
-               this.showNoSlots = false;
+                // console.log(this.slotsForQ);
+                this.showNoSlots = false;
               }
             }
           }

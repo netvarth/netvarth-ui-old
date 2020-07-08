@@ -46,7 +46,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-    if (this.data.appt) {
+    if (this.data.appt || this.data.type === 'appt') {
       this.checkin_label = 'Appointment';
     } else {
       this.checkin_label = this.sharedfunctionObj.getTerminologyTerm('waitlist');
@@ -63,14 +63,17 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       }
     }
     this.cancel_reasons = reasons_list;
-    if (this.data.appt) {
-      this.rep_username = this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName);
+    if (this.data.isBatch) {
     } else {
-      this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
-    }
-    this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
-    if (this.data.waitlist.providerAccount) {
-      this.rep_provname = this.titleCaseWord(this.data.waitlist.providerAccount.businessName);
+      if (this.data.appt) {
+        this.rep_username = this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName);
+      } else {
+        this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
+      }
+      this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
+      if (this.data.waitlist.providerAccount) {
+        this.rep_provname = this.titleCaseWord(this.data.waitlist.providerAccount.businessName);
+      }
     }
     this.getDefaultMessages();
     this.createForm();
@@ -81,6 +84,9 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       message: [''],
       send_message: [{ value: false, disabled: true }]
     });
+    if (this.data.isBatch) {
+      this.amForm.patchValue({send_message: true});
+    }
     this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {
@@ -99,7 +105,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
     let post_data;
-    if (this.data.appt) {
+    if (this.data.appt || this.data.type === 'appt') {
       post_data = {
         'rejectReason': form_data.reason
       };
@@ -116,6 +122,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       post_data['communicationMessage'] = form_data.message;
     }
 
+    if (this.data.isBatch && !post_data['communicationMessage']) {
+      this.api_error = 'Message cannot be empty';
+      return;
+    }
+
     this.dialogRef.close(post_data);
   }
 
@@ -125,7 +136,10 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     this.cancel_reason = cancel_reason.title;
     this.cancel_reason_key = cancel_reason.reasonkey;
     this.amForm.controls['send_message'].enable();
-    this.def_msg = this.replacedMessage();
+    if (this.data.isBatch) {
+    } else {
+      this.def_msg = this.replacedMessage();
+    }
     // if (this.amForm.get('message')) {
     //   this.amForm.get('message').setValue(this.replacedMessage());
     // }
