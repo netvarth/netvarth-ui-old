@@ -92,7 +92,6 @@ export class GlobalSettingsComponent implements OnInit {
             this.onlyHeader = true;
             this.provider_services.getDisplayboardAppointment(this.headerResult).subscribe(data => {
                 this.displayboard_data = data;
-                console.log(this.displayboard_data);
                 if (this.displayboard_data['headerSettings']) {
                     this.headerSettings['title1'] = this.displayboard_data['headerSettings']['title1'];
                 }
@@ -173,7 +172,6 @@ export class GlobalSettingsComponent implements OnInit {
             post_data['metric'] = this.displayboard_data.metric;
             post_data['layout'] = this.displayboard_data.layout;
         }
-        console.log(JSON.stringify(post_data));
         const propertiesDet = {
             'caption': 'Logo',
             'width': this.width,
@@ -208,8 +206,6 @@ export class GlobalSettingsComponent implements OnInit {
                             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
                 }
-                console.log(propertiesDet);
-
             } else {
                 this.api_loading = false;
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });

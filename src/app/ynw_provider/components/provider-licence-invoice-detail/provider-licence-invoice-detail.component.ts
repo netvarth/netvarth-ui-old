@@ -31,7 +31,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   subsc_pack_cap = Messages.SUBSC_PACKAGE;
   id_cap = Messages.ID_CAP;
   ref_id_cap = Messages.REF_ID_CAP;
-  @ViewChild('div', {static: false}) div: ElementRef;
+  @ViewChild('div', { static: false }) div: ElementRef;
   api_error = null;
   api_success = null;
   invoice: any = null;
@@ -75,7 +75,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  
+
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
@@ -84,14 +84,11 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
   ) {
-    console.log(data)
     this.invoice = data.invoice || null;
     this.source = data.source || 'payment-history';
-    console.log(this.source)
     this.payMentShow = data.payMent;
     this.pay_data.amount = this.invoice.amount;
     this.pay_data.uuid = this.invoice.ynwUuid;
-   // console.log(this.pay_data.uuid);
   }
 
   ngOnInit() {

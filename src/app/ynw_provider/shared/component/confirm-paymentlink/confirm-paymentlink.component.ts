@@ -65,7 +65,6 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.uuid = this.data.uuid;
       this.mobilenumber =   this.data.mobilenumber;
       this.emailId = this.data.emailId;
-      console.log(this.emailId);
       this.source = this.data.source;
       this.calculationMode = this.data.calc_mode;
       this.showToken = this.data.showToken;
@@ -124,7 +123,6 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     }
     this.provider_services.Paymentlink(this.pay_link)
     .subscribe((pData: any) => {
-      console.log(pData);
       this.dialogRef.close();
       this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
       });

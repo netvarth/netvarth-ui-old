@@ -211,7 +211,6 @@ export class ConsumerDonationComponent implements OnInit {
         public winRef: WindowRefService ) {
         this.route.queryParams.subscribe(
             params => {
-                console.log(params);
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
@@ -444,7 +443,6 @@ export class ConsumerDonationComponent implements OnInit {
     }
     donate(paymentWay) {
         this.showEditView = false;
-        console.log(this.businessjson);
         const post_Data = {
             'consumer': {
                 'id': this.customer_data.id
@@ -464,7 +462,6 @@ export class ConsumerDonationComponent implements OnInit {
                 'firstName': this.donorName
             }
         };
-        console.log(this.api_error);
         if (this.api_error === null) {
             this.addDonationConsumer(post_Data, paymentWay);
         }
@@ -771,7 +768,6 @@ export class ConsumerDonationComponent implements OnInit {
         this.shared_services.getConsumerDonationServices(this.account_id)
             .subscribe(data => {
                 this.servicesjson = data;
-                console.log(this.servicesjson);
                 this.serviceslist = data;
                 this.sel_ser_det = [];
                 if (this.servicesjson.length > 0) {

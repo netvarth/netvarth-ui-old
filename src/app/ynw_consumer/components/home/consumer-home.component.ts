@@ -266,7 +266,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'payments']);
   }
   showcheckindetails(waitlist) {
-    console.log(waitlist);
     const waitlistJSON = JSON.stringify(waitlist);
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -276,7 +275,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
   }
   showApptdetails(apptlist) {
-    console.log(apptlist);
     const apptlistJSON = JSON.stringify(apptlist);
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -487,7 +485,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.appointments = data;
-          console.log(this.appointments);
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
@@ -496,7 +493,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (appointment.service.livetrack) {
               this.getCurrentLocation().then(
                 (lat_long: any) => {
-                  console.log(lat_long);
                   appointment['differceofDistance'] = Math.round(this.getDistanceFromLatLonInKm(lat_long.latitude, lat_long.longitude, appointment.location.lattitude, appointment.location.longitude));
                 }, (error) => {
                   this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
@@ -548,7 +544,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getApptAppxTime(appointment) {
-    console.log(appointment);
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
       appx_ret.caption = 'Appointment for'; // 'Check-In Time';
@@ -568,7 +563,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         appx_ret.timeslot = appointment.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + appointment.schedule.apptSchedule.timeSlots[0].eTime;
       }
     } else {
-      console.log('in else');
       let time = [];
       let time1 = [];
       let t2;
@@ -789,11 +783,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   doCancelWaitlist(waitlist, type) {
-    console.log(waitlist);
     // if (!waitlist.ynwUuid || !waitlist.providerAccount.id || !waitlist.uid) {
     //   return false;
     // }
-    console.log(type);
     this.shared_functions.doCancelWaitlist(waitlist, type, this)
       .then(
         data => {
@@ -892,7 +884,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   addNote(pass_ob) {
-    console.log(pass_ob);
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -1324,7 +1315,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = R * c; // Distance in km
-    console.log(d);
     return d;
   }
   deg2rad(deg) {
@@ -1413,8 +1403,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-                // console.log('pollingDateTime' + pollingDateTime);
-                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.providerAccount.id, _this.lat_lng)
@@ -1454,8 +1442,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 pollingDtTim = apptlist.date + ' ' + apptlist.jaldeeApptDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-                // console.log('pollingDateTime' + pollingDateTime);
-                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(apptlist.uid, apptlist.providerAccount.id, _this.lat_lng)
@@ -1514,7 +1500,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.appointments = data;
-          console.log("Appointments", this.appointments);
         },
         error => {
         }

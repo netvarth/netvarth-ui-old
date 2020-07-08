@@ -53,7 +53,6 @@ export class CheckYourStatusComponent implements OnInit {
         } else {
           this.placeText = 'Enter Id';
         }
-        // console.log(this.type);
       });
   }
   setSystemDate() {

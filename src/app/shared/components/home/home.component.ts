@@ -182,7 +182,6 @@ export class HomeComponent implements OnInit {
       const saveddate = new Date(bdate);
       if (bconfig.bdata) {
         const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-        console.log('domain:' + projectConstants.DOMAINLIST_APIFETCH_HOURS);
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;

@@ -117,13 +117,11 @@ export class ConsumerPaymentComponent implements OnInit {
         this.status = this.status.toLowerCase();*/
     }
     payuPayment() {
-        console.log('payupayment');
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
     paytmPayment() {
-        console.log('paytmPayment');
         let paymentWay;
         paymentWay = 'PPI';
         this.makeFailedPayment(paymentWay);
@@ -133,7 +131,6 @@ export class ConsumerPaymentComponent implements OnInit {
         this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
         this.shared_functions.setitemonLocalStorage('acid', this.accountId);
         this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
-        console.log(this.waitlistDetails);
         this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';

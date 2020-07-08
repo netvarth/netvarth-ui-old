@@ -66,7 +66,6 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
-                console.log(this.activeWt);
                 this.livetrack = this.activeWt.service.livetrack;
                 this.prepaymentAmount = this.activeWt.service.minPrePaymentAmount * this.activeWt.appmtFor.length;
                 this.waitlistDetails = {
@@ -114,13 +113,11 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.status = this.status.toLowerCase();*/
       }
     payuPayment() {
-        console.log('payupayment');
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
     }
     paytmPayment() {
-        console.log('paytmPayment');
         let paymentWay;
         paymentWay = 'PPI';
         this.makeFailedPayment(paymentWay);
@@ -130,7 +127,6 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
         this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
         this.shared_functions.setitemonLocalStorage('acid', this.accountId);
         this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
-        console.log(this.waitlistDetails);
         this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';

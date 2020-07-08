@@ -45,16 +45,14 @@ export class ConsumerLiveTrackComponent implements OnInit {
             params => {
                 this.accountId = params.account_id;
                 this.state = params.status;
-                console.log(this.state);
                 if (this.state === 'true') {
                     this.shareLoc = true;
                     this.firstTimeClick = false;
-                   // this.updateLiveTrackInfo();
-                }  else {
+                    // this.updateLiveTrackInfo();
+                } else {
                     this.shareLoc = false;
                     this.firstTimeClick = true;
                 }
-                console.log(this.shareLoc);
             });
     }
 
@@ -84,26 +82,24 @@ export class ConsumerLiveTrackComponent implements OnInit {
         this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
-                console.log(this.activeWt);
                 if (this.shareLoc) {
-                    console.log('fgjdjs');
-                if (this.activeWt.jaldeeWaitlistDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
-                    this.driving = true;
-                    this.walking = false;
-                    this.bicycling = false;
-                    this.travelMode = 'DRIVING';
-                } else if (this.activeWt.jaldeeWaitlistDistanceTime  && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
-                    this.walking = true;
-                    this.driving = false;
-                    this.bicycling = false;
-                    this.travelMode = 'WALKING';
-                } 
-                // else {
-                //     this.walking = false;
-                //     this.driving = false;
-                //     this.bicycling = true;
-                // }
-            }
+                    if (this.activeWt.jaldeeWaitlistDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING') {
+                        this.driving = true;
+                        this.walking = false;
+                        this.bicycling = false;
+                        this.travelMode = 'DRIVING';
+                    } else if (this.activeWt.jaldeeWaitlistDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
+                        this.walking = true;
+                        this.driving = false;
+                        this.bicycling = false;
+                        this.travelMode = 'WALKING';
+                    }
+                    // else {
+                    //     this.walking = false;
+                    //     this.driving = false;
+                    //     this.bicycling = true;
+                    // }
+                }
             },
             () => {
             }
@@ -121,7 +117,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
             this.walking = true;
             this.driving = false;
             this.bicycling = false;
-        } 
+        }
         // else {
         //     this.walking = false;
         //     this.driving = false;

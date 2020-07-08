@@ -18,14 +18,12 @@ export class JaldeeSseService {
             };
 
             eventSource.onerror = error => {
-                console.log(error);
                 this._zone.run(() => {
                     observer.error(error);
                 });
             };
 
             eventSource.onopen = data => {
-                console.log(data);
                 this._zone.run(() => {
                     observer.next(data);
                 });

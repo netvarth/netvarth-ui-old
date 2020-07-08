@@ -128,7 +128,6 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
     submit_data = this.checkEnumList(this.domain_questions, submit_data);
     submit_data = this.checkGridQuestion(this.domain_questions, submit_data);
-    console.log(submit_data);
     const post_data = this.setPostData(submit_data);
     this.provider_services.updateDomainSubDomainFields(post_data, this.bProfile['serviceSector']['domain'])
       .subscribe(
@@ -239,11 +238,9 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     if (this.que_type === 'domain_questions' && typeof this.bProfile['domainVirtualFields'] === 'object') {
 
       pre_value = JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields']));
-      console.log(pre_value);
     } else if (this.que_type === 'subdomain_questions' && typeof this.bProfile['subDomainVirtualFields'] === 'object') {
 
       pre_value = JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
-      console.log(pre_value);
     }
 
     for (const key of keys) {

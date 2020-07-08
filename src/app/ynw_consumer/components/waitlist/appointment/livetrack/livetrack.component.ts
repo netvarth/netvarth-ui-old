@@ -45,16 +45,14 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             params => {
                 this.accountId = params.account_id;
                 this.state = params.status;
-                console.log(this.state);
                 if (this.state === 'true') {
                     this.shareLoc = true;
                     this.firstTimeClick = false;
-                   // this.updateLiveTrackInfo();
-                }  else {
+                    // this.updateLiveTrackInfo();
+                } else {
                     this.shareLoc = false;
                     this.firstTimeClick = true;
                 }
-                console.log(this.shareLoc);
             });
     }
 
@@ -84,25 +82,24 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
-                console.log(this.activeWt);
                 if (this.shareLoc) {
-                if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING'){
-                    this.driving = true;
-                    this.walking = false;
-                    this.bicycling = false;
-                    this.travelMode = 'DRIVING';
-                } else if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
-                    this.walking = true;
-                    this.driving = false;
-                    this.bicycling = false;
-                    this.travelMode = 'WALKING';
-                } 
-                // else {
-                //     this.walking = false;
-                //     this.driving = false;
-                //     this.bicycling = true;
-                // }
-            }
+                    if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'DRIVING') {
+                        this.driving = true;
+                        this.walking = false;
+                        this.bicycling = false;
+                        this.travelMode = 'DRIVING';
+                    } else if (this.activeWt.jaldeeApptDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime && this.activeWt.jaldeeApptDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode === 'WALKING') {
+                        this.walking = true;
+                        this.driving = false;
+                        this.bicycling = false;
+                        this.travelMode = 'WALKING';
+                    }
+                    // else {
+                    //     this.walking = false;
+                    //     this.driving = false;
+                    //     this.bicycling = true;
+                    // }
+                }
             },
             () => {
             }
@@ -120,7 +117,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             this.walking = true;
             this.driving = false;
             this.bicycling = false;
-        } 
+        }
         // else {
         //     this.walking = false;
         //     this.driving = false;
@@ -147,7 +144,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 'travelMode': _this.travelMode
             };
             _this.shared_services.updateAppointmentTravelMode(_this.uuid, _this.accountId, passdata)
-                .subscribe( 
+                .subscribe(
                     data => {
                         resolve(data);
                     },

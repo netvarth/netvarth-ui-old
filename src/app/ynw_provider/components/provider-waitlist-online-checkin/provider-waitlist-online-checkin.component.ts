@@ -120,7 +120,6 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
         });
   }
   setValue(value) {
-    console.log(value);
     const calcMode = value['calculationMode'] || '';
     if (value['showTokenId']) {
       this.tokenManager = true;
@@ -216,7 +215,6 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_manager = data;
-          console.log(data);
           this.reset_waitlist_manager = data;
           this.setValue(this.waitlist_manager);
           this.provider_datastorage.set('waitlistManage', data);

@@ -996,7 +996,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
-    // console.log(this.qrCodeParent.nativeElement.getElementsByTagName('img')[0]);
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
     }, 50);

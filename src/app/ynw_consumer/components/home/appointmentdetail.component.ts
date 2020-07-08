@@ -81,10 +81,8 @@ export class ApptDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.waitlistdata = qParams;
-                console.log(this.waitlistdata);
             });
         this.apptlist = this.waitlistdata.apptlist || null;
-        console.log(this.apptlist);
         const apptlistjson = JSON.parse(this.apptlist);
         this.BusinessName = apptlistjson.providerAccount.businessName;
         this.providerId = apptlistjson.providerAccount.id;
@@ -114,7 +112,6 @@ export class ApptDetailComponent implements OnInit {
         this.locationobj.back();
     }
     addCommonMessage(waitlistdata) {
-        console.log(waitlistdata);
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
         pass_ob['uuid'] = this.ynwUuid;
@@ -125,7 +122,6 @@ export class ApptDetailComponent implements OnInit {
         this.addNote(pass_ob);
     }
     addNote(pass_ob) {
-        console.log(pass_ob);
         this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],

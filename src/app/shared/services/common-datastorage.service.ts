@@ -18,7 +18,6 @@ export class CommonDataStorageService {
 
   set(type, data) {
     this.storage[type] = data;
-    console.log(this.storage[type]);
   }
 
   clear() {

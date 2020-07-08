@@ -81,10 +81,8 @@ export class CheckinDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.waitlistdata = qParams;
-                console.log(this.waitlistdata);
             });
         this.waitlist = this.waitlistdata.waitlist || null;
-        console.log(this.waitlist);
         const waitlistjson = JSON.parse(this.waitlist);
         this.BusinessName = waitlistjson.providerAccount.businessName;
         this.ProviderId = waitlistjson.providerAccount.id;
@@ -114,7 +112,6 @@ export class CheckinDetailComponent implements OnInit {
         this.locationobj.back();
     }
     addCommonMessage(waitlistdata) {
-        console.log(waitlistdata);
         const pass_ob = {};
         pass_ob['source'] = 'consumer-waitlist';
         pass_ob['uuid'] = this.ynwUuid;
@@ -124,7 +121,6 @@ export class CheckinDetailComponent implements OnInit {
         this.addNote(pass_ob);
     }
     addNote(pass_ob) {
-        console.log(pass_ob);
         this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],

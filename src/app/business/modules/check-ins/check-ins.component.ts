@@ -314,10 +314,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (header) {
       if (window.pageYOffset >= (this.topHeight + 50)) {
         header.classList.add('sticky');
-        console.log('sticky');
       } else {
         header.classList.remove('sticky');
-        console.log('non sticky');
       }
 
     }
@@ -699,9 +697,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
       this.activeQs = groupbyQs['ENABLED'];
     }
-    console.log(this.activeQs);
     const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
-    console.log(activeQ);
     if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
       this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
     }
@@ -978,7 +974,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-              console.log(this.check_in_filtered_list);
             },
             () => {
               // this.load_waitlist = 1;
@@ -1493,7 +1488,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.labelSelection();
-    console.log(this.filter);
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||

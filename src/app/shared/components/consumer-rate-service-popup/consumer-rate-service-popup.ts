@@ -36,9 +36,9 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   ) {
     this.waitlist = data.detail;
     this.type = data.isFrom;
-    if(this.type == 'checkin'){
+    if (this.type === 'checkin') {
       this.uuid = this.waitlist.ynwUuid;
-    }else if(this.type == 'appointment'){
+    } else if (this.type === 'appointment') {
       this.uuid = this.waitlist.uid;
     }
   }
@@ -53,10 +53,9 @@ export class ConsumerRateServicePopupComponent implements OnInit {
       'uId-eq': this.uuid
     };
 
-    this.shared_services.getConsumerRateService(params,this.type)
+    this.shared_services.getConsumerRateService(params, this.type)
       .subscribe(
         data => {
-          console.log(data);
           if (data[0]) {
             if (data[0]['feedback'].length > 0) {
               this.message = data[0]['feedback'][(data[0]['feedback'].length - 1)]['comments'];
@@ -96,7 +95,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   addRateService(params, post_data) {
 
-    this.shared_services.postConsumerRateService(params, post_data,this.type)
+    this.shared_services.postConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
           this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
@@ -111,7 +110,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
 
   updateRateService(params, post_data) {
 
-    this.shared_services.updateConsumerRateService(params, post_data,this.type)
+    this.shared_services.updateConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
           this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
@@ -133,7 +132,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
-   checkDisablebutton() {
+  checkDisablebutton() {
     if (this.rate_value === 0) {
       return true;
     } else {

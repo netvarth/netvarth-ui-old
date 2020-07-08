@@ -46,7 +46,6 @@ export class AddProviderUserBprofileSpokenLanguagesComponent implements OnInit {
     this.provider_services.getUser(this.data.userId)
       .subscribe(data => {
         this.user_arr = data;
-        console.log(this.user_arr.subdomain);
       });
   }
   langSel(sel) {

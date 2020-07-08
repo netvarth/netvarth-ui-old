@@ -18,7 +18,6 @@ export class CheckInHistoryServices {
   }
 
   getWaitlistBill(params, uuid) {
-    console.log(uuid);
     const path = 'consumer/bill/' + uuid;
     return this.servicemeta.httpGet(path, null, params);
   }

@@ -110,19 +110,15 @@ export class DonationsComponent implements OnInit {
     getServiceList() {
         const filter1 = { 'serviceType-eq': 'donationService' };
         this.provider_services.getServicesList(filter1)
-          .subscribe(
-            data => {
-              this.donationServices = data;
-              console.log(this.donationServices);
-            },
-            () => { }
-          );
-      }
+            .subscribe(
+                data => {
+                    this.donationServices = data;
+                },
+                () => { }
+            );
+    }
     //   setFilterData(type, status) {
     //     let passingStatus;
-    //     console.log(this.selected);
-    //     console.log(type);
-    //     console.log(status);
     //     if (status && this.selected === 0) {
     //       this.selected = 1;
     //       this.donationServices.push(status);
@@ -132,9 +128,7 @@ export class DonationsComponent implements OnInit {
     //     } else if (status && this.selected === 1) {
     //       if (this.donationServices.indexOf(status) !== -1) {
     //         const indexofStatus = this.donationServices.indexOf(status);
-    //         console.log(indexofStatus);
     //         if (indexofStatus >= 0) {
-    //          console.log( this.donationServices.splice(indexofStatus, 1));
     //         }
     //         passingStatus = this.donationServices.toString();
     //         this.filter[type] = passingStatus;
@@ -142,33 +136,32 @@ export class DonationsComponent implements OnInit {
     //         this.resetFilter();
     //         }
     //         this.doSearch();
-           
+
     //       }
     //        else {
     //         this.donationServices.push(status);
     //         passingStatus = this.donationServices.toString();
     //         this.filter[type] = passingStatus;
-    //         console.log(this.filter[type]);
     //         this.doSearch();
     //       }
-    
+
     //     }
     // }
     setFilterDataCheckbox(type, value, event) {
         this.filter[type] = value;
         const indx = this.services.indexOf(value);
         if (indx === -1) {
-          this.services.push(value);
+            this.services.push(value);
         } else {
-          this.services.splice(indx, 1);
+            this.services.splice(indx, 1);
         }
         this.doSearch();
     }
     getDonationsList(from_oninit = false, loc_id?) {
         let filter = this.setFilterForApi();
-        filter ['donationStatus-eq'] = 'SUCCESS';
+        filter['donationStatus-eq'] = 'SUCCESS';
         if (loc_id) {
-            filter ['location-eq'] = loc_id;
+            filter['location-eq'] = loc_id;
             this.show_loc = false;
         }
         this.getDonationsCount(filter)
@@ -230,7 +223,7 @@ export class DonationsComponent implements OnInit {
     }
     doSearch() {
         this.getDonationsList();
-        if (this.filter.first_name || this.filter.date || this.filter.service ) {
+        if (this.filter.first_name || this.filter.date || this.filter.service) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -266,10 +259,10 @@ export class DonationsComponent implements OnInit {
         if (this.filter.date != null) {
             api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
         }
-        if (this.services.length > 0 ) {
+        if (this.services.length > 0) {
             api_filter['service-eq'] = this.services.toString();
-          }
-        
+        }
+
         return api_filter;
     }
     focusInput(ev, input) {
@@ -308,12 +301,12 @@ export class DonationsComponent implements OnInit {
         }
     }
     getLocationList() {
-          this.provider_services.getProviderLocations()
+        this.provider_services.getProviderLocations()
             .subscribe((data: any) => {
                 this.locations = data;
             }
             );
-        }
+    }
     showFilterLocation() {
         this.filter_sidebar = false;
         this.show_loc = !this.show_loc;

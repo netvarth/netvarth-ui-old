@@ -160,7 +160,6 @@ export class DisplayboardsComponent implements OnInit {
         }
         const qBoard = {};
         this.sel_QBoard = sel_QBoard;
-        console.log(this.sel_QBoard);
         qBoard['id'] = this.sel_QBoard.id;
         const qboard = this.sel_QBoard;
         qBoard['displayName'] = qboard.displayName;
@@ -188,18 +187,15 @@ export class DisplayboardsComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
 
             this.provider_services.getDisplayboardAppointment(layout.id).subscribe((data: any) => {
-                console.log(data);
                 this.displayName = data.displayName;
                 this.serviceRoom = data.serviceRoom;
                 this.activeGroup = data;
                 this.qBoardsSelected = [];
-                console.log(this.qBoardsActive);
                 this.qBoardsNotSelected = this.qBoardsActive.slice();
                 this.hideAddToGroup = false;
                 if (data.containerData.length === this.qBoardsActive.length) {
                     this.hideAddToGroup = true;
                 }
-                console.log(this.qBoardsNotSelected);
                 data.containerData.forEach(sb => {
                     const qBoard = {};
                     qBoard['id'] = sb.sbId;
@@ -209,7 +205,6 @@ export class DisplayboardsComponent implements OnInit {
                     this.qBoardsSelected.push(qBoard);
                     this.qBoardsNotSelected = this.removeByAttr(this.qBoardsNotSelected, 'id', sb.sbId);
                 });
-                console.log(this.qBoardsNotSelected);
             });
 
         } else {
@@ -298,7 +293,6 @@ export class DisplayboardsComponent implements OnInit {
             this.qBoardsSelectedIndex[index] = true;
             this.qBoardSelectCount++;
         }
-        console.log(this.qBoardsSelectedIndex);
     }
     onCancel() {
         this.breadcrumbs = this.breadcrumbs_init;
@@ -328,7 +322,6 @@ export class DisplayboardsComponent implements OnInit {
                 'containerData': sbDetails,
                 'isContainer': true
             };
-            console.log(post_data);
             this.provider_services.createDisplayboardAppointment(post_data).subscribe(data => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.onCancel();

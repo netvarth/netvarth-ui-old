@@ -125,12 +125,10 @@ export class PaymentLinkComponent implements OnInit {
         if (qparams.id !== 'new') {
           this.genid = qparams.id;
         }
-        console.log(this.genid);
       });
   }
   ngOnInit() {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
-    console.log(this.isCheckin);
     const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
@@ -141,7 +139,6 @@ export class PaymentLinkComponent implements OnInit {
     this.provider_services.Paymentlinkcheck(this.genid)
       .subscribe(
         data => {
-          console.log(data);
           this.bill_data = data;
           if (this.bill_data = data) {
             this.businessname = this.bill_data.accountProfile.businessName;
@@ -179,7 +176,6 @@ export class PaymentLinkComponent implements OnInit {
       const billdatearr = datearr[0].split('-');
       this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
-      console.log(this.billtime);
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
@@ -253,7 +249,6 @@ export class PaymentLinkComponent implements OnInit {
     this.razorModel.description = data.description;
     this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
       (response: any) => {
-        console.log(response);
         if (response !== 'failure') {
           this.paidStatus = 'true';
           this.razorpay_order_id = response.razorpay_order_id;

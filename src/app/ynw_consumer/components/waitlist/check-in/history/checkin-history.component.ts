@@ -137,7 +137,6 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   getWaitlistBill(waitlist) {
-    console.log(waitlist);
     const params = {
       account: waitlist.providerAccount.id
     };

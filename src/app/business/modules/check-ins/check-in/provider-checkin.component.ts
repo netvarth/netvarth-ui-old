@@ -381,7 +381,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.sel_loc = loc.id;
 
         this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-        console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
@@ -523,7 +522,6 @@ export class ProviderCheckinComponent implements OnInit {
             for (const mem of data) {
                 if (mem.userProfile.id !== self_obj.userProfile.id) {
                     this.familymembers.push(mem);
-                    console.log(this.familymembers);
                 }
             }
             this.api_loading1 = false;
@@ -607,7 +605,6 @@ export class ProviderCheckinComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -707,7 +704,6 @@ export class ProviderCheckinComponent implements OnInit {
     }
 
     handleQueueSelection(queue, index) {
-        console.log(index);
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
@@ -872,14 +868,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_loading = true;
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
-                console.log(data);
                 this.api_loading = false;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
-                    console.log(this.trackUuid);
                 });
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
@@ -1206,7 +1200,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_error = '';
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
-        console.log(this.servicesjson);
         if (this.filterDepart) {
             const filter = {
                 'departmentId-eq': obj
@@ -1228,7 +1221,6 @@ export class ProviderCheckinComponent implements OnInit {
                             }
                         }
                     }
-                    console.log(this.users);
                     if (found) {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
@@ -1286,7 +1278,6 @@ export class ProviderCheckinComponent implements OnInit {
         //         this.servicesjson = newserviceArray;
         //     }
         // }
-        // console.log(this.servicesjson);
         // if (this.servicesjson.length > 0) {
         //     this.sel_ser = this.servicesjson[0].id;
         //     this.setServiceDetails(this.sel_ser);
@@ -1298,7 +1289,6 @@ export class ProviderCheckinComponent implements OnInit {
     handleUserSelection(user) {
         this.selectedUser = user;
         this.queuejson = [];
-        console.log(user);
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -1314,7 +1304,6 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        console.log(newserviceArray);
         this.servicesjson = newserviceArray;
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;

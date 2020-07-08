@@ -34,18 +34,14 @@ export class RazorpayService {
 
   changePaidStatus(value: string) {
     this.paidStatus.next(value);
-    console.log(value);
   }
 
   payBillWithoutCredentials(razorModel) {
     const self = this;
-    console.log('here');
     return new Promise(function (resolve) {
       const options = razorModel;
       options.handler = ((response, error) => {
         options.response = response;
-        console.log(response);
-        console.log(options.response);
         const dataToSend: FormData = new FormData();
         dataToSend.append('razorpay_payment_id', response.razorpay_payment_id);
         dataToSend.append('razorpay_order_id', response.razorpay_order_id);
@@ -76,8 +72,6 @@ export class RazorpayService {
     const options = razorModel;
     options.handler = ((response, error) => {
       options.response = response;
-      console.log(response);
-      console.log(options.response);
       const dataToSend: FormData = new FormData();
       dataToSend.append('razorpay_payment_id', response.razorpay_payment_id);
       dataToSend.append('razorpay_order_id', response.razorpay_order_id);
@@ -92,8 +86,6 @@ export class RazorpayService {
           uuid: uuid
         }
       };
-      console.log(usertype);
-      console.log(checkin_type);
       if (usertype === 'consumer') {
         this.sharedServices.consumerPaymentStatus(dataToSend)
           .subscribe(
@@ -110,12 +102,9 @@ export class RazorpayService {
                   this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                   this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));
                 } else if (checkin_type === 'payment_link') {
-                  console.log(checkin_type);
                 this.ngZone.run(() => this.router.navigate([ 'pay' , livetrack] , navigationExtras));
                 } else if (checkin_type === 'checkin_prepayment') {
-                  console.log(livetrack);
                   if (livetrack === true) {
-                    console.log(uuid);
                     this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                     this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'track', uuid], navigationExtras));
                   } else {
@@ -123,9 +112,7 @@ export class RazorpayService {
                     this.ngZone.run(() => this.router.navigate(['consumer'], { queryParams: { 'source': 'checkin_prepayment' } }));
                   }
                 } else if (checkin_type === 'appt_prepayment') {
-                  console.log(livetrack);
                   if (livetrack === true) {
-                    console.log(uuid);
                     this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                     this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'track', uuid], navigationExtras));
                   } else {
@@ -150,7 +137,6 @@ export class RazorpayService {
       // });
       // options.modal.ondismiss = (() => {
       //   // handle the case when user closes the form while transaction is in progress
-      //   console.log('Transaction cancelled.');
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();

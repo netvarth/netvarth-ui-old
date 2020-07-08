@@ -15,7 +15,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 })
 export class PaymentComponent implements OnInit {
   payment_popup = null;
-  breadcrumbs;
+  breadcrumbs = [];
   // breadcrumbs = [
   //   {
   //     title: 'License & Invoice',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute ,NavigationExtras} from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
@@ -156,16 +156,15 @@ export class ViewPrevStatementComponent implements OnInit {
                 });
     }
     previousRefstmt(mergeinvoicerefno) {
-        console.log(mergeinvoicerefno);
         this.showPreviousDue = false;
         this.credt_debtJson = null;
         this.credt_debtDetls = '';
         this.latestInvoiceDiscount = [];
         const navigationExtras: NavigationExtras = {
-          queryParams: {
-            InvoiceRefNo: mergeinvoicerefno
-          }
+            queryParams: {
+                InvoiceRefNo: mergeinvoicerefno
+            }
         };
         this.router.navigate(['provider', 'license', 'viewstatement'], navigationExtras);
-      }
+    }
 }

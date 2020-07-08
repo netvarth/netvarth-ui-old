@@ -81,7 +81,6 @@ export class PhomeComponent implements OnInit {
     private activateRoute: ActivatedRoute,
   ) {
     this.activateRoute.queryParams.subscribe(data => {
-      console.log(data);
       this.qParams = data;
       this.handleScroll(this.qParams.type);
     });

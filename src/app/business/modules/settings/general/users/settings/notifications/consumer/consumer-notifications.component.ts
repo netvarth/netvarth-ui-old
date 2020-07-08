@@ -83,7 +83,6 @@ export class ConsumerNotificationUserComponent implements OnInit {
     this.domain = user.sector;
     this.activatedRoot.params.subscribe(params => {
       this.userId = + params.id;
-      console.log(this.userId);
       this.getUser();
     });
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };

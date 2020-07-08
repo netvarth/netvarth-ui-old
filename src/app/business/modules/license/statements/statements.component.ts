@@ -208,13 +208,11 @@ export class StatementsComponent implements OnInit {
       .subscribe(
         data => {
           this.invoice = data;
-          console.log(this.invoice);
           if (this.invoice.creditDebitJson) {
             this.credt_debtJson = this.invoice.creditDebitJson;
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
           }
           if (this.invoice.discount) {
-            console.log(this.invoice.discount);
             this.licenseDiscounts = this.invoice.discount;
             this.licenseDiscounts.discount.forEach(discountObj => {
               this.latestInvoiceDiscount.push(discountObj);
@@ -268,10 +266,8 @@ export class StatementsComponent implements OnInit {
     }
   }
   previousRefstmt(mergeinvoicerefno) {
-    console.log(mergeinvoicerefno);
     let stmt = [];
     stmt = this.invoice.mergedStatements;
-    console.log(stmt);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         InvoiceRefNo: mergeinvoicerefno

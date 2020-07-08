@@ -58,7 +58,6 @@ export class CallingModesComponent implements OnInit {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
             this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;

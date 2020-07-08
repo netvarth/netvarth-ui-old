@@ -49,7 +49,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location
-  )  {}
+  ) { }
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();
@@ -86,8 +86,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   goback() {
     this.locationobj.back();
   }
-   getInvoice(invoice){
-    // console.log(invoice);
+  getInvoice(invoice) {
     // const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
     //   width: '50%',
     //   data: {
@@ -98,22 +97,23 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     //   disableClose: true
     // });
     // dialogRef.afterClosed().subscribe(() => {
-    // });    
- 
+    // });
+
     const invoiceJson = JSON.stringify(invoice);
     const navigationExtras: NavigationExtras = {
-      queryParams: { invoice: invoiceJson,
-                     source: 'payment-history'},
-                     skipLocationChange: true
-     
-        };
-          //  console.log(navigationExtras);
-       this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
-      
+      queryParams: {
+        invoice: invoiceJson,
+        source: 'payment-history'
+      },
+      skipLocationChange: true
+
+    };
+    this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
 
 
 
-       
+
+
   }
 
   handle_pageclick(pg) {
@@ -130,5 +130,5 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   }
   gotoStatements() {
     this.router.navigate(['provider', 'license', 'Statements']);
-}
+  }
 }

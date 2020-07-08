@@ -227,7 +227,6 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
 
 
   rateService(waitlist) {
-    console.log(waitlist);
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -253,7 +252,6 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
     }
   }
   providerDetail(provider) {
-    console.log(provider);
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 

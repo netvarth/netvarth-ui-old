@@ -306,7 +306,6 @@ export class AppointmentComponent implements OnInit {
         this.selectedMode = type;
     }
     findCustomer(form_data, event) {
-        console.log(event.key);
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
@@ -316,7 +315,6 @@ export class AppointmentComponent implements OnInit {
         let mode = 'id';
         this.form_data = null;
         this.create_new = false;
-        console.log(form_data);
         let post_data = {};
         const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const isEmail = emailPattern.test(form_data.search_input);
@@ -353,7 +351,6 @@ export class AppointmentComponent implements OnInit {
                 };
                 break;
         }
-        console.log(post_data);
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
@@ -362,7 +359,6 @@ export class AppointmentComponent implements OnInit {
                         this.create_new = true;
                     } else {
                         this.customer_data = data[0];
-                        console.log(this.customer_data);
                         this.consumerPhoneNo = this.customer_data.phoneNo;
                         this.getFamilyMembers();
                         this.initAppointment();
@@ -393,12 +389,10 @@ export class AppointmentComponent implements OnInit {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
 
         const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
-        console.log(loc);
         this.sel_loc = loc.id;
         if (this.sel_checkindate === undefined) {
             this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
         }
-        console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
@@ -540,7 +534,6 @@ export class AppointmentComponent implements OnInit {
             for (const mem of data) {
                 if (mem.userProfile.id !== self_obj.userProfile.id) {
                     this.familymembers.push(mem);
-                    console.log(this.familymembers);
                 }
             }
             this.api_loading1 = false;
@@ -627,7 +620,6 @@ export class AppointmentComponent implements OnInit {
             this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -704,7 +696,6 @@ export class AppointmentComponent implements OnInit {
     }
 
     handleQueueSelection(queue, index) {
-        console.log(index);
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         if (queue.timeDuration && queue.timeDuration !== 0) {
@@ -777,7 +768,6 @@ export class AppointmentComponent implements OnInit {
         }
     }
     saveCheckin() {
-        console.log(this.waitlist_for);
         this.is_wtsap_empty = false;
         if (this.waitlist_for.length !== 0) {
             for (const list of this.waitlist_for) {
@@ -870,7 +860,6 @@ export class AppointmentComponent implements OnInit {
         //  this.shared_services.addProviderCheckin(post_Data)
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
-                console.log(data);
                 this.api_loading = false;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
@@ -884,7 +873,6 @@ export class AppointmentComponent implements OnInit {
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
-                    console.log(this.trackUuid);
                 });
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
@@ -984,7 +972,6 @@ export class AppointmentComponent implements OnInit {
         }
     }
     isChecked(id) {
-        console.log(id);
         let retval = false;
         if (this.waitlist_for.length > 0) {
             for (let i = 0; i < this.waitlist_for.length; i++) {
@@ -1211,7 +1198,6 @@ export class AppointmentComponent implements OnInit {
         this.api_error = '';
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
-        console.log(this.servicesjson);
         if (this.filterDepart) {
             const filter = {
                 'departmentId-eq': obj
@@ -1233,7 +1219,6 @@ export class AppointmentComponent implements OnInit {
                             }
                         }
                     }
-                    console.log(this.users);
                     if (found) {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
@@ -1289,7 +1274,6 @@ export class AppointmentComponent implements OnInit {
         //         this.servicesjson = newserviceArray;
         //     }
         // }
-        // console.log(this.servicesjson);
         // if (this.servicesjson.length > 0) {
         //     this.sel_ser = this.servicesjson[0].id;
         //     this.setServiceDetails(this.sel_ser);
@@ -1300,7 +1284,6 @@ export class AppointmentComponent implements OnInit {
     }
     handleUserSelection(user) {
         this.queuejson = [];
-        console.log(user);
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -1316,7 +1299,6 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         }
-        console.log(newserviceArray);
         this.servicesjson = newserviceArray;
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;
@@ -1415,14 +1397,11 @@ export class AppointmentComponent implements OnInit {
                 (data) => {
                     this.slots = data;
                     this.availableSlots = this.slots.availableSlots;
-                    console.log(this.availableSlots);
                     for (const freslot of this.availableSlots) {
                         if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
                             this.freeSlots.push(freslot);
                         }
                     }
-                    console.log(this.freeSlots);
-                    console.log(this.comingSchduleId);
                     if (this.freeSlots.length > 0) {
                         // this.showSubq = 0;
                         this.showApptTime = true;
@@ -1432,24 +1411,17 @@ export class AppointmentComponent implements OnInit {
                                 list['apptTime'] = this.apptTime;
                             }
                         } else {
-                            console.log(this.queuejson[this.sel_queue_indx].id);
-
                             if (this.queuejson[this.sel_queue_indx].id === this.comingSchduleId) {
-                                console.log('scheduleid');
                                 this.apptTime = this.slotTime;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
                                 }
                             } else {
-                                console.log('in else');
                                 this.apptTime = this.freeSlots[0].time;
                                 for (const list of this.waitlist_for) {
                                     list['apptTime'] = this.apptTime;
                                 }
                             }
-
-
-                            console.log(this.apptTime);
                             this.comingSchduleId = '';
                         }
                     } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
@@ -1521,11 +1493,9 @@ export class AppointmentComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
-        console.log(this.waitlist_for);
         for (const list of this.waitlist_for) {
             list['apptTime'] = this.apptTime;
         }
-        //  console.log(this.waitlist_for);
         this.showEditView = false;
     }
     handleSideScreen(action) {

@@ -127,7 +127,7 @@ export class CustomerSearchComponent implements OnInit {
     nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
     checkinCaption = Messages.CHECKIN_TIME_CAPTION;
     checkinsCaption = Messages.CHECKINS_TIME_CAPTION;
-   
+
     mobile_cap = Messages.MOBILE_CAP;
     f_name_cap = Messages.F_NAME_CAP;
     l_name_cap = Messages.L_NAME_CAP;
@@ -139,7 +139,7 @@ export class CustomerSearchComponent implements OnInit {
     adrress_cap = Messages.ADDRESS_CAP;
     tday = new Date();
 
-   
+
     save_btn = Messages.SAVE_BTN;
     mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
     checkinLabel;
@@ -224,7 +224,7 @@ export class CustomerSearchComponent implements OnInit {
     appointmentDate;
     checkinType;
     isFrom;
-    
+
 
 
 
@@ -238,20 +238,19 @@ export class CustomerSearchComponent implements OnInit {
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
-            if(qparams.isFrom){
+            if (qparams.isFrom) {
                 this.isFrom = qparams.isFrom;
-                console.log("isForm", this.isFrom)
             }
-            if(qparams.scheduleId){
+            if (qparams.scheduleId) {
                 this.appointmentScheduleId = qparams.scheduleId;
             }
-            if(qparams.timeslot){
+            if (qparams.timeslot) {
                 this.appointmentSlot = qparams.timeslot;
             }
-            if(qparams.checkinType){
+            if (qparams.checkinType) {
                 this.checkinType = qparams.checkinType;
             }
-            if(qparams.date){
+            if (qparams.date) {
                 this.appointmentDate = qparams.date;
             }
             this.customerId = qparams.id;
@@ -419,7 +418,7 @@ export class CustomerSearchComponent implements OnInit {
                 mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-                customer_id: ['',Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+                customer_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
                 last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
                 email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
                 dob: [''],
@@ -442,7 +441,6 @@ export class CustomerSearchComponent implements OnInit {
         }
     }
     updateForm() {
-        console.log("Jaldeeid",this.customer[0].jaldeeId)
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -456,67 +454,66 @@ export class CustomerSearchComponent implements OnInit {
     }
     onSubmit(form_data) {
         this.disableButton = true;
-        console.log(this.action)
         // if (this.action === 'add') {
-            const post_data = {
-                //   'userProfile': {
-                'firstName': form_data.first_name,
-                'lastName': form_data.last_name,
-                'dob': form_data.dob,
-                'gender': form_data.gender,
-                'phoneNo': form_data.mobile_number,
-                'address': form_data.address,
-                //   }
-            };
-            if (form_data.mobile_number) {
-                post_data['countryCode'] = '+91';
-            }
-            if (form_data.email_id && form_data.email_id !== '') {
-                post_data['email'] = form_data.email_id;
-            }
-            if (form_data.customer_id) {
-                post_data['jaldeeId'] = form_data.customer_id;
-            }
-            this.provider_services.createProviderCustomer(post_data)
-                .subscribe(
-                    data => {
-                        this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.sharedFunctionobj.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
-                        const qParams = {};
-                        qParams['pid'] = data;
-                        if (this.source === 'checkin') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type,
-                                    haveMobile: this.haveMobile,
-                                    id: data
-                                }
-                            };
-                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-                        } else if (this.source === 'appointment') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type,
-                                    haveMobile: this.haveMobile,
-                                    id: data
-                                }
-                            };
-                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-                        } else {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    phoneNo: this.phoneNo
-                                }
-                            };
-                            this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
-                        }
-                    },
-                    error => {
-                        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.disableButton = false;
-                    });
+        const post_data = {
+            //   'userProfile': {
+            'firstName': form_data.first_name,
+            'lastName': form_data.last_name,
+            'dob': form_data.dob,
+            'gender': form_data.gender,
+            'phoneNo': form_data.mobile_number,
+            'address': form_data.address,
+            //   }
+        };
+        if (form_data.mobile_number) {
+            post_data['countryCode'] = '+91';
+        }
+        if (form_data.email_id && form_data.email_id !== '') {
+            post_data['email'] = form_data.email_id;
+        }
+        if (form_data.customer_id) {
+            post_data['jaldeeId'] = form_data.customer_id;
+        }
+        this.provider_services.createProviderCustomer(post_data)
+            .subscribe(
+                data => {
+                    this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                    this.sharedFunctionobj.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                    const qParams = {};
+                    qParams['pid'] = data;
+                    if (this.source === 'checkin') {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                ph: form_data.mobile_number,
+                                checkin_type: this.checkin_type,
+                                haveMobile: this.haveMobile,
+                                id: data
+                            }
+                        };
+                        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                    } else if (this.source === 'appointment') {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                ph: form_data.mobile_number,
+                                checkin_type: this.checkin_type,
+                                haveMobile: this.haveMobile,
+                                id: data
+                            }
+                        };
+                        this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                    } else {
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                phoneNo: this.phoneNo
+                            }
+                        };
+                        this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
+                    }
+                },
+                error => {
+                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.disableButton = false;
+                });
         // } else if (this.action === 'edit') {
         //     const post_data = {
         //         //   'userProfile': {
@@ -590,30 +587,30 @@ export class CustomerSearchComponent implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: { ph: this.customerPhone }
         };
-        
-            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-        }
+
+        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    }
     appointmentClicked() {
-        if (this.appointmentDate){
+        if (this.appointmentDate) {
             const navigationExtras: NavigationExtras = {
-                queryParams: { 
-                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate 
+                queryParams: {
+                    ph: this.customerPhone, timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType, date: this.appointmentDate
                 }
             };
             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-        }else {
+        } else {
             const navigationExtras: NavigationExtras = {
-                queryParams: { 
-                    ph: this.customerPhone,timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType 
+                queryParams: {
+                    ph: this.customerPhone, timeslot: this.appointmentSlot, scheduleId: this.appointmentScheduleId, checkinType: this.checkinType
                 }
             };
             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
         }
-        
-        
+
+
 
     }
-    
+
     selectMode(type) {
         this.selectedMode = type;
     }
@@ -680,17 +677,16 @@ export class CustomerSearchComponent implements OnInit {
                     this.loading = false;
                     if (data.length === 0) {
                         this.form_data = data;
-                        if(mode == 'phone'){
+                        if (mode === 'phone') {
                             this.amForm.get('mobile_number').setValue(form_data.search_input);
                         }
-                        if(mode == 'email'){
+                        if (mode === 'email') {
                             this.amForm.get('email_id').setValue(form_data.search_input);
                         }
-                        if(mode == 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL')
-                        {
+                        if (mode === 'id' && this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
                             this.amForm.get('customer_id').setValue(form_data.search_input);
                         }
-                       
+
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {

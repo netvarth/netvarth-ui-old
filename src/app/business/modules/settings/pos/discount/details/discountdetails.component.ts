@@ -69,7 +69,6 @@ export class DiscountDetailsComponent implements OnInit {
       (params) => {
         this.discount_id = params.id;
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        console.log(this.discount_id);
         if (this.discount_id) {
           if (this.discount_id === 'add') {
             const breadcrumbs = [];
@@ -176,7 +175,6 @@ export class DiscountDetailsComponent implements OnInit {
         if (form_data.discValue < 0 || form_data.discValue > 100) {
           // this.api_error = 'Discount percentage should be between 0 and 100';
           this.api_error = this.sharedfunctionObj.openSnackBar('Discount percentage should be between 0 and 100', { 'panelClass': 'snackbarerror' });
-          console.log(this.api_error);
           return;
         }
       }

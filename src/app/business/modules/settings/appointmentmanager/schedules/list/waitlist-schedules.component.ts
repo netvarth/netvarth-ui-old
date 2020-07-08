@@ -304,14 +304,12 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             this.provider_services.getProviderSchedules(filter)
                 .subscribe(
                     (data) => {
-                        console.log(data);
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
                         this.disabledQs = [];
                         const activeQs = [];
                         allQs = data;
-                        console.log(allQs);
                         const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
                         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
@@ -365,7 +363,6 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                         resolve();
                     },
                     (error) => {
-                        console.log(error);
                         reject(error);
                     });
         });
@@ -761,7 +758,6 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                     this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
-                            console.log(this.scheduledQs);
                             this.isAvailableNow().then(
                                 () => {
                                     if (this.todaysQs.length === 0 && !this.qAvailability.availableNow) {

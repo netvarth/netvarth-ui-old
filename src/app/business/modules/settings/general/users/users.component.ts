@@ -93,14 +93,12 @@ export class BranchUsersComponent implements OnInit {
     }
 
     personalProfile(user) {
-        console.log(user);
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 type: 'edit',
                 val: user
             }
         };
-        console.log(navigationExtras);
         this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
     }
     // manageOnlineProfile(userId) {
@@ -110,7 +108,6 @@ export class BranchUsersComponent implements OnInit {
         this.routerobj.navigate(['provider', 'settings', 'general', 'users', userId, 'settings']);
     }
     linkProfile(userid) {
-        console.log(userid);
         this.linkprofiledialogRef = this.dialog.open(LinkProfileComponent, {
             width: '50%',
             data: {

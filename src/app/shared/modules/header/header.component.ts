@@ -206,7 +206,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
-    console.log(projectConstants);
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
@@ -533,7 +532,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.inboxCntFetched = true;
         this.inboxUnreadCnt = data;
-        console.log('count ' + this.inboxUnreadCnt);
       },
         () => {
         });

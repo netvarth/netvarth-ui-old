@@ -235,7 +235,6 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
       .subscribe(
         data => {
           this.history = data;
-          // console.log("Appointments",this.history)
         },
         error => {
         }

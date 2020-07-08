@@ -121,14 +121,14 @@ export class BranchUserDetailComponent implements OnInit {
             for (let i = 0; i < bConfig.bdata.length; i++) {
                 if (user.sector === bConfig.bdata[i].domain) {
                     for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
-                     //  if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
-                            this.subDomains.push(bConfig.bdata[i].subDomains[j]);
-                      //  }
+                        //  if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
+                        this.subDomains.push(bConfig.bdata[i].subDomains[j]);
+                        //  }
                     }
                     break;
                 }
             }
-           // this.userForm.get('selectedSubDomain').setValue(this.subDomains[0].id);
+            // this.userForm.get('selectedSubDomain').setValue(this.subDomains[0].id);
         } else {
             this.shared_services.bussinessDomains()
                 .subscribe(
@@ -142,10 +142,9 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
-        console.log(this.subDomains);
         this.selectedsubDomain = [];
         for (const subdomain of this.subDomains) {
-        if (this.sector === 'healthCare') {
+            if (this.sector === 'healthCare') {
                 if (this.subsector === 'hospital') {
                     if (subdomain.subDomain === 'physiciansSurgeons') {
                         this.selectedsubDomain.push(subdomain);
@@ -159,18 +158,16 @@ export class BranchUserDetailComponent implements OnInit {
                         this.selectedsubDomain.push(subdomain);
                     }
                 }
-                
-            }
-            else if (this.sector === 'personalCare') {
+            } else if (this.sector === 'personalCare') {
                 if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
                 } else if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                }  else if (subdomain.subDomain === this.subsector) {
+                } else if (subdomain.subDomain === this.subsector) {
                     this.selectedsubDomain.push(subdomain);
-                } 
+                }
             }
-        } 
+        }
     }
     createForm() {
         this.userForm = this.fb.group({
@@ -181,12 +178,12 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-           // selectedSubDomain: [],
+            // selectedSubDomain: [],
             selectedDepartment: [],
             selectedUserType: [],
-           // address: [],
-           // state: [],
-           // city: []
+            // address: [],
+            // state: [],
+            // city: []
         });
 
         this.userForm.get('selectedUserType').setValue(this.userTypesFormfill[0]);
@@ -230,12 +227,12 @@ export class BranchUserDetailComponent implements OnInit {
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
             // 'password': this.user_data.commonPassword || this.userForm.get('password').value,
-           // 'selectedSubDomain': this.user_data.subdomain || null,
+            // 'selectedSubDomain': this.user_data.subdomain || null,
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
-            //'address': this.user_data.address || null,
-           // 'state': this.user_data.state || null,
-           // 'city': this.user_data.city || null
+            // 'address': this.user_data.address || null,
+            // 'state': this.user_data.state || null,
+            // 'city': this.user_data.city || null
         });
 
     }
@@ -248,10 +245,6 @@ export class BranchUserDetailComponent implements OnInit {
 
     }
     onSubmit(input) {
-        
-        console.log(this.selectedsubDomain[0].id);
-        console.log(this.subsector);
-        console.log(this.subDomains);
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -285,16 +278,16 @@ export class BranchUserDetailComponent implements OnInit {
             'gender': input.gender || null,
             'email': input.email || '',
             'mobileNo': input.phonenumber,
-           // 'address': input.address,
-           // 'city': input.city,
-            //'state': input.state,
+            // 'address': input.address,
+            // 'city': input.city,
+            // 'state': input.state,
             // 'deptId': input.selectedDepartment,
             'userType': input.selectedUserType
         };
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
-           // post_data1['subdomain'] = input.selectedSubDomain;
-           post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
+            // post_data1['subdomain'] = input.selectedSubDomain;
+            post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {

@@ -390,8 +390,6 @@ export class ConsumerJoinComponent implements OnInit {
 
   checkAccountExists() {
     this.mobile_num = this.document.getElementById('emailId').value;
-    console.log(this.loginForm.valid);
-    console.log(this.loginForm.get('emailId').valid);
     if (this.mobile_num) {
       this.shared_services.consumerMobilenumCheck(this.mobile_num).subscribe((accountExists) => {
         if (accountExists) {

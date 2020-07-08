@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild, ɵConsole } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
@@ -7,7 +7,6 @@ import { CheckInHistoryServices } from '../../consumer-checkin-history-list.serv
 import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
@@ -100,13 +99,12 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   ) {
     this.checkin = this.data.checkin || null;
     this.type = this.data.isFrom;
-    if (this.type == 'checkin') {
+    if (this.type === 'checkin') {
       this.uuid = this.checkin.ynwUuid;
-    }
-    else if (this.type == 'appointment') {
+    } else if (this.type === 'appointment') {
       this.uuid = this.checkin.uid;
     }
-    
+
     if (!this.checkin) {
       setTimeout(() => {
         this.dialogRef.close('error');
@@ -170,7 +168,6 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          console.log(this.bill_data);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].displayNote) {
               this.discountDisplayNotes = true;
@@ -364,13 +361,12 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     bill_html += '	<tr><td style="border-bottom:1px solid #ddd;">';
     bill_html += '<table width="100%">';
     bill_html += '	<tr style="line-height:20px">';
-    if (this.type == 'checkin') {
+    if (this.type === 'checkin') {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-    }
-    else if (this.type == 'appointment') {
+    } else if (this.type === 'appointment') {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
     }
-    
+
     bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
     bill_html += '	</tr>';
     bill_html += '	<tr>';
