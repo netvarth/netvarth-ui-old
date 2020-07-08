@@ -7511,11 +7511,6 @@ board-box {
     font-size: x-small !important;
   }
 }
-@media (max-width: 430px) {
-  .statusText {
-    /* padding: 8px !important; */
-  }
-}
 
 .check-in-chip .mat-chip {
   width: 85px !important;
@@ -10250,6 +10245,11 @@ a {
 
 .linkpagehight {
   min-height: auto !important;
+}
+
+.linkstyle{
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .linkdisplay{
