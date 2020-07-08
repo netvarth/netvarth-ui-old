@@ -238,6 +238,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
     initPaymentSettings(paySettings, type, mode?) {
+        console.log(paySettings);
+        console.log(type);
+        console.log(mode);
+
+
+
         if (mode !== undefined) {
             if (mode === 'paytm') {
                 this.paystatus = paySettings.onlinePayment || false;
@@ -672,9 +678,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     if (this.licenseMetadata[i].metrics[k].id === 6) {
                         if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
                             this.jPay_Billing = true;
+                            this.api_loading = false;
                             return;
                         } else {
                             this.jPay_Billing = false;
+                            this.api_loading = false;
                             return;
                         }
                     }
