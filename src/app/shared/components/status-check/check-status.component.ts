@@ -42,6 +42,8 @@ export class CheckYourStatusComponent implements OnInit {
           this.encId = qparams.id;
           if (this.encId.split('-')[0] === 'c') {
             this.type = 'wl';
+          } else {
+            this.type = 'appt';
           }
           if (this.type === 'wl') {
             this.placeText = 'Check-in Id';
@@ -52,7 +54,6 @@ export class CheckYourStatusComponent implements OnInit {
           this.placeText = 'Enter Id';
         }
         // console.log(this.type);
-        console.log(this.encId);
       });
   }
   setSystemDate() {
@@ -228,7 +229,6 @@ export class CheckYourStatusComponent implements OnInit {
           wlInfo.cancelled_time = retval.cancelled_time;
           this.api_loading = false;
           this.statusInfo = wlInfo;
-          console.log(this.statusInfo);
         },
         (error) => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -273,7 +273,6 @@ export class CheckYourStatusComponent implements OnInit {
           wlInfo.cancelled_time = retval.cancelled_time;
           this.api_loading = false;
           this.statusInfo = wlInfo;
-          console.log(this.statusInfo);
           this.api_loading = false;
         },
         (error) => {

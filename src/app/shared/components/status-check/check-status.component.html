@@ -92,7 +92,7 @@
                         *ngIf="type=='appt'">
                         
                         <div class="lt0 knw-stat-line-h">
-                          <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus != 'Cancelled' && statusInfo.apptStatus != 'Rejected'">
+                          <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
                             Appointment Time:
                             <span> {{statusInfo.estimated_timeslot}}</span>
                           </div>
