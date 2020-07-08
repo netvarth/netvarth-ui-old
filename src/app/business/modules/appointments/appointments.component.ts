@@ -709,7 +709,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQidsforHistory = qIds;
         this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
-      this.selQId = this.findCurrentActiveQueue(this.activeSchedules);
+      this.selQId = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)].id;
       // this.selQId = this.activeSchedules[0].id;
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
