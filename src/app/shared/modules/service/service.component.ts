@@ -630,7 +630,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         if (this.vcallmodes[i].status === 'ACTIVE') {
                             this.telemodes.push(this.vcallmodes[i]);
                         }
-                        if (this.vcallmodes[i].callingMode === 'Phone') {
+                        if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
                             this.include_audio = true;
                         }
                     }
