@@ -141,7 +141,7 @@ export class AppointmentComponent implements OnInit {
     userData: any = [];
     userEmail;
     userPhone;
-    emailExist = false;
+    emailExist = false; 
     payEmail;
     payEmail1;
     emailerror = null;

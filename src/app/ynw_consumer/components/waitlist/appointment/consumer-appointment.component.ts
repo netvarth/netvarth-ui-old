@@ -634,7 +634,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
             return true;
         } else {
-            return false;
+            return false; 
         }
     }
     revealChk() {
