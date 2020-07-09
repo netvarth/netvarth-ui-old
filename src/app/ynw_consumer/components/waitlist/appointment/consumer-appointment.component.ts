@@ -108,7 +108,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     maxsize;
     isFuturedate = false;
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    userN =  { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     fromKiosk = false;
@@ -201,6 +201,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     is_wtsap_empty = false;
     selectedDeptParam;
     selectedUserParam;
+    selectedUser;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -530,6 +531,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     handleUserSelection(user) {
+        this.selectedUser = user;
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -734,11 +736,11 @@ export class ConsumerAppointmentComponent implements OnInit {
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
-        // if (this.apptTime) {
+        // if (this.apptTime) { 
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
-        if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
-            post_Data['provider'] = { 'id': this.selected_user.id };
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+            post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             //  post_Data['virtualService'] = this.virtualServiceArray;

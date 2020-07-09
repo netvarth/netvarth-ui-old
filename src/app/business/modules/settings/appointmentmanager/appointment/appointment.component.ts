@@ -134,6 +134,7 @@ export class AppointmentComponent implements OnInit {
     departments: any = [];
     selected_dept;
     selected_user;
+    selectedUser;
     deptLength;
     filterDepart = false;
     confrmshow = false;
@@ -809,11 +810,11 @@ export class AppointmentComponent implements OnInit {
         // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
-        if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
-            if (this.selected_user && this.selected_user.id !== 0 && this.users.length > 0) {
-                post_Data['provider'] = { 'id': this.selected_user.id };
+        
+            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                post_Data['provider'] = { 'id': this.selectedUser.id };
             }
-        }
+        
         if (this.sel_ser_det.serviceType === 'virtualService') {
             // post_Data['virtualService'] = this.virtualServiceArray;
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
@@ -1227,6 +1228,8 @@ export class AppointmentComponent implements OnInit {
                         this.selected_user = this.users[0];
                         this.handleUserSelection(this.selected_user);
                     } else {
+                        this.selected_user = null;
+                        this.selectedUser = null;
                         for (let i = 0; i < this.departmentlist['departments'].length; i++) {
                             if (obj === this.departmentlist['departments'][i].departmentId) {
                                 this.services = this.departmentlist['departments'][i].serviceIds;
@@ -1283,6 +1286,7 @@ export class AppointmentComponent implements OnInit {
         // }
     }
     handleUserSelection(user) {
+        this.selectedUser = user;
         this.queuejson = [];
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
