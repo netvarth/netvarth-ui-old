@@ -64,6 +64,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     }
     this.cancel_reasons = reasons_list;
     if (this.data.isBatch) {
+      this.rep_username = 'Batch ' + this.data.batchId;
     } else {
       if (this.data.appt) {
         this.rep_username = this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName);

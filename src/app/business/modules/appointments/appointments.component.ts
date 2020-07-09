@@ -261,7 +261,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   allServiceSelected = false;
   services: any = [];
   consumr_id: any;
-  topHeight = 200;
+  topHeight = 250;
   @ViewChildren('appSlots') slotIds: QueryList<ElementRef>;
   @ViewChild('apptSection', { static: false }) apptSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
@@ -947,9 +947,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   sortCheckins(checkins) {
     checkins.sort(function (message1, message2) {
-      if (message1.token > message2.token) {
+      if (message1.appmtTime > message2.appmtTime) {
         return 11;
-      } else if (message1.token < message2.token) {
+      } else if (message1.appmtTime < message2.appmtTime) {
         return -1;
       } else {
         return 0;
@@ -1147,6 +1147,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptsChecked = {};
     this.chkSlotInput = {};
     this.selectedAppt = [];
+    this.appointmentsChecked = [];
     this.setApptSelections();
     this.chkSelectAppointments = false;
     this.apptSingleSelection = false;
@@ -1365,6 +1366,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.activeAppointment = null;
+    this.showRejected = false;
+    this.showUndo = false;
+    this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
     if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
@@ -1374,6 +1378,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
       });
+      if (this.time_type === 1 && this.activeAppointment.apptStatus === 'Confirmed' && !this.activeAppointment.virtualService) {
+        this.showArrived = true;
+      }
+      if (this.time_type !== 3 && this.activeAppointment.apptStatus !== 'Completed' && this.activeAppointment.apptStatus !== 'Confirmed') {
+        this.showUndo = true;
+      }
+      if (this.activeAppointment.apptStatus === 'Confirmed' || this.activeAppointment.apptStatus === 'Arrived') {
+        this.showRejected = true;
+      }
       if (this.activeAppointment.apptStatus === 'Confirmed' && this.activeAppointment.jaldeeApptDistanceTime && this.activeAppointment.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.activeAppointment.jaldeeStartTimeType === 'ONEHOUR' || this.activeAppointment.jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
@@ -1856,6 +1869,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   setSelections() {
+    this.showUndo = false;
+    this.showArrived = false;
+    this.showRejected = false;
     const selLength = Object.keys(this.apptsChecked).length;
     if (selLength === 0) {
       this.apptSingleSelection = false;
@@ -1865,6 +1881,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         if (Object.keys(this.apptsChecked[key]).length === 1) {
           this.apptMultiSelection = false;
           this.apptSingleSelection = true;
+          const activeAppt = this.apptsChecked[key][0];
+          if (this.time_type === 1 && activeAppt.apptStatus === 'Confirmed' && !activeAppt.virtualService) {
+            this.showArrived = true;
+          }
+          if (activeAppt.apptStatus !== 'Completed' && activeAppt.apptStatus !== 'Confirmed') {
+            this.showUndo = true;
+          }
+          if (activeAppt.apptStatus === 'Confirmed' || activeAppt.apptStatus === 'Arrived') {
+            this.showRejected = true;
+          }
           return;
         } else {
           this.apptMultiSelection = true;
@@ -1881,17 +1907,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.apptsChecked[slotIndex] = {};
     }
     if (!this.apptsChecked[slotIndex][apptIndex]) {
-      this.showRejected = true;
       this.apptsChecked[slotIndex][apptIndex] = appt;
-      if (appt.apptStatus === 'Confirmed' && !appt.virtualService) {
-        this.showArrived = true;
-      }
-      if (appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed' && !appt.virtualService) {
-        this.showUndo = true;
-      }
-      if (appt.billStatus && appt.billStatus === 'Settled') {
-        this.showRejected = false;
-      }
       if (Object.keys(this.apptsChecked[slotIndex]).length === this.timeSlotAppts[slotName].length) {
         this.slotsChecked[slotIndex] = true;
       }
@@ -1903,9 +1919,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.slotsChecked[slotIndex] = false;
       this.selAllSlots = false;
-      this.showArrived = false;
-      this.showRejected = true;
-      this.showUndo = false;
     }
     this.setSelections();
   }
@@ -1926,23 +1939,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
-      if (this.time_type === 1 && appt.apptStatus === 'Confirmed' && !appt.virtualService) {
-        this.showArrived = true;
-      }
-      if (this.time_type !== 3 && appt.apptStatus !== 'Completed' && appt.apptStatus !== 'Confirmed' && !appt.virtualService) {
-        this.showUndo = true;
-      }
-      if (appt.billStatus && appt.billStatus === 'Settled') {
-        this.showRejected = false;
-      }
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
       this.selAllSlots = false;
-      this.showArrived = false;
-      this.showRejected = true;
-      this.showUndo = false;
     }
     this.setApptSelections();
   }
@@ -2141,7 +2142,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         isBatch: true,
-        type: 'appt'
+        type: 'appt',
+        batchId: batchId
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -2707,6 +2709,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.refresh();
       }
     });
   }
