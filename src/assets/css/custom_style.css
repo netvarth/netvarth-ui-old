@@ -1895,7 +1895,7 @@ sup {
 }
 
 .bcrumb div:first-child {
-  /* display: flex !important; */
+  display: flex !important;
   float: left !important;
 }
 
