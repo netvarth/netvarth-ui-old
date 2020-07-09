@@ -165,30 +165,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-<<<<<<< HEAD
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));
                 })
               );
-=======
-              // const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
-              //  this.shared_functions.doLogout().then (
-              //    () => {
-              //      this.router.navigate(['/']);
-              //    }
-              //  );
-              // return EMPTY;
-              return this._ifSessionExpiredN().pipe(
-                switchMap(() => {
-                  // return next.handle(this.updateHeader(req, url));
-                  this.router.navigate(['/']);
-                  return EMPTY;
-                })
-              );
-               // return EMPTY;
-              // return throwError(error);
->>>>>>> refs/remotes/origin/1.3.0
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);
@@ -200,7 +181,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
+              // this.shared_functions.logout();
               // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
