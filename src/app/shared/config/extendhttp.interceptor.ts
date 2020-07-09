@@ -45,6 +45,22 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
   private _refreshSubject: Subject<any> = new Subject<any>();
 
+  private _ifSessionExpiredN() {
+    this._refreshSubject.subscribe({
+      complete: () => {
+        this._refreshSubject = new Subject<any>();
+      }
+    });
+    if (this._refreshSubject.observers.length === 1) {
+      this.shared_functions.doLogout().then(
+        (refreshSubject: any) => {
+          this._refreshSubject.next(refreshSubject);
+        }
+      );
+    }
+    return this._refreshSubject;
+  }
+
   private _ifSessionExpired() {
     this._refreshSubject.subscribe({
       complete: () => {
@@ -69,6 +85,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'mUniqueId': ynw_user.mUniqueId
       };
       const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      // this.shared_functions.doLogout().then(
+      //   (refreshSubject: any) => {
+      //     this._refreshSubject.next(refreshSubject);
+      //   }
+      // );
       if (activeuser) {
         this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
       } else {
@@ -144,11 +165,30 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
+<<<<<<< HEAD
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));
                 })
               );
+=======
+              // const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
+              //  this.shared_functions.doLogout().then (
+              //    () => {
+              //      this.router.navigate(['/']);
+              //    }
+              //  );
+              // return EMPTY;
+              return this._ifSessionExpiredN().pipe(
+                switchMap(() => {
+                  // return next.handle(this.updateHeader(req, url));
+                  this.router.navigate(['/']);
+                  return EMPTY;
+                })
+              );
+               // return EMPTY;
+              // return throwError(error);
+>>>>>>> refs/remotes/origin/1.3.0
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
               return throwError(error);
@@ -160,7 +200,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              // this.shared_functions.logout();
+              this.shared_functions.logout();
               // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {

@@ -49,7 +49,6 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
       this.show_addsection = false;
     }
     this.curmod = (data.editkey) ? 'edit' : 'add';
-    console.log(this.curmod);
     if (this.curmod === 'add') {
       this.socialkey = '';
       this.socialurl = '';

@@ -93,7 +93,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         this.api_loading = false;
       },
         () => {
-          this.api_loading = false; 
+          this.api_loading = false;
         });
   }
   getAlertList(ackStatus, sdate) {
@@ -121,7 +121,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/downpanel']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/alert']);
     }
   }
   clearFilter() {
@@ -166,7 +166,6 @@ export class ProviderSystemAlertComponent implements OnInit {
         this.alertSelAck.splice(this.alertSelAck.indexOf('false'), 1);
       }
     }
-    console.log(this.alertSelAck);
     if (pagecall === false) {
       this.startpageval = 1;
       this.holdalertSelAck = this.alertSelAck.join(',');

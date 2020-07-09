@@ -53,7 +53,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private globalService: GlobalService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
-    console.log('refresh Time :' + this.refreshTime);
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {

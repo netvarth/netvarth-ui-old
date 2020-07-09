@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row" *ngIf="account_type!='BRANCH_SP'">
+            <div class="row" *ngIf="accountType=='BRANCH'&& isMultilevel">
                 <div class="card p0">
                     <span class="b-link" (click)="goDepartments()">
                         <h2>Departments

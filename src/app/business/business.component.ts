@@ -95,6 +95,7 @@ export class BusinessComponent implements OnInit {
 
   ngOnInit() {
     this.getBusinessProfile();
+    this.getLicenseMetaData();
     this.activeSkin = this.shared_functions.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
       this.activeSkin = 'skin-blue';
@@ -157,6 +158,11 @@ export class BusinessComponent implements OnInit {
             reject();
           }
         );
+    });
+  }
+  getLicenseMetaData() {
+    this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.shared_functions.setitemonLocalStorage('license-metadata', data);
     });
   }
 }

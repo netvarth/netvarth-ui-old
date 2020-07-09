@@ -29,6 +29,7 @@ export class ProviderNotificationUserComponent implements OnInit {
 
     },
   ];
+  mode_of_notify = '';
   breadcrumbs = this.breadcrumbs_init;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
@@ -38,16 +39,30 @@ export class ProviderNotificationUserComponent implements OnInit {
   cancelsms = false;
   cancelemail = false;
   cancelpush = false;
+  smsAppt = false;
+  emailAppt = false;
+  apptPush = false;
+  cancelsmsAppt = false;
+  cancelemailAppt = false;
+  cancelpushAppt = false;
   notifyphonenumber = '';
   notifyemail = '';
   notifycanclphonenumber = '';
   notifycanclemail = '';
+  notifyApptphonenumber = '';
+  notifyApptemail = '';
+  notifyApptcanclphonenumber = '';
+  notifyApptcanclemail = '';
   api_error = null;
   api_success = null;
   ph_arr: any = [];
   em_arr: any = [];
   ph1_arr: any = [];
   em1_arr: any = [];
+  apptph_arr: any = [];
+  apptem_arr: any = [];
+  apptph1_arr: any = [];
+  apptem1_arr: any = [];
   domain;
   provdr_domain_name = '';
   provider_label = '';
@@ -56,6 +71,10 @@ export class ProviderNotificationUserComponent implements OnInit {
   notificationList: any = [];
   okCheckinStatus = false;
   okCancelStatus = false;
+  okApptCancelStatus = false;
+  okApptStatus = false;
+  selApptNotify = false;
+  selApptCancelNotify = false;
   userId: any;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
@@ -71,6 +90,7 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    // this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     this.activatedRoot.params.subscribe(params => {
       this.userId = + params.id;
       this.getUser();
@@ -97,7 +117,7 @@ export class ProviderNotificationUserComponent implements OnInit {
           url: '/provider/settings/general/users/' + this.userId + '/settings/notifications'
         });
         breadcrumbs.push({
-          title: 'Provider'
+          title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
         });
         this.breadcrumbs = breadcrumbs;
       });
@@ -172,6 +192,58 @@ export class ProviderNotificationUserComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
+        } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+            this.selApptNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length !== 0) {
+            this.apptem_arr = notifyList.email;
+            this.selApptNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+          if (notifyList.sms && notifyList.sms.length !== 0) {
+            this.apptph_arr = notifyList.sms;
+            this.selApptNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+
+          if (notifyList.pushMessage) {
+            this.apptPush = notifyList.pushMessage;
+            this.selApptNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+        } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+            this.selApptCancelNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length !== 0) {
+            this.apptem1_arr = notifyList.email;
+            this.selApptCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+          if (notifyList.sms && notifyList.sms.length !== 0) {
+            this.apptph1_arr = notifyList.sms;
+            this.selApptCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+
+          if (notifyList.pushMessage) {
+            this.cancelpushAppt = notifyList.pushMessage;
+            this.selApptCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
         }
       }
     }
@@ -186,6 +258,18 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.SelchkincnclNotify = event.checked;
     if (!this.SelchkincnclNotify) {
       this.checkinCancelNotifications('cancelcheckin');
+    }
+  }
+  selectApptNotify(event) {
+    this.selApptNotify = event.checked;
+    if (!this.selApptNotify) {
+      this.apptNotifications('newappointment');
+    }
+  }
+  selectApptCanclNotify(event) {
+    this.selApptCancelNotify = event.checked;
+    if (!this.selApptCancelNotify) {
+      this.apptCancelNotifications('cancelappointment');
     }
   }
 
@@ -307,6 +391,124 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.okCancelStatus = true;
     }
   }
+  addApptPh() {
+    this.resetApiErrors();
+    if (this.notifyApptphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyApptphonenumber !== '') {
+      const curphone = this.notifyApptphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.apptph_arr.indexOf(curphone) === -1) {
+        this.apptph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okApptStatus = true;
+      this.notifyApptphonenumber = '';
+    }
+  }
+  addApptemail() {
+    this.resetApiErrors();
+    if (this.notifyApptemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter a valid email id';
+      return;
+    }
+    if (this.notifyApptemail !== '') {
+      const curemail = this.notifyApptemail.trim();
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const result2 = pattern2.test(curemail);
+      if (!result2) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid email id';
+        return;
+      }
+      if (this.apptem_arr.indexOf(curemail) === -1) {
+        this.apptem_arr.push(curemail);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
+      this.okApptStatus = true;
+      this.notifyApptemail = '';
+    }
+  }
+  addApptCanclph() {
+    this.resetApiErrors();
+    if (this.notifyApptcanclphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyApptcanclphonenumber !== '') {
+      const curphone1 = this.notifyApptcanclphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone1);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone1);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.apptph1_arr.indexOf(curphone1) === -1) {
+        this.apptph1_arr.push(curphone1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      // this.ph1_arr.push(curphone1);
+      this.okApptCancelStatus = true;
+      this.notifyApptcanclphonenumber = '';
+    }
+  }
+  addApptCancelemail() {
+    this.resetApiErrors();
+    if (this.notifyApptcanclemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      return;
+    }
+    if (this.notifyApptcanclemail !== '') {
+      const curemail1 = this.notifyApptcanclemail.trim();
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const result2 = pattern2.test(curemail1);
+      if (!result2) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        return;
+      }
+      if (this.apptem1_arr.indexOf(curemail1) === -1) {
+        this.apptem1_arr.push(curemail1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
+      this.notifyApptcanclemail = '';
+      this.okApptCancelStatus = true;
+    }
+  }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
@@ -360,6 +562,55 @@ export class ProviderNotificationUserComponent implements OnInit {
     this.savecancelNotification_json.providerId = this.userId;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
+  apptNotifications(source) {
+    this.savechekinNotification_json = {};
+    let chekinMode = 'ADD';
+    if (this.notificationList.length === 0) {
+      chekinMode = 'ADD';
+    }
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
+        chekinMode = 'UPDATE';
+      }
+    }
+    if (!this.selApptNotify) {
+      this.apptem_arr = [];
+      this.apptph_arr = [];
+      this.apptPush = false;
+    }
+    this.savechekinNotification_json.resourceType = 'APPOINTMENT';
+    this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
+    this.savechekinNotification_json.sms = this.apptph_arr;
+    this.savechekinNotification_json.email = this.apptem_arr;
+    this.savechekinNotification_json.pushMessage = this.apptPush;
+    this.savechekinNotification_json.providerId = this.userId;
+    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
+  }
+
+  apptCancelNotifications(source) {
+    this.savecancelNotification_json = {};
+    let chekincancelMode = 'ADD';
+    if (this.notificationList.length === 0) {
+      chekincancelMode = 'ADD';
+    }
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
+        chekincancelMode = 'UPDATE';
+      }
+    }
+    if (!this.selApptCancelNotify) {
+      this.apptem1_arr = [];
+      this.apptph1_arr = [];
+      this.cancelpushAppt = false;
+    }
+    this.savecancelNotification_json.resourceType = 'APPOINTMENT';
+    this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
+    this.savecancelNotification_json.sms = this.apptph1_arr;
+    this.savecancelNotification_json.email = this.apptem1_arr;
+    this.savecancelNotification_json.pushMessage = this.cancelpushAppt;
+    this.savecancelNotification_json.providerId = this.userId;
+    this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
+  }
   saveNotifctnJson(saveNotification_json, mode, source) {
     this.sms = false;
     this.email = false;
@@ -375,6 +626,12 @@ export class ProviderNotificationUserComponent implements OnInit {
             }
             if (source === 'cancelcheckin') {
               this.okCancelStatus = false;
+            }
+            if (source === 'newappointment') {
+              this.okApptStatus = false;
+            }
+            if (source === 'cancelappointment') {
+              this.okApptCancelStatus = false;
             }
             this.okCancelStatus = false;
             this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
@@ -393,6 +650,12 @@ export class ProviderNotificationUserComponent implements OnInit {
             }
             if (source === 'cancelcheckin') {
               this.okCancelStatus = false;
+            }
+            if (source === 'newappointment') {
+              this.okApptStatus = false;
+            }
+            if (source === 'cancelappointment') {
+              this.okApptCancelStatus = false;
             }
             this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
           },
@@ -413,6 +676,12 @@ export class ProviderNotificationUserComponent implements OnInit {
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
     }
+    if (source === 'newappointment') {
+      this.okApptStatus = true;
+    }
+    if (source === 'cancelappointment') {
+      this.okApptCancelStatus = true;
+    }
   }
   smsAddClicked() {
     if (this.sms) {
@@ -426,6 +695,20 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.cancelsms = false;
     } else {
       this.cancelsms = true;
+    }
+  }
+  smsApptAddClicked() {
+    if (this.smsAppt) {
+      this.smsAppt = false;
+    } else {
+      this.smsAppt = true;
+    }
+  }
+  cancelledApptsmsAddClicked() {
+    if (this.cancelsmsAppt) {
+      this.cancelsmsAppt = false;
+    } else {
+      this.cancelsmsAppt = true;
     }
   }
   emailAddClicked() {
@@ -442,12 +725,32 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.cancelemail = true;
     }
   }
+  emailApptAddClicked() {
+    if (this.emailAppt) {
+      this.emailAppt = false;
+    } else {
+      this.emailAppt = true;
+    }
+  }
+  cancelledApptemailAddClicked() {
+    if (this.cancelemailAppt) {
+      this.cancelemailAppt = false;
+    } else {
+      this.cancelemailAppt = true;
+    }
+  }
   changePushMsgStatus(source) {
     if (source === 'newcheckin') {
       this.okCheckinStatus = true;
     }
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
+    }
+    if (source === 'cancelappointment') {
+      this.okApptCancelStatus = true;
+    }
+    if (source === 'newappointment') {
+      this.okApptStatus = true;
     }
   }
   learnmore_clicked(mod, e) {

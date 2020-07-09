@@ -282,7 +282,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         });
   }
   menuClick(source) {
-    console.log(this.locationExist);[]
     if (source === 'checkin') {
       if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
         let status;

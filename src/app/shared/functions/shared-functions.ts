@@ -446,7 +446,6 @@ export class SharedFunctions {
 
   get_Popularsarchlabels(labeltype, searchlabels_arr, params?) {
     let retdet = [];
-    console.log(labeltype);
     switch (labeltype) {
       case 'global':
         retdet = searchlabels_arr.popularSearchLabels.all.labels;
@@ -1468,5 +1467,14 @@ export class SharedFunctions {
     const y = newdate.getFullYear();
     const date1 = y + '-' + mm + '-' + dd;
     return date1 ;
+  }
+  setFilter() {
+    setTimeout(() => {
+      const sidebar = document.getElementById('filterContainer');
+      if (sidebar) {
+        const height = (window.screen.height - 200) + 'px';
+        sidebar.setAttribute('style', 'overflow:auto;height:' + height);
+      }
+    }, 500);
   }
 }

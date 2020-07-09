@@ -49,7 +49,6 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
 
     ngOnInit() {
         this.bProfile = this.data.bprofile;
-        console.log(this.bProfile);
         this.getUser();
         // calling method to create the form
         this.createForm();
@@ -113,7 +112,6 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         this.provider_servicesobj.getUser(this.data.userId)
             .subscribe(data => {
                 this.user_arr = data;
-                console.log(this.user_arr.subdomain);
             });
     }
 

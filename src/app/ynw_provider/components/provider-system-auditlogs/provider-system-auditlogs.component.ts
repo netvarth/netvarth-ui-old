@@ -132,7 +132,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-        this.routerobj.navigate(['/provider/' + this.domain + '/downpanel']);
+        this.routerobj.navigate(['/provider/' + this.domain + '/auditlog']);
     }
 }
   selectCategory() {
@@ -216,10 +216,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
-    //console.log(this.filter_sidebar);
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
-    //console.log(this.filter_sidebar);
   }
 }

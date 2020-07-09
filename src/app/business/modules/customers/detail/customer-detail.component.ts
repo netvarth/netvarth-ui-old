@@ -62,7 +62,7 @@ export class CustomerDetailComponent implements OnInit {
             title: 'Customers',
             url: 'provider/customers'
         }
-       
+
     ];
     breadcrumbs = this.breadcrumbs_init;
     breadcrumb_moreoptions: any = [];
@@ -89,12 +89,12 @@ export class CustomerDetailComponent implements OnInit {
                 this.customerId = params.id;
                 this.customer_label = this.shared_functions.getTerminologyTerm('customer');
                 this.breadcrumbs_init = [
-                    
+
                     {
                         title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1),
                         url: 'provider/customers'
                     }
-                   
+
                 ];
                 if (this.customerId) {
                     if (this.customerId === 'add') {
@@ -115,9 +115,7 @@ export class CustomerDetailComponent implements OnInit {
                                 this.getCustomers(this.customerId).then(
                                     (customer) => {
                                         this.customer = customer;
-                                        console.log(customer);
                                         this.customerName = this.customer[0].firstName;
-
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
                                             this.breadcrumbs_init.map((e) => {
@@ -189,7 +187,7 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit() {
         this.loading = true;
         this.getGlobalSettingsStatus();
-        this.breadcrumbs= this.breadcrumbs_init;
+        this.breadcrumbs = this.breadcrumbs_init;
         // this.breadcrumbs = [{
         //     title: this.shared_functions.firstToUpper(this.customer_label) + 's',
         //     url: 'provider/customers'
@@ -246,7 +244,6 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
     updateForm() {
-        console.log(this.customer)
         this.amForm.setValue({
             'first_name': this.customer[0].firstName || null,
             'last_name': this.customer[0].lastName || null,
@@ -301,7 +298,7 @@ export class CustomerDetailComponent implements OnInit {
                             const navigationExtras: NavigationExtras = {
                                 queryParams: {
                                     ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type,
+                                    checkinType: this.checkin_type,
                                     haveMobile: this.haveMobile,
                                     id: data
                                 }

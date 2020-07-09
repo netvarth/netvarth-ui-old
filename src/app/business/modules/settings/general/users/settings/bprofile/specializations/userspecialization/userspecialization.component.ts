@@ -36,7 +36,6 @@ export class UserSpecializationComponent implements OnInit {
     public shared_functions: SharedFunctions
   ) {
     this.loadData = data;
-    console.log(this.loadData);
   }
   ngOnInit() {
     this.api_loading = true;
@@ -64,7 +63,6 @@ export class UserSpecializationComponent implements OnInit {
     this.provider_services.getUser(this.data.userId)
       .subscribe(data => {
         this.user_arr = data;
-        console.log(this.user_arr.subdomain);
       });
   }
 

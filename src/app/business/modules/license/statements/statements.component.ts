@@ -10,6 +10,7 @@ import { DOCUMENT } from '@angular/common';
 // import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { JsonAdaptor } from '@syncfusion/ej2-data';
 
 @Component({
   selector: 'app-statements',
@@ -98,6 +99,7 @@ export class StatementsComponent implements OnInit {
   var: any;
   temp1;
   mergestatement: any;
+
 
   constructor(
     public dialogRef: MatDialogRef<StatementsComponent>,
@@ -207,11 +209,11 @@ export class StatementsComponent implements OnInit {
         data => {
           this.invoice = data;
           if (this.invoice.creditDebitJson) {
-            this.credt_debtJson = JSON.parse(this.invoice.creditDebitJson);
+            this.credt_debtJson = this.invoice.creditDebitJson;
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
           }
           if (this.invoice.discount) {
-            this.licenseDiscounts = JSON.parse(this.invoice.discount);
+            this.licenseDiscounts = this.invoice.discount;
             this.licenseDiscounts.discount.forEach(discountObj => {
               this.latestInvoiceDiscount.push(discountObj);
               this.discounts.push(discountObj);
@@ -239,7 +241,7 @@ export class StatementsComponent implements OnInit {
           });
         }
         if (object.discount) {
-          const licenseDiscounts = JSON.parse(object.discount);
+          const licenseDiscounts = object.discount;
           licenseDiscounts.discount.forEach(discountObj => {
             this.discounts.push(discountObj);
           });
@@ -264,10 +266,8 @@ export class StatementsComponent implements OnInit {
     }
   }
   previousRefstmt(mergeinvoicerefno) {
-    console.log(mergeinvoicerefno);
     let stmt = [];
     stmt = this.invoice.mergedStatements;
-    console.log(stmt);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         InvoiceRefNo: mergeinvoicerefno
@@ -333,15 +333,24 @@ export class StatementsComponent implements OnInit {
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0) {
       this.payment_loading = true;
-      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'details': this.pay_data,
-          'origin': 'provider'
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          'details': JSON.stringify(this.pay_data),
+          'origin': 'provider',
+          'paidStatus': false
         }
-      });
+      };
+      this.router.navigate(['provider', 'license', 'payments'], navigationExtras);
+      // const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      //   width: '50%',
+      //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     'details': this.pay_data,
+      //     'origin': 'provider',
+      //   }
+      // });
+      // dialogrefd.close();
     }
   }
   getgst() {

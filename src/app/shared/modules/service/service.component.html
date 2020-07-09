@@ -10,7 +10,7 @@
                 {{service_data.description | capitalizeFirst}}
             </div>
             <div class="c-ot">
-                <div class="item" *ngIf="departmentName">
+                <div class="item" *ngIf="departmentName && !is_donation">
                     <span class="ttle">Department Name</span>
                     <span>{{departmentName}}</span>
                 </div>
@@ -30,22 +30,24 @@
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class=" ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
-                    <span *ngIf="service_data.serviceType==='physicalService'">Physical</span>
+                    <span *ngIf="service_data.serviceType==='physicalService'">Onsiteservice</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class=" ttle">Service Mode</span>
-                    <!-- <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span> -->
+                    <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
             </div>
             <div class="c-ot" *ngIf="service_data.virtualServiceType">
                 <div class="item">
-                    <span class=" ttle">Video Call App</span>
+                    <span class=" ttle">Tele Mode</span>
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp
+                        Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom
+                        ID</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -75,7 +77,7 @@
                 </div>
             </div>
             <div class="c-ot m0" *ngIf="!is_donation">
-                <div class="item"  *ngIf="subdomainsettings.serviceBillable">
+                <div class="item" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
@@ -95,7 +97,8 @@
             </div>
             <div class="btm-ctrl">
                 <div class="ctrl enable-disable">
-                    <span class="ttle">{{serv_status}}</span>
+                    <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
+                    <span *ngIf="is_donation" class="ttle">Cause Status</span>
                     <span>
                         <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" [(ngModel)]="servstatus"
                             (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
@@ -155,7 +158,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
             <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
                 <mat-form-field>
-                    <mat-select formControlName="department" placeholder="Choose Department *">
+                    <mat-select #deptlist
+                    (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department" placeholder="Choose Department *">
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
                             {{dept.departmentName | capitalizeFirst}}
                         </mat-option>
@@ -172,7 +176,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             Teleservice
                         </mat-option>
                         <mat-option *ngIf="!is_donation" [value]="'physicalService'">
-                            Physical Service
+                            Onsite Service
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -181,9 +185,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     class="example-full-width mat-select-virtualservice">
                     <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
                         (selectionChange)="selectServiceTypeHandler(type.value)">
-                        <!-- <mat-option [value]="'audioService'">
+                        <mat-option *ngIf="include_audio" [value]="'audioService'">
                             Audio
-                        </mat-option> -->
+                        </mat-option>
                         <mat-option [value]="'videoService'">
                             Video
                         </mat-option>
@@ -194,16 +198,15 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
                 *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)">
                 <mat-form-field class="mat-select-virtualsrvcategory">
-                    <mat-label>Select Video Call App</mat-label>
-                    <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name"
-                        name="toolname" [ngModelOptions]="{standalone: true}">
+                    <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
+                    <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
                         <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
-                            <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic tool-pading"
+                            <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"
                                 aria-hidden="true"></i>
-                            <!-- <i *ngIf="mode.callingMode === 'Skype'" class="fa fa-skype skype-ic tool-pading" aria-hidden="true"></i> -->
-                            <img *ngIf="mode.callingMode === 'Zoom'" class="tool-pading"
-                                src="https://img.icons8.com/color/14/000000/zoom.png" />
-                            {{mode.callingMode}}
+                            <i *ngIf="mode.callingMode === 'Zoom'" class="fa zoom-icon"></i>
+                            <i *ngIf="mode.callingMode === 'GoogleMeet'" class="fa meet-icon" ></i>
+                            <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                           <span class="dash">{{mode.callingMode}}</span> 
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -221,6 +224,16 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         placeholder="Enter instructions to your {{customer_label}}" (keyup)="setCharCount($event)"
                         (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500" [(ngModel)]="tool_instruct"
                         [ngModelOptions]="{standalone: true}"> </textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add' && !is_donation">
+                <mat-form-field class="example-full-width">
+                    <mat-select [(value)]="selectedUser"  placeholder="Select user" #userlist
+                        (selectionChange)="selectUserHandler(userlist.value)">
+                        <mat-option *ngFor="let usr of users_list" [value]="usr.id">
+                            {{usr.firstName}} {{usr.lastName}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
@@ -267,7 +280,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     </div>
                 </ng-container>
             </div>
-            <div class="form-group glbl-preview" *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
+            <div class="form-group glbl-preview"
+                *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
                     <mat-form-field>
                         <input min="0" matInput type="text" class="form-control number-ip-sm" id="minprice"
@@ -324,10 +338,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
             </div>
             <div class="mgn-bt-20">
-            <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
-                style="font-size: 1.1rem;">
-                Additional Info</a>
-                <div class="settings_info">
+                <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
+                    style="font-size: 1.1rem;">
+                    Additional Info</a>
+                <div class="settings_info" *ngIf="!is_donation"> 
                     Service price, Live tracking and more</div>
             </div>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">

@@ -1534,7 +1534,7 @@
                                     class="accordion"> 
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                            (click)="handleScroll('jaldeebusiness-id','jaldeeonline')">Jaldee Business ID
+                                            (click)="handleScroll('jaldeebusiness-id','jaldeeonline')">Jaldee Link
                                            </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -2134,6 +2134,34 @@
                                                         departments to your
                                                         profile, choose one from
                                                         the drop down menu.</li>
+                                                        <li><strong>Choose Type : </strong>Choose type of service from the drop down menu.Onsiteservice or Teleservice.</li>
+                                                        <mat-accordion>
+                                                                <mat-expansion-panel [expanded]="true">
+                                                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                                        <mat-panel-title>
+                                                                            <span class="helpcontent">Type :Teleservice</span>
+                                                                        </mat-panel-title>
+                                                                    </mat-expansion-panel-header>
+                                                                        <div class="helpcontent">
+                                                                            <ul class="ul-normal">
+                                                                                <li><strong>How to set up a teleservice for your business?</strong><br><strong>Note:</strong> </li>
+                                                                                <li><strong>You will be able to create a teleservice only if you have switched on your “Teleservice” option.
+                                                                                </strong></li>
+                                                                                <li><strong>Make sure you have activated a medium such as Whatsapp, Google Meet, Skype or through phone call.</strong></li> 
+                                                                                            <ol>
+                                                                                            <li>Select <strong>SERVICES</strong> from <strong>JALDEE QMANAGER .</strong></li>
+                                                                                            <li>Click on <strong>ADD SERVICES</strong> at the top.</li>
+                                                                                            <li>Fill in the details - Service name, Service Description, Estimated Duration etc. </li>
+                                                                                            <li>Select <strong>“Teleservice”</strong> as TYPE.</li>
+                                                                                            <li><strong>SELECT MODE</strong> as <strong>Audio</strong> or <strong>Video</strong> from the drop down list.</li>   
+                                                                                            <li><strong>SELECT VIDEO CALL APP</strong> from the drop down list. </li>
+                                                                                             <li>You can edit the <strong>ZOOM LINK</strong> if there are any changes in the default Zoom ID/Whatsapp Number/ Skype ID/ Google Meet link.</li>
+                                                                                            <li>Now, Click on <strong>SAVE</strong> to add the teleservices to your services.</li>
+                                                                                            </ol> 
+                                                                                        </ul>
+                                                                        </div>
+                                                                </mat-expansion-panel>
+                                                            </mat-accordion>   
                                                     <li><strong>Estimated Duration (min) :</strong> Enter the minimum
                                                         time (in
                                                         minutes)
@@ -2408,36 +2436,36 @@
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('settings-q-boards','q-manager')">Queue
-                                                Status boards</span>
+                                                (click)="handleScroll('settings-q-boards','q-manager')">QBoards
+                                                </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
                                     <div>
                                         <div class="helpcontent">
                                             Get an immediate overview or a quick reference of check-ins or any related
-                                            information at the premise with the feature “Queue Board“ in Jaldee.
-                                            To create and display a queue board the provider has to purchase a Queue
-                                            queue board addon from license section. Provider can customize the display
+                                            information at the premise with the feature “QBoard“ in Jaldee.
+                                            To create and display a qboard the provider has to purchase a 
+                                            qboard addon from license section. Provider can customize the display
                                             boards to show any information they want by selecting the layout and also
-                                            queue board querys from the created list. We’ll help you replace the
-                                            conventional queue boards with Queue Board to display check-in
+                                            qboard querys from the created list. We’ll help you replace the
+                                            conventional qboards with QBoard to display check-in
                                             information.
                                             <ul>
-                                                <li>To create a Queue Board, first you have to create a “Status
+                                                <li>To create a Queue Board, first you have to create a “Q
                                                     Board Criteria“.</li>
-                                                <li>Queue Board Querys are created to display the required
-                                                    information in Queue Board. Once a queue board query is
-                                                    set, it can be added to the queue board to display.
+                                                <li>QBoard Querys are created to display the required
+                                                    information in Queue Board. Once a qboard query is
+                                                    set, it can be added to the qboard to display.
                                                 </li>
                                             </ul>
-                                            <strong><u>How to create a queue board query?</u></strong><br>
+                                            <strong><u>How to create a qboard query?</u></strong><br>
                                             <ol>
-                                                <li>Click <strong>“CREATE A QUEUE BOARD“</strong> and to start
-                                                    with creating a queue board query, click
+                                                <li>Click <strong>“CREATE A QBOARD“</strong> and to start
+                                                    with creating a qboard query, click
                                                     <strong>“CREATE“</strong>.
                                                 </li>
-                                                <li>Here, enter the name of the queue board query you are about to
+                                                <li>Here, enter the name of the qboard query you are about to
                                                     create.
                                                 </li>
                                                 <li>Under category, choose from <strong>Services, Queues,</strong> or
@@ -2448,44 +2476,44 @@
                                                     services added to the provider profile is listed here. Choose one
                                                     service from the list.
                                                 </li>
-                                                <li>And then select the fields to be displayed in queue board.
+                                                <li>And then select the fields to be displayed in qboard.
                                                     Also you can edit the field name from here.
                                                 </li>
                                                 <li>When you have all the information set, click “Save“ and thus a
-                                                    queue board query is created.
+                                                    qboard query is created.
                                                 </li>
                                                 <li>Once created these can be edited using the pencil icon in the right
                                                     corner.</li>
                                             </ol>
-                                            <strong><u>How to create a Queue Board?
+                                            <strong><u>How to create a QBoard?
                                                 </u></strong><br>
                                             <ol>
-                                                <li>To start with click on<strong>“CREATE A QUEUE BOARD“</strong>
+                                                <li>To start with click on<strong>“CREATE A QBOARD“</strong>
                                                     .
                                                 </li>
                                                 <li>Select a layout that you want from the list.</li>
-                                                <li>Give a title for the queue board.</li>
-                                                <li>Lastly, but most importantly select the already added queue board
-                                                    criteria you wanted to display in the queue board from the list.
+                                                <li>Give a title for the qboard.</li>
+                                                <li>Lastly, but most importantly select the already added qboard
+                                                    criteria you wanted to display in the qboard from the list.
                                                 </li>
                                                 <li>Queue board query can be chosen differently in four different
                                                     layouts. This is given below:
                                                     <ul>
-                                                        <li>If 1 x 1 layout is selected, only one queue board query
+                                                        <li>If 1 x 1 layout is selected, only one qboard query
                                                             can be chosen.
                                                         </li>
-                                                        <li>If 1 x 2 layout is selected two queue board query can be
+                                                        <li>If 1 x 2 layout is selected two qboard query can be
                                                             chosen.</li>
-                                                        <li>If 2 x 1 layout is selected two queue board query can be
+                                                        <li>If 2 x 1 layout is selected two qboard query can be
                                                             chosen.</li>
-                                                        <li>If 2 x 2 layout is selected four queue board query can
+                                                        <li>If 2 x 2 layout is selected four qboard query can
                                                             be chosen.</li>
                                                     </ul>
                                                 </li>
-                                                <li>Click “Save“ and a new queue board is created.</li>
-                                                <li>From the list of queue boards created click the three dots
-                                                    menu in the right corner click “Open“ to view the queue board.
-                                                    Options to edit or delete the status boards are given in the three
+                                                <li>Click “Save“ and a new qboard is created.</li>
+                                                <li>From the list of qboards created click the three dots
+                                                    menu in the right corner click “Open“ to view the qboard.
+                                                    Options to edit or delete the qboards are given in the three
                                                     dots menu.</li>
                                             </ol>
 
@@ -2502,7 +2530,7 @@
                             <mat-expansion-panel [expanded]='showappointments'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('appointmentmanager')">
-                                        Appointment Manager
+                                            Jaldee Appointment
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                     <div class="helpcontent">
@@ -2602,6 +2630,34 @@
                                                                             <li><strong>Choose Department :</strong> If already added
                                                                                 departments to your profile, choose one from the drop down menu.
                                                                             </li>
+                                                                            <li><strong>Choose Type : </strong>Choose type of service from the drop down menu.Onsiteservice or Teleservice.  </li>
+                                                                            <mat-accordion>
+                                                                                    <mat-expansion-panel [expanded]="true">
+                                                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                                                            <mat-panel-title>
+                                                                                                <span class="helpcontent">Type :Teleservice</span>
+                                                                                            </mat-panel-title>
+                                                                                        </mat-expansion-panel-header>
+                                                                                            <div class="helpcontent">
+                                                                                                <ul class="ul-normal">
+                                                                                                    <li><strong>How to set up a teleservice for your business?</strong><br><strong>Note:</strong> </li>
+                                                                                                    <li><strong>You will be able to create a teleservice only if you have switched on your “Teleservice” option.
+                                                                                                    </strong></li>
+                                                                                                    <li><strong>Make sure you have activated a medium such as Whatsapp, Google Meet, Skype or through phone call.</strong></li> 
+                                                                                                                <ol>
+                                                                                                                <li>Select <strong>SERVICES</strong> from <strong>JALDEE APPOINTMENT .</strong></li>
+                                                                                                                <li>Click on <strong>ADD SERVICES</strong> at the top.</li>
+                                                                                                                <li>Fill in the details - Service name, Service Description, Estimated Duration etc. </li>
+                                                                                                                <li>Select <strong>“Teleservice”</strong> as TYPE.</li>
+                                                                                                                <li><strong>SELECT MODE</strong> as <strong>Audio</strong> or <strong>Video</strong> from the drop down list.</li>   
+                                                                                                                <li><strong>SELECT VIDEO CALL APP</strong> from the drop down list. </li>
+                                                                                                                 <li>You can edit the <strong>ZOOM LINK</strong> if there are any changes in the default Zoom ID/Whatsapp Number/ Skype ID/ Google Meet link.</li>
+                                                                                                                <li>Now, Click on <strong>SAVE</strong> to add the teleservices to your services.</li>
+                                                                                                                </ol> 
+                                                                                                            </ul>
+                                                                                            </div>
+                                                                                    </mat-expansion-panel>
+                                                                                </mat-accordion>
                                                                             <li><strong>Estimated Duration (min) :</strong> Enter the minimum
                                                                                 time (in minutes)
                                                                                 required to complete the mentioned service.</li>
@@ -2806,31 +2862,31 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent"
-                                                            (click)="handleScroll('q-boards', 'appointmentmanager')">Qboards</span>
+                                                            (click)="handleScroll('q-boards', 'appointmentmanager')">QBoards</span>
                                                 </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <div class="helpcontent"> 
                                                         Get an immediate overview or a quick reference of check-ins or any related
-                                                        information at the premise with the feature “Queue Board“ in Jaldee. To
-                                                        create and display a queue board the provider has to purchase a Queue Status
-                                                        Board addon from license section. Provider can customize the queue boards to
-                                                        show any information they want by selecting the layout and also queue board
+                                                        information at the premise with the feature “QBoard“ in Jaldee. To
+                                                        create and display a qboard the provider has to purchase a QBoard 
+                                                        addon from license section. Provider can customize the qboards to
+                                                        show any information they want by selecting the layout and also qboard
                                                         criterias from the created list. We’ll help you replace the conventional display
-                                                        boards with Queue Board to display check-in information.
+                                                        boards with QBoard to display check-in information.
                                                         <ul>
-                                                            <li>To create a Queue Board, first you have to create a “Status Board
+                                                            <li>To create a Queue Board, first you have to create a “QBoard
                                                                 Criteria“.</li>
-                                                            <li>Queue Board Querys are created to display the required information
-                                                                in Queue Board. Once a queue board query is set, it can be
-                                                                added to the queue board to display.
+                                                            <li>QBoard Querys are created to display the required information
+                                                                in QBoard. Once a qboard query is set, it can be
+                                                                added to the qboard to display.
                                                             </li>
                                                         </ul>
-                                                        <strong><u>How to create a queue board query?</u></strong><br>
+                                                        <strong><u>How to create a qboard query?</u></strong><br>
                                                         <ol>
                                                             <li>Click <strong>“CREATE A QUEUE BOARD“</strong> and to start with
-                                                                creating a queue board query, click <strong>“CREATE“</strong>.
+                                                                creating a qboard query, click <strong>“CREATE“</strong>.
                                                             </li>
-                                                            <li>Here, enter the name of the queue board query you are about to
+                                                            <li>Here, enter the name of the qboard query you are about to
                                                                 create.
                                                             </li>
                                                             <li>Under category, choose from <strong>Services, Queues,</strong> or
@@ -2841,55 +2897,55 @@
                                                                 services added to the provider profile is listed here. Choose one
                                                                 service from the list.
                                                             </li>
-                                                            <li>And then select the fields to be displayed in queue board. Also
+                                                            <li>And then select the fields to be displayed in qboard. Also
                                                                 you can edit the field name from here.
                                                             </li>
-                                                            <li>When you have all the information set, click “Save“ and thus a status
+                                                            <li>When you have all the information set, click “Save“ and thus a q
                                                                 board criteria is created.
                                                             </li>
                                                             <li>Once created these can be edited using the pencil icon in the right
                                                                 corner.</li>
                                                         </ol>
-                                                        <strong><u>How to create a Queue Board?
+                                                        <strong><u>How to create a QBoard?
                                                             </u></strong><br>
                                                         <ol>
-                                                            <li>To start with click on<strong>“CREATE A QUEUE BOARD“</strong> .
+                                                            <li>To start with click on<strong>“CREATE A QBOARD“</strong> .
                                                             </li>
                                                             <li>Select a layout that you want from the list.</li>
-                                                            <li>Give a title for the queue board.</li>
-                                                            <li>Lastly, but most importantly select the already added queue board
-                                                                criteria you wanted to display in the queue board from the list.
+                                                            <li>Give a title for the qboard.</li>
+                                                            <li>Lastly, but most importantly select the already added qboard
+                                                                criteria you wanted to display in the qboard from the list.
                                                             </li>
-                                                            <li>Queue board query can be chosen differently in four different
+                                                            <li>Qboard query can be chosen differently in four different
                                                                 layouts. This is given below:
                                                                 <ul>
-                                                                    <li>If 1 x 1 layout is selected, only one queue board query can
+                                                                    <li>If 1 x 1 layout is selected, only one qboard query can
                                                                         be chosen.
                                                                     </li>
-                                                                    <li>If 1 x 2 layout is selected two queue board query can be
+                                                                    <li>If 1 x 2 layout is selected two qboard query can be
                                                                         chosen.</li>
-                                                                    <li>If 2 x 1 layout is selected two queue board query can be
+                                                                    <li>If 2 x 1 layout is selected two qboard query can be
                                                                         chosen.</li>
-                                                                    <li>If 2 x 2 layout is selected four queue board query can be
+                                                                    <li>If 2 x 2 layout is selected four qboard query can be
                                                                         chosen.</li>
                                                                 </ul>
                                                             </li>
-                                                            <li>Click “Save“ and a new queue board is created.</li>
-                                                            <li>From the list of queue boards created click the three dots menu
-                                                                in the right corner click “Open“ to view the queue board. Options to
-                                                                edit or delete the status boards are given in the three dots menu.</li>
+                                                            <li>Click “Save“ and a new qboard is created.</li>
+                                                            <li>From the list of qboards created click the three dots menu
+                                                                in the right corner click “Open“ to view the qboard. Options to
+                                                                edit or delete the qboards are given in the three dots menu.</li>
                                                         </ol>
                                                 </div>
                                             </mat-expansion-panel>
                                         </mat-accordion>
                             </mat-expansion-panel>
                         </mat-accordion>
-                        <!-- next -->
+                        <!-- next --> 
                         <mat-accordion>
                             <mat-expansion-panel [expanded]='showbilling'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('billing')">
-                                        Billing/POS
+                                            Jaldee Billing
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="helpcontent">
@@ -3305,7 +3361,7 @@
                             <mat-expansion-panel [expanded]='showpayments'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('payments')">
-                                      Payments
+                                            Jaldee Pay
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="helpcontent">
@@ -3826,77 +3882,99 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent"
-                                                        (click)="handleScroll('virtualcallingmode', 'comm')">Teleservice
-                                                        ON</span>
+                                                        (click)="handleScroll('virtualcallingmode', 'comm')">JALDEE TELESERVICE
+                                                        </span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                              <div class="helpcontent">
-                                                <section>
-                                                        <span>In this section, a provider can select the Teleservice
-                                                            ON mode with which he/she wishes
-                                                            to
-                                                          enable/disable Teleservice
-                                                          ON/OFF  here.
+                                                 <section>
+                                                    
+                                                        <strong>What is Jaldee Teleservice?</strong>
+                                                   
+                                                        <br>
+                                                        <span>Teleservice promotes social distancing and allows you to communicate with the customers remotely via 
+                                                            various digital platforms like Zoom, Google Meet, WhatsApp as well as Skype.
                                                         </span>
                                                 </section>
                                                 <section>
                                                         <ul class="ul-normal">
-                                                            <li>To enable video call, a provider has to switch
-                                                                on the
-                                                                "Teleservice
-                                                                ON" mode. Initially, this is set to off mode.</li>
+                                                            <li>To <strong>enable the Teleservice</strong>, you can switch on the toggle button. </li>
                                                         </ul>
                                                 </section>
-                                                <section>
-                                                    <ul class="ul-normal">
-                                                        <li>If true, the provider is available for video calling. 
-                                                            if false he is not available for virtual mode communication.</li>
-                                                    </ul>
-                                            </section>
-                                             </div>
-                                        </mat-expansion-panel>
-                                </mat-accordion>
-                                <mat-accordion> 
-                                    <mat-expansion-panel [expanded]="showvideocallmode && showvirtualcallingmodes">
+                                        <mat-accordion> 
+                                    <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"
-                                                    (click)="handleScroll('videocall-settings', 'comm')">Video Call Settings</span>
+                                                <span>Video Calling Service</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                          <div class="helpcontent">
                                                 <section>
-                                                        <span>In this section, a provider can add the mode for video call with which he/she wishes
-                                                            to
-                                                            Configure Customers video call preferences here. 
-                                                        </span>
-                                                </section>
+                                                       
+                                                           <strong>How to activate your video calling service?
+                                                            </strong>
+                                                            <br>
+                                                   
+                                                           <span>Switching on the Teleservice to control your <strong>Video calling modes</strong> and <strong>Audio calling modes</strong>.
+                                                             </span>
+                                                   </section>
                                                 <section>
-                                                    <span>
-                                                        To set up Customersvideo call preferences, a provider has to select
-                                                            the
-                                                                " video Call" options.
-                                                        </span>
-                                                </section>
-                                                <section>
-                                                    <span>
-                                                       Video Call settings contains six checkboxes .Choose one of the six video call checkbox options.
-                                                    </span>
-                                                </section>  
-                                                    <section>
-                                                        <ul>
-                                                            <li>Skype</li>
-                                                            <li>Whatsapp</li>
-                                                            <li>Hangouts</li>
-                                                            <li>Botim</li>
-                                                            <li>IMO</li>
-                                                            <li>Jaldee Integrated Video</li>
+                                                    <strong><u>VIDEO CALLING MODES</u></strong><br>
+                                                    <ol>
+                                                        <li><strong>WHATSAPP</strong><br>To configure your Whatsapp video call</li>
+                                                        <ul> 
+                                                            <li>Enter your Whatsapp mobile number.</li>
+                                                            <li>Click on <strong>UPDATE.</strong></li>
+                                                            <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
                                                         </ul>
-                                                    </section>
-                                         </div>
+                                                    
+                                                            <li><strong>ZOOM
+                                                                </strong><br>To configure your Zoom video call</li>
+                                                            <ul> 
+                                                                    <li>Enter your Zoom ID URL.<br>
+                                                                            For example, “https://zoom.us/j/3814640655?pwd=Z0JEVHMzeVpJVBPd3Nndz09”
+                                                                            </li>
+                                                                    <li>Click on  <strong>UPDATE.</strong></li>
+                                                                    <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
+                                                            </ul>
+
+                                                          
+                                                                    <li><strong>GOOGLE MEET</strong><br>Comingsoon..</li></ol>
+                                                                </section> 
+                                                                <section>
+                                                                        <strong><u>AUDIO CALLING MODES</u></strong><br>
+                                                                        <ol>
+                                                                            <li><strong>WHATSAPP</strong><br>To configure your Whatsapp audio call</li>
+                                                                            <ul> 
+                                                                                <li>Enter your Whatsapp mobile number.</li>
+                                                                                <li>Click on  <strong>UPDATE.</strong></li>
+                                                                                <li>Now, you’ll be able to <strong>SWITCH ON THE TOGGLE BUTTON </strong>of Whatsapp.</li>
+                                                                            </ul>
+                                                                            
+                                                                                <li><strong>SKYPE
+                                                                                    </strong><br>To configure your  Skype audio call</li>                                                                              
+                                                                                <ul> 
+                                                                                        <li>Enter your Skype ID.</li>
+                                                                                        <li>Click on <strong>UPDATE.</strong></li>
+                                                                                        <li>Now, you’ll be able to <strong> SWITCH ON THE TOGGLE BUTTON </strong>of Skype.</li>
+                                                                                </ul>
+                                                                               
+                                                                                        <li><strong>MOBILE CALL</strong><br>To configure your normal mobile audio call</li>
+                                                                                                                                                                      
+                                                                                        <ul> 
+                                                                                                <li>Enter your Mobile number.</li>                                                                                                 
+                                                                                                <li>Click on <strong>UPDATE.</strong></li>
+                                                                                                <li>Now, you’ll be able to <strong> SWITCH ON THE TOGGLE BUTTON </strong>of Mobile call.</li>
+                                                                                        </ul>
+                                                                                        </ol>
+                                                                                    </section>     
+                                                           </div>
                                     </mat-expansion-panel>
                             </mat-accordion>
+                        </div>
+                    </mat-expansion-panel>
+            </mat-accordion>
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="shownotifications && showvirtualcallingmodes">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
@@ -4556,7 +4634,7 @@
                                 <mat-expansion-panel [expanded]='showdbappointments'>
                                     <mat-expansion-panel-header class="accordion">
                                         <mat-panel-title class="accordion-title" (click)="menu('appointments')">
-                                          Appointments
+                                                Jaldee Appointment
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
@@ -4649,7 +4727,7 @@
                                                             the
                                                             business.Delay option helps the provider to set a delay to the current or an earliest
                                                             working
-                                                            hour.</span>
+                                                            hour.</span> 
                                                         <ol class="ol-normal adjust-delay-num">
                                                             <li>Select a working hour from the dashboard to adjust the delay.</li>
                                                             <li>Click on the <strong>“Delay“</strong> button. This opens a new window.
@@ -4676,6 +4754,54 @@
                                                             <li>Click the <strong>“Save“</strong> button to confirm the adjustments.</li>
                                                         </ol>
                                                     </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="false">
+                                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                        <mat-panel-title>
+                                                            <span class="helpcontent">Teleservice Call</span>
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                        <div class="helpcontent">
+                                                            <ul class="ul-normal">
+                                                                <li><strong>How to initiate a teleservice call?
+                                                                </strong><br>
+                                                                After receiving an appointment, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
+                                                            </strong>
+                                                                </li>
+                                                                <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                                <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
+                
+                                                                    <ul class="normal-abc">
+                                                                        <li><strong>Launch the service - </strong> Click on<strong> “Launch”</strong> to launch the respective application.
+                                                                       <br>After the pop-up appears,<br>
+                                                                        Respond “YES”, if you want to change the status of the customer into STARTED.<br> 
+                                                                        Respond “NO”, if you want the customer to remain in NEW.
+                                                                        </li>
+                                                                        <li><strong>Reminder -</strong>  Click on <strong>“Reminder”</strong> to send a reminder message to the customer by 
+                                                                        <ul class="normal-abc">
+                                                                            <li>SMS</li>  
+                                                                            <li>App Notifications</li>
+                                                                             <li>E-Mail</li>  
+                                                                        </ul>
+                                                                        </li>
+                                                                        <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting for you!”</strong> to notify that you are waiting for  the customer to join the video/audio call. 
+                                                                            <ul class="normal-abc">
+                                                                                    <li>SMS</li>  
+                                                                                    <li>App Notifications</li>
+                                                                                     <li>E-Mail</li>  
+                                                                                </ul>
+                                                                                <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                                     <ul class="normal-abc">
+                                                                                            <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                                            </li>  
+                                                                                            <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
+                                                                                        </ul> 
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                                 </mat-expansion-panel>
@@ -4806,6 +4932,54 @@
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                            <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="false">
+                                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" >
+                                                            <mat-panel-title>
+                                                                <span class="helpcontent">Teleservice Call</span>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                            <div class="helpcontent">
+                                                                <ul class="ul-normal">
+                                                                    <li><strong>How to initiate a teleservice call?
+                                                                    </strong><br>
+                                                                    After receiving a check-in, there are two options available- <strong>START button</strong> and <strong>TELESERVICE button.
+                                                                </strong>
+                                                                    </li>
+                                                                    <li><strong>START BUTTON </strong>allows you to move the customer to <strong>“STARTED”</strong> status.</li>
+                                                                    <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different options regarding teleservice. The different options are:-
+                    
+                                                                        <ul class="normal-abc">
+                                                                            <li><strong>Launch the service - </strong> Click on<strong> “Launch”</strong> to launch the respective application.
+                                                                           <br>After the pop-up appears,<br>
+                                                                            Respond “YES”, if you want to change the status of the customer into STARTED.<br> 
+                                                                            Respond “NO”, if you want the customer to remain in NEW.
+                                                                            </li>
+                                                                            <li><strong>Reminder -</strong>  Click on <strong>“Reminder”</strong> to send a reminder message to the customer by 
+                                                                            <ul class="normal-abc">
+                                                                                <li>SMS</li>  
+                                                                                <li>App Notifications</li>
+                                                                                 <li>E-Mail</li>  
+                                                                            </ul>
+                                                                            </li>
+                                                                            <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting for you!”</strong> to notify that you are waiting for  the customer to join the video/audio call. 
+                                                                                <ul class="normal-abc">
+                                                                                        <li>SMS</li>  
+                                                                                        <li>App Notifications</li>
+                                                                                         <li>E-Mail</li>  
+                                                                                    </ul>
+                                                                                    <li><strong>Meeting details -</strong> Click on<strong> ““Meeting Details””</strong> will give you details for Appointment, Service, Date & Time, Service Provider, Location, Join Zoom Meeting.
+                                                                                         <ul class="normal-abc">
+                                                                                                <li><u>Share</u> - Click on <strong> SHARE</strong> to send the meeting details to the customer
+                                                                                                </li>  
+                                                                                                <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to copy the link to the clipboard.</li>  
+                                                                                            </ul> 
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                             <!-- next -->
@@ -4978,6 +5152,41 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion> -->
+        <mat-accordion>
+                <mat-expansion-panel [expanded]='showauditlog'>
+                    <mat-expansion-panel-header class="accordion">
+                        <mat-panel-title class="accordion-title" (click)="menu('auditlog')">
+                            Activity Log
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+                            <span> Here the provider can view the activities done
+                                by
+                                him/her.
+                                The details appear with a date and time stamp. It also shows the actions
+                                completed
+                                by
+                                the provider along with a little description.</span>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]='showalert'>
+                    <mat-expansion-panel-header class="accordion">
+                        <mat-panel-title class="accordion-title" (click)="menu('alert')">
+                          Alerts
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+                            <span> All the Jaldee Broadcasts are shown here. These
+                                are the
+                                Jaldee
+                                provided notifications. Here a provider can learn about new coupons or any
+                                other such
+                                information directly from Jaldee Super admin.</span>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
                         <mat-expansion-panel [expanded]='showlicense'>
@@ -5255,18 +5464,31 @@
                                                     <div class="jd-pricing">
                                                         <table allign="center">
                                                             <thead>
-                                                                <tr>
-                                                                    <th class="th1 headcol lic_metric">Features</th>
-                                                                    <td class="th2 long head_bg">Free</td>
-                                                                    <td class="long head_bg">Basic <div style="font-size: 15px">(Rs 499)</div>
-                                                                    </td>
-                                                                    <td class="th3 long head_bg">Premium <div style="font-size: 15px">(Rs 1499)</div>
-                                                                    </td>
-                                                                    <td class="th4 long head_bg">Team <div  style="font-size: 15px">(Rs 2999)</div>
-                                                                    </td>     
-                                                                    <td class="th5 long head_bg">Enterprise <div style="font-size: 15px">(Rs 7999)</div>
-                                                                    </td>
-                                                                </tr>
+                                                                        <tr>
+                                                                            <th class="th1 headcol lic_metric"style="font-size: 15px">Features</th>
+                                                                            <td class="th2 long head_bg"style="font-size: 15px">Free</td>
+                                                                            <td class="long head_bg"style="font-size: 15px">Basic
+                                                                            </td>
+                                                                            <td class="th3 long head_bg"style="font-size: 15px">Premium (Free <br>45 days trial )
+                                                                            <br>(Best value)
+                                                                            </td>
+                                                                            <td class="th4 long head_bg"style="font-size: 15px">Team 
+                                                                            </td>     
+                                                                            <td class="th5 long head_bg"style="font-size: 15px">Enterprise
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th class="th1 headcol lic_metric"><div  style="font-size: 15px">Price (Rs per month)</div></th>
+                                                                            <td class="th2 long head_bg"><div  style="font-size: 15px">FREE</div></td>
+                                                                            <td class="long head_bg"><div  style="font-size: 15px">Rs 499</div>
+                                                                            </td>
+                                                                            <td class="th3 long head_bg"><div  style="font-size: 15px">Rs 1499</div>
+                                                                            </td>
+                                                                            <td class="th4 long head_bg"><div  style="font-size: 15px">Rs 2999</div>
+                                                                            </td>     
+                                                                            <td class="th5 long head_bg"><div  style="font-size: 15px">Rs 7999</div>
+                                                                            </td>
+                                                                        </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
@@ -5365,6 +5587,15 @@
                                                                     <td class="th5 light-col long">25</td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th class="th3 headcol">Jaldee Messaging 
+                                                                    </th>
+                                                                    <td class="th2 light-col long">15</td>
+                                                                    <td class="brozelicensecol long"><strong>30</strong></td>
+                                                                    <td class="th3 light-col long">75<br>15&nbsp;(Premium trial)</td>
+                                                                    <td class="th4 brozelicensecol long"><strong>200</strong></td>
+                                                                    <td class="th5 light-col long">500</td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th class="th3 headcol">Corporate branch admin (manage and monitor multiple branches)
                                                                     </th>
                                                                     <td class="th2 light-col long">No</td>
@@ -5374,11 +5605,11 @@
                                                                     <td class="th5 light-col long">Yes</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th class="th3 headcol">Queues/Services
+                                                                    <th class="th3 headcol">Queues/Schedules/Services
                                                                     </th>
                                                                     <td class="th2 light-col long">2</td>
                                                                     <td class="brozelicensecol long"><strong>4</strong></td>
-                                                                    <td class="th3 light-col long">8</td>
+                                                                    <td class="th3 light-col long">12</td>
                                                                     <td class="th4 brozelicensecol long"><strong>16</strong></td>
                                                                     <td class="th5 light-col long">32</td>
                                                                 </tr>
@@ -5576,16 +5807,16 @@
                                 </td>
                             </tr>
                            <tr>
-                                <td class="td1">Queue Status Board</td>
+                                <td class="td1">QBoards</td>
                                 <td class="td2 bordl">
                                     <ul class="ul-normal">
                                         <li><strong>Minimum pkg - Basic and above</strong></li>
-                                        <li class="fsize">Queue Status Board Lite 1 for Rs.399 per month</li>
-                                        <li class="fsize">Queue Status Board Lite 2 for Rs.759 per month</li>
-                                        <li class="fsize">Queue Status Board 5 for Rs.1499 per month</li>
-                                        <li class="fsize">Queue Status Board 10 for Rs.2499 per month</li>
-                                        <li class="fsize">Queue Status Board 25 for Rs.4999 per month</li>
-                                        <li class="fsize">Queue Status Board 100 for Rs.19999 per month</li>
+                                        <li class="fsize">QBoards Lite 1 for Rs.399 per month</li>
+                                        <li class="fsize">QBoards Lite 2 for Rs.759 per month</li>
+                                        <li class="fsize">QBoards 5 for Rs.1499 per month</li>
+                                        <li class="fsize">QBoards 10 for Rs.2499 per month</li>
+                                        <li class="fsize">QBoards 25 for Rs.4999 per month</li>
+                                        <li class="fsize">QBoards 100 for Rs.19999 per month</li>
                                     </ul>
                                 </td>
                             </tr>
@@ -5601,14 +5832,14 @@
                                 <td class="td1">Jaldee Messaging(SMS)</td>
                                 <td class="td2 bordl">
                                     <ul class="ul-normal">
-                                        <li class="fsize">Jaldee Messaging 1000 SMS for Rs 199 per
-                                            month on Real time- number</li>
-                                        <li class="fsize">Jaldee Messaging 2500 SMS for Rs 459 per
-                                            month  on Real time- number</li>
-                                        <li class="fsize">Jaldee Messaging 10000 SMS for Rs 1699 per
-                                            month  on Real time- number</li>
-                                        <li class="fsize">Jaldee Messaging  25000 SMS for Rs 3999 per
-                                            month  on Real time- number</li>
+                                        <li class="fsize">Jaldee Messaging 1000 SMS for Rs 250 per
+                                            month </li>
+                                        <li class="fsize">Jaldee Messaging 2500 SMS for Rs 625 per
+                                            month </li>
+                                        <li class="fsize">Jaldee Messaging 10000 SMS for Rs 2500 per
+                                            month  </li>
+                                        <li class="fsize">Jaldee Messaging  25000 SMS for Rs 6250 per
+                                            month </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -5641,13 +5872,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="td1">Queues and Services</td>
+                                <td class="td1">Queues Schedules and Services</td>
                                     <td class="td2 bordl">
                                         <ul class="ul-normal">
-                                            <li class="fsize">Queues and Services upto 25 for Rs. 299 per month on Team or above</li>
-                                            <li class="fsize">Queues and Services upto 50 for Rs. 599 per month on Team or above</li>
-                                            <li class="fsize">Queues and Services upto 100 for Rs. 1199 per month on Team or above</li>
-                                            <li class="fsize">Queues and Services upto 500 for Rs. 2399 per month on Team or above</li>
+                                            <li class="fsize">Queues Schedules and Services upto 25 for Rs. 299 per month on Team or above</li>
+                                            <li class="fsize">Queues Schedules and Services upto 50 for Rs. 599 per month on Team or above</li>
+                                            <li class="fsize">Queues Schedules and Services upto 100 for Rs. 1199 per month on Team or above</li>
+                                            <li class="fsize">Queues Schedules and Services upto 500 for Rs. 2399 per month on Team or above</li>
                                          </ul>
                                     </td>
                                 </tr>
@@ -5755,9 +5986,9 @@
     <!-- next -->
    
     <mat-accordion>
-        <mat-expansion-panel [expanded]='false'>
+        <mat-expansion-panel [expanded]='showprofile'>
             <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="handleScroll('profile', 'profile')">
+                <mat-panel-title class="accordion-title" (click)="menu('providerprofile')">
                     Provider Profile
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -5805,20 +6036,15 @@
                             Jaldee
                             provided notifications. Here a provider can learn about new coupons or any other such
                             information directly from Jaldee Super admin.</li>
-                        <li><strong>Activity Log :</strong> Here the provider can view the activities done by
-                            him/her.
-                            The details appear with a date and time stamp. It also shows the actions completed
-                            by
-                            the provider along with a little description.</li>
-                        <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the provider
-                            to
-                            enable check-in, if disabled or to disable the check-in, if enabled.</li>
+                       
                         <li><strong>License Details :</strong> Here the provider can see the current License
                             version
                             he/she is using. This option directly leads to the license page, where the provider
                             can
                             view the license history, its usage, payment history and upgrade the current License
                             package.</li>
+                            <li><strong>Messages:</strong> Here the provider can view the messages .
+                            </li>
                     </ul>
                 </ul>
             </div>

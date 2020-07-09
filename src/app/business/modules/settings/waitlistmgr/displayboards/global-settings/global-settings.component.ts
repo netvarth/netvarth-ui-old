@@ -95,11 +95,10 @@ export class GlobalSettingsComponent implements OnInit {
             this.onlyHeader = true;
             this.provider_services.getDisplayboardWaitlist(this.headerResult).subscribe(data => {
                 this.displayboard_data = data;
-                console.log(this.displayboard_data);
                 if (this.displayboard_data['headerSettings']) {
                     this.headerSettings['title1'] = this.displayboard_data['headerSettings']['title1'];
                 }
-                if (this.displayboard_data['headerSettings']) {
+                if (this.displayboard_data['footerSettings'] && this.displayboard_data['footerSettings']['title1']) {
                     this.footerSettings['title1'] = this.displayboard_data['footerSettings']['title1'];
                 }
                 if (this.displayboard_data.logoSettings) {
@@ -176,7 +175,6 @@ export class GlobalSettingsComponent implements OnInit {
             post_data['metric'] = this.displayboard_data.metric;
             post_data['layout'] = this.displayboard_data.layout;
         }
-        console.log(JSON.stringify(post_data));
         const propertiesDet = {
             'caption': 'Logo',
             'width': this.width,

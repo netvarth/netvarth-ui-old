@@ -405,11 +405,11 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qserveonce: this.queue_data.parallelServing || null,
             // timeSlot: this.queue_data.timeInterval || 0
         });
-        this.qbatchStatus = this.queue_data.batch;
-        if (this.queue_data.batchPatternSettings) {
-            this.qprefixName = this.queue_data.batchPatternSettings.prefix;
-            this.qsuffixName = this.queue_data.batchPatternSettings.suffix;
-        }
+        // this.qbatchStatus = this.queue_data.batch;
+        // if (this.queue_data.batchPatternSettings) {
+        //     this.qprefixName = this.queue_data.batchPatternSettings.prefix;
+        //     this.qsuffixName = this.queue_data.batchPatternSettings.suffix;
+        // }
         if (!this.queue_data.batchPatternSettings || (!this.queue_data.batchPatternSettings.prefix && !this.queue_data.batchPatternSettings.suffix) || (this.queue_data.batchPatternSettings.prefix === '' && this.queue_data.batchPatternSettings.suffix === '')) {
             this.showEditSection = true;
         } else {
@@ -445,7 +445,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     onSubmit(form_data) {
         if (!form_data.qname.replace(/\s/g, '').length) {
             const error = 'Please enter queue name';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         const selser: any = [];
@@ -477,7 +477,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
             const error = 'Please select the days';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             // Numeric validation
@@ -571,12 +571,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
                 'timeInterval': form_data.timeSlot,
-                'provider': this.userId,
-                'batch': this.qbatchStatus,
-                'batchPatternSettings': {
-                    'prefix': this.qprefixName,
-                    'suffix': this.qsuffixName
-                }
+                'provider': this.userId
+                // 'batch': this.qbatchStatus,
+                // 'batchPatternSettings': {
+                //     'prefix': this.qprefixName,
+                //     'suffix': this.qsuffixName
+                // }
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);

@@ -58,13 +58,12 @@ export class CallingModesComponent implements OnInit {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        console.log(this.data)
         this.busnes_name = this.data.qdata.providerAccount.businessName;
         if (this.data.type === 'checkin') {
             this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
             this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
             this.serv_name = this.data.qdata.service.name;
-            this.date = this.data.qdata.date;
+            this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
             this.time = this.data.qdata.checkInTime;
             this.serv_provider = this.data.qdata.providerAccount.businessName;
             this.location = this.data.qdata.queue.location.address;
@@ -76,7 +75,7 @@ export class CallingModesComponent implements OnInit {
         } else {
             this.consumer_fname = this.data.qdata.appmtFor[0].userName;
             this.serv_name = this.data.qdata.service.name;
-            this.date = this.data.qdata.appmtDate;
+            this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
             this.time = this.data.qdata.appmtTime;
             this.serv_provider = this.data.qdata.providerAccount.businessName;
             this.location = this.data.qdata.location.address;
@@ -85,9 +84,9 @@ export class CallingModesComponent implements OnInit {
         for (const i in this.data.modes) {
             this.callingModes = i;
         }
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
+        // if (this.callingModes !== 'WhatsApp') {
+        //     this.callingModes = 'Zoom';
+        // }
         if (this.data.linkValue) {
             this.show_link_only = true;
             if (this.data.linkValue === 1) {
@@ -126,12 +125,11 @@ export class CallingModesComponent implements OnInit {
         this.getMeetingDetails();
     }
     selectHeadsup() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         if (this.callingModes === 'WhatsApp') {
             // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';
             this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a video call for your service. Please be ready';
+        } else if (this.callingModes === 'Phone') {
+            this.msg_to_user = 'In one minute, ' + this.busnes_name + ' will be starting a audio call for your service. Please be ready';
         } else {
             this.getMeetingDetails();
             // this.msg_to_user = this.busnes_name + ' will be contacting you via ' + this.callingModes + ' .Join the ' + this.callingModes + ' using ' + this.temp_msglink;
@@ -142,6 +140,8 @@ export class CallingModesComponent implements OnInit {
         if (this.callingModes === 'WhatsApp') {
          //   this.msg_to_user = this.busnes_name + ' is already waiting';
          this.msg_to_user = 'I am waiting for you to start the video call';
+        } else if (this.callingModes === 'Phone') {
+            this.msg_to_user = 'I am waiting for you to start the audio call';
         } else {
           //  this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
           this.msg_to_user = 'I am waiting for you to start the video call. Here is the meeting details ' + this.temp_msglink;
@@ -195,9 +195,6 @@ export class CallingModesComponent implements OnInit {
         }
     }
     chkinTeleserviceJoinLink() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         const uuid_data = {
             'mode': this.callingModes
         };
@@ -212,9 +209,6 @@ export class CallingModesComponent implements OnInit {
             });
     }
     apptTeleserviceJoinLink() {
-        if (this.callingModes !== 'WhatsApp') {
-            this.callingModes = 'Zoom';
-        }
         const uuid_data = {
             'mode': this.callingModes
         };

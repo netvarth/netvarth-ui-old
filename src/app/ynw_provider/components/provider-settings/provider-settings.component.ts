@@ -248,7 +248,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.apptlist_details = data;
-          console.log(data);
           this.apptlist_status = data['enableToday'] || false;
           this.futureDateApptlist = data['futureAppt'] || false;
           this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
@@ -365,7 +364,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    console.log(user_data);
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {
@@ -792,9 +790,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.bProfile = data;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
-            this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+            this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
               subdomainfields => {
-                this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
+                this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
               });
           });
         if (this.bProfile.baseLocation) {

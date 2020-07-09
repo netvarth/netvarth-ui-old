@@ -6,8 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../app.component';
-
 
 @Component({
     selector: 'app-custom-view',
@@ -32,10 +30,9 @@ export class CustomViewComponent implements OnInit {
     customViewDetails: any = [];
     providerQs: any = [];
     providerServices: any = [];
-    allUsersIds: any = [];
     todaysQs: any = [];
     scheduledQs: any = [];
-    loading = true;
+    loading = false;
     viewId;
     isDepartments = false;
     firstFormGroup: FormGroup;
@@ -44,7 +41,7 @@ export class CustomViewComponent implements OnInit {
     userMultiFilterCtrl: FormControl = new FormControl();
     serviceMultiFilterCtrl: FormControl = new FormControl();
     qMultiFilterCtrl: FormControl = new FormControl();
-    scheduleMultiFilterCtrl : FormControl = new FormControl();
+    scheduleMultiFilterCtrl: FormControl = new FormControl();
     onDestroy = new Subject<void>();
     filterDepList: any = [];
     filterUsersList: any = [];
@@ -68,25 +65,23 @@ export class CustomViewComponent implements OnInit {
         }
     ];
     provider_label;
-
+    servicesList: any = [];
+    serviceScheduleCount;
+    serviceQCount;
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices) {
         this.activated_route.queryParams.subscribe((qparams) => {
+            this.loading = true;
             this.viewId = qparams.id;
             this.getWaitlistMgr();
             this.getDepartments();
+            this.getUsers();
+            this.getProviderServices();
             this.getAccountQs();
-            this.getAccountSchedules();
-            this.getAccountServices();
+            this.getAppointmentSchedules();
             this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-            if (this.viewId) {
-                this.getView(this.viewId);
-            } else {
-                this.getUsers();
-                this.loading = false;
-            }
         });
     }
     ngOnInit() {
@@ -110,13 +105,37 @@ export class CustomViewComponent implements OnInit {
             .subscribe(() => {
                 this.filterQbySearch();
             });
-            this.scheduleMultiFilterCtrl.valueChanges
+        this.scheduleMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterSchedulebySearch();
             });
-            
+        setTimeout(() => {
+            if (this.viewId) {
+                this.getView(this.viewId);
+            } else {
+                this.loading = false;
+            }
+        }, 1000);
     }
+    getProviderServices() {
+        return new Promise((resolve) => {
+            const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
+            if (this.selectedUsersId && this.selectedUsersId.length > 0) {
+                params['provider-eq'] = this.selectedUsersId.toString();
+            }
+            if (this.selectedDeptIds && this.selectedDeptIds.length > 0) {
+                params['department-eq'] = this.selectedDeptIds.toString();
+            }
+            this.provider_services.getServicesList(params)
+                .subscribe(data => {
+                    this.service_list = data;
+                    this.filterServiicesList = this.service_list;
+                    resolve();
+                });
+        });
+    }
+
     filterDeptbySearch() {
         if (!this.filterDepList) {
             return;
@@ -184,209 +203,16 @@ export class CustomViewComponent implements OnInit {
         this.todaysQs = this.schedulestoDisplay.filter(q => q.name.toLowerCase().indexOf(search) > -1);
     }
     getAccountQs() {
-        const filter = {
-            'scope-eq': 'account'
-        };
-        this.provider_services.getProviderQueues(filter)
-            .subscribe(
-                (data: any) => {
-                    this.providerQs = data;
-                    console.log(this.providerQs);
-                });
-    }
-    getAccountSchedules() {
-        const filter = {
-            'scope-eq': 'account'
-        };
-        this.provider_services.getAccountSchedules(filter)
-            .subscribe(
-                (data: any) => {
-                    this.providerSds = data;
-                    console.log(this.providerSds);
-                });
-    }
-    getAccountServices() {
-        const filter = {
-            'scope-eq': 'account',
-            'serviceType-neq': 'donationService'
-        };
-        this.provider_services.getProviderServices(filter)
-            .subscribe(
-                (data: any) => {
-                    this.providerServices = data;
-                });
-    }
-    getView(viewId) {
-        this.provider_services.getCustomViewDetail(viewId)
-            .subscribe(
-                data => {
-                    this.customViewDetails = data;
-                   // console.log(this.customViewDetails)
-                    this.customViewName = this.customViewDetails.name;
-                    this.customViewFor = this.customViewDetails.type;
-                    this.selectedDepartments = [];
-                    this.selectedUsers = [];
-                    this.selectedServices = [];
-                    this.selectedQs = [];
-                    this.selectedScheduls = [];
-                    
-                    for (const id of this.customViewDetails.customViewConditions.departments) {
-                        this.selectedDeptIds.push(id.departmentId);
-                        for (const dept of this.departments) {
-                            if (dept.departmentId === id.departmentId) {
-                                this.selectedDepartments.push(dept);
-                            }
-                        }
-                    }
-                    this.getUsers();
-                    setTimeout(() => {
-                        if (this.customViewDetails.customViewConditions.users.length > 0) {
-                            for (const id of this.customViewDetails.customViewConditions.users) {
-                                this.selectedUsersId.push(id.id);
-                                for (const user of this.users_list) {
-                                    if (user.id === id.id) {
-                                        this.selectedUsers.push(user);
-                                    }
-                                }
-                            }
-                        }
-                        this.getServices();
-                        if (this.customViewFor === 'Waitlist'){
-                            this.getQs();
-                        }else {
-                            this.getAppointmentSchedules();
-                        }
-                        
-                    }, 100);
-                    setTimeout(() => {
-                        if (this.customViewDetails.customViewConditions.services.length > 0) {
-                            for (const id of this.customViewDetails.customViewConditions.services) {
-                                this.selectedServiceids.push(id.id);
-                                for (const service of this.service_list) {
-                                    if (service.id === id.id) {
-                                        this.selectedServices.push(service);
-                                    }
-                                }
-                            }
-                        }
-                        if (this.customViewDetails.customViewConditions.queues){
-                            if (this.customViewDetails.customViewConditions.queues.length > 0) {
-                                for (const id of this.customViewDetails.customViewConditions.queues) {
-                                    this.selectedQIds.push(id.id);
-                                    for (const q of this.qstoDisplay) {
-                                        if (q.id === id.id) {
-                                            this.selectedQs.push(q);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if(this.customViewDetails.customViewConditions.schedules){
-                            if (this.customViewDetails.customViewConditions.schedules.length > 0) {
-                                for (const id of this.customViewDetails.customViewConditions.schedules) {
-                                    this.selectedScheduleIds.push(id.id);
-                                    for (const q of this.todaysQs) {
-                                        if (q.id === id.id) {
-                                            this.selectedScheduls.push(q);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }, 250);
-                    setTimeout(() => {
-                        this.loading = false;
-                    }, 500);
-                },
-                error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                }
-            );
-    }
-    getDepartments() {
-        this.provider_services.getDepartments()
-            .subscribe(
-                (data: any) => {
-                    this.isDepartments = true;
-                    this.departments = data.departments;
-                    console.log(this.departments)
-                    this.filterDepList = data.departments;
-                },
-                error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                    this.isDepartments = false;
-                }
-            );
-    }
-    getWaitlistMgr() {
-        this.provider_services.getWaitlistMgr()
-            .subscribe(
-                data => {
-                   this.waitlistMngr  = data
-                   console.log(this.waitlistMngr);
-                });
-    }
-    getServices() {
-        let doctorsIds;
-        let departmentIds;
-        if(this.selectedDeptIds.length > 0){
-            departmentIds = this.selectedDeptIds;
+        const params = {};
+        if (this.selectedUsersId && this.selectedUsersId.length > 0) {
+            params['provider-eq'] = this.selectedUsersId.toString();
         }
-        if (this.selectedUsersId.length > 0) {
-            doctorsIds = this.selectedUsersId;
-        } else {
-            doctorsIds = this.allUsersIds;
-        }
-
-        let filter = {};
-            if(departmentIds && departmentIds.length > 0){
-                //  filter = {
-                //      'department-eq' : departmentIds.toString()
-                // };
-                filter['department-eq'] = departmentIds.toString();
-               // console.log(filter);
-            }
-            if (doctorsIds && doctorsIds.length > 0){
-            //     filter = {
-            //        'provider-eq': doctorsIds.toString()
-            //    };
-            filter['provider-eq'] = doctorsIds.toString();
-            }
-           // console.log(filter);
-        this.provider_services.getUserServicesList(filter)
+        this.provider_services.getProviderQueues(params)
             .subscribe(
-                data => {
-                    this.service_list = data;
-                   // console.log("Services by dep :", this.service_list)
-                    if (this.selectedUsersId.length === 0 && this.selectedDeptIds.length === 0) {
-                        this.service_list = this.service_list.concat(this.providerServices);
-                    }
-                   // console.log(this.service_list);
-                    this.filterServiicesList = this.service_list;
-                },
-                error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                }
-            );
-    }
-
-    getQs() {
-        let doctorsIds;
-        if (this.selectedUsersId.length > 0) {
-            doctorsIds = this.selectedUsersId;
-        } else {
-            doctorsIds = this.allUsersIds;
-        }
-        this.provider_services.getUserProviderQueues(doctorsIds.toString())
-            .subscribe(
-                (data) => {
+                (data: any) => {
                     let allQs: any = [];
                     this.qstoDisplay = [];
                     allQs = data;
-                    if (this.selectedUsersId.length === 0) {
-                        allQs = allQs.concat(this.providerQs);
-                    }
                     for (let ii = 0; ii < allQs.length; ii++) {
                         let schedule_arr = [];
                         if (allQs[ii].queueSchedule) {
@@ -402,177 +228,307 @@ export class CustomViewComponent implements OnInit {
                         }
                     }
                     this.queuestoDisplay = this.qstoDisplay;
+                });
+    }
+    getView(viewId) {
+        this.provider_services.getCustomViewDetail(viewId)
+            .subscribe(
+                data => {
+                    this.customViewDetails = data;
+                    this.customViewName = this.customViewDetails.name;
+                    this.customViewFor = this.customViewDetails.type;
+                    this.selectedDepartments = [];
+                    this.selectedUsers = [];
+                    this.selectedScheduls = [];
+                    if (this.waitlistMngr.filterByDept && this.customViewDetails.customViewConditions.departments && this.customViewDetails.customViewConditions.departments.length > 0) {
+                        for (let j = 0; j < this.customViewDetails.customViewConditions.departments.length; j++) {
+                            for (let i = 0; i < this.departments.length; i++) {
+                                if (this.customViewDetails.customViewConditions.departments[j].departmentId === this.departments[i].departmentId) {
+                                    if (this.selectedDepartments.indexOf(this.departments[i]) === -1) {
+                                        this.selectedDepartments.push(this.departments[i]);
+                                    }
+                                    if (this.selectedDeptIds.indexOf(this.customViewDetails.customViewConditions.departments[j].departmentId) === -1) {
+                                        this.selectedDeptIds.push(this.customViewDetails.customViewConditions.departments[j].departmentId);
+                                    }
+                                }
+                            }
+                            if (j < this.customViewDetails.customViewConditions.departments.length) {
+                                this.getUsers();
+                                if (this.customViewDetails.customViewConditions.users && this.customViewDetails.customViewConditions.users.length > 0) {
+                                    this.getProviderServices();
+                                }
+                                setTimeout(() => {
+                                    this.departmentSelection();
+                                }, 500);
+                            }
+                        }
+                    } else {
+                        this.departmentSelection();
+                    }
                 },
-                (error) => {
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
 
+    departmentSelection() {
+        this.selectedServices = [];
+        this.selectedQs = [];
+        if (this.customViewDetails.customViewConditions.users && this.customViewDetails.customViewConditions.users.length > 0) {
+            for (let j = 0; j < this.customViewDetails.customViewConditions.users.length; j++) {
+                for (let i = 0; i < this.filterUsersList.length; i++) {
+                    if (this.customViewDetails.customViewConditions.users[j].id === this.filterUsersList[i].id) {
+                        if (this.selectedUsers.indexOf(this.filterUsersList[i]) === -1) {
+                            this.selectedUsers.push(this.filterUsersList[i]);
+                        }
+                        if (this.selectedUsersId.indexOf(this.customViewDetails.customViewConditions.users[j].id) === -1) {
+                            this.selectedUsersId.push(this.customViewDetails.customViewConditions.users[j].id);
+                        }
+                    }
+                }
+                if (j < this.customViewDetails.customViewConditions.users.length) {
+                    this.getProviderServices();
+                    if (this.customViewFor === 'Appointment') {
+                        this.getAppointmentSchedules();
+                    } else {
+                        this.getAccountQs();
+                    }
+                    setTimeout(() => {
+                        this.userSelection();
+                    }, 500);
+                }
+            }
+        } else {
+            this.userSelection();
+        }
+    }
+
+    userSelection() {
+        if (this.customViewDetails.customViewConditions.services && this.customViewDetails.customViewConditions.services.length > 0) {
+            for (let j = 0; j < this.customViewDetails.customViewConditions.services.length; j++) {
+                for (let i = 0; i < this.filterServiicesList.length; i++) {
+                    if (this.customViewDetails.customViewConditions.services[j].id === this.filterServiicesList[i].id) {
+                        if (this.selectedServices.indexOf(this.filterServiicesList[i]) === -1) {
+                            this.selectedServices.push(this.filterServiicesList[i]);
+                        }
+                        if (this.selectedServiceids.indexOf(this.customViewDetails.customViewConditions.services[j].id) === -1) {
+                            this.selectedServiceids.push(this.customViewDetails.customViewConditions.services[j].id);
+                        }
+                    }
+                }
+                if (j < this.customViewDetails.customViewConditions.services.length) {
+                    if (this.customViewFor === 'Appointment') {
+                        this.apptServiceSelection();
+                    } else {
+                        this.checkinServiceSelection();
+                    }
+                }
+            }
+        } else {
+            if (this.customViewFor === 'Appointment') {
+                this.apptServiceSelection();
+            } else {
+                this.checkinServiceSelection();
+            }
+        }
+    }
+    setServiceIds(service) {
+        this.selectedQs = [];
+        this.selectedQIds = [];
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
+        const index = this.selectedServiceids.indexOf(service);
+        if (index === -1) {
+            this.selectedServiceids.push(service);
+        } else {
+            this.selectedServiceids.splice(index, 1);
+        }
+        if (this.customViewFor === 'Appointment') {
+            this.apptServiceSelection();
+        } else {
+            this.checkinServiceSelection();
+        }
+    }
+    queueSelection(queue) {
+        const index = this.selectedQIds.indexOf(queue);
+        if (index === -1) {
+            this.selectedQIds.push(queue);
+        } else {
+            this.selectedQIds.splice(index, 1);
+        }
+    }
+    setDeptIds(dept) {
+        this.selectedUsers = [];
+        this.selectedUsersId = [];
+        this.selectedServices = [];
+        this.selectedServiceids = [];
+        this.selectedQs = [];
+        this.selectedQIds = [];
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
+        const index = this.selectedDeptIds.indexOf(dept);
+        if (index === -1) {
+            this.selectedDeptIds.push(dept);
+        } else {
+            this.selectedDeptIds.splice(index, 1);
+        }
+        this.getUsers();
+        this.getProviderServices();
+        if (this.customViewFor === 'Appointment') {
+            this.getAppointmentSchedules();
+        } else {
+            this.getAccountQs();
+        }
+    }
+
+    setUsersIds(userId) {
+        this.selectedServices = [];
+        this.selectedServiceids = [];
+        this.selectedQs = [];
+        this.selectedQIds = [];
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
+        const index = this.selectedUsersId.indexOf(userId);
+        if (index === -1) {
+            this.selectedUsersId.push(userId);
+        } else {
+            this.selectedUsersId.splice(index, 1);
+        }
+        this.getProviderServices();
+        if (this.customViewFor === 'Appointment') {
+            this.getAppointmentSchedules();
+        } else {
+            this.getAccountQs();
+        }
+    }
+    checkinServiceSelection() {
+        this.selectedQs = [];
+        this.selectedQIds = [];
+        this.qstoDisplay = [];
+        if (this.selectedServices && this.selectedServices.length > 0) {
+            for (let i = 0; i < this.selectedServices.length; i++) {
+                for (let j = 0; j < this.queuestoDisplay.length; j++) {
+                    for (let k = 0; k < this.queuestoDisplay[j].services.length; k++) {
+                        if (this.queuestoDisplay[j].services[k].id === this.selectedServices[i].id && this.qstoDisplay.indexOf(this.queuestoDisplay[j]) === -1) {
+                            this.qstoDisplay.push(this.queuestoDisplay[j]);
+                        }
+                    }
+                }
+            }
+            this.serviceQCount = this.qstoDisplay.length;
+        } else {
+            this.qstoDisplay = this.queuestoDisplay;
+            this.serviceQCount = this.qstoDisplay.length;
+        }
+        if (this.viewId && this.customViewDetails.customViewConditions.queues && this.customViewDetails.customViewConditions.queues.length > 0) {
+            for (let j = 0; j < this.customViewDetails.customViewConditions.queues.length; j++) {
+                for (let i = 0; i < this.queuestoDisplay.length; i++) {
+                    if (this.customViewDetails.customViewConditions.queues[j].id === this.queuestoDisplay[i].id) {
+                        if (this.selectedQs.indexOf(this.queuestoDisplay[i]) === -1) {
+                            this.selectedQs.push(this.queuestoDisplay[i]);
+                        }
+                        if (this.selectedQIds.indexOf(this.customViewDetails.customViewConditions.queues[j].id) === -1) {
+                            this.selectedQIds.push(this.customViewDetails.customViewConditions.queues[j].id);
+                        }
+                    }
+                }
+            }
+        }
+        this.loading = false;
+    }
+
+    apptServiceSelection() {
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
+        this.todaysQs = [];
+        if (this.selectedServices && this.selectedServices.length > 0) {
+            for (let i = 0; i < this.selectedServices.length; i++) {
+                for (let j = 0; j < this.schedulestoDisplay.length; j++) {
+                    for (let k = 0; k < this.schedulestoDisplay[j].services.length; k++) {
+                        if (this.schedulestoDisplay[j].services[k].id === this.selectedServices[i].id && this.todaysQs.indexOf(this.queuestoDisplay[j]) === -1) {
+                            this.todaysQs.push(this.schedulestoDisplay[j]);
+                        }
+                    }
+                }
+            }
+            this.serviceScheduleCount = this.todaysQs.length;
+        } else {
+            this.todaysQs = this.schedulestoDisplay;
+            this.serviceScheduleCount = this.todaysQs.length;
+        }
+        if (this.viewId && this.customViewDetails.customViewConditions.schedules && this.customViewDetails.customViewConditions.schedules.length > 0) {
+            for (let j = 0; j < this.customViewDetails.customViewConditions.schedules.length; j++) {
+                for (let i = 0; i < this.schedulestoDisplay.length; i++) {
+                    if (this.customViewDetails.customViewConditions.schedules[j].id === this.schedulestoDisplay[i].id) {
+                        if (this.selectedScheduls.indexOf(this.schedulestoDisplay[i]) === -1) {
+                            this.selectedScheduls.push(this.schedulestoDisplay[i]);
+                        }
+                        if (this.selectedScheduleIds.indexOf(this.customViewDetails.customViewConditions.schedules[j].id) === -1) {
+                            this.selectedScheduleIds.push(this.customViewDetails.customViewConditions.schedules[j].id);
+                        }
+                    }
+                }
+            }
+        }
+        this.loading = false;
+    }
+    getDepartments() {
+        this.provider_services.getDepartments()
+            .subscribe(
+                (data: any) => {
+                    this.isDepartments = true;
+                    this.departments = data.departments;
+                    this.filterDepList = data.departments;
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.isDepartments = false;
+                }
+            );
+    }
+    getWaitlistMgr() {
+        this.provider_services.getWaitlistMgr()
+            .subscribe(
+                data => {
+                    this.waitlistMngr = data;
                 });
     }
 
     getAppointmentSchedules() {
-        let doctorsIds;
-        if (this.selectedUsersId.length > 0) {
-            doctorsIds = this.selectedUsersId;
-        }else {
-            doctorsIds = this.allUsersIds;
+        const params = {};
+        if (this.selectedUsersId && this.selectedUsersId.length > 0) {
+            params['provider-eq'] = this.selectedUsersId.toString();
         }
-        
-            let filter = {};
-            if (doctorsIds && doctorsIds.length > 0) {
-                 filter = {
-                    'provider-eq': doctorsIds.toString()
-                };
-            }
-            this.provider_services.getProviderSchedules(filter)
-                .subscribe(
-                    (data) => {
-                       // console.log(data);
-                        let allQs: any = [];
-                        this.todaysQs = [];
-                       // this.scheduledQs = [];
-                        allQs = data;
-                        // const server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-                        // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-                        // const today = new Date(todaydt);
-                        // const dd = today.getDate();
-                        // const mm = today.getMonth() + 1;
-                        // const yyyy = today.getFullYear();
-                        // let cmon;
-                        // let cdate;
-                        // if (mm < 10) {
-                        //     cmon = '0' + mm;
-                        // } else {
-                        //     cmon = '' + mm;
-                        // }
-                        // if (dd < 10) {
-                        //     cdate = '0' + dd;
-                        // } else {
-                        //     cdate = '' + dd;
-                        // }
-                        // const todayDate = yyyy + '-' + cmon + '-' + cdate;
-                        if (this.selectedUsersId.length === 0) {
-                            allQs = allQs.concat(this.providerSds);
+        this.provider_services.getProviderSchedules(params)
+            .subscribe(
+                (data) => {
+                    let allQs: any = [];
+                    this.todaysQs = [];
+                    allQs = data;
+                    if (this.selectedUsersId.length === 0) {
+                        allQs = allQs.concat(this.providerSds);
+                    }
+                    for (let ii = 0; ii < allQs.length; ii++) {
+                        let schedule_arr = [];
+                        if (allQs[ii].apptSchedule) {
+                            schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].apptSchedule);
                         }
-                        for (let ii = 0; ii < allQs.length; ii++) {
-                            let schedule_arr = [];
-                            if (allQs[ii].apptSchedule) {
-                                schedule_arr = this.shared_functions.queueSheduleLoop(allQs[ii].apptSchedule);
-                            }
-                            let display_schedule = [];
-                            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-                            allQs[ii]['displayschedule'] = display_schedule;
-                        }
-                        for (let ii = 0; ii < allQs.length; ii++) {
-                            if (allQs[ii].apptState === 'ENABLED'&& this.todaysQs.indexOf(allQs[ii]) === -1) {
-                                this.todaysQs.push(allQs[ii]);
-                            }
-                        }
-
-                        this.schedulestoDisplay = this.todaysQs;
-                       
-                    },
-                    (error) => {
-                        console.log(error);
-                        
-                    });
-       
-    }
-
-
-
-    
-    deptSelection(depIds) {
-        if (this.selectedDeptIds.indexOf(depIds) === -1) {
-            this.selectedDeptIds.push(depIds);
-            this.getUsers();
-        } else {
-            this.selectedDeptIds.splice(this.selectedDeptIds.indexOf(depIds), 1);
-        }
-        this.getServices();
-        this.selectedUsers = [];
-        this.selectedServices = [];
-        this.selectedQs = [];
-        this.selectedScheduls = [];
-        this.selectedUsersId = [];
-        this.selectedServiceids = [];
-        this.selectedQIds = [];
-        this.selectedScheduleIds = [];
-        
-    }
-    userSelection(userIds) {
-        if (this.selectedUsersId.indexOf(userIds) === -1) {
-            this.selectedUsersId.push(userIds);
-        } else {
-            this.selectedUsersId.splice(this.selectedUsersId.indexOf(userIds), 1);
-        }
-        if (this.customViewFor === 'Waitlist'){
-            this.getQs();
-        } else {
-            this.getAppointmentSchedules();
-        }
-        this.getServices();
-        this.selectedServices = [];
-        this.selectedQs = [];
-        this.selectedScheduls = [];
-        this.selectedServiceids = [];
-        this.selectedQIds = [];
-        this.selectedScheduleIds = [];
-    }
-    serviceSelection(servIds) {
-        if (this.selectedServiceids.indexOf(servIds) === -1) {
-            this.selectedServiceids.push(servIds);
-        } else {
-            this.selectedServiceids.splice(this.selectedServiceids.indexOf(servIds), 1);
-        }
-        this.qSelectionByService();
-        this.selectedQs = [];
-        this.selectedScheduls = [];
-        this.selectedQIds = [];
-        this.selectedScheduleIds = [];
-    }
-    qSelectionByService() {
-        if (this.customViewFor === 'Waitlist'){
-            const qs = [];
-        if (this.selectedServices.length > 0) {
-            for (let i = 0; i < this.selectedServices.length; i++) {
-                for (let j = 0; j < this.queuestoDisplay.length; j++) {
-                    for (let k = 0; k < this.queuestoDisplay[j].services.length; k++) {
-                        if (this.selectedServices[i].id === this.queuestoDisplay[j].services[k].id) {
-                            qs.push(this.queuestoDisplay[j]);
+                        let display_schedule = [];
+                        display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+                        allQs[ii]['displayschedule'] = display_schedule;
+                    }
+                    for (let ii = 0; ii < allQs.length; ii++) {
+                        if (allQs[ii].apptState === 'ENABLED' && this.todaysQs.indexOf(allQs[ii]) === -1) {
+                            this.todaysQs.push(allQs[ii]);
                         }
                     }
-                }
-            }
-            this.qstoDisplay = qs;
-            return false;
-        } else {
-            this.qstoDisplay = this.queuestoDisplay;
-        }
-        }else{
-            const qs = [];
-            if (this.selectedServices.length > 0) {
-                for (let i = 0; i < this.selectedServices.length; i++) {
-                    for (let j = 0; j < this.schedulestoDisplay.length; j++) {
-                        for (let k = 0; k < this.schedulestoDisplay[j].services.length; k++) {
-                            if (this.selectedServices[i].id === this.schedulestoDisplay[j].services[k].id) {
-                                qs.push(this.schedulestoDisplay[j]);
-                            }
-                        }
-                    }
-                }
-                this.todaysQs = qs;
-                return false;
-            } else {
-                this.todaysQs = this.schedulestoDisplay;
-            }
-        }
+                    this.schedulestoDisplay = this.todaysQs;
+                },
+                (error) => {
+                });
     }
-    qSelection(QIds) {
-        if (this.selectedQIds.indexOf(QIds) === -1) {
-            this.selectedQIds.push(QIds);
-        } else {
-            this.selectedQIds.splice(this.selectedQIds.indexOf(QIds), 1);
-        }
-    }
+
     scheduleSelection(QIds) {
         if (this.selectedScheduleIds.indexOf(QIds) === -1) {
             this.selectedScheduleIds.push(QIds);
@@ -589,34 +545,34 @@ export class CustomViewComponent implements OnInit {
         this.provider_services.getUsers(apiFilter).subscribe(
             (data: any) => {
                 this.users_list = data;
-               // console.log(this.users_list);
                 this.filterUsersList = data;
-                for (const user of this.users_list) {
-                    if (this.allUsersIds.indexOf(user.id) === -1) {
-                        this.allUsersIds.push(user.id);
-                    }
-                }
-                if (!this.customViewDetails.customViewConditions) {
-                        this.getServices();
-                        this.getQs();
-                        this.getAppointmentSchedules();
-                    
-                }
             }
         );
     }
     createCustomView() {
-        const depids = [];
-        for (const id of this.selectedDeptIds) {
-            depids.push({ 'departmentId': id });
+        let depids = [];
+        if (this.selectedDeptIds.length > 0) {
+            for (const id of this.selectedDeptIds) {
+                depids.push({ 'departmentId': id });
+            }
+        } else {
+            depids = null;
         }
-        const userids = [];
-        for (const id of this.selectedUsersId) {
-            userids.push({ 'id': id });
+        let userids = [];
+        if (this.selectedUsersId.length > 0) {
+            for (const id of this.selectedUsersId) {
+                userids.push({ 'id': id });
+            }
+        } else {
+            userids = null;
         }
-        const servicesids = [];
-        for (const id of this.selectedServiceids) {
-            servicesids.push({ 'id': id });
+        let servicesids = [];
+        if (this.selectedServiceids.length > 0) {
+            for (const id of this.selectedServiceids) {
+                servicesids.push({ 'id': id });
+            }
+        } else {
+            servicesids = null;
         }
         const qids = [];
         if (this.selectedQIds.length !== 0) {
@@ -639,8 +595,8 @@ export class CustomViewComponent implements OnInit {
             }
         }
         let customViewInput;
-        if(this.customViewFor == 'Waitlist'){
-             customViewInput = {
+        if (this.customViewFor === 'Waitlist') {
+            customViewInput = {
                 'name': this.customViewName,
                 'merged': true,
                 'customViewConditions': {
@@ -651,8 +607,8 @@ export class CustomViewComponent implements OnInit {
                 },
                 'type': this.customViewFor
             };
-        }else {
-             customViewInput = {
+        } else {
+            customViewInput = {
                 'name': this.customViewName,
                 'merged': true,
                 'customViewConditions': {
@@ -664,7 +620,6 @@ export class CustomViewComponent implements OnInit {
                 'type': this.customViewFor
             };
         }
-        
         if (this.viewId) {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data) => {

@@ -454,7 +454,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.inboxCntFetched = true;
         this.inboxUnreadCnt = data;
-        console.log('count ' + this.inboxUnreadCnt);
       },
         () => {
         });

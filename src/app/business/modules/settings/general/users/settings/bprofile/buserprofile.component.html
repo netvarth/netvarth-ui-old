@@ -36,6 +36,177 @@
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                 </div>
+
+                                <!-- <div class="pubs card w-dta bprof" *ngIf="bProfile.profileId"> -->
+                                    <!-- <div class="ctrl">
+                                        <div class="ct-l">
+                                            <h2>Jaldee Link</h2>
+                                        </div>
+                                    </div>
+                                    <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
+                                            id="customer-help"
+                                            (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
+                                            More</a></p> -->
+
+
+                                    <!-- <div *ngIf="!bProfile.customId">
+                                        <div>
+                                            <div class="sblinks">
+                                                <ul class="sbl">
+                                                    <li class="acc-url-li">
+                                                        <span class="custid" rel="noopener"
+                                                            target="_blank">{{wndw_path}}{{bProfile.profileId}} </span>
+                                                        <span class="busns-id">
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-copy custId-cursor"
+                                                                    (click)="copyInputMessage(bProfile.profileId)"
+                                                                    [matTooltip]="'Copy link'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
+                                                                    (click)="qrCodegenerateOnlineID(bProfile.profileId)"
+                                                                    [matTooltip]="'Generate QR code'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                                <button class="btn-primary-n" (click)="customizeId()">
+                                                                    <a>
+                                                                        Customize ID
+                                                                    </a>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                  
+                                    <!-- <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
+                                        <div><i (click)="closeOnlineQR()"
+                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i></div>
+                                        <div class="ngx-qrcod">
+                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
+                                                [qrc-value]="qr_value">
+                                            </ngx-qrcode>
+                                        </div>
+                                        <div class="coupon-outer">
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
+                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
+                                                        style="padding-right: 2px;"></i>Download</a></button>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
+                                        <form [formGroup]="customForm"
+                                            class="ynw-common-form-nm change-mob-style custId-flex-form"
+                                            *ngIf="editMode==1 || editMode==0">
+                                            <div class="form-group custId-flex">
+                                                <mat-form-field class="custId-ip-wdth">
+                                                    <input matInput type="text" minlength="4" maxlength="25"
+                                                        class="form-control" autocomplete="off" value="www.jaldee.com/"
+                                                        [readonly]="true" style="color: #a5a2a2;">
+                                                </mat-form-field>
+                                                <mat-form-field>
+                                                    <input matInput type="text" minlength="4" maxlength="25"
+                                                        class="form-control custId-ip-max-wdth" id="customid"
+                                                        formControlName="customid" autocomplete="off">
+                                                    <app-field-error-display
+                                                        [displayError]="fed_service.isFieldValid(customForm,'customid')"
+                                                        [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
+                                                                    {
+                                                                    'required' : 'Please enter your Custom Business ID',
+                                                                    'minlength' : 'Minimum 4 characters are required',
+                                                                    'maxlength' : 'Maximum 25 characters are allowed',
+                                                                    'pattern' : 'Only alphabet,numbers and hyphen are allowed'
+                                                                    })">
+                                                    </app-field-error-display>
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="form-group custId-btns">
+                                                <button (click)="cancelCusUpdt()"
+                                                    class="cs-btn bt2 custId-btn-bt2">Cancel</button>
+                                                <button (click)="add_updateCustomId(customForm.value)" mat-button
+                                                    [disabled]="!customForm.valid"
+                                                    class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                                            </div>
+
+                                        </form>
+                                    </div> -->
+
+                                    <!-- <div>
+                                        <div *ngIf="normal_customid_show==3">
+                                            <div class="sblinks">
+                                                <ul class="sbl">
+                                                    <li class="acc-url-li">
+                                                        <span class="custid" rel="noopener"
+                                                            target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
+                                                        <span class="busns-id">
+                                                            <span class="custid custId-icon"><i
+                                                                    class="fa fa-copy custId-cursor"
+                                                                    (click)="copyInputMessage(bProfile.customId)"
+                                                                    [matTooltip]="'Copy link'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
+                                                                    (click)="qrCodegenerateCustID(bProfile.customId)"
+                                                                    [matTooltip]="'Generate QR code'"></i>
+                                                            </span>
+                                                            <span class="custid" style="padding-left: 40px;">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="menu">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button type="button"
+                                                                        (click)="editCustomId(bProfile.customId)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-edit"></i>
+                                                                        <span>{{edit_cap}}</span>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        (click)="deleteCustomId(bProfile.customId)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-delete"></i>
+                                                                        <span>{{delete_btn}}</span>
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                        </span>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
+                                        <div><i (click)="closeCustomQR()"
+                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
+                                                aria-hidden="true"></i></div>
+                                        <div class="ngx-qrcod">
+                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
+                                                [qrc-value]="qr_value">
+                                            </ngx-qrcode>
+                                        </div>
+                                        <div class="coupon-outer">
+                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
+                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
+                                                        style="padding-right: 2px;"></i>Download</a></button>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- <div class="coupon-outer" *ngIf="!bProfile.customId">
+                                        <div class="duration instantQ"
+                                            *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
+                                            You are not allowed to do this operation. Please upgrade license package
+                                        </div>
+                                    </div> -->
+<!-- 
+                                </div> -->
+
                             </div>
                             <div class="card p0 w-dta active">
                                 <mat-accordion>

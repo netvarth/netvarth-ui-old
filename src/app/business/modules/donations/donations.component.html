@@ -16,8 +16,32 @@
                 </i>
               </a>
             </li>
+
+            <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                <i class="icon-location" [matTooltipClass]="tooltipcls"
+                [matTooltip]="'Change location'">
+                </i>
+              </a>
+            </li> 
+          
           </ul>
         </div>
+        <aside class="filterSidebar" *ngIf="show_loc">
+          <section class="sidebar sidebar-bottom">
+            <ul class="sidebar-menu">
+              <div class="filterTextinput">
+                  <li class="filterli" *ngFor="let location of locations;let i = index" [(value)]="i">
+                    <a class="pointer-cursor" (click)="getDonationsList('true',location.id)">
+                      <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length>='27'">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</span>
+                      <span class="donate-loc" [ngClass]="{'donate-sel-loc': (selected_loc_id === location.id)}" *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</span>
+                    </a>
+                  </li>
+              </div>
+            </ul>
+          </section>
+        </aside>
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
           <section class="sidebar sidebar-bottom">
@@ -31,7 +55,7 @@
               <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                    class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="Name">
                 </li>
               </div>
               <div class="filterTextinput">
@@ -43,7 +67,38 @@
                   <mat-datepicker #picker></mat-datepicker>
                 </li>
               </div>
-              <div class="filterTextinput">
+              <!-- <span class="inl-blk filtr">
+                <a [class.button_filter]="filters['service']" (click)="filterClicked('service')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="services"
+                  id="btn_services_filter_id"><span>{{services_cap}}</span></a>
+                <mat-form-field *ngIf="filters['service']">
+                  <mat-select [(value)]="filter.service">
+                    <mat-option (click)="setFilterData('service', 'all')" [value]="'all'">
+                      {{all_cap}}
+                    </mat-option>
+                    <mat-option *ngFor="let service of services" (click)="setFilterData('service', service.id)"
+                      [value]="service.id">
+                      {{service.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span> -->
+              <div>
+                <!-- <label class="filterHeaders">Services</label>
+                <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                </li> 
+                <mat-checkbox *ngFor="let services of donationServices" [checked]= "check_status"  (click)="setFilterData(
+                  'service',services.id)" [value]="services.id" >
+                {{services.name}}</mat-checkbox> -->
+                <label class="filterHeaders">Services</label>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of donationServices"  [checked]= "services.indexOf(service.id) !== -1" 
+                          (change)="setFilterDataCheckbox('service', service.id, $event)" >
+                            {{service.name}}</mat-checkbox>
+                    </li>
+                
+            </div>
+              <!-- <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
                     (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox"
@@ -55,7 +110,7 @@
                   <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
                     (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
                 </li>
-              </div>
+              </div> -->
             </ul>
           </section>
         </aside>
@@ -67,7 +122,7 @@
                   <div class="list-outer">
                     <div class="table-th">
                       <div class="th one">Date</div>
-                      <div class="th two">Service</div>
+                      <div class="th two">Cause</div>
                       <div class="th one">Donor</div>
                       <div class="th three">{{amount_cap}}</div>
                     </div>
@@ -84,7 +139,7 @@
                               capitalizeFirst}}</span>
                         </div>
                         <div class="td one">
-                          <span *ngIf="donation.donor.firstName">{{donation.donor.firstName}}</span>
+                          <span *ngIf="donation.consumer.userProfile.firstName">{{donation.consumer.userProfile.firstName}}</span>
                         </div>
                         <div class="td three"> <span class="amt"></span> {{donation.donationAmount |
         currency:'&#8377; ' }}

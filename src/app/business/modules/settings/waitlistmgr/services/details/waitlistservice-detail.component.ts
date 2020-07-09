@@ -108,7 +108,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                             this.createService(post_itemdata2);
                         } else if (serviceActionModel.action === 'edit') {
                             post_itemdata2.id = this.service_id;
-                            this.updateService(post_itemdata2);
+                            if (post_itemdata2.livetrack !== this.serviceParams['service'].livetrack) {
+                                this.changeLiveTrackStatus(post_itemdata2);
+                            } else {
+                                this.updateService(post_itemdata2);
+                            }
                         } else if (serviceActionModel.action === 'changestatus') {
                             this.changeServiceStatus(post_itemdata2);
                         }
@@ -127,6 +131,24 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             }
         );
         return false;
+    }
+
+    changeLiveTrackStatus(service) {
+        let status;
+        if (service.livetrack === false) {
+            status = 'Disable';
+        } else {
+            status = 'Enable';
+        }
+        this.provider_services.setServiceLivetrack(status, service.id)
+            .subscribe(
+                () => {
+                    this.updateService(service);
+                },
+                error => {
+                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
     getDomainSubdomainSettings() {
         const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');

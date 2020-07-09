@@ -58,7 +58,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   queuejson: any = [];
   sel_ser;
   sel_ser_det: any = [];
-  //sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  // sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
   sel_checkindate;
   sortBy = 'sort_token';
   check_in_list: any = [];
@@ -85,7 +85,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
   ngOnInit() {
-    console.log('elsejk');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -110,7 +109,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     //   this.closePopup('error');
     // }
     const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
-    this.sel_loc = loc;
+    this.sel_loc = loc.id;
     this.getBussinessProfileApi()
       .then(
         (data: any) => {
@@ -134,16 +133,16 @@ export class AdjustscheduleDelayComponent implements OnInit {
                   }
                 );
               }
-              
+
 
             });
         }
-        
+
       );
-      setTimeout(() => {
-        this.getScheduleDelay(this.queuejson[0].id);
+    setTimeout(() => {
+      this.getScheduleDelay(this.queuejson[0].id);
     }, 1000);
-      
+
 
 
 
@@ -171,7 +170,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
-    
+
   }
   performActions(actions) {
     if (actions === 'learnmore') {
@@ -245,14 +244,12 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.api_error = '';
     this.selected_dept = obj;
     this.servicesjson = this.serviceslist;
-    console.log(this.servicesjson);
     if (this.filterDepart) {
       const filter = {
         'departmentId-eq': obj
       };
       this.provider_services.getUsers(filter).subscribe(
         (users: any) => {
-          console.log(users);
           this.users = [];
           let found = false;
           for (let userIndex = 0; userIndex < users.length; userIndex++) {
@@ -267,7 +264,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
               }
             }
           }
-          console.log(this.users);
           if (found) {
             // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
             this.users.push(this.userN);
@@ -307,7 +303,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
   }
   handleUserSelection(user) {
     this.queuejson = [];
-    console.log(user);
     this.servicesjson = this.serviceslist;
     const newserviceArray = [];
     if (user.id && user.id !== 0) {
@@ -323,7 +318,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
         }
       }
     }
-    console.log(newserviceArray);
     this.servicesjson = newserviceArray;
     if (this.servicesjson.length > 0) {
       this.sel_ser = this.servicesjson[0].id;
@@ -388,7 +382,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
           } else {
-            //  console.log("delay added successfuly");
             // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
@@ -411,7 +404,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.provider_services.getScheduleDelay(queue_id)
       .subscribe(
         data => {
-           console.log(data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
         },
@@ -472,7 +464,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
 
   getTodayAppointments(queueid) {
     const Mfilter = this.setFilterForApi(queueid);
-    //Mfilter[this.sortBy] = 'asc';
+    // Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayApptlist(Mfilter)
       .subscribe(
         data => {
@@ -497,22 +489,21 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.today_checkins_count = this.today_arrived_count + this.today_checkedin_count;
 
   }
-   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+  getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
-      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid,accountid)
+      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
         .subscribe(data => {
           this.queuejson = data;
-          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
-              this.getTodayAppointments(this.queuejson[0].id);
-        }
+            this.getTodayAppointments(this.queuejson[0].id);
+          }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
-              this.amForm.get('queueControl').setValue(this.queuejson[0].id);
-              this.getTodayAppointments(this.queuejson[0].id);
+            this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+            this.getTodayAppointments(this.queuejson[0].id);
           }
-         
+
         });
     }
   }
@@ -530,7 +521,6 @@ export class AdjustscheduleDelayComponent implements OnInit {
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
     // this.sel_queue_indx = index;
     // this.sel_queue_id = queue.id;
     // this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);

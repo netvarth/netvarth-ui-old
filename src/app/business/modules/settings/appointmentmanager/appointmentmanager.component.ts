@@ -36,7 +36,7 @@ export class AppointmentmanagerComponent implements OnInit {
     futureDateApptlist = false;
     apptlist_statusstr = 'Off';
     futureapptlist_statusstr = 'off';
-    breadcrumb_moreoptions: any = []; 
+    breadcrumb_moreoptions: any = [];
 
     constructor(
         private router: Router,
@@ -72,9 +72,9 @@ export class AppointmentmanagerComponent implements OnInit {
     // }
     performActions(action) {
         if (action === 'learnmore') {
-          this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager']);
         }
-      }
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
@@ -155,7 +155,6 @@ export class AppointmentmanagerComponent implements OnInit {
             .subscribe(
                 data => {
                     this.apptlist_details = data;
-                    console.log(data);
                     this.apptlist_status = data['enableToday'] || false;
                     this.futureDateApptlist = data['futureAppt'] || false;
                     this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';

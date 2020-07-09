@@ -14,6 +14,7 @@ import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/c
 import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { ConfirmPatmentLinkComponent } from '../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -121,7 +122,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   taxabletotal = 0;
   tottaxvalue = 0;
   totpaid = 0;
-  curSelItm = { indx: 0, typ: '', qty: 1 };
+  curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   bname;
   selectedItemService;
   showPaidlist = false;
@@ -200,7 +201,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   mode;
   isItem;
   source;
-
+  pos = false;
+  emailId: any;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -247,6 +249,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.bname = bdetails.bn || '';
     }
     this.getPaymentSettings();
+    this.getPos();
     this.getJaldeeActiveCoupons();
     this.getCoupons();
     this.getDiscounts();
@@ -281,6 +284,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.checkin = data;
+          this.emailId = this.checkin.providerConsumer.email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -296,12 +300,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
+  }
 
   getCheckinDetails() {
     this.provider_services.getProviderWaitlistDetailById(this.uuid)
       .subscribe(
         data => {
           this.checkin = data;
+          this.emailId = this.checkin.waitlistingFor[0].email;
           this.getWaitlistBill();
           this.getPrePaymentDetails()
             .then(
@@ -598,7 +608,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.actiontype = null;
     this.showAddItemsec = false;
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   }
   getAddedServcOrItem(name) {
     if (name) {
@@ -646,6 +656,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
     }
     return itemId;
+  }
+  getSelectedItemPrice(itemName) {
+    let itemPrice = 0;
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].displayName === itemName) {
+        itemPrice = this.items[i].price;
+        break;
+      }
+    }
+    return itemPrice;
   }
   /**
    * Toggle Item Discount/Coupon Section
@@ -755,7 +775,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   itemServiceSelected(type, name) {
 
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
 
     if (type === 'Services') {
       this.selectedItemService = name;
@@ -767,6 +787,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.curSelItm.indx = this.getSelectedItemId(name);
       this.curSelItm.typ = 'Items';
       this.curSelItm.qty = 1;
+      this.curSelItm.price = this.getSelectedItemPrice(name);
     }
   }
   /**
@@ -829,10 +850,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
-
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
+      if (this.actiontype !== 'adjustItem') {
+      data['price'] = this.curSelItm.price;
+      }
       if (this.curSelItm.qty === 0) {
         action = 'removeItem';
       }
@@ -848,7 +871,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         });
     }
     this.itemServiceSearch.reset();
-    this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    this.curSelItm = { indx: 0, typ: '', qty: 1, price: 0 };
   }
   /**
    * Remove a particular Service from the bill
@@ -1224,13 +1247,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   confirmSettleBill() {
-    if (this.amountpay > 0) {
+    if (this.amountpay > 0 || this.bill_data.amountDue < 0) {
+      let msg = '';
+      if (this.bill_data.amountDue < 0) {
+        msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
+      } else {
+        msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
+      }
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+          'message': msg
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
@@ -1241,6 +1270,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     } else {
       this.settleBill();
     }
+  }
+  paymentlink() {
+    const dialogrefd = this.dialog.open(ConfirmPatmentLinkComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        mobilenumber: this.bill_data.billFor.alternativePhoneNo,
+        emailId: this.emailId,
+        // mobilenumber : this.checkin.waitlistPhoneNumber,
+        uuid : this.uuid
+      }
+    });
   }
 
   changeDate(time) {

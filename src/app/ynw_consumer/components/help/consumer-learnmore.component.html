@@ -1,0 +1,404 @@
+<div class="container">
+        <div class="card cons-help" style="background-color: #f2f2f2">
+                        <div class="col-md-12" >
+                            <div class="row">
+                                <div class="col-md-2" style="font-weight:600 ; font-size:large">Help</div>
+                                <div class="col-md-10 rightalign" ><a style="display: flex; justify-content:flex-end; align-items: center" (click)="goBack()">
+                                <i class="material-icons">keyboard_arrow_left</i><span style="font-size: small" class="pointlist"><b> Go Back</b></span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+        <div class="card cons-content-card">
+                <div class="modal-body col-md-12 no-padding">
+                    <div class="row">
+                        <div class="col-md-3 help" style="border-right: 1px solid lightgray">
+                            <ul>
+                                <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'searchh')}"><a (click)="menuclicked('searchh')">Search </a></li>
+                                <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'refine')}"><a (click)="menuclicked('refine')">Refine Search </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'claim')}"><a (click)="menuclicked('claim')">Claim My Business </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'checkin')}"><a (click)="menuclicked('checkin')">Consumer Checkin </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'appointments')}"><a (click)="menuclicked('appointments')">Consumer Appointment </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'donations')}"><a (click)="menuclicked('donations')">Consumer Donation </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'profile')}"><a (click)="menuclicked('profile')">Consumer Profile </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'dashboard')}"><a (click)="menuclicked('dashboard')">Consumer Dashboard </a></li>
+                                <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'verified')}"><a (click)="menuclicked('verified')">Jaldee Verified Levels</a></li>
+                                </ul>
+                                </div>
+
+                    <div class="col-md-9 helpcontent">
+
+<section class="helpcontent" *ngIf="activeMenu == 'searchh'">
+<h6>Search</h6>
+<ul class="ul-normal abc">
+<li>The search bar is the start of a journey through Jaldee.com. Here the search functionality activates the exploration of services mainly by location, domains, subdomains, Keywords, or business name/specialization.</li>
+<li>To find a particular business, select its location in the first search bar. Next to the location search field comes the domain and subsequently the subdomains or business name/specialization field. Jaldee.com offers services for the below-mentioned domains and subdomains.</li>
+</ul>
+<mat-accordion>
+<mat-expansion-panel [expanded]="false">
+<mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+  <mat-panel-title><span class="helpcontent">Health Care</span> </mat-panel-title>
+</mat-expansion-panel-header>
+          <div class="helpcontent">
+          <ol class="ol-normal">
+          <li>Doctor/Clinic</li>
+          <li>Dentist/Dental Clinic</li>
+          <li>Alternative Medicine Practitioner</li>
+          <li>Hospital/Nursing Home</li>
+          <li>Dental Hospital</li>
+          <li>Alternative Medicine Hospital</li>
+          <li>Laboratory</li>
+          <li>Pharmacy</li>
+          </ol>
+          </div>
+</mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+            <mat-panel-title><span class="helpcontent">Personal Care</span></mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+                    <ol class="ol-normal">
+                    <li>Beauty Care/Spa/Hair Salon</li>
+                    <li>Fitness Trainer/Gym</li>
+                    <li>Massage Centre</li>
+                    </ol>
+                    </div>
+            </mat-expansion-panel>
+         </mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+            <mat-panel-title><span class="helpcontent">Professional Consulting</span></mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+                    <ol class="ol-normal">
+                    <li>Lawyer</li>
+                    <li>Chartered Accountant</li>
+                    <li>Tax Consultant</li>
+                    <li>Civil Architect</li>
+                    <li>Financial Advisor</li>
+                    <li>Stockbroker</li>
+                    <li>Auditor</li>
+                    <li>Geologist</li>
+                    </ol>
+                    </div>
+            </mat-expansion-panel>
+         </mat-accordion>
+
+<mat-accordion>
+<mat-expansion-panel [expanded]="false">
+<mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+<mat-panel-title><span class="helpcontent">Finance/Loan/Insurance</span></mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
+        <ol class="ol-normal">
+        <li>Bank</li>
+        <li>NBFC</li>
+        <li>Insurance</li>
+        </ol>
+        </div>
+</mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+        <mat-panel-title><span class="helpcontent">Food and Beverages</span></mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
+        <ol class="ol-normal">
+        <li>Restaurants/bar/fastfood</li>
+        <li>Caterer</li>
+        <li>Home Baker</li>
+        <li>Bakery</li>
+        <li>Juice Parlour</li>
+        <li>Ice Cream Parlour</li>
+        <li>Home Food</li>
+        <li>Coffee Shop</li>
+        <li>Sweet Shop</li>
+        </ol>
+        </div>
+</mat-expansion-panel>
+</mat-accordion>
+
+
+<mat-accordion>
+<mat-expansion-panel [expanded]="false">
+<mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+<mat-panel-title><span class="helpcontent">Vastu/Astrologer</span></mat-panel-title>
+</mat-expansion-panel-header>
+<div class="helpcontent">
+<ol class="ol-normal">
+<li>Vastu</li>
+<li>Astrologer</li>
+</ol>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+<mat-expansion-panel [expanded]="false">
+<mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+<mat-panel-title><span class="helpcontent">Religious/Priests</span></mat-panel-title>
+</mat-expansion-panel-header>
+<div class="helpcontent">
+<ol class="ol-normal">
+<li>Temple</li>
+<li>Poojari</li>
+</ol>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+ <mat-expansion-panel [expanded]="false">
+ <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+<mat-panel-title><span class="helpcontent">Veterinary/Pet Care</span></mat-panel-title>
+</mat-expansion-panel-header>
+<div class="helpcontent">
+<ol class="ol-normal">
+<li>Veterinary Doctor/Veterinary Clinic</li>
+<li>Pet Care</li>
+<li>Veterinary Hospital</li>
+</ol>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+   <mat-panel-title><span class="helpcontent">Supermarket/Grocery</span></mat-panel-title>
+   </mat-expansion-panel-header>
+   <div class="helpcontent">
+   <ol class="ol-normal">
+   <li>Grocery Shops</li>
+   <li>Supermarket</li>
+   <li>Hypermarket</li>
+   </ol>
+   </div>
+   </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+   <mat-panel-title><span class="helpcontent">Other/Miscellaneous</span></mat-panel-title>
+   </mat-expansion-panel-header>
+   <div class="helpcontent">
+   <ol class="ol-normal">
+   <li>Miscellaneous</li>
+   </ol>
+   </div>
+   </mat-expansion-panel>
+</mat-accordion>
+<br>
+<span>Next to the search bar is the “More Options Icon” where a consumer can narrow down the search results using the following filters:</span>
+<ol class="ol-normal">
+<li><strong>Language Spoken :</strong> A consumer can filter the search using languages in which he/she would like to communicate with the service provider.</li>
+<li><strong>Parking Type :</strong> The search can also be filtered according to the available parking types near the business premises.</li>
+<li><strong>Jaldee Verified Level :</strong> The consumer can search for a service provider on his/her Jaldee verified level as well.</li>
+<li><strong>Rating :</strong> The consumer can filter the search as per the ratings that were given to the provider by other consumers.</li>
+<li><strong>Other Filters :</strong> The consumer can also search for providers on the basis of “open 24 hours” & “Jaldee Coupons”.</li>
+</ol>
+<span>A consumer can filter and customize the search activity to find exactly what is required. To filter the search results accordingly, Jaldee.com presents “Refine Search” to its consumers.</span>
+</section>
+
+<section class="helpcontent" *ngIf="activeMenu == 'refine'">
+    <h6>Refine Search</h6>
+<ul class="ul-normal abc">
+<li>When a consumer click on the search button, the results appear in the dashboard. To refine the search results further, there is a section given on the left side of the page which helps in further sorting the search results.</li>
+<li>Enter the search terms from here such as “Subdomain, Language Spoken, Parking type, Jaldee verified levels, Rating, and other filters.</li>
+<li>In the search result, a consumer can see the list of the available service providers. Here a consumer can see the gallery, location amenities, ratings given to the provider by other consumers.</li>
+<li>In the right side, a consumer can view the available Jaldee coupons & history (previous encounters with the service provider).</li>
+<li>A consumer can also add a specific service provider to Favourites and send a message to the provider if any.</li>
+
+</ul>
+</section>
+<section class="helpcontent"  *ngIf="activeMenu == 'claim'">
+    <h6>Claim My Business</h6>
+<ul class="ul-normal abc">
+<span>The search results in Jaldee consumer dashboard has provider profiles with the flag <strong>“Claim My Business”</strong>. The best way to manage your business (if you are a business owner and your business profile is listed in Jaldee) in Jaldee is by claiming your business and creating a provider account. Claiming your business in Jaldee is pretty simple. To begin the claim process, click the <strong>“Claim your business”</strong> button in the provider profile listed. Follow the easy steps to find your business and create your provider account.</span>
+
+<li>Enter mobile number, provider name, choose the license package and accept the Terms & Conditions.</li>
+<li>Click on Send OTP to receive OTP on the entered mobile number.</li>
+<li>Enter the OTP to create a provider account.</li>
+<li>In the next step, create a password for the provider profile.</li>
+<li>Complete the initial Provider profile setup by entering the brief details of the business such as its Name, Profile Summary, Service, Location, Working Hours, Specialization and Public Search.</li>
+<li>Now you are done creating provider account in Jaldee.</li>
+
+</ul>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'appointments'">
+    <h6>Consumer Appointments</h6>
+    <ul class="ul-normal abc">
+        <li>Coming Soon...</li>
+    </ul>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'donations'">
+    <h6>Consumer Donations</h6>
+    <ul class="ul-normal abc">
+        <li>Coming Soon...</li>
+    </ul>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'checkin'">
+    <h6>Consumer Checkin</h6>
+<li>It is an easy way to check-in online for the services offered by a provider registered with Jaldee.com.
+<span>A consumer has the following options for check-in</span>
+<ol class="ol-normal">
+<li>One can receive wait-time before availing the services.</li>
+<li>One can get a token number which demonstrates the number of consumers ahead.</li>
+</ol>
+</li>
+<li>This mode of check-in is very convenient for consumers as it can be done anytime, anywhere.</li>
+<li>Online Check-in for a day is open from 1:00 am and continues until the working hours end or before the available slots get filled.</li>
+<li>Here is how a consumer can proceed with the check-in process.
+<ol class="ol-normal">
+<li>If a consumer finds the provider profile of his/her choice, the consumer can further see the detailed view of the provider by clicking on the name of the service provider.</li>
+<li>In the detailed view, a consumer gets to know everything about the service provider such as his/her specializations, services offered by the business, location and location amenities of the business, contact details, working hours of the business, Jaldee coupons and estimated waiting time. The consumer has the option to check-in online from here.</li>
+<li>Click on the <strong>“Check-in”</strong> button to proceed further with the online check-in.</li>
+<li>In the check-in window, first, a consumer has to select the services from the drop-down menu he/she wishes to avail.</li>
+<li>Check-in window has a feature to add or change a family member for whom he/she wishes to complete the check-in process. To do so, click <strong>“Add/Change Member”</strong> with the first and last name of the member. The consumer can also change member from the list of already added members.</li>
+<li>For the domain of <strong>Personal Care,</strong> multiple persons can be selected from Add/Change member to proceed with a single check-in.</li>
+<li>For the domain <strong>Food and Beverages,</strong> enter the party size to proceed with check-in.</li>
+<li>In case, a consumer wants to write a personalized message to the service provider, he/she can click on the <strong>“If you have a note, Click here (+)”</strong>. Here a consumer can write the message in the given textbox.</li>
+<li>For the domain <strong>Food and Beverages,</strong> order the food in this note(Food menu will be seen in the gallery of provider’s profile).</li>
+<li>If prepayment is enabled for the selected service, the consumer will have to pay in advance using the selected payment modes (Debit card, Credit card or Net banking).
+<ol class="ol-normal">
+<li>When a payment mode is selected, click on confirm check-in. This will redirect the consumer to PayU or PayTM dashboard to complete the prepayment process.</li>
+<li>Prepayment should be done within 15 minutes of clicking <strong>“Confirm Check-in”</strong>.</li>
+<li>If the prepayment is successful, the consumer will receive a message for the confirmed check-in.</li>
+<li>In case, the prepayment is pending, the consumer will receive a message notifying the same. Please note that if one couldn’t complete the prepayment process in 15 minutes, the check-in will be automatically cancelled.</li>
+</ol></li>
+
+<li>Completion of the above process enables the consumer to proceed with the online check-in. To confirm the same, click on <strong>“Check-in”</strong>.</li>
+<li>A push message and an email to the registered email id notifying the confirmation of the online check-in will be sent.</li>
+<li>Future check-in can also be done in the same way. The only difference here is that the consumer is required to select the date of the check-in here.</li>
+</ol>
+</li>
+<span>In the detailed view of the provider, a consumer has the following options:</span>
+<ol class="ol-normal">
+<li><strong>Jaldee Coupons :</strong> Here you can see the available coupons, and choose the appropriate coupons and apply in the check-in window to avail offers.</li>
+<li><strong>History :</strong> All of the check-ins from newest to oldest with a particular service provider is listed here.</li>
+<li><strong>Add to favorites/Remove from favourites :</strong> As a consumer one has an option to add particular service providers to <strong>My Favourites</strong> list by clicking “💗” symbol. This lets the consumer to keep frequently searched providers easily available for future check-ins. Also if this provider is already added to your favourites list, option to remove from favourite is available unchecking the “💗” symbol.</li>
+<li><strong>Inbox :</strong> Here one can see the messages received from/sent to the providers.</li>
+<li><strong>Enquiry :</strong> Here one can send enquiries to this particular provider.</li>
+</ol>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'profile'">
+    <h6>Consumer Profile</h6>
+<span>Consumer profile is a collection of settings and information associated with a consumer. Jaldee system creates a consumer profile the first time one registers with Jaldee.com. This profile includes information for attributes such as names of the consumer, mobile number, email address, etc. Jaldee consumer profile has the following options:</span>
+<br>
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">Dashboard</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+      <span>This will redirect to the consumer’s dashboard from this page.</span>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">My Account</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+      <span>This contains the personal information of a consumer. The option to edit this information is available. A consumer can enter the email ID under My Accounts to receive notifications from Jaldee regarding coupons & discounts.</span>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">Change Password</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+                <ol class="ol-normal">
+                                <li>Minimum 6 characters</li>
+                                <li>Maximum 32 characters</li>
+                                <li>Space is not accepted</li>
+                </ol>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">Change Mobile</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+        <span>Enter a new mobile number here. When a consumer submits a new number, an SMS with an OTP is sent to the newly registered mobile number. The consumer is required to enter this OTP on the Jaldee portal to verify the mobile number.</span>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">Family Members</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+        <span>Here a consumer can manage the family members. One can add, edit or delete the members. The family members can also be added from the check-in window with the member’s first/last name. In such cases, consumers can view the entries here and edit each entry with additional details like mobile number, gender, and date of birth.</span>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+       <mat-panel-title><span class="helpcontent">Logout</span></mat-panel-title>
+       </mat-expansion-panel-header>
+       <div class="helpcontent">
+        <span> This will enable one to log out from the account.</span>
+       </div>
+       </mat-expansion-panel>
+</mat-accordion>
+</section>
+
+<section class="helpcontent" *ngIf="activeMenu == 'dashboard'">
+    <h6>Consumer Dashboard</h6>
+<span>A consumer login is redirected to the dashboard initially. Here a consumer can search for the service providers, set up the profile and view the status of current check-ins, My favorites and History of check-ins.</span>
+<ul class="ul-normal abc">
+<li><strong>Active Appointments</strong><br></li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Checkins</strong><br> A consumer can track the status of the services checked-in for. If the provider has generated a bill for the services rendered, it will be displayed here and can be paid from here itself. A consumer can rate the services by giving stars. This will let the providers get instant feedback on the services they offer.</li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Donations</strong><br> </li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>Payments</strong><br> </li>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>My Favourites</strong><br> A consumer’s own Service by default comes under My Favourites. Apart from that, when a consumer adds a provider to favorites, it gets listed here.</li>
+<ol class="ol-normal">
+<li>To manage privacy, click on the three-dot menu. Here a consumer can reveal/hide the mobile number.</li>
+<li>A consumer can also check-in from here. To do so, click on the service provider. A detailed description of the service provider will appear and a tab for <strong>“Check-in”</strong>. Click on the tab for quick Check-in.</li>
+</ol>
+</ul>
+<ul class="ul-normal abc">
+<li><strong>History</strong><br> All the check-ins from newest to oldest are listed here. If the check-in status is <strong>“Done”</strong>, Bill can be viewed here. The consumer can rate the service provider here or edit the rating with the option <strong>“Rate Your Visit”</strong>.</li>
+</ul>
+</section>
+<section class="helpcontent" *ngIf="activeMenu == 'verified'">
+    <h6>Jaldee Verified Levels</h6>
+<span>Verification refers to a level of security a Jaldee Provider must meet before providing services to Jaldee consumers. The providers with the highest verification levels are listed in the top of search results. We can see there's four different levels of verification to check out here, so let's break them down piece by piece:</span>
+<ul class="ul-normal abc">
+<li><strong>NONE :</strong> If provider’s verification level is “None”, Jaldee cannot assure whether the provider is genuine or not.</li>
+<li><strong>BASIC :</strong> Under this verification level, Jaldee team verifies the authenticity of the business on a primary level. Provider with BASIC verification level, has gone through ID proof and mobile number verification. This verification level’s badge is a charcoal crown shown in the provider profile in search results.</li>
+<li><strong>BASIC PLUS :</strong> In addition to BASIC verification level, a provider with <strong>BASIC PLUS</strong> verification level has undergone certificate verification. This verification level’s badge is a copper crown shown in the provider profile in search results.</li>
+<li><strong>ADVANCED :</strong> This is the highest verification level in Jaldee. Here in addition to Id proof, mobile number and certificate verification, Jaldee team also physically check and verify the authenticity of the business. This verification level’s badge is a golden crown shown in the provider profile in search results.</li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
+</div>

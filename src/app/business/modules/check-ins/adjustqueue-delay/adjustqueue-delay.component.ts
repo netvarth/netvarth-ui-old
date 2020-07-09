@@ -135,8 +135,8 @@ export class AdjustqueueDelayComponent implements OnInit {
             });
         }
       );
-      setTimeout(() => {
-        this.getQueueDelay(this.queuejson[0].id);
+    setTimeout(() => {
+      this.getQueueDelay(this.queuejson[0].id);
     }, 1000);
 
 
@@ -154,7 +154,7 @@ export class AdjustqueueDelayComponent implements OnInit {
         this.getQueueDelay(data);
       }
     );*/
-  //  this.getQueueDelay(this.queuejson[0].id);
+    //  this.getQueueDelay(this.queuejson[0].id);
     this.amForm.get('send_message').valueChanges
       .subscribe(
         data => {
@@ -237,14 +237,12 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.api_error = '';
     this.selected_dept = obj;
     this.servicesjson = this.serviceslist;
-    console.log(this.servicesjson);
     if (this.filterDepart) {
       const filter = {
         'departmentId-eq': obj
       };
       this.provider_services.getUsers(filter).subscribe(
         (users: any) => {
-          console.log(users);
           this.users = [];
           let found = false;
           for (let userIndex = 0; userIndex < users.length; userIndex++) {
@@ -259,7 +257,6 @@ export class AdjustqueueDelayComponent implements OnInit {
               }
             }
           }
-          console.log(this.users);
           if (found) {
             // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
             this.users.push(this.userN);
@@ -299,7 +296,6 @@ export class AdjustqueueDelayComponent implements OnInit {
   }
   handleUserSelection(user) {
     this.queuejson = [];
-    console.log(user);
     this.servicesjson = this.serviceslist;
     const newserviceArray = [];
     if (user.id && user.id !== 0) {
@@ -315,7 +311,6 @@ export class AdjustqueueDelayComponent implements OnInit {
         }
       }
     }
-    console.log(newserviceArray);
     this.servicesjson = newserviceArray;
     if (this.servicesjson.length > 0) {
       this.sel_ser = this.servicesjson[0].id;
@@ -380,7 +375,6 @@ export class AdjustqueueDelayComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
           } else {
-            //  console.log("delay added successfuly");
             // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
@@ -403,7 +397,6 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.provider_services.getQueueDelay(queue_id)
       .subscribe(
         data => {
-          // console.log(data);
           this.convertTime(data['delayDuration'] || 0);
           this.amForm.get('send_message').setValue(data['sendMsg']);
         },
@@ -495,16 +488,14 @@ export class AdjustqueueDelayComponent implements OnInit {
       this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
         .subscribe(data => {
           this.queuejson = data;
-          console.log(this.queuejson);
           if (this.queuejson.length === 1) {
-              this.getTodayCheckIn(this.queuejson[0].id);
-        }
+            this.getTodayCheckIn(this.queuejson[0].id);
+          }
           // this.queueQryExecuted = true;
           if (this.queuejson.length > 1) {
-              this.amForm.get('queueControl').setValue(this.queuejson[0].id); 
-              this.getTodayCheckIn(this.queuejson[0].id);
+            this.amForm.get('queueControl').setValue(this.queuejson[0].id);
+            this.getTodayCheckIn(this.queuejson[0].id);
           }
-         
         });
     }
   }
@@ -522,7 +513,6 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
     // this.sel_queue_indx = index;
     // this.sel_queue_id = queue.id;
     // this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);

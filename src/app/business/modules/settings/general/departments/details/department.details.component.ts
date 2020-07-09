@@ -69,7 +69,7 @@ export class DepartmentDetailComponent implements OnInit {
     }
     ngOnInit() {
         this.loading = true;
-        this.getServices();
+        // this.getServices();
         this.getDepartments();
         if (this.dept_id === 'add') {
             this.dept_id = null;
@@ -284,33 +284,36 @@ export class DepartmentDetailComponent implements OnInit {
 
     getDepartments() {
         this.loading = false;
-        this.provider_services.getDepartments()
-            .subscribe(
-                data => {
-                    this.deptObj = data;
-                    this.departments = this.deptObj['departments'];
-                    this.defaultdepartmentservice = [];
-                    for (let i = 0; i < this.servicesjson.length; i++) {
-                        for (let j = 0; j < this.departments.length; j++) {
-                            if (this.departments[j].isDefault) {
-                                if (this.departments[j].serviceIds.length > 0) {
-                                    for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                                        if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
-                                            if (this.defaultdepartmentservice.indexOf(this.servicesjson[i]) === -1) {
-                                                this.defaultdepartmentservice.push(this.servicesjson[i]);
+        this.getServices().then(
+            res => {
+                this.provider_services.getDepartments()
+                    .subscribe(
+                        data => {
+                            this.deptObj = data;
+                            this.departments = this.deptObj['departments'];
+                            this.defaultdepartmentservice = [];
+                            for (let i = 0; i < this.servicesjson.length; i++) {
+                                for (let j = 0; j < this.departments.length; j++) {
+                                    if (this.departments[j].isDefault) {
+                                        if (this.departments[j].serviceIds.length > 0) {
+                                            for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                                                if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
+                                                    if (this.defaultdepartmentservice.indexOf(this.servicesjson[i]) === -1) {
+                                                        this.defaultdepartmentservice.push(this.servicesjson[i]);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            this.editLocationServices();
+                        },
+                        error => {
+                            this.shared_Functionsobj.apiErrorAutoHide(this, error);
                         }
-                    }
-                    this.editLocationServices();
-                },
-                error => {
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
-                }
-            );
+                    );
+            });
     }
 
     updateDepartment(post_data) {

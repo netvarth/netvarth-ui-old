@@ -6,6 +6,7 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 // import { MatMenuModule } from '@angular/material/menu';
 // import { MatIconModule } from '@angular/material/icon';
+import { LazyModule } from '../../modules/lazy-load/lazy.module';
 
 import { HeaderComponent } from './header.component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
@@ -16,7 +17,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         CommonModule,
         RouterModule,
         MaterialModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        LazyModule
         // MatMenuModule,
         //  MatIconModule
     ],

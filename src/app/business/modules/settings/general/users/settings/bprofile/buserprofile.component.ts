@@ -163,6 +163,8 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   subDomains: any = [];
   user_arr;
   normal_search_active = false;
+  jaldee_acc_url = Messages.JALDEE_URL;
+  wndw_path = projectConstants.PATH;
 
   constructor(private provider_services: ProviderServices,
     private sharedfunctionobj: SharedFunctions,
@@ -190,6 +192,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     this.getBusinessConfiguration();
     const breadcrumbs = [];
@@ -546,5 +549,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
   }
   galerySocialmedia() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'media']);
+  }
+
+  copyInputMessage(valuetocopy) {
+    const path = projectConstants.PATH + valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Link copied to clipboard');
   }
 }

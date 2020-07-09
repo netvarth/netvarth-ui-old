@@ -111,6 +111,9 @@ export class VeterinaryComponent implements OnInit {
   showcorporate = false;
   showappointmentphonein = false;
   showschdelay = false;
+  showauditlog = false;
+  showalert  = false;
+  showprofile = false;
   constructor(
     private activated_route: ActivatedRoute,
     private shared_functions: SharedFunctions,
@@ -401,11 +404,18 @@ export class VeterinaryComponent implements OnInit {
     if (parentContent === 'customer' && childContent === 'customer') {
         this.showcustomer = true;
     }
-
+    if (parentContent === 'auditlog' && childContent === 'auditlog') {
+      this.showauditlog = true;
+    }
+    if (parentContent === 'alert' && childContent === 'alert') {
+      this.showalert = true;
+      }
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }
-   
+   if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+    this.showprofile = true;
+  }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
   }

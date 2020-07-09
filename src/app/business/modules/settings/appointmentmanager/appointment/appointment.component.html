@@ -93,11 +93,11 @@
                                     <ng-container>
                                         <mat-form-field *ngIf="users.length == 1">
                                             <input matInput *ngFor="let user of users" [readonly]="true"
-                                                placeholder="Doctors"
+                                                placeholder="Providers"
                                                 value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
                                         </mat-form-field>
                                         <mat-form-field *ngIf="users.length > 1">
-                                            <mat-select placeholder="Select Doctor" [ngModel]="selected_user" #usersel
+                                            <mat-select placeholder="Select Provider" [ngModel]="selected_user" #usersel
                                                 (selectionChange)="handleUserSelection(usersel.value)">
                                                 <mat-option *ngFor="let user of users" [value]="user">
                                                     {{user.firstName}} {{user.lastName}}
@@ -119,10 +119,12 @@
                                             <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp fa-lg whtsap-ic tool-pading"></i>
-                                                        <img *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="tool-pading"
-                                                        src="https://img.icons8.com/color/20/000000/zoom.png" />
-                                                    {{serv.name | capitalizeFirst}}
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"></i>
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'" class="fa zoom-icon"
+                                                        ></i>
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'" class="fa meet-icon"></i>
+                                                        <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'" class="fa fa-mobile custId-qr pad-rt-5" aria-hidden="true"></i> 
+                                                   <span class="dash">{{serv.name | capitalizeFirst}}</span>
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -138,15 +140,15 @@
                                                 <div style="visibility: hidden;">
                                                     {{callingModesDisplayName[mode.callingMode]}}
                                                 </div>
-                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode === 'WhatsApp'">
+                                                <div class="cal-mod-instrct" *ngIf="mode.callingMode">
                                                     {{mode.instructions}}
                                                 </div>
                                                 <div class="input-section mgn-bt-15 desfont"
-                                                *ngIf="mode.callingMode === 'WhatsApp'">
+                                                *ngIf="mode.callingMode === 'WhatsApp' || mode.callingMode === 'Phone'">
                                                <span> <i *ngIf="mode.callingMode === 'WhatsApp'"
                                                     class="fa fa-whatsapp fa-lg whtsap-ic call-icon"></i>
-                                                <img *ngIf="mode.callingMode === 'Zoom'" class="call-icon"
-                                                    src="https://img.icons8.com/color/18/000000/zoom.png" /></span>
+                                                    <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile fa-lg call-icon" aria-hidden="true"></i>
+                                                </span>
                                                     <span> <input *ngIf="!showInputSection" (keypress)="isNumeric($event)" 
                                                     class="form-control emailPrepay call-mode-ip wtsap-ip-wdth" placeholder=""
                                                     [(ngModel)]="callingModes" autocomplete="off" maxlength="10"></span>
@@ -435,7 +437,7 @@
                                 <ng-container *ngIf="action=='note'">
                                     <div class="col-md-12 mgn-bt-20">
                                         <mat-form-field>
-                                            <textarea matInput class="form-control" #consumernote
+                                            <textarea matInput class="form-control"  [(ngModel)]="consumerNote" #consumernote
                                                 (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                                 placeholder="{{note_placeholder}}"></textarea>
                                         </mat-form-field>
@@ -487,13 +489,13 @@
                                     <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
                                     </button>
                                 </ng-container> -->
-
+                                
                             </aside>
                         </div>
                         <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
                             <button class="cs-btn bt3 width-100" (click)="handleSideScreen('members')">Add / Change
                                 Member</button>
-                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add
+                            <button class="cs-btn bt3 width-100 mgn-up-20" (click)="handleSideScreen('note')">Add / Edit
                                 Note</button>
                             <button class="cs-btn bt3 width-100 mgn-up-20" (click)="imagefile.click()">
                                 <!-- <button type="button" class="cs-btn btn-attach bt_attach"

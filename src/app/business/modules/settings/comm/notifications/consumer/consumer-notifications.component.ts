@@ -22,7 +22,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     {
       title: 'Communications And Notifications',
       url: '/provider/settings/comm',
-  },
+    },
     {
       title: 'Notifications',
       url: '/provider/settings/comm/notifications',
@@ -54,18 +54,24 @@ export class ConsumerNotificationsComponent implements OnInit {
   okCancelStatus = false;
   earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
   earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: '' };
+  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: '' };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  prefinalDONATNotificationSettings = { eventType: 'PREFINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   finalWLNotificationSettings = { eventType: 'FINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   finalAPPTNotificationSettings = { eventType: 'FINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  finalDONATNotificationSettings = { eventType: 'FINAL', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
+  donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false ,'DONATIONSERVICE' : false};
   consumerNotification;
   notification_statusstr: string;
-
+  wltstPersonsahead;
+  apptPersonsahead;
+  donatPersonsahead ;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -85,10 +91,10 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
+      breadcrumbs.push(e);
     });
     breadcrumbs.push({
-        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
+      title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
   }
@@ -100,7 +106,7 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   numberOnly(event):
     boolean {
-      const charCode = (event.which) ? event.which : event.keyCode;
+    const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) { return false; } return true;
   }
 
@@ -133,9 +139,9 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
         const global_data = data;
-          this.consumerNotification = global_data.sendNotification;
-          this.notification_statusstr = (this.consumerNotification) ? 'On' : 'Off';
-          this.provider_datastorage.set('waitlistManage', data);
+        this.consumerNotification = global_data.sendNotification;
+        this.notification_statusstr = (this.consumerNotification) ? 'On' : 'Off';
+        this.provider_datastorage.set('waitlistManage', data);
       });
   }
   setNotifications(notificationList: any) {
@@ -143,6 +149,7 @@ export class ConsumerNotificationsComponent implements OnInit {
       if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'CHECKIN') {
         this.cSettings['EARLY_WL'] = true;
         this.earlyWLNotificatonSettings = notificationObj;
+        this.wltstPersonsahead = (notificationObj['personsAhead']) ? true : false;
       } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'CHECKIN') {
         this.prefinalWLNotificationSettings = notificationObj;
         this.cSettings['PREFINAL_WL'] = true;
@@ -150,20 +157,34 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.cSettings['FINAL_WL'] = true;
         this.finalWLNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'WAITLISTADD' && notificationObj['resourceType'] === 'CHECKIN') {
-        this.cSettings ['WAITLISTADD'] = true;
+        this.cSettings['WAITLISTADD'] = true;
         this.wlAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'APPOINTMENTADD' && notificationObj['resourceType'] === 'APPOINTMENT') {
-        this.cSettings ['APPOINTMENTADD'] = true;
+        this.cSettings['APPOINTMENTADD'] = true;
         this.apptAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'APPOINTMENT') {
-        this.cSettings ['EARLY_APPT'] = true;
+        this.cSettings['EARLY_APPT'] = true;
         this.earlyAPPTNotificatonSettings = notificationObj;
+        this.apptPersonsahead = (notificationObj['personsAhead']) ? true : false;
       } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
-        this.cSettings ['PREFINAL_APPT'] = true;
+        this.cSettings['PREFINAL_APPT'] = true;
         this.prefinalAPPTNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'APPOINTMENT') {
-        this.cSettings ['FINAL_APPT'] = true;
+        this.cSettings['FINAL_APPT'] = true;
         this.finalAPPTNotificationSettings = notificationObj;
+      }  else if (notificationObj['eventType'] === 'DONATIONSERVICE' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['DONATIONSERVICE'] = true;
+        this.donatAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['EARLY_APPT'] = true;
+        this.earlyDONATNotificatonSettings = notificationObj;
+        this.donatPersonsahead = (notificationObj['personsAhead']) ? true : false;
+      } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['PREFINAL_APPT'] = true;
+        this.prefinalDONATNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'DONATION') {
+        this.cSettings['FINAL_APPT'] = true;
+        this.finalDONATNotificationSettings = notificationObj;
       }
     });
   }
@@ -194,6 +215,8 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
+    } else if (type === 'DONATIONSERVICE') {
+      activeInput = this.finalDONATNotificationSettings;
     }
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(

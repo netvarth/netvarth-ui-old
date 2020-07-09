@@ -206,7 +206,6 @@ export class ProviderServices {
    updateDomainSubDomainFields(data, domain, subdomain = null) {
       const path = (!subdomain) ? 'provider/bProfile/domain' :
          'provider/bProfile/' + subdomain;
-      console.log(data);
       return this.servicemeta.httpPut(path, data);
    }
    updateSocialMediaLinks(data) {
@@ -402,16 +401,14 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url, null, filter);
    }
    getTodayWaitlist(filter) {
-      console.log(filter);
       const url = 'provider/waitlist/today/';
       return this.servicemeta.httpGet(url, null, filter);
    }
    getTodayWaitlistFromStringQuery(filter) {
-      console.log(filter);
       const url = 'provider/waitlist/today?' + filter;
       return this.servicemeta.httpGet(url, null, null);
    }
-   getHistroryWaitlist(filter = {}) {
+   getHistoryWaitlist(filter = {}) {
       const url = 'provider/waitlist/history';
       return this.servicemeta.httpGet(url, null, filter);
    }
@@ -496,9 +493,17 @@ export class ProviderServices {
       const url = 'provider/waitlist/' + waitlist_id + '/' + action;
       return this.servicemeta.httpPut(url, message);
    }
+   getInvoicesHistoryWithStatus(filter = {}) {
+      const url = 'provider/license/invoice/payment/history';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
    getInvoicesWithStatus(status = 'NotPaid', filter = {}) {
       const url = 'provider/license/invoices/' + status + '/status';
       return this.servicemeta.httpGet(url, null, filter);
+   }
+   getInvoicesHistoryWithStatusCount() {
+      const url = 'provider/license/invoice/payment/history/count';
+      return this.servicemeta.httpGet(url);
    }
    getInvoicesWithStatusCount(status = 'NotPaid', filter = {}) {
       const url = 'provider/license/invoices/' + status + '/count';
@@ -589,6 +594,10 @@ export class ProviderServices {
    providerPayment(data) {
       const url = 'provider/payment';
       return this.servicemeta.httpPost(url, data);
+   }
+   providerPaymentStatus(data) {
+      const url = 'provider/payment/status';
+      return this.servicemeta.httpPost(url , data);
    }
    acknowledgeAlert(id) {
       return this.servicemeta.httpPut('provider/alerts/' + id);
@@ -904,6 +913,20 @@ export class ProviderServices {
       const url = 'provider/account/settings/smsCount';
       return this.servicemeta.httpGet(url);
    }
+   getUserConsumerNotificationSettings(filter) {
+      // const url = 'provider/consumerNotification/settings/' + id;
+      // return this.servicemeta.httpGet(url);
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   saveUserConsumerNotificationSettings(data) {
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateUserConsumerNotificationSettings(data) {
+      const url = 'provider/consumerNotification/settings';
+      return this.servicemeta.httpPut(url, data);
+   }
    getConsumerNotificationSettings() {
       const url = 'provider/consumerNotification/settings';
       return this.servicemeta.httpGet(url);
@@ -1015,7 +1038,6 @@ export class ProviderServices {
       return this.servicemeta.httpPut('provider/user/providerBprofile/socialMedia/' + id, data);
    }
    updateDomainFields(providerId, postdata) {
-      console.log(postdata);
       const url = 'provider/user/providerBprofile/domain' + '/' + providerId;
       return this.servicemeta.httpPut(url, postdata);
    }
@@ -1047,7 +1069,6 @@ export class ProviderServices {
    }
 
    getUserdetailNonworkingday(id) {
-      console.log(id);
       return this.servicemeta.httpGet('provider/vacation/' + id);
    }
 
@@ -1410,6 +1431,10 @@ export class ProviderServices {
       const url = 'provider/appointment/schedules/batch/pattern/' + queueId;
       return this.servicemeta.httpPut(url, data);
    }
+   changeAppointmentStatusByBatch(batchId, status, data) {
+      const url = 'provider/appointment/statusChangeByBatch/' + batchId + '/' + status;
+      return this.servicemeta.httpPut(url, data);
+   }
    setApptCallStatus(uuid, status) {
       const url = 'provider/appointment/callingStatus/' + uuid + '/' + status;
       return this.servicemeta.httpPut(url);
@@ -1444,5 +1469,17 @@ export class ProviderServices {
    }
    getAccountSchedules(filter?) {
       return this.servicemeta.httpGet('provider/appointment/schedule', null, filter);
+   }
+   Paymentlink(data) {
+      const url = 'provider/payment/paylink/generate';
+      return this.servicemeta.httpPost(url, data);
+   }
+   Paymentlinkcheck(uuid) {
+      const url = 'consumer/bill/pay/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   linkPayment(data) {
+      const url = 'provider/payment/paylink/order/create';
+      return this.servicemeta.httpPost(url, data);
    }
 }

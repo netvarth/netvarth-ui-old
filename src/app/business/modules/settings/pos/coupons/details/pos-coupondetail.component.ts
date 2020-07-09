@@ -195,7 +195,7 @@ export class PosCouponDetailComponent implements OnInit {
       }
     }
     if (!isNaN(form_data.description.trim(' '))) {
-      this.api_error = 'Please enter a description';
+      this.api_error = this.sharedfunctionObj.openSnackBar('Please enter a valid description', { 'panelClass': 'snackbarerror' });
       return;
     }
     const post_data = {

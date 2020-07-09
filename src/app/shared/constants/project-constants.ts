@@ -95,6 +95,7 @@ export const projectConstantsLocal = {
     { name: 'others', items: ['-'] }
   ],
   DISPLAY_DATE_FORMAT: 'DD/MM/YYYY',
+  DISPLAY_DATE_FORMAT_NEW: 'dd/MM/yyyy',
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',
   PIPE_DISPLAY_DATE_FORMAT_WITH_DAY: 'E, dd/MM/y',
   PIPE_DISPLAY_TIME_FORMAT: 'h:mm a',

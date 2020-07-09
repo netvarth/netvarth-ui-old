@@ -250,9 +250,9 @@ export class ProviderSharedFuctions {
             this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
           },
           error => {
-            waitlist.disableDonebtn = false;
-            waitlist.disableStartbtn = false;
-            waitlist.disableArrivedbtn = false;
+            // waitlist.disableDonebtn = false;
+            // waitlist.disableStartbtn = false;
+            // waitlist.disableArrivedbtn = false;
             const errMsg = error.error.replace('[checkedIn]', 'checked-in');
             this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
             reject();
@@ -402,6 +402,18 @@ export class ProviderSharedFuctions {
 
   getActiveQueues() {
     return this.activeQueues;
+  }
+  formatTime (hours, minutes) {
+    let sHours = hours.toString();
+    let sMinutes = minutes.toString();
+    if (hours < 10) {
+      sHours = '0' + sHours;
+    }
+    if (minutes < 10) {
+      sMinutes = '0' + sMinutes;
+    }
+    const time24 = sHours + ':' + sMinutes + ':00';
+    return time24;
   }
   AMHourto24(time12) {
     const time = time12;

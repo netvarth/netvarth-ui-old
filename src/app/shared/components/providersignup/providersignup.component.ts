@@ -454,7 +454,6 @@ export class ProvidersignupComponent implements OnInit {
   }
   resendOtp(user_details) {
     // if (user_details.isAdmin) {
-    console.log(user_details);
     this.signUpApiProvider(user_details, 'resend');
     // } else {
     //   this.signUpApiConsumer(user_details);
@@ -610,7 +609,6 @@ export class ProvidersignupComponent implements OnInit {
           //   return;
           // }
           this.user_details['userProfile'] = userProfile;
-          console.log(this.user_details);
           this.active_step = 1;
         }
       }

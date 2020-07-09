@@ -283,4 +283,7 @@ export class HolidayDetailsComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+}
 }

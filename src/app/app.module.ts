@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/modules/common/shared.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -52,6 +52,13 @@ import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module'
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { GlobalService } from './shared/services/global-service';
 import { GlobalFunctions } from './shared/functions/global-functions';
+import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
+import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
+import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
+import { WindowRefService } from './shared/services/windowRef.service';
+import { RazorpayService } from './shared/services/razorpay.service';
+import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
+
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -119,6 +126,10 @@ export function init_app(globalService: GlobalService) {
     AuthGuardHome,
     AuthGuardLogin,
     ServiceMeta,
+    Razorpaymodel,
+    RazorpayprefillModel,
+    WindowRefService,
+    RazorpayService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,
@@ -132,6 +143,7 @@ export function init_app(globalService: GlobalService) {
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService, GlobalFunctions
     ], multi: true },
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

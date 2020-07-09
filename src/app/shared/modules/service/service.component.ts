@@ -110,6 +110,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tool_instruct: any;
     default_instruct: any;
     is_lvtrack_enable = false;
+    users_list;
+    providerId: any;
+    provider: { id: any; };
+    departId: any;
+    include_audio = false;
+    selectedUser = '0';
+    defaultOption = {
+        'id': '0',
+        'firstName': 'Global',
+        'lastName' : 'Service'
+    };
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -327,7 +338,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.end_cause_notify_cap = Messages.DONATION_NOTIFY_CAP.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
         this.getGlobalSettings();
-
+        this.getUsers();
         if (this.donationservice) {
             this.is_donation = true;
         }
@@ -415,6 +426,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
             //  form_data['virtualServiceType'] = this.serv_mode;
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
+            }
+            if (this.providerId && this.providerId !== '0') {
+                this.provider = {
+                    'id' : this.providerId
+                };
+                form_data['provider'] = this.provider;
             }
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
@@ -580,7 +597,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     gotoManageQueue() {
         if (this.locationExists) {
             if (this.serviceFrom === 'userlevel') {
-                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'queues']);
+                this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'queues']);
             } else if (this.source === 'appt') {
                 this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
             } else {
@@ -595,9 +612,27 @@ export class ServiceComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
-                for (let i = 0; i < this.vcallmodes.length; i++) {
-                    if (this.vcallmodes[i].status === 'ACTIVE') {
-                        this.telemodes.push(this.vcallmodes[i]);
+                if (this.serv_mode && this.serv_mode === 'audioService') {
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
+                    }
+                } else if (this.serv_mode && this.serv_mode === 'videoService') {
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode !== 'Phone') {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
+                    }
+                } else {
+                    this.include_audio = false;
+                    for (let i = 0; i < this.vcallmodes.length; i++) {
+                        if (this.vcallmodes[i].status === 'ACTIVE') {
+                            this.telemodes.push(this.vcallmodes[i]);
+                        }
+                        if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
+                            this.include_audio = true;
+                        }
                     }
                 }
                 if (this.telemodes.length === 0) {
@@ -624,5 +659,22 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.getVirtualCallingModesList();
                 }
             });
+    }
+    getUsers() {
+        const filter = { 'userType-eq': 'PROVIDER' };
+        if (this.departId) {
+            filter['departmentId-eq'] = this.departId.toString();
+        }
+        this.provider_services.getUsers(filter).subscribe(data => {
+            this.users_list = data;
+            this.users_list.push(this.defaultOption);
+        });
+    }
+    selectUserHandler(value) {
+        this.providerId = value;
+    }
+    selectDeptHandler(value) {
+        this.departId = value;
+        this.getUsers();
     }
 }

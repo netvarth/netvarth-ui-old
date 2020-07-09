@@ -16,7 +16,18 @@
                                 <span class="editbt" (click)="addEditProviderQueue()"
                                     *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
-                                    <div class="row col-sm-12 padleft">
+                                        <div class="row col-sm-12 padleft" style="display: flex;">
+                                                <h4>{{queue_data.name | capitalizeFirst}}</h4>
+                                                <span class="tspace">
+                                                    <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
+                                                        (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
+                                                </span>
+                                                <span class='greenc mgn-lt-5'
+                                                    *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
+                                                <span class='disabled mgn-lt-5'
+                                                    *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
+                                            </div>
+                                    <!-- <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
                                         <span class="tspace">
                                             <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
@@ -28,7 +39,7 @@
                                             *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
                                         <span class='disabled'
                                             *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
-                                    </div>
+                                    </div> -->
                                     <div class="row col-sm-12 workpading">
                                         <div class="c-ot row col-sm-12">
                                             <div class="item schedule"
@@ -86,7 +97,7 @@
                                                 </mat-slide-toggle>
                                             </div>
                                         </div> -->
-                                        <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
+                                        <!-- <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                             <div class="mgn-up-10" style="display: flex;">
                                                 <h6> Batch mode </h6>
                                                 <mat-slide-toggle class="example-margin mgn-lt-10"
@@ -136,14 +147,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <nav class="queue-nav navbar navbar-static-top jd-custom-nav" role="navigation"
+                <nav class="queue-nav navbar navbar-static-top jd-custom-nav" role="navigation" style="z-index: 1"
                     *ngIf="action !== 'view' && !api_loading && params.source !== 'location_detail'">
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav jd-custom-nav chkn-dash pull-right">
@@ -179,9 +190,10 @@
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group queue-selection">
-                                <label class="labelstyle">{{schedule_cap}}</label><a
+                                <label class="labelstyle">Queue</label>
+                                <!-- <a
                                     class="link exstschdlesze pointer-cursor"
-                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a>
+                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a> -->
                                 <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
                                     <ul class="item">
                                         <li *ngFor="let schedule of this.activeQueues"><span
@@ -348,7 +360,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings"> 
+                            <!-- <div class="form-group" *ngIf="showAdvancedSettings"> 
                                 <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                     <div class="mgn-up-10" style="display: flex;">
                                         <h6> Batch mode </h6>
@@ -387,7 +399,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             </div>
                                             </div> 
                                         </div>
-                                    </div>
+                                    </div> -->
                             <!-- <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'" >
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text"

@@ -36,8 +36,14 @@ export class VideoSettingsComponent implements OnInit {
         // Botim: { value: 'Botim', displayName: 'BOTIM', placeHolder: 'BOTIM ID', titleHelp: 'Configure BOTIM Settings', actualValue: '', enabled: false },
         // Imo: { value: 'Imo', displayName: 'IMO', placeHolder: 'IMO ID', titleHelp: 'Configure IMO Settings', actualValue: '', enabled: false },
         Zoom: { value: 'Zoom', displayName: 'Zoom', placeHolder: 'Zoom ID', titleHelp: 'Configure Zoom Settings', actualValue: '', enabled: false },
-        // Viber: { value: 'Viber', displayName: 'Viber', placeHolder: 'Viber ID', titleHelp: 'Configure Viber Settings', actualValue: '', enabled: false }
+        GoogleMeet: { value: 'GoogleMeet', displayName: 'Google Meet', placeHolder: 'Meet ID', titleHelp: 'Configure Google Meet Settings', actualValue: '', enabled: false
+        },
+        Phone: { value: 'Phone', displayName: 'Phone', placeHolder: 'Phone number', titleHelp: 'Configure Phone Settings', actualValue: '', enabled: false }
     };
+    // voiceModes = {
+    //     WhatsApp: { value: 'WhatsApp', displayName: 'WhatsApp', placeHolder: 'WhatsApp ID', titleHelp: 'Configure WhatsApp Settings', actualValue: '', enabled: false },
+    //     Phone: { value: 'Phone', displayName: 'Phone', placeHolder: 'Phone number', titleHelp: 'Configure Phone Settings', actualValue: '', enabled: false }
+    // };
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         { title: 'Settings', url: '/provider/settings' },
@@ -88,7 +94,7 @@ export class VideoSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-            this.router.navigate(['/provider/' + this.domain + '/comm->videocall-settings']);
+            this.router.navigate(['/provider/' + this.domain + '/comm->virtualcallingmode']);
         }
     }
 
@@ -112,16 +118,16 @@ export class VideoSettingsComponent implements OnInit {
     }
     triggerChange(resultMode, callingMode) {
         if (resultMode['value'].actualValue.trim() !== '') {
-            this.updateVideoSettings(resultMode, callingMode);
+            this.updateVideoSettings(resultMode, callingMode, 'statuschange');
         } else {
             if (!resultMode.value.enabled) {
-                this.updateVideoSettings(resultMode, callingMode);
+                this.updateVideoSettings(resultMode, callingMode, 'statuschange');
             } else {
                 this.videoModes[callingMode].enabled = false;
             }
         }
     }
-    updateVideoSettings(resultMode, callingMode) {
+    updateVideoSettings(resultMode, callingMode, statuschange?) {
         const virtualCallingModes = [];
 
         // Object.keys(this.videoModes).forEach(key => {
@@ -173,11 +179,52 @@ export class VideoSettingsComponent implements OnInit {
                 //         this.getVirtualCallingModesList();
                 //     }
                 // }
-                if (callingMode === 'WhatsApp'){
-                    this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                if (callingMode === 'WhatsApp') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Whatsapp mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+                    } else {
+                        this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                    }
                     this.getVirtualCallingModesList();
-                }else if (callingMode === 'Zoom') {
-                    this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                } else if (callingMode === 'Zoom') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Zoom mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                    }
+                    this.getVirtualCallingModesList();
+                } else if (callingMode === 'GoogleMeet') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Google Meet mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Google Meet added successfully', { 'panelclass': 'snackbarerror' });
+                    }
+                    this.getVirtualCallingModesList();
+                } else if (callingMode === 'Phone') {
+                    if (statuschange) {
+                        let status = 'disabled';
+                        if (resultMode.value.enabled) {
+                            status = 'enabled';
+                        }
+                        this.shared_functions.openSnackBar('Phone ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+
+                    } else {
+                        this.shared_functions.openSnackBar('Phone added successfully', { 'panelclass': 'snackbarerror' });
+                    }
                     this.getVirtualCallingModesList();
                 }
                 // for (let callingmodes of postdata.virtualCallingModes) {

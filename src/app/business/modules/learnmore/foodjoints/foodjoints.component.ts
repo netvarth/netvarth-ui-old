@@ -106,6 +106,9 @@ export class FoodJointComponent implements OnInit {
   showbusiness: boolean;
   showappointmentphonein = false;
   showschdelay = false;
+  showauditlog = false;
+  showalert = false;
+  showprofile = false;
  
   constructor(
     private activated_route: ActivatedRoute,
@@ -386,8 +389,14 @@ export class FoodJointComponent implements OnInit {
     this.showdelay = true;
   }
 
-}  
+}   
 
+    if (parentContent === 'auditlog' && childContent === 'auditlog') {
+      this.showauditlog = true;
+    }
+    if (parentContent === 'alert' && childContent === 'alert') {
+      this.showalert = true;
+      }
     if (parentContent === 'customer' && childContent === 'customer') {
       this.showcustomer = true;
     }
@@ -395,7 +404,9 @@ export class FoodJointComponent implements OnInit {
     if (parentContent === 'inbox' && childContent === 'inbox') {
       this.showinbox = true;
    }
-   
+   if (parentContent === 'providerprofile' && childContent === 'providerprofile') {
+    this.showprofile = true;
+  }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
     }

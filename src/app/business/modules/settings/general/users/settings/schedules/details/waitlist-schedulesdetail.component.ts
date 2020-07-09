@@ -477,7 +477,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
     onSubmit(form_data) {
         if (!form_data.qname.replace(/\s/g, '').length) {
             const error = 'Please enter queue name';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         const selser: any = [];
@@ -503,13 +503,13 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         }
         if (!found) {
             const error = 'Please select services';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
             const error = 'Please select the days';
-            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             // Numeric validation
@@ -532,17 +532,17 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served per timeslot';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
                 const error = 'Please enter an integer value for ' + this.customer_label + 's served per timeslot';
-                this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             } else {
                 if (form_data.qserveonce === 0) {
                     const error = this.customer_label + 's served per timeslot should be greater than 0';
-                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     return;
                 }
             }
@@ -591,6 +591,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     'eTime': endtime_format
                 }]
             };
+            if (this.action === 'edit') {
+                schedulejson.startDate = this.queue_data.apptSchedule.startDate;
+              }
             // generating the data to be posted
             const post_data = {
                 'name': form_data.qname,

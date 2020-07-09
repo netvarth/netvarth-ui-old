@@ -36,7 +36,6 @@ export class LinkProfileComponent implements OnInit {
     ) { }
     ngOnInit() {
         this.provId = this.data.provId;
-        console.log(this.provId);
         this.createForm();
         this.api_loading = false;
     }

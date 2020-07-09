@@ -218,6 +218,16 @@ export class SharedServices {
     }
     return this.servicemeta.httpGet(gurl);
   }
+  getUserbusinessprofiledetails_json(accUId, providerId, s3url, section, UTCstring) {
+    let gurl = '';
+    section = section + '.json';
+    if (UTCstring !== null) {
+      gurl = s3url + '/' + accUId + '/' + providerId + '/' + section + '?modifiedDate=' + UTCstring;
+    } else {
+      gurl = s3url + '/' + accUId + '/' + providerId + '/' + section;
+    }
+    return this.servicemeta.httpGet(gurl);
+  }
   getAllSearchlabels() {
     const path = 'ynwConf/searchLabels';
     return this.servicemeta.httpGet(path);
@@ -418,6 +428,10 @@ export class SharedServices {
     const url = 'consumer/payment';
     return this.servicemeta.httpPost(url, data);
   }
+  consumerPaymentStatus(data) {
+    const url = 'consumer/payment/status';
+    return this.servicemeta.httpPost(url, data);
+ }
   getConsumerPayments() {
     const url = 'consumer/payment';
     return this.servicemeta.httpGet(url);

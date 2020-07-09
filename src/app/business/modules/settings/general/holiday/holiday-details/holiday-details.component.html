@@ -17,7 +17,7 @@
                               <div class="form-group no-padding nonworking">
                                   <mat-form-field class="selctDte">
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'add'" formControlName="selectdate"
-                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
+                                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date" (keypress)="isNumeric($event)">
                                     <input type="text" matInput [matDatepicker]="picker" *ngIf="action === 'edit'" formControlName="selectdate"
                                       [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
                                     <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="action === 'add'"></mat-datepicker-toggle>

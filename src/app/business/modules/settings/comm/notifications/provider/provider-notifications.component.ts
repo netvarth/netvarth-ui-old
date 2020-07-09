@@ -36,6 +36,9 @@ export class ProviderNotificationsComponent implements OnInit {
   smsAppt = false;
   emailAppt = false;
   apptPush = false;
+  smsDonate = false;
+  emaildonate = false;
+  donatePush = false;
   cancelsmsAppt = false;
   cancelemailAppt = false;
   cancelpushAppt = false;
@@ -51,6 +54,8 @@ export class ProviderNotificationsComponent implements OnInit {
   notifyApptemail = '';
   notifyApptcanclphonenumber = '';
   notifyApptcanclemail = '';
+  notifyDonatephonenumber = '';
+  notifydonateemail = '';
 
   api_error = null;
   api_success = null;
@@ -63,6 +68,8 @@ export class ProviderNotificationsComponent implements OnInit {
   apptem_arr: any = [];
   apptph1_arr: any = [];
   apptem1_arr: any = [];
+  donateem_arr: any = [];
+  donateph_arr: any =  [];
   domain;
   provdr_domain_name = '';
   provider_label = '';
@@ -73,10 +80,12 @@ export class ProviderNotificationsComponent implements OnInit {
   okCancelStatus = false;
   okApptCancelStatus = false;
   okApptStatus = false;
+  okDonateStatus = false;
   selApptNotify = false;
   selApptCancelNotify = false;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
+  selDonatnNotify = false;
   mode_of_notify = '';
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
@@ -224,6 +233,32 @@ export class ProviderNotificationsComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
+        } else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
+            this.selDonatnNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length !== 0) {
+            this.donateem_arr = notifyList.email;
+            this.selDonatnNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+          if (notifyList.sms && notifyList.sms.length !== 0) {
+            this.donateph_arr = notifyList.sms;
+            this.selDonatnNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+
+          if (notifyList.pushMessage) {
+            this.donatePush = notifyList.pushMessage;
+            this.selDonatnNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
         }
       }
     }
@@ -252,6 +287,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptCancelNotifications('cancelappointment');
     }
   }
+  selectDonatinNotify(event) {
+    this.selApptNotify = event.checked;
+    if (!this.selApptNotify) {
+      this.donateNotifications('newdonation');
+    }
+  }
+  
 
   addChkinPh() {
     this.resetApiErrors();
@@ -489,6 +531,66 @@ export class ProviderNotificationsComponent implements OnInit {
       this.okApptCancelStatus = true;
     }
   }
+  addDonatePh() {
+    this.resetApiErrors();
+    if (this.notifyDonatephonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyDonatephonenumber !== '') {
+      const curphone = this.notifyDonatephonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.donateph_arr.indexOf(curphone) === -1) {
+        this.donateph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okDonateStatus = true;
+      this.notifyDonatephonenumber = '';
+    }
+  }
+  addDonatemail() {
+    this.resetApiErrors();
+    if (this.notifydonateemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter a valid email id';
+      return;
+    }
+    if (this.notifydonateemail !== '') {
+      const curemail = this.notifydonateemail.trim();
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const result2 = pattern2.test(curemail);
+      if (!result2) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid email id';
+        return;
+      }
+      if (this.donateem_arr.indexOf(curemail) === -1) {
+        this.donateem_arr.push(curemail);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
+      this.okDonateStatus = true;
+      this.notifydonateemail = '';
+    }
+  }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
@@ -591,13 +693,39 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
+  donateNotifications(source){
+    this.savechekinNotification_json = {};
+    let chekinMode = 'ADD';
+    if (this.notificationList.length === 0) {
+      chekinMode = 'ADD';
+    }
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
+        chekinMode = 'UPDATE';
+      }
+    }
+    if (!this.selDonatnNotify) {
+      this.donateem_arr = [];
+      this.donateph_arr = [];
+      this.donatePush = false; 
+    }
+    this.savechekinNotification_json.resourceType = 'DONATION';
+    this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
+    this.savechekinNotification_json.sms = this.donateph_arr;
+    this.savechekinNotification_json.email = this.donateem_arr;
+    this.savechekinNotification_json.pushMessage = this.donatePush;
+    this.savechekinNotification_json.providerId = 0;
+    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
+  }
   saveNotifctnJson(saveNotification_json, mode, source) {
     this.sms = false;
     this.email = false;
     this.cancelemail = false;
     this.cancelsms = false;
     this.smsAppt = false;
+    this.smsDonate = false;
     this.emailAppt = false;
+    this.emaildonate = false;
     this.cancelemailAppt = false;
     this.cancelsmsAppt = false;
     if (mode === 'ADD') {
@@ -616,6 +744,9 @@ export class ProviderNotificationsComponent implements OnInit {
             }
             if (source === 'cancelappointment') {
               this.okApptCancelStatus = false;
+            }
+            if (source === 'newdonation') {
+              this.okDonateStatus = true;
             }
             // this.okCancelStatus = false;
             this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
@@ -640,6 +771,9 @@ export class ProviderNotificationsComponent implements OnInit {
             }
             if (source === 'cancelappointment') {
               this.okApptCancelStatus = false;
+            }
+            if (source === 'newdonation') {
+              this.okDonateStatus = true;
             }
             this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
           },
@@ -666,6 +800,9 @@ export class ProviderNotificationsComponent implements OnInit {
     if (source === 'cancelappointment') {
       this.okApptCancelStatus = true;
     }
+    if (source === 'newdonation') {
+      this.okDonateStatus = true;
+    }
   }
   smsAddClicked() {
     if (this.sms) {
@@ -686,6 +823,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.smsAppt = false;
     } else {
       this.smsAppt = true;
+    }
+  }
+  smsDonateAddClicked() {
+    if (this.smsDonate) {
+      this.smsDonate = false;
+    } else {
+      this.smsDonate = true;
     }
   }
   cancelledApptsmsAddClicked() {
@@ -723,6 +867,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.cancelemailAppt = true;
     }
   }
+  emaildonateAddClicked() {
+    if (this.emaildonate) {
+      this.emaildonate = false;
+    } else {
+      this.emaildonate = true;
+    }
+  }
   changePushMsgStatus(source) {
     if (source === 'newcheckin') {
       this.okCheckinStatus = true;
@@ -735,6 +886,9 @@ export class ProviderNotificationsComponent implements OnInit {
     }
     if (source === 'newappointment') {
       this.okApptStatus = true;
+    }
+    if (source === 'newdonation') {
+      this.okDonateStatus = true;
     }
   }
   learnmore_clicked(mod, e) {

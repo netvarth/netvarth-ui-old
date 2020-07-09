@@ -1,0 +1,61 @@
+<section class="container">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section class="container no-padding">
+    <div class="content loc-list p-checkin ynw-common-form-nm">
+        <div class="col-md-12 no-padding">
+            <div class="card p0">
+                <div class="copy locd">
+                    <div class="lbl col-sm-12 col-md-7 col-lg-7">
+                        <ng-container *ngIf="activeWt">
+                            <div class="mainouter checkin-page ">
+                                <div class="servicefor-outer btborder" *ngIf="members">
+                                    <div class="mgn-bt-5" *ngFor="let waitfor of members">
+                                        {{waitfor | capitalizeFirst}}
+                                    </div>
+                                </div>
+                                <div class="mainouter checkin-page ">
+                                    <div class="servicefor-outer btborder">
+                                        <div>{{activeWt.service.name}}</div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="mainouter checkin-page ">
+                                    <div class="servicefor-outer btborder">
+                                        <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377;
+                                                {{prepaymentAmount}}</b></div>
+                                    </div>
+                                    <div class="mainouter checkin-page ">
+                                        <div style="padding-bottom: 10px">Payment Options
+                                            <div>
+                                                <p class="settings_info" style="display: inline;">Choose your payment
+                                                    options from here</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mainouter checkin-page ">
+                                        <div class="col-md-12 cc-dc-nb no-padding mgn-bt-20" style="display: flex">
+                                            <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net
+                                                Banking/UPI</button>
+                                            <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="lbr col-sm-12 col-md-5 col-lg-5 mainouter">
+                        <!-- <div class="col-md-12  mgn-up-20 ">
+                            <aside class="checkin-aside">
+                                <div class="servicefor-outer">
+                                </div>
+                            </aside>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+    </div>
+</section>

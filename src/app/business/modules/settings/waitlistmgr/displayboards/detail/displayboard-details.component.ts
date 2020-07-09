@@ -218,7 +218,6 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         // get the search keyword
         let search = this.qBoardFilterMultictrl.value;
-        console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
             this.filteredQboardList = this.qboard_list.slice();
             return;

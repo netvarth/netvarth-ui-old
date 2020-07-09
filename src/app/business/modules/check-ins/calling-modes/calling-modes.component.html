@@ -17,10 +17,28 @@
                         <span style="padding-left: 20px;">Launch WhatsApp</span>
                     </button>
                 </div>
-                <div *ngIf="callingModes !== 'WhatsApp'">
+                <div *ngIf="callingModes === 'Zoom'">
                     <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
-                        <img src="https://img.icons8.com/color/16/000000/zoom.png" />
+                        <!-- <img class="tool-pading" src="https://img.icons8.com/color/16/000000/zoom.png" /> -->
+                        <i class="fa zoom-icon"></i>
                         <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Zoom</a>
+                    </button>
+                </div>
+                <div *ngIf="callingModes === 'GoogleMeet'">
+                    <button  (click)="asktoLaunch()" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}">
+                        <!-- <img class="tool-pading" src="https://img.icons8.com/ultraviolet/16/000000/video-message.png"/> -->
+                        <i class="fa meet-icon"></i>
+                        <a [ngClass]="{'tspace': !btndisabled, 'tspace tel-serv-a': btndisabled}">Launch Google Meet</a>
+                    </button>
+                </div>
+                <div *ngIf="callingModes === 'Phone'">
+                    <button *ngIf="!is_web" [ngClass]="{'btn-primary-n tele-btn': !btndisabled, 'disabled cs-btn bt1': btndisabled}"  (click)="asktoLaunch()">
+                        <i class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                        <a class="tspace teli-wtsap-a">Call this number</a>
+                    </button>
+                    <button *ngIf="is_web" class="cs-btn bt2 disabled">
+                        <i class="fa fa-mobile fa-lg tool-pading" aria-hidden="true"></i>
+                        <span style="padding-left: 20px;">Call this number</span>
                     </button>
                 </div>
                 <div class="coupon-outer">
@@ -165,7 +183,7 @@
                     aria-hidden="true"></i>Back</button>
         </div>
         <div class="example-full-width" style="padding-top: 30px;text-align: center;">
-            Video call completed? <br> Change <span *ngIf="data.type === 'checkin'">Checkin</span> <span *ngIf="data.type === 'appt'">Appointment</span> status to completed?
+          <span *ngIf="callingModes === 'Phone'">Audio</span><span *ngIf="callingModes !== 'Phone'">Video</span> call completed? <br> Change <span *ngIf="data.type === 'checkin'">Checkin</span> <span *ngIf="data.type === 'appt'">Appointment</span> status to completed?
         </div>
     </mat-dialog-content>
     <mat-dialog-actions style="padding-left: 30%;">
@@ -181,17 +199,23 @@
         </div>
     </mat-dialog-content>
     <mat-dialog-actions style="padding-left: 30%;">
-        <button type="button" class="cs-btn bt1" style="background: #00cc96;"
-            (click)="makeStarted()">
-            <a style="color:white" target="_blank" [href]="starting_url">Yes</a>
-            </button>&nbsp;&nbsp;&nbsp;
-            <a (click)="back()" style="color:white" target="_blank" [href]="starting_url">
+            <a *ngIf="callingModes !== 'Phone'" style="color:white" target="_blank" [href]="starting_url">
+            <button type="button" class="cs-btn bt1" style="background: #00cc96;"
+            (click)="makeStarted()">Yes</button></a>
+
+            <a *ngIf="callingModes === 'Phone'" style="color:white" target="_blank" [href]="'tel:' + starting_url">
+            <button type="button" class="cs-btn bt1" style="background: #00cc96;"
+            (click)="makeStarted()">Yes</button>
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <a *ngIf="callingModes !== 'Phone'" (click)="back()" style="color:white" target="_blank" [href]="starting_url">
                 <button type="button" class="cs-btn bt1" style="background: #f24949;">No
                 </button>
             </a>
-        <!-- <button type="button" class="cs-btn bt1" style="background: #f24949;">
-            <a (click)="back()" style="color:white" target="_blank" [href]="starting_url">No</a>
-            </button> -->
+            <a *ngIf="callingModes === 'Phone'" (click)="back()" style="color:white" target="_blank" [href]="'tel:' + starting_url">
+                <button type="button" class="cs-btn bt1" style="background: #f24949;">No
+                </button>
+            </a>
     </mat-dialog-actions>
 
 </div>

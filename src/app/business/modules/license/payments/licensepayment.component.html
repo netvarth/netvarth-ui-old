@@ -1,0 +1,45 @@
+<section> 
+  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
+        <div class="col-md-12 no-padding-small">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy one col-xs-12 col-sm-12 no-padding">                     
+                        <div class="pay-section card">                
+                          <div *ngIf ="paidStatus == 'false'">
+                             <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377;{{prepayAmount}}</b></div> 
+                              <div style="padding-bottom: 10px">Payment Options
+                              <div><p class="settings_info" style="display: inline;">Choose your payment options from here</p></div>
+                              </div>
+                              <div class="cc-dc-nb-change">
+                                  <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
+                                  <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+                              </div>
+                         </div>
+    
+                         <div  *ngIf ="paidStatus == 'true'">
+                            <div style="padding-bottom: 10px"><b>&#8377; {{prepayAmount}}</b></div> 
+                            <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br><br>
+                                <div class="ivc">
+                                    <div class="pay-det-row">
+                                            <span><b>Payment Gateway:</b>&nbsp;<span>{{this.pGateway}}</span></span>
+                                    </div> 
+                                    <div class="pay-det-row">
+                                            <span><b> Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                                    </div> 
+                                    <div class="pay-det-row">
+                                            <span><b> Transaction Id:</b>&nbsp; <span>{{razorpay_order_id}}</span></span>
+                                    </div> 
+                                </div>              
+                          
+                         </div>                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+    <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+</section>

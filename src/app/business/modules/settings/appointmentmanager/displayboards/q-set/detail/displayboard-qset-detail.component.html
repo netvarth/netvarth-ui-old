@@ -126,7 +126,7 @@
                                 placeholderLabel="Search departments"
                                 noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
-                                (click)="setDeptIds(department.departmentId, 'DEPARTMENT')">
+                                (click)="setDeptIds(department.departmentId)">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -146,25 +146,25 @@
             <div class="form-group col-md-12 mgn-bt-20"
                 *ngIf="selectedCategory !== 'SCHEDULE' && selectedCategory !== 'SERVICE'">
                 <label class="col-form-label" style="margin-left: 20px">Choose
-                    Users</label>
+                    {{provider_label | capitalizeFirst}}s</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="users.length > 0">
-                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="Users" [multiple]="true">
-                            <ngx-mat-select-search [formControl]="userMultiFilterCtrl" placeholderLabel="Search users"
-                                noEntriesFoundLabel="no matching user found"></ngx-mat-select-search>
-                            <mat-option *ngFor="let user of userList" [value]="user"
-                                (click)="setUsersIds(user.id, 'PROVIDER')">
+                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s" [multiple]="true">
+                            <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
+                                placeholderLabel="Search {{provider_label}}s"
+                                noEntriesFoundLabel="no matching {{provider_label}} found"></ngx-mat-select-search>
+                            <mat-option *ngFor="let user of userList" [value]="user" (click)="setUsersIds(user.id)">
                                 {{user.firstName}} {{user.lastName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <div class="mgn-lt-5 disabled-text" *ngIf="users.length === 0">
-                        No users
+                        No {{provider_label}}s
                     </div>
                 </div>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="userMultiCtrl.length > 0">
                     <p>
-                        Selected Users:
+                        Selected {{provider_label}}s:
                     </p>
                     <ul *ngFor="let user of userMultiCtrl">
                         <li>
@@ -183,7 +183,7 @@
                                 placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
-                                (click)="setServiceIds(service.id, 'SERVICE')">
+                                (click)="setServiceIds(service.id)">
                                 {{service.name | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -211,7 +211,7 @@
                                 noEntriesFoundLabel="no matching schedule found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
-                                (click)="queueSelection(schedule.id, 'SCHEDULE')">
+                                (click)="queueSelection(schedule.id)">
                                 {{schedule.name}}
                                 [{{schedule.displayQ.dstr | capitalizeFirst}} - {{schedule.displayQ.time}}]
                             </mat-option>
@@ -310,7 +310,6 @@
             </div>
         </div>
         <div class="clearfix"></div>
-
         <div class="step4 mgn-up-20 col-md-12" *ngIf="step === 4">
             <label class="col-form-label mgn-lt-20 mgn-bt-20">QBoard field to display</label>
             <div class="disply-field" *ngFor="let label of defaultLabels; let i = index">
@@ -364,7 +363,6 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-
             <div class="col-md-6 col-12 control mgn-bt-20 qbord-div mgn-up-20">
                 <button mat-button type="button" (click)="showStep(4)" class="cs-btn bt1">Back</button>&nbsp;
                 <button mat-button type="button" (click)="onSubmit()" class="cs-btn bt1">Create</button>

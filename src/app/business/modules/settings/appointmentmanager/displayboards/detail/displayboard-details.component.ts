@@ -223,7 +223,6 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         // get the search keyword
         let search = this.qBoardFilterMultictrl.value;
-        console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
             this.filteredQboardList = this.qboard_list.slice();
             return;
@@ -244,9 +243,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
-        console.log(id);
         this.provider_services.getDisplayboardAppointment(id).subscribe(data => {
-            console.log(data);
             this.layoutData = data;
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;

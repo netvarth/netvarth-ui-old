@@ -175,7 +175,7 @@ export class ProviderCheckinComponent implements OnInit {
     notes = false;
     attachments = false;
     users = [];
-    userN = { 'id': 0, 'firstName': 'None', 'lastName': '' };
+    userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     customerid: any;
     callingMode;
     virtualServiceArray;
@@ -358,6 +358,7 @@ export class ProviderCheckinComponent implements OnInit {
             );
     }
     initCheckIn() {
+        const _this = this;
         this.showCheckin = true;
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
@@ -380,7 +381,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.sel_loc = loc.id;
 
         this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-        console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
@@ -395,35 +395,35 @@ export class ProviderCheckinComponent implements OnInit {
         }
         this.getWaitlistMgr().then(
             () => {
-                this.setTerminologyLabels();
-                this.getBussinessProfileApi()
+                _this.setTerminologyLabels();
+                _this.getBussinessProfileApi()
                     .then(
                         (data: any) => {
-                            this.account_id = data.id;
-                            this.domain = data.serviceSector.domain;
-                            this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
-                            if (this.domain === 'foodJoints') {
-                                this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                                this.note_placeholder = 'Item No Item Name Item Quantity';
+                            _this.account_id = data.id;
+                            _this.domain = data.serviceSector.domain;
+                            _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
+                            if (_this.domain === 'foodJoints') {
+                                _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                                _this.note_placeholder = 'Item No Item Name Item Quantity';
                             } else {
-                                this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                this.note_placeholder = 'Add Note';
+                                _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                                _this.note_placeholder = 'Add Note';
                             }
-                            this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
+                            _this.shared_services.getServicesByLocationId(_this.sel_loc).subscribe(
                                 (services: any) => {
-                                    this.servicesjson = services;
-                                    this.serviceslist = services;
+                                    _this.servicesjson = services;
+                                    _this.serviceslist = services;
                                     // this.sel_ser_det = [];
-                                    if (this.servicesjson.length > 0) {
+                                    if (_this.servicesjson.length > 0) {
                                         //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                                         //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
                                         //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        this.initDepartments(this.account_id).then(
+                                        _this.initDepartments(_this.account_id).then(
                                             () => {
-                                                this.handleDeptSelction(this.selected_dept);
+                                                _this.handleDeptSelction(_this.selected_dept);
                                             },
                                             () => {
-                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
                                             }
                                         );
                                     }
@@ -522,7 +522,6 @@ export class ProviderCheckinComponent implements OnInit {
             for (const mem of data) {
                 if (mem.userProfile.id !== self_obj.userProfile.id) {
                     this.familymembers.push(mem);
-                    console.log(this.familymembers);
                 }
             }
             this.api_loading1 = false;
@@ -577,7 +576,7 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.servicesjson[i].id === curservid) {
                 serv = this.servicesjson[i];
                 if (serv.virtualCallingModes) {
-                    if (serv.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                    if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         this.callingModes = this.customer_data.phoneNo;
                         this.wtsapmode = this.customer_data.phoneNo;
                     }
@@ -606,7 +605,6 @@ export class ProviderCheckinComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log(this.queuejson);
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -706,7 +704,6 @@ export class ProviderCheckinComponent implements OnInit {
     }
 
     handleQueueSelection(queue, index) {
-        console.log(index);
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(queue.queueWaitingTime);
@@ -800,7 +797,11 @@ export class ProviderCheckinComponent implements OnInit {
         this.virtualServiceArray = {};
         // for (let i = 0; i < this.callingModes.length; i++) {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
-            this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+            } else {
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+            }
         }
         // }
         const post_Data = {
@@ -817,11 +818,11 @@ export class ProviderCheckinComponent implements OnInit {
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'waitlistMode': this.checkinType
         };
-        if (this.selectedUser && this.selectedUser.firstName !== 'None') {
+        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
-            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp') {
+            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
                     this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
@@ -831,9 +832,16 @@ export class ProviderCheckinComponent implements OnInit {
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
                     post_Data['virtualService'] = this.virtualServiceArray;
-                } else {
-                    post_Data['virtualService'] = {};
+                } else if (i === 'GoogleMeet') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Zoom') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
+                } else if (i === 'Phone') {
+                    post_Data['virtualService'] = this.virtualServiceArray;
                 }
+                //  else {
+                //     post_Data['virtualService'] = {};
+                // }
             }
         }
         if (this.apptTime) {
@@ -860,14 +868,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_loading = true;
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
-                console.log(data);
                 this.api_loading = false;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
-                    console.log(this.trackUuid);
                 });
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
@@ -1194,7 +1200,6 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_error = '';
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
-        console.log(this.servicesjson);
         if (this.filterDepart) {
             const filter = {
                 'departmentId-eq': obj
@@ -1216,7 +1221,6 @@ export class ProviderCheckinComponent implements OnInit {
                             }
                         }
                     }
-                    console.log(this.users);
                     if (found) {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
@@ -1225,6 +1229,8 @@ export class ProviderCheckinComponent implements OnInit {
                         this.selected_user = this.users[0];
                         this.handleUserSelection(this.selected_user);
                     } else {
+                        this.selected_user = null;
+                        this.selectedUser = null;
                         for (let i = 0; i < this.departmentlist['departments'].length; i++) {
                             if (obj === this.departmentlist['departments'][i].departmentId) {
                                 this.services = this.departmentlist['departments'][i].serviceIds;
@@ -1272,7 +1278,6 @@ export class ProviderCheckinComponent implements OnInit {
         //         this.servicesjson = newserviceArray;
         //     }
         // }
-        // console.log(this.servicesjson);
         // if (this.servicesjson.length > 0) {
         //     this.sel_ser = this.servicesjson[0].id;
         //     this.setServiceDetails(this.sel_ser);
@@ -1284,7 +1289,6 @@ export class ProviderCheckinComponent implements OnInit {
     handleUserSelection(user) {
         this.selectedUser = user;
         this.queuejson = [];
-        console.log(user);
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
@@ -1300,7 +1304,6 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        console.log(newserviceArray);
         this.servicesjson = newserviceArray;
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;

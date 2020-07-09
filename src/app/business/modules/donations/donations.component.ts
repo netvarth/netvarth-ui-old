@@ -6,6 +6,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
     'selector': 'app-donations',
@@ -15,11 +16,11 @@ export class DonationsComponent implements OnInit {
     filter_sidebar = false;
     filterapplied = false;
     open_filter = false;
+    check_status;
     filter = {
         first_name: '',
         date: null,
-        mobile: '',
-        email: '',
+        service: '',
         page_count: projectConstants.PERPAGING_LIMIT,
         page: 1
     }; // same in resetFilter Fn
@@ -52,13 +53,19 @@ export class DonationsComponent implements OnInit {
         'mobile': false,
         'email': false
     };
+    selected = 0;
     donationSelection = 0;
     donationsSelected: any = [];
     donations: any = [];
     selectedIndex: any = [];
+    donationServices: any = [];
     customer_label = '';
     donations_count;
     selectedcustomersformsg: any;
+    show_loc = false;
+    locations: any;
+    selected_loc_id: any;
+    services: any = [];
     constructor(private provider_services: ProviderServices,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions,
@@ -76,7 +83,9 @@ export class DonationsComponent implements OnInit {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.getServiceList();
         this.getDonationsList(true);
+        this.getLocationList();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     filterClicked(type) {
@@ -98,10 +107,63 @@ export class DonationsComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/donations']);
         }
     }
-    getDonationsList(from_oninit = false) {
+    getServiceList() {
+        const filter1 = { 'serviceType-eq': 'donationService' };
+        this.provider_services.getServicesList(filter1)
+            .subscribe(
+                data => {
+                    this.donationServices = data;
+                },
+                () => { }
+            );
+    }
+    //   setFilterData(type, status) {
+    //     let passingStatus;
+    //     if (status && this.selected === 0) {
+    //       this.selected = 1;
+    //       this.donationServices.push(status);
+    //       passingStatus = this.donationServices.toString();
+    //       this.filter[type] = passingStatus;
+    //       this.doSearch();
+    //     } else if (status && this.selected === 1) {
+    //       if (this.donationServices.indexOf(status) !== -1) {
+    //         const indexofStatus = this.donationServices.indexOf(status);
+    //         if (indexofStatus >= 0) {
+    //         }
+    //         passingStatus = this.donationServices.toString();
+    //         this.filter[type] = passingStatus;
+    //         if(this.filter[type] === ''){
+    //         this.resetFilter();
+    //         }
+    //         this.doSearch();
+
+    //       }
+    //        else {
+    //         this.donationServices.push(status);
+    //         passingStatus = this.donationServices.toString();
+    //         this.filter[type] = passingStatus;
+    //         this.doSearch();
+    //       }
+
+    //     }
+    // }
+    setFilterDataCheckbox(type, value, event) {
+        this.filter[type] = value;
+        const indx = this.services.indexOf(value);
+        if (indx === -1) {
+            this.services.push(value);
+        } else {
+            this.services.splice(indx, 1);
+        }
+        this.doSearch();
+    }
+    getDonationsList(from_oninit = false, loc_id?) {
         let filter = this.setFilterForApi();
-        filter ['donationStatus-eq'] = 'SUCCESS';
-        // filter ['sort_date'] = 'desc';
+        filter['donationStatus-eq'] = 'SUCCESS';
+        if (loc_id) {
+            filter['location-eq'] = loc_id;
+            this.show_loc = false;
+        }
         this.getDonationsCount(filter)
             .then(
                 result => {
@@ -111,6 +173,9 @@ export class DonationsComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.donations = data;
+                                if (loc_id) {
+                                    this.selected_loc_id = loc_id;
+                                }
                                 this.loadComplete = true;
                             },
                             error => {
@@ -125,6 +190,7 @@ export class DonationsComponent implements OnInit {
             );
     }
     clearFilter() {
+        this.services = [];
         this.resetFilter();
         this.filterapplied = false;
         this.getDonationsList(true);
@@ -157,7 +223,7 @@ export class DonationsComponent implements OnInit {
     }
     doSearch() {
         this.getDonationsList();
-        if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
+        if (this.filter.first_name || this.filter.date || this.filter.service) {
             this.filterapplied = true;
         } else {
             this.filterapplied = false;
@@ -167,14 +233,12 @@ export class DonationsComponent implements OnInit {
         this.filters = {
             'first_name': false,
             'date': false,
-            'mobile': false,
-            'email': false
+            'service': false
         };
         this.filter = {
             first_name: '',
             date: null,
-            mobile: '',
-            email: '',
+            service: '',
             page_count: projectConstants.PERPAGING_LIMIT,
             page: 1
         };
@@ -189,24 +253,16 @@ export class DonationsComponent implements OnInit {
     }
     setFilterForApi() {
         const api_filter = {};
-        // if (this.filter.first_name !== '') {
-        //     api_filter['firstName-eq'] = this.filter.first_name;
-        // }
-        // if (this.filter.date != null) {
-        //     api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
-        // }
-        // if (this.filter.email !== '') {
-        //     api_filter['email-eq'] = this.filter.email;
-        // }
-        // if (this.filter.mobile !== '') {
-        //     const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
-        //     const mval = pattern.test(this.filter.mobile);
-        //     if (mval) {
-        //         api_filter['primaryMobileNo-eq'] = this.filter.mobile;
-        //     } else {
-        //         this.filter.mobile = '';
-        //     }
-        // }
+        if (this.filter.first_name !== '') {
+            api_filter['firstName-eq'] = this.filter.first_name;
+        }
+        if (this.filter.date != null) {
+            api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
+        }
+        if (this.services.length > 0) {
+            api_filter['service-eq'] = this.services.toString();
+        }
+
         return api_filter;
     }
     focusInput(ev, input) {
@@ -217,6 +273,7 @@ export class DonationsComponent implements OnInit {
         }
     }
     showFilterSidebar() {
+        this.show_loc = false;
         this.filter_sidebar = true;
     }
     hideFilterSidebar() {
@@ -242,5 +299,16 @@ export class DonationsComponent implements OnInit {
                 }
             }
         }
+    }
+    getLocationList() {
+        this.provider_services.getProviderLocations()
+            .subscribe((data: any) => {
+                this.locations = data;
+            }
+            );
+    }
+    showFilterLocation() {
+        this.filter_sidebar = false;
+        this.show_loc = !this.show_loc;
     }
 }
