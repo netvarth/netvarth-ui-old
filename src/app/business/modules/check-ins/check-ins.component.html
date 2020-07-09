@@ -676,10 +676,10 @@
                           </span>
                           <span class="fa fa-phone phone-in-icon" *ngIf="checkin.waitlistMode == 'PHONE_CHECKIN'">
                           </span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote pointer-cursor"
+                          <!-- <span [matTooltip]="cust_note_tooltip" class="pull-left cnote pointer-cursor"
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
-                          </span>
+                          </span> -->
                           <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
                             *ngIf="checkin.waitlistStatus == 'arrived'"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"

@@ -15,6 +15,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { CallingModesComponent } from './calling-modes/calling-modes.component';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -707,9 +708,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
     } else {
       if (this.time_type !== 1) {
-      this.selQIds = this.getActiveQIdsFromView(view);
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+        this.selQIds = this.getActiveQIdsFromView(view);
+        this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+        this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
         this.selQIds.push(activeQ.id);
@@ -2137,7 +2138,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
-    keyPressed(event) {
+  keyPressed(event) {
     if (event.keyCode === 13) {
       this.doSearch();
     }
@@ -2148,5 +2149,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getVirtualMode(virtualService) {
     // Object.keys(virtualService)[0];
     return Object.keys(virtualService)[0];
+  }
+  showConsumerNote(checkin) {
+    this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: checkin
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

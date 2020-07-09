@@ -784,10 +784,10 @@
                           <span class="fa fa-phone phone-in-icon"
                             *ngIf="appt.appointmentMode == 'PHONE_IN_APPOINTMENT'">
                           </span>
-                          <span [matTooltip]="cust_note_tooltip" class="pull-left cnote pointer-cursor"
+                          <!-- <span [matTooltip]="cust_note_tooltip" class="pull-left cnote pointer-cursor"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
-                          </span>
+                          </span> -->
                           <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
                             *ngIf="appt.apptStatus == 'Arrived'"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
