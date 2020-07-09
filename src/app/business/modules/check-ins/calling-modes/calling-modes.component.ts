@@ -236,7 +236,7 @@ export class CallingModesComponent implements OnInit {
                 .then(
                     result => {
                         if (action === 'DONE') {
-                              this.dialogRef.close();
+                              this.dialogRef.close('reloadlist');
                         }
                     }
                 );
@@ -245,7 +245,7 @@ export class CallingModesComponent implements OnInit {
                 .then(
                     result => {
                        if (action === 'Completed') {
-                         this.dialogRef.close();
+                         this.dialogRef.close('reloadlist');
                        }
                     }
                 );
@@ -302,7 +302,7 @@ export class CallingModesComponent implements OnInit {
         if (this.is_started) {
             this.step = 5;
         } else {
-            this.dialogRef.close();
+            this.dialogRef.close('reloadlist');
         }
     }
     asktoLaunch() {
