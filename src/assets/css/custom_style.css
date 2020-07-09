@@ -10328,3 +10328,6 @@ a {
     font-weight: bold;
     color: #f24949;
 }
+.chkins-sect .table-responsive {
+  min-height: 250px !important;
+}
