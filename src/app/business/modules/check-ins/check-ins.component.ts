@@ -15,6 +15,8 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { CallingModesComponent } from './calling-modes/calling-modes.component';
 import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { ApplyLabelComponent } from './apply-label/apply-label.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -246,6 +248,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerdialogRef;
   trackDetail: any = [];
   consumerTrackstatus = false;
+  labeldialogRef;
   @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 200;
@@ -707,9 +710,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
     } else {
       if (this.time_type !== 1) {
-      this.selQIds = this.getActiveQIdsFromView(view);
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+        this.selQIds = this.getActiveQIdsFromView(view);
+        this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+        this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
         this.selQIds.push(activeQ.id);
@@ -866,6 +869,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.chkAppointments = {};
+    this.appointmentsChecked = [];
   }
   loadApiSwitch(source) {
     // this.resetAll();
@@ -923,22 +927,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.chkAppointments[index]) {
       this.chkAppointments[index] = true;
       this.appointmentsChecked[index] = appt;
-      if (this.time_type === 1 && appt.waitlistStatus === 'checkedIn' && !appt.virtualService) {
-        this.showArrived = true;
-      }
-      if (this.time_type !== 3 && appt.waitlistStatus !== 'done' && appt.waitlistStatus !== 'checkedIn' && !appt.virtualService) {
-        this.showUndo = true;
-      }
-      if (appt.billStatus && appt.billStatus === 'Settled') {
-        this.showRejected = false;
-      }
     } else {
       this.chkAppointments[index] = false;
       delete this.appointmentsChecked[index];
       this.chkSelectAppointments = false;
-      this.showArrived = false;
-      this.showRejected = true;
-      this.showUndo = false;
     }
     this.setApptSelections();
   }
@@ -1075,6 +1067,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptSingleSelection = false;
     this.apptMultiSelection = false;
     this.activeAppointment = null;
+    this.showArrived = false;
+    this.showUndo = false;
+    this.showRejected = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
     if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
@@ -1084,6 +1079,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       Object.keys(this.appointmentsChecked).forEach(key => {
         this.activeAppointment = this.appointmentsChecked[key];
       });
+      if (this.time_type === 1 && this.activeAppointment.waitlistStatus === 'checkedIn' && !this.activeAppointment.virtualService) {
+        this.showArrived = true;
+      }
+      if (this.time_type !== 3 && this.activeAppointment.waitlistStatus !== 'done' && this.activeAppointment.waitlistStatus !== 'checkedIn') {
+        this.showUndo = true;
+      }
+      if (this.activeAppointment.waitlistStatus === 'arrived' || this.activeAppointment.waitlistStatus === 'checkedIn') {
+        this.showRejected = true;
+      }
       if (this.activeAppointment.waitlistStatus === 'checkedIn' && this.activeAppointment.jaldeeWaitlistDistanceTime && this.activeAppointment.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.activeAppointment.jaldeeStartTimeType === 'ONEHOUR' || this.activeAppointment.jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
@@ -1637,6 +1641,37 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }, 100);
   }
+  addLabelvalue(source, label?) {
+    const _this = this;
+    const appts = [];
+    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+      appts.push(_this.appointmentsChecked[apptIndex]);
+    });
+    this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        checkin: appts[0],
+        source: source,
+        label: label
+      }
+    });
+    this.labeldialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        setTimeout(() => {
+          this.labels(appts[0]);
+          this.labelMap = new Object();
+          this.labelMap[data.label] = data.value;
+          this.addLabel(appts[0].ynwUuid);
+          this.getDisplayname(data.label);
+          this.loadApiSwitch('');
+        }, 500);
+      }
+      this.getLabel();
+    });
+  }
   addLabel(checkinId) {
     this.provider_services.addLabeltoCheckin(checkinId, this.labelMap).subscribe(data => {
       this.loadApiSwitch('');
@@ -2131,13 +2166,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.refresh();
       }
     });
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
   }
-    keyPressed(event) {
+  keyPressed(event) {
     if (event.keyCode === 13) {
       this.doSearch();
     }
@@ -2148,5 +2184,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getVirtualMode(virtualService) {
     // Object.keys(virtualService)[0];
     return Object.keys(virtualService)[0];
+  }
+  showConsumerNote(checkin) {
+    this.notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: checkin
+      }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }
