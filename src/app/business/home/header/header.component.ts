@@ -12,6 +12,7 @@ import { HttpHandler, HttpHeaders } from '@angular/common/http';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { GlobalService } from '../../../shared/services/global-service';
 import { global } from '@angular/compiler/src/util';
+import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
   selector: 'app-header',
@@ -51,7 +52,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
     private titleService: Title,
-    private globalService: GlobalService) {
+    private globalService: GlobalService,
+    private provider_dataStorage: ProviderDataStorageService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     console.log('refresh Time :' + this.refreshTime);
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
@@ -149,7 +151,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.doLogout()
       .then(
         () => {
-          this.titleService.setTitle('Jaldee');
+          this.provider_dataStorage.setWeightageArray([]);
+            this.titleService.setTitle('Jaldee');
           this.router.navigate(['/home']);
         },
         () => {

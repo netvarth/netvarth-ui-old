@@ -35,55 +35,57 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 export class BProfileComponent implements OnInit, OnDestroy {
 
+  weightageObjectOfDomainAndSubDomain: any;
+  vkeyNameMap = {};
   profile_status;
 
   jaldee_online_status;
- //social media and gallery
+  //social media and gallery
 
- frm_social_cap = '';
-    frm_gallery_cap = '';
-    error_msg = '';
-    socialdialogRef;
-    gallerydialogRef;
-    delgaldialogRef;
-    social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
-    add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
-    no_social_media = Messages.NO_SOCIAL_MEDIA;
-    gallery_cap = Messages.GALLERY_CAP;
-    photos_to_cap = Messages.BPROFILE_PHOTOS_CAP;
-    photo_cap = Messages.BPROFILE_PHOT0_CAP;
-    have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
-    add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
-    orgsocial_list: any = [];
-    social_arr: any = [];
-    social_list: any = [];
-    showaddsocialmedia = false;
-    normal_gallery_show = 1;
-    normal_socialmedia_show = 1;
-    customer_label = '';
-    error_list = [];
-   // image_list: any = [];
-   // image_list_popup: Image[];
-    image_showlist: any = [];
+  frm_social_cap = '';
+  frm_gallery_cap = '';
+  error_msg = '';
+  socialdialogRef;
+  gallerydialogRef;
+  delgaldialogRef;
+  social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
+  add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
+  no_social_media = Messages.NO_SOCIAL_MEDIA;
+  gallery_cap = Messages.GALLERY_CAP;
+  photos_to_cap = Messages.BPROFILE_PHOTOS_CAP;
+  photo_cap = Messages.BPROFILE_PHOT0_CAP;
+  have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+  add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+  orgsocial_list: any = [];
+  social_arr: any = [];
+  social_list: any = [];
+  showaddsocialmedia = false;
+  normal_gallery_show = 1;
+  normal_socialmedia_show = 1;
+  customer_label = '';
+  error_list = [];
+  // image_list: any = [];
+  // image_list_popup: Image[];
+  image_showlist: any = [];
 
-    item_pic = {
-        files: [],
-        base64: null
-    };
-    profimg_exists = false;
-    success_error = null;
-    selitem_pic = '';
-    image_remaining_cnt = 0;
+  item_pic = {
+    files: [],
+    base64: null
+  };
+  profimg_exists = false;
+  success_error = null;
+  selitem_pic = '';
+  image_remaining_cnt = 0;
 
- //languages
- languages_arr: any = [];
- langdialogRef;
- frm_lang_cap = '';
- normal_language_show = 1;
- //virtual fields
+  //languages
+  languages_arr: any = [];
+  langdialogRef;
+  frm_lang_cap = '';
+  normal_language_show = 1;
+  //virtual fields
 
 
-  dynamicdialogRef:any;
+  dynamicdialogRef: any;
 
   subdomain: any;
   weightageValue: number;
@@ -118,12 +120,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
   create_adword_cap = Messages.BPROFILE_CREATE_ADWORD_CAP;
   more_adword_cap = Messages.BPROFILE_MOR_ADOWRDS_CAP;
   license_cap = Messages.BPROFILE_LICENSE_INVOICE_CAP;
- // have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+  // have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
   basic_info_cap = Messages.BPROFILE_BASIC_INFORMATION_CAP;
   such_as_cap = Messages.BPROFILE_SUCH_AS_CAP;
   name_summary_cap = Messages.BPROFILE_BUSINESS_NAME_CAP;
   profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
- // add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+  // add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
@@ -154,13 +156,13 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
-  profile_strength_cap=Messages.PROFILE_STRENGTH_CAP;
-  profile_incomplete_cap= Messages.PROFILE_INCOMPLETE_CAP;
-  minimally_complete_cap=Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
-  fully_complete_cap= Messages.PROFILE_COMPLETE_CAP;
-  three_quaters_complete_cap=Messages.THREE_QUATERES_COMPLETE_CAP;
+  profile_strength_cap = Messages.PROFILE_STRENGTH_CAP;
+  profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
+  minimally_complete_cap = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
+  fully_complete_cap = Messages.PROFILE_COMPLETE_CAP;
+  three_quaters_complete_cap = Messages.THREE_QUATERES_COMPLETE_CAP;
   //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
- // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
+  // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
@@ -176,11 +178,15 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.qrCodeParent = content2;
     }
   }
+  mandatoryfieldArray: any = [];
+
+  additionalInfoDomainFields: any = [];
+  additionalInfoSubDomainFields: any = [];
   checked = false;
   bProfile = null;
   serviceSector = null;
   public_search = false;
- // error_msg = '';
+  // error_msg = '';
 
   loc_badges: any = [];
   badge_map_arr: any = [];
@@ -283,7 +289,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   frm_loc_amen_cap = '';
   frm_additional_cap = '';
   //frm_gallery_cap = '';
- // frm_social_cap = '';
+  // frm_social_cap = '';
   frm_profile_name_cap = Messages.FRM_LEVEL_PROFILE_NAME_CAP;
   frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
   frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
@@ -313,10 +319,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
   is_customized = false;
   licence_warn = false;
   adword_loading = true;
-  subscription: Subscription ;
-  bprofile_btn_text='Complete Your Profile';
-  profile_status_str='';
-  jaldee_online_status_str='';
+  subscription: Subscription;
+  bprofile_btn_text = 'Complete Your Profile';
+  profile_status_str = '';
+  jaldee_online_status_str = '';
   //mandatory fields
   domain_fields;
   domain_questions = [];
@@ -340,7 +346,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   specialdialogRef;
   normal_specilization_show = 1;
   image_list: any = [];
-    constructor(private provider_services: ProviderServices,
+  constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -367,7 +373,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-   
+
+    //this.provider_datastorage.setWeightageArray([]);
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -378,24 +385,24 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.getGalleryImages();
-   // this.getBusinessProfile();
+    // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
-        if (input.ttype === 'image-upload') {
-            this.provider_services.uploadGalleryImages(input.value)
-                .subscribe(
-                    () => {
-                        this.getGalleryImages();
-                        this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
-                        this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                    },
-                    error => {
-                        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                        this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                    }
-                );
-        } else if (input.ttype === 'delete-image') {
-            this.deleteImage(input.value);
-        }
+      if (input.ttype === 'image-upload') {
+        this.provider_services.uploadGalleryImages(input.value)
+          .subscribe(
+            () => {
+              this.getGalleryImages();
+              this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+            },
+            error => {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+            }
+          );
+      } else if (input.ttype === 'delete-image') {
+        this.deleteImage(input.value);
+      }
     });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -429,17 +436,19 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
-   this.subscription= this.provider_datastorage.getWeightageArray().subscribe(result =>{
-      this.businessProfile_weightageArray=result;
-      this.weightageValue=this.calculateWeightage(result);
-   
+    this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
+      this.businessProfile_weightageArray = result;
+      console.log('weightage...' + JSON.stringify(this.businessProfile_weightageArray));
+      this.weightageValue = this.calculateWeightage(result);
+
     });
     //this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.getSpokenLanguages();
     this.setLanguages();
-      
-    
-          // this.getLicensemetrics();
+
+
+
+
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -460,56 +469,55 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
     if (this.socialdialogRef) {
       this.socialdialogRef.close();
-  }
-  if (this.gallerydialogRef) {
+    }
+    if (this.gallerydialogRef) {
       this.gallerydialogRef.close();
-  }
-  if (this.delgaldialogRef) {
+    }
+    if (this.delgaldialogRef) {
       this.delgaldialogRef.close();
-  }
+    }
 
     this.subscription.unsubscribe();
   }
 
 
-  calculateWeightage(data){
+  calculateWeightage(data) {
     var total = 0;
-    if (data != null && data.length > 0) {      
+    if (data != null && data.length > 0) {
       data.forEach(x => total += x.value);
     }
     return total;
 
   }
   scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior: 'smooth'});
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 
   getBusinessProfileWeightageText() {
-    let businessProfileWeightageText='';
-    let weightage=this.weightageValue;
-    if(weightage <10){
-        businessProfileWeightageText=this.profile_incomplete_cap;
-        this.bprofile_btn_text=Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-        return businessProfileWeightageText;
-     }else if
-        (weightage >10 && weightage <= 50){
-        businessProfileWeightageText= this.minimally_complete_cap;
-        this.bprofile_btn_text=Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-        return businessProfileWeightageText;
-        
-       }else if(weightage >50){
-         businessProfileWeightageText=this.three_quaters_complete_cap;
-         this.bprofile_btn_text=Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
-         return businessProfileWeightageText;
-       }
-       else if
-       (weightage==100) {
-        businessProfileWeightageText= this.fully_complete_cap;
-        this.bprofile_btn_text=Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
-        return businessProfileWeightageText;
-         
-       }
-   
+    let businessProfileWeightageText = '';
+    let weightage = this.weightageValue;
+    if (weightage < 10) {
+      businessProfileWeightageText = this.profile_incomplete_cap;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      return businessProfileWeightageText;
+    } else if
+    (weightage > 10 && weightage <= 50) {
+      businessProfileWeightageText = this.minimally_complete_cap;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      return businessProfileWeightageText;
+
+    } else if (weightage > 50 && weightage < 100) {
+      businessProfileWeightageText = this.three_quaters_complete_cap;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      return businessProfileWeightageText;
+    }
+    else if (weightage == 100) {
+      businessProfileWeightageText = this.fully_complete_cap;
+      this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      return businessProfileWeightageText;
+
+    }
+
   }
 
   getLicensemetrics() {
@@ -545,8 +553,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
-          this.jaldee_online_status_str=(this.public_search === true) ? 'on' : 'off';
-           this.jaldee_online_status=this.public_search;
+          this.jaldee_online_status_str = (this.public_search === true) ? 'on' : 'off';
+          this.jaldee_online_status = this.public_search;
           // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
         },
@@ -565,10 +573,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
         });
   }
   confirm_searchStatus() {
-  
+
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
-       // this.getPublicSearch();
+      // this.getPublicSearch();
     } else {
       this.handle_searchstatus();
     }
@@ -582,18 +590,17 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   //regular button
   handle_searchstatus() {
-    console.log('inside');
     //const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
         //this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
-       // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
+        // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
         this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
-       // this.getJaldeeOnlineStatus();
-       this.getPublicSearch();
-        
+        // this.getJaldeeOnlineStatus();
+        this.getPublicSearch();
+
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //this.getJaldeeOnlineStatus();
@@ -611,7 +618,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   //       this.shared_functions.openSnackBar('Public Search ' + is_jaldee_online + 'd successfully', { ' panelclass': 'snackbarerror' });
   //      // this.getJaldeeOnlineStatus();
   //       this.getPublicSearch();
-        
+
   //     }, error => {
   //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //       //this.getJaldeeOnlineStatus();
@@ -627,16 +634,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
         // this.jaldeeintegration_status = data.onlinePresence;
         // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
-        this.profile_status=this.onlinepresence_status ? true :false;
-        this.profile_status_str=this.profile_status ?'On':'Off';
+        this.profile_status = this.onlinepresence_status ? true : false;
+        this.profile_status_str = this.profile_status ? 'On' : 'Off';
         // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
     );
   }
   handle_jaldeeOnlinePresence() {
-    console.log('triggered');
+
     const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
-   
+
     // this.businessProfile_status=(is_check==='Disable'? false: true);
     // this.businessProfile_status_str=(this.businessProfile_status===true? 'On':'Off');
     const data = {
@@ -665,52 +672,64 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   getBusinessProfile() {
     this.bProfile = [];
+    this.additionalInfoDomainFields = [];
+    this.additionalInfoSubDomainFields = [];
+    this.mandatoryfieldArray = [];
     this.getBussinessProfileApi()
       .then(
         data => {
           this.bProfile = data;
-
-          this.getWeightagesOfAllSections(this.bProfile)
-          this.normal_socialmedia_show = 2;
-          this.social_arr = [];
-          if (this.bProfile.socialMedia) {
-              if (this.bProfile.socialMedia.length > 0) {
-                  this.normal_socialmedia_show = 3;
-                  for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
-                      if (this.bProfile.socialMedia[i].resource !== '') {
-                          this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
-                      }
-                  }
-              }
-          }
-          if (this.social_arr.length < this.orgsocial_list.length) {
-              this.showaddsocialmedia = true;
-          }
-
-
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
-                  console.log('required_fields......'+ JSON.stringify(this.reqFields));
-                  
+
+                  console.log(this.reqFields);
+                  this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+                  this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
+                  this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
+                  this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+                  this.getDomainVirtualFields();
+                  if (this.bProfile['serviceSubSector']['subDomain']) {
+                    this.getSubDomainVirtualFields();
+                  }
+
                 });
+
+
+
             });
-          this.provider_datastorage.set('bProfile', data);
+          this.provider_datastorage.set('bProfile', this.bProfile);
+          this.normal_socialmedia_show = 2;
+          this.social_arr = [];
+          if (this.bProfile.socialMedia) {
+            if (this.bProfile.socialMedia.length > 0) {
+              this.normal_socialmedia_show = 3;
+              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
+                if (this.bProfile.socialMedia[i].resource !== '') {
+                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                }
+              }
+            }
+          }
+          if (this.social_arr.length < this.orgsocial_list.length) {
+            this.showaddsocialmedia = true;
+          }
+
+
+
+
+
           for (let i = 0; i < this.businessConfig.length; i++) {
             if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
               if (this.businessConfig[i].multipleLocation) {
                 this.multipeLocationAllowed = true;
               }
             }
-            
+
           }
-          this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
-          this.getDomainVirtualFields();
-          if (this.bProfile['serviceSubSector']['subDomain']) {
-            this.getSubDomainVirtualFields();
-          }
+
           const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
@@ -787,8 +806,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
           if (this.bProfile.customId) {
             this.normal_customid_show = 3;
           }
+
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
+          this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
           this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
 
         },
@@ -798,18 +819,22 @@ export class BProfileComponent implements OnInit, OnDestroy {
       );
   }
 
-  getWeightagesOfAllSections(bprofile){
-    let businessProfileData=bprofile;
- 
+  getGalleryImages() {
     this.provider_services.getGalleryImages()
-    .subscribe(
+      .subscribe(
         data => {
-      
-            businessProfileData = { ...businessProfileData,media : data};
-             this.provider_datastorage.setBusinessProfileWeightage(businessProfileData);
-           // this.provider_datastorage.addMediaToWeightage(data);
-        });
+          this.image_list = data;
+          this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
+
+        },
+        () => {
+
+        }
+      );
   }
+
+
+
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -1264,7 +1289,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
-    // console.log(this.qrCodeParent.nativeElement.getElementsByTagName('img')[0]);
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
     }, 50);
@@ -1328,449 +1352,581 @@ export class BProfileComponent implements OnInit, OnDestroy {
   initSpecializations() {
     this.bProfile = [];
     this.getBussinessProfileApi()
-        .then(
-            data => {
-                this.bProfile = data;
-                this.getWeightagesOfAllSections(this.bProfile);
-                this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-                this.specialization_title = (data['serviceSubSector']['displayName']) ?
-                    data['serviceSubSector']['displayName'] : '';
-                if (this.bProfile.specialization) {
-                    if (this.bProfile.specialization.length > 0) {
-                        this.normal_specilization_show = 3;
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
-                } else {
-                    this.normal_specilization_show = 2;
-                }
-            });
-       
-}
-getSpecializations(domain, subdomain) {
-    this.provider_services.getSpecializations(domain, subdomain)
-        .subscribe(data => {
-            this.specialization_arr = data;
+      .then(
+        data => {
+          this.bProfile = data;
+          this.provider_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+          this.specialization_title = (data['serviceSubSector']['displayName']) ?
+            data['serviceSubSector']['displayName'] : '';
+          if (this.bProfile.specialization) {
+            if (this.bProfile.specialization.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
+          } else {
+            this.normal_specilization_show = 2;
+          }
         });
-}
-getSpecializationName(n) {
+
+  }
+  getSpecializations(domain, subdomain) {
+    this.provider_services.getSpecializations(domain, subdomain)
+      .subscribe(data => {
+        this.specialization_arr = data;
+
+      });
+  }
+  getSpecializationName(n) {
     for (let i = 0; i < this.specialization_arr.length; i++) {
-        if (this.specialization_arr[i].name === n) {
-            return this.specialization_arr[i].displayName;
-        }
+      if (this.specialization_arr[i].name === n) {
+        return this.specialization_arr[i].displayName;
+      }
     }
-}
+  }
 
   handleSpecialization() {
     let holdselspec;
     if (this.bProfile && this.bProfile.specialization) {
-        holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+      holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
     } else {
-        holdselspec = [];
+      holdselspec = [];
     }
 
     const bprof = holdselspec;
     const special = this.specialization_arr;
     this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-        disableClose: true,
-        autoFocus: false,
-        data: {
-            selspecializations: bprof,
-            specializations: special
-        }
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        selspecializations: bprof,
+        specializations: special
+      }
     });
-    
+
     this.specialdialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            if (result['mod'] === 'reloadlist') {
-                // this.getBusinessProfile();
-                this.bProfile = result['data'];
-                this.initSpecializations();
-                if (this.bProfile && this.bProfile.selspecializations) {
-                    if (this.bProfile.selspecializations.length > 0) {
-                        this.normal_specilization_show = 3;
-                    } else {
-                        this.normal_specilization_show = 2;
-                    }
-                } else {
-                    this.normal_specilization_show = 2;
-                }
+      if (result) {
+        if (result['mod'] === 'reloadlist') {
+          // this.getBusinessProfile();
+          this.bProfile = result['data'];
+          this.initSpecializations();
+          if (this.bProfile && this.bProfile.selspecializations) {
+            if (this.bProfile.selspecializations.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
             }
+          } else {
+            this.normal_specilization_show = 2;
+          }
         }
+      }
     });
-}
-//mandatory fields
-
-
-onDomainsFormSubmit(post_data) {
-  this.provider_services.updateDomainSubDomainFields(post_data,
-    this.bProfile['serviceSector']['domain'])
-    .subscribe(
-      () => {
-        this.getBusinessProfile();
-      },
-      (error) => {
-        this.getBusinessProfile(); // refresh data ;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
-}
-
-onSubDomainsFormSubmit(post_data) {
-  this.provider_services.updateDomainSubDomainFields(post_data, null,
-    this.bProfile['serviceSubSector']['subDomain'])
-    .subscribe(
-      () => {
-        this.getBusinessProfile();
-        this.showAddSection = false;
-        this.showAddSection1 = false;
-      },
-      (error) => {
-        this.getBusinessProfile(); // refresh data ;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
-}
-
-deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
-  const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
-    JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
-  const grid_list = pre_value[field_name] || [];
-  if (grid_list.length === 1 && index === 0) {
-    delete pre_value[field_name];
-  } else {
-    grid_list.splice(index, 1);
-    pre_value[field_name] = grid_list;
   }
-  if (type === 'domain_questions') {
-    this.onDomainsFormSubmit(pre_value);
-    // this.onDomainFormSubmit(pre_value);
-  } else if (type === 'subdomain_questions') {
-    this.onSubDomainsFormSubmit(pre_value);
-    // this.onSubDomainFormSubmit(pre_value);
-  }
-}
 
 
-getDomainVirtualFields() {
-  this.getVirtualFields(this.bProfile['serviceSector']['domain'])
-    .then(
-      data => {
-        this.domain_fields = data['fields'];
-        console.log(this.domain_fields);
-        
-        this.domain_questions = data['questions'] || [];
-        this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-      }
-    );
-}
 
-getSubDomainVirtualFields() {
-  this.getVirtualFields(this.bProfile['serviceSector']['domain'],
-    this.bProfile['serviceSubSector']['subDomain']).then(
-      data => {
-        this.subdomain_fields = data['fields'];
-        console.log(this.subdomain_fields);
-        
-        this.subdomain_questions = data['questions'] || [];
-        this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
-      }
-    );
-}
+  //mandatory fields
 
-getVirtualFields(domain, subdomin = null) {
-  const _this = this;
-  return new Promise(function (resolve, reject) {
-    _this.provider_services.getVirtualFields(domain, subdomin)
-      .subscribe(
+  getDomainVirtualFields() {
+    let weightageObjectOfDomain: any = {};
+    let checkArray = [];
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+      .then(
         data => {
-          const set_data = [];
-          set_data['fields'] = _this.setFieldValue(data, subdomin);
-          set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
-          resolve(set_data);
-        },
-        () => {
-          reject();
+          // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+          //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
+          let mandatorydomain = false;
+          let mandatorydomainFilled = false;
+          let additionalInfoFilledStatus = false
+          this.domain_fields = data['fields'];
+          this.domain_questions = data['questions'] || [];
+          this.domain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
+          if (this.mandatoryfieldArray.length != 0) {
+            mandatorydomain = true
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
+                mandatorydomainFilled = true;
+              } else {
+                mandatorydomainFilled = false;
+                return;
+              }
+            });
+
+          } else {
+            mandatorydomain = false;
+          }
+
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+          weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
+          weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
+          weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
+
+
+
         }
       );
-  });
-}
-setFieldValue(data, subdomin) {
-  let fields = [];
-  if (subdomin) {
-    fields = (this.bProfile['subDomainVirtualFields'] &&
-      this.bProfile['subDomainVirtualFields'][0]) ?
-      this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
-  } else {
-    fields = (this.bProfile['domainVirtualFields']) ?
-      this.bProfile['domainVirtualFields'] : [];
   }
-  if (fields) {
-    for (const i in data) {
-      if (data[i]) {
-        const row = data[i];
-        if (fields[row.name]) {
-          data[i]['value'] = fields[row.name];
+
+
+  checkMandatoryFieldsInResultSet(domainFields, fieldname) {
+    return domainFields.some(domain => domain.name === fieldname);
+
+  }
+  checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
+    let fullyfilledStatus = true;
+    additionalInfoFields.forEach(function (field) {
+      if (fullyfilledStatus) {
+        if (!dom_subdom_list.some(domobject => domobject.name === field)) {
+          fullyfilledStatus = false;
+          return;
         } else {
-          delete data[i]['value'];
+          dom_subdom_list.forEach(function (data_object) {
+            if (data_object.name === field) {
+              console.log(field + "value" + data_object.value);
+              if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
+                fullyfilledStatus = false;
+                return;
+              }
+            }
+          });
         }
       }
-    }
-    return data;
-  } else {
-    return data;
-  }
-}
+    });
 
-showDynamicFieldPopup(field, type, grid_row_index = null) {
-  this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
-    disableClose: true,
-    autoFocus: true,
-    data: {
+    return fullyfilledStatus;
+  }
+
+  addDynamicField(field, type) {
+    if (field.dataType === 'DataGrid') {
+      this.editGridDynamicField(field.name, type, null);
+    } else {
+      this.editDynamicField(field.name, type);
+    }
+  }
+  editGridDynamicField(field_name, type, index = 0) {
+    const field = JSON.parse(JSON.stringify(this.getFieldQuestion(field_name, type)));
+    // We need to pass only selected row to edit page
+    // Create the data for passing to dynamicform
+    if (index !== null) {
+      const column = field[0]['columns'][index] || [];
+      field[0]['columns'] = [];
+      field[0]['columns'].push(column);
+      const selected_row = field[0]['value'][index] || [];
+      field[0]['value'] = [];
+      field[0]['value'].push(selected_row);
+    } else {
+      const column = field[0]['columns'][0] || [];
+      field[0]['columns'] = [];
+      field[0]['columns'].push(column);
+      column.map((e) => { delete e.value; });
+    }
+    this.showDynamicFieldPopup(field, type, index);
+  }
+  deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
+    const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
+      JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+    // JSON.parse(JSON.stringify used to remove reference
+    const grid_list = pre_value[field_name] || [];
+    if (grid_list.length === 1 && index === 0) {
+      delete pre_value[field_name];
+    } else {
+      grid_list.splice(index, 1);
+      pre_value[field_name] = grid_list;
+    }
+    if (type === 'domain_questions') {
+      this.onDomainFormSubmit(pre_value);
+    } else if (type === 'subdomain_questions') {
+      this.onSubDomainFormSubmit(pre_value);
+    }
+  }
+  editDynamicField(field_name, type) {
+    const field = this.getFieldQuestion(field_name, type);
+    this.showDynamicFieldPopup(field, type);
+  }
+  showDynamicFieldPopup(field, type, grid_row_index = null) {
+    this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
         type: type,
         questions: field,
         bProfile: this.bProfile,
         grid_row_index: grid_row_index
-    }
-});
-this.dynamicdialogRef.afterClosed().subscribe(result => {
-    if (result) {
+      }
+    });
+    this.dynamicdialogRef.afterClosed().subscribe(result => {
+      if (result) {
         if (result === 'reloadlist') {
-            this.getBussinessProfileApi()
-                .then(
-                    data => {
-                        this.bProfile = data;
-                        if (type === 'domain_questions') {
-                            this.getDomainVirtualFields();
-                        } else {
-                            this.getSubDomainVirtualFields();
-                        }
-                    },
-                    () => {
+          this.getBussinessProfileApi()
+            .then(
+              data => {
+                this.bProfile = data;
+                if (type === 'domain_questions') {
+                  this.getDomainVirtualFields();
+                } else {
+                  this.getSubDomainVirtualFields();
+                }
+              },
+              () => {
 
-                    }
-                );
+              }
+            );
         }
+      }
+    });
+  }
+
+  getSubDomainVirtualFields() {
+    let checkArray = [];
+    let weightageObjectOfSubDomain: any = {};
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'],
+      this.bProfile['serviceSubSector']['subDomain']).then(
+        data => {
+          let mandatorysubdomain = false;
+          let mandatorySubDomainFilled = false;
+          let additionalInfoFilledStatus = false
+          this.subdomain_fields = data['fields'];
+          this.subdomain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.subdomain_questions = data['questions'] || [];
+          if (this.mandatoryfieldArray.length != 0) {
+            mandatorysubdomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
+                mandatorySubDomainFilled = true;
+              } else {
+                mandatorySubDomainFilled = false;
+                return;
+              }
+            });
+
+          }
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+
+          weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
+          weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
+          weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
+          this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
+          for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {
+            // tslint:disable-next-line:no-unused-expression
+            if (this.subdomain_fields[fdIndex]['dataType'] === 'DataGrid') {
+              for (let colIndex = 0; colIndex < this.subdomain_fields[fdIndex]['Columns'].length; colIndex++) {
+                if (this.subdomain_fields[fdIndex]['Columns'][colIndex]['type'] === 'Enum') {
+                  for (let enumIndex = 0; enumIndex < this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'].length; enumIndex++) {
+                    this.vkeyNameMap[this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['name']] = this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['displayName'];
+                  }
+                }
+              }
+            }
+          }
+
+          this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
+        }
+      );
+  }
+
+
+  getdispVal(typ, field) {
+    let retfield = '';
+    let passArray = [];
+    if (typ === 'domain') {
+      passArray = this.domain_fields;
+    } else if (typ === 'subdomain') {
+      passArray = this.subdomain_fields;
     }
-});
-}
-
-editGridDynamicField(field_name, type, index = 0) {
-  const field = JSON.parse(JSON.stringify(this.getFieldQuestion(field_name, type)));
-  if (index !== null) {
-    const column = field[0]['columns'][index] || [];
-    field[0]['columns'] = [];
-    field[0]['columns'].push(column);
-
-    const selected_row = field[0]['value'][index] || [];
-    field[0]['value'] = [];
-    field[0]['value'].push(selected_row);
-  } else {
-    const column = field[0]['columns'][0] || [];
-    field[0]['columns'] = [];
-    field[0]['columns'].push(column);
-    column.map((e) => { delete e.value; });
-  }
-  this.showDynamicFieldPopup(field, type, index);
-  this.showAddSection1 = false;
-  this.showAddSection = true;
-}
-
-
-addDynamicField(field, type) {
-  if (field.dataType === 'DataGrid') {
-    this.editGridDynamicField(field.name, type, null);
-  } else {
-    this.editDynamicField(field.name, type);
-  }
-}
-
-editDynamicField(field_name, type) {
-  const field = this.getFieldQuestion(field_name, type);
-  this.showDynamicFieldPopup(field, type);
-  this.showAddSection = false;
-  this.showAddSection1 = true;
-}
-
-getFieldQuestion(field_key = null, type = 'domain_questions') {
-  const questions = (type === 'subdomain_questions') ? this.subdomain_questions : this.domain_questions;
-  if (field_key != null) {
-    const field = [];
-    for (const que of questions) {
-      if (que.key === field_key) {
-        field.push(que);
+    let str = '';
+    if (field.value !== undefined) {
+      if (field.dataType === 'Enum') {
+        retfield = this.getFieldDetails(passArray, field.value, field.name);
+      } else if (field.dataType === 'EnumList') {
+        for (let i = 0; i < field.value.length; i++) {
+          if (str !== '') {
+            str += ', ';
+          }
+          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          str += this.getFieldDetails(passArray, field.value[i], field.name);
+        }
+        retfield = str;
+      } else {
+        retfield = field.value;
       }
     }
-    return field;
+    return retfield;
   }
 
-}
-
-//gallery
-
-getGalleryImages() {
-  this.provider_services.getGalleryImages()
-      .subscribe(
+  getFieldDetails(passedArray, fieldvalue, fieldname) {
+    let retfield;
+    if (fieldvalue !== undefined) {
+      for (let i = 0; i < passedArray.length; i++) {
+        if (fieldname === passedArray[i].name) {
+          for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+            if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+              retfield = passedArray[i].enumeratedConstants[j].displayName;
+            }
+          }
+        }
+      }
+    }
+    return retfield;
+  }
+  showValueswithComma(fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
+  }
+  getVirtualFields(domain, subdomin = null) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getVirtualFields(domain, subdomin)
+        .subscribe(
           data => {
-              console.log(data);
-              console.log(JSON.stringify(data));
-              this.provider_datastorage.addMediaToWeightage(data);
-
-              
-              this.image_list = data;
+            const set_data = [];
+            set_data['fields'] = _this.setFieldValue(data, subdomin);
+            set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
+            resolve(set_data);
           },
           () => {
-
+            reject();
           }
-      );
-}
-
-deleteImage(file) {
-  this.provider_services.deleteProviderGalleryImage(file)
-      .subscribe(
-          () => {
-              this.getGalleryImages();
-          },
-          () => {
-
-          }
-      );
-}
-
-getSocialdet(key, field) {
-  const retdet = this.orgsocial_list.filter(
-      soc => soc.key === key);
-  const returndet = retdet[0][field];
-  return returndet;
-}
-
-check_alreadyexists(v) {
-  for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey === v) {
-          return true;
-      }
+        );
+    });
   }
-  return false;
-}
-handleSocialmedia(key) {
-  this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
+  setFieldValue(data, subdomin) {
+    let fields = [];
+    if (subdomin) {
+      fields = (this.bProfile['subDomainVirtualFields'] &&
+        this.bProfile['subDomainVirtualFields'][0]) ?
+        this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
+    } else {
+      fields = (this.bProfile['domainVirtualFields']) ?
+        this.bProfile['domainVirtualFields'] : [];
+    }
+    if (fields) {
+      for (const i in data) {
+        if (data[i]) {
+          const row = data[i];
+          if (fields[row.name]) {
+            data[i]['value'] = fields[row.name];
+          } else {
+            delete data[i]['value'];
+          }
+        }
+      }
+      return data;
+    } else {
+      return data;
+    }
+  }
+  getFieldQuestion(field_key = null, type = 'domain_questions') {
+    const questions = (type === 'subdomain_questions') ? this.subdomain_questions : this.domain_questions;
+    if (field_key != null) {
+      const field = [];
+      for (const que of questions) {
+        if (que.key === field_key) {
+          field.push(que);
+        }
+      }
+      return field;
+    }
+  }
+  onDomainFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data,
+      this.bProfile['serviceSector']['domain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  onSubDomainFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data, null,
+      this.bProfile['serviceSubSector']['subDomain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+
+  //gallery
+
+
+
+  deleteImage(file) {
+    this.provider_services.deleteProviderGalleryImage(file)
+      .subscribe(
+        () => {
+          this.getGalleryImages();
+        },
+        () => {
+
+        }
+      );
+  }
+
+  getSocialdet(key, field) {
+    const retdet = this.orgsocial_list.filter(
+      soc => soc.key === key);
+    const returndet = retdet[0][field];
+    return returndet;
+  }
+
+  check_alreadyexists(v) {
+    for (let i = 0; i < this.social_arr.length; i++) {
+      if (this.social_arr[i].Sockey === v) {
+        return true;
+      }
+    }
+    return false;
+  }
+  handleSocialmedia(key) {
+    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
       width: '50%',
       // panelClass: 'socialmediamainclass',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       autoFocus: true,
       data: {
-          bprofile: this.bProfile,
-          editkey: key || ''
+        bprofile: this.bProfile,
+        editkey: key || ''
       }
-  });
-  this.socialdialogRef.afterClosed().subscribe(result => {
+    });
+    this.socialdialogRef.afterClosed().subscribe(result => {
       if (result) {
-          if (result === 'reloadlist') {
-              this.getBusinessProfile();
-          }
+        if (result === 'reloadlist') {
+          this.getBusinessProfile();
+        }
       }
-  });
-}
-deleteSocialmedia(sockey) {
-  const post_data: any = [];
-  for (let i = 0; i < this.social_arr.length; i++) {
-      if (this.social_arr[i].Sockey !== sockey) {
-          post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
-      }
+    });
   }
-  const submit_data = {
+  deleteSocialmedia(sockey) {
+    const post_data: any = [];
+    for (let i = 0; i < this.social_arr.length; i++) {
+      if (this.social_arr[i].Sockey !== sockey) {
+        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
+      }
+    }
+    const submit_data = {
       'socialMedia': post_data
-  };
-  this.provider_services.updateSocialMediaLinks(submit_data)
+    };
+    this.provider_services.updateSocialMediaLinks(submit_data)
       .subscribe(
-          () => {
-              this.getBusinessProfile();
-          },
-          () => {
+        () => {
+          this.getBusinessProfile();
+        },
+        () => {
 
-          }
+        }
       );
 
-}
-editSocialmedia(key) {
-  this.handleSocialmedia(key);
-}
+  }
+  editSocialmedia(key) {
+    this.handleSocialmedia(key);
+  }
 
-//languages known
+  //languages known
 
-setLanguages() {
-  this.bProfile = [];
-  this.getBussinessProfileApi()
+  setLanguages() {
+    this.bProfile = [];
+    this.getBussinessProfileApi()
       .then(
-          data => {
-              this.bProfile = data;
-              this.getWeightagesOfAllSections(this.bProfile);
-              if (this.bProfile.languagesSpoken) {
-                  if (this.bProfile.languagesSpoken.length > 0) {
-                      this.normal_language_show = 3;
-                  } else {
-                      this.normal_language_show = 2;
-                  }
-              } else {
-                  this.normal_language_show = 2;
-              }
-          });
-}
-getSpokenLanguages() {
-  this.provider_services.getSpokenLanguages()
+        data => {
+          this.bProfile = data;
+          if (this.bProfile.languagesSpoken) {
+            this.provider_datastorage.updateLanguagesWeightage(this.bProfile.languagesSpoken);
+            if (this.bProfile.languagesSpoken.length > 0) {
+              this.normal_language_show = 3;
+            } else {
+              this.normal_language_show = 2;
+            }
+          } else {
+            this.normal_language_show = 2;
+          }
+        });
+  }
+  getSpokenLanguages() {
+    this.provider_services.getSpokenLanguages()
       .subscribe(data => {
-          this.languages_arr = data;
+        this.languages_arr = data;
+        //this.provider_datastorage.updateLanguagesWeightage(this.languages_arr);
       });
-}
-getlanguageName(n) {
-  for (let i = 0; i < this.languages_arr.length; i++) {
+  }
+  getlanguageName(n) {
+    for (let i = 0; i < this.languages_arr.length; i++) {
       if (this.languages_arr[i].name === n) {
-          return this.languages_arr[i].displayName;
+        return this.languages_arr[i].displayName;
       }
+    }
   }
-}
-handleSpokenLanguages() {
-  let holdsellang;
-  if (this.bProfile.languagesSpoken) {
+  handleSpokenLanguages() {
+    let holdsellang;
+    if (this.bProfile.languagesSpoken) {
       holdsellang = JSON.parse(JSON.stringify(this.bProfile.languagesSpoken)); // to avoid pass by reference
-  } else {
+    } else {
       holdsellang = [];
-  }
+    }
 
-  const bprof = holdsellang;
-  const lang = this.languages_arr;
-  this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
+    const bprof = holdsellang;
+    const lang = this.languages_arr;
+    this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
       disableClose: true,
       autoFocus: false,
       data: {
-          sellanguages: bprof,
-          languagesSpoken: lang
+        sellanguages: bprof,
+        languagesSpoken: lang
       }
-  });
-  this.langdialogRef.afterClosed().subscribe(result => {
+    });
+    this.langdialogRef.afterClosed().subscribe(result => {
       if (result) {
-          if (result['mod'] === 'reloadlist') {
-              // this.getBusinessProfile();
-              this.bProfile = result['data'];
-              this.setLanguages();
-              if (this.bProfile.sellanguages) {
-                  if (this.bProfile.sellanguages.length > 0) {
-                      this.normal_language_show = 3;
-                  } else {
-                      this.normal_language_show = 2;
-                  }
-              } else {
-                  this.normal_language_show = 2;
-              }
+        if (result['mod'] === 'reloadlist') {
+          // this.getBusinessProfile();
+          this.bProfile = result['data'];
+          this.setLanguages();
+          if (this.bProfile.sellanguages) {
+            if (this.bProfile.sellanguages.length > 0) {
+              this.normal_language_show = 3;
+            } else {
+              this.normal_language_show = 2;
+            }
+          } else {
+            this.normal_language_show = 2;
           }
+        }
       }
-  });
-}
+    });
+  }
 }

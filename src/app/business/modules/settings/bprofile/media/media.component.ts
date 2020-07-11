@@ -198,7 +198,6 @@ export class MediaComponent implements OnInit, OnDestroy {
                 data => {
                     console.log(data);
                     console.log(JSON.stringify(data));
-                    this.data_storage.addMediaToWeightage(data);
 
                     
                     this.image_list = data;

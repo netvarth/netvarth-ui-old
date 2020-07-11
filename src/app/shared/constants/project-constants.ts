@@ -640,7 +640,8 @@ export const projectConstantsLocal = {
     MEDIA_GALLERY : {"Name" :"GALLERY","value" :5 },
     PRIVACY_PHONE_NUMBER:{"Name" :"PRIVACY_PHONE_NUMBER","value" :5 },
     PRIVACY_EMAILS:{"Name" :"PRIVACY_EMAILS","value" :5 },
-    ADDITIONAL_INFO :{"Name" :"ADDITIONAL_INFO","value" :35 },
+    ADDITIONAL_INFO :{"Name" :"ADDITIONAL_INFO","value" :20 },
+    MANDATORY_INFO:{"Name":"MANDATORY_INFO","value":20}
   },
   PATH: 'https://' + window.location.host + '/'
 
