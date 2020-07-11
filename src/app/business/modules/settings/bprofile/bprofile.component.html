@@ -433,19 +433,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="cd-b">
+                                        <div class="cd-b ">
+                                            <mat-card class="slimpadding">
 
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel [expanded]="true">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                <span style="font-size:15px;">
-                                                                    Location
+                                                                Location
                                                                     <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
-                                                                </span>
+                                                              
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Manage your business location details here.
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -598,22 +598,23 @@
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                        </mat-card>
                                         </div>
                                         <!-- specialization-->
-                                        <div class="cd-b">
-
+                                        <div class="cd-b ">
+                                          <mat-card>
 
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel [expanded]="true">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                         role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                         aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                <span style="font-size:15px;"> Specilization
+                                                                Specilization
                                                                     <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
                                                                     </i>
-                                                                </span>
+                                                               
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Mention your specilization here
                                                                     <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -648,13 +649,68 @@
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                            </mat-card>
 
                                         </div>
+                                        <div class="cd-b ">
+                                                <mat-card>
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="true">
+                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                        <span class="mat-content">
+                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                Languages Known
+                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    </i>
+                                                                
+                                                                <!--bindings={}-->
+                                                                <p class="form-level-settings">Mention your languages here
+                                                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                                </p>
+                                                            </mat-panel-title>
+                                                        </span>
+                                                        <!--bindings={
+                                                            "ng-reflect-ng-if": "true"
+                                                          }-->
+                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                                    style="transform: rotate(180deg);"></span> -->
+                                                    </mat-expansion-panel-header>
+                                                    <div class="row">
+                                                        <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                                                            <div class="card p0 w-dta active">
+
+                                                                <div class="no-dta" *ngIf="normal_language_show==1">
+                                                                    <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                    </app-innerloading-spinner>
+                                                                </div>
+                                                                <div class="no-dta" *ngIf="normal_language_show==2">
+                                                                    <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                                                    <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                                </div>
+
+                                                                <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
+                                                                    <span class="editbt" (click)="handleSpokenLanguages()"></span>
+                                                                    <div *ngFor="let lang of bProfile.languagesSpoken">
+                                                                        {{getlanguageName(lang)}}
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                            </mat-card>
+                                        </div>
+
                                         <!--mandatory fields -->
-                                        <div class="cd-b">
+                                        <div class="cd-b ">
                                             <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                                             <div class="acc-cont" *ngFor="let fields of domain_fields">
                                                 <ng-container *ngIf="fields.mandatory">
+                                                    <mat-card>
                                                     <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                         <mat-expansion-panel [expanded]="fields['value']" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
                                                             <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
@@ -810,6 +866,7 @@
                                                             </ng-container>
                                                         </mat-expansion-panel>
                                                     </mat-accordion>
+                                                </mat-card>
                                                 </ng-container>
                                                 </div>
                                                 </ng-container>
@@ -826,6 +883,7 @@
                                                 <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                                                     <div class="acc-cont" *ngFor="let fields of subdomain_fields">
                                                         <ng-container *ngIf="fields.mandatory">
+                                                            <mat-card>
                                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                                 <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
                                                                     <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
@@ -987,6 +1045,7 @@
                                                                     </ng-container>
                                                                 </mat-expansion-panel>
                                                             </mat-accordion>
+                                                        </mat-card>
                                                         </ng-container>
                                                     </div>
 
@@ -1003,20 +1062,20 @@
                                             <!-- gallery and social media-->
                                             <div class="cd-b">
 
-
+                                               <mat-card>
                                                 <mat-accordion>
-                                                    <mat-expansion-panel [expanded]="false">
+                                                    <mat-expansion-panel [expanded]="true">
                                                         <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                             role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                             aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                             <span class="mat-content">
-                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                    <span style="font-size:15px;">Gallery and Social Media
+                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title mat-title-font" >
+                                                                    Gallery and Social Media
                                                                         <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
                                                                         </i>
-                                                                    </span>
+                                                                  
                                                                     <!--bindings={}-->
-                                                                    <p class="form-level-settings">Mention your specilization here
+                                                                    <p class="form-level-settings">Add your images and social media
                                                                         <a class="learnmore-pointer" id="customer-help">Learn More</a>
                                                                     </p>
                                                                 </mat-panel-title>
@@ -1044,10 +1103,7 @@
                                                                                         </p>
                                                                                     </mat-panel-title>
                                                                                 </mat-expansion-panel-header>
-                                                                                <!-- <div class="no-dta" *ngIf="normal_gallery_show==1">
-                                                    <app-innerloading-spinner spinnerParams="loadingParams">
-                                                    </app-innerloading-spinner>
-                                                </div> -->
+                                            
                                                                                 <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'">
                                                                                 </app-jaldee-gallery>
                                                                             </mat-expansion-panel>
@@ -1111,60 +1167,10 @@
                                                         </div>
                                                     </mat-expansion-panel>
                                                 </mat-accordion>
+                                            </mat-card>
 
                                             </div>
-                                            <div class="cd-b">
-                                                <mat-accordion>
-                                                    <mat-expansion-panel [expanded]="false">
-                                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                                            <span class="mat-content">
-                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                    <span style="font-size:15px;">Languages Known
-                                                                        <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                                        </i>
-                                                                    </span>
-                                                                    <!--bindings={}-->
-                                                                    <p class="form-level-settings">Mention your languages here
-                                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
-                                                                    </p>
-                                                                </mat-panel-title>
-                                                            </span>
-                                                            <!--bindings={
-                                                                "ng-reflect-ng-if": "true"
-                                                              }-->
-                                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
-                                                                        style="transform: rotate(180deg);"></span> -->
-                                                        </mat-expansion-panel-header>
-                                                        <div class="row">
-                                                            <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                                                                <div class="card p0 w-dta active">
-
-                                                                    <div class="no-dta" *ngIf="normal_language_show==1">
-                                                                        <app-innerloading-spinner spinnerParams="loadingParams">
-                                                                        </app-innerloading-spinner>
-                                                                    </div>
-                                                                    <div class="no-dta" *ngIf="normal_language_show==2">
-                                                                        <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
-                                                                        <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
-                                                                    </div>
-
-                                                                    <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
-                                                                        <span class="editbt" (click)="handleSpokenLanguages()"></span>
-                                                                        <div *ngFor="let lang of bProfile.languagesSpoken">
-                                                                            {{getlanguageName(lang)}}
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </mat-expansion-panel>
-                                                </mat-accordion>
-
-                                            </div>
-
+                                      
 
 
                                     </mat-expansion-panel>
@@ -1180,7 +1186,7 @@
                     </div>
                 </div>
 
-
+<!-- 
                 <div class="w-dta">
                     <div class="row">
                         <div class="copy one col-xs-12 col-sm-12 no-padding">
@@ -1241,7 +1247,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
@@ -1261,15 +1267,18 @@
                         <span class="b-link" (click)="gotoAdditionalInfo()">
                             <h2>
                                 Additional Info
-                                <!-- <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i> -->
-                            </h2>
+                                <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i> 
+                             </h2>
                             <span class="form-level-settings">{{frm_additional_cap}}
                                 <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
                                 </a>
                             </span>
                         </span>
                     </div>
-                </div>
+                </div> 
+
+
+                
                 <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
