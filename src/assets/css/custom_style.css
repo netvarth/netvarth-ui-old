@@ -1895,7 +1895,8 @@ sup {
 }
 
 .bcrumb div:first-child {
-  display: flex !important;
+  /* display: flex !important; */
+  display: -webkit-box !important;
   float: left !important;
 }
 
@@ -10328,6 +10329,6 @@ a {
     font-weight: bold;
     color: #f24949;
 }
-.chkins-sect .table-responsive {
+.chkins-sect .adj-hgt.table-responsive {
   min-height: 250px !important;
 }
