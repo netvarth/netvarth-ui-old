@@ -344,7 +344,7 @@
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">
-              <div class="col-md-12 col-xs-12 col-sm-12 no-padding table-responsive"
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
                   <thead id="childActionBar">
@@ -502,17 +502,17 @@
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allAgeSlected || ageGroups.indexOf('kids') !== -1"
+                                    <mat-checkbox [checked]="ageGroups.indexOf('kids') !== -1"
                                       (change)="setFilterDataCheckbox('age', 'kids', $event)">
                                       kids</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allAgeSlected || ageGroups.indexOf('adults') !== -1"
+                                    <mat-checkbox [checked]="ageGroups.indexOf('adults') !== -1"
                                       (change)="setFilterDataCheckbox('age', 'adults', $event)">
                                       Adults</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allAgeSlected || ageGroups.indexOf('senior') !== -1"
+                                    <mat-checkbox [checked]="ageGroups.indexOf('senior') !== -1"
                                       (change)="setFilterDataCheckbox('age', 'senior', $event)">
                                       Senior citizen</mat-checkbox>
                                   </li>
@@ -527,12 +527,12 @@
                                       All</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allGenderSlected || genderList.indexOf('male') !== -1"
+                                    <mat-checkbox [checked]="genderList.indexOf('male') !== -1"
                                       (change)="setFilterDataCheckbox('gender', 'male', $event)">
                                       Male</mat-checkbox>
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                    <mat-checkbox [checked]="allGenderSlected || genderList.indexOf('female') !== -1"
+                                    <mat-checkbox [checked]="genderList.indexOf('female') !== -1"
                                       (change)="setFilterDataCheckbox('gender', 'female', $event)">
                                       Female</mat-checkbox>
                                   </li>
@@ -548,7 +548,7 @@
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                     <mat-checkbox *ngFor="let service of services"
-                                      [checked]="allServiceSelected || filterService.indexOf(service.id) !== -1"
+                                      [checked]="filterService.indexOf(service.id) !== -1"
                                       (change)="setFilterDataCheckbox('service', service.id, $event)">
                                       {{service.name}}</mat-checkbox>
                                   </li>
@@ -565,7 +565,7 @@
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let appt_status of check_in_statuses_filter">
                                     <mat-checkbox
-                                      [checked]="allApptStatusSelected || apptStatuses.indexOf(appt_status.value) !== -1"
+                                      [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
                                       (change)="setFilterDataCheckbox('waitlist_status', appt_status.value, $event)">
                                       {{appt_status.displayName}}</mat-checkbox>
                                   </li>
@@ -582,7 +582,7 @@
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let pay_status of payStatusList">
                                     <mat-checkbox
-                                      [checked]="allPayStatusSelected || paymentStatuses.indexOf(pay_status.pk) !== -1"
+                                      [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
                                       (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
                                       {{pay_status.value}}</mat-checkbox>
                                   </li>
@@ -598,7 +598,7 @@
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                     *ngFor="let mode of waitlistModes">
-                                    <mat-checkbox [checked]="allModeSelected || apptModes.indexOf(mode.mode) !== -1"
+                                    <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
                                       (change)="setFilterDataCheckbox('waitlistMode', mode.mode, $event)">
                                       {{mode.value}}</mat-checkbox>
                                   </li>
