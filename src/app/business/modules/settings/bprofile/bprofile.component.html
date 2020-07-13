@@ -91,14 +91,16 @@
 
                                         </span>
                                         <br>
-                                        <span style="font-weight:bold;">{{weightageValue}} %
-                                            <button (click)="scroll(basicInfoSection)" class="btn btn-primary" style="float:right;margin:10px">{{bprofile_btn_text}}</button>
-                                        </span>
+                                        <span style="font-weight:bold;">{{weightageValue}} %</span>
+                                       
 
                                         <div class="progress" style="height: 15px;">
                                             <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
+                                        <span class="btnWeightage">
+                                            <button (click)="scroll(basicInfoSection)" [className]="'btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                                        </span>
                                         <!-- <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar> -->
                                     </div>
 

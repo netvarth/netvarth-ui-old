@@ -10239,3 +10239,13 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
     border: none !important;
     width: 100%;
 }
+.progress-bar {
+    background: -webkit-linear-gradient(left, #0276FD 0%, #003F87 100%); /* Chrome10-25,Safari5.1-6 */
+    }
+
+.btnWeightage{
+    font-weight: bold;
+    margin-left: 80%;
+    margin-top: 20%;
+
+}

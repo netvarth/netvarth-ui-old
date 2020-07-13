@@ -35,6 +35,7 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 export class BProfileComponent implements OnInit, OnDestroy {
 
+  weightageClass='danger';
   weightageObjectOfDomainAndSubDomain: any;
   vkeyNameMap = {};
   profile_status;
@@ -500,21 +501,25 @@ export class BProfileComponent implements OnInit, OnDestroy {
     if (weightage < 10) {
       businessProfileWeightageText = this.profile_incomplete_cap;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass='danger';
       return businessProfileWeightageText;
     } else if
     (weightage > 10 && weightage <= 50) {
       businessProfileWeightageText = this.minimally_complete_cap;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass='warning';
       return businessProfileWeightageText;
 
     } else if (weightage > 50 && weightage < 100) {
       businessProfileWeightageText = this.three_quaters_complete_cap;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      this.weightageClass='primary';
       return businessProfileWeightageText;
     }
     else if (weightage == 100) {
       businessProfileWeightageText = this.fully_complete_cap;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      this.weightageClass='success';
       return businessProfileWeightageText;
 
     }
