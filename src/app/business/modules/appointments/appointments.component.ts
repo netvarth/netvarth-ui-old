@@ -1981,49 +1981,56 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterDataCheckbox(type, value, event) {
     this.filter[type] = value;
     this.resetPaginationData();
-    if (type === 'age') {
-      if (value === 'all') {
-        this.ageGroups = [];
-        if (event.checked) {
-          this.allAgeSlected = true;
-        } else {
-          this.allAgeSlected = false;
-        }
-      } else {
-        const indx = this.ageGroups.indexOf(value);
-        if (indx === -1) {
-          this.ageGroups.push(value);
-        } else {
-          this.ageGroups.splice(indx, 1);
-        }
-      }
-    }
-    if (type === 'gender') {
-      if (value === 'all') {
-        this.genderList = [];
-        if (event.checked) {
-          this.allGenderSlected = true;
-        } else {
-          this.allGenderSlected = false;
-        }
-      } else {
-        const indx = this.genderList.indexOf(value);
-        if (indx === -1) {
-          this.genderList.push(value);
-        } else {
-          this.genderList.splice(indx, 1);
-        }
-      }
-    }
+    // if (type === 'age') {
+    //   if (value === 'all') {
+    //     this.ageGroups = [];
+    //     if (event.checked) {
+    //       this.allAgeSlected = true;
+    //     } else {
+    //       this.allAgeSlected = false;
+    //     }
+    //   } else {
+    //     const indx = this.ageGroups.indexOf(value);
+    //     if (indx === -1) {
+    //       this.ageGroups.push(value);
+    //     } else {
+    //       this.ageGroups.splice(indx, 1);
+    //     }
+    //     this.allAgeSlected = false;
+    //   }
+    // }
+    // if (type === 'gender') {
+    //   if (value === 'all') {
+    //     this.genderList = [];
+    //     if (event.checked) {
+    //       this.allGenderSlected = true;
+    //     } else {
+    //       this.allGenderSlected = false;
+    //     }
+    //   } else {
+    //     const indx = this.genderList.indexOf(value);
+    //     if (indx === -1) {
+    //       this.genderList.push(value);
+    //     } else {
+    //       this.genderList.splice(indx, 1);
+    //     }
+    //     this.allGenderSlected = false;
+    //   }
+    // }
     if (type === 'appointmentMode') {
       if (value === 'all') {
         this.apptModes = [];
+        this.allModeSelected = false;
         if (event.checked) {
+          for (const apptMode of this.appointmentModes) {
+            if (this.apptModes.indexOf(apptMode.mode) === -1) {
+              this.apptModes.push(apptMode.mode);
+            }
+          }
           this.allModeSelected = true;
-        } else {
-          this.allModeSelected = false;
         }
       } else {
+        this.allModeSelected = false;
         const indx = this.apptModes.indexOf(value);
         if (indx === -1) {
           this.apptModes.push(value);
@@ -2031,16 +2038,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.apptModes.splice(indx, 1);
         }
       }
+      if (this.apptModes.length === this.appointmentModes.length) {
+        this.filter['appointmentMode'] = 'all';
+        this.allModeSelected = true;
+      }
     }
     if (type === 'payment_status') {
       if (value === 'all') {
         this.paymentStatuses = [];
+        this.allPayStatusSelected = false;
         if (event.checked) {
+          for (const pay_status of this.payStatusList) {
+            if (this.paymentStatuses.indexOf(pay_status.pk) === -1) {
+              this.paymentStatuses.push(pay_status.pk);
+            }
+          }
           this.allPayStatusSelected = true;
-        } else {
-          this.allPayStatusSelected = false;
         }
       } else {
+        this.allPayStatusSelected = false;
         const indx = this.paymentStatuses.indexOf(value);
         if (indx === -1) {
           this.paymentStatuses.push(value);
@@ -2048,16 +2064,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.paymentStatuses.splice(indx, 1);
         }
       }
+      if (this.paymentStatuses.length === this.payStatusList.length) {
+        this.filter['payment_status'] = 'all';
+        this.allPayStatusSelected = true;
+      }
     }
     if (type === 'apptStatus') {
       if (value === 'all') {
         this.apptStatuses = [];
+        this.allApptStatusSelected = false;
         if (event.checked) {
+          for (const apptStatus of this.check_in_statuses_filter) {
+            if (this.apptStatuses.indexOf(apptStatus.value) === -1) {
+              this.apptStatuses.push(apptStatus.value);
+            }
+          }
           this.allApptStatusSelected = true;
-        } else {
-          this.allApptStatusSelected = false;
         }
       } else {
+        this.allApptStatusSelected = false;
         const indx = this.apptStatuses.indexOf(value);
         if (indx === -1) {
           this.apptStatuses.push(value);
@@ -2065,22 +2090,35 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.apptStatuses.splice(indx, 1);
         }
       }
+      if (this.apptStatuses.length === this.check_in_statuses_filter.length) {
+        this.filter['apptStatus'] = 'all';
+        this.allApptStatusSelected = true;
+      }
     }
     if (type === 'service') {
       if (value === 'all') {
         this.services = [];
+        this.allServiceSelected = false;
         if (event.checked) {
+          for (const service of this.service_list) {
+            if (this.services.indexOf(service.id) === -1) {
+              this.services.push(service.id);
+            }
+          }
           this.allServiceSelected = true;
-        } else {
-          this.allServiceSelected = false;
         }
       } else {
+        this.allServiceSelected = false;
         const indx = this.services.indexOf(value);
         if (indx === -1) {
           this.services.push(value);
         } else {
           this.services.splice(indx, 1);
         }
+      }
+      if (this.services.length === this.service_list.length) {
+        this.filter['service'] = 'all';
+        this.allServiceSelected = true;
       }
     }
     this.doSearch();
