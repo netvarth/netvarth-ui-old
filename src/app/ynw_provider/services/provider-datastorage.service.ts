@@ -179,28 +179,28 @@ updateMandatoryAndAdditionalFieldWeightage(){
         this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
         this.setWeightageArray(this.weightageArray);
     }// some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
-    else if(!this.weightageObjectDomain.mandatoryDomain && !this.weightageObjectSubDomain.mandatorySubDomain){
+    else if(this.weightageObjectDomain.mandatoryDomain===false && this.weightageObjectSubDomain.mandatorySubDomain===false){
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
       this.setWeightageArray(this.weightageArray);
     }
    }
   else{
-    if((this.weightageObjectDomain.mandatoryDomain && !this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && !this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
+    if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectSubDomain.mandatorySubDomain)){
+      if(this.weightageObjectDomain.mandatoryDomainFilledStatus===false|| this.weightageObjectSubDomain.mandatorySubDomainFilledStatus===false)
       this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.Name);
       this.setWeightageArray(this.weightageArray);
     }
    }
 
   if(!this.checkExistenceInWeightageArray(additionalObject)){
-    console.log('inisder');
-    
     if(this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled){
      this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
      this.setWeightageArray(this.weightageArray);
 
     }
   }else{
-    if(!this.weightageObjectDomain.additonalDomainFullyFilled || !this.weightageObjectSubDomain.additonalSubDomainFullyFilled){
+
+    if(this.weightageObjectDomain.additonalDomainFullyFilled===false || this.weightageObjectSubDomain.additonalSubDomainFullyFilled=== false ){
      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.Name);
      this.setWeightageArray(this.weightageArray);
     }
@@ -245,6 +245,25 @@ updateSpecilizationWeightage(data){
    }
  }
 
+}
+
+updateProfilePicWeightage(isImageExist){
+console.log(isImageExist);
+
+  let profilePicObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC;
+  if(this.checkExistenceInWeightageArray(profilePicObject)){
+    if(isImageExist===false){
+     this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC.Name);
+     this.setWeightageArray(this.weightageArray);
+    }
+   
+ }else if(!this.checkExistenceInWeightageArray(profilePicObject)){
+    if(isImageExist){
+       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC);
+     this.setWeightageArray(this.weightageArray);
+     
+   }
+ }
 }
 
 }

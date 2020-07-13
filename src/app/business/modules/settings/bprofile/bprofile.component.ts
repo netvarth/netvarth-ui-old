@@ -379,11 +379,17 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-
+  
 
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.getPublicSearch();
+    // this.getBusinessProfile();
+    this.getJaldeeIntegrationSettings();
+    this.getBusinessConfiguration();
+    this.getProviderLocations();
+    this.initSpecializations();
     this.getGalleryImages();
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -420,12 +426,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
-    this.getPublicSearch();
-    // this.getBusinessProfile();
-    this.getJaldeeIntegrationSettings();
-    this.getBusinessConfiguration();
-    this.getProviderLocations();
-    this.initSpecializations();
+
     // this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
@@ -988,6 +989,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
+   
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -996,6 +998,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
+    
   }
   // handles the image display on load and on change
   imageSelect(input) {
@@ -1040,19 +1043,25 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   // get the logo url for the provider
   getProviderLogo() {
+    console.log('cal provider logo');
+    
     this.provider_services.getProviderLogo()
       .subscribe(
         data => {
           this.blogo = data;
+          let logoExist;
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider = dd;
           let logo = '';
           if (this.blogo[0]) {
+            logoExist=true;
             logo = this.blogo[0].url;
           } else {
             logo = '';
+            logoExist=false;
           }
+          this.provider_datastorage.updateProfilePicWeightage(logoExist);
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
@@ -1083,6 +1092,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
 
           const pdata = { 'ttype': 'updateuserdetails' };
+          this.provider_datastorage.updateProfilePicWeightage(true);
           this.sharedfunctionobj.sendMessage(pdata);
           /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
         },
@@ -1101,6 +1111,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         // calling function which saves the business related details to show in the header
         this.blogo = [];
         this.profimg_exists = false;
+        this.provider_datastorage.updateProfilePicWeightage(this.profimg_exists);
         const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
           || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
