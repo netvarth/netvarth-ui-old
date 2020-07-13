@@ -913,18 +913,18 @@ export class ProviderServices {
       const url = 'provider/account/settings/smsCount';
       return this.servicemeta.httpGet(url);
    }
-   getUserConsumerNotificationSettings(filter) {
+   getUserConsumerNotificationSettings(id) {
       // const url = 'provider/consumerNotification/settings/' + id;
       // return this.servicemeta.httpGet(url);
-      const url = 'provider/consumerNotification/settings';
-      return this.servicemeta.httpGet(url, null, filter);
+      const url = 'provider/consumerNotification/settings/provider/' + id;
+      return this.servicemeta.httpGet(url);
    }
    saveUserConsumerNotificationSettings(data) {
       const url = 'provider/consumerNotification/settings';
       return this.servicemeta.httpPost(url, data);
    }
    updateUserConsumerNotificationSettings(data) {
-      const url = 'provider/consumerNotification/settings';
+      const url = 'provider/consumerNotification/settings/provider';
       return this.servicemeta.httpPut(url, data);
    }
    getConsumerNotificationSettings() {

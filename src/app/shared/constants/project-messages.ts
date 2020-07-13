@@ -317,6 +317,7 @@ export const Messages = {
   'SEND_MSG_CAP': 'Send Message',
   'SEND_MSG': 'Enquiry',
   'DELAY_SEND_MSG': 'Send message to checked-in [customer]s about the delay',
+  'DELAY_SEND_MSG1': 'Send message to [customer]s about the delay',
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
   'MAKE_PAYMENT_CAP': 'Make Payment',
   'TOKEN_NO': 'Token Number',
