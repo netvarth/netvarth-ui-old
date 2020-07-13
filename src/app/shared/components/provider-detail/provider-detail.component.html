@@ -1,3 +1,24 @@
+<!-- <header>
+    <div class="container">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="tp-r">
+                <div class="tc1">
+                    <div class="topsignouter">
+                        <div class="app-btn">
+                            <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="app-btn1">
+                                <img src="assets/images/home/app_btn1.png" alt="Download Jaldee app from App Store"></a>
+                            &nbsp;
+                            <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
+                                class="app-btn2">
+                                <img src="assets/images/home/app_btn2.png" alt="Download Jaldee app from Google Play">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header> -->
 <app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
     [source]="source">
 </app-header>
@@ -6,9 +27,8 @@
         <div class="row">
             <div class="c-outer">
                 <div class="c-body prov-detail-outer">
-                    <div class="bk-ctrl">
-                        <span class="backtoresults" (click)="backtoSearchResult()"><span
-                                class="strong">{{go_back_cap}}</span></span>
+                    <div class="bk-ctrl" *ngIf="userId">
+                        <span class="backtoresults" (click)="backtoDetails()"><span class="strong">Go back</span></span>
                     </div>
                     <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading">
                         <div class="top-sect">
@@ -16,14 +36,14 @@
                                 <div class="tp-l">
                                     <div class="tp1 bus-pro">
                                         <div class="pro-img">
-                                            <ng-container *ngIf="galleryjson.length > 0 && image_list_popup.length > 0">
+                                            <ng-container *ngIf="galleryjson.length > 0">
                                                 <ng-container>
                                                     <img [src]="galleryjson[0].thumbUrl" alt=""
                                                         (click)="openImageModalRow(image_list_popup[0])" alt="">
                                                 </ng-container>
                                             </ng-container>
                                         </div>
-                                        <ul class="gal" *ngIf="galleryjson.length > 1 && image_list_popup.length > 0">
+                                        <ul class="gal" *ngIf="galleryjson.length > 1">
                                             <li>
                                                 <div class="galbx">
                                                     <div class="overlay"
@@ -33,14 +53,14 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="rating-stars">
-                                            <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
-                                                src="./assets/images/star.svg" alt="" />
-                                            <img class="ratingstar" *ngIf="ratingenabledHalf"
-                                                src="./assets/images/star-half.svg" alt="" />
-                                            <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
-                                                src="./assets/images/star-disabled.svg" alt="" />
-                                        </div>
+                                        <!-- <div class="rating-stars">
+                                                        <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
+                                                            src="./assets/images/star.svg" alt="" />
+                                                        <img class="ratingstar" *ngIf="ratingenabledHalf"
+                                                            src="./assets/images/star-half.svg" alt="" />
+                                                        <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
+                                                            src="./assets/images/star-disabled.svg" alt="" />
+                                                    </div> -->
                                     </div>
                                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                                         [modalImages]="image_list_popup"
@@ -49,13 +69,16 @@
                                         (buttonBeforeHook)="onButtonBeforeHook($event)"
                                         (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
                                     <div class="tp2" *ngIf="businessjson">
-                                        <h3>{{businessjson.businessName | capitalizeFirst}} <span
-                                                class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0"
-                                                (click)="openJdn()" [matTooltip]="jdnTooltip"><img height="35"
-                                                    width="35" src="./assets/images/JDN.png"></span></h3>
+                                        <!-- <div class="ynw-verified"></div> -->
+                                        <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10 pointer-cursor
+                                                        
+                                                        " *ngIf="jdnlength > 0" (click)="openJdn()"
+                                                [matTooltip]="jdnTooltip"><img height="35" width="35"
+                                                    src="./assets/images/JDN.png"></span></h3>
                                         <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
-                                            | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
-                                            capitalizeFirst}})</span>
+                                                        | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
+                                                        capitalizeFirst}})</span>
+
                                         <div class="clr">
                                             <div class="pro-desc">
                                                 <span *ngIf="bNameStart!=''"
@@ -67,8 +90,7 @@
                                                 <span class="more" *ngIf="showmoreDesc"
                                                     (click)="showDesc()">{{less_cap}}</span>
                                             </div>
-                                            <div class="services"
-                                                *ngIf="specializationslist && specializationslist.length > 0">
+                                            <div class="services" *ngIf="specializationslist.length > 0">
                                                 <div class="otr-elements">
                                                     <span *ngIf="specializationslist.length > 0">
                                                         <span class="categoryspec"
@@ -119,20 +141,30 @@
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
-                                    <!-- && location_exists -->
+                                    <li *ngIf="!isInFav && !userId">
+                                        <a class='like-button' (click)="handle_Fav('add')">
+                                            <span class='like-icon'>
+                                                <div class='heart-animation-1'></div>
+                                                <div class='heart-animation-2'></div>
+                                            </span>
+                                            {{add_to_fav_cap}}
+                                        </a>
+                                    </li>
+                                    <li *ngIf="isInFav && !userId">
+                                        <a class='' (click)="doRemoveFav()">
+                                            <span class='like-icon'>
+                                                <div class='heart-animation-1'></div>
+                                                <div class='heart-animation-2'></div>
+                                            </span>
+                                            {{rem_from_fav_cap}}
+                                        </a>
+                                    </li>
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
                                     <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span
                                             class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
-
-                                    <li *ngIf="!userId"><span class="icon-history"
-                                            (click)="redirectMe('history')">{{history_cap}}</span></li>
-                                    <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
-                                            (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
-                                    <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
-                                            (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
                                     <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
                                 </ul>
@@ -195,7 +227,7 @@
                         <div class="loc-accor">
                             <mat-accordion *ngFor="let loc of locationjson; let i = index">
                                 <mat-expansion-panel style="margin-top: 10px !important;
-                            box-shadow: none !important;" [expanded]="locationId == loc.id || !locationId">
+                                        box-shadow: none !important;" [expanded]="true">
                                     <mat-expansion-panel-header expandedHeight="80px" collapsedHeight="80px"
                                         style="background-color: white !important;">
                                         <mat-panel-title>
@@ -243,19 +275,38 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <!-- <div class="services" *ngIf="loc.departments">
-                                                            <span class="sub-title">Departments</span>
-                                                            <ul>
-                                                                <li *ngFor="let dept of loc.departments"
-                                                                    (click)="getServicesByDepartment(loc, dept)">
-                                                                    {{dept}}</li>
-                                                            </ul>
-                                                        </div> -->
 
+                                                        <!-- <div class="services" *ngIf="loc.departments">
+                                                                        <span class="sub-title">Departments</span>
+                                                                        <ul>
+                                                                            <li *ngFor="let dept of loc.departments"
+                                                                                (click)="getServicesByDepartment(loc, dept)">
+                                                                                {{dept}}</li>
+                                                                        </ul>
+                                                                    </div> -->
+                                                        <!-- <div class="services"
+                                                                        *ngIf="!loc.departments && loc.serviceList && loc.serviceList.length > 0">
+                                                                        <span class="sub-title">{{services_offered}}</span>
+                                                                        <ul>
+                                                                            <li *ngFor="let serv of loc.serviceList"
+                                                                                (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
+                                                                                {{serv.name}}</li>
+                                                                        </ul>
+                                                                    </div> -->
+                                                        <!-- <div class="services"
+                                                                    *ngIf="!loc.departments && !loc.serviceList && loc.services && loc.services.length > 0">
+                                                                    <span class="sub-title">{{services_offered}}</span>
+                                                                    <ul>
+                                                                        <li *ngFor="let serv of loc.services"
+                                                                            (click)="showServiceDetail(serv, businessjson.businessName)">
+                                                                            {{serv}}</li>
+                                                                    </ul>
+                                                                </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="tp-r">
+
                                                 <ul class="badges">
                                                     <li *ngIf="loc.parkingType && loc.parkingType!=='' && loc.parkingType != undefined && loc.parkingType != 'none'"
                                                         [matTooltip]="'Parking Type: ' + loc.parkingType">
@@ -274,10 +325,10 @@
                                                     </li>
                                                     <li [matTooltip]="'Emergency Services'"
                                                         *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                                            loc?.locationVirtualFields?.dentistemergencyservices=='true' || 
-                                                            loc?.locationVirtualFields?.altemergencyservices=='true' ||
-                                                            loc?.locationVirtualFields?.hosemergencyservices=='true' || 
-                                                            loc?.locationVirtualFields?.veterinaryemergencyservices=='true'">
+                                                                        loc?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                                                        loc?.locationVirtualFields?.altemergencyservices=='true' ||
+                                                                        loc?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                                                        loc?.locationVirtualFields?.veterinaryemergencyservices=='true'">
                                                         <span class="icon-emergency"></span></li>
                                                     <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
                                                         [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
@@ -290,7 +341,7 @@
                                             <div class="bt-l">
                                                 <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                                     <!-- <div class="o-now" *ngIf="loc.opennow">
-                                                        {{open_now_cap}}</div> -->
+                                                                    {{open_now_cap}}</div> -->
                                                     <div
                                                         *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                                                         <div class="timing" *ngIf="loc['personAhead']">
@@ -336,38 +387,6 @@
                                                                     {{dept.departmentName}}</li>
                                                             </ul>
                                                         </div>
-                                                        <!-- <div class="donat-service"
-                                                            *ngIf="!loc.departments && loc.serviceList && loc.serviceList.length > 0">
-                                                            <span
-                                                                class="sub-title-donate checkin-service-group">Check-in
-                                                                Service(s)</span>
-                                                            <ul>
-                                                                <li *ngFor="let serv of loc.serviceList"
-                                                                    (click)="showServiceDetail(serv, businessjson.businessName, 'servicedetails')">
-                                                                    {{serv.name}}
-                                                                    <span *ngIf="serv.serviceType == 'virtualService'">
-                                                                        (<i class="fa fa-video-camera cal-mod-font"
-                                                                            aria-hidden="true"></i>)
-                                                                    </span></li>
-                                                            </ul>
-                                                        </div> -->
-                                                        <!-- <div class="donat-service" *ngIf="loc.departments">
-                                                            <span class="sub-title-donate checkin-service-group">Departments</span>
-                                                            <ul>
-                                                                <li *ngFor="let dept of loc.departments"
-                                                                    (click)="getServicesByDepartment(loc, dept)">
-                                                                    {{dept}}</li>
-                                                            </ul>
-                                                        </div> -->
-                                                        <!-- <div class="donat-service"
-                                                            *ngIf="!loc.departments && !loc.serviceList && loc.services && loc.services.length > 0">
-                                                            <span class="sub-title">{{services_offered}}</span>
-                                                            <ul>
-                                                                <li *ngFor="let serv of loc.services"
-                                                                    (click)="showServiceDetail(serv, businessjson.businessName)">
-                                                                    {{serv}}</li>
-                                                            </ul>
-                                                        </div> -->
                                                     </div>
                                                     <div class="wt-tme notallowed"
                                                         *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
@@ -418,53 +437,38 @@
                                                     <span *ngIf="loc['showToken']">{{get_token_btn}}</span>
                                                     {{for_cap}}
                                                     <span>{{different_date_cap}}</span></span>
-                                                <!-- <span class="checkin-btn"
-                                                    (click)="appointmentClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
                                             </div>
                                         </div>
-                                        <!-- <div class="bottom-sect pdetail" *ngIf="loc['apptAllowed'] && loc.onlinePresence">
-                                            <div class="bt-l"> </div>
-                                            <div style="flex-grow:1"></div>
-                                            <div class="bottom-actions-root"> -->
-                                        <!-- <span class="checkin-btn disabled"
-                                                    *ngIf="loc.today_appt != 1">Appointment</span> -->
-                                        <!-- <span class="checkin-btn"
-                                                    (click)="appointmentClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)">Appointment</span> -->
-                                        <!-- <div class="future-date-link checkin-future">  <span class="bt10" *ngIf="loc.future_appt == 1" (click)="appointmentClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], true)" >{{do_you_want_to_cap}} <span> Appointment </span>{{for_cap}} <span>{{different_date_cap}}</span>
-                                                </span> </div> -->
-                                        <!-- </div>
-                                        </div> -->
-
                                         <div class="bottom-sect pdetail"
                                             *ngIf="loc['apptAllowed'] && businessjson.onlinePresence">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <!-- <div class="donat-service" *ngIf="!loc.departments">
-                                                        <span class="sub-title-donate">Appointment Service(s)</span>
-                                                        <ul *ngIf="!loc.appointmentServiceList">
-                                                            <li *ngFor="let appointmentService of loc.appt_services"
-                                                                (click)="showServiceDetail(appointmentService, businessjson.businessName)">
-                                                                {{appointmentService}}</li>
-                                                        </ul>
-                                                        <ul *ngIf="loc.appointmentServiceList">
-                                                            <li *ngFor="let appointmentService of loc.appointmentServiceList"
-                                                                (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
-                                                                {{appointmentService.name}}
-                                                                <span
-                                                                    *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                                    (<i class="fa fa-video-camera cal-mod-font"
-                                                                        aria-hidden="true"></i>)
-                                                                </span></li>
-                                                        </ul>
-                                                    </div> -->
+                                                                <span class="sub-title-donate">Appointment Service(s)</span>
+                                                                <ul *ngIf="!loc.appointmentServiceList">
+                                                                    <li *ngFor="let appointmentService of loc.appt_services"
+                                                                        (click)="showServiceDetail(appointmentService, businessjson.businessName)">
+                                                                        {{appointmentService}}</li>
+                                                                </ul>
+                                                                <ul *ngIf="loc.appointmentServiceList">
+                                                                    <li *ngFor="let appointmentService of loc.appointmentServiceList"
+                                                                        (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
+                                                                        {{appointmentService.name}}
+                                                                        <span
+                                                                            *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                                            (<i class="fa fa-video-camera cal-mod-font"
+                                                                                aria-hidden="true"></i>)
+                                                                        </span></li>
+                                                                </ul>
+                                                            </div> -->
                                                     <!-- <div class="donat-service" *ngIf="loc.departments">
-                                                        <span class="sub-title-donate">Departments</span>
-                                                        <ul>
-                                                            <li *ngFor="let dept of loc.departments"
-                                                                (click)="getServicesByDepartment(loc, dept)">
-                                                                {{dept}}</li>
-                                                        </ul>
-                                                    </div> -->
+                                                                <span class="sub-title-donate">Departments</span>
+                                                                <ul>
+                                                                    <li *ngFor="let dept of loc.departments"
+                                                                        (click)="getServicesByDepartment(loc, dept)">
+                                                                        {{dept}}</li>
+                                                                </ul>
+                                                            </div> -->
                                                     <div class="donat-service"
                                                         *ngIf="apptServicesjson.length > 0 && !showDepartments">
                                                         <span class="sub-title-donate">Appointment Service(s)</span>
@@ -497,16 +501,15 @@
                                                     class="checkin-btn">Appointment</span>
                                             </div>
                                         </div>
-
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="businessjson.donationFundRaising && donationData.length > 0 && businessjson.onlinePresence">
+                                            *ngIf="businessjson.donationFundRaising && businessjson.onlinePresence && donationServicesjson.length >= 1">
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
-                                                        <span class="sub-title-donate">Donation Services</span>
+                                                        <span class="sub-title-donate">Donation Service(s)</span>
                                                         <ul>
-                                                            <li *ngFor="let donationService of donationData"
-                                                                (click)="showServiceDetail(donationService, businessjson.businessName)">
+                                                            <li *ngFor="let donationService of donationServicesjson"
+                                                                (click)="showServiceDetail(donationService, businessjson.businessName,'servicedetails')">
                                                                 {{donationService.name}}</li>
                                                         </ul>
                                                     </div>
@@ -514,9 +517,12 @@
                                             </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
-                                                <span (click)="payClicked(loc.id)" class="checkin-btn">Donate</span>
+                                                <span
+                                                    (click)="payClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                                    class="checkin-btn">Donate</span>
                                             </div>
                                         </div>
+
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -527,4 +533,15 @@
         </div>
     </div>
 </section>
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->
+<footer class="main-footer" style="margin-left: 0px">
+    <div class="pull-right hidden-xs footer_info">
+    </div>
+    <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
+        reserved.</span>
+    <span> <a class="logo">
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg pull-right"><img class="buisnessPageJaldeeLogo" src="assets/images/jaldee-logo.png"
+                    alt="Jaldee"></span>
+        </a></span>
+</footer>

@@ -1,38 +1,35 @@
-import { Component, OnInit, OnDestroy, HostListener, Input, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { ProviderDetailService } from '../provider-detail/provider-detail.service';
-import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-import {
-  AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
-} from 'angular-modal-gallery';
-import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
-import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
-import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { projectConstants } from '../../../app.component';
+import { MatDialog } from '@angular/material';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
-import { SearchDetailServices } from '../search-detail/search-detail-services.service';
+import { ProviderDetailService } from '../provider-detail/provider-detail.service';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
+import { SearchDetailServices } from '../search-detail/search-detail-services.service';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-provider-detail',
   templateUrl: './provider-detail.component.html',
   styleUrls: ['./provider-detail.component.css'],
   animations: [
-    trigger('locationjson', [
+    trigger('search_data', [
       transition('* => *', [
 
         query(':enter', style({ opacity: 0 }), { optional: true }),
 
-        query(':enter', stagger('300ms', [
-          animate('.6s ease-in', keyframes([
+        query(':enter', stagger('10ms', [
+          animate('.4s ease-out', keyframes([
             style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
             style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
             style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
@@ -43,7 +40,6 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
-
   go_back_cap = Messages.GO_BACK_CAP;
   more_cap = Messages.MORE_CAP;
   less_cap = Messages.LESS_CAP;
@@ -136,6 +132,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   virtualsectionHeader = 'Click here to View More Details';
   isPlaceisSame = false;
   jdnDiscountType;
+  playstore = true;
+  appstore = true;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -200,60 +198,75 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   provider_data: any;
   gender_length: any;
   api_loading = false;
-  source;
-  locationId;
-  donation: any = [];
+  userType = '';
+  pageFound = false;
   results_data;
-  donationData: any = [];
-  allservices;
   appttime_arr: any = [];
   apptServicesjson: any = [];
-  tempservicejson;
-  users: any = [];
+  donationServicesjson: any = [];
   userId;
-  businessid;
   domainList: any = [];
   subDomainList: any = [];
+  businessid;
   departmentId;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
     public sharedFunctionobj: SharedFunctions,
-    private locationobj: Location,
     private shared_services: SharedServices,
     private routerobj: Router,
     private dialog: MatDialog,
-    private searchdetailserviceobj: SearchDetailServices
+    private searchdetailserviceobj: SearchDetailServices,
+    public router: Router,
+    private locationobj: Location
   ) {
     this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
   }
 
   ngOnInit() {
+    this.api_loading = true;
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
+    const isMobile = {
+      Android: function () {
+        return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+        return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+        return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+        return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+      }
+    };
+    if (isMobile.Android()) {
+      this.playstore = true;
+      this.appstore = false;
+    } else if (isMobile.iOS()) {
+      this.playstore = false;
+      this.appstore = true;
+    } else {
+      this.playstore = true;
+      this.appstore = true;
+    }
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
-    this.getInboxUnreadCnt();
-    this.activaterouterobj.paramMap
-      .subscribe(params => {
-        this.provider_id = params.get('id');
-        // this.api_loading = true;
-        this.gets3curl();
-      });
+    // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
-      if (qparams.source) {
-        this.source = qparams.source;
-      }
-      if (qparams.locId) {
-        this.locationId = qparams.locId;
-      } else {
-        this.locationId = '';
-      }
       if (qparams.userId) {
         this.userId = qparams.userId;
       }
@@ -264,6 +277,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.departmentId = qparams.deptId;
       }
     });
+    this.activaterouterobj.paramMap
+      .subscribe(params => {
+        // this.provider_id = params.get('id');
+        const customId = params.get('id').replace(/\s/g, '');
+        this.shared_services.getBusinessUniqueId(customId).subscribe(
+          id => {
+            this.provider_id = id;
+            this.gets3curl();
+          },
+          error => {
+            this.provider_id = customId;
+            this.gets3curl();
+          }
+        );
+      });
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -282,9 +310,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.extChecindialogRef.close();
     }
   }
-  backtoSearchResult() {
-    this.locationobj.back();
-  }
+
   getSocialdet(key, field) {
     const retdet = this.orgsocial_list.filter(
       soc => soc.key === key);
@@ -311,6 +337,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('virtualFields', true);
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
+            this.getbusinessprofiledetails_json('donationServices', true);
           }
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -325,32 +352,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   fetchClouddata() {
     this.locationjson = [];
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
-    if (userobj !== null) {
+    if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
       }
+      if (!testUser) {
+        this.testuserQry = ' (not test_account:1) ';
+      } else {
+        this.testuserQry = ' test_account:1 ';
+      }
     }
-    if (!testUser) {
-      this.testuserQry = ' (not test_account:1) ';
-    } else {
-      this.testuserQry = ' test_account:1 ';
-    }
-    // this.q_str = q_str;
     this.q_str = '(and ' + 'unique_id:' + this.provider_id + ')';
     const searchpass_criterias = {
       'start': 0,
@@ -365,41 +378,27 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
-        searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
-        searchpass_criterias.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        if (this.testuserQry) {
+          searchpass_criterias.fq = '(and ' + this.testuserQry + ')';
+        }
         searchpass_criterias.q = this.q_str;
         searchpass_criterias.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criterias)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criterias)
           .subscribe(res => {
             this.result_data = res;
-
-            for (let i = 0; i < this.result_data.hits.hit.length; i++) {
-              this.account_Type = this.result_data.hits.hit[i].fields.account_type;
-              try {
-                if (this.result_data.hits.hit[i].fields.services) {
-                  this.result_data.hits.hit[i].fields.serviceList = JSON.parse(this.result_data.hits.hit[i].fields.services);
-                }
-                if (this.result_data.hits.hit[i].fields.appt_services) {
-                  this.result_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.result_data.hits.hit[i].fields.appt_services);
-                }
-                if (this.result_data.hits.hit[i].fields.donation_services) {
-                  this.result_data.hits.hit[i].fields.donationServices = JSON.parse(this.result_data.hits.hit[i].fields.donation_services);
-                  this.result_data.hits.hit[i].fields.donationlength = this.result_data.hits.hit[i].fields.donationServices.length;
-                }
-              } catch (e) {
-              }
-            }
             let schedule_arr: any = [];
             this.locationjson = this.result_data.hits.hit;
             if (this.locationjson) {
+              // tslint:disable-next-line:forin
               for (const i in this.locationjson) {
                 this.results_data = this.locationjson[i];
               }
             }
-            // this.search_data = this.result_data.hits.hit;
             const locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
-              this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+              if (this.userType === 'consumer') {
+                this.getExistingCheckinsByLocation(this.locationjson[i].fields.location_id1, i);
+              }
               const addres = this.locationjson[i].address1;
               const place = this.locationjson[i].place1;
               if (addres && addres.includes(place)) {
@@ -451,19 +450,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.api_loading = false;
+            this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
-            this.shared_services.getConsumerDonationServices(this.provider_bussiness_id)
-              .subscribe((data) => {
-                this.donationData = data;
-              });
-            if (this.businessjson.claimStatus === 'Claimed') {
-              this.getProviderDepart(this.provider_bussiness_id);
-            }
+
+            // if (this.businessjson.claimStatus === 'Claimed') {
+            // this.getProviderDepart(this.provider_bussiness_id);
+            // }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
@@ -484,7 +482,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.phonelist = this.businessjson.phoneNumbers;
             }
             this.getbusinessprofiledetails_json('gallery', true);
-            this.getFavProviders();
+            if (this.userType === 'consumer') {
+              this.getFavProviders();
+            }
             const holdbName = this.businessjson.businessDesc || '';
             const maxCnt = 120;
             if (holdbName.length > maxCnt) {
@@ -518,31 +518,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'services': {
-            if (!this.businessjson.virtualServices) {
-              this.servicesjson = [];
-              this.tempservicejson = res;
-              for (let i = 0; i < this.tempservicejson.length; i++) {
-                if (this.tempservicejson[i].serviceType !== 'virtualService') {
-                  this.servicesjson.push(this.tempservicejson[i]);
-                }
+            this.servicesjson = res;
+            // for (let i = 0; i < this.servicesjson.length; i++) {
+            if (this.servicesjson[0].hasOwnProperty('departmentName')) {
+              this.showDepartments = true;
+              if (this.branch_id && this.account_Type === 'BRANCH') {
+                this.getDoctors();
               }
-            } else {
-              this.servicesjson = res;
+              break;
             }
+            // }
             break;
           }
           case 'apptServices': {
-            if (!this.businessjson.virtualServices) {
-              this.apptServicesjson = [];
-              this.tempservicejson = res;
-              for (let i = 0; i < this.tempservicejson.length; i++) {
-                if (this.tempservicejson[i].serviceType !== 'virtualService') {
-                  this.apptServicesjson.push(this.tempservicejson[i]);
-                }
-              }
-            } else {
-              this.apptServicesjson = res;
-            }
+            this.apptServicesjson = res;
             break;
           }
           case 'gallery': {
@@ -627,14 +616,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              if (this.businessjson.claimStatus === 'Claimed') {
-                this.getProviderDepart(this.provider_bussiness_id);
-              }
+              // if (this.businessjson.claimStatus === 'Claimed') {
+              // this.getProviderDepart(this.provider_bussiness_id);
+              // }
               this.locationjson[i]['checkins'] = [];
-              this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-              if (this.businessjson.id) {
-                locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
+              if (this.userType === 'consumer') {
+                this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
+              locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
               wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
             }
@@ -680,12 +669,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             break;
           }
+          case 'donationServices': {
+            this.donationServicesjson = res;
+            break;
+          }
           case 'jaldeediscount':
             this.jaldeediscountJson = res;
             this.jdnlength = Object.keys(this.jaldeediscountJson).length;
         }
       },
-        () => {
+        (error) => {
+          if (section === 'businessProfile') {
+            this.routerobj.navigate(['/not-found']);
+          }
           if (section === 'gallery') {
             this.galleryjson = [];
             if (this.bLogo !== '') {
@@ -702,7 +698,130 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
+  private getUserWaitingTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getUserEstimatedWaitingTime(post_provids_locid)
+        .subscribe(data => {
+          this.waitlisttime_arr = data;
+          if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
+            this.waitlisttime_arr = [];
+          }
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          let locindx;
+          const check_dtoday = new Date(dtoday);
+          let cdate;
+          for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+            locindx = provids_locid[i].locindx;
+            this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
+            this.locationjson[locindx]['estimatedtime_det'] = [];
+            if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+              this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
+              this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
+              this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
+              this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
+              this.locationjson[locindx]['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
+              this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
+              this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
+              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                this.locationjson[locindx]['availableToday'] = true;
+              } else {
+                this.locationjson[locindx]['availableToday'] = false;
+              }
+              if (!this.locationjson[locindx]['opennow']) {
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                } else {
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
+                this.locationjson[locindx]['estimatedtime_det']['nextAvailDate'] = this.locationjson[locindx]['estimatedtime_det']['date'] + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+              } else {
+                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                } else {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
+                  // this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                }
+              }
+            } else {
+              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
+            }
+            if (this.waitlisttime_arr[i]['message']) {
+              this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
+            }
 
+          }
+        });
+    }
+  }
+  getUserApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getUserApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            if (provids_locid[i]) {
+              locindx = provids_locid[i].locindx;
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
+          }
+        });
+    }
+  }
   getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
     let UTCstring = null;
     if (modDateReq) {
@@ -782,6 +901,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
+            this.api_loading = false;
             break;
           }
           case 'providerVirtualFields': {
@@ -809,34 +929,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'providerservices': {
-            // if (!this.businessjson.virtualServices) {
-            //   this.servicesjson = [];
-            //   this.tempservicejson = res;
-            //   for (let i = 0; i < this.tempservicejson.length; i++) {
-            //     if (this.tempservicejson[i].serviceType !== 'virtualService') {
-            //       this.servicesjson.push(this.tempservicejson[i]);
-            //     }
-            //   }
-            // } else {
-            //   this.servicesjson = res;
-            // }
             if (res[0] && res[0].services) {
               this.servicesjson = res[0].services;
             }
             break;
           }
           case 'providerApptServices': {
-            // if (!this.businessjson.virtualServices) {
-            //   this.apptServicesjson = [];
-            //   this.tempservicejson = res;
-            //   for (let i = 0; i < this.tempservicejson.length; i++) {
-            //     if (this.tempservicejson[i].serviceType !== 'virtualService') {
-            //       this.apptServicesjson.push(this.tempservicejson[i]);
-            //     }
-            //   }
-            // } else {
-            //   this.apptServicesjson = res;
-            // }
             if (res[0] && res[0].services) {
               this.apptServicesjson = res[0].services;
             }
@@ -847,7 +945,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
   sortVfields(dataF) {
     let temp;
     const temp1 = new Array();
@@ -1018,12 +1115,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getServicesByDepartment(dept) {
-    this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'pro-details' } });
+    this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
   }
 
   backtoDetails() {
-    this.showServices = false;
+    this.locationobj.back();
   }
+
   getExistingCheckinsByLocation(locid, passedIndx) {
     this.shared_services.getExistingCheckinsByLocation(locid)
       .subscribe(data => {
@@ -1074,17 +1172,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     return str;
   }
-  redirectMe(opt) {
-    switch (opt) {
-      case 'dashboard':
-        this.routerobj.navigate(['consumer']);
-        break;
-      case 'inbox':
-        this.routerobj.navigate(['consumer', 'inbox']);
-        break;
-      case 'history':
-        this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
-        break;
+  redirectToHistory() {
+    if (this.sharedFunctionobj.checkLogin()) {
+      this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
+    } else { // show consumer login
+      const passParam = { callback: 'history' };
+      this.doLogin('consumer', passParam);
     }
   }
   getInboxUnreadCnt() {
@@ -1104,8 +1197,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.sharedFunctionobj.checkLogin()) {
       this.showCommunicate(providforCommunicate);
     } else { // show consumer login
-
+      const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+      this.doLogin('consumer', passParam);
     }
+  }
+
+  openJdn() {
+    this.jdndialogRef = this.dialog.open(JdnComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
+      data: {
+        jdnList: this.jaldeediscountJson
+      }
+    });
+    this.jdndialogRef.afterClosed().subscribe(() => {
+    });
   }
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
@@ -1121,47 +1228,54 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         name: this.businessjson.businessName
       }
     });
-
     this.commdialogRef.afterClosed().subscribe(() => {
-
     });
   }
-  getFavProviders() {
-    this.shared_services.getFavProvider()
-      .subscribe(data => {
-        this.favprovs = data;
-        this.isInFav = false;
-        if (this.favprovs.length > 0) {
-          for (let i = 0; i < this.favprovs.length; i++) {
-            if (this.favprovs[i].id === this.provider_bussiness_id) {
+  getFavProviders(mod?) {
+    if (mod) {
+      this.handle_Fav(mod);
+    } else {
+      this.shared_services.getFavProvider()
+        .subscribe(data => {
+          this.favprovs = data;
+          if (this.favprovs.length === 0) {
+            this.handle_Fav('add');
+          } else {
+            const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
+            if (provider.length === 0) {
+              this.handle_Fav('add');
+            } else {
               this.isInFav = true;
             }
           }
-        } else {
-          this.isInFav = false;
-        }
-      }, error => {
-        this.sharedFunctionobj.apiErrorAutoHide(this, error);
-      });
+        }, error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        });
+    }
   }
   handle_Fav(mod) {
-    const accountid = this.provider_bussiness_id;
-    if (mod === 'add') {
-      this.shared_services.addProvidertoFavourite(accountid)
-        .subscribe(() => {
-          this.isInFav = true;
-        },
-          error => {
-            this.sharedFunctionobj.apiErrorAutoHide(this, error);
-          });
-    } else if (mod === 'remove') {
-      this.shared_services.removeProviderfromFavourite(accountid)
-        .subscribe(() => {
-          this.isInFav = false;
-        },
-          error => {
-            this.sharedFunctionobj.apiErrorAutoHide(this, error);
-          });
+    if (this.sharedFunctionobj.checkLogin()) {
+      const accountid = this.provider_bussiness_id;
+      if (mod === 'add' && !this.isInFav) {
+        this.shared_services.addProvidertoFavourite(accountid)
+          .subscribe(() => {
+            this.isInFav = true;
+          },
+            error => {
+              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+            });
+      } else if (mod === 'remove') {
+        this.shared_services.removeProviderfromFavourite(accountid)
+          .subscribe(() => {
+            this.isInFav = false;
+          },
+            error => {
+              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+            });
+      }
+    } else {
+      const passParam = { callback: 'fav' };
+      this.doLogin('consumer', passParam);
     }
   }
   doRemoveFav() {
@@ -1180,9 +1294,118 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
   checkinClicked(locid, locname, cdate, chdatereq) {
+    const current_provider = {
+      'id': locid,
+      'place': locname,
+      'cdate': cdate
+    };
     this.changedate_req = chdatereq;
-    this.showCheckin(locid, locname, cdate, 'consumer');
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.showCheckin(locid, locname, cdate, 'consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: '', current_provider: current_provider };
+      this.doLogin('consumer', passParam);
+    }
   }
+
+  appointmentClicked(locid, locname, cdate, chdatereq) {
+    const current_provider = {
+      'id': locid,
+      'place': locname,
+      'cdate': cdate
+    };
+    this.changedate_req = chdatereq;
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.showAppointment(locid, locname, cdate, 'consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: 'appointment', current_provider: current_provider };
+      this.doLogin('consumer', passParam);
+    }
+  }
+  doLogin(origin?, passParam?) {
+    // this.shared_functions.openSnackBar('You need to login to check in');
+    const current_provider = passParam['current_provider'];
+    // let is_test_account = null;
+    // if (current_provider) {
+    //   if (current_provider.test_account === '1') {
+    const is_test_account = true;
+    //   } else {
+    //     is_test_account = false;
+    //   }
+    // }
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: false,
+        test_account: is_test_account,
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'communicate') {
+          this.getFavProviders();
+          this.showCommunicate(passParam['providerId']);
+        } else if (passParam['callback'] === 'history') {
+          this.redirectToHistory();
+        } else if (passParam['callback'] === 'fav') {
+          this.getFavProviders(passParam['mod']);
+        } else if (passParam['callback'] === 'donation') {
+          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+        } else if (passParam['callback'] === 'appointment') {
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        } else {
+          this.getFavProviders();
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        }
+      } else if (result === 'showsignup') {
+        this.doSignup(passParam);
+      }
+    });
+  }
+  doSignup(passParam?) {
+    // this.api_loading = false;
+    const current_provider = passParam['current_provider'];
+    const dialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        is_provider: 'false',
+        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        if (passParam['callback'] === 'communicate') {
+          this.showCommunicate(passParam['providerId']);
+        } else if (passParam['callback'] === 'history') {
+          this.redirectToHistory();
+        } else if (passParam['callback'] === 'fav') {
+          this.getFavProviders(passParam['mod']);
+        } else if (passParam['callback'] === 'donation') {
+          this.showDonation(passParam['loc_id'], passParam['name'], passParam['date'], passParam['consumer']);
+        } else if (passParam['callback'] === 'appointment') {
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        } else {
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        }
+      }
+    });
+  }
+
   showCheckin(locid, locname, curdate, origin?) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1196,12 +1419,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         user: this.userId
       }
     };
-    this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
-  }
-
-  appointmentClicked(locid, locname, cdate, chdatereq) {
-    this.changedate_req = chdatereq;
-    this.showAppointment(locid, locname, cdate, 'consumer');
+    this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showAppointment(locid, locname, curdate, origin?) {
     const navigationExtras: NavigationExtras = {
@@ -1215,80 +1433,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         user: this.userId
       }
     };
-    this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
-  }
-  payClicked(locid) {
-    // alert('j');
-    this.showDonation(locid);
-  }
-  showDonation(locid) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        loc_id: locid,
-        unique_id: this.provider_id,
-        account_id: this.provider_bussiness_id
-      }
-    };
-    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
+    this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {
       return true;
     }
   }
-
-  getUserApptTime(provids_locid) {
-    if (provids_locid.length > 0) {
-      const post_provids_locid: any = [];
-      for (let i = 0; i < provids_locid.length; i++) {
-        post_provids_locid.push(provids_locid[i].locid);
-      }
-      if (post_provids_locid.length === 0) {
-        return;
-      }
-      this.providerdetailserviceobj.getUserApptTime(post_provids_locid)
-        .subscribe(data => {
-          this.appttime_arr = data;
-          let locindx;
-          for (let i = 0; i < this.appttime_arr.length; i++) {
-            if (provids_locid[i]) {
-              locindx = provids_locid[i].locindx;
-              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              if (this.appttime_arr[i]['availableSchedule']) {
-                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-              }
-            }
-          }
-        });
-    }
-  }
-
-  getApptTime(provids_locid) {
-    if (provids_locid.length > 0) {
-      const post_provids_locid: any = [];
-      for (let i = 0; i < provids_locid.length; i++) {
-        post_provids_locid.push(provids_locid[i].locid);
-      }
-      if (post_provids_locid.length === 0) {
-        return;
-      }
-      this.providerdetailserviceobj.getApptTime(post_provids_locid)
-        .subscribe(data => {
-          this.appttime_arr = data;
-          let locindx;
-          for (let i = 0; i < this.appttime_arr.length; i++) {
-            if (provids_locid[i]) {
-              locindx = provids_locid[i].locindx;
-              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              if (this.appttime_arr[i]['availableSchedule']) {
-                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-              }
-            }
-          }
-        });
-    }
-  }
-
   // Some of functions copied to Consumer Home also.
   private getWaitingTime(provids_locid) {
     if (provids_locid.length > 0) {
@@ -1300,107 +1451,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         return;
       }
       this.providerdetailserviceobj.getEstimatedWaitingTime(post_provids_locid)
-        .subscribe(data => {
-          this.waitlisttime_arr = data;
-          if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
-            this.waitlisttime_arr = [];
-          }
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-          const today = new Date(todaydt);
-          const dd = today.getDate();
-          const mm = today.getMonth() + 1; // January is 0!
-          const yyyy = today.getFullYear();
-          let cday = '';
-          if (dd < 10) {
-            cday = '0' + dd;
-          } else {
-            cday = '' + dd;
-          }
-          let cmon;
-          if (mm < 10) {
-            cmon = '0' + mm;
-          } else {
-            cmon = '' + mm;
-          }
-          const dtoday = yyyy + '-' + cmon + '-' + cday;
-          let locindx;
-          const check_dtoday = new Date(dtoday);
-          let cdate;
-          for (let i = 0; i < this.waitlisttime_arr.length; i++) {
-            locindx = provids_locid[i].locindx;
-            this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
-            this.locationjson[locindx]['estimatedtime_det'] = [];
-            if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-              this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-              this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
-              this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
-              this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
-              this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
-              this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
-              this.locationjson[locindx]['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
-              this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
-              this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
-              cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-              if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-                this.locationjson[locindx]['availableToday'] = true;
-              } else {
-                this.locationjson[locindx]['availableToday'] = false;
-              }
-              if (!this.locationjson[locindx]['opennow']) {
-                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
-                  } else {
-                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
-                  }
-                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
-                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                } else {
-                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                }
-                this.locationjson[locindx]['estimatedtime_det']['nextAvailDate'] = this.locationjson[locindx]['estimatedtime_det']['date'] + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-              } else {
-                this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                } else {
-                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
-                  } else {
-                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
-                  }
-                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
-                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                  this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-                  // this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                }
-              }
-            } else {
-              this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
-            }
-            if (this.waitlisttime_arr[i]['message']) {
-              this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
-            }
-
-          }
-        });
-    }
-  }
-
-
-  private getUserWaitingTime(provids_locid) {
-    if (provids_locid.length > 0) {
-      const post_provids_locid: any = [];
-      for (let i = 0; i < provids_locid.length; i++) {
-        post_provids_locid.push(provids_locid[i].locid);
-      }
-      if (post_provids_locid.length === 0) {
-        return;
-      }
-      this.providerdetailserviceobj.getUserEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           this.waitlisttime_arr = data;
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
@@ -1518,19 +1568,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  showServiceDetail(serv, busname, type) {
-    // let service;
+  showServiceDetail(serv, busname) {
     let servData;
-    // if (type === 'servicedetails') {
-    //   service = serv;
-    // } else {
-    //   if (!this.showDepartments) {
-    //     const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
-    //     service = serviceDetails[0];
-    //   } else {
-    //     service = serv;
-    //   }
-    // }
     if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
         bname: busname,
@@ -1543,6 +1582,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         serdet: serv
       };
     }
+    // let service;
+    // if (!this.showDepartments) {
+    //   const serviceDetails = this.servicesjson.filter(dpt => dpt.name === serv);
+    //   service = serviceDetails[0];
+    // } else {
+    //   service = serv;
+    // }
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
@@ -1595,19 +1641,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  openJdn() {
-    this.jdndialogRef = this.dialog.open(JdnComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: {
-        jdnList: this.jaldeediscountJson
-      }
-    });
-    this.jdndialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
   firstChckinCuponCunt(CouponList) {
     for (let index = 0; index < CouponList.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
@@ -1632,44 +1665,31 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   getCount(e) {
     this.searchCount = e.leng;
-    for (let i = 0; i < this.departmentlist.departments.length; i++) {
-      if (e.depart === this.departmentlist.departments[i].departmentCode) {
-        this.departmentlist.departments[i].count = e.leng;
-      }
-      if (this.departmentlist.departments[i].count === 1) {
-        this.departmentlist.departments[i].name = 'Doctor';
-      } else {
-        this.departmentlist.departments[i].name = 'Doctors';
-      }
-    }
+    // for (let i = 0; i < this.departmentlist.departments.length; i++) {
+    //   if (e.depart === this.departmentlist.departments[i].departmentCode) {
+    //     this.departmentlist.departments[i].count = e.leng;
+    //   }
+    //   if (this.departmentlist.departments[i].count === 1) {
+    //     this.departmentlist.departments[i].name = 'Doctor';
+    //   } else {
+    //     this.departmentlist.departments[i].name = 'Doctors';
+    //   }
+    // }
   }
 
   getDoctors() {
     const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.latitude = loc_det.lat;
-    this.longitude = loc_det.lon;
-    this.loctype = loc_det.typ;
-    let q_str = '';
-    let locstr = '';
-    if (this.latitude) { // case of location is selected
-      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
-      const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
-      locstr = 'location1:' + coordinates;
-      q_str = q_str + locstr;
-    }
     let testUser = false;
-    if (userobj !== null) {
+    if (userobj && userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
       }
-    }
-    if (!testUser) {
-      this.testuserQry = ' (not test_account:1) ';
-    } else {
-      this.testuserQry = ' test_account:1 ';
+      if (!testUser) {
+        this.testuserQry = ' (not test_account:1) ';
+      } else {
+        this.testuserQry = ' test_account:1 ';
+      }
     }
     this.q_str = '(and ' + 'account_type:' + 1 + ' branch_id:' + this.branch_id + ')';
     const searchpass_criteria = {
@@ -1680,17 +1700,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'size': 10,
       'parser': 'structured', // 'q.parser'
       'options': '', // 'q.options'
-      'sort': '',
-      'distance': ''
+      'sort': ''
     };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
-        searchpass_criteria.fq = '(and ' + this.testuserQry + ')';
-        searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        if (this.testuserQry) {
+          searchpass_criteria.fq = '(and' + this.testuserQry + ')';
+        }
         searchpass_criteria.q = this.q_str;
         searchpass_criteria.start = 0;
         searchpass_criteria.size = 10000;
-        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criteria)
+        this.search_return = this.shared_services.DocloudSearchWithoutDistance(url, searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
             this.getDoctorListbyDept(this.search_data);
@@ -1757,5 +1777,51 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
     this.claimdialogRef.afterClosed().subscribe(result => {
     });
+  }
+  payClicked(locid, locname, cdate, chdatereq) {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      this.showDonation(locid, locname, cdate, 'consumer');
+    } else if (this.userType === '') {
+      const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
+      this.doLogin('consumer', passParam);
+    }
+  }
+  showDonation(locid, locname, curdate, origin?) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        loc_id: locid,
+        sel_date: curdate,
+        cur: this.changedate_req,
+        unique_id: this.provider_id,
+        account_id: this.provider_bussiness_id
+      }
+    };
+    this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
+  }
+  getApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.providerdetailserviceobj.getApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+          let locindx;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            if (provids_locid[i]) {
+              locindx = provids_locid[i].locindx;
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              }
+            }
+          }
+        });
+    }
   }
 }

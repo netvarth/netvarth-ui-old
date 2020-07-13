@@ -1782,15 +1782,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       const locId = obj.fields.location_id1;
       // check whether logged in as consumer
       this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
-      if (this.shared_functions.checkLogin()) {
+      // if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         // if (ctype === 'consumer') {
         this.showProviderDetails(providforDetails, locId);
         // }
-      } else { // show consumer login
-        const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
-        this.doLogin('', 'consumer', passParam);
-      }
+      // } else { // show consumer login
+      //   const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
+      //   this.doLogin('', 'consumer', passParam);
+      // }
     }
   }
   showProviderDetails(provid, locId) {
