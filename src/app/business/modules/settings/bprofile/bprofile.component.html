@@ -434,7 +434,7 @@
                                             </div>
                                         </div>
                                         <div class="cd-b ">
-                                            <mat-card class="slimpadding">
+                                            <mat-card class="custom">
 
                                             <mat-accordion>
                                                 <mat-expansion-panel [expanded]="true">
@@ -602,7 +602,7 @@
                                         </div>
                                         <!-- specialization-->
                                         <div class="cd-b ">
-                                          <mat-card>
+                                          <mat-card class="custom">
 
                                             <mat-accordion>
                                                 <mat-expansion-panel [expanded]="true">
@@ -653,7 +653,7 @@
 
                                         </div>
                                         <div class="cd-b ">
-                                                <mat-card>
+                                                <mat-card class="custom">
                                             <mat-accordion>
                                                 <mat-expansion-panel [expanded]="true">
                                                     <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
@@ -710,7 +710,7 @@
                                             <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                                             <div class="acc-cont" *ngFor="let fields of domain_fields">
                                                 <ng-container *ngIf="fields.mandatory">
-                                                    <mat-card>
+                                                    <mat-card class="custom">
                                                     <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                         <mat-expansion-panel [expanded]="fields['value']" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
                                                             <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
@@ -883,7 +883,7 @@
                                                 <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                                                     <div class="acc-cont" *ngFor="let fields of subdomain_fields">
                                                         <ng-container *ngIf="fields.mandatory">
-                                                            <mat-card>
+                                                            <mat-card class="custom">
                                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                                 <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
                                                                     <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
@@ -1062,7 +1062,7 @@
                                             <!-- gallery and social media-->
                                             <div class="cd-b">
 
-                                               <mat-card>
+                                               <mat-card class="custom">
                                                 <mat-accordion>
                                                     <mat-expansion-panel [expanded]="true">
                                                         <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
