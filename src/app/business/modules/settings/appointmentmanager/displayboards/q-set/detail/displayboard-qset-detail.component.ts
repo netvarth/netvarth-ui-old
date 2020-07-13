@@ -345,7 +345,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'departmentId': id
             };
-            departmentIds.push(ids);
+            if (departmentIds.indexOf(ids) === -1) {
+                departmentIds.push(ids);
+            }
         }
 
         const userIds = [];
@@ -353,7 +355,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'id': id
             };
-            userIds.push(ids);
+            if (userIds.indexOf(ids) === -1) {
+                userIds.push(ids);
+            }
         }
 
         const serviceIds = [];
@@ -361,14 +365,18 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'id': id
             };
-            serviceIds.push(ids);
+            if (serviceIds.indexOf(ids) === -1) {
+                serviceIds.push(ids);
+            }
         }
         const qIds = [];
         for (const id of this.qIds) {
             const ids = {
                 'id': id
             };
-            qIds.push(ids);
+            if (qIds.indexOf(ids) === -1) {
+                qIds.push(ids);
+            }
         }
         this.qboardConditions = {
             'departments': departmentIds,
