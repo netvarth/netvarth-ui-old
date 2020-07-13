@@ -271,9 +271,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             }
                         }
                         if (j < this.displayBoardData.qBoardConditions.departments.length) {
-                            this.departmentSelection();
                             this.getUsers();
-                            this.getProviderServices();
+                            if (this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
+                                this.getProviderServices();
+                            }
+                            setTimeout(() => {
+                                this.departmentSelection();
+                            }, 500);
                         }
                     }
                 } else {
@@ -675,10 +679,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
                 if (j < this.displayBoardData.qBoardConditions.providers.length) {
-                    this.userSelection();
-
                     this.getProviderServices();
                     this.getProviderQueues();
+                    setTimeout(() => {
+                        this.userSelection();
+                    }, 500);
                 }
             }
         } else {
