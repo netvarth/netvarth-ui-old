@@ -243,32 +243,34 @@ export class DisplayboardDetailComponent implements OnInit {
         this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
-        this.provider_services.getDisplayboardAppointment(id).subscribe(data => {
-            this.layoutData = data;
-            this.layout = this.getLayout(this.layoutData.layout);
-            this.displayBoardData = data;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: this.layoutData.displayName
-            });
-            this.breadcrumbs = breadcrumbs;
-            this.name = this.layoutData.name;
-            this.displayName = this.layoutData.displayName;
-            this.serviceRoom = this.layoutData.serviceRoom;
-            this.id = this.layoutData.id;
-            const layoutPosition = this.layoutData.layout.split('_');
-            this.boardRows = layoutPosition[0];
-            this.boardCols = layoutPosition[1];
-            if (this.layoutData.metric) {
-                this.layoutData.metric.forEach(element => {
-                    this.boardSelectedItems[element.position] = element.sbId;
-                    this.metricSelected[element.position] = element.sbId;
+        if (id) {
+            this.provider_services.getDisplayboardAppointment(id).subscribe(data => {
+                this.layoutData = data;
+                this.layout = this.getLayout(this.layoutData.layout);
+                this.displayBoardData = data;
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
                 });
-            }
-        });
+                breadcrumbs.push({
+                    title: this.layoutData.displayName
+                });
+                this.breadcrumbs = breadcrumbs;
+                this.name = this.layoutData.name;
+                this.displayName = this.layoutData.displayName;
+                this.serviceRoom = this.layoutData.serviceRoom;
+                this.id = this.layoutData.id;
+                const layoutPosition = this.layoutData.layout.split('_');
+                this.boardRows = layoutPosition[0];
+                this.boardCols = layoutPosition[1];
+                if (this.layoutData.metric) {
+                    this.layoutData.metric.forEach(element => {
+                        this.boardSelectedItems[element.position] = element.sbId;
+                        this.metricSelected[element.position] = element.sbId;
+                    });
+                }
+            });
+        }
     }
     handleLayoutMetric(selectedItem, position) {
         this.metricSelected[position] = selectedItem;

@@ -185,10 +185,11 @@
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailAppt()"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
-                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i>
-                        </a>
+                          <a class="icon-action pointer-cursor icon-size3"
+                            *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 "
+                            (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
+                            <i class="fa fa-location-arrow"></i>
+                          </a>
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection"
                             [matTooltip]="'Print'">
                             <i class="fa fa-print" (click)="printAppt()"></i>
@@ -314,8 +315,10 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled" (click)="cancelBatchAppt(timeSlotAppts[slot.time][0].batchId)"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Reject'">
+                        <a class="statusText btn-play pointer-cursor"
+                          *ngIf="statusAction =='new' && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0 && timeSlotAppts[slot.time][0].batchId && batchEnabled"
+                          (click)="cancelBatchAppt(timeSlotAppts[slot.time][0].batchId)" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="'Reject'">
                           <i class="fa fa-trash"></i> <span *ngIf="!small_device_display"> Reject</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor"
@@ -405,17 +408,23 @@
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                                     <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                                   </a>
-                                  <a class="statusText btn-play pointer-cursor" [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
+                                  <a class="statusText btn-play pointer-cursor"
+                                    [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                                     *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                                     (click)="showCallingModes(appt, 'Started')">
-                                    <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                    <i class="fa meet-icon"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
                                       *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                                    <i class="fa zoom-icon"
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
                                     <i class="fa fa-phone"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
                                     <i class="fa fa-whatsapp whtsap-ic"
-                                    [ngClass]="{'tool-pading': (!small_device_display?true:false)}" *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
+                                      [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
+                                      *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
                                     <span *ngIf="!small_device_display">Teleservice</span>
                                   </a>
                                   <a class="btn-play pointer-cursor " *ngIf="appt.apptStatus === 'Started'"
@@ -466,11 +475,12 @@
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailAppt()"></i>
-                          </a> 
-                          <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
-                          (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i>
-                        </a>
+                          </a>
+                          <a class="icon-action pointer-cursor icon-size3"
+                            *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 "
+                            (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
+                            <i class="fa fa-location-arrow"></i>
+                          </a>
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Print'">
                             <i class="fa fa-print" (click)="printAppt()"></i>
@@ -832,17 +842,23 @@
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
-                        <a class="statusText btn-play pointer-cursor" [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
+                        <a class="statusText btn-play pointer-cursor"
+                          [ngClass]="{'vid-ic-pd': (getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
                           *ngIf="time_type==1 && appt.virtualService && (appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(appt, 'Started')">
-                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}" *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
-                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"*ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
+                          <i class="fa meet-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="getVirtualMode(appt.virtualService) === 'GoogleMeet'"></i>
+                          <i class="fa zoom-icon" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                            *ngIf="getVirtualMode(appt.virtualService) === 'Zoom'"></i>
                           <i class="fa fa-phone" [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'Phone'"></i>
-                          <i class="fa fa-whatsapp whtsap-ic" [ngClass]="{'tool-pading': !small_device_display?true:false}"
+                          <i class="fa fa-whatsapp whtsap-ic"
+                            [ngClass]="{'tool-pading': !small_device_display?true:false}"
                             *ngIf="getVirtualMode(appt.virtualService) === 'WhatsApp'"></i>
-                          <span [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}" *ngIf="!small_device_display">Teleservice</span>
+                          <span
+                            [ngClass]="{'dash': (!small_device_display && getVirtualMode(appt.virtualService) === 'GoogleMeet' || getVirtualMode(appt.virtualService) === 'Zoom')?true:false}"
+                            *ngIf="!small_device_display">Teleservice</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">

@@ -176,14 +176,14 @@ export class ConsumerNotificationsComponent implements OnInit {
         this.cSettings['DONATIONSERVICE'] = true;
         this.donatAddNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'EARLY' && notificationObj['resourceType'] === 'DONATION') {
-        this.cSettings['EARLY_APPT'] = true;
+        this.cSettings['EARLY_DONAT'] = true;
         this.earlyDONATNotificatonSettings = notificationObj;
         this.donatPersonsahead = (notificationObj['personsAhead']) ? true : false;
       } else if (notificationObj['eventType'] === 'PREFINAL' && notificationObj['resourceType'] === 'DONATION') {
-        this.cSettings['PREFINAL_APPT'] = true;
+        this.cSettings['PREFINAL_DONAT'] = true;
         this.prefinalDONATNotificationSettings = notificationObj;
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'DONATION') {
-        this.cSettings['FINAL_APPT'] = true;
+        this.cSettings['FINAL_DONAT'] = true;
         this.finalDONATNotificationSettings = notificationObj;
       }
     });
@@ -216,8 +216,15 @@ export class ConsumerNotificationsComponent implements OnInit {
     } else if (type === 'FINAL_APPT') {
       activeInput = this.finalAPPTNotificationSettings;
     } else if (type === 'DONATIONSERVICE') {
+      activeInput = this.donatAddNotificationSettings;
+    } else if (type === 'EARLY_DONAT') {
+      activeInput = this.earlyDONATNotificatonSettings;
+    } else if (type === 'PREFINAL_DONAT') {
+      activeInput = this.prefinalDONATNotificationSettings;
+    } else if (type === 'FINAL_DONAT') {
       activeInput = this.finalDONATNotificationSettings;
     }
+
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(
         () => {

@@ -185,28 +185,28 @@ export class DisplayboardsComponent implements OnInit {
                 title: layout.displayName
             });
             this.breadcrumbs = breadcrumbs;
-
-            this.provider_services.getDisplayboardAppointment(layout.id).subscribe((data: any) => {
-                this.displayName = data.displayName;
-                this.serviceRoom = data.serviceRoom;
-                this.activeGroup = data;
-                this.qBoardsSelected = [];
-                this.qBoardsNotSelected = this.qBoardsActive.slice();
-                this.hideAddToGroup = false;
-                if (data.containerData.length === this.qBoardsActive.length) {
-                    this.hideAddToGroup = true;
-                }
-                data.containerData.forEach(sb => {
-                    const qBoard = {};
-                    qBoard['id'] = sb.sbId;
-                    const qboard = this.getQBoard(sb.sbId);
-                    qBoard['displayName'] = qboard.displayName;
-                    qBoard['refreshInterval'] = sb.sbInterval;
-                    this.qBoardsSelected.push(qBoard);
-                    this.qBoardsNotSelected = this.removeByAttr(this.qBoardsNotSelected, 'id', sb.sbId);
+            if (layout && layout.id) {
+                this.provider_services.getDisplayboardAppointment(layout.id).subscribe((data: any) => {
+                    this.displayName = data.displayName;
+                    this.serviceRoom = data.serviceRoom;
+                    this.activeGroup = data;
+                    this.qBoardsSelected = [];
+                    this.qBoardsNotSelected = this.qBoardsActive.slice();
+                    this.hideAddToGroup = false;
+                    if (data.containerData.length === this.qBoardsActive.length) {
+                        this.hideAddToGroup = true;
+                    }
+                    data.containerData.forEach(sb => {
+                        const qBoard = {};
+                        qBoard['id'] = sb.sbId;
+                        const qboard = this.getQBoard(sb.sbId);
+                        qBoard['displayName'] = qboard.displayName;
+                        qBoard['refreshInterval'] = sb.sbInterval;
+                        this.qBoardsSelected.push(qBoard);
+                        this.qBoardsNotSelected = this.removeByAttr(this.qBoardsNotSelected, 'id', sb.sbId);
+                    });
                 });
-            });
-
+            }
         } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { id: layout.id }

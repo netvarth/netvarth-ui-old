@@ -39,7 +39,7 @@
 
                             </div>
                             <aside class="filterSidebar" *ngIf="filter_sidebar">
-                                <section class="sidebar">
+                                <section class="sidebar" style="overflow:auto;height:568px">
                                     <div class="filterClosebtn">
                                         <i class="icon-filter-one-op ng-star-inserted closeFilter"
                                             (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
@@ -75,7 +75,7 @@
                                             </li>
 
                                         </div>
-                                        <div class="filterTextinput">
+                                        <div>
                                             <li class="filterli filterDatepicker">
                                                 <mat-form-field class="userfilter">
                                                     <mat-select id="userType"  #userType [(ngModel)]="filter.userType" placeholder="User type"
