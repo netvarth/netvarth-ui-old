@@ -711,8 +711,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getServiceCount() {
-    const filter = { 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
-    this.provider_services.getServiceCount(filter)
+   // const filter = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getServiceCount()
       .subscribe(
         data => {
           this.service_count = data;
