@@ -1494,5 +1494,6 @@ export const Messages = {
   'BTN_TEXT_COMPLETE_YOUR_PROFILE':'Complete Your Profile',
   'BTN_TEXT_STRENGTHEN_YOUR_PROFILE':'Strengthen Your Profile',
   'BTN_TEXT_MANAGE_YOUR_PROFILE':'Manage Your Profile',
+  'FIFTY_PERCENTANGE_COMPLETE_CAP':'More than Fifty Percentage Complete'
 
 };

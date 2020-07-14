@@ -162,6 +162,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   minimally_complete_cap = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
   fully_complete_cap = Messages.PROFILE_COMPLETE_CAP;
   three_quaters_complete_cap = Messages.THREE_QUATERES_COMPLETE_CAP;
+  fifty_percentage_complete_cap=Messages.FIFTY_PERCENTANGE_COMPLETE_CAP;
   //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
@@ -386,7 +387,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.getPublicSearch();
-    // this.getBusinessProfile();
     this.getJaldeeIntegrationSettings();
     this.getBusinessConfiguration();
     this.getProviderLocations();
@@ -510,7 +510,13 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.weightageClass='warning';
       return businessProfileWeightageText;
 
-    } else if (weightage > 50 && weightage < 100) {
+    } else if (weightage > 50 && weightage <75) {
+      businessProfileWeightageText = this.fifty_percentage_complete_cap;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      this.weightageClass='primary';
+      return businessProfileWeightageText;
+    }
+    else if (weightage > 50 && weightage <75) {
       businessProfileWeightageText = this.three_quaters_complete_cap;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass='primary';
@@ -559,7 +565,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
-          this.jaldee_online_status_str = (this.public_search === true) ? 'on' : 'off';
+          this.jaldee_online_status_str = (this.public_search === true) ? 'On' : 'Off';
           this.jaldee_online_status = this.public_search;
           // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
@@ -603,7 +609,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         //this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
         // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
-        this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        this.shared_functions.openSnackBar('Jaldee Online ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
 
@@ -658,7 +664,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Business profile ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('List my Profile on Jaldee.com  ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -707,25 +713,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
             });
           this.provider_datastorage.set('bProfile', this.bProfile);
-          this.normal_socialmedia_show = 2;
-          this.social_arr = [];
-          if (this.bProfile.socialMedia) {
-            if (this.bProfile.socialMedia.length > 0) {
-              this.normal_socialmedia_show = 3;
-              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
-                if (this.bProfile.socialMedia[i].resource !== '') {
-                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
-                }
-              }
-            }
-          }
-          if (this.social_arr.length < this.orgsocial_list.length) {
-            this.showaddsocialmedia = true;
-          }
-
-
-
-
 
           for (let i = 0; i < this.businessConfig.length; i++) {
             if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
@@ -812,6 +799,22 @@ export class BProfileComponent implements OnInit, OnDestroy {
           if (this.bProfile.customId) {
             this.normal_customid_show = 3;
           }
+          this.normal_socialmedia_show = 2;
+          this.social_arr = [];
+          if (this.bProfile.socialMedia) {
+            if (this.bProfile.socialMedia.length > 0) {
+              this.normal_socialmedia_show = 3;
+              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
+                if (this.bProfile.socialMedia[i].resource !== '') {
+                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                }
+              }
+            }
+          }
+          if (this.social_arr.length < this.orgsocial_list.length) {
+            this.showaddsocialmedia = true;
+          }
+
 
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
@@ -1495,8 +1498,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
+   if(domainFields.some(domain=>domain.mandatory===true)){
     return domainFields.some(domain => domain.name === fieldname);
-
+   }else{
+     return true
+   }
   }
   checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
     let fullyfilledStatus = true;

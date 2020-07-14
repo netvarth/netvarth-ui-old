@@ -99,7 +99,7 @@
                                                 aria-valuemax="100"></div>
                                         </div>
                                         <span class="btnWeightage">
-                                            <button (click)="scroll(basicInfoSection)" [className]="'btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                                            <button (click)="scroll(basicInfoSection)" [className]="'btn btn-' + weightageClass" style="font-weight:bold;">{{bprofile_btn_text}}</button>
                                         </span>
                                         <!-- <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar> -->
                                     </div>
@@ -112,7 +112,7 @@
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Online
+                                            <h2>Jaldee Online &nbsp;&nbsp;&nbsp;
                                                 <!--                                                
                                                     <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="handle_searchstatus($event)">
                                                     </mat-slide-toggle>
@@ -166,10 +166,13 @@
                                                         <span class="busns-id">
 
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:48px;" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
                                                             </span>
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                                <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                            </span>
+                                                            <span class="custid custId-icon">
+                                                                <i class="fa fa-share-alt custId-cursor" style="font-size:24px;" (click)="customizeId()" [matTooltip]="'Share Qr'"></i>
                                                             </span>
                                                             <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
                                                                 <button class="btn-primary-n" (click)="customizeId()">
@@ -196,7 +199,7 @@
 
                                                             <span class="custid" rel="noopener" target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                                <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                             </span>
                                                             <span class="custid custId-icon" *ngIf="!bProfile.customId">
                                                                 <button class="btn-default-n" (click)="customizeId()">
@@ -335,11 +338,11 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>List my profile on Jaldee.com
-                                                <span>
+                                            <h2>List my profile on Jaldee.com &nbsp;&nbsp;&nbsp;
+                                               
                                                     <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
                                                     </mat-slide-toggle>
-                                                    &nbsp;{{profile_status_str}} </span>
+                                                    &nbsp;{{profile_status_str}}
                                             </h2>
                                             <br>
                                             <span style="color:red;font-weight:bold" *ngIf="!profile_status">Your profile is not listed in jaldee.com</span>
@@ -817,7 +820,7 @@
 
                                                                 <ng-container *ngSwitchCase="'Gender'">
                                                                     <div class="cont-btn">
-                                                                        <p> {{fields.value | capitalizeFirst}}</p>
+                                                                        <p style="margin-left:20px;"> {{fields.value | capitalizeFirst}}</p>
                                                                         <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                     </div>
                                                                 </ng-container>
@@ -996,7 +999,7 @@
 
                                                                         <ng-container *ngSwitchCase="'Gender'">
                                                                             <div class="cont-btn">
-                                                                                <p> {{fields.value | capitalizeFirst}}</p>
+                                                                                <p style="margin-left:20px;"> {{fields.value | capitalizeFirst}}</p>
                                                                                 <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                                             </div>
                                                                         </ng-container>
