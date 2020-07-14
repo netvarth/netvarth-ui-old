@@ -289,10 +289,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.api_loading1 = false;
   }
   getProviderQueues() {
-    const filter = {
-      'scope-eq': 'account'
-    };
-    this.provider_services.getProviderQueues(filter).subscribe(data => {
+    // const filter = {
+    //   'scope-eq': 'account' 
+    // };
+    this.provider_services.getProviderQueues().subscribe(data => {
       this.queue_list = data;
     });
   }

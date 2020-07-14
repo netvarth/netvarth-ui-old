@@ -262,16 +262,16 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         }
         if (this.services_selected.length === this.services_list.length) {
             this.isAllServicesSelected = true;
-        }
+        } 
         this.loc_name = q.location.place;
         this.location = q.location;
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            const filter = {
-                'scope-eq': 'account'
-            };
-            this.provider_services.getProviderQueues(filter)
+            // const filter = {
+            //     'scope-eq': 'account'
+            // };
+            this.provider_services.getProviderQueues()
                 .subscribe(
                     (data) => {
                         let allQs: any = [];
