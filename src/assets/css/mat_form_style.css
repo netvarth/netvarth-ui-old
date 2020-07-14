@@ -631,3 +631,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
  .custom.mat-card{
    padding:2px !important
    } 
+   custom_business .mat-expansion-panel-header[aria-disabled='true'], .mat-expansion-panel-header-title {
+       color:black !important;
+
+   }

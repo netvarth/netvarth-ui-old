@@ -30,6 +30,8 @@ export class ProviderDataStorageService {
     return this.observable_weightageArray.asObservable();
   }
   setWeightageArray(ArrayObject) {
+    console.log('ArrayObject..'+ArrayObject);
+    
     this.observable_weightageArray.next(ArrayObject);
   }
   setWeightageObjectOfDomain(domainObject){
@@ -144,14 +146,9 @@ export class ProviderDataStorageService {
 
   //gallery
   updateGalleryWeightageToBusinessProfile(data){
-console.log(data);
-console.log(JSON.stringify(data));
-
     let galleryObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MEDIA_GALLERY;
    if(this.checkExistenceInWeightageArray(galleryObject)){
      if(data==null|| data==undefined||data.length===0){
-       console.log('inisdedefdekfmkfm');
-       
       this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MEDIA_GALLERY.Name);
       this.setWeightageArray(this.weightageArray);
      }
@@ -178,18 +175,18 @@ updateMandatoryAndAdditionalFieldWeightage(){
    let additionalObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
   
   if(!this.checkExistenceInWeightageArray(mandatoryObject)){
-    if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)&& (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
+    if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)|| (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
         this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
         this.setWeightageArray(this.weightageArray);
     }
    }
   else{
-    if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectSubDomain.mandatorySubDomain)){
-      if(this.weightageObjectDomain.mandatoryDomainFilledStatus===false|| this.weightageObjectSubDomain.mandatorySubDomainFilledStatus===false)
+     if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus===false)||(this.weightageObjectSubDomain.mandatorySubDomain &&this.weightageObjectSubDomain.mandatorySubDomainFilledStatus===false)){
       this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.Name);
       this.setWeightageArray(this.weightageArray);
-    }
+    
    }
+  }
 
   if(!this.checkExistenceInWeightageArray(additionalObject)){
     if(this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled){

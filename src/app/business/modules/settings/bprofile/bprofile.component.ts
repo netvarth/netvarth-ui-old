@@ -1467,7 +1467,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             checkArray.push(subdomain);
           });
           this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-          if (this.mandatoryfieldArray.length != 0) {
+          if (this.mandatoryfieldArray.length != 0 && this.domain_fields.some(domain=>domain.mandatory===true)) {
             mandatorydomain = true
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
@@ -1477,6 +1477,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
                 return;
               }
             });
+          
 
           } else {
             mandatorydomain = false;
@@ -1488,6 +1489,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
           weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
           weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
+          console.log(this.mandatoryfieldArray);
+          console.log(weightageObjectOfDomain);
+          
+          
           this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
 
 
@@ -1498,12 +1503,18 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
-   if(domainFields.some(domain=>domain.mandatory===true)){
-    return domainFields.some(domain => domain.name === fieldname);
-   }else{
-     return true
-   }
+    let fullyfilledStatus=true;
+    domainFields.forEach(function (dom) {
+      if(dom.name===fieldname){
+        if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
+          fullyfilledStatus = false;
+          return;
+        }
+      }
+    });
+   return fullyfilledStatus;
   }
+  
   checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
     let fullyfilledStatus = true;
     additionalInfoFields.forEach(function (field) {
@@ -1624,7 +1635,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             checkArray.push(subdomain);
           });
           this.subdomain_questions = data['questions'] || [];
-          if (this.mandatoryfieldArray.length != 0) {
+          if (this.mandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain=>subdomain.mandatory===true) ) {
             mandatorysubdomain = true;
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
@@ -1643,6 +1654,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
           weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
           weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
           weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
+          console.log(this.mandatoryfieldArray);
+          console.log(weightageObjectOfSubDomain);
           this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
           for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {

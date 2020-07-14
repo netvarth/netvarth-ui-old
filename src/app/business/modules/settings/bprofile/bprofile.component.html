@@ -617,7 +617,7 @@
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                                                 Specilization
-                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
                                                                     </i>
                                                                
                                                                 <!--bindings={}-->
@@ -667,7 +667,7 @@
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                                                 Languages Known
-                                                                    <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    <i *ngIf="normal_language_show==2 ||normal_language_show==1" class="req-flds-cap">*required fields missing
                                                                     </i>
                                                                 
                                                                 <!--bindings={}-->
@@ -713,21 +713,21 @@
                                         <!--mandatory fields -->
                                         <div class="cd-b ">
                                             <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
-                                            <div class="acc-cont" *ngFor="let fields of domain_fields">
+                                            <div  *ngFor="let fields of domain_fields">
                                                 <ng-container *ngIf="fields.mandatory">
                                                     <mat-card class="custom">
-                                                    <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
-                                                        <mat-expansion-panel [expanded]="fields['value']" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
-                                                            <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                                    <mat-accordion [class.acc-btn-data]="fields['value']">
+                                                        <mat-expansion-panel [expanded]="fields['value']"  [hideToggle]="!fields['value']">
+                                                            <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"  class="custom_business">
                                                                 <mat-panel-title>{{fields.displayName}}
                                                                     
                                                                     <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
                                                                 </mat-panel-title>
-                                                                <mat-panel-description class="acc-plus-btn">
+                                                                
                                                                     <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
                                                                         <mat-icon>{{add_circle_outline}}</mat-icon>
                                                                     </button>
-                                                                </mat-panel-description>
+                                                               
                                                             </mat-expansion-panel-header>
 
                                                             <ng-container [ngSwitch]="fields.dataType">
@@ -820,8 +820,9 @@
 
                                                                 <ng-container *ngSwitchCase="'Gender'">
                                                                     <div class="cont-btn">
-                                                                        <p style="margin-left:20px;"> {{fields.value | capitalizeFirst}}</p>
+                                                                        <p> {{fields.value | capitalizeFirst}} </p>
                                                                         <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                       
                                                                     </div>
                                                                 </ng-container>
 
@@ -889,9 +890,9 @@
                                                     <div class="acc-cont" *ngFor="let fields of subdomain_fields">
                                                         <ng-container *ngIf="fields.mandatory">
                                                             <mat-card class="custom">
-                                                            <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
+                                                            <mat-accordion  [class.acc-btn-data]="fields['value']">
                                                                 <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
-                                                                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                                                                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
                                                                         <mat-panel-title>
                                                                             {{fields.displayName}}
                                                                             <span *ngIf="fields.mandatory == true"
@@ -899,11 +900,11 @@
                                                                             <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
                                                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2 weeks </span>
                                                                         </mat-panel-title>
-                                                                        <mat-panel-description class="acc-plus-btn">
+                                                                       
                                                                             <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
                                                                                 <mat-icon>{{add_circle_outline}}</mat-icon>
                                                                             </button>
-                                                                        </mat-panel-description>
+                                                                   
                                                                     </mat-expansion-panel-header>
 
                                                                     <ng-container [ngSwitch]="fields.dataType">
@@ -999,8 +1000,9 @@
 
                                                                         <ng-container *ngSwitchCase="'Gender'">
                                                                             <div class="cont-btn">
-                                                                                <p style="margin-left:20px;"> {{fields.value | capitalizeFirst}}</p>
-                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                                <span style="margin-left:1%">{{fields.value | capitalizeFirst}} </span>
+                                                                                <span class="editbt" style="margin-left:5%" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                               
                                                                             </div>
                                                                         </ng-container>
 
