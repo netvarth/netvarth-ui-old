@@ -209,6 +209,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   subDomainList: any = [];
   businessid;
   departmentId;
+  deptUsers: any = [];
+  loading = false;
+  pSource;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -273,8 +276,20 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.pId) {
         this.businessid = qparams.pId;
       }
-      if (qparams.deptId) {
-        this.departmentId = qparams.deptId;
+      this.businessjson = [];
+      this.servicesjson = [];
+      this.apptServicesjson = [];
+      this.image_list_popup = [];
+      this.galleryjson = [];
+      if (qparams.psource) {
+        this.pSource = qparams.psource;
+        if (qparams.psource === 'business') {
+          this.loading = true;
+          this.showDepartments = false;
+          setTimeout(() => {
+            this.loading = false;
+          }, 2500);
+        }
       }
     });
     this.activaterouterobj.paramMap
@@ -338,6 +353,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
             this.getbusinessprofiledetails_json('donationServices', true);
+            this.getbusinessprofiledetails_json('departmentProviders', true);
           }
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -623,8 +639,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
-              appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-              wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
+              if (this.businessid && this.userId) {
+                appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
+              }
             }
             if (this.userId) {
               this.getUserWaitingTime(wait_locarr);
@@ -670,6 +688,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'donationServices': {
             this.donationServicesjson = res;
+            break;
+          }
+          case 'departmentProviders': {
+            this.deptUsers = res;
             break;
           }
           case 'jaldeediscount':
@@ -1119,6 +1141,13 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
 
   backtoDetails() {
     this.locationobj.back();
+    if (this.pSource === 'business') {
+      this.userId = null;
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2500);
+    }
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {
@@ -1406,6 +1435,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(locid, locname, curdate, origin?) {
+    console.log(this.servicesjson);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
@@ -1414,7 +1444,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.departmentId,
+        dept: this.servicesjson[0].department,
         user: this.userId
       }
     };
@@ -1428,7 +1458,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.departmentId,
+        dept: this.servicesjson[0].department,
         user: this.userId
       }
     };
@@ -1821,6 +1851,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             }
           }
         });
+    }
+  }
+  getServiceByDept(deptId) {
+    const service = this.servicesjson.filter(dpt => dpt.departmentId === deptId);
+    if (service[0] && service[0].services) {
+      return service[0].services;
     }
   }
 }

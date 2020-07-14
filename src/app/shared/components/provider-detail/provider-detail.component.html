@@ -22,12 +22,12 @@
 <app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
     [source]="source">
 </app-header>
-<section class="content pro_details">
+<section class="content">
     <div class="container">
         <div class="row">
             <div class="c-outer">
-                <div class="c-body prov-detail-outer">
-                    <div class="bk-ctrl" *ngIf="userId">
+                <div class="c-body prov-detail-outer" style="width: 100%;">
+                    <div class="bk-ctrl">
                         <span class="backtoresults" (click)="backtoDetails()"><span class="strong">Go back</span></span>
                     </div>
                     <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading">
@@ -141,7 +141,7 @@
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
-                                    <li *ngIf="!isInFav && !userId">
+                                    <li *ngIf="!isInFav">
                                         <a class='like-button' (click)="handle_Fav('add')">
                                             <span class='like-icon'>
                                                 <div class='heart-animation-1'></div>
@@ -150,7 +150,7 @@
                                             {{add_to_fav_cap}}
                                         </a>
                                     </li>
-                                    <li *ngIf="isInFav && !userId">
+                                    <li *ngIf="isInFav">
                                         <a class='' (click)="doRemoveFav()">
                                             <span class='like-icon'>
                                                 <div class='heart-animation-1'></div>
@@ -377,7 +377,7 @@
                                                                     </span></li>
                                                             </ul>
                                                         </div>
-                                                        <div class="donat-service"
+                                                        <!-- <div class="donat-service"
                                                             *ngIf="servicesjson.length > 0 && showDepartments">
                                                             <span
                                                                 class="sub-title-donate checkin-service-group">Departments</span>
@@ -386,7 +386,7 @@
                                                                     (click)="getServicesByDepartment(dept)">
                                                                     {{dept.departmentName}}</li>
                                                             </ul>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="wt-tme notallowed"
                                                         *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
@@ -483,7 +483,7 @@
                                                                 </span></li>
                                                         </ul>
                                                     </div>
-                                                    <div class="donat-service"
+                                                    <!-- <div class="donat-service"
                                                         *ngIf="apptServicesjson.length > 0 && showDepartments">
                                                         <span class="sub-title-donate">Departments</span>
                                                         <ul>
@@ -491,7 +491,7 @@
                                                                 (click)="getServicesByDepartment(dept)">
                                                                 {{dept.departmentName}}</li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div style="flex-grow:1"></div>
@@ -522,10 +522,36 @@
                                                     class="checkin-btn">Donate</span>
                                             </div>
                                         </div>
-
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
+                            <!-- Department wise doctors/service listing start -->
+                            <div class="location col-md-12 no-padding middle-sect" *ngIf="showDepartments">
+                                <mat-accordion *ngFor="let dept of deptUsers; let i = index">
+                                    <mat-expansion-panel [expanded]="false"
+                                        *ngIf="(dept.users && dept.users.length > 0) || (dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <span style="font-size: normal">{{dept.departmentName}}
+                                                    <span *ngIf="dept.users && dept.users.length==1">(1
+                                                        {{getTerminologyTerm("provider")}})</span>
+                                                    <span
+                                                        *ngIf="dept.users && dept.users.length>1">({{dept.users.length}}
+                                                        {{getTerminologyTerm("provider")}}s)</span>
+                                                </span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <app-search-provider [id]="provider_id" [deptId]="dept.departmentId"
+                                            [bprofile]="businessjson" [settings]="settingsjson"
+                                            [terminologies]="terminologiesjson" [coupon]="s3CouponList"
+                                            [serviceJson]="getServiceByDept(dept.departmentId)"
+                                            [jaldeediscount]="jaldeediscountJson" [location]="locationjson"
+                                            [selectedDept]="dept" [psource]="'details-page'">
+                                        </app-search-provider>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <!-- Department wise doctors/service listing ends-->
                         </div>
                     </ng-container>
                 </div>

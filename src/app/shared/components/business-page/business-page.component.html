@@ -1,13 +1,13 @@
-<!-- <app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet"
-    [source]="'business'">
-</app-header> -->
+<app-header *ngIf="pSource === 'details-page'" [headerTitle]="'Header'" (searchclick)="handlesearchClick()"
+    [passedDomain]="domain" [passedkwdet]="kwdet" [source]="source">
+</app-header>
 <!-- <div class="buy-theme" *ngIf="playstore"><a href="http://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
         target="_blank"><span>DOWNLOAD ON GOOLGE PLAY</span></a></div>
 <div class="quick-question" *ngIf="appstore"><a
         href="https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1" target="_blank"><span>DOWNLOAD ON APP
             STORE</span></a></div> -->
-<header>
-    <div class="container">
+<header *ngIf="pSource !== 'details-page'">
+    <div class="container no-padding-small">
         <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
             <div class="tp-r">
                 <div class="tc1">
@@ -27,15 +27,18 @@
         </div>
     </div>
 </header>
-<section class="content pro_details">
+<section class="content">
     <div class="container">
         <div class="row">
             <div class="c-outer">
+                <!-- <div style="align-items: center;" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div> -->
                 <div class="c-body prov-detail-outer">
                     <div class="bk-ctrl" *ngIf="userId">
                         <span class="backtoresults" (click)="backtoDetails()"><span class="strong">Go back</span></span>
                     </div>
-                    <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading">
+                    <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading && !loading">
                         <div class="top-sect">
                             <div class="new_style">
                                 <div class="tp-l">
@@ -148,20 +151,20 @@
                                     <li *ngIf="!isInFav && !userId">
                                         <a class='like-button' (click)="handle_Fav('add')">
                                             <span class='like-icon'>
-                                              <div class='heart-animation-1'></div>
-                                              <div class='heart-animation-2'></div>
+                                                <div class='heart-animation-1'></div>
+                                                <div class='heart-animation-2'></div>
                                             </span>
                                             {{add_to_fav_cap}}
-                                          </a>
+                                        </a>
                                     </li>
                                     <li *ngIf="isInFav && !userId">
                                         <a class='like-button' (click)="doRemoveFav()">
                                             <span class='like-icon'>
-                                              <div class='heart-animation-1'></div>
-                                              <div class='heart-animation-2'></div>
+                                                <div class='heart-animation-1'></div>
+                                                <div class='heart-animation-2'></div>
                                             </span>
                                             {{rem_from_fav_cap}}
-                                          </a>
+                                        </a>
                                     </li>
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
@@ -173,8 +176,8 @@
                                     <!-- <li *ngIf="userType !== 'provider'"><span class="icon-history"
                                             (click)="redirectToHistory()">{{history_cap}}</span>
                                     </li> -->
-                                   
-                                    
+
+
                                     <!-- <li *ngIf="!isInFav && !userId"><span class="fav icon-favourite"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav && !userId"><span class="icon-favourite-filled"
@@ -236,8 +239,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-                    <ng-container *ngIf="locationjson.length > 0 && !api_loading">
+                    <app-common-innerloading-spinner *ngIf="api_loading || loading"></app-common-innerloading-spinner>
+                    <ng-container *ngIf="locationjson.length > 0 && !api_loading && !loading">
                         <div class="loc-accor">
                             <mat-accordion *ngFor="let loc of locationjson; let i = index">
                                 <mat-expansion-panel style="margin-top: 10px !important;
@@ -391,7 +394,7 @@
                                                                     </span></li>
                                                             </ul>
                                                         </div>
-                                                        <div class="donat-service"
+                                                        <!-- <div class="donat-service"
                                                             *ngIf="servicesjson.length > 0 && showDepartments">
                                                             <span
                                                                 class="sub-title-donate checkin-service-group">Departments</span>
@@ -400,7 +403,7 @@
                                                                     (click)="getServicesByDepartment(dept)">
                                                                     {{dept.departmentName}}</li>
                                                             </ul>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="wt-tme notallowed"
                                                         *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
@@ -497,7 +500,7 @@
                                                                 </span></li>
                                                         </ul>
                                                     </div>
-                                                    <div class="donat-service"
+                                                    <!-- <div class="donat-service"
                                                         *ngIf="apptServicesjson.length > 0 && showDepartments">
                                                         <span class="sub-title-donate">Departments</span>
                                                         <ul>
@@ -505,7 +508,7 @@
                                                                 (click)="getServicesByDepartment(dept)">
                                                                 {{dept.departmentName}}</li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div style="flex-grow:1"></div>
@@ -540,6 +543,34 @@
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
+
+                            <!-- Department wise doctors/service listing start -->
+                            <div class="location col-md-12 no-padding middle-sect" *ngIf="showDepartments">
+                                <mat-accordion *ngFor="let dept of deptUsers; let i = index">
+                                    <mat-expansion-panel [expanded]="false"
+                                        *ngIf="(dept.users && dept.users.length > 0) || (dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <span style="font-size: normal">{{dept.departmentName}}
+                                                    <span *ngIf="dept.users && dept.users.length==1">(1
+                                                        {{getTerminologyTerm("provider")}})</span>
+                                                    <span
+                                                        *ngIf="dept.users && dept.users.length>1">({{dept.users.length}}
+                                                        {{getTerminologyTerm("provider")}}s)</span>
+                                                </span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <app-search-provider [id]="provider_id" [deptId]="dept.departmentId"
+                                            [bprofile]="businessjson" [settings]="settingsjson"
+                                            [terminologies]="terminologiesjson" [coupon]="s3CouponList"
+                                            [serviceJson]="getServiceByDept(dept.departmentId)"
+                                            [jaldeediscount]="jaldeediscountJson" [location]="locationjson"
+                                            [selectedDept]="dept" [psource]="'business'">
+                                        </app-search-provider>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <!-- Department wise doctors/service listing ends-->
                         </div>
                     </ng-container>
                 </div>
@@ -547,6 +578,7 @@
         </div>
     </div>
 </section>
+<div class="clear-fix"></div>
 <!-- <app-footer></app-footer> -->
 <footer class="main-footer" style="margin-left: 0px">
     <div class="pull-right hidden-xs footer_info">

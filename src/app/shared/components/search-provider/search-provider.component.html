@@ -1,251 +1,238 @@
 <app-header *ngIf="page_source === 'pro-details'" [headerTitle]="'Header'" (searchclick)="handlesearchClick()"
   [passedDomain]="domain" [passedkwdet]="kwdet" [source]="source">
 </app-header>
-<section class="content">
+<!-- <section class="content">
   <div class="container">
     <div class="row">
       <div class="c-outer">
-        <div class="c-body prov-detail-outer">
-          <div class="bk-ctrl">
-            <span class="backtoresults" (click)="backtoDetails()"><span class="strong">{{go_back_cap}}</span></span>
-          </div>
-          <div class="card">
-            <div class="c-ot" style="margin-bottom: 50px;
+        <div class="c-body prov-detail-outer"> -->
+<div class="card">
+  <div class="c-ot" style="margin-bottom: 50px;
         margin-top: 10px" *ngIf="selectedDepartment">
-              <div class="item col-md-4 col-xs-12 mgn-bt-10" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;">
-                <span class="ttle" style="color: #999999;
+    <div class="item col-md-4 col-xs-12 mgn-bt-10" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;">
+      <span class="ttle" style="color: #999999;
                 display: block;
                 font-weight: 500;">Department Name</span>
-                <span>{{selectedDepartment.departmentName}}</span>
-              </div>
-              <div class="item col-md-8 col-xs-12" *ngIf="selectedDepartment.departmentDescription"
-                style="font-weight: 600;">
-                <span class="ttle" style="color: #999999;
+      <span>{{selectedDepartment.departmentName}}</span>
+    </div>
+    <div class="item col-md-8 col-xs-12" *ngIf="selectedDepartment.departmentDescription" style="font-weight: 600;">
+      <span class="ttle" style="color: #999999;
                 display: block;
                 font-weight: 500;">Description</span>
-                <span> {{selectedDepartment.departmentDescription}}</span>
+      <span> {{selectedDepartment.departmentDescription}}</span>
+    </div>
+  </div>
+  <div class="dept-services" *ngIf="!api_loading && showService && serviceJson && serviceJson.length > 0">
+    <h6 class="mgn-bt-10">{{services_offered}}</h6>
+    <ul>
+      <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">{{service.name
+                                        | capitalizeFirst}}</li>
+    </ul>
+  </div>
+  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+  <ng-container *ngIf="!api_loading && !showService">
+    <div class="col-md-12" *ngIf="businessjson.accountType === 'BRANCH' && usersList && usersList.length > 0"
+      style="padding: 0px">
+      <div class="srlst provider-det" *ngFor="let search_result of usersList">
+        <div class="top-sect">
+          <div class="tp-l">
+            <div class="tp1">
+              <div class="pro-img" (click)="providerDetClicked(search_result)">
+                <img *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
+                  [src]="search_result.bProfile.logo.url" alt="">
+              </div>
+              <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
+                <li>
+                  <div class="galbx">
+                    <div class="overlay" (click)="providerDetClicked(search_result)">
+                      +{{(search_result.gallery_thumb_nails.length)}}</div>
+                    <img [src]="search_result.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
+                  </div>
+                </li>
+              </ul>
+              <div class="rating-stars">
+                <img class="ratingstar" *ngFor="let enable of search_result.ratingenabledArr"
+                  src="./assets/images/star.svg" alt="" />
+                <img class="ratingstar" *ngIf="search_result.ratingenabledHalf" src="./assets/images/star-half.svg"
+                  alt="" />
+                <img class="ratingstar" *ngFor="let enable of search_result.ratingdisabledArr"
+                  src="./assets/images/star-disabled.svg" alt="" />
               </div>
             </div>
-            <div class="dept-services" *ngIf="!api_loading && showService && services && services.length > 0">
-              <h6 class="mgn-bt-10">{{services_offered}}</h6>
-              <ul>
-                <li *ngFor="let service of services" (click)="showServiceDetail(service, businessjson.businessName)">{{service.name
-                                        | capitalizeFirst}}</li>
-              </ul>
+            <div class="tp2">
+              <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
+                <span (click)="providerDetClicked(search_result)">
+                  {{search_result.bProfile?.businessName | capitalizeFirst}}<sup class="font-open-now"
+                    *ngIf="search_result['opennow'] || search_result['apptopennow']">&nbsp;{{open_now_cap}}
+                  </sup></span> <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0" (click)="openJdn()"
+                  [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
+              </h3>
+              <span *ngIf="locationjson[0].place">{{locationjson[0].place | capitalizeFirst }}
+                <span class="consumr-loc-icon"> <a rel="noopener" class="directions mgn-lt-20"
+                    [href]="locationjson[0].googleMapUrl" target="_blank"
+                    *ngIf="locationjson[0].googleMapUrl!=''">{{get_directions_cap}}</a></span>
+              </span>
+              <div class="clr">
+                <div class="otr-elements">
+                  <span class="category">{{search_result.bProfile?.userSubSector?.displayName}}</span>
+                  <span *ngIf="search_result.bProfile?.specialization"><span class="categoryspec"
+                      *ngFor="let spec of search_result.bProfile?.specialization; let i = index"><span *ngIf="i>0"
+                        class="spacer"></span>{{spec}}</span></span>
+                </div>
+                <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
+                  <ul>
+                    <li *ngFor="let schedule of locationjson[0]?.display_schedule">
+                      <div class="day">{{schedule.dstr}}&nbsp;:</div>
+                      <div class="time">{{schedule.time}}
+                        <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for
+                          today)</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-            <ng-container *ngIf="!api_loading && !showService">
-              <h6 class="mgn-bt-10" *ngIf="usersList && usersList.length==1">
-                {{getTerminologyTerm('provider')}}
-                (1)</h6>
-              <h6 class="mgn-bt-10" *ngIf="usersList && usersList.length!=1">
-                {{getTerminologyTerm('provider')}}s
-                ({{usersList.length}})</h6>
-              <div class="col-md-12" *ngIf="businessjson.accountType === 'BRANCH' && usersList && usersList.length > 0"
-                style="padding: 0px">
-                <div class="srlst provider-det" *ngFor="let search_result of usersList">
-                  <div class="top-sect">
-                    <div class="tp-l">
-                      <div class="tp1">
-                        <div class="pro-img" (click)="providerDetClicked(search_result)">
-                          <img *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
-                            [src]="search_result.bProfile.logo.url" alt="">
-                        </div>
-                        <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
-                          <li>
-                            <div class="galbx">
-                              <div class="overlay" (click)="providerDetClicked(search_result)">
-                                +{{(search_result.gallery_thumb_nails.length)}}</div>
-                              <img [src]="search_result.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="rating-stars">
-                          <img class="ratingstar" *ngFor="let enable of search_result.ratingenabledArr"
-                            src="./assets/images/star.svg" alt="" />
-                          <img class="ratingstar" *ngIf="search_result.ratingenabledHalf"
-                            src="./assets/images/star-half.svg" alt="" />
-                          <img class="ratingstar" *ngFor="let enable of search_result.ratingdisabledArr"
-                            src="./assets/images/star-disabled.svg" alt="" />
-                        </div>
-                      </div>
-                      <div class="tp2">
-                        <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
-                          <span (click)="providerDetClicked(search_result)">
-                            {{search_result.bProfile?.businessName | capitalizeFirst}}<sup class="font-open-now"
-                              *ngIf="search_result['opennow'] || search_result['apptopennow']">&nbsp;{{open_now_cap}}
-                            </sup></span> <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0"
-                            (click)="openJdn()" [matTooltip]="jdnTooltip"><img height="35" width="35"
-                              src="./assets/images/JDN.png"></span>
-                        </h3>
-                        <span *ngIf="locationjson[0].place">{{locationjson[0].place | capitalizeFirst }}
-                          <span class="consumr-loc-icon"> <a rel="noopener" class="directions mgn-lt-20"
-                              [href]="locationjson[0].googleMapUrl" target="_blank"
-                              *ngIf="locationjson[0].googleMapUrl!=''">{{get_directions_cap}}</a></span>
-                        </span>
-                        <div class="clr">
-                          <div class="otr-elements">
-                            <span class="category">{{search_result.bProfile?.userSubSector?.displayName}}</span>
-                            <span *ngIf="search_result.bProfile?.specialization"><span class="categoryspec"
-                                *ngFor="let spec of search_result.bProfile?.specialization; let i = index"><span
-                                  *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
-                          </div>
-                          <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
-                            <ul>
-                              <li *ngFor="let schedule of locationjson[0]?.display_schedule">
-                                <div class="day">{{schedule.dstr}}&nbsp;:</div>
-                                <div class="time">{{schedule.time}}
-                                  <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for
-                                    today)</span>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tp-r">
-                      <ul class="badges">
-                        <li
-                          *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
-                          [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
-                          <span class="icon-parking"></span></li>
-                        <li *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">
-                          <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
-                        <li *ngIf="locationjson[0]?.locationVirtualFields?.traumacentre=='true'"
-                          [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
-                        </li>
-                        <li *ngIf="locationjson[0]?.locationVirtualFields?.docambulance=='true'"
-                          [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span>
-                        </li>
-                        <li [matTooltip]="'Emergency Services'"
-                          *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
+          </div>
+          <div class="tp-r" style="width: auto;">
+            <ul class="badges">
+              <li
+                *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
+                [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
+                <span class="icon-parking"></span></li>
+              <li *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">
+                <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span></li>
+              <li *ngIf="locationjson[0]?.locationVirtualFields?.traumacentre=='true'" [matTooltip]="'Trauma Centre'">
+                <span class="icon-trauma"></span>
+              </li>
+              <li *ngIf="locationjson[0]?.locationVirtualFields?.docambulance=='true'"
+                [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span>
+              </li>
+              <li [matTooltip]="'Emergency Services'"
+                *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
                                                             locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
                                                             locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
                                                             locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
                                                             locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
-                          <span class="icon-emergency"></span></li>
-                        <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'" [matTooltip]="'First Aid'">
-                          <span class="icon-first-aid"></span>
-                        </li>
-                      </ul>
-                      <span class="first-time-jc"
-                        *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"
-                        (click)="openCoupons('first')"><i class="fa fa-tag red"></i>
-                        {{first_time_coupon}}</span>
-                      <span class="other-jcs" *ngIf="s3CouponList.length>0" (click)="openCoupons()"><i
-                          class="fa fa-tag blue"></i>
-                        {{jaldee_coupon}}</span>
-                      <span class="communicate" (click)="communicateHandler(search_result)"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_messages}}</span>
-                    </div>
-                  </div>
-                  <div class="bottom-sect"
-                    *ngIf="search_result['estimatedtime_det'] && search_result['estimatedtime_det']['waitlist'] && businessjson.onlinePresence">
-                    <div class="bt-l">
-                      <div class="wt-tme"
-                        *ngIf="search_result['estimatedtime_det'] && search_result['estimatedtime_det']['message']!='No active services'">
-                        <div class="wt-tme notallowed">
-                          <ng-container *ngIf="search_result['estimatedtime_det']['message']">
-                            {{search_result['estimatedtime_det']['message']}}</ng-container>
-                        </div>
-                        <div
-                          *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['showToken'])">
-                          <div *ngIf="search_result['estimatedtime_det']['personAhead']">
-                            <b>{{search_result['estimatedtime_det']['personAhead']}} </b><span class="people-ahead"
-                              *ngIf="search_result['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
-                            <span class="people-ahead"
-                              *ngIf="search_result['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
-                          </div>
-                          <div *ngIf="search_result['estimatedtime_det']['personAhead'] === 0">
-                            <div class="time-data">
-                              {{search_result['estimatedtime_det']['personAhead']}}
-                              {{people_ahead}} </div>Be the first in line
-                          </div>
-                          <div class="donat-service"
-                            *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
-                            <span class="sub-title-donate checkin-service-group">Check-in
-                              Service(s)</span>
-                            <ul>
-                              <li *ngFor="let serv of search_result.wtlstservices"
-                                (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name
+                <span class="icon-emergency"></span></li>
+              <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'" [matTooltip]="'First Aid'">
+                <span class="icon-first-aid"></span>
+              </li>
+            </ul>
+            <span class="first-time-jc" *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"
+              (click)="openCoupons('first')"><i class="fa fa-tag red"></i>
+              {{first_time_coupon}}</span>
+            <span class="other-jcs" *ngIf="s3CouponList.length>0" (click)="openCoupons()"><i class="fa fa-tag blue"></i>
+              {{jaldee_coupon}}</span>
+            <span class="communicate" (click)="communicateHandler(search_result)" [matTooltipClass]="tooltipcls"
+              [matTooltip]="commTooltip">{{send_messages}}</span>
+          </div>
+        </div>
+        <div class="bottom-sect"
+          *ngIf="search_result['estimatedtime_det'] && search_result['estimatedtime_det']['waitlist'] && businessjson.onlinePresence">
+          <div class="bt-l">
+            <div class="wt-tme"
+              *ngIf="search_result['estimatedtime_det'] && search_result['estimatedtime_det']['message']!='No active services'">
+              <div class="wt-tme notallowed">
+                <ng-container *ngIf="search_result['estimatedtime_det']['message']">
+                  {{search_result['estimatedtime_det']['message']}}</ng-container>
+              </div>
+              <div
+                *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['showToken'])">
+                <div *ngIf="search_result['estimatedtime_det']['personAhead']">
+                  <b>{{search_result['estimatedtime_det']['personAhead']}} </b><span class="people-ahead"
+                    *ngIf="search_result['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
+                  <span class="people-ahead"
+                    *ngIf="search_result['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
+                </div>
+                <div *ngIf="search_result['estimatedtime_det']['personAhead'] === 0">
+                  <div class="time-data">
+                    {{search_result['estimatedtime_det']['personAhead']}}
+                    {{people_ahead}} </div>Be the first in line
+                </div>
+                <div class="donat-service"
+                  *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
+                  <span class="sub-title-donate checkin-service-group">Check-in
+                    Service(s)</span>
+                  <ul>
+                    <li *ngFor="let serv of search_result.wtlstservices"
+                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name
                                             | capitalizeFirst}}
-                                <span *ngIf="serv.serviceType == 'virtualService'">
-                                  (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                </span></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div style="flex-grow:1"></div>
-                    <div class="bottom-actions-root"
-                      *ngIf="search_result['estimatedtime_det'] && (search_result['estimatedtime_det']['onlineCheckIn'] || search_result.future_checkins==1)">
-                      <div class="checkin-est nrm"
-                        *ngIf="!search_result['estimatedtime_det']['message'] && search_result['estimatedtime_det']['calculationMode']!='NoCalc'">
-                        <span class="est-time"
-                          *ngIf="search_result['estimatedtime_det']['caption']">{{search_result['estimatedtime_det']['caption']}}</span>
-                        <span class="time-data"
-                          *ngIf="search_result['estimatedtime_det']['time']">{{search_result['estimatedtime_det']['time']}}
-                        </span>
-                      </div>
-                      <ng-container
-                        *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['showToken']">
-                        <ng-container
-                          *ngIf="search_result['estimatedtime_det']['personAhead'] || search_result['estimatedtime_det']['personAhead'] === 0">
-                          <div class="checkin-est" style="margin-bottom: 5px" *ngIf="!search_result['opennow']">
-                            <span class="est-time">Next Available Time</span>
-                            <span class="time-data">{{search_result['estimatedtime_det']['nextAvailDate']}}</span>
-                          </div>
-                        </ng-container>
-                      </ng-container>
-                      <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-                        *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
-                            search_result)}}</span>
-                      <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-                        *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                      <span class="checkin-btn disabled"
-                        *ngIf="!search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
-                            search_result)}}</span>
-                      <span class="checkin-btn disabled"
-                        *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
-                      <div class="future-date-link checkin-future">
-                        <span class="bt10" (click)="checkinClicked(search_result, true)"
-                          *ngIf="search_result['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']">{{do_you_want_to_cap}}
-                          <span *ngIf="search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                          <span
-                            *ngIf="!search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist', search_result)}}</span>
-                          {{for_cap}} <span>{{different_date}}</span></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bottom-sect pdetail" *ngIf="search_result.apptAllowed && businessjson.onlinePresence">
-                    <div class="bt-l" *ngIf="search_result.apptServices && search_result.apptServices.length > 0">
-                      <div class="wt-tme">
-                        <div class="donat-service">
-                          <span class="sub-title-donate">Appointment Service(s)</span>
-                          <ul>
-                            <li *ngFor="let appointmentService of search_result.apptServices"
-                              (click)="checkserviceClicked(appointmentService,search_result)">
-                              {{appointmentService.name}}
-                              <span *ngIf="appointmentService.serviceType == 'virtualService'">
-                                (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                              </span></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div style="flex-grow:1"></div>
-                    <div class="bottom-actions-root">
-                      <span (click)="appointmentClicked(search_result, false)" class="checkin-btn">Appointment</span>
-                    </div>
-                  </div>
+                      <span *ngIf="serv.serviceType == 'virtualService'">
+                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                      </span></li>
+                  </ul>
                 </div>
               </div>
+            </div>
+          </div>
+          <div style="flex-grow:1"></div>
+          <div class="bottom-actions-root"
+            *ngIf="search_result['estimatedtime_det'] && (search_result['estimatedtime_det']['onlineCheckIn'] || search_result.future_checkins==1)">
+            <div class="checkin-est nrm"
+              *ngIf="!search_result['estimatedtime_det']['message'] && search_result['estimatedtime_det']['calculationMode']!='NoCalc'">
+              <span class="est-time"
+                *ngIf="search_result['estimatedtime_det']['caption']">{{search_result['estimatedtime_det']['caption']}}</span>
+              <span class="time-data"
+                *ngIf="search_result['estimatedtime_det']['time']">{{search_result['estimatedtime_det']['time']}}
+              </span>
+            </div>
+            <ng-container
+              *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['showToken']">
+              <ng-container
+                *ngIf="search_result['estimatedtime_det']['personAhead'] || search_result['estimatedtime_det']['personAhead'] === 0">
+                <div class="checkin-est" style="margin-bottom: 5px" *ngIf="!search_result['opennow']">
+                  <span class="est-time">Next Available Time</span>
+                  <span class="time-data">{{search_result['estimatedtime_det']['nextAvailDate']}}</span>
+                </div>
+              </ng-container>
             </ng-container>
+            <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+              *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
+                            search_result)}}</span>
+            <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
+              *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+            <span class="checkin-btn disabled"
+              *ngIf="!search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
+                            search_result)}}</span>
+            <span class="checkin-btn disabled"
+              *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
+            <div class="future-date-link checkin-future">
+              <span class="bt10" (click)="checkinClicked(search_result, true)"
+                *ngIf="search_result['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']">{{do_you_want_to_cap}}
+                <span *ngIf="search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                <span
+                  *ngIf="!search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist', search_result)}}</span>
+                {{for_cap}} <span>{{different_date}}</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-sect pdetail" *ngIf="search_result.apptAllowed && businessjson.onlinePresence">
+          <div class="bt-l" *ngIf="search_result.apptServices && search_result.apptServices.length > 0">
+            <div class="wt-tme">
+              <div class="donat-service">
+                <span class="sub-title-donate">Appointment Service(s)</span>
+                <ul>
+                  <li *ngFor="let appointmentService of search_result.apptServices"
+                    (click)="checkserviceClicked(appointmentService,search_result)">
+                    {{appointmentService.name}}
+                    <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                      (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                    </span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="flex-grow:1"></div>
+          <div class="bottom-actions-root">
+            <span (click)="appointmentClicked(search_result, false)" class="checkin-btn">Appointment</span>
           </div>
         </div>
       </div>
     </div>
+  </ng-container>
+</div>
+<!-- </div>
+      </div>
+    </div>
   </div>
-</section>
+</section> -->
