@@ -474,20 +474,20 @@
                               <ul class="sidebar-menu">
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput">
                                   <li class="filterli">
-                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
                                   </li>
                                 </div>
                                 <div class="filterTextinput" *ngIf="time_type == 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
-                                      (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)"
                                       (keypress)="isNumeric($event)" maxlength="10" class="filterTextbox"
                                       placeholder="Phone Number">
                                   </li>
