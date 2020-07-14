@@ -77,7 +77,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
     getServices() {
         this.api_loading = true;
-        const filter = { 'scope-eq': 'account' };
+      //  const filter = { 'scope-eq': 'account' };
         this.provider_services.getProviderServices()
             .subscribe(
                 data => {

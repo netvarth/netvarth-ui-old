@@ -949,8 +949,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       );
   }
   getSchedulesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getSchedulesCount(filter)
+  //  const filter = { 'scope-eq': 'account' };
+    this.provider_services.getSchedulesCount()
       .subscribe(
         data => {
           this.schedules_count = data;
