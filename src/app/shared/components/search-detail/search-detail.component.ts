@@ -888,6 +888,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
                     this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
+                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
@@ -895,6 +896,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   if (this.search_data.hits.hit[i].fields.donation_services) {
                     this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
                     this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
+                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.donationServices);
                   }
                 } catch (e) {
                 }
