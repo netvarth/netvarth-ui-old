@@ -719,8 +719,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getQueuesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getQueuesCount(filter)
+    // const filter = { 'scope-eq': 'account' };
+    this.provider_services.getQueuesCount()
       .subscribe(
         data => {
           this.queues_count = data;
