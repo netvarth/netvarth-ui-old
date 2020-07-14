@@ -141,12 +141,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   schedules_count: any = 0;
   waitlistStatus;
   waitlistStatusStr;
-  profile_strength_cap = Messages.PROFILE_STRENGTH_CAP;
-  profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
-  minimally_complete_cap = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
-  fully_complete_cap = Messages.PROFILE_COMPLETE_CAP;
-  three_quaters_complete_cap = Messages.THREE_QUATERES_COMPLETE_CAP;
-  fifty_percentage_complete_cap = Messages.FIFTY_PERCENTANGE_COMPLETE_CAP;
+
   businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
@@ -289,29 +284,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     let weightage = this.weightageValue;
-    if (weightage < 10) {
-      businessProfileWeightageText = this.profile_incomplete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+    if (weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       return businessProfileWeightageText;
     } else if
-    (weightage > 10 && weightage <= 50) {
-      businessProfileWeightageText = this.minimally_complete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+    (weightage >= 50 && weightage < 75) {
+      businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       return businessProfileWeightageText;
 
-    } else if (weightage > 50 && weightage < 75) {
-      businessProfileWeightageText = this.fifty_percentage_complete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
-      return businessProfileWeightageText;
-    }
-    else if (weightage >= 75 && weightage <100) {
-      businessProfileWeightageText = this.three_quaters_complete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+    } else if (weightage >=75 && weightage <100) {
+      businessProfileWeightageText = Messages.GOOD_CAP;
       return businessProfileWeightageText;
     }
     else if (weightage == 100) {
-      businessProfileWeightageText = this.fully_complete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       return businessProfileWeightageText;
 
     }

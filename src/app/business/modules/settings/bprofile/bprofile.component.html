@@ -86,8 +86,8 @@
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a> </p> -->
 
-                                    <div class="col-md-10 ct-l">
-                                        <span style="font-size:12px;">{{profile_strength_cap}} - {{getBusinessProfileWeightageText()}}
+                                    <div class="col-md-10 ct-l col-xs-12">
+                                        <span style="font-size:12px;">Profile Strength- {{getBusinessProfileWeightageText()}}
 
                                         </span>
                                         <br>
@@ -98,9 +98,9 @@
                                             <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div>
-                                        <span class="btnWeightage">
+                                        <div class="btnWeightage">
                                             <button (click)="scroll(basicInfoSection)" [className]="'btn btn-' + weightageClass" style="font-weight:bold;">{{bprofile_btn_text}}</button>
-                                        </span>
+                                        </div>
                                         <!-- <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar> -->
                                     </div>
 
@@ -110,27 +110,18 @@
 
 
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
-                                    <div class="ctrl">
-                                        <div class="ct-l">
-                                            <h2>Jaldee Online &nbsp;&nbsp;&nbsp;
-                                                <!--                                                
-                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="handle_searchstatus($event)">
-                                                    </mat-slide-toggle>
-                                                    &nbsp;{{jaldee_online_status_str}} -->
-
-                                                <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-                                                </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
-                                            <!-- <span class="status">{{current_status_cap}} -
-                                                        <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
-                                                        <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
-                                              
+                                 
+                                            <div class="ctrl">
+                                                <div class="ct-l">
+                                                    <h2>Jaldee Link &nbsp;&nbsp; <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                        </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
+                                                    
+                                               
+                                                </div>
+                                            </div>
+                                      
                                              
-                                                <!-- <div class="ct-r ml-auto">
-                                                    <button class="cs-btn bt3 off" *ngIf="normal_search_active"
-                                                        (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
-                                                    <button class="cs-btn bt3 on" *ngIf="!normal_search_active"
-                                                        (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
-                                                </div> -->
+                                             
 
                                             <p class="form-level-settings" *ngIf="!normal_search_active">
                                                 {{frm_public_search_cap}}
@@ -144,11 +135,13 @@
                                             </p>
 
                                             <br>
-                                            <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status">Your Patients cannot able to see u online,please enable jaldee </span>
-                                            <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status">Your Patients can see u online by clicking jaldee link or scanning QR code</span>
-
-                                        </div>
-                                    </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                            <span class="inactive" *ngIf="!jaldee_online_status">Your Patients cannot able to see u online,please enable jaldee </span>
+                                            <span class="active" *ngIf="jaldee_online_status">Your Patients can see u online by clicking jaldee link or scanning QR code</span>
+                                            </div>
+                                      
+                                    
+                                   
                                     <!-- <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"{{jaldee_turn_on_or_off_cap}}
                                             id="customer-help"
                                             (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
@@ -338,42 +331,33 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>List my profile on Jaldee.com &nbsp;&nbsp;&nbsp;
+                                            <h2>List my profile on Jaldee.com &nbsp;&nbsp;
                                                
                                                     <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
                                                     </mat-slide-toggle>
                                                     &nbsp;{{profile_status_str}}
                                             </h2>
-                                            <br>
-                                            <span style="color:red;font-weight:bold" *ngIf="!profile_status">Your profile is not listed in jaldee.com</span>
-                                            <span style="color:green;font-weight:bold" *ngIf="profile_status">Your profile is listed in jaldee.com</span>
+                                           
 
                                         </div>
 
-                                        <!-- <div class="ct-r ml-auto">
-                                            <button class="cs-btn bt3 off" *ngIf="onlinepresence_status"
-                                                (click)="confirm_opsearchStatus()">{{turn_off_cap}}</button>
-                                            <button class="cs-btn bt3 on" *ngIf="!onlinepresence_status"
-                                                (click)="confirm_opsearchStatus()">{{turn_on_cap}}</button>
-                                        </div> -->
+                                
                                     </div>
-                                    <!-- <p class="form-level-settings" *ngIf="!onlinepresence_status">
+                                    <p class="form-level-settings" *ngIf="!profile_status">
                                         {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a></p>
-                                    <p class="form-level-settings" *ngIf="onlinepresence_status">
+                                    <p class="form-level-settings" *ngIf="profile_status">
                                         {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
-                                            More</a> </p> -->
+                                            More</a> </p> 
 
-                                    <!-- <div class="col-md-10 ct-l">
-                                                <span style="font-size:12px;">{{profile_strength_cap}} - {{getBusinessProfileWeightageText()}}
-                                                       
-                                                </span><br>
-                                                <span style="font-weight:bold;">{{weightageValue}} %  <button class="btn btn-primary" style="float:right">{{bprofile_btn_text}}</button></span>
-            
-                                                    <mat-progress-bar class="properties" mode="determinate" [value]= "weightageValue"></mat-progress-bar>
-                                                    </div> -->
+                                            <br>
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <span class="inactive" *ngIf="!profile_status">Your profile is not listed in jaldee.com</span>
+                                            <span class="active" *ngIf="profile_status">Your profile is listed in jaldee.com</span>
+                                        </div>
+                                   
 
                                 </div>
 

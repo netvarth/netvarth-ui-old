@@ -157,12 +157,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
-  profile_strength_cap = Messages.PROFILE_STRENGTH_CAP;
-  profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
-  minimally_complete_cap = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
-  fully_complete_cap = Messages.PROFILE_COMPLETE_CAP;
-  three_quaters_complete_cap = Messages.THREE_QUATERES_COMPLETE_CAP;
-  fifty_percentage_complete_cap=Messages.FIFTY_PERCENTANGE_COMPLETE_CAP;
+ 
   //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
@@ -498,32 +493,27 @@ export class BProfileComponent implements OnInit, OnDestroy {
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     let weightage = this.weightageValue;
-    if (weightage < 10) {
-      businessProfileWeightageText = this.profile_incomplete_cap;
+    if (weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass='danger';
       return businessProfileWeightageText;
     } else if
-    (weightage > 10 && weightage <= 50) {
-      businessProfileWeightageText = this.minimally_complete_cap;
+    (weightage >= 50 && weightage < 75) {
+      businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass='warning';
       return businessProfileWeightageText;
 
-    } else if (weightage > 50 && weightage <75) {
-      businessProfileWeightageText = this.fifty_percentage_complete_cap;
+    } else if (weightage >=75 && weightage <100) {
+      businessProfileWeightageText = Messages.GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass='primary';
       return businessProfileWeightageText;
     }
-    else if (weightage > 50 && weightage <75) {
-      businessProfileWeightageText = this.three_quaters_complete_cap;
-      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
-      this.weightageClass='primary';
-      return businessProfileWeightageText;
-    }
+  
     else if (weightage == 100) {
-      businessProfileWeightageText = this.fully_complete_cap;
+      businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
       this.weightageClass='success';
       return businessProfileWeightageText;
@@ -1514,7 +1504,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     });
    return fullyfilledStatus;
   }
-  
+
   checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
     let fullyfilledStatus = true;
     additionalInfoFields.forEach(function (field) {

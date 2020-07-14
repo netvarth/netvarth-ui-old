@@ -10260,9 +10260,16 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
 
    
 .btnWeightage {
-    font-weight: bold !important;
-    margin-left: 80%;
-    margin-top: 20%;
+   float:right;
 
 }
+span.active{
+    color:green;
+    font-weight:bold;
+}
+span.inactive{
+    color:red;
+    font-weight:bold;
+}
+
 
