@@ -115,7 +115,7 @@
         <div class="clearfix"></div>
 
         <div class="step2 mgn-up-20" *ngIf="step ===2">
-            <div class="form-group col-md-12 mgn-bt-20"
+            <div class="form-group col-md-12 col-sm-12 col-xs-12"
                 *ngIf="selectedCategory !== 'SCHEDULE' && selectedCategory !== 'SERVICE'">
                 <label class="col-form-label" style="margin-left: 20px">Choose
                     Department</label>
@@ -143,7 +143,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-group col-md-12 mgn-bt-20"
+            <div class="form-group col-md-12 col-sm-12 col-xs-12"
                 *ngIf="selectedCategory !== 'SCHEDULE' && selectedCategory !== 'SERVICE'">
                 <label class="col-form-label" style="margin-left: 20px">Choose
                     {{provider_label | capitalizeFirst}}s</label>
@@ -173,7 +173,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-group col-md-12 mgn-bt-20" *ngIf="selectedCategory !== 'SCHEDULE'">
+            <div class="form-group col-md-12 col-sm-12 col-xs-12" *ngIf="selectedCategory !== 'SCHEDULE'">
                 <label class="col-form-label" style="margin-left: 20px">Choose
                     Services</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -201,7 +201,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-group col-md-12 mgn-bt-20">
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <label class="col-form-label" style="margin-left: 20px">Choose
                     Schedules</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
@@ -233,7 +233,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
+            <div class="control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button mat-button type="button" (click)="showStep(1)" class="cs-btn bt1">Back</button>&nbsp;
                 <button mat-button type="button" (click)="showStep(3)" class="cs-btn bt1">Next</button>
             </div>

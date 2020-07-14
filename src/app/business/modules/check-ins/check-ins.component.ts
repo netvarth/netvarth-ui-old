@@ -17,6 +17,7 @@ import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
+declare let cordova: any;
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -1961,6 +1962,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadApiSwitch('reloadAPIs');
       });
   }
+
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
     const promise = this.getHistoryWLCount(Mfilter);
@@ -1970,12 +1972,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              const params = [
-                'height=' + screen.height,
-                'width=' + screen.width,
-                'fullscreen=yes'
-              ].join(',');
-              const printWindow = window.open('', '', params);
+              // const params = [
+              //   'height=' + screen.height,
+              //   'width=' + screen.width,
+              //   'fullscreen=yes'
+              // ].join(',');
+              // const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -1992,7 +1994,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                  if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
                   Object.keys(this.historyCheckins[i].label).forEach(key => {
                     labels.push(this.historyCheckins[i].label[key]);
@@ -2009,19 +2011,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              printWindow.document.write('<html><head><title></title>');
-              printWindow.document.write('</head><body >');
-              printWindow.document.write(checkin_html);
-              printWindow.document.write('</body></html>');
-              printWindow.moveTo(0, 0);
-              printWindow.print();
-              printWindow.document.close();
-              setTimeout(() => {
-                printWindow.close();
-              }, 500);
+              cordova.plugins.printer.print(checkin_html);
+              // printWindow.document.write('<html><head><title></title>');
+              // printWindow.document.write('</head><body >');
+              // printWindow.document.write(checkin_html);
+              // printWindow.document.write('</body></html>');
+              // printWindow.moveTo(0, 0);
+              // printWindow.print();
+              // printWindow.document.close();
+              // setTimeout(() => {
+              //   printWindow.close();
+              // }, 500);
             });
       });
   }
+
   printCheckin() {
     const _this = this;
     let appt;
@@ -2041,12 +2045,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.bname = bprof.bn;
     setTimeout(() => {
       const printContent = document.getElementById('print-section');
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
+      // const params = [
+      //   'height=' + screen.height,
+      //   'width=' + screen.width,
+      //   'fullscreen=yes'
+      // ].join(',');
+      // const printWindow = window.open('', '', params);
       let checkin_html = '';
       checkin_html += '<table style="width:100%;"><thead>';
       checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(checkinlist.date) + '<br/>';
@@ -2063,19 +2067,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + checkinlist.service.name + '</td></tr>';
       if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
-        checkin_html += '<tr><td>' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName + '</td></tr>';
+        checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName + '</td></tr>';
       }
       checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']' + '</td></tr>';
       checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
       checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
       checkin_html += '</tbody></table>';
-      printWindow.document.write('<html><head><title></title>');
-      printWindow.document.write('</head><body>');
-      printWindow.document.write(checkin_html);
-      printWindow.document.write('</body></html>');
-      // this.showQR = false;
-      printWindow.moveTo(0, 0);
-      printWindow.print();
+      cordova.plugins.printer.print(checkin_html);
+      // printWindow.document.write('<html><head><title></title>');
+      // printWindow.document.write('</head><body>');
+      // printWindow.document.write(checkin_html);
+      // printWindow.document.write('</body></html>');
+      // // this.showQR = false;
+      // printWindow.moveTo(0, 0);
+      // printWindow.print();
     });
   }
   smsCheckin() {
