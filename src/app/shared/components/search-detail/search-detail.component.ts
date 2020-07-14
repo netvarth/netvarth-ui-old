@@ -1058,7 +1058,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              this.search_data.hits.hit[srchindx].fields['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
@@ -1783,10 +1783,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // check whether logged in as consumer
       this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
       // if (this.shared_functions.checkLogin()) {
-        const ctype = this.shared_functions.isBusinessOwner('returntyp');
-        // if (ctype === 'consumer') {
-        this.showProviderDetails(providforDetails, locId);
-        // }
+      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+      // if (ctype === 'consumer') {
+      this.showProviderDetails(providforDetails, locId);
+      // }
       // } else { // show consumer login
       //   const passParam = { callback: 'providerdetail', providerId: providforDetails, current_provider: obj, locId: locId };
       //   this.doLogin('', 'consumer', passParam);
@@ -2123,4 +2123,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
+  showButton(searchData) {
+    if (searchData.fields.online_profile === '1' && (searchData.fields.waitlist || searchData.fields.apptAllowed
+      || (searchData.fields.donation_status === '1' && searchData.fields.donationlength >= 1))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
