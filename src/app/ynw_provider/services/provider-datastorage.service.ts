@@ -52,7 +52,7 @@ export class ProviderDataStorageService {
     this.business_profile = data;
     const domainName = this.business_profile.serviceSector.domain;
     const subdomainName = this.business_profile.serviceSubSector.subDomain;
-    console.log('eweightageARray' + this.weightageArray);
+    console.log('weightageARray' + this.weightageArray);
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME) && this.business_profile.businessName) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME);
     }
@@ -78,12 +78,14 @@ export class ProviderDataStorageService {
      
     }
     //business schedule
+    if(this.business_profile.baseLocation){
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && this.business_profile.baseLocation.bSchedule) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE);
     }
     else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
       this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.Name);
     }
+  }
 
     //specialization
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION) && this.business_profile.specialization && this.business_profile.specialization.length > 0) {
@@ -179,10 +181,6 @@ updateMandatoryAndAdditionalFieldWeightage(){
     if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)&& (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
         this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
         this.setWeightageArray(this.weightageArray);
-    }// some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
-    else if(this.weightageObjectDomain.mandatoryDomain===false && this.weightageObjectSubDomain.mandatorySubDomain===false){
-      this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
-      this.setWeightageArray(this.weightageArray);
     }
    }
   else{
@@ -196,6 +194,11 @@ updateMandatoryAndAdditionalFieldWeightage(){
   if(!this.checkExistenceInWeightageArray(additionalObject)){
     if(this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled){
      this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
+     // some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
+     if(!this.checkExistenceInWeightageArray(mandatoryObject) && this.weightageObjectDomain.mandatoryDomain===false && this.weightageObjectSubDomain.mandatorySubDomain===false){
+      this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
+      this.setWeightageArray(this.weightageArray);
+    }
      this.setWeightageArray(this.weightageArray);
 
     }
