@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
-                        <div class="lbl col-md-12 no padding">
+                        <div class="lbl col-md-12 no padding"> 
                             <div class="card" *ngIf="api_loading">
                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
                             </div>
@@ -228,6 +228,13 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showPrvdrFields">
+                                        <div class="form-group">
+                                                <mat-checkbox  formControlName="privileges">
+                                                    Admin Privileges
+                                                </mat-checkbox>
+                                        </div>
+                                    </div>
 
 
                                     <div class="col-md-12 col-sm-12 col-xs-12">

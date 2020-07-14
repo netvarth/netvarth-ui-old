@@ -180,6 +180,7 @@ export class BranchUserDetailComponent implements OnInit {
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             // selectedSubDomain: [],
             selectedDepartment: [],
+            privileges : [''],
             selectedUserType: [],
             // address: [],
             // state: [],
@@ -230,6 +231,7 @@ export class BranchUserDetailComponent implements OnInit {
             // 'selectedSubDomain': this.user_data.subdomain || null,
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
+            'privileges': this.user_data.admin || false,
             // 'address': this.user_data.address || null,
             // 'state': this.user_data.state || null,
             // 'city': this.user_data.city || null
@@ -282,10 +284,12 @@ export class BranchUserDetailComponent implements OnInit {
             // 'city': input.city,
             // 'state': input.state,
             // 'deptId': input.selectedDepartment,
+            //'isAdmin' :
             'userType': input.selectedUserType
         };
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
+            post_data1['admin'] = input.privileges;
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
@@ -308,7 +312,7 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'general', 'users']);
+        this.router.navigate(['provider', 'settings', 'general', 'users']); 
     }
     // onlineProfile() {
     //     this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'bprofile']);
