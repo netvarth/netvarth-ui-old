@@ -630,35 +630,38 @@ export const projectConstantsLocal = {
     IMO: 'Imo'
   },
   BUSINESS_PROFILE_WEIGHTAGE :{
-    BUSINESS_NAME : {"Name" :"BUSINESS_NAME","value" :5 },
-    BUSINESS_DESCRIPTION : {"Name" :"BUSINESS_DESCRIPTION","value" :5 },
-    BASE_LOCATION :{"Name" :"BASE_LOCATION","value" :5 },
-    LOCATION_SCHEDULE :{"Name" :"LOCATION_SCHEDULE","value" :10 },
-    SPECIALIZATION :{"Name" :"SPECIALIZATION","value" :5 },
-    LANGUAGES_KNOWN :{"Name" :"LANGUAGES_KNOWN","value" :5 },
-    SOCIAL_MEDIA : {"Name" :"SOCIAL_MEDIA","value" :5 },
-    MEDIA_GALLERY : {"Name" :"GALLERY","value" :5 },
-    PRIVACY_PHONE_NUMBER:{"Name" :"PRIVACY_PHONE_NUMBER","value" :5 },
-    PRIVACY_EMAILS:{"Name" :"PRIVACY_EMAILS","value" :5 },
-    ADDITIONAL_INFO :{"Name" :"ADDITIONAL_INFO","value" :20 },
-    MANDATORY_INFO:{"Name":"MANDATORY_INFO","value":20},
-    PROFILE_PIC:{"Name" :"PROFILE_PIC","value" :5}
+    BUSINESS_NAME : {"name" :"BUSINESS_NAME","value" :10 },
+    BUSINESS_DESCRIPTION : {"name" :"BUSINESS_DESCRIPTION","value" :5 },
+    BASE_LOCATION :{"name" :"BASE_LOCATION","value" :10 },
+    LOCATION_SCHEDULE :{"name" :"LOCATION_SCHEDULE","value" :10 },
+    SPECIALIZATION :{"name" :"SPECIALIZATION","value" :10 },
+    LANGUAGES_KNOWN :{"name" :"LANGUAGES_KNOWN","value" :5 },
+    SOCIAL_MEDIA : {"name" :"SOCIAL_MEDIA","value" :5 },
+    MEDIA_GALLERY : {"name" :"GALLERY","value" :5 },
+    PRIVACY_PHONE_NUMBER:{"name" :"PRIVACY_PHONE_NUMBER","value" :5 },
+    PRIVACY_EMAILS:{"name" :"PRIVACY_EMAILS","value" :5 },
+    ADDITIONAL_INFO :{"name" :"ADDITIONAL_INFO","value" :10 },
+    MANDATORY_INFO:{"name":"MANDATORY_INFO","value":10},
+    PROFILE_PIC:{"name" :"PROFILE_PIC","value" :10}
   },
   USER_BUSINESS_PROFILE_WEIGHTAGE :{
-    BUSINESS_NAME : {"Name" :"BUSINESS_NAME","value" :5 },
-    BUSINESS_DESCRIPTION : {"Name" :"BUSINESS_DESCRIPTION","value" :5 },
-    // BASE_LOCATION :{"Name" :"BASE_LOCATION","value" :5 },
-    // LOCATION_SCHEDULE :{"Name" :"LOCATION_SCHEDULE","value" :10 },
-    SPECIALIZATION :{"Name" :"SPECIALIZATION","value" :5 },
-    LANGUAGES_KNOWN :{"Name" :"LANGUAGES_KNOWN","value" :5 },
-    SOCIAL_MEDIA : {"Name" :"SOCIAL_MEDIA","value" :5 },
-    // MEDIA_GALLERY : {"Name" :"GALLERY","value" :5 },
-    PRIVACY_PHONE_NUMBER:{"Name" :"PRIVACY_PHONE_NUMBER","value" :5 },
-    PRIVACY_EMAILS:{"Name" :"PRIVACY_EMAILS","value" :5 },
-    ADDITIONAL_INFO :{"Name" :"ADDITIONAL_INFO","value" :20 },
-    MANDATORY_INFO:{"Name":"MANDATORY_INFO","value":20},
-    PROFILE_PIC:{"Name" :"PROFILE_PIC","value" :5}
+    BUSINESS_NAME : {"name" :"BUSINESS_NAME","value" :5 },
+    BUSINESS_DESCRIPTION : {"name" :"BUSINESS_DESCRIPTION","value" :5 },
+    // BASE_LOCATION :{"name" :"BASE_LOCATION","value" :5 },
+    // LOCATION_SCHEDULE :{"name" :"LOCATION_SCHEDULE","value" :10 },
+    SPECIALIZATION :{"name" :"SPECIALIZATION","value" :5 },
+    LANGUAGES_KNOWN :{"name" :"LANGUAGES_KNOWN","value" :5 },
+    SOCIAL_MEDIA : {"name" :"SOCIAL_MEDIA","value" :5 },
+    // MEDIA_GALLERY : {"name" :"GALLERY","value" :5 },
+    PRIVACY_PHONE_NUMBER:{"name" :"PRIVACY_PHONE_NUMBER","value" :5 },
+    PRIVACY_EMAILS:{"name" :"PRIVACY_EMAILS","value" :5 },
+    ADDITIONAL_INFO :{"name" :"ADDITIONAL_INFO","value" :10 },
+    MANDATORY_INFO:{"name":"MANDATORY_INFO","value":10},
+    PROFILE_PIC:{"name" :"PROFILE_PIC","value" :5}
   },
+  REQUIRED_FIELDS_JALDEE_ONLINE :[
+    'SPECIALIZATION','PROFILE_PIC','BUSINESS_NAME','BASE_LOCATION','LOCATION_SCHEDULE'
+  ],
   PATH: 'https://' + window.location.host + '/'
 
 };

@@ -16,6 +16,10 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
+  progress_bar_four: number;
+  progress_bar_three: number;
+  progress_bar_two: number;
+  progress_bar_one: number;
   subdomain: any;
   bprofile_btn_text: string;
   weightageValue: any;
@@ -284,20 +288,55 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     let weightage = this.weightageValue;
-    if (weightage < 50) {
+    if(weightage <=25){
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.progress_bar_one=weightage;
+      this.progress_bar_two=0;
+      this.progress_bar_three=0;
+      this.progress_bar_four=0;
+      return businessProfileWeightageText;
+     
+    }
+    if (weightage>25 && weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+     
+      this.progress_bar_one=25;
+      this.progress_bar_two=weightage-25;
+      this.progress_bar_three=0;
+      this.progress_bar_four=0;
       return businessProfileWeightageText;
     } else if
     (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=weightage-50;
+      this.progress_bar_four=0;
       return businessProfileWeightageText;
 
-    } else if (weightage >=75 && weightage <100) {
+    } else if (weightage >= 75 && weightage < 100) {
       businessProfileWeightageText = Messages.GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+  
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=25;
+      this.progress_bar_four=weightage-75;
       return businessProfileWeightageText;
     }
+
     else if (weightage == 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=25;
+      this.progress_bar_four=25;
       return businessProfileWeightageText;
 
     }

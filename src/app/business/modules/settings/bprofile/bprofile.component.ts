@@ -35,7 +35,11 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 export class BProfileComponent implements OnInit, OnDestroy {
 
-  weightageClass='danger';
+  progress_bar_four: number;
+  progress_bar_three: number;
+  progress_bar_two: number;
+  progress_bar_one: number;
+  weightageClass = 'danger';
   weightageObjectOfDomainAndSubDomain: any;
   vkeyNameMap = {};
   profile_status;
@@ -90,7 +94,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   subdomain: any;
   weightageValue: number;
-  businessProfile_weightageArray: any[];
+  businessweightageArray: any[];
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
@@ -157,7 +161,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
- 
+
   //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
@@ -370,17 +374,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
-    //this.provider_datastorage.setWeightageArray([]);
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-  
-
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
     this.getBusinessConfiguration();
@@ -434,9 +435,21 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
-      this.businessProfile_weightageArray = result;
-      console.log('weightage...' + JSON.stringify(this.businessProfile_weightageArray));
+      this.businessweightageArray = result;
       this.weightageValue = this.calculateWeightage(result);
+   
+      if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
+        if(this.mandatoryfieldArray.length!==0){
+          this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
+        }
+        else{
+          this.changeJaldeeOnlineStatus(true);
+        }
+      }else{
+        this.changeJaldeeOnlineStatus(false);
+      }
+      
+
 
     });
     //this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -445,6 +458,29 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
 
+
+  }
+  checkMandatoryFieldsAlsoFilled(){
+    let weightageArray = this.businessweightageArray.map(obj => obj.name);
+    this.mandatoryfieldArray.every(function (val) {
+      return weightageArray.includes(val);
+    });
+  }
+  checkAllRequiredFiedsOfJaldeeOnlineFilled() {
+    console.log(JSON.stringify(this.businessweightageArray));
+    
+    let weightageArray = this.businessweightageArray.map(obj => obj.name);
+    return projectConstantsLocal.REQUIRED_FIELDS_JALDEE_ONLINE.every(function (val) {
+      return weightageArray.includes(val);
+    });
+
+  }
+  changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
+    if (requiredFieldFilledStatus==true && this.normal_search_active === false) {
+      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+    } else if (requiredFieldFilledStatus==false && this.normal_search_active===true) {
+      this.handle_searchstatus();
+    }
 
   }
   ngOnDestroy() {
@@ -493,29 +529,56 @@ export class BProfileComponent implements OnInit, OnDestroy {
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     let weightage = this.weightageValue;
-    if (weightage < 50) {
+    if(weightage <=25){
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-      this.weightageClass='danger';
+      this.weightageClass = 'danger';
+      this.progress_bar_one=weightage;
+      this.progress_bar_two=0;
+      this.progress_bar_three=0;
+      this.progress_bar_four=0;
+      return businessProfileWeightageText;
+     
+    }
+    if (weightage>25 && weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'warning';
+      this.progress_bar_one=25;
+      this.progress_bar_two=weightage-25;
+      this.progress_bar_three=0;
+      this.progress_bar_four=0;
       return businessProfileWeightageText;
     } else if
     (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-      this.weightageClass='warning';
+      this.weightageClass = 'info';
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=weightage-50;
+      this.progress_bar_four=0;
       return businessProfileWeightageText;
 
-    } else if (weightage >=75 && weightage <100) {
+    } else if (weightage >= 75 && weightage < 100) {
       businessProfileWeightageText = Messages.GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
-      this.weightageClass='primary';
+      this.weightageClass = 'primary';
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=25;
+      this.progress_bar_four=weightage-75;
       return businessProfileWeightageText;
     }
-  
+
     else if (weightage == 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
-      this.weightageClass='success';
+      this.weightageClass = 'success';
+      this.progress_bar_one=25;
+      this.progress_bar_two=25;
+      this.progress_bar_three=25;
+      this.progress_bar_four=25;
       return businessProfileWeightageText;
 
     }
@@ -686,8 +749,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
-
-                  console.log(this.reqFields);
                   this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
                   this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                   this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
@@ -987,7 +1048,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-   
+
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -996,7 +1057,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
-    
+
   }
   // handles the image display on load and on change
   imageSelect(input) {
@@ -1041,8 +1102,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   // get the logo url for the provider
   getProviderLogo() {
-    console.log('cal provider logo');
-    
     this.provider_services.getProviderLogo()
       .subscribe(
         data => {
@@ -1053,11 +1112,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
           this.cacheavoider = dd;
           let logo = '';
           if (this.blogo[0]) {
-            logoExist=true;
+            logoExist = true;
             logo = this.blogo[0].url;
           } else {
             logo = '';
-            logoExist=false;
+            logoExist = false;
           }
           this.provider_datastorage.updateProfilePicWeightage(logoExist);
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
@@ -1457,7 +1516,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             checkArray.push(subdomain);
           });
           this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-          if (this.mandatoryfieldArray.length != 0 && this.domain_fields.some(domain=>domain.mandatory===true)) {
+          if (this.mandatoryfieldArray.length != 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
             mandatorydomain = true
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
@@ -1467,7 +1526,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
                 return;
               }
             });
-          
+
 
           } else {
             mandatorydomain = false;
@@ -1481,8 +1540,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
           console.log(this.mandatoryfieldArray);
           console.log(weightageObjectOfDomain);
-          
-          
+
+
           this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
 
 
@@ -1493,16 +1552,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
-    let fullyfilledStatus=true;
+    let fullyfilledStatus = true;
     domainFields.forEach(function (dom) {
-      if(dom.name===fieldname){
+      if (dom.name === fieldname) {
         if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
           fullyfilledStatus = false;
           return;
         }
       }
     });
-   return fullyfilledStatus;
+    return fullyfilledStatus;
   }
 
   checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
@@ -1515,7 +1574,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
         } else {
           dom_subdom_list.forEach(function (data_object) {
             if (data_object.name === field) {
-              console.log(field + "value" + data_object.value);
               if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
                 fullyfilledStatus = false;
                 return;
@@ -1625,7 +1683,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             checkArray.push(subdomain);
           });
           this.subdomain_questions = data['questions'] || [];
-          if (this.mandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain=>subdomain.mandatory===true) ) {
+          if (this.mandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             mandatorysubdomain = true;
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {

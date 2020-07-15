@@ -91,29 +91,58 @@
 
                                         </span>
                                         <br>
-                                        <span style="font-weight:bold;">{{weightageValue}} %</span>
-                                       
-
-                                        <div class="progress" style="height: 15px;">
+                                        <div class="col-md-10">
+                                        <div style="font-weight:bold;" class="col-md-9 mt-2">{{weightageValue}} %  </div>
+                                                <div class="col-md-3">
+                                                        <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;" >{{bprofile_btn_text}}</button>
+                                                    </div>
+                                      
+<!--                                                 
+                                        <div class="progress col-md-12 no-padding" style="height: 10px;">
                                             <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
-                                        </div>
-                                        <div class="btnWeightage">
-                                            <button (click)="scroll(basicInfoSection)" [className]="'btn btn-' + weightageClass" style="font-weight:bold;">{{bprofile_btn_text}}</button>
-                                        </div>
-                                        <!-- <mat-progress-bar class="properties" mode="determinate" [value]="weightageValue"></mat-progress-bar> -->
+                                        </div> -->
+                                        <div class="progress col-md-10 mt-2 p0"  style="height: 12px;">
+                                                <div class="progress-bar"  role="progressbar" aria-valuenow="progress_bar_one" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
+                                               
+                                                </div>
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_two" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
+                                                 
+                                                </div>
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
+                                                  
+                                                </div>
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_four" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
+                                                  
+                                                </div>
+                                            
+                                            
+                                            </div>
+
+
+                                    </div>
+                                      
+                                       
+                                     
                                     </div>
 
                                 </div>
 
-
+                             <!--TEsting-->
+                        
+                           
+                  
 
 
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                  
                                             <div class="ctrl">
                                                 <div class="ct-l">
-                                                    <h2>Jaldee Link &nbsp;&nbsp; <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                    <h2>Jaldee Online &nbsp;&nbsp; <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
                                                         </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
                                                     
                                                
@@ -150,16 +179,14 @@
 
                                     <div *ngIf="!bProfile.customId && !is_customized">
                                         <div>
-                                            <div class="sblinks">
+                                       
                                                 <ul class="sbl">
                                                     <li class="acc-url-li">
-                                                        <!-- <span class="custid" rel="noopener"
-                                                            target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span> -->
-                                                        <span class=""> Here is your QR Code</span>
-                                                        <span class="busns-id">
+                                        
+                                                         <span class=""> Here is your QR Code :-</span>
 
                                                             <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:48px;" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
                                                             </span>
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
@@ -174,44 +201,52 @@
                                                                     </a>
                                                                 </button>
                                                             </span> -->
-                                                        </span>
-                                                        <br>
+                                                       
+                                                        
+                                                  
+                                          
 
 
                                                     </li>
 
-                                                    <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status">
-                                                        <i class="fa fa-power-off" style="font-size:20px;color:red"></i> Inactive</span>
-                                                    <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status">
-                                                        <i class="fa fa-power-off" style="font-size:20px;color:green"></i> Active</span>
+                                                    <li class="bstatus"><span class="inactive" *ngIf="!jaldee_online_status">
+                                                            <i class="fa fa-times"></i> Inactive</span>
+                                                        <span class="active" *ngIf="jaldee_online_status">
+                                                            <i class="fa fa-check"></i> Active</span>
+
+                                                    </li>
 
                                                     <li class="acc-url-li">
 
                                                         <span class=""> Here is your Jaldee Link :-</span>
                                                         <span class="busns-id">
 
-                                                            <span class="custid" rel="noopener" target="_blank">{{wndw_path}}{{bProfile.accEncUid}} </span>
+                                                            <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.accEncUid}}</a> </span>
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                             </span>
-                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
                                                                 <button class="btn-default-n" (click)="customizeId()">
                                                                     <a>
                                                                         Customize ID
                                                                     </a>
                                                                 </button>
-                                                            </span>
+                                                            </span> -->
                                                         </span>
                                                         <br>
 
 
                                                     </li>
-                                                    <span style="color:red;font-weight:bold" *ngIf="!jaldee_online_status">
-                                                        <i class="fa fa-power-off" style="font-size:24px;color:red"></i> Inactive</span>
-                                                    <span style="color:green;font-weight:bold" *ngIf="jaldee_online_status">
-                                                        <i class="fa fa-power-off" style="font-size:24px;color:green"></i> Active</span>
+                                                    <li class="bstatus">
+                                                            <span class="inactive"*ngIf="!jaldee_online_status">
+                                                                    <i class="fa fa-times" ></i> Inactive</span>
+                                                                <span class="active" *ngIf="jaldee_online_status">
+                                                                    <i class="fa fa-check" ></i> Active</span>
+                                                           
+
+                                                    </li>
                                                 </ul>
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
@@ -628,7 +663,7 @@
                                                             <p>{{have_not_add_cap}} {{special_cap}}.</p>
                                                             <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
                                                         </div>
-                                                        <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                                                        <div class="lang-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
                                                             <span class="editbt" (click)="handleSpecialization()"></span>
                                                             <div *ngFor="let spec of bProfile.specialization">
                                                                 {{getSpecializationName(spec)}}

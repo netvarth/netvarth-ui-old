@@ -59,7 +59,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME) && !this.business_profile.businessName) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME.name);
     }
     //business description
 
@@ -67,7 +67,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_DESCRIPTION);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_DESCRIPTION) && !this.business_profile.businessDesc) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_DESCRIPTION.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_DESCRIPTION.name);
     }
 
     //base location  
@@ -76,7 +76,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BASE_LOCATION);
 
     } else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BASE_LOCATION) && !this.business_profile.baseLocation) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BASE_LOCATION.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BASE_LOCATION.name);
      
     }
     //business schedule
@@ -85,7 +85,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE);
     }
     else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.name);
     }
   }
 
@@ -94,7 +94,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION) && (!this.business_profile.specialization || this.business_profile.specialization.length === 0)) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION.name);
     }
 
     //languages known
@@ -103,7 +103,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN) && (!this.business_profile.languagesSpoken || this.business_profile.languagesSpoken.length === 0)) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN.name);
     }
 
     //social Media
@@ -111,7 +111,7 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SOCIAL_MEDIA);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SOCIAL_MEDIA) && (!this.business_profile.socialMedia || this.business_profile.socialMedia.length === 0)) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SOCIAL_MEDIA.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SOCIAL_MEDIA.name);
     }
 
     //privacy phone numbers
@@ -119,14 +119,14 @@ export class ProviderDataStorageService {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_PHONE_NUMBER);
     }
     else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_PHONE_NUMBER) && (!this.business_profile.phoneNumbers || this.business_profile.phoneNumbers.length === 0)) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_PHONE_NUMBER.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_PHONE_NUMBER.name);
     }
 
     //privacy emails
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_EMAILS) && this.business_profile.emails && this.business_profile.emails.length > 0) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_EMAILS);
     } else if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_EMAILS) && (!this.business_profile.emails || this.business_profile.emails.length === 0)) {
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_EMAILS.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PRIVACY_EMAILS.name);
     }
 
     //additionalInfo
@@ -140,7 +140,7 @@ export class ProviderDataStorageService {
 
   checkExistenceInWeightageArray(constantName) {
 
-    return this.weightageArray.some(object => object.Name === constantName.Name)
+    return this.weightageArray.some(object => object.name === constantName.name)
   }
 
 
@@ -149,7 +149,7 @@ export class ProviderDataStorageService {
     let galleryObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MEDIA_GALLERY;
    if(this.checkExistenceInWeightageArray(galleryObject)){
      if(data==null|| data==undefined||data.length===0){
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MEDIA_GALLERY.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MEDIA_GALLERY.name);
       this.setWeightageArray(this.weightageArray);
      }
     
@@ -182,7 +182,7 @@ updateMandatoryAndAdditionalFieldWeightage(){
    }
   else{
      if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus===false)||(this.weightageObjectSubDomain.mandatorySubDomain &&this.weightageObjectSubDomain.mandatorySubDomainFilledStatus===false)){
-      this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.Name);
+      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
       this.setWeightageArray(this.weightageArray);
     
    }
@@ -202,7 +202,7 @@ updateMandatoryAndAdditionalFieldWeightage(){
   }else{
 
     if(this.weightageObjectDomain.additonalDomainFullyFilled===false || this.weightageObjectSubDomain.additonalSubDomainFullyFilled=== false ){
-     this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.Name);
+     this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.name);
      this.setWeightageArray(this.weightageArray);
     }
   }
@@ -215,7 +215,7 @@ updateLanguagesWeightage(data){
   if(this.checkExistenceInWeightageArray(languageObject)){
     if(data==null|| data==undefined||data.length===0){
    
-     this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN.Name);
+     this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LANGUAGES_KNOWN.name);
      this.setWeightageArray(this.weightageArray);
     }
    
@@ -233,7 +233,7 @@ updateSpecilizationWeightage(data){
   if(this.checkExistenceInWeightageArray(specializationObject)){
     if(data==null|| data==undefined||data.length===0){
    
-     this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION.Name);
+     this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION.name);
      this.setWeightageArray(this.weightageArray);
     }
    
@@ -249,12 +249,12 @@ updateSpecilizationWeightage(data){
 }
 
 updateProfilePicWeightage(isImageExist){
-console.log(isImageExist);
+console.log('dataStotrgae imageExists..'+isImageExist);
 
   let profilePicObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC;
   if(this.checkExistenceInWeightageArray(profilePicObject)){
     if(isImageExist===false){
-     this.weightageArray = this.weightageArray.filter(obj => obj.Name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC.Name);
+     this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC.name);
      this.setWeightageArray(this.weightageArray);
     }
    

@@ -9855,3 +9855,14 @@ td.chkWth, th.chkWth {
 .matProgressbar::ng-deep .mat-progress-bar {
   border-radius: 2px;
 }
+.bstatus {
+  display:flex !important;
+  list-style:none !important;
+
+}
+.progress-bar {
+  border-right: solid 5px #FFF;
+}
+.progress-bar:last-child {
+  border: none; 
+}

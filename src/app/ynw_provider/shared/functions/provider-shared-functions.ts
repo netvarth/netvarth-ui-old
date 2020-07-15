@@ -139,6 +139,7 @@ export class ProviderSharedFuctions {
         }
       }
     }
+    console.log(reqFields);
     return reqFields;
   }
   getAdditonalInfoMandatoryFields(){
