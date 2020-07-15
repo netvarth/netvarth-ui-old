@@ -121,6 +121,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   availableSlotDetails: any = [];
   selQId;
+  selUser;
   timeSlotAppts: any = [];
   statusMultiCtrl: any = [];
   appt_list: any = [];
@@ -269,6 +270,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   consumerTrackstatus = false;
   slotsloading = false;
   showNoSlots: boolean;
+  users_list: any = [];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -355,6 +357,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
     this.getServices();
+    this.getUsers();
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
@@ -446,6 +449,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         return false;
       } else {
         this.selQId = q.id;
+        if (q && q.provider) {
+          this.selUser = q.provider;
+        }
         this.servicesCount = q.services.length;
         this.selQCapacity = q.parallelServing;
         this.batchEnabled = q.batchEnabled;
@@ -653,6 +659,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
       if (selQdetails.length > 0) {
         this.servicesCount = selQdetails[0].services.length;
+        if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
+          this.selUser = this.activeSchedules[0].provider;
+        }
         this.selQCapacity = this.activeSchedules[0].parallelServing;
         this.batchEnabled = this.activeSchedules[0].batchEnable;
         if (this.selQCapacity > 1) {
@@ -663,6 +672,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (this.activeSchedules.length > 0) {
         const selQ = this.activeSchedules[0];
         this.selQId = selQ.id;
+        if (selQ && selQ.provider) {
+          this.selUser = selQ.provider;
+        }
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
         this.servicesCount = selQ.services.length;
         this.selQCapacity = selQ.parallelServing;
@@ -678,6 +690,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
       if (selQdetails && selQdetails.length !== 0) {
         this.servicesCount = selQdetails[0].services.length;
+        if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
+          this.selUser = this.activeSchedules[0].provider;
+        }
         this.selQCapacity = this.activeSchedules[0].parallelServing;
         this.batchEnabled = this.activeSchedules[0].batchEnable;
         if (this.selQCapacity > 1) {
@@ -688,6 +703,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (this.activeSchedules.length > 0) {
         const selQ = this.activeSchedules[0];
         this.selQId = selQ.id;
+        if (selQ && selQ.provider) {
+          this.selUser = selQ.provider;
+        }
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
         this.servicesCount = selQ.services.length;
         this.selQCapacity = selQ.parallelServing;
@@ -711,6 +729,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
       this.selQId = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)].id;
+      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
+        this.selUser = this.activeSchedules[0].provider;
+      }
       // this.selQId = this.activeSchedules[0].id;
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
@@ -1170,6 +1191,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQId = selQs[0].id;
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       this.servicesCount = selQs[0].services.length;
+      if (selQs[0] && selQs[0].provider) {
+        this.selUser = selQs[0].provider;
+      }
       this.selQCapacity = selQs[0].parallelServing;
       this.batchEnabled = selQs[0].batchEnable;
       if (this.selQCapacity > 1) {
@@ -1179,6 +1203,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else if (this.activeSchedules.length > 0) {
       this.selQId = this.activeSchedules[0].id;
+      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
+        this.selUser = this.activeSchedules[0].provider;
+      }
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
@@ -1270,6 +1297,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (selQs.length > 0) {
       this.selQId = selQs[0].id;
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      if (selQs[0] && selQs[0].provider) {
+        this.selUser = selQs[0].provider;
+      }
       this.servicesCount = selQs[0].services.length;
       this.selQCapacity = selQs[0].parallelServing;
       this.batchEnabled = selQs[0].batchEnable;
@@ -1281,6 +1311,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.activeSchedules.length > 0) {
       this.selQId = this.activeSchedules[0].id;
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+      if (this.activeSchedules[0] && this.activeSchedules[0].provider) {
+        this.selUser = this.activeSchedules[0].provider;
+      }
       this.servicesCount = this.activeSchedules[0].services.length;
       this.selQCapacity = this.activeSchedules[0].parallelServing;
       this.batchEnabled = this.activeSchedules[0].batchEnable;
@@ -1544,7 +1577,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type } });
+      const filteredDept = this.users_list.filter(user => user.id === this.selUser);
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: filteredDept[0].deptId } });
     }
   }
   searchCustomer(source, appttime) {
@@ -2754,7 +2788,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
-        this.refresh();
+      this.refresh();
       // }
     });
   }
@@ -2781,5 +2815,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getVirtualMode(virtualService) {
     return Object.keys(virtualService)[0];
+  }
+  getUsers() {
+    const apiFilter = {};
+    apiFilter['userType-eq'] = 'PROVIDER';
+    this.provider_services.getUsers(apiFilter).subscribe(
+      (data: any) => {
+        this.users_list = data;
+      }
+    );
   }
 }

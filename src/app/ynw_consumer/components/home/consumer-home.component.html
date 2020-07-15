@@ -214,7 +214,7 @@
                                             *ngIf="!(appointment.amountDue>0) && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
                                             (click)="viewBill(appointment,'appointment')">Receipt</span>
                                         <span class="view-bill"
-                                            *ngIf="appointment.apptStatus === 'Cancelled' && appointment.apptStatus === 'Rejected' && appointment.paymentStatus !== 'NotPaid'"
+                                            *ngIf="(appointment.apptStatus === 'Cancelled' || appointment.apptStatus === 'Rejected') && appointment.paymentStatus !== 'NotPaid'"
                                             (click)="viewBill(appointment,'appointment')">Receipt</span>
                                         <span class="view-bill"
                                             *ngIf="appointment.amountDue>0 && appointment.apptStatus != 'Cancelled' && appointment.apptStatus != 'Rejected'"
