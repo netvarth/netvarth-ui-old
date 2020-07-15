@@ -2193,9 +2193,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+      // if (result === 'reloadlist') {
         this.refresh();
-      }
+      // }
     });
   }
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {

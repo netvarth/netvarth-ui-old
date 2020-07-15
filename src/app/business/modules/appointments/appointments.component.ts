@@ -2753,9 +2753,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+      // if (result === 'reloadlist') {
         this.refresh();
-      }
+      // }
     });
   }
   scrollToSection(curTime) {
