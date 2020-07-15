@@ -276,13 +276,13 @@
 
                                         </div>
                                         <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
-                                            <div *ngIf="showApptTime">
+                                            <div *ngIf="showApptTime && !api_loading">
                                                 <div class="ttle mgn-bt-10">Appointment Time</div>
                                                 <span class="label-bold">{{getSingleTime(apptTime)}} </span>
                                                 <span style="margin-left: 30px" class="editbt"
                                                     (click)="editClicked()"></span>
                                             </div>
-                                            <div *ngIf="!showApptTime">TimeSlots are not available </div>
+                                            <div *ngIf="!showApptTime && !api_loading">TimeSlots are not available </div>
                                         </div>
 
 

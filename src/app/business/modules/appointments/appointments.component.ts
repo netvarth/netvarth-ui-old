@@ -1580,7 +1580,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         slot = time;
       }
       const filteredDept = this.users_list.filter(user => user.id === this.selUser);
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: filteredDept[0].deptId } });
+      let deptId;
+      if (filteredDept[0] && filteredDept[0].deptId) {
+      deptId = filteredDept[0].deptId;
+      }
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: deptId} });
     }
   }
   searchCustomer(source, appttime) {

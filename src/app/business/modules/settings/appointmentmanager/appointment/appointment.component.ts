@@ -1256,7 +1256,7 @@ export class AppointmentComponent implements OnInit {
         this.queuejson = [];
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
-        if (user.id && user.id !== 0) {
+        if (user && user.id && user.id !== 0) {
             for (let i = 0; i < this.servicesjson.length; i++) {
                 if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
                     newserviceArray.push(this.serviceslist[i]);
@@ -1358,6 +1358,7 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
+        this.api_loading = true;
         this.freeSlots = [];
         this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
@@ -1372,6 +1373,7 @@ export class AppointmentComponent implements OnInit {
                     if (this.freeSlots.length > 0) {
                         // this.showSubq = 0;
                         this.showApptTime = true;
+                        this.api_loading = false;
                         if (this.comingSchduleId === '') {
                             this.apptTime = this.freeSlots[0].time;
                             for (const list of this.waitlist_for) {
@@ -1393,6 +1395,7 @@ export class AppointmentComponent implements OnInit {
                         }
                     } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
                         this.showApptTime = true;
+                        this.api_loading = false;
                         for (let i = 0; i < this.queuejson.length; i++) {
                             if (this.queuejson[this.sel_queue_indx].id === this.queuejson[i].id) {
                                 this.queuejson.splice(i, 1);
@@ -1401,6 +1404,7 @@ export class AppointmentComponent implements OnInit {
                         this.handleQueueSelection(this.queuejson[0], 0);
                     } else {
                         this.showApptTime = false;
+                        this.api_loading = false;
                     }
                 },
                 error => {
