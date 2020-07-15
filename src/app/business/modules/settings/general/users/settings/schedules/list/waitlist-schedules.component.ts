@@ -152,7 +152,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                     url: '/provider/settings/general/users/' + this.userId + '/settings'
                 });
                 breadcrumbs.push({
-                    title: 'Schedules'
+                    title: 'Appointment Schedules'
                 });
                 this.breadcrumbs = breadcrumbs;
             });

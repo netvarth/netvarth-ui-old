@@ -97,7 +97,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
         title: 'Adjust delay'
       }
     ];
-    this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
+    this.send_message_cap = Messages.DELAY_SEND_MSG1.replace('[customer]', this.customer_label);
     // this.arrived_cnt = this.data.arrived_count;
     // this.checkedin_cnt = this.data.checkedin_count;
     // this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;

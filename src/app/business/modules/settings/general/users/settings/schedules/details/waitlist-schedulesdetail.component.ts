@@ -147,7 +147,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     },
                     {
                         url: '/provider/settings/general/users/' + this.userId + '/settings/schedules',
-                        title: 'Schedules'
+                        title: ' Appointment Schedules'
                     }
                 );
                 if (this.action === 'add') {
