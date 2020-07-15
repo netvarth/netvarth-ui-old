@@ -523,24 +523,22 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 params['provider-eq'] = this.userIds.toString();
             }
             this.provider_services.getProviderSchedules(params)
-                .subscribe(data => {
-                    this.display_schedule = data;
-                    this.display_scheduleList = this.display_schedule;
+                .subscribe((data: any) => {
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                         this.selectedCategory = 'SCHEDULE';
                     }
-                    for (let ii = 0; ii < this.display_schedule.length; ii++) {
+                    for (let ii = 0; ii < data.length; ii++) {
+                        if (data[ii].apptState === 'ENABLED') {
+                            this.display_schedule.push(data[ii]);
+                            this.display_scheduleList.push(data[ii]);
+                        }
                         let schedule_arr = [];
-                        if (this.display_schedule[ii].apptSchedule) {
-                            schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.display_schedule[ii].apptSchedule);
+                        if (data[ii].apptSchedule) {
+                            schedule_arr = this.shared_Functionsobj.queueSheduleLoop(data[ii].apptSchedule);
                         }
                         queue_list = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                        this.display_schedule[ii].displayQ = queue_list[0];
-                        if (this.display_schedule[ii].apptState === 'ENABLED') {
-                            activeQueues.push(this.display_schedule[0]);
-                        }
+                        data[ii].displayQ = queue_list[0];
                     }
-                    this.provider_shared_functions.setActiveQueues(activeQueues);
                     resolve();
                 });
         });

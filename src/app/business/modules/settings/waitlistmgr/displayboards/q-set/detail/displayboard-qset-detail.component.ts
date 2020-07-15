@@ -514,6 +514,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const activeQueues: any = [];
             let queue_list: any = [];
             const params = {};
+            params['queueState-eq'] = 'ENABLED';
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }
@@ -531,11 +532,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         }
                         queue_list = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
                         this.display_schedule[ii].displayQ = queue_list[0];
-                        if (this.display_schedule[ii].queueState === 'ENABLED') {
-                            activeQueues.push(this.display_schedule[0]);
-                        }
                     }
-                    this.provider_shared_functions.setActiveQueues(activeQueues);
                     resolve();
                 });
         });
