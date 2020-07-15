@@ -10335,3 +10335,6 @@ a {
 .content .c-outer .prov-detail-outer .mat-expansion-panel-body {
   padding: 0px !important;
 }
+.cdetailssend {
+  padding-left: 5px;
+}

@@ -17,6 +17,7 @@ import { KeyValue } from '@angular/common';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
+import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -252,6 +253,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('chekinSection', { static: false }) chekinSection: ElementRef<HTMLElement>;
   windowScrolled: boolean;
   topHeight = 200;
+  smsdialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2112,14 +2114,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
       appt = _this.appointmentsChecked[apptIndex];
     });
-    this.provider_services.smsCheckin(appt.ynwUuid).subscribe(
-      () => {
-        this.shared_functions.openSnackBar('Check-in details sent successfully');
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        uuid : appt.ynwUuid,
+        check : 'sms'
       }
-    );
+    });
+    // this.provider_services.smsCheckin(appt.ynwUuid).subscribe(
+    //   () => {
+    //     this.shared_functions.openSnackBar('Check-in details sent successfully');
+    //   },
+    //   error => {
+    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //   }
+    // );
   }
   emailCheckin() {
     const _this = this;
@@ -2127,14 +2138,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
       appt = _this.appointmentsChecked[apptIndex];
     });
-    this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
-      () => {
-        this.shared_functions.openSnackBar('Check-in details mailed successfully');
-      },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    this.notedialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        uuid : appt.ynwUuid,
+        check : 'email'
       }
-    );
+    });
+    // this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
+    //   () => {
+    //     this.shared_functions.openSnackBar('Check-in details mailed successfully');
+    //   },
+    //   error => {
+    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //   }
+    // );
   }
   goToCheckinDetails() {
     const _this = this;

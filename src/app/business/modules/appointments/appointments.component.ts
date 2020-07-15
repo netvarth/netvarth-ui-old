@@ -16,6 +16,7 @@ import { LocateCustomerComponent } from '../check-ins/locate-customer/locate-cus
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -271,6 +272,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   slotsloading = false;
   showNoSlots: boolean;
   users_list: any = [];
+  smsdialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2364,58 +2366,100 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   smsAppt() {
     const _this = this;
+    let appt;
     if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        _this.provider_services.smsAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
-          () => {
-            _this.shared_functions.openSnackBar('Appointment details sent successfully');
-          },
-          error => {
-            _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+        appt = _this.appointmentsChecked[apptIndex];
       });
+      this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          uuid : appt.uid,
+          check : 'apptsms'
+        }
+      });
+        // _this.provider_services.smsAppt(appt.uid).subscribe(
+        //   () => {
+        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+        //   },
+        //   error => {
+        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //   }
+        // );
     } else {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          _this.provider_services.smsAppt(_this.apptsChecked[slotIndex][apptIndex].uid).subscribe(
-            () => {
-              _this.shared_functions.openSnackBar('Appointment details sent successfully');
-            },
-            error => {
-              _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
+          appt = _this.apptsChecked[apptIndex];
         });
-      });
+        this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            uuid : appt.uid,
+            check : 'apptsms'
+          }
+        });
+          // _this.provider_services.smsAppt(appt.uid).subscribe(
+          //   () => {
+          //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+          //   },
+          //   error => {
+          //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          //   }
+          // );
+        });
     }
   }
   emailAppt() {
     const _this = this;
+    let appt;
     if (!this.isBatch || this.time_type === 3) {
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        _this.provider_services.emailAppt(_this.appointmentsChecked[apptIndex].uid).subscribe(
-          () => {
-            _this.shared_functions.openSnackBar('Appointment details sent successfully');
-          },
-          error => {
-            _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+        appt = _this.appointmentsChecked[apptIndex];
       });
+      this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          uuid : appt.uid,
+          check : 'apptemail'
+        }
+      });
+        // _this.provider_services.emailAppt(appt.uid).subscribe(
+        //   () => {
+        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+        //   },
+        //   error => {
+        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //   }
+        // );
     } else {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          this.provider_services.emailAppt(_this.apptsChecked[slotIndex][apptIndex].uid).subscribe(
-            () => {
-              _this.shared_functions.openSnackBar('Appointment details mailed successfully');
-            },
-            error => {
-              _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
+          appt = _this.appointmentsChecked[apptIndex];
         });
-      });
+        this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            uuid : appt.uid,
+            check : 'apptemail'
+          }
+        });
+        //   this.provider_services.emailAppt(appt.uid).subscribe(
+        //     () => {
+        //       _this.shared_functions.openSnackBar('Appointment details mailed successfully');
+        //     },
+        //     error => {
+        //       _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     }
+        //   );
+        });
     }
   }
   printAppt() {
