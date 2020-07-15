@@ -279,6 +279,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.businessjson = [];
       this.servicesjson = [];
       this.apptServicesjson = [];
+      this.donationServicesjson = [];
       this.image_list_popup = [];
       this.galleryjson = [];
       if (qparams.psource) {
