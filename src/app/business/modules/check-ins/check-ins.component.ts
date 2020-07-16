@@ -164,6 +164,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selQidsforHistory: any = [];
   selQIds: any = [];
   selectedView: any;
+  selectedUser: any;
+  users: any = [];
   views: any = [];
   queues: any;
   loading = true;
@@ -350,6 +352,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getServiceList();
     this.getLabel();
     this.getDepartments();
+    this.getProviders();
     const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       this.time_type = savedtype;
@@ -839,7 +842,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQs(date?) {
     const _this = this;
+    let filterEnum = {}
     if (date === 'all') {
+
+      if(this.selectedUser) {
+        filterEnum ['provider-eq'] = this.selectedUser.id;
+         
+      }
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
           (queues: any) => {
@@ -2247,5 +2256,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') {
       }
     });
+  }
+  getProviders() {
+    const apiFilter = {};
+    apiFilter['userType-neq'] = 'ASSISTANT';
+    // let filter = 'userType-neq :"assistant"'
+    this.provider_services.getUsers(apiFilter).subscribe(data => {
+      this.users = data;
+      this.selectedUser = this.users[0]
+    });
+  }
+  handleUserSelection(user){
+    // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.selectedUser = user;
+    this.getQs();
   }
 }
