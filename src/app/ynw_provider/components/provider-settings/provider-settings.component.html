@@ -9,25 +9,32 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="general">General <i class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="general">General
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings"><a>Set up and manage your locations, departments and
-                                        more</a></li>
-                                <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{locName}} <span class="pull-right badge bg-blue"
-                                                *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
-                                                <p *ngIf="location_count == 0"
-                                                class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
+                                <li class="form-level-settings">
+                                    <a>Set up and manage your locations, departments and more
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('locations')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{locName}}
+                                            <span class="pull-right badge bg-blue" *ngIf="multipeLocationAllowed == true">{{location_count}}</span>
+                                        </span>
+                                        <p *ngIf="location_count == 0" class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
                                         <p class="settings_info">Set up your locations here</p>
-                                    </a></li>
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')"><a
-                                        class="pointer-cursor"><span class="lnk setings">Departments
-                                            <span *ngIf="filterbydepartment"
-                                                class="pull-right badge bg-blue">{{departmentCount}}</span>
-                                        <span *ngIf="!filterbydepartment" class="pull-right">Off</span></span>
+                                    </a>
+                                </li>
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Departments
+                                            <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>
+                                            <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
+                                        </span>
                                         <p class="settings_info">Add departments here</p>
                                     </a>
                                 </li>
@@ -37,8 +44,10 @@
                                         <p class="settings_info">Create or manage users</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('livetrack')"><a class="pointer-cursor">
-                                        <span class="lnk setings">Live Tracking<span class="pull-right">
+                                <li (click)="redirecTo('livetrack')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Live Tracking
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
                                                 (change)="handle_liveTracking($event)">
                                             </mat-slide-toggle> -->
@@ -50,12 +59,14 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('nonworking')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{non_wrk_day_hr_cap}}</span>
+                                <li (click)="redirecTo('nonworking')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{non_wrk_day_hr_cap}}</span>
                                         <p class="settings_info">Manage your non working days here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('labels')"><a class="pointer-cursor">
+                                <li (click)="redirecTo('labels')">
+                                    <a class="pointer-cursor">
                                         <span class="lnk setings">{{customfields_cap}}</span>
                                         <p class="settings_info">Add or manage your labels here</p>
                                     </a>
@@ -81,49 +92,52 @@
                     <div class="box box-widget widget-user-2">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="bprofileTooltip">Jaldee Online <i class="fa fa-gears fl-right lnk"></i>
+                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">Jaldee Online
+                                <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings"><a>{{frm_profile_cap}}</a></li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor">
-                                   
-                            
-                                <span  class="lnk setings"> Business Profile :- {{weightageValue}} %
-                                </span>
-                                <p class="settings_info"> Profile Strength -{{getBusinessProfileWeightageText()}}</p>
-                                <!-- <div class="progress" style="height: 15px;">
+                                <li class="form-level-settings">
+                                    <a>{{frm_profile_cap}}</a>
+                                </li>
+                                <li (click)="redirecTo('bprofile')">
+                                    <a class="pointer-cursor">
+
+
+                                        <span class="lnk setings"> Business Profile :- {{weightageValue}} %
+                                        </span>
+                                        <p> Profile Strength -<span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}}</span> </p>
+                                        <!-- <div class="progress" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                             </div> -->
-                            <div class="progress"  style="height: 12px;">
-                                    <div class="progress-bar"  role="progressbar" aria-valuenow="progress_bar_one" 
-                                        aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
-                                   
-                                    </div>
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_two" 
-                                        aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
-                                     
-                                    </div>
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" 
-                                        aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
-                                      
-                                    </div>
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_four" 
-                                        aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
-                                      
-                                    </div>
-                                
-                                
-                                </div>
-                            
-                                <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
-                            </a>
-                        </li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Jaldee Online
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_one" aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
+
+                                            </div>
+                                            <div class="progress-bar" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" aria-valuemin="0"
+                                                aria-valuemax="100" [style.width.%]="progress_bar_two">
+
+                                            </div>
+                                            <div *ngIf="progress_bar_three!=0" class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" aria-valuemin="0"
+                                                aria-valuemax="100" [style.width.%]="progress_bar_three">
+
+                                            </div>
+                                            <div class="progress-bar" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" aria-valuemin="0"
+                                                aria-valuemax="100" [style.width.%]="progress_bar_four">
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('bprofile')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Jaldee Online
                                             <span class="pull-right">
                                                 {{onlinepresence_statusstr}}</span>
                                             <!-- <mat-slide-toggle [(ngModel)]="search_status"
@@ -131,26 +145,30 @@
                                             </mat-slide-toggle> -->
                                         </span>
                                         <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                        class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                            class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
                                         <p class="settings_info">Enable this to get online visibility.</p>
-                                       
+
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
-                                            class="lnk setings">List my profile on Jaldee.com
+                                <li (click)="redirecTo('bprofile')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">List my profile on Jaldee.com
                                             <span class="pull-right">
-                                                    {{search_statusstr}} 
+                                                {{search_statusstr}}
                                                 <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
-                                            </mat-slide-toggle> --></span>
+                                            </mat-slide-toggle> -->
+                                            </span>
                                         </span>
-                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
-                                        class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
-                                <p class="settings_info">{{frm_search_cap}}</p>
-                                       
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                        <p class="settings_info">{{frm_search_cap}}</p>
+
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
-                                    </a></li>
+                                    </a>
+                                </li>
                                 <!-- <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
                                             style="display: flex;">Online
                                             Profile
@@ -159,10 +177,9 @@
                                         <p class="settings_info">Manage your profile here</p>
                                     </a>
                                 </li> -->
-                                <li (click)="redirecTo('integration')" class="pointer-cursor"
-                                    [matTooltipClass]="tooltipcls" [matTooltip]="integration"><a
-                                        class="pointer-cursor"><span class="lnk setings"
-                                            style="display: flex;">Jaldee.com Integration
+                                <li (click)="redirecTo('integration')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="integration">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings" style="display: flex;">Jaldee.com Integration
                                         </span>
                                         <p class="settings_info">Manage your account integration with jaldee.com</p>
                                     </a>
@@ -182,10 +199,12 @@
                                         <p class="settings_info">{{frm_addinfo_cap}}</p>
                                     </a>                                   
                                 </li> -->
-                                <li (click)="redirecTo('privacy')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Privacy</span>
+                                <li (click)="redirecTo('privacy')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Privacy</span>
                                         <p class="settings_info">Manage the privacy of your contact details here.</p>
-                                    </a></li>
+                                    </a>
+                                </li>
                                 <!-- <li (click)="redirecTo('languages')"><a class="pointer-cursor"><span
                                             class="lnk setings">Languages
                                             Known</span>
@@ -206,15 +225,19 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager <i
-                                    class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')" [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
-                                <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
-                                <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
-                                            class="lnk setings">QManager<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>{{frm_waitlist_cap}}</a>
+                                </li>
+                                <li (click)="redirecTo('waitlistmanager')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">QManager
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="waitlistStatus"
                                                 (change)="handleCheckinPresence($event)">
                                             </mat-slide-toggle> -->
@@ -227,42 +250,47 @@
                                 <!-- <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Same Day Online {{checkin_label |capitalizeFirst}}s
                                             <span class="pull-right"> -->
-                                                <!-- <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
+                                <!-- <mat-slide-toggle [(ngModel)]="waitlist_status" [disabled]="!waitlistStatus"
                                                 (change)="handle_waitliststatus($event)"></mat-slide-toggle> -->
-                                                <!-- {{waitlist_statusstr}}</span>
+                                <!-- {{waitlist_statusstr}}</span>
                                         </span> -->
-                                        <!-- <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p> -->
-                                        <!-- <p class="settings_info">Set up same day checkin here</p>
+                                <!-- <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p> -->
+                                <!-- <p class="settings_info">Set up same day checkin here</p>
                                     </a></li>
                                 <li (click)="redirecTo('waitlistmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Future {{checkin_label |capitalizeFirst}}s
                                             <span class="pull-right"> -->
-                                                <!-- <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                <!-- <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
                                                 [disabled]="!waitlistStatus"
                                                 (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle> -->
-                                                <!-- {{futurewaitlist_statusstr}}</span>
+                                <!-- {{futurewaitlist_statusstr}}</span>
                                         </span> -->
-                                        <!-- <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
+                                <!-- <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
                                         </p> -->
-                                        <!-- <p class="settings_info">Set up future checkin here</p>
+                                <!-- <p class="settings_info">Set up future checkin here</p>
                                     </a></li> -->
-                                <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{services_cap}} <span
-                                                class="pull-right badge bg-blue">{{service_count}}</span></span>
+                                <li (click)="redirecTo('services')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{services_cap}}
+                                            <span class="pull-right badge bg-blue">{{service_count}}</span>
+                                        </span>
                                         <p class="settings_info">Add and manage services here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{qs_cap}}
-                                            <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
-                                            <p *ngIf="queues_count == 0"
-                                            class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Queues are not created</p>
+                                <li (click)="redirecTo('queues')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{qs_cap}}
+                                            <span class="pull-right badge bg-blue">{{queues_count}}</span>
+                                        </span>
+                                        <p *ngIf="queues_count == 0" class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Queues are not created</p>
                                         <p class="settings_info">Add and manage your queues here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{displayboards_cap}}s<span
-                                                class="pull-right badge bg-blue">{{board_count_waitlist}}</span>
+                                <li (click)="redirecTo('displayboards')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{displayboards_cap}}s
+                                            <span class="pull-right badge bg-blue">{{board_count_waitlist}}</span>
                                         </span>
                                         <p class="settings_info">Create and manage QBoards here</p>
                                     </a>
@@ -275,15 +303,20 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
-                                Jaldee Appointment <i class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
+                                Jaldee Appointment
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
-                                <li class="form-level-settings"><a>{{frm_appointment_cap}}</a></li>
-                                <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Appointment Manager<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>{{frm_appointment_cap}}</a>
+                                </li>
+                                <li (click)="redirecTo('appointmentmanager')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Appointment Manager
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="createappointment_status"
                                                 (change)="handle_appointmentPresence($event)">
                                             </mat-slide-toggle> -->
@@ -300,43 +333,48 @@
                                 </li>
                                 <!-- <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Same Day Online Appointments <span class="pull-right"> -->
-                                                <!-- <mat-slide-toggle [(ngModel)]="apptlist_status"
+                                <!-- <mat-slide-toggle [(ngModel)]="apptlist_status"
                                                 [disabled]="!createappointment_status"
                                                 (change)="handle_apptliststatus($event)"></mat-slide-toggle> -->
-                                                <!-- {{apptlist_statusstr}}</span>
+                                <!-- {{apptlist_statusstr}}</span>
                                         </span> -->
-                                        <!-- <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p> -->
-                                        <!-- <p class="settings_info">Set up same day appointment here</p>
+                                <!-- <p class="sts" [class.active]="apptlist_status">{{apptlist_statusstr}}</p> -->
+                                <!-- <p class="settings_info">Set up same day appointment here</p>
                                     </a></li>
                                 <li (click)="redirecTo('appointmentmanager')"><a class="pointer-cursor"><span
                                             class="lnk setings">Future Appointments
                                             <span class="pull-right"> -->
-                                                <!-- <mat-slide-toggle [(ngModel)]="futureDateApptlist"
+                                <!-- <mat-slide-toggle [(ngModel)]="futureDateApptlist"
                                                 [disabled]="!createappointment_status"
                                                 (change)="handle_futureapptliststatus($event)"></mat-slide-toggle> -->
-                                                <!-- {{futureapptlist_statusstr}}</span>
+                                <!-- {{futureapptlist_statusstr}}</span>
                                         </span> -->
-                                        <!-- <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}} -->
-                                        <!-- </p> -->
-                                        <!-- <p class="settings_info">Set up future appointment here</p>
+                                <!-- <p class="sts" [class.active]="futureDateApptlist">{{futureapptlist_statusstr}} -->
+                                <!-- </p> -->
+                                <!-- <p class="settings_info">Set up future appointment here</p>
                                     </a></li> -->
-                                <li (click)="redirecTo('appservices')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{services_cap}} <span
-                                                class="pull-right badge bg-blue">{{service_count}}</span></span>
+                                <li (click)="redirecTo('appservices')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{services_cap}}
+                                            <span class="pull-right badge bg-blue">{{service_count}}</span>
+                                        </span>
                                         <p class="settings_info">Add and manage services here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('schedules')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{schedules_cap}}<span
-                                                class="pull-right badge bg-blue">{{schedules_count}}</span></span>
-                                                <p *ngIf="schedules_count == 0"
-                                            class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are not created</p>
+                                <li (click)="redirecTo('schedules')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{schedules_cap}}
+                                            <span class="pull-right badge bg-blue">{{schedules_count}}</span>
+                                        </span>
+                                        <p *ngIf="schedules_count == 0" class="req-flds-cap">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are not created</p>
                                         <p class="settings_info">Manage your schedules here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('appdisplayboards')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{displayboards_cap}}s<span
-                                                class="pull-right badge bg-blue">{{board_count}}</span>
+                                <li (click)="redirecTo('appdisplayboards')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{displayboards_cap}}s
+                                            <span class="pull-right badge bg-blue">{{board_count}}</span>
                                         </span>
                                         <p class="settings_info">Create and manage QBoards here</p>
                                     </a>
@@ -419,15 +457,19 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="billposTooltip">Jaldee Billing <i class="fa fa-gears fl-right lnk"></i>
+                            <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">Jaldee Billing
+                                <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings"><a>{{frm_bill_cap}}.</a></li>
-                                <li (click)="redirecTo('pos')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Billing/POS<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>{{frm_bill_cap}}.</a>
+                                </li>
+                                <li (click)="redirecTo('pos')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Billing/POS
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="pos_status"
                                                 (change)="handle_posStatus($event)">
                                             </mat-slide-toggle> -->
@@ -439,21 +481,26 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('items')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{items_cap}}
-                                            <span class="pull-right badge bg-blue">{{item_count}}</span></span>
+                                <li (click)="redirecTo('items')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{items_cap}}
+                                            <span class="pull-right badge bg-blue">{{item_count}}</span>
+                                        </span>
                                         <p class="settings_info">Create new products/items and related information here.
                                         </p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('discounts')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{discount_cap}}
-                                            <span class="pull-right badge bg-blue">{{discount_count}}</span></span>
+                                <li (click)="redirecTo('discounts')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{discount_cap}}
+                                            <span class="pull-right badge bg-blue">{{discount_count}}</span>
+                                        </span>
                                         <p class="settings_info">Create your discounts here.</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('coupons')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{coupons_cap}}
+                                <li (click)="redirecTo('coupons')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{coupons_cap}}
                                         </span>
                                         <p class="settings_info">View all the coupons available here.</p>
                                     </a>
@@ -467,15 +514,20 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="payments">
-                                Jaldee Pay <i class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="payments">
+                                Jaldee Pay
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings"><a>Set up and manage your banking details.</a></li>
-                                <li (click)="redirecTo('payments')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Jaldee Pay<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>Set up and manage your banking details.</a>
+                                </li>
+                                <li (click)="redirecTo('payments')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Jaldee Pay
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="payment_status"
                                                 (change)="handle_paymentstatus($event)"></mat-slide-toggle> -->
                                                 {{payment_statusstr}}</span>
@@ -486,27 +538,21 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('paymentsettings')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{payment_setting_cap}}
+                                <li (click)="redirecTo('paymentsettings')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{payment_setting_cap}}
                                         </span>
                                         <p class="settings_info">Set up your payment modes here</p>
-                                        <div class="payTypeVerify"
-                                            *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active payment
-                                            mode : PayTm </div>
-                                        <div class="payTypeVerify"
-                                            *ngIf="payuVerified && !paytmVerified && !isJaldeeAccount">Active
-                                            payment
-                                            mode : CC/DC/Netbanking</div>
-                                        <div class="payTypeVerify"
-                                            *ngIf="paytmVerified && payuVerified && !isJaldeeAccount">Active payment
-                                            modes : CC/DC/Netbanking and PayTm</div>
-                                        <div class="payTypeVerify" *ngIf="isJaldeeAccount">Active payment mode :
-                                            Jaldee
-                                            Bank</div>
+                                        <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active payment mode : PayTm </div>
+                                        <div class="payTypeVerify" *ngIf="payuVerified && !paytmVerified && !isJaldeeAccount">Active payment mode : CC/DC/Netbanking</div>
+                                        <div class="payTypeVerify" *ngIf="paytmVerified && payuVerified && !isJaldeeAccount">Active payment modes : CC/DC/Netbanking and PayTm</div>
+                                        <div class="payTypeVerify" *ngIf="isJaldeeAccount">Active payment mode : Jaldee Bank
+                                        </div>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('taxsettings')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{tax_setting_cap}}
+                                <li (click)="redirecTo('taxsettings')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{tax_setting_cap}}
                                         </span>
                                         <p class="settings_info">Enable and configure tax settings.</p>
                                     </a>
@@ -519,19 +565,22 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager <i
-                                    class="fa fa-gears fl-right lnk"></i>
+                            <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager
+                                <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked  set-block-4">
-                                <li class="form-level-settings"><a>{{frm_donation_cap}}</a></li>
-                                <li (click)="redirecTo('donationmanager')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Accept Donations<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>{{frm_donation_cap}}</a>
+                                </li>
+                                <li (click)="redirecTo('donationmanager')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Accept Donations
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="donations_status"
                                                 (change)="handle_Donations($event)">
-                                            </mat-slide-toggle> --> {{donations_statusstr}}</span>
+                                            </mat-slide-toggle> -->{{donations_statusstr}}</span>
                                         </span>
                                         <!-- <p class="sts" [class.active]="donations_status">
                                             {{donations_statusstr}}</p> -->
@@ -540,9 +589,11 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('causes')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Causes
-                                            <span class="pull-right badge bg-blue">{{cause_count}}</span></span>
+                                <li (click)="redirecTo('causes')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Causes
+                                            <span class="pull-right badge bg-blue">{{cause_count}}</span>
+                                        </span>
                                         <p class="settings_info">Add and manage causes here</p>
                                     </a>
                                 </li>
@@ -554,15 +605,20 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="comm">
-                                Communications And Notifications <i class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="comm">
+                                Communications And Notifications
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings"><a>These settings allows the video call options</a></li>
-                                <li (click)="redirecTo('video')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Teleservice<span class="pull-right">
+                                <li class="form-level-settings">
+                                    <a>These settings allows the video call options</a>
+                                </li>
+                                <li (click)="redirecTo('video')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Teleservice
+                                            <span class="pull-right">
                                                 <!-- <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
                                                 (change)="handle_virtualCallingModeStatus($event)">
                                             </mat-slide-toggle> -->
@@ -570,10 +626,9 @@
                                         </span>
                                         <!-- <p class="sts" [class.active]="virtualCallingMode_status">
                                             {{virtualCallingMode_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling
-                                            hints.</p>
-                                        <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling
-                                            hints
+                                        <p class="settings_info" *ngIf="virtualCallingMode_status"> Virtual Calling hints.
+                                        </p>
+                                        <p class="settings_info" *ngIf="!virtualCallingMode_status">Virtual Calling hints
                                         </p>
                                     </a>
                                 </li>
@@ -583,10 +638,10 @@
                                         <p class="settings_info">Add the mode for the video call </p>
                                     </a>
                                 </li> -->
-                                <li (click)="redirecTo('notifications')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{notification_cap}}</span>
-                                        <p class="settings_info">{{cust_domain_name|capitalizeFirst}} and
-                                            {{provider_domain_name}} notifications settings</p>
+                                <li (click)="redirecTo('notifications')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{notification_cap}}</span>
+                                        <p class="settings_info">{{cust_domain_name|capitalizeFirst}} and {{provider_domain_name}} notifications settings</p>
                                     </a>
                                 </li>
                             </ul>
@@ -597,15 +652,18 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}} <i
-                                    class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings"><a>{{frm_mis_cap}}</a></li>
-                                <li (click)="redirecTo('saleschannel')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{saleschannel_cap}}</span>
+                                <li class="form-level-settings">
+                                    <a>{{frm_mis_cap}}</a>
+                                </li>
+                                <li (click)="redirecTo('saleschannel')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{saleschannel_cap}}</span>
                                         <p class="settings_info">Sales channel options</p>
                                     </a>
                                 </li>
@@ -615,8 +673,9 @@
                                         <p class="settings_info">Create or join corporate account</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('jdn')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{frm_jdn_short_cap}}
+                                <li (click)="redirecTo('jdn')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">{{frm_jdn_short_cap}}
                                         </span>
                                         <p class="settings_info">Subscribe to Jaldee Discount Network here</p>
                                     </a>
@@ -668,16 +727,19 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('customers')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="customers">
-                                Customers <i class="fa fa-gears fl-right lnk"></i></h4>
+                            <h4 (click)="redirecTo('customers')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="customers">
+                                Customers
+                                <i class="fa fa-gears fl-right lnk"></i>
+                            </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings"><a>These settings allows the customers to see their
-                                        walkin check-ins</a></li>
-                                <li (click)="redirecTo('custid')"><a class="pointer-cursor"><span
-                                            class="lnk setings">Customer Id
+                                <li class="form-level-settings">
+                                    <a>These settings allows the customers to see their walkin check-ins</a>
+                                </li>
+                                <li (click)="redirecTo('custid')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Customer Id
                                         </span>
                                         <p class="settings_info">Configure Customer Id format</p>
                                     </a>
