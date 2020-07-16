@@ -10338,3 +10338,7 @@ a {
 .cdetailssend {
   padding-left: 5px;
 }
+.slot-list .mat-chip-list-wrapper {
+  max-height: 200px !important;
+  overflow: auto !important;
+}
