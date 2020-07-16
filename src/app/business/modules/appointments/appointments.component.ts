@@ -363,7 +363,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
     this.getServices();
-    this.getUsers();
+    this.getProviders();
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
