@@ -30,8 +30,6 @@ export class ProviderDataStorageService {
     return this.observable_weightageArray.asObservable();
   }
   setWeightageArray(ArrayObject) {
-    console.log('ArrayObject..'+ArrayObject);
-    
     this.observable_weightageArray.next(ArrayObject);
   }
   setWeightageObjectOfDomain(domainObject){
@@ -54,7 +52,7 @@ export class ProviderDataStorageService {
     this.business_profile = data;
     const domainName = this.business_profile.serviceSector.domain;
     const subdomainName = this.business_profile.serviceSubSector.subDomain;
-    console.log('weightageARray' + this.weightageArray);
+
     //business name
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME) && this.business_profile.businessName) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME);
@@ -168,9 +166,7 @@ export class ProviderDataStorageService {
 
 
 updateMandatoryAndAdditionalFieldWeightage(){
- console.log(this.weightageObjectDomain);
- console.log(this.weightageObjectSubDomain);
- 
+
   let mandatoryObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
    let additionalObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
   
@@ -249,8 +245,6 @@ updateSpecilizationWeightage(data){
 }
 
 updateProfilePicWeightage(isImageExist){
-console.log('dataStotrgae imageExists..'+isImageExist);
-
   let profilePicObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.PROFILE_PIC;
   if(this.checkExistenceInWeightageArray(profilePicObject)){
     if(isImageExist===false){

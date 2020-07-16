@@ -35,6 +35,8 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 export class BProfileComponent implements OnInit, OnDestroy {
 
+  jaldee_online_disabled_msg: string;
+  jaldee_online_enabled_msg: string;
   progress_bar_four: number;
   progress_bar_three: number;
   progress_bar_two: number;
@@ -380,7 +382,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_enabled_msg=Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_disabled_msg=Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
@@ -467,8 +472,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
     });
   }
   checkAllRequiredFiedsOfJaldeeOnlineFilled() {
-    console.log(JSON.stringify(this.businessweightageArray));
-    
     let weightageArray = this.businessweightageArray.map(obj => obj.name);
     return projectConstantsLocal.REQUIRED_FIELDS_JALDEE_ONLINE.every(function (val) {
       return weightageArray.includes(val);
@@ -476,16 +479,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   }
   changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
-    console.log('requiredFieldStatus...'+requiredFieldFilledStatus);
-    
-    if (requiredFieldFilledStatus==true && this.normal_search_active === false) {
-      
+    if (requiredFieldFilledStatus==true && this.onlinepresence_status === false) {
       if(!localStorage.getItem('popupShown')) {
-      this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+      this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
       localStorage.setItem('popupShown', 'true');
       }
-    } else if (requiredFieldFilledStatus==false && this.normal_search_active===true) {
-      this.handle_searchstatus();
+    } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
+      this.handle_jaldeeOnlinePresence();
+      
     }
 
   }
@@ -668,7 +669,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         //this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
         // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
-        this.shared_functions.openSnackBar('Jaldee Online ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        this.shared_functions.openSnackBar('List myProfile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
 
@@ -723,7 +724,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('List my Profile on Jaldee.com  ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -1544,10 +1545,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
           weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
           weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
           weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
-          console.log(this.mandatoryfieldArray);
-          console.log(weightageObjectOfDomain);
-
-
           this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
 
 
@@ -1708,8 +1705,6 @@ export class BProfileComponent implements OnInit, OnDestroy {
           weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
           weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
           weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
-          console.log(this.mandatoryfieldArray);
-          console.log(weightageObjectOfSubDomain);
           this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
           for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {

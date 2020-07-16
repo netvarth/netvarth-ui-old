@@ -65,9 +65,11 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Business profile
-                                            </h2>
-
+                                            <h3>Business Profile
+                                            </h3>
+                                            <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}} {{weightageValue}} %</span>
+                                                
+                                                </h6>
                                         </div>
 
                                         <!-- <div class="ct-r ml-auto">
@@ -86,15 +88,10 @@
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a> </p> -->
 
-                                    <div class="col-md-10 ct-l col-xs-12">
-                                        <span style="font-size:12px;">Profile Strength- {{getBusinessProfileWeightageText()}}
-
-                                        </span>
-                                        <br>
+                                    <div class="col-md-10 ct-l col-xs-12 no-padding">
                                         <div class="col-md-10">
-                                        <div style="font-weight:bold;" class="col-md-9 mt-2">{{weightageValue}} %  </div>
-                                                <div class="col-md-3">
-                                                        <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;" >{{bprofile_btn_text}}</button>
+                                        <div class="col-md-10 mt-2">  
+                                                        <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button>
                                                     </div>
                                       
 <!--                                                 
@@ -142,8 +139,11 @@
                                  
                                             <div class="ctrl">
                                                 <div class="ct-l">
-                                                    <h2>Jaldee Online &nbsp;&nbsp; <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-                                                        </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
+                                                    <h2 style="color:black;">Jaldee Online &nbsp;&nbsp;
+                                                            <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
+                                                                </mat-slide-toggle>
+                                                                &nbsp;{{profile_status_str}}</h2>
+                                                        
                                                     
                                                
                                                 </div>
@@ -151,22 +151,20 @@
                                       
                                              
                                              
+<!-- 
+                                            <p class="form-level-settings" *ngIf="!profile_status">
+                                                    {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
+                                                        (click)="learnmore_clicked('business-profile', $event)">Learn
+                                                        More</a></p>
+                                                <p class="form-level-settings" *ngIf="profile_status">
+                                                    {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
+                                                        (click)="learnmore_clicked('business-profile', $event)">Learn
+                                                        More</a> </p> 
 
-                                            <p class="form-level-settings" *ngIf="!normal_search_active">
-                                                {{frm_public_search_cap}}
-                                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
-                                                </a>
-                                            </p>
-                                            <p class="form-level-settings" *ngIf="normal_search_active">
-                                                {{frm_public_search_off_cap}}
-                                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
-                                                </a>
-                                            </p>
-
-                                            <br>
+                                            <br> -->
                                             <div class="col-md-12 col-xs-12 col-sm-12">
-                                            <span class="inactive" *ngIf="!jaldee_online_status">Your Patients cannot able to see u online,please enable jaldee </span>
-                                            <span class="active" *ngIf="jaldee_online_status">Your Patients can see u online by clicking jaldee link or scanning QR code</span>
+                                            <span class="inactive" *ngIf="!profile_status">{{jaldee_online_disabled_msg}} </span>
+                                            <span class="active" *ngIf="profile_status">{{jaldee_online_enabled_msg}}</span>
                                             </div>
                                       
                                     
@@ -183,7 +181,7 @@
                                                 <ul class="sbl">
                                                     <li class="acc-url-li">
                                         
-                                                         <span class=""> Here is your QR Code :-</span>
+                                                         <strong> Here is your QR Code :-</strong>
 
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
@@ -209,16 +207,16 @@
 
                                                     </li>
 
-                                                    <li class="bstatus"><span class="inactive" *ngIf="!jaldee_online_status">
+                                                    <li class="bstatus"><span class="inactive" *ngIf="!profile_status">
                                                             <i class="fa fa-times"></i> Inactive</span>
-                                                        <span class="active" *ngIf="jaldee_online_status">
+                                                        <span class="active" *ngIf="profile_status">
                                                             <i class="fa fa-check"></i> Active</span>
 
                                                     </li>
 
                                                     <li class="acc-url-li">
 
-                                                        <span class=""> Here is your Jaldee Link :-</span>
+                                                        <strong> Here is your Jaldee Link :-</strong>
                                                         <span class="busns-id">
 
                                                             <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.accEncUid}}</a> </span>
@@ -238,9 +236,9 @@
 
                                                     </li>
                                                     <li class="bstatus">
-                                                            <span class="inactive"*ngIf="!jaldee_online_status">
+                                                            <span class="inactive"*ngIf="!profile_status">
                                                                     <i class="fa fa-times" ></i> Inactive</span>
-                                                                <span class="active" *ngIf="jaldee_online_status">
+                                                                <span class="active" *ngIf="profile_status">
                                                                     <i class="fa fa-check" ></i> Active</span>
                                                            
 
@@ -366,11 +364,11 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>List my profile on Jaldee.com &nbsp;&nbsp;
+                                            <h2 style="color:black;">List my profile on Jaldee.com &nbsp;&nbsp;
                                                
-                                                    <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
-                                                    </mat-slide-toggle>
-                                                    &nbsp;{{profile_status_str}}
+                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                        </mat-slide-toggle> {{jaldee_online_status_str}}
+                                                   
                                             </h2>
                                            
 
@@ -378,19 +376,22 @@
 
                                 
                                     </div>
-                                    <p class="form-level-settings" *ngIf="!profile_status">
-                                        {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
-                                            (click)="learnmore_clicked('business-profile', $event)">Learn
-                                            More</a></p>
-                                    <p class="form-level-settings" *ngIf="profile_status">
-                                        {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
-                                            (click)="learnmore_clicked('business-profile', $event)">Learn
-                                            More</a> </p> 
+                                    <!-- <p class="form-level-settings" *ngIf="!normal_search_active">
+                                            {{frm_public_search_cap}}
+                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
+                                            </a>
+                                        </p>
+                                        <p class="form-level-settings" *ngIf="normal_search_active">
+                                            {{frm_public_search_off_cap}}
+                                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More
+                                            </a>
+                                        </p>
 
-                                            <br>
+
+                                            <br> -->
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <span class="inactive" *ngIf="!profile_status">Your profile is not listed in jaldee.com</span>
-                                            <span class="active" *ngIf="profile_status">Your profile is listed in jaldee.com</span>
+                                            <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
+                                            <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
                                         </div>
                                    
 
