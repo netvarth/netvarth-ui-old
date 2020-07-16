@@ -274,6 +274,9 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             this.updateLiveTrackInfo();
         }
     }
+    onCancel(){
+        this.router.navigate(['consumer']);
+    }
     notifyEvent(event) {
         if (event.checked) {
             this.notifyTime = 'ONEHOUR';

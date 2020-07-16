@@ -52,18 +52,18 @@
                                             {{liveTrackMessage}}
                                         </div>
                                     </div>
-                                    <ng-container>
-                                        <div *ngIf="shareLoc"
+                                </div>
+                                <ng-container>
+                                        <div
                                             class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
-                                            <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
-                                            <button type="button" [class.disabled]="track_loading"
+                                            <button (click)="onCancel()" type="button"  class="cs-btn bt2 small-btn">Cancel</button>&nbsp;
+                                            <button  *ngIf="shareLoc" type="button" [class.disabled]="track_loading"
                                                 class="cs-btn bt1 small-btn"
                                                 (click)="saveLiveTrackDetails()">Ok</button>
                                             <app-common-innerloading-spinner *ngIf="track_loading">
                                             </app-common-innerloading-spinner>
                                         </div>
                                     </ng-container>
-                                </div>
                             </div>
                         </ng-container>
                     </div>
