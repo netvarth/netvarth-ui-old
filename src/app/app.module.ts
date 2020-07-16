@@ -74,8 +74,12 @@ import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
+<<<<<<< HEAD
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
 
+=======
+import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
+>>>>>>> refs/remotes/origin/1.3-Profile
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();

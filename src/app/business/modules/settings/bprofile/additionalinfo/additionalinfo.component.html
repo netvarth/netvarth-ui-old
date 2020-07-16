@@ -35,6 +35,7 @@
                                     <ng-container
                                         *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                                         <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                                <ng-container *ngIf="fields.mandatory == false">
                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                 <mat-expansion-panel
                                                     [expanded]="fields['value'] && fields['value'] != ''"
@@ -227,12 +228,14 @@
                                                     </ng-container>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                            </ng-container>
                                         </div>
 
                                     </ng-container>
 
                                     <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                                         <div class="acc-cont" *ngFor="let fields of domain_fields">
+                                            <ng-container *ngIf="fields.mandatory == false">
                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                 <mat-expansion-panel [expanded]="fields['value']"
                                                     [disabled]="!fields['value']" [hideToggle]="!fields['value']">
@@ -419,6 +422,7 @@
                                                     </ng-container>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
+                                        </ng-container>
                                         </div>
                                     </ng-container>
                                 </mat-expansion-panel>

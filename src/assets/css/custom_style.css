@@ -10342,3 +10342,27 @@ a {
   max-height: 200px !important;
   overflow: auto !important;
 }
+
+.matProgressbar::ng-deep .mat-progress-bar-fill::after {
+  background-color: #1E457C;
+}
+
+.matProgressbar::ng-deep .mat-progress-bar {
+  background: #E4E8EB;
+}
+
+.matProgressbar::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}
+.bstatus {
+  display:flex !important;
+  list-style:none !important;
+
+}
+
+.progress-bar {
+  border-right: solid 5px #FFF;
+}
+.progress-bar:last-child {
+  border: none; 
+}

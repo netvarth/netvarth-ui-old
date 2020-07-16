@@ -6,6 +6,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../app.component';
+import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,6 +32,7 @@ export class AdminLoginComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public activaterouterobj: ActivatedRoute,
+    private provider_dataStorage:ProviderDataStorageService,
     public router: Router
   ) {
     this.activaterouterobj.paramMap
@@ -66,6 +68,8 @@ export class AdminLoginComponent implements OnInit {
         () => {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.provider_dataStorage.setWeightageArray([]);
+          localStorage.setItem('popupShown', 'false');
           this.api_loading = false;
           this.router.navigate(['home']);
           // this.dialogRef.close();
