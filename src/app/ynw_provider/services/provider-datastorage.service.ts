@@ -55,6 +55,7 @@ export class ProviderDataStorageService {
     const domainName = this.business_profile.serviceSector.domain;
     const subdomainName = this.business_profile.serviceSubSector.subDomain;
     console.log('weightageARray' + this.weightageArray);
+    //business name
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME) && this.business_profile.businessName) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.BUSINESS_NAME);
     }
@@ -139,7 +140,6 @@ export class ProviderDataStorageService {
   }
 
   checkExistenceInWeightageArray(constantName) {
-
     return this.weightageArray.some(object => object.name === constantName.name)
   }
 

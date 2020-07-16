@@ -69,6 +69,7 @@ export class AdminLoginComponent implements OnInit {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
           this.provider_dataStorage.setWeightageArray([]);
+          localStorage.setItem('popupShown', 'false');
           this.api_loading = false;
           this.router.navigate(['home']);
           // this.dialogRef.close();

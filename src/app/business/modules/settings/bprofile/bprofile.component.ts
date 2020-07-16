@@ -476,8 +476,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   }
   changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
+    console.log('requiredFieldStatus...'+requiredFieldFilledStatus);
+    
     if (requiredFieldFilledStatus==true && this.normal_search_active === false) {
+      
+      if(!localStorage.getItem('popupShown')) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+      localStorage.setItem('popupShown', 'true');
+      }
     } else if (requiredFieldFilledStatus==false && this.normal_search_active===true) {
       this.handle_searchstatus();
     }
