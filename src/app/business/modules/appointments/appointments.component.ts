@@ -77,6 +77,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_location = null;
   server_date;
   selectedView: any;
+  selectedUser: any;
   isBatch = false;
   statusAction = 'new';
   todayAppointments = [];
@@ -127,6 +128,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   timeSlotAppts: any = [];
   statusMultiCtrl: any = [];
   appt_list: any = [];
+  users: any = [];
   filterapplied = false;
   noFilter = true;
   today_waitlist_count: any = 0;
@@ -551,17 +553,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSchedules(date?) {
     const _this = this;
+    let filterEnum = {}
     if (date === 'all') {
-      const filterEnum = {
-        'location-eq': this.selected_location.id
-      };
+      filterEnum ['location-eq'] = this.selected_location.id;
+    }
+    if(this.selectedUser) {
+        filterEnum ['provider-eq'] = this.selectedUser.id;
+         
+      }
       return new Promise((resolve) => {
         _this.provider_services.getProviderSchedules(filterEnum).subscribe(
           (schedules: any) => {
             resolve(schedules);
           });
       });
-    }
   }
   getSchedulesFromView(view, schedules) {
     const qs = [];
@@ -2854,4 +2859,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
+  getProviders() {
+    const apiFilter = {};
+    apiFilter['userType-neq'] = 'ASSISTANT';
+    // let filter = 'userType-neq :"assistant"'
+    this.provider_services.getUsers(apiFilter).subscribe(data => {
+      this.users = data;
+      this.selectedUser = this.users[0]
+    });
+  }
+  
+  
+  handleUserSelection(user){
+      // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+      this.selectedUser = user;
+      this.getSchedules();
+    }
 }

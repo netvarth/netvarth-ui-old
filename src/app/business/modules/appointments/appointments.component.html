@@ -57,6 +57,28 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
+                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db">
+                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
+                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+                     style="padding-top: 12px !important;">
+                    <span *ngIf="!small_device_display">
+                      {{selectedUser.firstName}}</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <ul class="menu">
+                        <li *ngFor="let user of users;let i = index" [(value)]="i">
+                          <a class="pointer-cursor" (click)="handleUserSelection(user)">
+                            <h4 *ngIf="user.firstName.length>='27'">
+                              {{ user.firstName.substring(0,24) }}...</h4>
+                            <h4 *ngIf="user.firstName.length<'27'">{{user.firstName}}</h4>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <!-- <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li> -->
+                  </ul>
+                </li>
                 <li class="dropdown notifications-menu">
                   <a (click)="apptClicked('WALK_IN_APPOINTMENT')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
