@@ -246,7 +246,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
             this.getCurrentLocation().then(
                 (lat_long: any) => {
                     this.lat_lng = lat_long;
-                    if (!this.firstTimeClick) {
+                    if (!this.firstTimeClick) { 
                         this.updateLiveTrackInfo().then(
                             (liveTInfo) => {
                                 this.track_loading = false;

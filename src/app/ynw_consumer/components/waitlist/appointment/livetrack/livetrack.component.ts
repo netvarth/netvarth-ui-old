@@ -271,7 +271,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             );
         } else {
             this.shareLoc = false;
-            this.updateLiveTrackInfo();
+            this.updateLiveTrackInfo(); 
         }
     }
     onCancel(){
