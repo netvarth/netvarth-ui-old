@@ -10332,3 +10332,7 @@ a {
 .chkins-sect .table-responsive {
   min-height: 250px !important;
 }
+.slot-list .mat-chip-list-wrapper {
+  max-height: 200px !important;
+  overflow: auto !important;
+}

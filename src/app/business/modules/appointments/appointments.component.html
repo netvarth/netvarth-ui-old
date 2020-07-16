@@ -271,7 +271,7 @@
                     </tr>
                     <tr *ngIf="showSlotsN">
                       <td colspan="5" [ngClass]="{'no-appt': showNoSlots}">
-                        <mat-chip-list class="apptm-in-chip" *ngIf="!slotsloading && slotsForQ.length!=0">
+                        <mat-chip-list class="apptm-in-chip slot-list" *ngIf="!slotsloading && slotsForQ.length!=0">
                           <mat-chip class="apptslotW pointer-cursor" [ngClass]="{'active': slot.active}"
                             *ngFor="let slot of slotsForQ" [selected]="slot === apptTime"
                             (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
@@ -729,7 +729,7 @@
                     </tr>
                     <tr *ngIf="showSlotsN">
                       <td colspan="5" [ngClass]="{'no-appt':showNoSlots}">
-                        <mat-chip-list class="apptm-in-chip" *ngIf="!slotsloading && slotsForQ.length > 0">
+                        <mat-chip-list class="apptm-in-chip slot-list" *ngIf="!slotsloading && slotsForQ.length > 0">
                           <mat-chip class="apptslotW" [ngClass]="{'active': slot.active}" *ngFor="let slot of slotsForQ"
                             [selected]="slot === apptTime" (click)="apptClicked('WALK_IN_APPOINTMENT',slot.time)">
                             {{getSingleTime(slot.time)}}</mat-chip>

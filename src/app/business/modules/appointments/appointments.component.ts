@@ -406,6 +406,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         error => {
           _this.views.push(tempView);
+          _this.shared_functions.setitemToGroupStorage('appt-selectedView', _this.selectedView);
           resolve(_this.selectedView);
         }
       );
@@ -633,7 +634,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
+    if (view && view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
       for (let i = 0; i < view.customViewConditions.schedules.length; i++) {
         qIds.push(view.customViewConditions.schedules[i]['id']);
       }
