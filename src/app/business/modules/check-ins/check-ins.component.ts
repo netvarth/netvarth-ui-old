@@ -659,6 +659,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         error => {
           _this.views.push(tempView);
+          _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
           resolve(_this.selectedView);
         }
       );
@@ -776,7 +777,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
+    if (view && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
@@ -785,7 +786,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getActiveQIdsFromView(view) {
     const qIds = [];
-    if (view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
+    if (view && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         if (view.customViewConditions.queues[i].queueState === 'ENABLED') {
           qIds.push(view.customViewConditions.queues[i]['id']);
