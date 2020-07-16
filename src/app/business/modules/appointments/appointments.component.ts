@@ -17,6 +17,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -277,6 +278,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
     private _scrollToService: ScrollToService,
+    public dateformat: DateFormatPipe,
     private router: Router,
     private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions) {
@@ -2494,51 +2496,29 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       ].join(',');
       const printWindow = window.open('', '', params);
       let checkin_html = '';
-      checkin_html += '<div style="width:100%;height:280px;border:1px solid #ddd;display:flex ">';
-      checkin_html += '<div style="width:65%;">';
-      checkin_html += '<div style="float: left; width:150px; height:280px;font-size:1.5rem;background-color: #eee;text-align: center;">';
-      checkin_html += '<div style="margin-top:90px">' + _this.shared_functions.transformToYMDFormat(apptlist.appmtDate) + '</div>';
-      checkin_html += '<div style="margin-top:10px">' + apptlist.appmtTime + '</div>';
-      checkin_html += '</div>';
-      checkin_html += '<div style="float:left;height:100px;font-weight:500;margin-left:5px">';
-      checkin_html += '<h2 style="clear:both;padding-left:5px;text-align:center;">';
-      checkin_html += _this.bname.charAt(0).toUpperCase() + _this.bname.substring(1);
-      checkin_html += '<div style="clear:both;font-weight:500;font-size:0.95rem;padding:0px;margin:0px">';
-      checkin_html += apptlist.location.place;
-      checkin_html += '</div>';
-      checkin_html += '</h2>';
-      checkin_html += '<div style="padding-top:5px;padding-left:5px">';
-      checkin_html += apptlist.appmtFor[0].firstName + ' ' + apptlist.appmtFor[0].lastName;
-      checkin_html += '</div>';
+      checkin_html += '<table style="width:100%;"><thead>';
+      checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(apptlist.appmtDate) + '<br/>';
+      if (apptlist.batchId) {
+        checkin_html += 'Batch <span style="font-weight:bold">' + apptlist.batchId + '</span>';
+      } else {
+        checkin_html += 'Appointment Time <span style="font-weight:bold">' + apptlist.appmtTime + '</span>';
+      }
+      checkin_html += '</td></tr>';
+      checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" style="text-align:center">' + apptlist.location.place + '</td></tr>';
+      checkin_html += '</thead><tbody>';
+      checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + apptlist.appmtFor[0].firstName + ' ' + apptlist.appmtFor[0].lastName + '</td></tr>';
       if (apptlist.service && apptlist.service.deptName) {
-        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">Department: </span>';
-        checkin_html += '<span>' + apptlist.service.deptName + '</span>';
-        checkin_html += '</div>';
+        checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + apptlist.service.deptName + '</td></tr>';
       }
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Service: </span>';
-      checkin_html += '<span>' + apptlist.service.name + '</span>';
-      checkin_html += '</div>';
+      checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + apptlist.service.name + '</td></tr>';
       if (apptlist.provider && apptlist.provider.firstName && apptlist.provider.lastName) {
-        checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-        checkin_html += '<span style="color: #999999">' + _this.provider_label + ': </span>';
-        checkin_html += '<span>' + apptlist.provider.firstName.charAt(0).toUpperCase() + apptlist.provider.firstName.substring(1) + ' ' + apptlist.provider.lastName;
-        checkin_html += '</span></div>';
+        checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + apptlist.provider.firstName.charAt(0).toUpperCase() + apptlist.provider.firstName.substring(1) + ' ' + apptlist.provider.lastName + '</td></tr>';
       }
-      checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
-      checkin_html += '<span style="color: #999999">Schedule: </span>';
-      checkin_html += '<span>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']';
-      checkin_html += '</span></div>';
-      checkin_html += '</div>';
-      checkin_html += '</div>';
-      checkin_html += '<div style="margin-top:65px;width:35%">';
-      checkin_html += '<div style="text-align:right;width:150px;height:150px">';
-      checkin_html += printContent.innerHTML;
-      checkin_html += '</div>';
-      checkin_html += '<div>Scan to know your status or log on to ' + _this.qr_value + '</div>';
-      checkin_html += '</div>';
-      checkin_html += '</div>';
+      checkin_html += '<tr><td width="48%" align="right">schedule</td><td>:</td><td>' + apptlist.schedule.name + ' [' + apptlist.schedule.apptSchedule.timeSlots[0].sTime + ' - ' + apptlist.schedule.apptSchedule.timeSlots[0].eTime + ']' + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+      checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+      checkin_html += '</tbody></table>';
       printWindow.document.write('<html><head><title></title>');
       printWindow.document.write('</head><body >');
       printWindow.document.write(checkin_html);
