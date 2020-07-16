@@ -10,7 +10,6 @@ import { IfStmt } from '@angular/compiler';
 })
 export class CheckinDetailsSendComponent implements OnInit {
     uuid: any;
-    check: any;
     checkin;
     deptName;
     bname;
@@ -29,6 +28,9 @@ export class CheckinDetailsSendComponent implements OnInit {
     splname: any;
     Schedulestime: any;
     Scheduleetime: any;
+    sms = true;
+    email = true;
+  chekintype: any;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -36,16 +38,19 @@ export class CheckinDetailsSendComponent implements OnInit {
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
-            this.check = this.data.check;
+            this.chekintype = this.data.chekintype;
+            console.log(this.chekintype);
         }
    ngOnInit() {
-    if ((this.check === 'sms') || (this.check === 'email')) {
+    console.log(this.chekintype);
+    if (this.chekintype === 'Waitlist') {
       this.getCheckinDetails();
      } else {
     this.getApptDetails();
      }
    }
     getApptDetails() {
+      console.log(this.chekintype);
         this.provider_services.getAppointmentById(this.uuid)
         .subscribe(
           data => {
@@ -61,12 +66,17 @@ export class CheckinDetailsSendComponent implements OnInit {
           this.schedulename =  this.checkin.schedule.name;
           this.Schedulestime = this.checkin.schedule.apptSchedule.timeSlots[0].sTime ;
           this.Scheduleetime = this.checkin.schedule.apptSchedule.timeSlots[0].eTime;
+          if (this.checkin.provider.firstName) {
           this.spfname = this.checkin.provider.firstName;
+          }
+          if (this.checkin.provider.lastName) {
           this.splname = this.checkin.provider.lastName;
+          }
           },
         );
     }
     getCheckinDetails() {
+      console.log(this.chekintype);
         this.provider_services.getProviderWaitlistDetailById(this.uuid)
       .subscribe(
         data => {
@@ -89,46 +99,54 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.dialogRef.close();
     }
     sendMessage() {
-        if (this.check === 'sms') {
-        this.provider_services.smsCheckin(this.uuid).subscribe(
-        () => {
-            this.dialogRef.close();
-            this.shared_functions.openSnackBar('Check-in details sent successfully');
-        },
-        error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-        );
-        } else if (this.check === 'email') {
-        this.provider_services.emailCheckin(this.uuid).subscribe(
-            () => {
-                this.dialogRef.close();
-                this.shared_functions.openSnackBar('Check-in details mailed successfully');
-            },
-            error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      console.log(this.chekintype);
+      if (this.chekintype === 'Waitlist') {
+          if (this.sms === true) {
+              this.provider_services.smsCheckin(this.uuid).subscribe(
+              () => {
+                  this.dialogRef.close();
+                  this.shared_functions.openSnackBar('Check-in details sent successfully');
+              },
+              error => {
+                  this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+              );
+          }
+          if (this.email === true) {
+              this.provider_services.emailCheckin(this.uuid).subscribe(
+                  () => {
+                      this.dialogRef.close();
+                      this.shared_functions.openSnackBar('Check-in details mailed successfully');
+                  },
+                  error => {
+                      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  }
+                  );
+          }
+        } else {
+          if (this.sms === true) {
+              this.provider_services.smsAppt(this.uuid).subscribe(
+                () => {
+                  this.dialogRef.close();
+                  this.shared_functions.openSnackBar('Appointment details sent successfully');
+                },
+                error => {
+                  this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+              );
             }
-            );
-        } else if (this.check === 'apptsms') {
-        this.provider_services.smsAppt(this.uuid).subscribe(
-          () => {
-            this.dialogRef.close();
-            this.shared_functions.openSnackBar('Appointment details sent successfully');
-          },
-          error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          if (this.email === true) {
+              this.provider_services.emailAppt(this.uuid).subscribe(
+                () => {
+                  this.dialogRef.close();
+                  this.shared_functions.openSnackBar('Appointment details mailed successfully');
+                },
+                error => {
+                  this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+              );
           }
-        );
-        } else if (this.check === 'apptemail') {
-          this.provider_services.emailAppt(this.uuid).subscribe(
-          () => {
-            this.dialogRef.close();
-           this.shared_functions.openSnackBar('Appointment details mailed successfully');
-          },
-          error => {
-           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-        }
+      }
     }
-}
+  }
+

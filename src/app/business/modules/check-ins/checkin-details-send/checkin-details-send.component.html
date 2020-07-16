@@ -1,8 +1,74 @@
 <h1 class="mat-dialog-title"> Checkin Details</h1>
-<!-- <h1 class="mat-dialog-title"> Appointment Details</h1> -->
+    <mat-dialog-content>        
+        <div class="form-group">
+             <div>
+                            <table style="width:100%;">
+                                 <thead>
+                                    <tr><td colspan="3" style="text-align:center">{{bname}}</td></tr>
+                                    <tr><td colspan="3" style="text-align:center">{{location}}</td></tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr><td width="48%" align="right">{{customer_label}}</td><td>:</td><td class="cdetailssend">{{fname}} {{lname}}</td></tr>
+            
+                                     <tr *ngIf="deptName"><td width="48%" align="right">Department</td><td>:</td><td class="cdetailssend">{{deptName}}</td></tr>
+                                     <tr *ngIf="spfname && splname"><td width="48%" align="right">doctor</td><td>:</td><td class="cdetailssend">{{spfname}}{{splname}}</td></tr>
+                                     <tr *ngIf = "qstarttime"><td width="48%" align="right">Queue</td><td>:</td><td class="cdetailssend">{{qname}} [{{qstarttime}} - {{qendtime}}]</td></tr>
+                                     <tr *ngIf = "Schedulestime"><td width="48%" align="right">Schedule</td><td>:</td><td class="cdetailssend">{{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</td></tr>
+                                     <tr *ngIf="appttime"><td width="48%" align="right">appointment Time</td><td>:</td><td class="cdetailssend">{{appttime}}</td></tr>
+                                     <tr *ngIf="appmtDate"><td width="48%" align="right">appointment Date</td><td>:</td><td class="cdetailssend">{{appmtDate}}</td></tr>
+            
+                                 </tbody>
+                            </table>   
+                    </div>  
+        </div>
+        <div class="mgtop40 form-group">
+            Send message via
+            <div class="coupon-outer">
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms"  [ngModelOptions]="{standalone: true}">
+                    SMS
+                </mat-checkbox>
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email"
+                    [ngModelOptions]="{standalone: true}">Email
+                </mat-checkbox>
+            </div>
+        </div>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
+        <button type="button" class="cs-btn bt1"  mat-button [disabled]="(!sms &&!email)" (click)="sendMessage()">Send</button>
+    </mat-dialog-actions>
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1 class="mat-dialog-title"> Checkin Details</h1>
 <div>
   
-        <div class="form-group">
+        <div>
                 <table style="width:100%;">
                      <thead>
                         <tr><td colspan="3" style="text-align:center">{{bname}}</td></tr>
@@ -20,9 +86,24 @@
 
                      </tbody>
                 </table>   
-            </div>  
+        </div>  
+        <div class="mgtop40 form-group">
+            Send message via
+            <div class="coupon-outer">
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                    SMS
+                </mat-checkbox>
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email"
+                    [ngModelOptions]="{standalone: true}">Email
+                </mat-checkbox>
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify"
+                    [ngModelOptions]="{standalone: true}">App
+                    notification
+                </mat-checkbox>
+            </div>
+        </div>
     <mat-dialog-actions>
         <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
         <button type="button" class="cs-btn bt1" (click)="sendMessage()">Send</button>
     </mat-dialog-actions>
-</div>
+</div> -->

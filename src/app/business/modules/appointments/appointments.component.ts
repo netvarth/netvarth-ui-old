@@ -2389,7 +2389,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         disableClose: true,
         data: {
           uuid: appt.uid,
-          check: 'apptsms'
+          chekintype: 'appointment'
         }
       });
       // _this.provider_services.smsAppt(appt.uid).subscribe(
@@ -2411,7 +2411,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           disableClose: true,
           data: {
             uuid: appt.uid,
-            check: 'apptsms'
+            chekintype: 'appointment'
           }
         });
         // _this.provider_services.smsAppt(appt.uid).subscribe(
@@ -2425,55 +2425,55 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-  emailAppt() {
-    const _this = this;
-    let appt;
-    if (!this.isBatch || this.time_type === 3) {
-      Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-        appt = _this.appointmentsChecked[apptIndex];
-      });
-      this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          uuid: appt.uid,
-          check: 'apptemail'
-        }
-      });
-      // _this.provider_services.emailAppt(appt.uid).subscribe(
-      //   () => {
-      //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-      //   },
-      //   error => {
-      //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   }
-      // );
-    } else {
-      Object.keys(_this.apptsChecked).forEach(slotIndex => {
-        Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appt = _this.appointmentsChecked[apptIndex];
-        });
-        this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            uuid: appt.uid,
-            check: 'apptemail'
-          }
-        });
-        //   this.provider_services.emailAppt(appt.uid).subscribe(
-        //     () => {
-        //       _this.shared_functions.openSnackBar('Appointment details mailed successfully');
-        //     },
-        //     error => {
-        //       _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     }
-        //   );
-      });
-    }
-  }
+  // emailAppt() {
+  //   const _this = this;
+  //   let appt;
+  //   if (!this.isBatch || this.time_type === 3) {
+  //     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+  //       appt = _this.appointmentsChecked[apptIndex];
+  //     });
+  //     this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+  //       width: '50%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         uuid: appt.uid,
+  //         check: 'apptemail'
+  //       }
+  //     });
+  //     // _this.provider_services.emailAppt(appt.uid).subscribe(
+  //     //   () => {
+  //     //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+  //     //   },
+  //     //   error => {
+  //     //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     //   }
+  //     // );
+  //   } else {
+  //     Object.keys(_this.apptsChecked).forEach(slotIndex => {
+  //       Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
+  //         appt = _this.appointmentsChecked[apptIndex];
+  //       });
+  //       this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+  //         width: '50%',
+  //         panelClass: ['popup-class', 'commonpopupmainclass'],
+  //         disableClose: true,
+  //         data: {
+  //           uuid: appt.uid,
+  //           check: 'apptemail'
+  //         }
+  //       });
+  //       //   this.provider_services.emailAppt(appt.uid).subscribe(
+  //       //     () => {
+  //       //       _this.shared_functions.openSnackBar('Appointment details mailed successfully');
+  //       //     },
+  //       //     error => {
+  //       //       _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       //     }
+  //       //   );
+  //     });
+  //   }
+  // }
   printAppt() {
     const _this = this;
     let appt;

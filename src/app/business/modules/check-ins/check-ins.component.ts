@@ -2130,7 +2130,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         uuid : appt.ynwUuid,
-        check : 'sms'
+        chekintype: 'Waitlist'
       }
     });
     // this.provider_services.smsCheckin(appt.ynwUuid).subscribe(
@@ -2142,30 +2142,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //   }
     // );
   }
-  emailCheckin() {
-    const _this = this;
-    let appt;
-    Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
-      appt = _this.appointmentsChecked[apptIndex];
-    });
-    this.notedialogRef = this.dialog.open(CheckinDetailsSendComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        uuid : appt.ynwUuid,
-        check : 'email'
-      }
-    });
-    // this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
-    //   () => {
-    //     this.shared_functions.openSnackBar('Check-in details mailed successfully');
-    //   },
-    //   error => {
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //   }
-    // );
-  }
+  // emailCheckin() {
+  //   const _this = this;
+  //   let appt;
+  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+  //     appt = _this.appointmentsChecked[apptIndex];
+  //   });
+  //   this.notedialogRef = this.dialog.open(CheckinDetailsSendComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       uuid : appt.ynwUuid,
+  //       check : 'email'
+  //     }
+  //   });
+  //   // this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
+  //   //   () => {
+  //   //     this.shared_functions.openSnackBar('Check-in details mailed successfully');
+  //   //   },
+  //   //   error => {
+  //   //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //   //   }
+  //   // );
+  // }
   goToCheckinDetails() {
     const _this = this;
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {

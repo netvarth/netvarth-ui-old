@@ -392,13 +392,13 @@
                             <i class="fa fa-comments-o "></i>
                           </a>
                           <a class="icon-action pointer-cursor icon-size2" *ngIf="apptSingleSelection && time_type!=3"
-                            [matTooltip]="'Send via SMS'">
+                            [matTooltip]="'Send via SMS/Email'">
                             <i class="fa fa-comment-o" (click)="smsCheckin()"></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
+                          <!-- <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
                             [matTooltip]="'Send via Email'">
                             <i class="fa fa-envelope-o" (click)="emailCheckin()"></i>
-                          </a>
+                          </a> -->
                           <a class="icon-action pointer-cursor icon-size3" *ngIf="consumerTrackstatus && apptSingleSelection &&  time_type == 1 " 
                           (click)="locateCustomer()" [matTooltip]="'Where is my customer'">
                           <i class="fa fa-location-arrow"></i>
