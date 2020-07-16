@@ -16,6 +16,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
+  weightageClass: string;
   progress_bar_four: number;
   progress_bar_three: number;
   progress_bar_two: number;
@@ -239,7 +240,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-    this.getBusinessConfiguration();
+   
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -266,6 +267,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     return total;
 
   }
+
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
@@ -290,6 +292,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     if(weightage <=25){
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'danger';
       this.progress_bar_one=weightage;
       this.progress_bar_two=0;
       this.progress_bar_three=0;
@@ -300,7 +303,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     if (weightage>25 && weightage < 50) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-     
+      this.weightageClass = 'warning';
       this.progress_bar_one=25;
       this.progress_bar_two=weightage-25;
       this.progress_bar_three=0;
@@ -310,7 +313,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-
+      this.weightageClass = 'info';
       this.progress_bar_one=25;
       this.progress_bar_two=25;
       this.progress_bar_three=weightage-50;
@@ -320,7 +323,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     } else if (weightage >= 75 && weightage < 100) {
       businessProfileWeightageText = Messages.GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
-  
+      this.weightageClass = 'primary';
       this.progress_bar_one=25;
       this.progress_bar_two=25;
       this.progress_bar_three=25;
@@ -331,7 +334,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     else if (weightage == 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
-      
+      this.weightageClass = 'success';
       this.progress_bar_one=25;
       this.progress_bar_two=25;
       this.progress_bar_three=25;
@@ -810,7 +813,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getServiceCount() {
-    const filter = { 'serviceType-neq': 'donationService' };
+    const filter = { 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -818,8 +821,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getQueuesCount() {
-    // const filter = { 'scope-eq': 'account' };
-    this.provider_services.getQueuesCount()
+    const filter = { 'scope-eq': 'account' };
+    this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
           this.queues_count = data;
@@ -895,6 +898,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
+                console.log(this.reqFields);
                 this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
                 this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                 this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
@@ -923,6 +927,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             }
           }
         }
+        this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
       });
   }
   getAssistantCount() {
@@ -1059,8 +1064,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       );
   }
   getSchedulesCount() {
-  //  const filter = { 'scope-eq': 'account' };
-    this.provider_services.getSchedulesCount()
+    const filter = { 'scope-eq': 'account' };
+    this.provider_services.getSchedulesCount(filter)
       .subscribe(
         data => {
           this.schedules_count = data;

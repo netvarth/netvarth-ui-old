@@ -67,7 +67,7 @@
                                         <div class="ct-l">
                                             <h3>Business Profile
                                             </h3>
-                                            <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}} {{weightageValue}} %</span>
+                                            <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}}</span>
                                                 
                                                 </h6>
                                         </div>
@@ -87,10 +87,13 @@
                                         {{frm_bpublic_search_cap}}<a class="learnmore-pointer" id="customer-help"
                                             (click)="learnmore_clicked('business-profile', $event)">Learn
                                             More</a> </p> -->
-
+                                          
                                     <div class="col-md-10 ct-l col-xs-12 no-padding">
+
                                         <div class="col-md-10">
-                                        <div class="col-md-10 mt-2">  
+                                              
+                                        <div class="col-md-10 mt-2"> 
+                                             <strong>  {{weightageValue}} %</strong>
                                                         <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button>
                                                     </div>
                                       
@@ -104,15 +107,15 @@
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
                                                
                                                 </div>
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_two" 
+                                                <div class="progress-bar" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
                                                  
                                                 </div>
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" 
+                                                <div *ngIf="progress_bar_three!=0"class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
                                                   
                                                 </div>
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="progress_bar_four" 
+                                                <div class="progress-bar" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
                                                   
                                                 </div>
