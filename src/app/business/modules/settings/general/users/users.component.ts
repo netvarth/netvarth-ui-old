@@ -68,6 +68,8 @@ export class BranchUsersComponent implements OnInit {
     linkprofiledialogRef;
     provId;
     businessConfig: any;
+    provider_label = '';
+    assistant_label = '';
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -82,6 +84,8 @@ export class BranchUsersComponent implements OnInit {
         this.domain = user.sector;
         this.api_loading = true;
         this.getUsers();
+        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        this.assistant_label = this.shared_functions.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
 
@@ -91,6 +95,7 @@ export class BranchUsersComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
     }
+    
 
     personalProfile(user) {
         const navigationExtras: NavigationExtras = {

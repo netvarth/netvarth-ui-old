@@ -109,14 +109,16 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span>
-                                        <h3 class="">
+                                        <div style="color: #3c8dbc;">
                                             {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}} <span
                                                 *ngIf="user.userType === 'PROVIDER'">({{getDepartmentNamebyId(user.deptId)}})</span>
-                                        </h3>
+                                        </div>
 
                                         <div class="c-ot m0">
                                             <div class="item">
-                                                <span class="ttle">{{user.userType}}</span>
+                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER'">{{provider_label}}</span>
+                                                <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
+                                                <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
                                             </div>
                                         </div>
 
