@@ -247,17 +247,10 @@
                                           
                                         </div>
                                     </div>
-<<<<<<< HEAD
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId style="width: 25%">
-                                        <div><i (click)="closeOnlineQR()"
-                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
-                                                aria-hidden="true"></i></div>
-=======
                                     <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
                                         <div>
                                             <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
                                         </div>
->>>>>>> refs/remotes/origin/1.3-Profile
                                         <div class="ngx-qrcod">
                                             <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
                                             </ngx-qrcode>
@@ -586,44 +579,6 @@
                                                                 class="time">{{schedule.time}}</span>
                                                         </li>
                                                     </ul> -->
-<<<<<<< HEAD
-                                                    <ng-container *ngIf="display_schedule.length == 0">
-                                                        <div class="no-dta">
-                                                            <p>{{have_not_add_cap}} Location Hours.</p>
-                                                            <span class="cs-btn bt3"
-                                                                (click)="change_schedulepopup()">{{add_it_cap}}</span>
-                                                        </div>
-                                                    </ng-container>
-                                                    <div class="copy block-level">
-                                                        <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')"
-                                                                class="editbt"
-                                                                *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
-                                                        </h5>
-                                                        <p class="form-level-settings">{{frm_loc_amen_cap}}<a
-                                                                class="learnmore-pointer" id="customer-help"
-                                                                (click)="learnmore_clicked('locationAmenities', $event)">Learn
-                                                                More</a>
-                                                        </p>
-                                                    </div>
-                                                    <ng-container
-                                                        *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
-                                                        <div class="copy">
-                                                            <ul class="amt-list">
-                                                                <li [matTooltip]="park_type + ' parking'"
-                                                                    [class]="badgeIcons['parkingtype']['class']"
-                                                                    *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
-                                                                </li>
-                                                                <li [matTooltip]="'24 Hours Open'"
-                                                                    [class]="badgeIcons['24hour']['class']"
-                                                                    *ngIf="bProfile.baseLocation.open24hours"></li>
-                                                                <ng-container
-                                                                    *ngIf="bProfile.baseLocation.locationVirtualFields">
-                                                                    <ng-container
-                                                                        *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
-                                                                        <li [matTooltip]="badge_map_arr[locvirtual]"
-                                                                            *ngIf="badgeIcons[locvirtual]"
-                                                                            [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
-=======
                                                             <ng-container *ngIf="display_schedule.length == 0">
                                                                 <div class="no-dta">
                                                                     <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
@@ -643,7 +598,6 @@
                                                                 <div class="copy">
                                                                     <ul class="amt-list">
                                                                         <li [matTooltip]="park_type + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
->>>>>>> refs/remotes/origin/1.3-Profile
                                                                         </li>
                                                                         <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
                                                                         <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
