@@ -151,7 +151,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     url: '/provider/settings/general/users/' + this.userId + '/settings'
                 });
                 breadcrumbs.push({
-                    title: 'Queues'
+                    title: 'Tokens/checkins'
                 });
                 this.breadcrumbs = breadcrumbs;
             });

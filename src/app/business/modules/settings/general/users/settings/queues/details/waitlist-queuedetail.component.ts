@@ -130,7 +130,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     },
                     {
                         url: '/provider/settings/general/users/' + this.userId + '/settings/queues',
-                        title: 'Queues'
+                        title: 'Tokens/checkins'
                     }
                 );
                 if (this.action === 'add') {
