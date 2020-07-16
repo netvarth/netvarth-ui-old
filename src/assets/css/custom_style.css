@@ -10342,3 +10342,10 @@ a {
   max-height: 200px !important;
   overflow: auto !important;
 }
+
+@media (max-width: 575px) {
+  ckeditor .ck-dropdown__panel-visible {
+    max-width: 240px;
+    overflow: auto;
+  }
+}
