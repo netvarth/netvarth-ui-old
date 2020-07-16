@@ -10366,3 +10366,9 @@ a {
 .progress-bar:last-child {
   border: none; 
 }
+@media (max-width: 575px) {
+  ckeditor .ck-dropdown__panel-visible {
+    max-width: 240px;
+    overflow: auto;
+  }
+}

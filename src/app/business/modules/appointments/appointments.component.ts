@@ -555,18 +555,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     let filterEnum = {}
     if (date === 'all') {
-      filterEnum ['location-eq'] = this.selected_location.id;
+      filterEnum['location-eq'] = this.selected_location.id;
     }
-    if(this.selectedUser) {
-        filterEnum ['provider-eq'] = this.selectedUser.id;
-         
-      }
-      return new Promise((resolve) => {
-        _this.provider_services.getProviderSchedules(filterEnum).subscribe(
-          (schedules: any) => {
-            resolve(schedules);
-          });
-      });
+    if (this.selectedUser) {
+      filterEnum['provider-eq'] = this.selectedUser.id;
+
+    }
+    return new Promise((resolve) => {
+      _this.provider_services.getProviderSchedules(filterEnum).subscribe(
+        (schedules: any) => {
+          resolve(schedules);
+        });
+    });
   }
   getSchedulesFromView(view, schedules) {
     const qs = [];
@@ -1590,9 +1590,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       const filteredDept = this.users_list.filter(user => user.id === this.selUser);
       let deptId;
       if (filteredDept[0] && filteredDept[0].deptId) {
-      deptId = filteredDept[0].deptId;
+        deptId = filteredDept[0].deptId;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: deptId} });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: deptId } });
     }
   }
   searchCustomer(source, appttime) {
@@ -2388,18 +2388,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          uuid : appt.uid,
-          check : 'apptsms'
+          uuid: appt.uid,
+          check: 'apptsms'
         }
       });
-        // _this.provider_services.smsAppt(appt.uid).subscribe(
-        //   () => {
-        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-        //   },
-        //   error => {
-        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //   }
-        // );
+      // _this.provider_services.smsAppt(appt.uid).subscribe(
+      //   () => {
+      //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+      //   },
+      //   error => {
+      //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   }
+      // );
     } else {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
@@ -2410,19 +2410,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            uuid : appt.uid,
-            check : 'apptsms'
+            uuid: appt.uid,
+            check: 'apptsms'
           }
         });
-          // _this.provider_services.smsAppt(appt.uid).subscribe(
-          //   () => {
-          //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-          //   },
-          //   error => {
-          //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          //   }
-          // );
-        });
+        // _this.provider_services.smsAppt(appt.uid).subscribe(
+        //   () => {
+        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+        //   },
+        //   error => {
+        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //   }
+        // );
+      });
     }
   }
   emailAppt() {
@@ -2437,18 +2437,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          uuid : appt.uid,
-          check : 'apptemail'
+          uuid: appt.uid,
+          check: 'apptemail'
         }
       });
-        // _this.provider_services.emailAppt(appt.uid).subscribe(
-        //   () => {
-        //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
-        //   },
-        //   error => {
-        //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //   }
-        // );
+      // _this.provider_services.emailAppt(appt.uid).subscribe(
+      //   () => {
+      //     _this.shared_functions.openSnackBar('Appointment details sent successfully');
+      //   },
+      //   error => {
+      //     _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   }
+      // );
     } else {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
@@ -2459,8 +2459,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
-            uuid : appt.uid,
-            check : 'apptemail'
+            uuid: appt.uid,
+            check: 'apptemail'
           }
         });
         //   this.provider_services.emailAppt(appt.uid).subscribe(
@@ -2471,7 +2471,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         //       _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     }
         //   );
-        });
+      });
     }
   }
   printAppt() {
@@ -2868,11 +2868,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedUser = this.users[0]
     });
   }
-  
-  
-  handleUserSelection(user){
-      // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
-      this.selectedUser = user;
-      this.getSchedules();
-    }
+
+
+  handleUserSelection(user) {
+    // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.selectedUser = user;
+    this.getSchedules();
+  }
 }
