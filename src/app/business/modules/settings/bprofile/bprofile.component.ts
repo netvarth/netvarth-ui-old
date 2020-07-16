@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -33,7 +33,7 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 })
 
-export class BProfileComponent implements OnInit, OnDestroy {
+export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
@@ -466,10 +466,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   }
   checkMandatoryFieldsAlsoFilled(){
-    let weightageArray = this.businessweightageArray.map(obj => obj.name);
-    this.mandatoryfieldArray.every(function (val) {
-      return weightageArray.includes(val);
-    });
+    return this.businessweightageArray.includes(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
   }
   checkAllRequiredFiedsOfJaldeeOnlineFilled() {
     let weightageArray = this.businessweightageArray.map(obj => obj.name);
@@ -489,6 +486,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
       
     }
 
+  }
+  ngAfterViewChecked(){
+    this.changeDetectorRef.detectChanges();
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -760,6 +760,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
                   this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                   this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
                   this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+                  this.getProviderLogo();
                   this.getDomainVirtualFields();
                   if (this.bProfile['serviceSubSector']['subDomain']) {
                     this.getSubDomainVirtualFields();
@@ -813,7 +814,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
               || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
-            this.getProviderLogo();
+            
           }
           // check whether normal search section can be displayed
           this.normal_search_display = this.bProfile.enableSearch;

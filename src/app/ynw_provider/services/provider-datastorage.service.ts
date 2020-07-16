@@ -79,13 +79,15 @@ export class ProviderDataStorageService {
      
     }
     //business schedule
-    if(this.business_profile.baseLocation){
+    if(this.business_profile.baseLocation&&this.business_profile.baseLocation.bSchedule){
     if (!this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && this.business_profile.baseLocation.bSchedule) {
       this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE);
     }
     else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
       this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.name);
     }
+  } else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
+    this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.name);
   }
 
     //specialization
@@ -129,8 +131,9 @@ export class ProviderDataStorageService {
     }
 
     //additionalInfo
+     
+    console.log(this.weightageArray);
     
-
     this.setWeightageArray(this.weightageArray);
 
 

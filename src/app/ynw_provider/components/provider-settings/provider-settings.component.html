@@ -125,28 +125,30 @@
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
                                             class="lnk setings">Jaldee Online
                                             <span class="pull-right">
-                                                {{search_statusstr}}</span>
+                                                {{onlinepresence_statusstr}}</span>
                                             <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> -->
                                         </span>
-                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
-                                                class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
-                                        <p class="settings_info">{{frm_search_cap}}</p>
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                        class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                        <p class="settings_info">Enable this to get online visibility.</p>
+                                       
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span
                                             class="lnk setings">List my profile on Jaldee.com
                                             <span class="pull-right">
-                                                {{onlinepresence_statusstr}}
+                                                    {{search_statusstr}} 
                                                 <!-- <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle> --></span>
                                         </span>
-                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                                class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
-                                                <p class="settings_info">Enable this to get online visibility.</p>
+                                        <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                        class="req-flds-cap"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
+                                <p class="settings_info">{{frm_search_cap}}</p>
+                                       
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a></li>
                                 <!-- <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings"
