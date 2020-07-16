@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -15,7 +15,8 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
   templateUrl: './provider-settings.component.html'
 })
 
-export class ProviderSettingsComponent implements OnInit, OnDestroy {
+export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChecked {
+  blogo: ArrayBuffer;
   weightageClass: string;
   progress_bar_four: number;
   progress_bar_three: number;
@@ -150,6 +151,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
+    private cdf:ChangeDetectorRef,
     private routerobj: Router,
     private shared_services: SharedServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -220,7 +222,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-    this.getBusinessConfiguration();
+    this.getProviderLogo();
     this.getGalleryImages();
     this.getDomainSubdomainSettings();
     this.getLocationCount();
@@ -267,8 +269,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     return total;
 
   }
+  ngAfterViewChecked(){
+    this.cdf.detectChanges();
 
-  ngOnDestroy() {
+}  ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -343,6 +347,25 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+  getProviderLogo() {
+    this.provider_services.getProviderLogo()
+      .subscribe(
+        data => {
+          this.blogo = data;
+          let logoExist;
+
+          let logo = '';
+          if (this.blogo[0]) {
+            logoExist = true;
+            logo = this.blogo[0].url;
+          } else {
+            logo = '';
+            logoExist = false;
+          }
+          this.provider_datastorage.updateProfilePicWeightage(logoExist);
+        }
+      );
   }
 
   getApptlistMgr() {
