@@ -142,6 +142,53 @@ export class ProviderSharedFuctions {
     console.log(reqFields);
     return reqFields;
   }
+  getuserProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields, subdomain?) {
+    this.mandatoryAdditionalInfo=[];
+    this.nonMandatoryDomainAdditionalInfo=[];
+    this.nonMandatorySubDomainAdditionalInfo=[];
+    const reqFields = {};
+    if (!profile.specialization) {
+      reqFields['specialization'] = true;
+    }
+    if (!profile.businessName || profile.businessName === '') {
+      reqFields['name'] = true;
+    }
+    // if (!profile.baseLocation) {
+    //   reqFields['location'] = true;
+    //   reqFields['schedule'] = true;
+    // }
+    // if (profile.baseLocation && !profile.baseLocation.bSchedule) {
+    //   reqFields['schedule'] = true;
+    // }
+    if (domainMandatoryFields) {
+      for (const domainfield of domainMandatoryFields) {
+        if (domainfield.mandatory) {
+          this.mandatoryAdditionalInfo.push(domainfield.name);
+          if (!profile['domainVirtualFields'][domainfield.name]) {
+            reqFields['domainvirtual'] = true;
+          }
+        }else if(!domainfield.mandatory){
+          this.nonMandatoryDomainAdditionalInfo.push(domainfield.name);
+        }
+      }
+    }
+    if (subdomainMandatoryFields) {
+      for (const domainfield of subdomainMandatoryFields) {
+        if (domainfield.mandatory) {
+          console.log('domainfield'+domainfield.mandatory);
+          this.mandatoryAdditionalInfo.push(domainfield.name);
+          if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
+            reqFields['subdomainvirtual'] = true;
+          }
+        }
+        else {
+          this.nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
+        }
+      }
+    }
+    console.log(reqFields);
+    return reqFields;
+  }
   getAdditonalInfoMandatoryFields(){
     return this.mandatoryAdditionalInfo;
   }

@@ -204,6 +204,7 @@ export class ManageSettingsComponent implements OnInit {
         breadcrumbs.push({
           title: 'Settings'
         });
+        
         this.breadcrumbs = breadcrumbs;
       });
   }
