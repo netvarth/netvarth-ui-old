@@ -318,7 +318,7 @@
                                                     <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'"
                                                         [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
                                                     </li>
-                                                    <li *ngIf="loc?.locationVirtualFields?.docambulance=='true'"
+                                                    <li *ngIf="(loc?.locationVirtualFields?.docambulance=='true') || (loc?.locationVirtualFields?.altambulance=='true')"
                                                         [matTooltip]="'Ambulance Services'"><span
                                                             class="icon-ambulance"></span>
                                                     </li>

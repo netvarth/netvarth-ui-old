@@ -443,7 +443,7 @@
                                         <span class="icon-emergency"></span></li>
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'">
                                         <span class="icon-first-aid"></span></li>
-                                    <li *ngIf="search_result.fields.docambulance_location1==1"
+                                    <li *ngIf="search_result.fields.docambulance_location1==1 || search_result.fields.altambulance_location1==1"
                                         [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
                                     <li *ngIf="search_result.fields.onlinereports_location1==1"
                                         [matTooltip]="'Online Reports'"><span class="fa fa-file-pdf-o"></span></li>
