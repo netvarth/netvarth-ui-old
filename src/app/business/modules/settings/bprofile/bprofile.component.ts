@@ -446,17 +446,18 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       if(this.businessweightageArray.length!==0){
       this.weightageValue = this.calculateWeightage(result);
    
-      if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
-        if(this.mandatoryfieldArray.length!==0){
-          this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
-        }
-        else{
-          this.changeJaldeeOnlineStatus(true);
-        }
-      }else{
-        this.changeJaldeeOnlineStatus(false);
-      }
-    }
+      // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
+      //   if(this.mandatoryfieldArray.length!==0){
+      //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
+      //   }
+      //   else{
+      //     this.changeJaldeeOnlineStatus(true);
+      //   }
+      // }else{
+      //   this.changeJaldeeOnlineStatus(false);
+      // }
+    }else
+        this.weightageValue=0;
 
 
     });
@@ -520,7 +521,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       this.delgaldialogRef.close();
     }
 
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
 

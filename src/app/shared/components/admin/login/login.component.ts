@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../app.component';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -68,9 +69,7 @@ export class AdminLoginComponent implements OnInit {
         () => {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-          this.provider_dataStorage.setWeightageArray([]);
-          console.log("first");
-          
+           this.provider_dataStorage.setWeightageArray([]);
           localStorage.setItem('popupShown', 'false');
           this.api_loading = false;
           this.router.navigate(['home']);

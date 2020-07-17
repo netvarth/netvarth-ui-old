@@ -9,6 +9,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
+import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 @Injectable()
 
 export class SharedFunctions {
@@ -21,7 +22,8 @@ export class SharedFunctions {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
-    private common_datastorage: CommonDataStorageService
+    private common_datastorage: CommonDataStorageService,
+    private providerDataStorage:ProviderDataStorageService
   ) { }
 
   logout() {
@@ -85,6 +87,7 @@ export class SharedFunctions {
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
+          this.providerDataStorage.setWeightageArray([]);
           this.clearLocalstorage();
           this.clearSessionStorage();
           resolve();
@@ -138,6 +141,8 @@ export class SharedFunctions {
       this.shared_service.ProviderLogin(post_data)
         .subscribe(
           data => {
+            this.providerDataStorage.setWeightageArray([]);
+            localStorage.setItem('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
             this.router.navigate(['/provider']);
