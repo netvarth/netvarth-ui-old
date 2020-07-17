@@ -55,7 +55,7 @@ export class BranchUsersComponent implements OnInit {
         }
     ];
 
-    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER'];
+    userTypesFormfill: any = ['ASSISTANT', 'PROVIDER', 'ADMIN'];
     api_loading: boolean;
     departments: any;
     loadComplete = false;
@@ -95,8 +95,6 @@ export class BranchUsersComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
     }
-    
-
     personalProfile(user) {
         const navigationExtras: NavigationExtras = {
             queryParams: {

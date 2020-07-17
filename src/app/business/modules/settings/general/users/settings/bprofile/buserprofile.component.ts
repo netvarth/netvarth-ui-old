@@ -516,7 +516,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.sharedfunctionobj.confirmLogoImageDelete(this, keyname);
   }
   removeLogo(keyname) {
-    this.provider_services.deleteLogo(keyname)
+    this.provider_services.deleteuserLogo(keyname, this.userId)
       .subscribe(() => {
         // calling function which saves the business related details to show in the header
         this.blogo = [];

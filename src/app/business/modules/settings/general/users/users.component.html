@@ -111,7 +111,7 @@
                                         </span>
                                         <div style="color: #3c8dbc;">
                                             {{user.firstName | capitalizeFirst}} {{lastName| capitalizeFirst}} <span
-                                                *ngIf="user.userType === 'PROVIDER'">({{getDepartmentNamebyId(user.deptId)}})</span>
+                                                *ngIf="user.userType === 'PROVIDER' && user.deptId">({{getDepartmentNamebyId(user.deptId)}})</span>
                                         </div>
 
                                         <div class="c-ot m0">

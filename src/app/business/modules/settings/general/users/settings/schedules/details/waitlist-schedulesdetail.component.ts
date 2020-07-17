@@ -605,7 +605,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 'services': selser,
                 // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
-                'provider': this.userId,
+                'provider': {
+                    'id' : this.userId
+                },
                 'batchEnable': this.sbatchStatus,
                 'batchName': {
                     'prefix': this.sprefixName,

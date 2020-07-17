@@ -230,6 +230,10 @@ export class ProviderServices {
       const url = 'provider/logo/' + name;
       return this.servicemeta.httpDelete(url);
    }
+   deleteuserLogo(name, userid) {
+      const url = 'provider/user/logo/' + userid + '/' + name;
+      return this.servicemeta.httpDelete(url);
+   }
    // Addwords
    getAdwords() {
       return this.servicemeta.httpGet('provider/license/adwords');

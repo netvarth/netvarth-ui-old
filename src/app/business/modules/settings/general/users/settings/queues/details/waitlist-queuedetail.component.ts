@@ -571,7 +571,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
                 'timeInterval': form_data.timeSlot,
-                'provider': this.userId
+                'provider': {
+                    'id' : this.userId
+                }
                 // 'batch': this.qbatchStatus,
                 // 'batchPatternSettings': {
                 //     'prefix': this.qprefixName,
