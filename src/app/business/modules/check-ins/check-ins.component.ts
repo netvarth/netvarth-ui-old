@@ -2129,6 +2129,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
+        qdata: appt,
         uuid : appt.ynwUuid,
         chekintype: 'Waitlist'
       }

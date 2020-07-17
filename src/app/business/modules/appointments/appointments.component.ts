@@ -2388,6 +2388,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
+          qdata: appt,
           uuid: appt.uid,
           chekintype: 'appointment'
         }

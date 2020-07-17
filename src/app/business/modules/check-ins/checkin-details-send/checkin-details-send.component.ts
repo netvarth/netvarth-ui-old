@@ -14,9 +14,6 @@ export class CheckinDetailsSendComponent implements OnInit {
     deptName;
     bname;
     location;
-    fname;
-    lname;
-    servicename;
     customer_label: any;
     qname: any;
     qstarttime: any;
@@ -30,7 +27,12 @@ export class CheckinDetailsSendComponent implements OnInit {
     Scheduleetime: any;
     sms = true;
     email = true;
-  chekintype: any;
+    chekintype: any;
+    consumer_fname: any;
+    consumer_lname: any;
+    serv_name: any;
+    date: string;
+    time: any;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -42,59 +44,35 @@ export class CheckinDetailsSendComponent implements OnInit {
             console.log(this.chekintype);
         }
    ngOnInit() {
-    console.log(this.chekintype);
+    this.bname = this.data.qdata.providerAccount.businessName;
     if (this.chekintype === 'Waitlist') {
-      this.getCheckinDetails();
-     } else {
-    this.getApptDetails();
-     }
+        this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
+        this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
+        this.serv_name = this.data.qdata.service.name;
+        this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
+        this.time = this.data.qdata.checkInTime;
+        this.deptName = this.data.qdata.service.deptName;
+        this.qname =  this.data.qdata.queue.name;
+        this.qstarttime = this.data.qdata.queue.queueStartTime;
+        this.qendtime = this.data.qdata.queue.queueEndTime;
+        this.location = this.data.qdata.queue.location.address;
+        this.spfname = this.data.qdata.provider.firstName;
+        this.splname = this.data.qdata.provider.lastName;
+    } else {
+        this.consumer_fname = this.data.qdata.appmtFor[0].userName;
+        this.serv_name = this.data.qdata.service.name;
+        this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
+        this.time = this.data.qdata.appmtTime;
+        this.location = this.data.qdata.location.address;
+        this.appttime = this.data.qdata.appmtFor[0].apptTime;
+        this.appmtDate = this.data.qdata.appmtDate;
+        this.schedulename =  this.data.qdata.schedule.name;
+        this.Schedulestime = this.data.qdata.schedule.apptSchedule.timeSlots[0].sTime ;
+        this.Scheduleetime = this.data.qdata.schedule.apptSchedule.timeSlots[0].eTime;
+        this.spfname = this.data.qdata.provider.firstName;
+        this.splname = this.data.qdata.provider.lastName;
+    }
    }
-    getApptDetails() {
-      console.log(this.chekintype);
-        this.provider_services.getAppointmentById(this.uuid)
-        .subscribe(
-          data => {
-          this.checkin = data;
-          this.bname = this.checkin.providerAccount.businessName;
-          this.location = this.checkin.location.place;
-          this.fname = this.checkin.appmtFor[0].firstName;
-          this.lname = this.checkin.appmtFor[0].lastName;
-          this.appttime = this.checkin.appmtFor[0].apptTime;
-          this.appmtDate = this.checkin.appmtDate;
-          this.servicename =  this.checkin.service.name;
-          //   this.deptName = this.checkin.service.deptName;
-          this.schedulename =  this.checkin.schedule.name;
-          this.Schedulestime = this.checkin.schedule.apptSchedule.timeSlots[0].sTime ;
-          this.Scheduleetime = this.checkin.schedule.apptSchedule.timeSlots[0].eTime;
-          if (this.checkin.provider.firstName) {
-          this.spfname = this.checkin.provider.firstName;
-          }
-          if (this.checkin.provider.lastName) {
-          this.splname = this.checkin.provider.lastName;
-          }
-          },
-        );
-    }
-    getCheckinDetails() {
-      console.log(this.chekintype);
-        this.provider_services.getProviderWaitlistDetailById(this.uuid)
-      .subscribe(
-        data => {
-          this.checkin = data;
-          this.bname = this.checkin.providerAccount.businessName;
-          this.location = this.checkin.queue.location.place;
-          this.fname = this.checkin.waitlistingFor[0].firstName;
-          this.lname = this.checkin.waitlistingFor[0].lastName;
-          this.servicename =  this.checkin.service.name;
-          this.deptName = this.checkin.service.deptName;
-          this.qname =  this.checkin.queue.name;
-          this.qstarttime = this.checkin.queue.queueStartTime;
-          this.qendtime = this.checkin.queue.queueEndTime;
-          this.spfname = this.checkin.provider.firstName;
-          this.splname = this.checkin.provider.lastName;
-        },
-      );
-    }
     back() {
         this.dialogRef.close();
     }
