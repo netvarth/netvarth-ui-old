@@ -1,5 +1,6 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content w-manager settings comn-cls lic-page">
@@ -132,7 +133,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId style="width: 25%">
+                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId
+                                        style="width: 25%">
                                         <div><i (click)="closeOnlineQR()"
                                                 class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
                                                 aria-hidden="true"></i></div>
@@ -142,12 +144,9 @@
                                             </ngx-qrcode>
                                         </div>
                                         <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
-                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
-                                                        style="padding-right: 2px;"></i>Download</a></button>
-                                            <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
-                                            &nbsp;&nbsp;&nbsp;
-                                            <button (click)="closeOnlineQR()">close</button> -->
+                                            <button class="" (click)="printQr('print-section')"><i
+                                                    class="fa fa-cloud-download" aria-hidden="true"
+                                                    style="padding-right: 2px;"></i>Download</button>
                                         </div>
                                     </div>
 
@@ -302,8 +301,7 @@
                                                         <div class="pro-pic" [class.yes]="profimg_exists">
                                                             <div class="pro-pic-img"><img [src]="showimg()" alt=""
                                                                     *ngIf="blogo[0] && blogo[0].url"></div>
-                                                            <input #logofile type="file" accept="image/*"
-                                                                style="display:none;"
+                                                            <input #logofile type="file" style="display:none;"
                                                                 (change)="imageSelect(logofile,$event)">
                                                             <div class="add"><span
                                                                     (click)="logofile.click()">{{add_cap}} <br />
@@ -335,7 +333,8 @@
                                                 </div>
                                                 <div class="warning" *ngIf="normal_locationinfo_show==2">
                                                     <i data-icon="m"></i>
-                                                    <p><span>{{have_not_add_cap}}</span> <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
+                                                    <p><span>{{have_not_add_cap}}</span>
+                                                        <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
                                                     <span class="cs-btn bt3"
                                                         (click)="addLocation()">{{add_it_cap}}</span>
                                                     <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}

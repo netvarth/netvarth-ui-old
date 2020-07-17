@@ -53,7 +53,7 @@
   <div class="upload-doc" (click)="filed.click()">
     <label class="col-form-label">{{select_img_file_cap}}</label>
     <span class="select-wrapper ">
-      <input type="file" multiple name="image_src" id="image_src" accept="image/*" #filed
+      <input type="file" multiple name="image_src" id="image_src" #filed
         (change)="imageSelect(filed,$event)">
     </span>
   </div>

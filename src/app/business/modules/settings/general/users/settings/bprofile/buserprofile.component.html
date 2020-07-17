@@ -240,7 +240,7 @@
                                                     <div class="pro-pic" [class.yes]="profimg_exists">
                                                         <div class="pro-pic-img"><img [src]="showimg()" alt=""
                                                                 *ngIf="blogo && blogo.url"></div>
-                                                        <input #logofile type="file" accept="image/*"
+                                                        <input #logofile type="file"
                                                             style="display:none;"
                                                             (change)="imageSelect(logofile,$event)">
                                                         <div class="add"><span (click)="logofile.click()">{{add_cap}}
