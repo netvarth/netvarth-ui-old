@@ -121,6 +121,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         'firstName': 'Global',
         'lastName' : 'Service'
     };
+    include_video = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -626,12 +627,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 } else {
                     this.include_audio = false;
+                    this.include_video = false;
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE') {
                             this.telemodes.push(this.vcallmodes[i]);
-                        }
-                        if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
-                            this.include_audio = true;
+                            if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
+                                this.include_audio = true;
+                            }
+                            if (this.vcallmodes[i].callingMode !== 'Phone') {
+                                this.include_video = true;
+                            }
                         }
                     }
                 }
