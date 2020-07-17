@@ -205,6 +205,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
   field;
   
   ngOnInit() {
+    //this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -225,6 +226,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
     this.getProviderLogo();
     this.getGalleryImages();
     this.getDomainSubdomainSettings();
+    this.getBusinessConfiguration();
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

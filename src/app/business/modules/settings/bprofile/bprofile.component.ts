@@ -17,7 +17,7 @@ import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/
 import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { AddProviderBprofileSpecializationsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
@@ -95,7 +95,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
   dynamicdialogRef: any;
 
   subdomain: any;
-  weightageValue: number;
+  weightageValue=0;
   businessweightageArray: any[];
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
@@ -363,6 +363,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.provider_datastorage.setWeightageArray([]);
     this.shared_functions.getMessage().subscribe(data => {
       this.getLicensemetrics();
       switch (data.ttype) {
@@ -376,6 +377,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
 
   ngOnInit() {
+   
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -441,6 +443,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessweightageArray = result;
+      if(this.businessweightageArray.length!==0){
       this.weightageValue = this.calculateWeightage(result);
    
       if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
@@ -453,7 +456,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       }else{
         this.changeJaldeeOnlineStatus(false);
       }
-      
+    }
 
 
     });
@@ -476,15 +479,15 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
   }
   changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
-    if (requiredFieldFilledStatus==true && this.onlinepresence_status === false) {
-      if(!localStorage.getItem('popupShown')) {
-      this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
-      localStorage.setItem('popupShown', 'true');
-      }
-    } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
-      this.handle_jaldeeOnlinePresence();
+    // if (requiredFieldFilledStatus==true && this.onlinepresence_status === false) {
+    //   if(!localStorage.getItem('popupShown')) {
+    //   this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
+    //   localStorage.setItem('popupShown', 'true');
+    //   }
+    // } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
+    //   this.handle_jaldeeOnlinePresence();
       
-    }
+    // }
 
   }
   ngAfterViewChecked(){

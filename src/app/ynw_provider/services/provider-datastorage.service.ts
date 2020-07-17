@@ -14,7 +14,7 @@ export class ProviderDataStorageService {
     'waitlistManage': null
   };
   private weightageArray = [];
-  private observable_weightageArray = new BehaviorSubject([]);
+  public observable_weightageArray = new BehaviorSubject([]);
 
 
   constructor() { }
@@ -30,6 +30,8 @@ export class ProviderDataStorageService {
     return this.observable_weightageArray.asObservable();
   }
   setWeightageArray(ArrayObject) {
+    console.log('insdfi'+ArrayObject);
+    
     this.observable_weightageArray.next(ArrayObject);
   }
   setWeightageObjectOfDomain(domainObject){
@@ -86,7 +88,7 @@ export class ProviderDataStorageService {
     else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
       this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.name);
     }
-  } else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE) && !this.business_profile.baseLocation.bSchedule) {
+  } else  if (this.checkExistenceInWeightageArray(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE)) {
     this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.LOCATION_SCHEDULE.name);
   }
 
@@ -172,6 +174,10 @@ updateMandatoryAndAdditionalFieldWeightage(){
 
   let mandatoryObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
    let additionalObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
+   console.log(this.weightageObjectDomain);
+   console.log(this.weightageObjectSubDomain);
+   
+   
   
   if(!this.checkExistenceInWeightageArray(mandatoryObject)){
     if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)|| (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
@@ -199,8 +205,7 @@ updateMandatoryAndAdditionalFieldWeightage(){
 
     }
   }else{
-
-    if(this.weightageObjectDomain.additonalDomainFullyFilled===false || this.weightageObjectSubDomain.additonalSubDomainFullyFilled=== false ){
+    if(this.weightageObjectDomain.additionalDomainFullyFilled===false || this.weightageObjectSubDomain.additionalSubDomainFullyFilled=== false ){
      this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.name);
      this.setWeightageArray(this.weightageArray);
     }

@@ -2,6 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
+       
     <div class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
@@ -35,6 +36,7 @@
                             </div> -->
                             <!-- <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3"> -->
                             <div class="card p0">
+                               
                                 <!-- <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
@@ -102,26 +104,27 @@
                                             <div class="progress-bar" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div> -->
-                                        <div class="progress col-md-10 mt-2 p0"  style="height: 12px;">
-                                                <div class="progress-bar"  role="progressbar" aria-valuenow="progress_bar_one" 
+                                        <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
                                                
                                                 </div>
-                                                <div class="progress-bar" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" 
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
                                                  
                                                 </div>
-                                                <div *ngIf="progress_bar_three!=0"class="progress-bar" role="progressbar" aria-valuenow="progress_bar_three" 
+                                                <div *ngIf="progress_bar_three!=0"class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="progress_bar_three" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
                                                   
                                                 </div>
-                                                <div class="progress-bar" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" 
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
                                                   
                                                 </div>
                                             
                                             
                                             </div>
+                                          
 
 
                                     </div>
@@ -131,6 +134,7 @@
                                     </div>
 
                                 </div>
+                               
 
                              <!--TEsting-->
                         
