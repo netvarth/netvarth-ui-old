@@ -366,6 +366,7 @@
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">
+              <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive"
                 *ngIf="!loading && (!isBatch || this.time_type == 3)">
                 <table class="table tbl-qboard childDetails singleDash">
@@ -660,8 +661,11 @@
                   </thead>
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
-                      <td colspan="5" class="no-appt">
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
                         No Check-ins Found
+                      </td>
+                      <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
+                       {{no_service_cap}}
                       </td>
                     </tr>
                   </tbody>

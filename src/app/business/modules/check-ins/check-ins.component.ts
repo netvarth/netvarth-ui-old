@@ -168,7 +168,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   users: any = [];
   views: any = [];
   queues: any;
-  loading = true;
+  loading = false;
   statusMultiCtrl: any = [];
   labelMultiCtrl: any = [];
   labelFilter: any = [];
@@ -747,10 +747,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
+        if (activeQ && activeQ.id) {
         this.selQIds.push(activeQ.id);
         this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+        } else {
+          this.loading = false;
+        }
       }
     }
+    console.log(this.selQIds);
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -845,9 +850,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     let filterEnum = {}
     if (date === 'all') {
 
-      if(this.selectedUser) {
-        filterEnum ['provider-eq'] = this.selectedUser.id;
-         
+      if (this.selectedUser) {
+        filterEnum['provider-eq'] = this.selectedUser.id;
+
       }
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
@@ -865,6 +870,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
   }
   onChangeLocationSelect(event) {
+    this.loading = true;
+    this.resetFields();
     const value = event;
     this.clearQIdsFromStorage();
     this.locationSelected(this.locations[value] || []).then(
@@ -876,6 +883,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
       }
     );
+  }
+  resetFields() {
+    this.today_waitlist_count = 0;
+    this.future_waitlist_count = 0;
+    this.history_waitlist_count = 0;
+    this.check_in_filtered_list = [];
+    this.activeQs = [];
+    this.scheduled_count = 0;
+    this.started_count = 0;
+    this.completed_count = 0;
+    this.cancelled_count = 0;
   }
   locationSelected(location) {
     this.selected_location = location;
@@ -913,7 +931,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.resetAll();
     this.resetCheckList();
     let chkSrc = true;
-    this.loading = true;
     if (source === 'changeLocation' && this.time_type === 3) {
       const hisPage = this.shared_functions.getitemFromGroupStorage('hP');
       const hFilter = this.shared_functions.getitemFromGroupStorage('hPFil');
@@ -1004,6 +1021,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               this.setCounts(this.appt_list);
               this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+              this.loading = false;
             },
             () => {
               // this.load_waitlist = 1;
@@ -1052,7 +1070,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.check_in_filtered_list = this.getActiveAppointments(this.futureAppointments, this.statusAction);
               this.setFutureCounts(this.futureAppointments);
               // }
-              // this.loading = false;
+              this.loading = false;
             },
             () => {
               // this.load_waitlist = 1;
@@ -1090,7 +1108,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              // this.loading = false;
+              this.loading = false;
             },
             () => {
               // this.load_waitlist = 1;
@@ -2130,7 +2148,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       disableClose: true,
       data: {
         qdata: appt,
-        uuid : appt.ynwUuid,
+        uuid: appt.ynwUuid,
         chekintype: 'Waitlist'
       }
     });
@@ -2225,7 +2243,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
-        this.refresh();
+      this.refresh();
       // }
     });
   }
@@ -2267,7 +2285,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedUser = this.users[0]
     });
   }
-  handleUserSelection(user){
+  handleUserSelection(user) {
     // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedUser = user;
     this.getQs();
