@@ -5,88 +5,8 @@
     <div class="content settings">
         <div class="row">
             <div class="col-md-12 no-padding">
-                <div class="col-md-6 col-lg-4 col-12  no-padding-small">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user-2">
-                        <div class="widget-user-header bg-blue">
-                            <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="general">General
-                                <i class="fa fa-gears fl-right lnk"></i>
-                            </h4>
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings">
-                                    <a>Set up and manage your locations, departments and more
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('locations')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">{{locName}}
-                                            <span class="pull-right badge bg-blue" *ngIf="multipeLocationAllowed == true">{{location_count}}</span>
-                                        </span>
-                                        <p *ngIf="location_count == 0" class="req-flds-cap">
-                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
-                                        <p class="settings_info">Set up your locations here</p>
-                                    </a>
-                                </li>
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Departments
-                                            <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>
-                                            <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
-                                        </span>
-                                        <p class="settings_info">Add departments here</p>
-                                    </a>
-                                </li>
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Users</span>
-                                        <p class="settings_info">Create or manage users</p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('livetrack')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Live Tracking
-                                            <span class="pull-right">
-                                                <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
-                                                (change)="handle_liveTracking($event)">
-                                            </mat-slide-toggle> -->
-                                                {{livetrack_statusstr}}</span>
-                                        </span>
-                                        <!-- <p class="sts" [class.active]="livetrack_status">{{livetrack_statusstr}}</p> -->
-                                        <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
-                                        <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints
-                                        </p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('nonworking')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">{{non_wrk_day_hr_cap}}</span>
-                                        <p class="settings_info">Manage your non working days here</p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('labels')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">{{customfields_cap}}</span>
-                                        <p class="settings_info">Add or manage your labels here</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="pointer-cursor" (click)="redirecTo('customview')">
-                                        <span class="lnk setings">Custom Views</span>
-                                        <p class="settings_info">Create or manage custom views</p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('skins')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Themes</span>
-                                        <p class="settings_info">Customize your themes</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+               
+                 <!--Jaldee online-->
                 <div class="col-md-6 col-lg-4 col-12  no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
@@ -221,6 +141,7 @@
                     </div>
                     <!-- /.widget-user -->
                 </div>
+                <!--Jaldee QManager-->
                 <div class="col-md-6 col-lg-4 col-12 no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
@@ -299,6 +220,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Jaldee ApptManager-->
                 <div class="col-md-6 col-lg-4 col-12 no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
@@ -384,6 +306,89 @@
                         </div>
                     </div>
                 </div>
+                 <!-- General -->
+                 <div class="col-md-6 col-lg-4 col-12  no-padding-small">
+                        <!-- Widget: user widget style 1 -->
+                        <div class="box box-widget widget-user-2">
+                            <div class="widget-user-header bg-blue">
+                                <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="general">General
+                                    <i class="fa fa-gears fl-right lnk"></i>
+                                </h4>
+                            </div>
+                            <div class="box-footer no-padding">
+                                <ul class="nav nav-stacked set-block-1">
+                                    <li class="form-level-settings">
+                                        <a>Set up and manage your locations, departments and more
+                                        </a>
+                                    </li>
+                                    <li (click)="redirecTo('locations')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">{{locName}}
+                                                <span class="pull-right badge bg-blue" *ngIf="multipeLocationAllowed == true">{{location_count}}</span>
+                                            </span>
+                                            <p *ngIf="location_count == 0" class="req-flds-cap">
+                                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Locations are not created</p>
+                                            <p class="settings_info">Set up your locations here</p>
+                                        </a>
+                                    </li>
+                                    <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">Departments
+                                                <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>
+                                                <span *ngIf="!filterbydepartment" class="pull-right">Off</span>
+                                            </span>
+                                            <p class="settings_info">Add departments here</p>
+                                        </a>
+                                    </li>
+                                    <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">Users</span>
+                                            <p class="settings_info">Create or manage users</p>
+                                        </a>
+                                    </li>
+                                    <li (click)="redirecTo('livetrack')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">Live Tracking
+                                                <span class="pull-right">
+                                                    <!-- <mat-slide-toggle [(ngModel)]="livetrack_status"
+                                                    (change)="handle_liveTracking($event)">
+                                                </mat-slide-toggle> -->
+                                                    {{livetrack_statusstr}}</span>
+                                            </span>
+                                            <!-- <p class="sts" [class.active]="livetrack_status">{{livetrack_statusstr}}</p> -->
+                                            <p class="settings_info" *ngIf="livetrack_status">Live tracking hints.</p>
+                                            <p class="settings_info" *ngIf="!livetrack_status">Live tracking hints
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li (click)="redirecTo('nonworking')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">{{non_wrk_day_hr_cap}}</span>
+                                            <p class="settings_info">Manage your non working days here</p>
+                                        </a>
+                                    </li>
+                                    <li (click)="redirecTo('labels')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">{{customfields_cap}}</span>
+                                            <p class="settings_info">Add or manage your labels here</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="pointer-cursor" (click)="redirecTo('customview')">
+                                            <span class="lnk setings">Custom Views</span>
+                                            <p class="settings_info">Create or manage custom views</p>
+                                        </a>
+                                    </li>
+                                    <li (click)="redirecTo('skins')">
+                                        <a class="pointer-cursor">
+                                            <span class="lnk setings">Themes</span>
+                                            <p class="settings_info">Customize your themes</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 <!-- <div class="col-md-6 col-lg-4 col-12 set-block">
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
