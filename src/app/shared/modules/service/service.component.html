@@ -5,7 +5,9 @@
             *ngIf="service_data.status=='ACTIVE'"
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
-            <h4>{{service_data.name | capitalizeFirst}}</h4>
+            <h4>{{service_data.name | capitalizeFirst}}
+                <span  *ngIf="service.provider">({{service.provider.firstName}})</span>
+            </h4>
             <div class="it-des">
                 {{service_data.description | capitalizeFirst}}
             </div>

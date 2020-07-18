@@ -34,7 +34,8 @@
                                                                                                         [matTooltipClass]="tooltipcls"
                                                                                                         [matTooltip]="tooltip_queueedit">
                                                                                                         <i
-                                                                                                                class="fas fa-calendar-day"></i>{{schedule.time}}
+                                                                                                                class="fas fa-calendar-day"></i>{{schedule.time}}<span *ngIf="queue.provider"
+                                                                                                                style="font-size: small; color: black;">({{queue.provider.firstName}})</span>
                                                                                                         <br />
                                                                                                         <span
                                                                                                                 style="font-size: small; color: black;">({{schedule.dstr}})</span>

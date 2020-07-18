@@ -223,8 +223,9 @@
                                                                                                 <i *ngIf="!queue.instantQueue"
                                                                                                         class="q-recur">&nbsp;&nbsp;&nbsp;&nbsp;</i>
                                                                                                 <i *ngIf="queue.instantQueue"
-                                                                                                        class="q-instant">&nbsp;&nbsp;&nbsp;&nbsp;</i>
-                                                                                                {{schedule.time}}
+                                                                                                         class="q-instant">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                                                                                {{schedule.time}}<span *ngIf="queue.provider"
+                                                                                                style="font-size: small; color: black;">({{queue.provider.firstName}})</span>
                                                                                                 <br />
                                                                                                 <span
                                                                                                         style="font-size: small;color: black;">({{schedule.dstr}})</span>

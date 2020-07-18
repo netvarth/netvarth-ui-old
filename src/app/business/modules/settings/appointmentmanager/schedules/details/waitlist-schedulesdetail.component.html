@@ -17,7 +17,8 @@
                                     *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
-                                        <h4>{{queue_data.name | capitalizeFirst}}</h4>
+                                        <h4>{{queue_data.name | capitalizeFirst}} <span 
+                                            *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span></h4> 
                                         <span class="tspace">
                                             <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
                                                 (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>

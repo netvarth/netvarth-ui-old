@@ -18,7 +18,8 @@
                         </span>
                         <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
                         <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
-                                capitalizeFirst}}</h3><span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'" class="link"> (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)</span>
+                                capitalizeFirst}}<span 
+                                *ngIf="service.provider">({{service.provider.firstName}})</span></h3><span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'" class="link"> (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)</span>
                                 <span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'" class="link"> (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)</span>
                         <div class="c-ot m0">
                             <div class="item" *ngIf="isServiceBillable">
