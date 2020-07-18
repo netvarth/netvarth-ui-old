@@ -24,7 +24,7 @@
                             formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
                         </mat-form-field>
                         <app-field-error-display
-                          [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
+                          [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                           errorMsg="please enter your Mobile/Email">
                         </app-field-error-display>
                         <!-- <span class="focus-input100" data-></span> -->
@@ -35,14 +35,12 @@
                         <input type="password" matInput class="form-control" id="password" placeholder="Password"
                           formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
                       </mat-form-field>
+                      <app-field-error-display
+                      [displayError]="fed_service.isFieldValid(loginForm,'password')"
+                      errorMsg="Password is required">
+                    </app-field-error-display>
                       <a style="margin-top:30px;cursor: pointer;" class="forgotpass" (click)="doForgotPassword()">Forgot
                         Password ?</a>
-
-
-                      <app-field-error-display
-                        [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-                        errorMsg="Password is required">
-                      </app-field-error-display>
                       <div class="container-login100-form-btn">
                         <!-- <div class="wrap-login100-form-btn"> -->
                         <div class="btn_3">
