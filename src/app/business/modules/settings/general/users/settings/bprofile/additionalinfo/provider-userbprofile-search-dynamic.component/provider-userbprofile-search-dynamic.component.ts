@@ -51,6 +51,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     this.getVirtualFields(this.bProfile['domain'])
       .then(
         data => {
+          console.log('DOAMIN VIRTUAL FIELDS..'+JSON.stringify(data));
           this.domain_questions = data;
         }
       );

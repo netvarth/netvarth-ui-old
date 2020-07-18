@@ -8,8 +8,11 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 
 @Injectable()
 export class ProviderSharedFuctions {
-  nonMandatorySubDomainAdditionalInfo: any[];
-  nonMandatoryDomainAdditionalInfo: any[];
+  user_nonMandatorySubDomainAdditionalInfo: any=[];
+  user_nonMandatoryDomainAdditionalInfo: any=[];
+  user_mandatoryAdditionalInfo: any=[];
+  nonMandatorySubDomainAdditionalInfo: any=[];
+  nonMandatoryDomainAdditionalInfo: any=[];
   nonMandatoryAdditionalInfo: any=[];
   private activeQueues: any = [];
   sendglobalmsgdialogRef;
@@ -128,7 +131,6 @@ export class ProviderSharedFuctions {
     if (subdomainMandatoryFields) {
       for (const domainfield of subdomainMandatoryFields) {
         if (domainfield.mandatory) {
-          console.log('domainfield'+domainfield.mandatory);
           this.mandatoryAdditionalInfo.push(domainfield.name);
           if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
             reqFields['subdomainvirtual'] = true;
@@ -139,55 +141,42 @@ export class ProviderSharedFuctions {
         }
       }
     }
-    console.log(reqFields);
+
     return reqFields;
   }
-  getuserProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields, subdomain?) {
-    this.mandatoryAdditionalInfo=[];
-    this.nonMandatoryDomainAdditionalInfo=[];
-    this.nonMandatorySubDomainAdditionalInfo=[];
+  getuserProfileRequiredFields( domainMandatoryFields, subdomainMandatoryFields) {
+
     const reqFields = {};
-    if (!profile.specialization) {
-      reqFields['specialization'] = true;
-    }
-    if (!profile.businessName || profile.businessName === '') {
-      reqFields['name'] = true;
-    }
-    // if (!profile.baseLocation) {
-    //   reqFields['location'] = true;
-    //   reqFields['schedule'] = true;
-    // }
-    // if (profile.baseLocation && !profile.baseLocation.bSchedule) {
-    //   reqFields['schedule'] = true;
-    // }
+    this.user_mandatoryAdditionalInfo=[];
+    this.user_nonMandatoryDomainAdditionalInfo=[];
+    this.user_nonMandatorySubDomainAdditionalInfo=[];
+    
     if (domainMandatoryFields) {
       for (const domainfield of domainMandatoryFields) {
         if (domainfield.mandatory) {
-          this.mandatoryAdditionalInfo.push(domainfield.name);
-          if (!profile['domainVirtualFields'][domainfield.name]) {
-            reqFields['domainvirtual'] = true;
-          }
+
+          reqFields['domainvirtual'] = true;
+          this.user_mandatoryAdditionalInfo.push(domainfield.name);
+         
         }else if(!domainfield.mandatory){
-          this.nonMandatoryDomainAdditionalInfo.push(domainfield.name);
+          this.user_nonMandatoryDomainAdditionalInfo.push(domainfield.name);
         }
       }
     }
     if (subdomainMandatoryFields) {
       for (const domainfield of subdomainMandatoryFields) {
         if (domainfield.mandatory) {
-          console.log('domainfield'+domainfield.mandatory);
-          this.mandatoryAdditionalInfo.push(domainfield.name);
-          if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
-            reqFields['subdomainvirtual'] = true;
-          }
+          this.user_mandatoryAdditionalInfo.push(domainfield.name);
+          reqFields['subdomainvirtual'] = true;
         }
         else {
-          this.nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
+          this.user_nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
         }
       }
     }
-    console.log(reqFields);
+    
     return reqFields;
+    
   }
   getAdditonalInfoMandatoryFields(){
     return this.mandatoryAdditionalInfo;
@@ -197,6 +186,17 @@ export class ProviderSharedFuctions {
   }
   getAdditionalNonSubDomainMandatoryFields() {
     return this.nonMandatorySubDomainAdditionalInfo;
+  }
+
+  //user
+  getUserAdditonalInfoMandatoryFields(){
+    return this.user_mandatoryAdditionalInfo;
+  }
+  getUserAdditionalNonDomainMandatoryFields() {
+    return this.user_nonMandatoryDomainAdditionalInfo
+  }
+  getUserAdditionalNonSubDomainMandatoryFields() {
+    return this.user_nonMandatorySubDomainAdditionalInfo;
   }
 
   serviceReloadApi(ob, source = 'service_list') {
