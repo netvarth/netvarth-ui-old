@@ -119,8 +119,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.api_loading = true;
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
-    this.getProviderServices();
-    this.getProviderQueues();
+     this.getProviderQueues();
     setTimeout(() => {
       if (this.queue_id !== 'add') {
         this.getQueueDetail();
@@ -270,6 +269,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           if (this.action === 'edit') {
             this.createForm();
           }
+          this.getProviderServices();
         },
         () => {
           this.api_loading = false;
@@ -280,7 +280,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
   // get the list of services
   getProviderServices() {
     this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE', 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    let filter;
+    console.log(this.queue_data);
+    if (this.queue_data && this.queue_data.provider) {
+      filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.queue_data.provider.id };
+    } else {
+      filter = { 'status-eq': 'ACTIVE', 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    }
     this.provider_services.getProviderServices(filter)
       .subscribe(data => {
         this.services_list = data;
