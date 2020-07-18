@@ -283,4 +283,16 @@ export class BranchUsersComponent implements OnInit {
                 );
         });
     }
+    makeDefalutAdmin(id) {
+        this.provider_services.makeDefalutAdmin(id)
+        .subscribe(
+            () => {
+                this.getUsers();
+            },
+            (error) => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.getUsers();
+            });
+
+    }
 }

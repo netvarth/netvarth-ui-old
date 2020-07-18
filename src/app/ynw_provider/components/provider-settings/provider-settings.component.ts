@@ -838,7 +838,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
         });
   }
   getServiceCount() {
-    const filter = { 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    const filter = {  'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -846,8 +846,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
         });
   }
   getQueuesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getQueuesCount(filter)
+   // const filter = { 'scope-eq': 'account' };
+    this.provider_services.getQueuesCount()
       .subscribe(
         data => {
           this.queues_count = data;
@@ -1089,8 +1089,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
       );
   }
   getSchedulesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getSchedulesCount(filter)
+    //const filter = { 'scope-eq': 'account' };
+    this.provider_services.getSchedulesCount()
       .subscribe(
         data => {
           this.schedules_count = data;

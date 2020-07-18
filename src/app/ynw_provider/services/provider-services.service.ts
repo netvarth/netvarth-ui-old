@@ -1486,4 +1486,8 @@ export class ProviderServices {
       const url = 'provider/payment/paylink/order/create';
       return this.servicemeta.httpPost(url, data);
    }
+   makeDefalutAdmin(id) {
+      const url = 'provider/user/makeDefalutAdminUser/' + id;
+      return this.servicemeta.httpPut(url);
+   }
 }

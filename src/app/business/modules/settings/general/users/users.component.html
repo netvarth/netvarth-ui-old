@@ -116,9 +116,10 @@
 
                                         <div class="c-ot m0">
                                             <div class="item">
-                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER'">{{provider_label}}</span>
+                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser">{{provider_label}}</span>
                                                 <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
                                                 <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
+                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">superadmin</span>
                                             </div>
                                         </div>
 
@@ -135,6 +136,10 @@
                                                 mat-menu-item (click)="manageSettings(user.id)">
                                                 Settings
                                             </button>
+                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
+                                                mat-menu-item (click)="makeDefalutAdmin(user.id)">
+                                                Change to superadmin
+                                            </button>
                                             <!-- <button *ngIf="user.userType === 'PROVIDER' && user.bProfileCreated"
                                             mat-menu-item (click)="manageSettings(user.id)">
                                             Manage Settings
@@ -148,7 +153,7 @@
                                                 Link Profile
                                             </button> -->
 
-                                            <button *ngIf="user.userType !== 'ADMIN'" mat-menu-item (click)="changeUserStatus(user)">
+                                            <button *ngIf="!user.defaultAdminUser" mat-menu-item (click)="changeUserStatus(user)">
                                                 <i *ngIf="user.status=='INACTIVE' || !user.status"
                                                     class="icon-enable"></i>
                                                 <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>

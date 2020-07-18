@@ -78,7 +78,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     subdomainvirtual: false,
     specialization: false
   };
-  blogo: any = [];
+  blogo : any = [];
   item_pic = {
     files: [],
     base64: null
@@ -477,11 +477,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
         data => {
           // this.getProviderLogo();
           this.blogo = [];
-          this.blogo[0] = data;
+          this.blogo = data;
           // calling function which saves the business related details to show in the header
           const today = new Date();
           const tday = today.toString().replace(/\s/g, '');
-          const blogo = this.blogo[0].url + '?' + tday;
+          const blogo = this.blogo.url + '?' + tday;
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
             || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
