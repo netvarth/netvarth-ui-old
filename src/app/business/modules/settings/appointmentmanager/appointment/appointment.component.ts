@@ -628,7 +628,7 @@ export class AppointmentComponent implements OnInit {
         this.queuejson = [];
         this.queueQryExecuted = false;
         if (locid && servid) {
-            this.shared_services.getSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
+            this.shared_services.getProviderSchedulesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
                     this.queueQryExecuted = true;

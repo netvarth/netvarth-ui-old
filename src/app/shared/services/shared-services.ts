@@ -774,4 +774,9 @@ export class SharedServices {
     });
     return promise;
   }
+
+  getProviderSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
+    return this.servicemeta.httpGet(url);
+  }
 }
