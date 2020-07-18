@@ -1788,6 +1788,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         checkin_type: source,
+        calmode : this.calculationmode,
+        showtoken : this.showToken
         // isFrom: 'checkin'
       }
     };

@@ -187,6 +187,8 @@ export class ProviderCheckinComponent implements OnInit {
     wtsapmode: any;
     chekin_title: string;
     is_wtsap_empty = false;
+    calculationMode: any;
+    showtoken: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -204,6 +206,34 @@ export class ProviderCheckinComponent implements OnInit {
                 } else {
                     this.chekin_title = 'Walk-ins';
                 }
+            }
+            if (qparams.calmode) {
+                this.calculationMode = qparams.calmode;
+            }
+            if (qparams.showtoken) {
+                this.showtoken = qparams.showtoken;
+            }
+            if (this.calculationMode !== 'NoCalc' || (this.calculationMode === 'NoCalc' && !this.showtoken)) {
+                this.breadcrumbs = [
+                    {
+                        title: 'New Check-in',
+                        url: 'provider/check-ins'
+                    },
+                    {
+                        title: this.chekin_title
+                    }
+                ];
+            }
+            if (this.calculationMode === 'NoCalc' && this.showtoken) {
+                this.breadcrumbs = [
+                    {
+                        title: 'New Token',
+                        url: 'provider/check-ins'
+                    },
+                    {
+                        title: this.chekin_title
+                    }
+                ];
             }
             if (qparams.ph || qparams.haveMobile) {
                 const filter = {};
@@ -255,15 +285,15 @@ export class ProviderCheckinComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
         this.get_token_cap = Messages.GET_TOKEN;
-        this.breadcrumbs = [
-            {
-                title: 'Tokens/Check-ins',
-                url: 'provider/check-ins'
-            },
-            {
-                title: this.chekin_title
-            }
-        ];
+        // this.breadcrumbs = [
+        //     {
+        //         title: 'Tokens/Check-ins',
+        //         url: 'provider/check-ins'
+        //     },
+        //     {
+        //         title: this.chekin_title
+        //     }
+        // ];
         this.maxsize = 1;
         this.step = 1;
         // this.getCurrentLocation();
