@@ -275,7 +275,13 @@ scrollToTop() {
         },
         error => {
           // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          if (error.status === 401 && error.error === 'Session already exists.') {
+            this.shared_functions.doLogout().then( () => {
+              this.onSubmit(data);
+            });
+          } else {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
           this.api_loading = false;
         }
       );

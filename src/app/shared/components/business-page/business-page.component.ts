@@ -584,6 +584,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.maxsize === undefined) {
               this.maxsize = 1;
             }
+            this.showDepartments = this.settingsjson.filterByDept;
             break;
           }
           case 'location': {
@@ -1854,10 +1855,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         });
     }
   }
-  getServiceByDept(deptId) {
-    const service = this.servicesjson.filter(dpt => dpt.departmentId === deptId);
-    if (service[0] && service[0].services) {
-      return service[0].services;
+  getServiceByDept(department) {
+    if (department && department.departmentId) {
+      const service = this.servicesjson.filter(dpt => dpt.departmentId === department.departmentId);
+      if (service[0] && service[0].services) {
+        return service[0].services;
+      }
+    } else {
+      return [];
     }
   }
 }

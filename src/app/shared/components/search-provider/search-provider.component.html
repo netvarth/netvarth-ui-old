@@ -8,7 +8,7 @@
         <div class="c-body prov-detail-outer"> -->
 <div class="card">
   <div class="c-ot" style="margin-bottom: 50px;
-        margin-top: 10px" *ngIf="selectedDepartment">
+        margin-top: 10px" *ngIf="selectedDepartment && fiterByDept">
     <div class="item col-md-4 col-xs-12 mgn-bt-10" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;">
       <span class="ttle" style="color: #999999;
                 display: block;
@@ -167,7 +167,7 @@
           </div>
           <div style="flex-grow:1"></div>
           <div class="bottom-actions-root"
-            *ngIf="search_result['estimatedtime_det'] && (search_result['estimatedtime_det']['onlineCheckIn'] || search_result.future_checkins==1)">
+            *ngIf="search_result['estimatedtime_det'] && (search_result['estimatedtime_det']['onlineCheckIn'] || search_result['estimatedtime_det']['futureWaitlist'])">
             <div class="checkin-est nrm"
               *ngIf="!search_result['estimatedtime_det']['message'] && search_result['estimatedtime_det']['calculationMode']!='NoCalc'">
               <span class="est-time"
@@ -198,7 +198,7 @@
               *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
             <div class="future-date-link checkin-future">
               <span class="bt10" (click)="checkinClicked(search_result, true)"
-                *ngIf="search_result['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']">{{do_you_want_to_cap}}
+                *ngIf="search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist']">{{do_you_want_to_cap}}
                 <span *ngIf="search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
                 <span
                   *ngIf="!search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist', search_result)}}</span>

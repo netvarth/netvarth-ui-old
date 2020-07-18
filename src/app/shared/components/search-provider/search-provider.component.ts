@@ -89,7 +89,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   page_source;
   api_loading = false;
   @Input() id;
-  @Input() deptId;
   @Input() psource;
   @Input() bprofile;
   @Input() settings;
@@ -99,6 +98,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   @Input() jaldeediscount;
   @Input() location;
   @Input() selectedDept;
+  @Input() fiterByDept;
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
@@ -184,8 +184,11 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     }
     if (this.selectedDept) {
       this.selectedDepartment = this.selectedDept;
-
+      if (this.selectedDept.users) {
       this.usersList = this.selectedDept.users;
+      } else {
+        this.usersList = this.selectedDept;
+      }
       this.showService = false;
       if (this.usersList.length === 0) {
         this.showService = true;
@@ -282,6 +285,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
               user['estimatedtime_det']['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
               user['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               user['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
+              user['estimatedtime_det']['futureWaitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['futureWaitlist'];
               user['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
               user['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
               user['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];

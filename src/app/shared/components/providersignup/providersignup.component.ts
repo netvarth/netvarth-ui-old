@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-providersignup',
@@ -139,11 +140,13 @@ export class ProvidersignupComponent implements OnInit {
     jaldee_playstore: 'assets/images/home/app_btn1.png',
     jaldee_appstore: 'assets/images/home/app_btn2.png'
   };
+  scInfo;
+  scCode_Ph;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
-    private router: Router,
+    private router: Router, private provider_services: ProviderServices,
     public shared_functions: SharedFunctions) { }
   @Inject(DOCUMENT) public document;
 
@@ -345,17 +348,65 @@ export class ProvidersignupComponent implements OnInit {
         );
     });
   }
-  onReferalSubmit(sccode) {
-    this.scfound = false;
-    this.scCode = null;
-    if (sccode) {
-      this.scCode = sccode;
-      this.scfound = true;
+  // onReferalSubmit(sccode) {
+  //   this.scfound = false;
+  //   this.scCode = null;
+  //   if (sccode) {
+  //     this.scCode = sccode;
+  //     this.scfound = true;
+  //   }
+  // }
+  submitHearus() {
+    if (this.hearus === 'SalesReps') {
+      if (this.scCode_Ph) {
+        this.findSC_ByScCode(this.scCode_Ph).then(() => {
+          this.signUpApiProvider(this.user_details);
+        });
+      } else {
+        this.shared_functions.openSnackBar('Please enter Sales Partner Id/ Phone', { 'panelClass': 'snackbarerror' });
+      }
+    } else {
+      this.signUpApiProvider(this.user_details);
     }
   }
-  submitHearus() {
-    this.signUpApiProvider(this.user_details);
+
+  handlekeyup(ev) {
+    this.scfound = false;
+    this.scInfo = {};
+    if (ev.keyCode === 13) {
+      this.scInfo = {};
+      this.findSC_ByScCode(this.scCode_Ph);
+    }
   }
+
+  findSC_ByScCode(scCode) {
+    this.scfound = false;
+    this.scCode = null;
+    if (scCode) {
+      return new Promise((resolve, reject) => {
+        this.provider_services.getSearchSCdetails(scCode)
+          .subscribe(
+            data => {
+              this.scfound = true;
+              this.scInfo = data;
+              if (this.scInfo.primaryPhoneNo === scCode) {
+                this.scCode = this.scInfo.scId;
+                resolve();
+              } else {
+                this.scCode = this.scCode_Ph;
+                resolve();
+              }
+            },
+            (error) => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.scfound = false;
+              this.scCode = null;
+            }
+          );
+      });
+    }
+  }
+
   signUpFinished(login_data) {
     if (this.ynw_credentials != null) {
       this.shared_functions.doLogout().then(() => {
@@ -554,7 +605,6 @@ export class ProvidersignupComponent implements OnInit {
   }
   showdomainstep() {
     this.active_step = 1;
-
   }
   checkAccountExists() {
     const mobile = this.signupForm.get('phonenumber').value;

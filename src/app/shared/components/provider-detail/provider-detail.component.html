@@ -139,6 +139,11 @@
                                     <span class="icon-female" *ngIf="genderType=='female'"
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
+                                <span class="claim-business" *ngIf="businessjson.claimStatus === 'Unclaimed'"
+                                    (click)="claimBusiness()">
+                                    {{claim_my_business_cap}} <i style="font-size: 1.1rem;" class="fa fa-hand-o-up"
+                                        aria-hidden="true"></i>
+                                </span>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists">
                                     <li *ngIf="!isInFav">
                                         <a class='like-button' (click)="handle_Fav('add')">
@@ -391,12 +396,12 @@
                                                         *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
                                                         {{loc['estimatedtime_det']['message']}}
                                                     </div>
-                                                    <span class="claim-business"
+                                                    <!-- <span class="claim-business"
                                                         *ngIf="businessjson.claimStatus === 'Unclaimed'"
                                                         (click)="claimBusiness()">
                                                         {{claim_my_business_cap}} <i style="font-size: 1.1rem;"
                                                             class="fa fa-hand-o-up" aria-hidden="true"></i>
-                                                    </span>
+                                                    </span> -->
                                                 </div>
                                             </div>
                                             <div class="bottom-actions-root"
@@ -525,13 +530,15 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <!-- Department wise doctors/service listing start -->
-                            <div class="location col-md-12 no-padding middle-sect" *ngIf="showDepartments">
+                            <div class="location col-md-12 no-padding middle-sect" *ngIf="deptUsers.length > 0">
                                 <mat-accordion *ngFor="let dept of deptUsers; let i = index">
-                                    <mat-expansion-panel [expanded]="false"
-                                        *ngIf="(dept.users && dept.users.length > 0) || (dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)">
+                                    <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <span style="font-size: normal">{{dept.departmentName}}
+                                            <!-- <mat-panel-title
+                                            *ngIf="(dept.users && dept.users.length > 0) || (dept.users && dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)"> -->
+                                            <mat-panel-title
+                                            *ngIf="showDepartments">   
+                                            <span style="font-size: normal">{{dept.departmentName}}
                                                     <span *ngIf="dept.users && dept.users.length==1">(1
                                                         {{getTerminologyTerm("provider")}})</span>
                                                     <span
@@ -539,11 +546,19 @@
                                                         {{getTerminologyTerm("provider")}}s)</span>
                                                 </span>
                                             </mat-panel-title>
+                                            <mat-panel-title
+                                            *ngIf="!showDepartments">
+                                            <span *ngIf="dept.length==1">(1
+                                                {{getTerminologyTerm("provider")}})</span>
+                                            <span
+                                                *ngIf="dept.length>1">({{dept.length}}
+                                                {{getTerminologyTerm("provider")}}s)</span>
+                                            </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <app-search-provider [id]="provider_id" [deptId]="dept.departmentId"
+                                        <app-search-provider [id]="provider_id"
                                             [bprofile]="businessjson" [settings]="settingsjson"
                                             [terminologies]="terminologiesjson" [coupon]="s3CouponList"
-                                            [serviceJson]="getServiceByDept(dept.departmentId)"
+                                            [serviceJson]="getServiceByDept(dept)" [fiterByDept]="showDepartments"
                                             [jaldeediscount]="jaldeediscountJson" [location]="locationjson"
                                             [selectedDept]="dept" [psource]="'details-page'">
                                         </app-search-provider>
@@ -562,7 +577,8 @@
 <footer class="main-footer" style="margin-left: 0px">
     <div class="pull-right hidden-xs footer_info">
     </div>
-    <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
+    <span class="footer_info">Copyright &copy; 2020 Jaldee Inc.</span> &nbsp; <span class="
+    footer_info">All rights
         reserved.</span>
     <span> <a class="logo">
             <!-- logo for regular state and mobile devices -->
