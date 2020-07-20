@@ -563,7 +563,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     } else if
     (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
-      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'info';
       this.progress_bar_one=25;
       this.progress_bar_two=25;
