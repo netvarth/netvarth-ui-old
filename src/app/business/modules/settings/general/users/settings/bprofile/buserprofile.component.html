@@ -7,352 +7,792 @@
             <div class="w-dta">
                 <div class="row">
                     <div class="copy one col-xs-12 col-sm-12 no-padding">
-                        <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 no-padding">
+                        <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12">
                             <div class="card p0">
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>{{public_search_cap}}
-                                            </h2>
-                                            <span class="status">{{current_status_cap}} -
-                                                <span class="on" *ngIf="normal_search_active">{{on_cap}}</span>
-                                                <span class="off" *ngIf="!normal_search_active">{{off_cap}}</span>
-                                            </span>
-                                        </div>
-                                        <div class="ct-r ml-auto">
-                                            <button class="cs-btn bt3 off" *ngIf="normal_search_active"
-                                                (click)="confirm_searchStatus()">{{turn_off_cap}}</button>
-                                            <button class="cs-btn bt3 on" *ngIf="!normal_search_active"
-                                                (click)="confirm_searchStatus()">{{turn_on_cap}}</button>
+                                                <h3>Business Profile
+                                                    </h3>
+                                                    <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}} </span>
+                                                        
+                                                        </h6>
                                         </div>
                                     </div>
-                                    <p class="form-level-settings" *ngIf="!normal_search_active">
-                                        {{frm_public_search_cap}}<a class="learnmore-pointer"
-                                            id="customer-help"
-                                            (click)="learnmore_clicked('public-search', $event)">Learn
-                                            More</a></p>
-                                    <p class="form-level-settings" *ngIf="normal_search_active">
-                                        {{frm_public_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
-                                            (click)="learnmore_clicked('public-search', $event)">Learn
-                                            More</a></p>
+                               
+                                    <div class="col-md-10 ct-l col-xs-12 no-padding">
+
+                                        <div class="col-md-10">
+                                              
+                                        <div class="col-md-10 mt-2"> 
+                                             <strong>  {{weightageValue}} %</strong>
+                                                        <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button>
+                                                    </div>
+                                      
+                                            
+                                        <div class="progress col-md-10 mt-2 p0" style="height:15px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div> 
+                                        <!-- <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
+                                               
+                                                </div>
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
+                                                 
+                                                </div>
+                                                <div *ngIf="progress_bar_three!=0"class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="progress_bar_three" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
+                                                  
+                                                </div>
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" 
+                                                    aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
+                                                  
+                                                </div>
+                                            
+                                            
+                                            </div> -->
+                                          
+
+
+                                    </div>
+                                      
+                                       
+                                     
+                                    </div>
                                 </div>
-
-                                <!-- <div class="pubs card w-dta bprof" *ngIf="bProfile.profileId"> -->
-                                    <!-- <div class="ctrl">
+                                <div class="pubs card w-dta bprof" *ngIf="bProfile">
+                                    <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Link</h2>
-                                        </div>
+                                            <h2>Jaldee Online
+                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                        </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
+                                                            <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
+                                                        </div>
+                
+                                                        </div>
+                                                    </div>
+                                                   
+                                                     
+                    
+                                                     
+                                               
+                                </div>
+                                </div>
+                                           
+              
+            <div class="card p0 w-dta active" #basicInfoSection>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="min100">
+                                <mat-panel-title class="block-level">
+                                    {{profile_summary_cap}}
+                                    <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                    <p class="form-level-settings">{{frm_profile_name_cap}}
+                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More
+                                        </a>
+                                    </p>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            
+                                <div class="cd-t" *ngIf="!showProfile">
+                                <div class="warning" *ngIf="normal_basicinfo_show==1">
+                                    <app-innerloading-spinner spinnerParams="loadingParams">
+                                    </app-innerloading-spinner>
+                                </div>
+                                <div class="basic-i" *ngIf="normal_basicinfo_show==2">
+                                    <div class="warning">
+                                        <i data-icon="m"></i>
+                                        <p>
+                                            <span>{{have_not_add_cap}}
+                                                <b>{{name_cap}} & {{description_cap}}.
+                                                </b>
+                                            </span>
+                                        </p>
+                                        <span class="cs-btn bt3" (click)="showBPrimary()">{{add_it_cap}}</span>
+                                        <p class="smlft">* {{to_turn_search}}</p>
                                     </div>
-                                    <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"
-                                            id="customer-help"
-                                            (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
-                                            More</a></p> -->
-
-
-                                    <!-- <div *ngIf="!bProfile.customId">
-                                        <div>
-                                            <div class="sblinks">
-                                                <ul class="sbl">
-                                                    <li class="acc-url-li">
-                                                        <span class="custid" rel="noopener"
-                                                            target="_blank">{{wndw_path}}{{bProfile.profileId}} </span>
-                                                        <span class="busns-id">
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor"
-                                                                    (click)="copyInputMessage(bProfile.profileId)"
-                                                                    [matTooltip]="'Copy link'"></i>
-                                                            </span>
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                                    (click)="qrCodegenerateOnlineID(bProfile.profileId)"
-                                                                    [matTooltip]="'Generate QR code'"></i>
-                                                            </span>
-                                                            <span class="custid custId-icon" *ngIf="!bProfile.customId">
-                                                                <button class="btn-primary-n" (click)="customizeId()">
-                                                                    <a>
-                                                                        Customize ID
-                                                                    </a>
-                                                                </button>
-                                                            </span>
-                                                        </span>
-
-                                                    </li>
-                                                </ul>
+                                </div>
+                                <div *ngIf="normal_basicinfo_show==3">
+                                    <div class="basic-i">
+                                        <span class="editbt" (click)="showBPrimary()"></span>
+                                        <div class="bi-l" *ngIf="blogo">
+                                            <div class="pro-pic" [class.yes]="profimg_exists">
+                                                <div class="pro-pic-img">
+                                                    <img [src]="showimg()" alt="" *ngIf="blogo && blogo.url">
+                                                </div>
+                                                <input #logofile type="file" accept="image/*" style="display:none;" (change)="imageSelect(logofile,$event)">
+                                                <div class="add">
+                                                    <span (click)="logofile.click()">{{add_cap}}
+                                                        <br /> {{profile_pic_cap}}
+                                                    </span>
+                                                </div>
+                                                <div class="change">
+                                                    <span class="change-pic" (click)="logofile.click()">{{change_cap}}
+                                                        <br /> {{pic_cap}}</span>
+                                                    <span class="del-pic" (click)="confirmLogoremove(blogo.keyName)">{{delete_pic}}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div> -->
-                                  
-                                    <!-- <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
-                                        <div><i (click)="closeOnlineQR()"
-                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
-                                                aria-hidden="true"></i></div>
-                                        <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
-                                                [qrc-value]="qr_value">
-                                            </ngx-qrcode>
-                                        </div>
-                                        <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
-                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
-                                                        style="padding-right: 2px;"></i>Download</a></button>
-                                        </div>
-                                    </div> -->
-
-                                    <!-- <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                                        <form [formGroup]="customForm"
-                                            class="ynw-common-form-nm change-mob-style custId-flex-form"
-                                            *ngIf="editMode==1 || editMode==0">
-                                            <div class="form-group custId-flex">
-                                                <mat-form-field class="custId-ip-wdth">
-                                                    <input matInput type="text" minlength="4" maxlength="25"
-                                                        class="form-control" autocomplete="off" value="www.jaldee.com/"
-                                                        [readonly]="true" style="color: #a5a2a2;">
-                                                </mat-form-field>
-                                                <mat-form-field>
-                                                    <input matInput type="text" minlength="4" maxlength="25"
-                                                        class="form-control custId-ip-max-wdth" id="customid"
-                                                        formControlName="customid" autocomplete="off">
-                                                    <app-field-error-display
-                                                        [displayError]="fed_service.isFieldValid(customForm,'customid')"
-                                                        [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
-                                                                    {
-                                                                    'required' : 'Please enter your Custom Business ID',
-                                                                    'minlength' : 'Minimum 4 characters are required',
-                                                                    'maxlength' : 'Maximum 25 characters are allowed',
-                                                                    'pattern' : 'Only alphabet,numbers and hyphen are allowed'
-                                                                    })">
-                                                    </app-field-error-display>
-                                                </mat-form-field>
-
                                             </div>
-                                            <div class="form-group custId-btns">
-                                                <button (click)="cancelCusUpdt()"
-                                                    class="cs-btn bt2 custId-btn-bt2">Cancel</button>
-                                                <button (click)="add_updateCustomId(customForm.value)" mat-button
-                                                    [disabled]="!customForm.valid"
-                                                    class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                                            <div class="bi-r">
+                                                    <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
+                                                    <p class="profile-des-p" [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc | capitalizeFirst}}
+                                                    </p>
+                                        </div>
+                                        </div>
+                                </div>
+                                        </div>
+                                        
+                                            <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
+                                                    <h1 class="mat-dialog-title"></h1>
+                                                    <form [formGroup]="amForm" novalidate
+                                                        (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                                                        (keyup)="resetApiErrors()" class="ynw-common-form">
+            
+                                                        <div class="form-group">
+                                                            <mat-form-field>
+                                                                <input matInput class="form-control" formControlName="bname"
+                                                                    autocomplete="off" placeholder="{{business_name_cap}}">
+                                                            </mat-form-field>
+                                                            <app-field-error-display
+                                                                [displayError]="fed_service.isFieldValid(amForm,'bname')"
+                                                                errorMsg="Please enter the business name">
+                                                            </app-field-error-display>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <mat-form-field>
+                                                                <textarea maxlength="2000" matInput class="form-control"
+                                                                    formControlName="bdesc" row="4"
+                                                                    placeholder="A short description about your service (Max 2000 characters)"></textarea>
+            
+                                                            </mat-form-field>
+                                                            <app-field-error-display
+                                                                [displayError]="fed_service.isFieldValid(amForm,'bdesc')"
+                                                                errorMsg="Please enter the profile summary">
+                                                            </app-field-error-display>
+                                                        </div>
+                                                        <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                                            <button type="button" class="cs-btn bt2" (click)="cancel()"
+                                                                [disabled]="disableButton">{{cancel_btn_cap}}</button>
+                                                            <button type="submit" style="margin-left: 15px;"
+                                                                [disabled]="!amForm.valid && disableButton" class="cs-btn bt1"
+                                                                mat-button>{{save_btn_cap}}</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            
+                                       
+                                   
+                                
+                            
+          
+                            <!-- specialization-->
+                            <div class="cd-b ">
+                              <mat-card class="custom">
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="true">
+                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                            <span class="mat-content">
+                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                    Specilization
+                                                        <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                        </i>
+                                                   
+                                                    <!--bindings={}-->
+                                                    <p class="form-level-settings">Mention your specilization here
+                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                    </p>
+                                                </mat-panel-title>
+                                            </span>
+                                            <!--bindings={
+                                        "ng-reflect-ng-if": "true"
+                                      }-->
+                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                style="transform: rotate(180deg);"></span> -->
+                                        </mat-expansion-panel-header>
+                                        <div class="row" *ngIf="bProfile  ">
+                                        <div class="card p0 w-dta active">
+
+
+                                            <div class="no-dta" *ngIf="normal_specilization_show==1&&normal_basicinfo_show==1">
+                                                <app-innerloading-spinner spinnerParams="loadingParams">
+                                                </app-innerloading-spinner>
+                                            </div>
+                                            <div class="no-dta" *ngIf="normal_specilization_show==2">
+                                                <p>{{have_not_add_cap}} {{special_cap}}.</p>
+                                                <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                            </div>
+                                            <div class="special-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                                                <span class="editbt" (click)="handleSpecialization()"></span>
+                                                <div *ngFor="let spec of bProfile.specialization">
+                                                    {{getSpecializationName(spec)}}
+                                                </div>
                                             </div>
 
-                                        </form>
-                                    </div> -->
-
-                                    <!-- <div>
-                                        <div *ngIf="normal_customid_show==3">
-                                            <div class="sblinks">
-                                                <ul class="sbl">
-                                                    <li class="acc-url-li">
-                                                        <span class="custid" rel="noopener"
-                                                            target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
-                                                        <span class="busns-id">
-                                                            <span class="custid custId-icon"><i
-                                                                    class="fa fa-copy custId-cursor"
-                                                                    (click)="copyInputMessage(bProfile.customId)"
-                                                                    [matTooltip]="'Copy link'"></i>
-                                                            </span>
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr"
-                                                                    (click)="qrCodegenerateCustID(bProfile.customId)"
-                                                                    [matTooltip]="'Generate QR code'"></i>
-                                                            </span>
-                                                            <span class="custid" style="padding-left: 40px;">
-                                                                <button type="button" mat-icon-button
-                                                                    [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button"
-                                                                        (click)="editCustomId(bProfile.customId)"
-                                                                        mat-menu-item>
-                                                                        <i class="icon-edit"></i>
-                                                                        <span>{{edit_cap}}</span>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        (click)="deleteCustomId(bProfile.customId)"
-                                                                        mat-menu-item>
-                                                                        <i class="icon-delete"></i>
-                                                                        <span>{{delete_btn}}</span>
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
-                                                        </span>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </div>
-                                    </div> -->
-
-                                    <!-- <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
-                                        <div><i (click)="closeCustomQR()"
-                                                class="fa fa-window-close fa-lg ngx-qr-close custId-cursor"
-                                                aria-hidden="true"></i></div>
-                                        <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType"
-                                                [qrc-value]="qr_value">
-                                            </ngx-qrcode>
                                         </div>
-                                        <div class="coupon-outer">
-                                            <button class="ngx-qr-btn"><a class="ngx-qr-btn" [href]="qrCodePath"
-                                                    download><i class="fa fa-cloud-download" aria-hidden="true"
-                                                        style="padding-right: 2px;"></i>Download</a></button>
-                                        </div>
-                                    </div> -->
-
-                                    <!-- <div class="coupon-outer" *ngIf="!bProfile.customId">
-                                        <div class="duration instantQ"
-                                            *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
-                                            You are not allowed to do this operation. Please upgrade license package
-                                        </div>
-                                    </div> -->
-<!-- 
-                                </div> -->
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                </mat-card>
 
                             </div>
-                            <div class="card p0 w-dta active">
+                            <div class="cd-b ">
+                                    <mat-card class="custom">
                                 <mat-accordion>
-                                    <div class="block-level userprofileheader">
-                                        {{profile_summary_cap}} <i *ngIf="reqFields.name "
-                                            class="req-flds-cap">*required fields missing</i>
-                                        <p class="form-level-settings">{{frm_profile_name_cap}}<a
-                                                class="learnmore-pointer" id="customer-help"
-                                                (click)="learnmore_clicked('basic-information', $event)">Learn
-                                                More</a></p>
-                                    </div>
-                                    <div class="cd-t" *ngIf="!showProfile">
-                                        <div class="warning" *ngIf="normal_basicinfo_show==1">
-                                            <app-innerloading-spinner spinnerParams="loadingParams">
-                                            </app-innerloading-spinner>
-                                        </div>
-                                        <div class="basic-i" *ngIf="normal_basicinfo_show==2">
-                                            <div class="warning">
-                                                <i data-icon="m"></i>
-                                                <p><span>{{have_not_add_cap}}<b>{{name_cap}} &
-                                                            {{description_cap}}.</b>
-                                                    </span> </p>
-                                                <span class="cs-btn bt3" (click)="showBPrimary()">{{add_it_cap}}</span>
-                                                <p class="smlft">* {{to_turn_search}}</p>
+                                    <mat-expansion-panel [expanded]="true">
+                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                            <span class="mat-content">
+                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                    Languages Known
+                                                        <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                        </i>
+                                                    
+                                                    <!--bindings={}-->
+                                                    <p class="form-level-settings">Mention your languages here
+                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                    </p>
+                                                </mat-panel-title>
+                                            </span>
+                                            <!--bindings={
+                                                "ng-reflect-ng-if": "true"
+                                              }-->
+                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                        style="transform: rotate(180deg);"></span> -->
+                                        </mat-expansion-panel-header>
+                                        <div class="row">
+                                            <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                                                <div class="card p0 w-dta active">
+
+                                                    <div class="no-dta" *ngIf="normal_language_show==1&&normal_basicinfo_show==1">
+                                                        <app-innerloading-spinner spinnerParams="loadingParams">
+                                                        </app-innerloading-spinner>
+                                                    </div>
+                                                    <div class="no-dta" *ngIf="normal_language_show==2">
+                                                        <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                                        <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                    </div>
+
+                                                    <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
+                                                        <span class="editbt" (click)="handleSpokenLanguages()"></span>
+                                                        <div *ngFor="let lang of bProfile.languagesSpoken">
+                                                            {{getlanguageName(lang)}}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div *ngIf="normal_basicinfo_show==3">
-                                            <div class="basic-i">
-                                                <span class="editbt" (click)="showBPrimary()"></span>
-                                                <div class="bi-l" *ngIf="blogo">
-                                                    <div class="pro-pic" [class.yes]="profimg_exists">
-                                                        <div class="pro-pic-img"><img [src]="showimg()" alt=""
-                                                                *ngIf="blogo && blogo.url"></div>
-                                                        <input #logofile type="file" accept="image/*"
-                                                            style="display:none;"
-                                                            (change)="imageSelect(logofile,$event)">
-                                                        <div class="add"><span (click)="logofile.click()">{{add_cap}}
-                                                                <br />
-                                                                {{profile_pic_cap}}</span></div>
-                                                        <div class="change">
-                                                            <span class="change-pic"
-                                                                (click)="logofile.click()">{{change_cap}}
-                                                                <br /> {{pic_cap}}</span>
-                                                            <span class="del-pic"
-                                                                (click)="confirmLogoremove(blogo.keyName)">{{delete_pic}}</span>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                </mat-card>
+                            </div>
+                             <!--mandatory fields -->
+                             <div class="cd-b ">
+                                <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
+                                <div  *ngFor="let fields of domain_fields">
+                                    <ng-container *ngIf="fields.mandatory">
+                                        <mat-card class="custom">
+                                        <mat-accordion [class.acc-btn-data]="fields['value']">
+                                            <mat-expansion-panel [expanded]="fields['value']"  [hideToggle]="!fields['value']">
+                                                <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"  class="custom_business">
+                                                    <mat-panel-title>{{fields.displayName}}
+                                                        
+                                                        <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                    </mat-panel-title>
+                                                    
+                                                        <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
+                                                            <mat-icon>{{add_circle_outline}}</mat-icon>
+                                                        </button>
+                                                   
+                                                </mat-expansion-panel-header>
+
+                                                <ng-container [ngSwitch]="fields.dataType">
+                                                    <ng-container *ngSwitchCase="'TEXT'">
+                                                        <div class="cont-btn">
+                                                            <p> {{ fields.value | capitalizeFirst}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'TEXT_MED'">
+                                                        <div class="cont-btn">
+                                                            <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
+                                                                {{fields.value | nl2br | capitalizeFirst }}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'Boolean'">
+                                                        <div class="cont-btn">
+                                                            <p> {{(fields.value == 'true' || fields.value == true
+                                                                ) ? 'Yes' : 'No'}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'Age'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'Number'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'URL'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+
+                                                    <ng-container *ngSwitchCase="'Date'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value | date:dateFormat}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'DOB'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'Phone'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+
+                                                    <ng-container *ngSwitchCase="'Email'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'Enum'">
+                                                        <div class="cont-btn">
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'EnumList'">
+                                                        <div class="cont-btn">
+                                                            <p>{{ getdispVal('domain', fields)}}</p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'Gender'">
+                                                        <div class="cont-btn">
+                                                            <p> {{fields.value | capitalizeFirst}} </p>
+                                                            <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                           
+                                                        </div>
+                                                    </ng-container>
+
+                                                    <ng-container *ngSwitchCase="'DataGrid'">
+                                                        <div class="table-outer">
+                                                            <table class="table table-striped">
+                                                                <thead class="cf">
+                                                                    <tr>
+                                                                        <th class="cth" *ngFor="let column of fields.Columns">
+                                                                            {{column.displayName}}</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let row of fields.value;let i = index">
+                                                                        <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
+                                                                            {{row[column.key]}}</td>
+                                                                        <td class="action">
+                                                                            <span class="mbt">
+                                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                                    <mat-icon>more_vert
+                                                                                    </mat-icon>
+                                                                                </button>
+                                                                                <mat-menu #menu="matMenu">
+                                                                                    <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'domain_questions', i)">
+                                                                                        <i class="icon-edit"></i>
+                                                                                        <span>{{edit_cap}}</span>
+                                                                                    </button>
+                                                                                    <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
+                                                                                        <i class="icon-delete"></i>
+                                                                                        <span>{{delete_btn}}</span>
+                                                                                    </button>
+                                                                                </mat-menu>
+                                                                            </span>
+
+                                                                            <span class="mbt-mobile-show">
+                                                                                <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
+                                                                                <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <span (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </mat-card>
+                                    </ng-container>
+                                    </div>
+                                    </ng-container>
+
+
+
+
+
+
+
+
+
+
+                                    <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
+                                        <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                            <ng-container *ngIf="fields.mandatory">
+                                                <mat-card class="custom">
+                                                <mat-accordion  [class.acc-btn-data]="fields['value']">
+                                                    <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
+                                                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
+                                                            <mat-panel-title>
+                                                                {{fields.displayName}}
+                                                                <span *ngIf="fields.mandatory == true"
+                                                                    class="red">&nbsp;*</span>
+                                                                <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
+                                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2 weeks </span>
+                                                            </mat-panel-title>
+                                                           
+                                                                <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
+                                                                    <mat-icon>{{add_circle_outline}}</mat-icon>
+                                                                </button>
+                                                       
+                                                        </mat-expansion-panel-header>
+
+                                                        <ng-container [ngSwitch]="fields.dataType">
+
+                                                            <ng-container *ngSwitchCase="'TEXT'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value | capitalizeFirst}}</p>
+
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'TEXT_MED'">
+                                                                <div class="cont-btn">
+                                                                    <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
+                                                                        {{fields.value | nl2br | capitalizeFirst}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Boolean'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{(fields.value == 'true' || fields.value
+                                                                        == true ) ? 'Yes' : 'No'}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Age'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Number'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'URL'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+
+                                                            <ng-container *ngSwitchCase="'Date'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value | date:dateFormat}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'DOB'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Phone'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+
+                                                            <ng-container *ngSwitchCase="'Email'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{fields.value}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Enum'">
+                                                                <div class="cont-btn">
+                                                                    <p> {{ getdispVal('subdomain',fields)}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'EnumList'">
+                                                                <div class="cont-btn">
+                                                                    <p>{{ getdispVal('subdomain', fields)}}</p>
+                                                                    <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'Gender'">
+                                                                <div class="cont-btn">
+                                                                    <span style="margin-left:1%">{{fields.value | capitalizeFirst}} </span>
+                                                                    <span class="editbt" style="margin-left:5%" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                                   
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <ng-container *ngSwitchCase="'DataGrid'">
+                                                                <div class="table-outer">
+                                                                    <table class="table table-striped">
+                                                                        <thead class="cf">
+                                                                            <tr>
+                                                                                <th class="cth" *ngFor="let column of fields.Columns">
+                                                                                    {{column.displayName}}</th>
+                                                                                <th></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let row of fields.value;let i = index">
+                                                                                <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
+                                                                                    {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}
+                                                                                </td>
+                                                                                <td class="action">
+                                                                                    <span class="mbt">
+                                                                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                                            <mat-icon>more_vert
+                                                                                            </mat-icon>
+                                                                                        </button>
+                                                                                        <mat-menu #menu="matMenu">
+                                                                                            <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
+                                                                                                <i class="icon-edit"></i>
+                                                                                                <span>{{edit_cap}}</span>
+                                                                                            </button>
+                                                                                            <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
+                                                                                                <i class="icon-delete"></i>
+                                                                                                <span>{{delete_btn}}</span>
+                                                                                            </button>
+                                                                                        </mat-menu>
+                                                                                    </span>
+                                                                                    <span class="mbt-mobile-show">
+                                                                                        <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">{{edit_cap}}</button>
+                                                                                        <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">{{delete_btn}}</button>
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <span (click)="editGridDynamicField(fields.name,'subdomain_questions', null)" class="addbt"></span>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                            </mat-card>
+                                            </ng-container>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <!-- 
+                                    </mat-expansion-panel>
+
+
+                                </mat-accordion> -->
+
+
+                                </div>
+                            
+                                <!-- gallery and social media-->
+                                <div class="cd-b">
+
+                                   <mat-card class="custom">
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                <span class="mat-content">
+                                                    <mat-panel-title class="block-level mat-expansion-panel-header-title mat-title-font" >
+                                                       Social Media
+                                                            <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                            </i>
+                                                      
+                                                        <!--bindings={}-->
+                                                        <p class="form-level-settings">{{frm_social_cap}}
+                                                            <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                        </p>
+                                                    </mat-panel-title>
+                                                </span>
+                                                <!--bindings={
+                                            "ng-reflect-ng-if": "true"
+                                          }-->
+                                                <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                    style="transform: rotate(180deg);"></span> -->
+                                            </mat-expansion-panel-header>
+
+                                            <div class="card p0 w-dta active">
+
+                                                <div class="row no-padding">
+                                                    <!-- <div class=" col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="card w-dta active no-padding">
+                                                            <mat-accordion>
+                                                                <mat-expansion-panel [expanded]="true">
+                                                                    <mat-expansion-panel-header class="min100">
+                                                                        <mat-panel-title class="block-level">
+                                                                            <span style="font-size:15px;">{{gallery_cap}}</span>
+                                                                            <p class="form-level-settings">{{frm_gallery_cap}}
+                                                                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)">Learn More
+                                                                                </a>
+                                                                            </p>
+                                                                        </mat-panel-title>
+                                                                    </mat-expansion-panel-header>
+                                
+                                                                    <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'">
+                                                                    </app-jaldee-gallery>
+                                                                </mat-expansion-panel>
+                                                            </mat-accordion>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class=" col-md-12 col-xs-12 col-sm-6">
+                                                        <div class="card w-dta active no-padding">
+                                                           
+                                                                    <div class="row" *ngIf="bProfile">
+                                                                    <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                                                                        <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                        </app-innerloading-spinner>
+                                                                    </div>
+                                                                    <div class="no-dta" *ngIf="normal_socialmedia_show==2">
+                                                                        <p>{{no_social_media}}</p>
+                                                                        <span class="cs-btn bt3"
+                                                                            (click)="handleSocialmedia()">{{add_it_cap}}</span>
+                                                                    </div>
+                                                                    <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
+                                                                        <div class="sblinks">
+                                                                            <ul class="sbl">
+                                                                                <li *ngFor="let social of social_arr;let i = index"
+                                                                                    [class]="getSocialdet(social.Sockey, 'iconClass')">
+                                                                                    <!-- <a [href]="social.Socurl" class="mbt">222</a> -->
+                                                                                    <span class="mbt">
+                                                                                        <button type="button" mat-icon-button
+                                                                                            [matMenuTriggerFor]="menu">
+                                                                                            <mat-icon>more_vert</mat-icon>
+                                                                                        </button>
+                                                                                        <mat-menu #menu="matMenu">
+                                                                                            <button type="button"
+                                                                                                (click)="editSocialmedia(social.Sockey)"
+                                                                                                mat-menu-item>
+                                                                                                <i class="icon-edit"></i>
+                                                                                                <span>{{edit_cap}}</span>
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                (click)="deleteSocialmedia(social.Sockey)"
+                                                                                                mat-menu-item>
+                                                                                                <i class="icon-delete"></i>
+                                                                                                <span>{{delete_btn}}</span>
+                                                                                            </button>
+                                                                                        </mat-menu>
+                                                                                    </span>
+                                                                                    <a rel="noopener" [href]="social.Socurl"
+                                                                                        target="_blank">{{getSocialdet(social.Sockey,'displayName')}}
+                                                                                                         </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <span (click)="handleSocialmedia()" class="addbt"
+                                                                                *ngIf="showaddsocialmedia"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                               
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="bi-r">
-                                                    <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
-                                                    <p class="profile-des-p"
-                                                        [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc
-                                                                        | capitalizeFirst}}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card  w-dta active ynw-common-form-nm" *ngIf="showProfile">
-                                        <h1 class="mat-dialog-title"></h1>
-                                        <form [formGroup]="amForm" novalidate
-                                            (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-                                            (keyup)="resetApiErrors()" class="ynw-common-form">
 
-                                            <div class="form-group">
-                                                <mat-form-field>
-                                                    <input matInput class="form-control" formControlName="bname"
-                                                        autocomplete="off" placeholder="{{business_name_cap}}">
-                                                </mat-form-field>
-                                                <app-field-error-display
-                                                    [displayError]="fed_service.isFieldValid(amForm,'bname')"
-                                                    errorMsg="Please enter the business name">
-                                                </app-field-error-display>
                                             </div>
-                                            <div class="form-group">
-                                                <mat-form-field>
-                                                    <textarea maxlength="2000" matInput class="form-control"
-                                                        formControlName="bdesc" row="4"
-                                                        placeholder="A short description about your service (Max 2000 characters)"></textarea>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </mat-card>
 
-                                                </mat-form-field>
-                                                <app-field-error-display
-                                                    [displayError]="fed_service.isFieldValid(amForm,'bdesc')"
-                                                    errorMsg="Please enter the profile summary">
-                                                </app-field-error-display>
-                                            </div>
-                                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                                <button type="button" class="cs-btn bt2" (click)="cancel()"
-                                                    [disabled]="disableButton">{{cancel_btn_cap}}</button>
-                                                <button type="submit" style="margin-left: 15px;"
-                                                    [disabled]="!amForm.valid && disableButton" class="cs-btn bt1"
-                                                    mat-button>{{save_btn_cap}}</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </mat-accordion>
-                            </div>
-                        </div>
+                                </div>
+                          
+
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
                     </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
-                <div class="card p0">
-                    <span class="b-link" (click)="specializations()">
-                        <h2>Specializations</h2>
-                        <span class="form-level-settings"> Mention your specializations here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('specializations', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
-                <div class="card p0">
-                    <span class="b-link" (click)="additionalInfo()">
-                        <h2>Additional Info</h2>
-                        <span class="form-level-settings">Add more details to your online profile.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('additional-info', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile">
-                <div class="card p0">
-                    <span class="b-link" (click)="languagesKnown()">
-                        <h2>Languages Known</h2>
-                        <span class="form-level-settings">Add languages you know, to increase visibility.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('languages-known', $event)">Learn
-                            More</a></span>
-                    </span>
-                </div>
-            </div>
-            <div class="row" *ngIf="bProfile && bProfile.businessName && !showProfile ">
-                <div class="card p0">
-                    <span class="b-link" (click)="galerySocialmedia()">
-                        <h2>Social Media</h2>
-                        <span class="form-level-settings">Add social media platforms.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('your-social-media', $event)">Learn
-                            More</a></span>
-                    </span>
+                    
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
     </div>
+           
+               
+            <div class="row">
+                    <div class="card p0">
+                        <span class="b-link" (click)="additionalInfo()">
+                            <h2>
+                                Additional Info
+                                <!-- <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>  -->
+                             </h2>
+                            <span class="form-level-settings">{{frm_additional_cap}}
+                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
+                                </a>
+                            </span>
+                        </span>
+                    </div>
+                </div> 
+
+        </div>
+    </div>
+        <div class="clearfix"></div>
+  
 </section>

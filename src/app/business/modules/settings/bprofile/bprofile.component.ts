@@ -757,9 +757,12 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
           this.bProfile = data;
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
+              console.log(domainfields);
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
+                  console.log(subdomainfields);
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
+                  console.log(this.reqFields);
                   this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
                   this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                   this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
@@ -1517,6 +1520,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     this.getVirtualFields(this.bProfile['serviceSector']['domain'])
       .then(
         data => {
+          console.log(data);
           // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
           //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
           let mandatorydomain = false;
@@ -1683,6 +1687,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
       this.bProfile['serviceSubSector']['subDomain']).then(
         data => {
+          console.log(data);
           let mandatorysubdomain = false;
           let mandatorySubDomainFilled = false;
           let additionalInfoFilledStatus = false

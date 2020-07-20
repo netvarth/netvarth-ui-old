@@ -13,6 +13,8 @@ import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprof
     styleUrls: ['./additionalinfo.component.scss']
 })
 export class AdditionalInfoComponent implements OnInit, OnDestroy {
+    domain_fields_nonmandatory= [];
+    subdomain_fields_nonmandatory=[];
     frm_additional_cap = '';
     dynamicdialogRef;
     customer_label = '';
@@ -120,6 +122,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 this.breadcrumbs = breadcrumbs;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
+                        console.log('domainList..'+this.domainList.bdata[i].domain);
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
                             if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
@@ -133,6 +136,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
 
     getBusinessProfile() {
+
         this.getBussinessProfileApi()
             .then(
                 data => {
@@ -155,7 +159,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.getVirtualFields(this.domain)
             .then(
                 data => {
+                   
                     this.domain_fields = data['fields'];
+                    this.domain_fields_nonmandatory=this.domain_fields.filter(dom=>dom.mandatory===false);
                     this.domain_questions = data['questions'] || [];
                     this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
                 }
@@ -268,6 +274,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             this.subDomain).then(
                 data => {
                     this.subdomain_fields = data['fields'];
+                    this.subdomain_fields_nonmandatory=this.subdomain_fields.filter(dom=>dom.mandatory===false);
                     this.subdomain_questions = data['questions'] || [];
                     this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
                     for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {

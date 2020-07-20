@@ -1178,6 +1178,7 @@ export const Messages = {
   'WIZ_PUB_SEARCH_CAP': 'Public Search!',
   'CUSTM_ID': 'Create your own personalised URL and QR code of  your account to share among with your potential [customer]s',
   'JALDEE_URL': 'Share your Free URL and QR code of your account among your potential [customer]s',
+  
   //Jaldee Online
   'JALDEE_ONLINE_DISABLED_MSG':'Your [customer]s cannot able to see u online,please enable Jaldee Online',
   'JALDEE_ONLINE_ENABLED_MSG':'Your [customer] can see you online by clicking Jaldee link or scanning QR code',
