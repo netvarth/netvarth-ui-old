@@ -60,14 +60,15 @@
                 <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                     style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display">
+                    style="padding-top: 12px !important;">
+                    <span *ngIf="!small_device_display && selectedUser && selectedUser.firstName">
                       {{selectedUser.firstName}}</span>
                   </a>
                   <ul class="dropdown-menu">
                     <li>
                       <ul class="menu">
-                        <li *ngFor="let user of users;let i = index" [(value)]="i">
+                        <li *ngFor="let user of users;let i = index" [(value)]="i"
+                          [ngClass]="{'active': (user.id == selectedUser.id)}">
                           <a class="pointer-cursor" (click)="handleUserSelection(user)">
                             <h4 *ngIf="user.firstName.length>='27'">
                               {{ user.firstName.substring(0,24) }}...</h4>
@@ -76,7 +77,7 @@
                         </li>
                       </ul>
                     </li>
-                    <!-- <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li> -->
+                    <li class="footer"><a class="pointer-cursor" (click)="gotoUser()">Manage Users</a></li>
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">

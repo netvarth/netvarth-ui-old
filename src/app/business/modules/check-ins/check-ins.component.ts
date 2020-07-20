@@ -161,6 +161,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   open_filter = false;
   status_type = 'all';
   activeQs: any = [];
+  tempActiveQs: any = [];
   selQidsforHistory: any = [];
   selQIds: any = [];
   selectedView: any;
@@ -728,14 +729,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activeQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeQs = groupbyQs['ENABLED'];
+      this.activeQs = this.tempActiveQs =  groupbyQs['ENABLED'];
     }
     const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
-        this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
+        this.activeQs = this.tempActiveQs = this.activeQs.concat(groupbyQs['DISABLED']);
       }
     }
+    this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('selQ')) {
@@ -755,7 +757,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    console.log(this.selQIds);
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -847,12 +848,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQs(date?) {
     const _this = this;
-    let filterEnum = {}
+    const filterEnum = {};
     if (date === 'all') {
-
-      if (this.selectedUser) {
+      if (this.selectedUser && this.selectedUser.id !== 'all') {
         filterEnum['provider-eq'] = this.selectedUser.id;
-
       }
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
@@ -890,6 +889,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.history_waitlist_count = 0;
     this.check_in_filtered_list = [];
     this.activeQs = [];
+    this.tempActiveQs = [];
     this.scheduled_count = 0;
     this.started_count = 0;
     this.completed_count = 0;
@@ -1784,6 +1784,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
+  gotoUser() {
+    this.router.navigate(['provider', 'settings', 'general', 'users']);
+  }
   checkinClicked(source) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -2284,12 +2287,34 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      this.selectedUser = this.users[0]
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
+      this.users.push(tempUser);
+      if (this.shared_functions.getitemFromGroupStorage('selectedUser')) {
+        this.selectedUser = this.shared_functions.getitemFromGroupStorage('selectedUser');
+      } else {
+        this.selectedUser = tempUser;
+      }
+      this.handleUserSelection(this.selectedUser);
     });
   }
   handleUserSelection(user) {
-    // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
-    this.getQs();
+    this.getQsByProvider();
+  }
+  getQsByProvider() {
+    const qs = [];
+    if (this.selectedUser.id === 'all') {
+      this.activeQs = this.tempActiveQs;
+    } else {
+      for (let i = 0; i < this.tempActiveQs.length; i++) {
+        if (this.tempActiveQs[i].provider && this.tempActiveQs[i].provider.id === this.selectedUser.id) {
+          qs.push(this.tempActiveQs[i]);
+        }
+      }
+      this.activeQs = qs;
+    }
   }
 }

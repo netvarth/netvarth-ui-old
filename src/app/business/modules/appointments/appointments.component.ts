@@ -156,6 +156,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   viewsList: any = [];
   schedules: any = [];
   activeSchedules: any = [];
+  tempActiveSchedules: any = [];
   selQidsforHistory: any = [];
   board_count = 0;
   tomorrowDate;
@@ -552,13 +553,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getSchedules(date?) {
     const _this = this;
-    let filterEnum = {}
+    const filterEnum = {};
     if (date === 'all') {
       filterEnum['location-eq'] = this.selected_location.id;
     }
-    if (this.selectedUser) {
+    if (this.selectedUser && this.selectedUser.id !== 'all') {
       filterEnum['provider-eq'] = this.selectedUser.id;
-
     }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
@@ -656,13 +656,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activeSchedules = [];
     const groupbyQs = this.shared_functions.groupBy(this.getSchedulesFromView(view, this.schedules), 'apptState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeSchedules = groupbyQs['ENABLED'];
+      this.activeSchedules = this.tempActiveSchedules = groupbyQs['ENABLED'];
     }
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
-        this.activeSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
+        this.activeSchedules = this.tempActiveSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
       }
     }
+    this.getQsByProvider();
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQId = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
       const selQdetails = this.activeSchedules.filter(q => q.id === this.selQId);
@@ -1809,6 +1810,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   gotoCustomViews() {
     this.router.navigate(['provider', 'settings', 'general', 'customview']);
   }
+  gotoUser() {
+    this.router.navigate(['provider', 'settings', 'general', 'users']);
+  }
   applyLabel(checkin) {
     this.router.navigate(['provider', 'check-ins', checkin.uid, 'add-label'], { queryParams: checkin.label });
   }
@@ -2782,7 +2786,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     this.initView(this.selectedView, 'reloadAPIs');
-
   }
   clearApptIdsFromStorage() {
     this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
@@ -2857,14 +2860,35 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      this.selectedUser = this.users[0]
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
+      this.users.push(tempUser);
+      if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
+        this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
+      } else {
+        this.selectedUser = tempUser;
+      }
     });
   }
 
-
   handleUserSelection(user) {
-    // this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
-    this.getSchedules();
+    this.getQsByProvider();
+  }
+
+  getQsByProvider() {
+    const qs = [];
+    if (this.selectedUser.id === 'all') {
+      this.activeSchedules = this.tempActiveSchedules;
+    } else {
+      for (let i = 0; i < this.tempActiveSchedules.length; i++) {
+        if (this.tempActiveSchedules[i].provider && this.tempActiveSchedules[i].provider.id === this.selectedUser.id) {
+          qs.push(this.tempActiveSchedules[i]);
+        }
+      }
+      this.activeSchedules = qs;
+    }
   }
 }
