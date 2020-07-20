@@ -10367,3 +10367,20 @@ a {
     overflow: auto;
   }
 }
+.grid-btn {
+  background: none;
+  border: none;
+}
+.grid-pad {
+  padding:0px;
+}
+.grid-pad td {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  vertical-align: middle !important;
+}
+.grid-disabled {
+  background: #e6e6e6 !important;
+  cursor: not-allowed !important;
+	border: 3px dashed #ccc !important;
+}
