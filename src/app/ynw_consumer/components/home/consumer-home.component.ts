@@ -619,12 +619,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
           this.fav_providers_id_list = [];
-          // this.setWaitlistTimeDetails();
-          for (const x of this.fav_providers) {
-            this.fav_providers_id_list.push(x.id);
-            this.setWaitlistTimeDetailsProvider(x, k);
-            k++;
-          }
+          // for (const x of this.fav_providers) {
+          //   this.fav_providers_id_list.push(x.id);
+          //   this.setWaitlistTimeDetailsProvider(x, k);
+          //   k++;
+          // }
         },
         error => {
           this.loadcomplete.fav_provider = true;
