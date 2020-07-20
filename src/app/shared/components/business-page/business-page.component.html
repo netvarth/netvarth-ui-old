@@ -40,104 +40,127 @@
                     </div>
                     <div class="srlst details pro-details" style="width: 100%;" *ngIf="!api_loading && !loading">
                         <div class="top-sect">
-                            <div class="new_style">
-                                <div class="tp-l">
-                                    <div class="tp1 bus-pro">
-                                        <div class="pro-img">
-                                            <ng-container *ngIf="galleryjson.length > 0">
-                                                <ng-container>
-                                                    <img [src]="galleryjson[0].thumbUrl" alt=""
-                                                        (click)="openImageModalRow(image_list_popup[0])" alt="">
+                            <div class="new_style" style="display: block !important;">
+                                <div style="display: flex;">
+                                    <div class="tp-l">
+                                        <div class="tp1 bus-pro">
+                                            <div class="pro-img">
+                                                <ng-container *ngIf="galleryjson.length > 0">
+                                                    <ng-container>
+                                                        <img [src]="galleryjson[0].thumbUrl" alt=""
+                                                            (click)="openImageModalRow(image_list_popup[0])" alt="">
+                                                    </ng-container>
                                                 </ng-container>
-                                            </ng-container>
+                                            </div>
+                                            <ul class="gal" *ngIf="galleryjson.length > 1">
+                                                <li>
+                                                    <div class="galbx">
+                                                        <div class="overlay"
+                                                            (click)="openImageModalRow(image_list_popup[1])">+
+                                                            {{galleryjson.length - 1 }}</div>
+                                                        <img [src]="galleryjson[1].thumbUrl" alt="">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="rating-stars" *ngIf="!userId">
+                                                <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
+                                                    src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" *ngIf="ratingenabledHalf"
+                                                    src="./assets/images/star-half.svg" alt="" />
+                                                <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
+                                                    src="./assets/images/star-disabled.svg" alt="" />
+                                            </div>
                                         </div>
-                                        <ul class="gal" *ngIf="galleryjson.length > 1">
-                                            <li>
-                                                <div class="galbx">
-                                                    <div class="overlay"
-                                                        (click)="openImageModalRow(image_list_popup[1])">+
-                                                        {{galleryjson.length - 1 }}</div>
-                                                    <img [src]="galleryjson[1].thumbUrl" alt="">
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="rating-stars" *ngIf="!userId">
-                                            <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
-                                                src="./assets/images/star.svg" alt="" />
-                                            <img class="ratingstar" *ngIf="ratingenabledHalf"
-                                                src="./assets/images/star-half.svg" alt="" />
-                                            <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
-                                                src="./assets/images/star-disabled.svg" alt="" />
-                                        </div>
-                                    </div>
-                                    <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
-                                        [modalImages]="image_list_popup"
-                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
-                                        (buttonBeforeHook)="onButtonBeforeHook($event)"
-                                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
-                                    <div class="tp2" *ngIf="businessjson">
-                                        <!-- <div class="ynw-verified"></div> -->
-                                        <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10 pointer-cursor
+                                        <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+                                            [modalImages]="image_list_popup"
+                                            [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                            [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                            (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                            (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+                                        <div class="tp2" *ngIf="businessjson">
+                                            <!-- <div class="ynw-verified"></div> -->
+                                            <h3>{{businessjson.businessName | capitalizeFirst}} <span class="mgn-lt-10 pointer-cursor
                                             
                                             " *ngIf="jdnlength > 0" (click)="openJdn()" [matTooltip]="jdnTooltip"><img
-                                                    height="35" width="35" src="./assets/images/JDN.png"></span></h3>
-                                        <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
+                                                        height="35" width="35" src="./assets/images/JDN.png"></span>
+                                            </h3>
+                                            <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
                                             | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
                                             capitalizeFirst}})</span>
 
-                                        <div class="clr">
-                                            <div class="pro-desc">
-                                                <span *ngIf="bNameStart!=''"
-                                                    [innerHTML]="bNameStart | nl2br"></span><span
-                                                    *ngIf="bNameEnd!='' && showmoreDesc"
-                                                    [innerHTML]="bNameEnd | nl2br"></span>
-                                                <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''"
-                                                    (click)="showDesc()">{{more_cap}}</span>
-                                                <span class="more" *ngIf="showmoreDesc"
-                                                    (click)="showDesc()">{{less_cap}}</span>
-                                            </div>
-                                            <div class="services" *ngIf="specializationslist.length > 0">
-                                                <div class="otr-elements">
-                                                    <span *ngIf="specializationslist.length > 0">
-                                                        <span class="categoryspec"
-                                                            *ngFor="let spec of specializationslist; let i = index"><span
-                                                                *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
+                                            <div class="clr">
+                                                <div class="pro-desc">
+                                                    <span *ngIf="bNameStart!=''"
+                                                        [innerHTML]="bNameStart | nl2br"></span><span
+                                                        *ngIf="bNameEnd!='' && showmoreDesc"
+                                                        [innerHTML]="bNameEnd | nl2br"></span>
+                                                    <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''"
+                                                        (click)="showDesc()">{{more_cap}}</span>
+                                                    <span class="more" *ngIf="showmoreDesc"
+                                                        (click)="showDesc()">{{less_cap}}</span>
                                                 </div>
-                                            </div>
-                                            <div class="emails-phones-outer"
-                                                *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
-                                                <span class="email-phone-title" (click)="handleEmailPhonediv()">
-                                                    <ng-container>{{contact_details_cap}}</ng-container> <i
-                                                        [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i>
-                                                </span>
-                                                <ng-container *ngIf="showEmailPhonediv">
-                                                    <div class="phone-outer" *ngIf="phonelist.length > 0">
-                                                        <div class="phones" *ngFor="let phone of phonelist">
-                                                            <span
-                                                                class="caption">{{phone.label | capitalizeFirst }}</span>
-                                                            <span class="cvalue">{{phone.instance}}</span>
-                                                        </div>
+                                                <div class="services" *ngIf="specializationslist.length > 0">
+                                                    <div class="otr-elements">
+                                                        <span *ngIf="specializationslist.length > 0">
+                                                            <span class="categoryspec"
+                                                                *ngFor="let spec of specializationslist; let i = index"><span
+                                                                    *ngIf="i>0"
+                                                                    class="spacer"></span>{{spec}}</span></span>
                                                     </div>
-                                                    <div class="email-outer" *ngIf="emaillist.length > 0">
-                                                        <div class="emails" *ngFor="let email of emaillist">
-                                                            <span
-                                                                class="caption">{{email.label | capitalizeFirst}}</span>
-                                                            <span class="cvalue">{{email.instance}}</span>
+                                                </div>
+                                                <div class="emails-phones-outer"
+                                                    *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
+                                                    <span class="email-phone-title" (click)="handleEmailPhonediv()">
+                                                        <ng-container>{{contact_details_cap}}</ng-container> <i
+                                                            [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i>
+                                                    </span>
+                                                    <ng-container *ngIf="showEmailPhonediv">
+                                                        <div class="phone-outer" *ngIf="phonelist.length > 0">
+                                                            <div class="phones" *ngFor="let phone of phonelist">
+                                                                <span
+                                                                    class="caption">{{phone.label | capitalizeFirst }}</span>
+                                                                <span class="cvalue">{{phone.instance}}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </ng-container>
+                                                        <div class="email-outer" *ngIf="emaillist.length > 0">
+                                                            <div class="emails" *ngFor="let email of emaillist">
+                                                                <span
+                                                                    class="caption">{{email.label | capitalizeFirst}}</span>
+                                                                <span class="cvalue">{{email.instance}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                        <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
+                                                src="./assets/images/BasicOrg.png" alt="Basic"></span>
+                                        <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
+                                                src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
+                                        <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
+                                                src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                            src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                    <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                            src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                                    <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                            src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
+                                <div class="col-md-12 donat-service"
+                                    *ngIf="apptServicesjson.length > 0 && !showDepartments">
+                                    <span class="sub-title-donate">Service(s)</span>
+                                    <ul>
+                                        <li *ngFor="let appointmentService of apptfirstArray"
+                                            (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
+                                            {{appointmentService.name}}
+                                            <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                                            </span></li>
+                                        <a *ngIf="apptServicesjson.length > 3 && showType === 'more'"
+                                            (click)="showmore('less')">
+                                            more
+                                        </a>
+                                        <a *ngIf="showType === 'less'" (click)="showmore('more')">
+                                            less
+                                        </a>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="tp-r list-style">
@@ -166,8 +189,8 @@
                                             {{rem_from_fav_cap}}
                                         </a>
                                     </li>
-                                    <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
-                                            class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
+                                    <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0">
+                                        <i class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
                                     <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span
                                             class="icon-jal-coupon pointer-cursor"
@@ -239,7 +262,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <app-common-innerloading-spinner *ngIf="api_loading || loading"></app-common-innerloading-spinner>
+                    <app-common-innerloading-spinner *ngIf="api_loading || loading">
+                    </app-common-innerloading-spinner>
                     <ng-container *ngIf="locationjson.length > 0 && !api_loading && !loading">
                         <div class="loc-accor">
                             <mat-accordion *ngFor="let loc of locationjson; let i = index">
@@ -379,7 +403,7 @@
                                                             line
                                                         </div>
 
-                                                        <div class="donat-service"
+                                                        <!-- <div class="donat-service"
                                                             *ngIf="servicesjson.length > 0 && !showDepartments">
                                                             <span
                                                                 class="sub-title-donate checkin-service-group">Check-in
@@ -393,7 +417,7 @@
                                                                             aria-hidden="true"></i>)
                                                                     </span></li>
                                                             </ul>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- <div class="donat-service"
                                                             *ngIf="servicesjson.length > 0 && showDepartments">
                                                             <span
@@ -486,7 +510,7 @@
                                                             {{dept}}</li>
                                                     </ul>
                                                 </div> -->
-                                                    <div class="donat-service"
+                                                    <!-- <div class="donat-service"
                                                         *ngIf="apptServicesjson.length > 0 && !showDepartments">
                                                         <span class="sub-title-donate">Appointment Service(s)</span>
                                                         <ul>
@@ -499,7 +523,7 @@
                                                                         aria-hidden="true"></i>)
                                                                 </span></li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- <div class="donat-service"
                                                         *ngIf="apptServicesjson.length > 0 && showDepartments">
                                                         <span class="sub-title-donate">Departments</span>
@@ -551,9 +575,8 @@
                                         <mat-expansion-panel-header>
                                             <!-- <mat-panel-title
                                             *ngIf="(dept.users && dept.users.length > 0) || (dept.users && dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)"> -->
-                                            <mat-panel-title
-                                            *ngIf="showDepartments">   
-                                            <span style="font-size: normal">{{dept.departmentName}}
+                                            <mat-panel-title *ngIf="showDepartments">
+                                                <span style="font-size: normal">{{dept.departmentName}}
                                                     <span *ngIf="dept.users && dept.users.length==1">(1
                                                         {{getTerminologyTerm("provider")}})</span>
                                                     <span
@@ -561,16 +584,14 @@
                                                         {{getTerminologyTerm("provider")}}s)</span>
                                                 </span>
                                             </mat-panel-title>
-                                            <mat-panel-title
-                                            *ngIf="!showDepartments">
-                                            <span *ngIf="dept.length==1">(1
-                                                {{getTerminologyTerm("provider")}})</span>
-                                            <span
-                                                *ngIf="dept.length>1">({{dept.length}}
-                                                {{getTerminologyTerm("provider")}}s)</span>
+                                            <mat-panel-title *ngIf="!showDepartments">
+                                                <span *ngIf="dept.length==1">(1
+                                                    {{getTerminologyTerm("provider")}})</span>
+                                                <span *ngIf="dept.length>1">({{dept.length}}
+                                                    {{getTerminologyTerm("provider")}}s)</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <app-search-provider [id]="provider_id"
+                                        <app-search-provider *ngIf="showDepartments" [id]="provider_id"
                                             [bprofile]="businessjson" [settings]="settingsjson"
                                             [terminologies]="terminologiesjson" [coupon]="s3CouponList"
                                             [serviceJson]="getServiceByDept(dept)" [fiterByDept]="showDepartments"

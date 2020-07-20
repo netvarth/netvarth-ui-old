@@ -209,6 +209,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   subDomainList: any = [];
   businessid;
   deptUsers: any = [];
+  apptfirstArray: any = [];
+  apptTempArray: any = [];
+  showType = 'more';
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -422,6 +425,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'apptServices': {
             this.apptServicesjson = res;
+            for (let i = 0; i < this.apptServicesjson.length; i++) {
+              if (i < 3) {
+                this.apptfirstArray.push(this.apptServicesjson[i]);
+              }
+            }
+            this.apptTempArray = this.apptfirstArray;
             break;
           }
           case 'gallery': {
@@ -1272,6 +1281,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     } else {
       return [];
+    }
+  }
+  showmore(type) {
+    this.showType = type;
+    if (type === 'less') {
+      this.apptfirstArray = this.apptServicesjson;
+    } else {
+      this.apptfirstArray = this.apptTempArray;
     }
   }
 }

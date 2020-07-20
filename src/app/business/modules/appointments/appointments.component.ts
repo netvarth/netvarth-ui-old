@@ -274,7 +274,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   consumerTrackstatus = false;
   slotsloading = false;
   showNoSlots: boolean;
-  users_list: any = [];
   smsdialogRef: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
@@ -1587,12 +1586,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      const filteredDept = this.users_list.filter(user => user.id === this.selUser);
+      const filteredDept = this.users.filter(user => user.id === this.selUser.id);
       let deptId;
       if (filteredDept[0] && filteredDept[0].deptId) {
         deptId = filteredDept[0].deptId;
       }
-      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser, deptId: deptId } });
+      this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser.id, deptId: deptId } });
     }
   }
   searchCustomer(source, appttime) {
@@ -2851,15 +2850,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getVirtualMode(virtualService) {
     return Object.keys(virtualService)[0];
   }
-  getUsers() {
-    const apiFilter = {};
-    apiFilter['userType-eq'] = 'PROVIDER';
-    this.provider_services.getUsers(apiFilter).subscribe(
-      (data: any) => {
-        this.users_list = data;
-      }
-    );
-  }
+
   getProviders() {
     const apiFilter = {};
     apiFilter['userType-neq'] = 'ASSISTANT';

@@ -212,6 +212,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   deptUsers: any = [];
   loading = false;
   pSource;
+  apptfirstArray: any = [];
+  apptTempArray: any = [];
+  showType = 'more';
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -548,6 +551,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'apptServices': {
             this.apptServicesjson = res;
+            for (let i = 0; i < this.apptServicesjson.length; i++) {
+              if (i < 3) {
+                this.apptfirstArray.push(this.apptServicesjson[i]);
+              }
+            }
+            this.apptTempArray = this.apptfirstArray;
             break;
           }
           case 'gallery': {
@@ -1863,6 +1872,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }
     } else {
       return [];
+    }
+  }
+  showmore(type) {
+    this.showType = type;
+    if (type === 'less') {
+      this.apptfirstArray = this.apptServicesjson;
+    } else {
+      this.apptfirstArray = this.apptTempArray;
     }
   }
 }
