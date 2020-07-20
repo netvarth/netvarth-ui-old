@@ -48,10 +48,18 @@ export class ConsumerRateServicePopupComponent implements OnInit {
   }
 
   getRateByUser() {
-    const params = {
-      'account-eq': this.waitlist.providerAccount.id,
-      'uId-eq': this.uuid
-    };
+    let params;
+    if (this.type === 'appointment') {
+      params = {
+        'account-eq': this.waitlist.providerAccount.id,
+        'uId-eq': this.uuid
+      };
+    } else {
+      params = {
+        'account': this.waitlist.providerAccount.id,
+        'uId-eq': this.uuid
+      };
+    }
 
     this.shared_services.getConsumerRateService(params, this.type)
       .subscribe(
