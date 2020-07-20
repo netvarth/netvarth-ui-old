@@ -119,7 +119,7 @@
                                                 <span class="ttle" *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser">{{provider_label}}</span>
                                                 <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label}}</span>
                                                 <span class="ttle" *ngIf="user.userType === 'ADMIN'">admin</span>
-                                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">superadmin</span>
+                                                <span class="admin" *ngIf="user.userType === 'PROVIDER' && user.defaultAdminUser">admin</span>
                                             </div>
                                         </div>
 
@@ -132,7 +132,7 @@
                                                 Manage Online Profile
                                             </button> -->
 
-                                            <button *ngIf="user.userType === 'PROVIDER'"
+                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
                                                 mat-menu-item (click)="manageSettings(user.id)">
                                                 Settings
                                             </button>

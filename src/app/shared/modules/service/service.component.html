@@ -6,7 +6,7 @@
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
             <h4>{{service_data.name | capitalizeFirst}}
-                <span  *ngIf="service.provider">({{service.provider.firstName}})</span>
+                <span  *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
             </h4>
             <div class="it-des">
                 {{service_data.description | capitalizeFirst}}
@@ -229,7 +229,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-form-field>
             </div>
             <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add' && !is_donation">
-                <mat-form-field class="example-full-width">
+                            <mat-checkbox   [(ngModel)]="userspecific"  [ngModelOptions]="{standalone: true}">
+                                User specific
+                            </mat-checkbox>
+                <mat-form-field class="example-full-width" *ngIf="userspecific">
                     <mat-select [(value)]="selectedUser"  placeholder="Select user" #userlist
                         (selectionChange)="selectUserHandler(userlist.value)">
                         <mat-option *ngFor="let usr of users_list" [value]="usr.id">
