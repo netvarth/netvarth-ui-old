@@ -195,7 +195,7 @@
                             
           
                             <!-- specialization-->
-                            <div class="cd-b ">
+                            <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
                               <mat-card class="custom">
 
                                 <mat-accordion>
@@ -247,7 +247,7 @@
                                 </mat-card>
 
                             </div>
-                            <div class="cd-b ">
+                            <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
                                     <mat-card class="custom">
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
@@ -300,7 +300,7 @@
                                 </mat-card>
                             </div>
                              <!--mandatory fields -->
-                             <div class="cd-b ">
+                             <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
                                 <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
                                 <div  *ngFor="let fields of domain_fields">
                                     <ng-container *ngIf="fields.mandatory">
@@ -657,7 +657,7 @@
                                 </div>
                             
                                 <!-- gallery and social media-->
-                                <div class="cd-b">
+                                <div class="cd-b" *ngIf="bProfile && bProfile.businessName ">
 
                                    <mat-card class="custom">
                                     <mat-accordion>
@@ -780,7 +780,7 @@
     </div>
            
                
-            <div class="row">
+            <div class="row" *ngIf="bProfile && bProfile.businessName ">
                     <div class="card p0">
                         <span class="b-link" (click)="additionalInfo()">
                             <h2>
