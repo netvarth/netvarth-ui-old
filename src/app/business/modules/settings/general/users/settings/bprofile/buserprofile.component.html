@@ -17,20 +17,24 @@
                                                     <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}} </span>
                                                         
                                                         </h6>
+                                                        <div>
+                                                        <div class="col-md-6 col-sm-6 mt-3"> <strong> {{weightageValue}} %</strong></div>
+                                                        <div class="col-md-6 col-sm-6 "><button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button></div>
+                                                    </div>
                                         </div>
                                     </div>
                                
-                                    <div class="col-md-10 ct-l col-xs-12 no-padding">
+                                    <div class="col-md-12 ct-l col-xs-12 no-padding">
 
-                                        <div class="col-md-10">
+                                        <!-- <div class="col-md-10"> -->
                                               
-                                        <div class="col-md-10 mt-2"> 
+                                        <!-- <div class="col-md-10 mt-2"> 
                                              <strong>  {{weightageValue}} %</strong>
-                                                        <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button>
-                                                    </div>
+                                                     <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button> 
+                                                    </div> -->
                                       
                                             
-                                        <div class="progress col-md-10 mt-2 p0" style="height:10px;">
+                                        <div class="progress col-md-6 col-xs-12 mt-2 p0" style="height:10px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
                                         </div> 
@@ -57,7 +61,7 @@
                                           
 
 
-                                    </div>
+                                    <!-- </div> -->
                                       
                                        
                                      
