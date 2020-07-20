@@ -19,7 +19,7 @@
                                                         </h6>
                                                         <div>
                                                         <div class="col-md-6 col-sm-6 mt-3"> <strong> {{weightageValue}} %</strong></div>
-                                                        <div class="col-md-6 col-sm-6 "><button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button></div>
+                                                        <div class="col-md-6 col-sm-6 "><button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-responsive btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button></div>
                                                     </div>
                                         </div>
                                     </div>
@@ -70,9 +70,9 @@
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                            <h2>Jaldee Online
+                                            <h2>Jaldee Online &nbsp;
                                                     <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-                                                        </mat-slide-toggle> {{jaldee_online_status_str}}</h2>
+                                                        </mat-slide-toggle> &nbsp;{{jaldee_online_status_str}}</h2>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
                                                             <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
