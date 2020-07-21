@@ -830,28 +830,28 @@ export class ConsumerAppointmentComponent implements OnInit {
         let post_data;
         let passtyp;
         if (this.payEmail) {
-            const stat = this.validateEmail(this.payEmail);
+            const stat = this.validateEmail(this.payEmail.trim());
             if (!stat) {
                 this.emailerror = 'Please enter a valid email.';
                 this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         if (this.payEmail1) {
-            const stat1 = this.validateEmail(this.payEmail1);
+            const stat1 = this.validateEmail(this.payEmail1.trim());
             if (!stat1) {
                 this.email1error = 'Please enter a valid email.';
                 this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         // return new Promise((resolve) => {
-        if (this.payEmail === this.payEmail1) {
+        if (this.payEmail.trim() === this.payEmail1.trim()) {
             post_data = {
                 'id': this.userData.userProfile.id || null,
                 'firstName': this.userData.userProfile.firstName || null,
                 'lastName': this.userData.userProfile.lastName || null,
                 'dob': this.userData.userProfile.dob || null,
                 'gender': this.userData.userProfile.gender || null,
-                'email': this.payEmail || ''
+                'email': this.payEmail.trim() || ''
             };
             passtyp = 'consumer';
             if (this.payEmail) {
