@@ -10411,3 +10411,12 @@ a {
   padding-right: 5px !important;
   font-weight: 400 !important;
   }
+  .useredit{
+    position: absolute;
+    right: 0px;
+    top: 15px;
+    z-index: 11;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }

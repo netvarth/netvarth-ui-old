@@ -14,12 +14,14 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue && !queue_data.provider"></span>
+                                    <span class="useredit"
+                                    *ngIf="queue_data.provider"><i class="fa fa-info-circle" matTooltip="User queues can be edit in user level"></i></span> 
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft" style="display: flex;">
                                         <h4>{{queue_data.name | capitalizeFirst}}<span 
                                             *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span></h4>
-                                        <span class="tspace">
+                                        <span class="tspace"  *ngIf="!queue_data.provider">
                                             <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
                                                 (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
                                         </span>
