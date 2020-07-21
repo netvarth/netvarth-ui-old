@@ -10396,3 +10396,11 @@ a {
   cursor: not-allowed !important;
 	border: 3px dashed #ccc !important;
 }
+.admin {
+  border: 1px solid #008000!important;
+  border-radius: 3px!important;
+  font-size: small !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  font-weight: 500 !important;
+  }
