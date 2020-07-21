@@ -50,7 +50,6 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
         this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
         this.consumer_email = this.data.qdata.waitlistingFor[0].email;
-        console.log(this.consumer_email);
         this.serv_name = this.data.qdata.service.name;
         this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
         this.time = this.data.qdata.checkInTime;
