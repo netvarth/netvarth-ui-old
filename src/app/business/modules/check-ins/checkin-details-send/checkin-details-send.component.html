@@ -31,7 +31,7 @@
                 <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms"  [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
-                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email"
+                <mat-checkbox  [disabled]="!consumer_email" class="mgright50 example-margin" [(ngModel)]="email"
                     [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
             </div>

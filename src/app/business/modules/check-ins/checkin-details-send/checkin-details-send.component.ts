@@ -33,6 +33,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     serv_name: any;
     date: string;
     time: any;
+    consumer_email: any;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -41,13 +42,15 @@ export class CheckinDetailsSendComponent implements OnInit {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
             this.chekintype = this.data.chekintype;
-            console.log(this.chekintype);
         }
    ngOnInit() {
     this.bname = this.data.qdata.providerAccount.businessName;
     if (this.chekintype === 'Waitlist') {
+
         this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
         this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
+        this.consumer_email = this.data.qdata.waitlistingFor[0].email;
+        console.log(this.consumer_email);
         this.serv_name = this.data.qdata.service.name;
         this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
         this.time = this.data.qdata.checkInTime;
@@ -60,6 +63,7 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.splname = this.data.qdata.provider.lastName;
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].userName;
+        this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
         this.serv_name = this.data.qdata.service.name;
         this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
@@ -90,7 +94,7 @@ export class CheckinDetailsSendComponent implements OnInit {
               }
               );
           }
-          if (this.email === true) {
+          if (this.email === true && this.consumer_email) {
               this.provider_services.emailCheckin(this.uuid).subscribe(
                   () => {
                       this.dialogRef.close();
@@ -113,7 +117,7 @@ export class CheckinDetailsSendComponent implements OnInit {
                 }
               );
             }
-          if (this.email === true) {
+          if (this.email === true && this.consumer_email === true) {
               this.provider_services.emailAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();
