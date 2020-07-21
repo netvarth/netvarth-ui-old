@@ -46,7 +46,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         totalCnt: 0,
         perPage: this.page_count
       };
-    next_pge = false;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -128,11 +127,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.disableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
 
@@ -140,11 +139,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.enableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
     editService(service) {
@@ -184,7 +183,6 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
     handle_pageclick(pg) {
-        this.next_pge = true;
         this.pagination.startpageval = pg;
         this.page = pg;
         const pgefilter = {
