@@ -49,6 +49,7 @@ const routes: Routes = [
     { path: 'pay/:id', component: PaymentLinkComponent },
     // { path: '**', redirectTo: 'not-found' }
 ];
+
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
         // preloadingStrategy: PreloadAllModules
