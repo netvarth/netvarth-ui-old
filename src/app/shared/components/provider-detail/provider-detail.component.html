@@ -557,13 +557,12 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <!-- Department wise doctors/service listing start -->
-                            <div class="location col-md-12 no-padding middle-sect" *ngIf="deptUsers.length > 0">
+                            <div class="location col-md-12 no-padding middle-sect"
+                                *ngIf="deptUsers.length > 0 && showDepartments">
                                 <mat-accordion *ngFor="let dept of deptUsers; let i = index">
                                     <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
-                                            <!-- <mat-panel-title
-                                            *ngIf="(dept.users && dept.users.length > 0) || (dept.users && dept.users.length === 0 && servicesjson[i] && servicesjson[i].services && servicesjson[i].services.length > 0)"> -->
-                                            <mat-panel-title *ngIf="showDepartments">
+                                            <mat-panel-title>
                                                 <span style="font-size: normal">{{dept.departmentName}}
                                                     <span *ngIf="dept.users && dept.users.length==1">(1
                                                         {{getTerminologyTerm("provider")}})</span>
@@ -572,24 +571,41 @@
                                                         {{getTerminologyTerm("provider")}}s)</span>
                                                 </span>
                                             </mat-panel-title>
-                                            <mat-panel-title *ngIf="!showDepartments">
-                                                <span *ngIf="dept.length==1">(1
-                                                    {{getTerminologyTerm("provider")}})</span>
-                                                <span *ngIf="dept.length>1">({{dept.length}}
-                                                    {{getTerminologyTerm("provider")}}s)</span>
-                                            </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <app-search-provider *ngIf="showDepartments" [id]="provider_id"
-                                            [bprofile]="businessjson" [settings]="settingsjson"
-                                            [terminologies]="terminologiesjson" [coupon]="s3CouponList"
-                                            [serviceJson]="getServiceByDept(dept)" [fiterByDept]="showDepartments"
-                                            [jaldeediscount]="jaldeediscountJson" [location]="locationjson"
-                                            [selectedDept]="dept" [psource]="'details-page'">
+                                        <app-search-provider [id]="provider_id" [bprofile]="businessjson"
+                                            [settings]="settingsjson" [terminologies]="terminologiesjson"
+                                            [coupon]="s3CouponList" [serviceJson]="getServiceByDept(dept)"
+                                            [fiterByDept]="showDepartments" [jaldeediscount]="jaldeediscountJson"
+                                            [location]="locationjson" [selectedDeptOrUser]="dept"
+                                            [psource]="'details-page'">
                                         </app-search-provider>
                                     </mat-expansion-panel>
                                 </mat-accordion>
                             </div>
                             <!-- Department wise doctors/service listing ends-->
+                            <!-- All doctors listing if department is disabled start -->
+                            <div class="location col-md-12 no-padding middle-sect"
+                                *ngIf="deptUsers.length > 0 && !showDepartments">
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <span *ngIf="deptUsers.length==1">1
+                                                    {{getTerminologyTerm("provider")}}</span>
+                                                <span *ngIf="deptUsers.length>1">{{deptUsers.length}}
+                                                    {{getTerminologyTerm("provider")}}s</span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <app-search-provider [id]="provider_id" [bprofile]="businessjson"
+                                            [settings]="settingsjson" [terminologies]="terminologiesjson"
+                                            [coupon]="s3CouponList" [fiterByDept]="showDepartments"
+                                            [jaldeediscount]="jaldeediscountJson" [location]="locationjson"
+                                            [selectedDeptOrUser]="deptUsers" [psource]="'details-page'">
+                                        </app-search-provider>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <!-- All doctors listing if department is disabled ends-->
                         </div>
                     </ng-container>
                 </div>

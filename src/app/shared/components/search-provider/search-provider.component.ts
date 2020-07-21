@@ -97,7 +97,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   @Input() serviceJson;
   @Input() jaldeediscount;
   @Input() location;
-  @Input() selectedDept;
+  @Input() selectedDeptOrUser;
   @Input() fiterByDept;
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
@@ -160,8 +160,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         let display_schedule = [];
         display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
         this.locationjson[i]['display_schedule'] = display_schedule;
-        this.locationjson[i]['services'] = [];
-        this.getServiceByLocationid(this.locationjson[i].id, i);
+        // this.locationjson[i]['services'] = [];
+        // this.getServiceByLocationid(this.locationjson[i].id, i);
         this.locationjson[i]['checkins'] = [];
         if (this.businessjson.id) {
           locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
@@ -182,12 +182,12 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       this.jaldeediscountJson = this.jaldeediscount;
       this.jdnlength = Object.keys(this.jaldeediscountJson).length;
     }
-    if (this.selectedDept) {
-      this.selectedDepartment = this.selectedDept;
-      if (this.selectedDept.users) {
-      this.usersList = this.selectedDept.users;
+    if (this.selectedDeptOrUser) {
+      this.selectedDepartment = this.selectedDeptOrUser;
+      if (this.fiterByDept && this.selectedDeptOrUser.users) {
+        this.usersList = this.selectedDeptOrUser.users;
       } else {
-        this.usersList = this.selectedDept;
+        this.usersList = this.selectedDeptOrUser;
       }
       this.showService = false;
       if (this.usersList.length === 0) {
@@ -381,7 +381,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         unique_id: this.provider_id,
         account_id: this.businessjson.id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.selectedDepartment.departmentId,
+        dept: this.current_provider.wtlstservices[0].department,
         user: this.current_provider.id
       }
     };
@@ -396,7 +396,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         unique_id: this.provider_id,
         account_id: this.businessjson.id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.selectedDepartment.departmentId,
+        dept: this.current_provider.wtlstservices[0].department,
         user: this.current_provider.id
       }
     };

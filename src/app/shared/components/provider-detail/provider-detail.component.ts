@@ -410,17 +410,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.ratingdisabledArr.push(i);
             }
             this.getbusinessprofiledetails_json('location', true);
-            // this.fetchClouddata();
             break;
           }
           case 'services': {
             this.servicesjson = res;
-            // for (let i = 0; i < this.servicesjson.length; i++) {
-            if (this.servicesjson[0].hasOwnProperty('departmentName')) {
+            if (this.servicesjson[0] && this.servicesjson[0].hasOwnProperty('departmentName')) {
               this.showDepartments = true;
               break;
             }
-            // }
             break;
           }
           case 'apptServices': {
@@ -538,7 +535,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.virtualfieldsjson.subdomain) {
               this.virtualfieldsSubdomainjson = this.sortVfields(this.virtualfieldsjson.subdomain);
             }
-
             if (this.virtualfieldsSubdomainjson.length && this.virtualfieldsDomainjson.length) {
               this.virtualfieldsCombinedjson = this.virtualfieldsSubdomainjson.concat(this.virtualfieldsDomainjson);
             } else if (this.virtualfieldsSubdomainjson.length && !this.virtualfieldsDomainjson.length) {
@@ -636,7 +632,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           break;
       }
     }
-
     dataF = temp1;
     for (let i = 0; i < dataF.length; i++) {
       for (let j = i + 1; j < dataF.length; j++) {
@@ -649,7 +644,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     return dataF;
   }
-
   showDesc() {
     if (this.showmoreDesc) {
       this.showmoreDesc = false;
@@ -661,11 +655,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
-
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-
   getServiceByLocationid(locid, passedIndx) {
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
@@ -675,15 +667,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
   }
-
   getServicesByDepartment(dept) {
     this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
   }
-
   backtoDetails() {
     this.locationobj.back();
   }
-
   getExistingCheckinsByLocation(locid, passedIndx) {
     this.shared_services.getExistingCheckinsByLocation(locid)
       .subscribe(data => {
@@ -752,7 +741,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
   communicateHandler() {
     const providforCommunicate = this.provider_bussiness_id;
     // check whether logged in as consumer
@@ -763,7 +751,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-
   openJdn() {
     this.jdndialogRef = this.dialog.open(JdnComponent, {
       width: '50%',
@@ -870,7 +857,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-
   appointmentClicked(locid, locname, cdate, chdatereq) {
     const current_provider = {
       'id': locid,
@@ -908,7 +894,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
@@ -967,7 +952,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   showCheckin(locid, locname, curdate, origin?) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1117,14 +1101,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         settings: this.settingsjson
       }
     });
-
     this.extChecindialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.getExistingCheckinsByLocation(locId, index);
       }
     });
   }
-
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
@@ -1187,7 +1169,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.coupondialogRef.afterClosed().subscribe(() => {
     });
   }
-
   firstChckinCuponCunt(CouponList) {
     for (let index = 0; index < CouponList.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
@@ -1195,7 +1176,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   claimBusiness() {
     const myidarr = this.businessjson.id;
     if (myidarr) {

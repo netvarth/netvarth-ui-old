@@ -90,6 +90,19 @@
                     </li>
                   </ul>
                 </div>
+                <div class="donat-service"
+                  *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
+                  <span class="sub-title-donate checkin-service-group">
+                    Service(s)</span>
+                  <ul>
+                    <li *ngFor="let serv of search_result.wtlstservices"
+                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name
+                                            | capitalizeFirst}}
+                      <span *ngIf="serv.serviceType == 'virtualService'">
+                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                      </span></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -149,7 +162,7 @@
                     {{search_result['estimatedtime_det']['personAhead']}}
                     {{people_ahead}} </div>Be the first in line
                 </div>
-                <div class="donat-service"
+                <!-- <div class="donat-service"
                   *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
                   <span class="sub-title-donate checkin-service-group">Check-in
                     Service(s)</span>
@@ -161,7 +174,7 @@
                         (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
                       </span></li>
                   </ul>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -207,7 +220,7 @@
           </div>
         </div>
         <div class="bottom-sect pdetail" *ngIf="search_result.apptAllowed && businessjson.onlinePresence">
-          <div class="bt-l" *ngIf="search_result.apptServices && search_result.apptServices.length > 0">
+          <!-- <div class="bt-l" *ngIf="search_result.apptServices && search_result.apptServices.length > 0">
             <div class="wt-tme">
               <div class="donat-service">
                 <span class="sub-title-donate">Appointment Service(s)</span>
@@ -221,7 +234,7 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> -->
           <div style="flex-grow:1"></div>
           <div class="bottom-actions-root">
             <span (click)="appointmentClicked(search_result, false)" class="checkin-btn">Appointment</span>
