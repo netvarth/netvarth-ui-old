@@ -119,7 +119,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.api_loading = true;
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
-     this.getProviderQueues();
+    this.getProviderServices();
+    this.getProviderQueues();
     setTimeout(() => {
       if (this.queue_id !== 'add') {
         this.getQueueDetail();
