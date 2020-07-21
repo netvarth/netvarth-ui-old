@@ -53,8 +53,10 @@
                             <div class="lt">
                                 <div class="lt0 pointlist" (click)="showApptdetails(appointment)">
                                     <span class="service">
-                                        <i *ngIf="appointment.service.serviceType === 'virtualService'"
+                                        <i *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualServiceType === 'videoService'"
                                             class="fa fa-video-camera cal-mod-font tool-pading"></i>
+                                        <i *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualServiceType === 'audioService'"
+                                            class="fa fa-volume-up cal-mod-font tool-pading" aria-hidden="true"></i>
                                         {{appointment.service.name | capitalizeFirst}}</span>
                                     for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
@@ -307,8 +309,11 @@
                                     <div class="lt">
                                         <div class="lt0 pointlist" (click)="showcheckindetails(waitlist)">
                                             <span class="service">
-                                                <i *ngIf="waitlist.service.serviceType === 'virtualService'"
+                                                <i *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'videoService'"
                                                     class="fa fa-video-camera cal-mod-font tool-pading"></i>
+                                                <i *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualServiceType === 'audioService'"
+                                                    class="fa fa-volume-up cal-mod-font tool-pading"
+                                                    aria-hidden="true"></i>
                                                 {{waitlist.service.name | capitalizeFirst}}</span> for <span
                                                 class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
                                                 {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
