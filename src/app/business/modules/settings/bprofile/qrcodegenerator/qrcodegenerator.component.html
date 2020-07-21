@@ -1,0 +1,25 @@
+<h1 class="mat-dialog-title">QRCodeGenerator
+        <button  (click)="qrCodegenerateOnlineID()" mat-dialog-close class="modal_close" tabindex="-1">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+    <mat-dialog-content>
+        <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
+                    <!-- <div>
+                        <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
+                    </div> -->
+            <div class="ngx-qrcod">
+                <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
+                </ngx-qrcode>
+            </div>
+            <div class="coupon-outer">
+                <button class="ngx-qr-btn">
+                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                    <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
+                </button>
+                        <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <button (click)="closeOnlineQR()">close</button> -->
+            </div>
+            </div>
+    </mat-dialog-content>

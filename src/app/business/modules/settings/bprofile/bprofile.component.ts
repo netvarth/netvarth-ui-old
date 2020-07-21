@@ -24,6 +24,7 @@ import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
+import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
 
 
 @Component({
@@ -303,7 +304,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   verified_level = Messages.VERIFIED_LEVEL;
   loca_hours = Messages.LOCATION_HOURS_CAP;
   isCheckin;
-
+  qrdialogRef: any;
   editMode = 3;
   customForm: FormGroup;
   custId;
@@ -521,7 +522,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.delgaldialogRef) {
       this.delgaldialogRef.close();
     }
-
+    if(this.qrdialogRef)
+    {
+      this.qrdialogRef.close();
+    }
     //this.subscription.unsubscribe();
   }
 
@@ -1388,6 +1392,26 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     document.body.removeChild(selBox);
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
+  qrCodegeneraterOnlineID(accEncUid)
+{
+this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+width: '50%',
+panelClass: ['popup-class', 'commonpopupmainclass'],
+disableClose: true,
+data: {
+accencUid:accEncUid
+}
+});
+
+this.qrdialogRef.afterClosed().subscribe(result => {
+if (result === 'reloadlist') {
+this.getBusinessProfile();
+}
+});
+}
+
+
+
   qrCodegenerateOnlineID(valuetogenerate) {
     this.qr_value = projectConstants.PATH + valuetogenerate;
     this.qr_code_oId = true;

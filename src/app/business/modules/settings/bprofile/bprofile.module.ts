@@ -18,6 +18,8 @@ import { DynamicFormModule } from '../../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
 import { PrivacyModule } from './privacy/privacy.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+
 @NgModule({
     imports: [
         BProfileRoutingModule,
@@ -30,6 +32,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         Nl2BrPipeModule,
         DynamicFormModule,
         GalleryModule,
+        
         PrivacyModule,
         NgxQRCodeModule
     ],
@@ -39,11 +42,13 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         AddProviderBprofileSpokenLanguagesComponent,
         ProviderBprofileSearchDynamicComponent,
         LanguagesComponent,
+        QRCodeGeneratorComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,
+        QRCodeGeneratorComponent,
         ProviderBprofileSearchDynamicComponent
     ],
     exports: [
