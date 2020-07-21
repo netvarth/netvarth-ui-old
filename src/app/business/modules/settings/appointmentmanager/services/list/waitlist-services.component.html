@@ -45,7 +45,7 @@
                               <td class="title td-two">
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
                               </td>
-                              <td class="td-three linkdisplay">
+                              <td class="td-three grid-flex">
                                 <button [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'" class="grid-btn" (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)" *ngIf="service.status=='ACTIVE'">
                                     <i class="icon-edit chkin-mobic" *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'" [matTooltip]="'Edit'"></i>
                                 </button> 
@@ -59,7 +59,7 @@
                               </td>
                         </tr>
                     </tbody>
-                    <!-- <tfoot *ngIf="time_type == 3">
+                    <tfoot>
                         <tr>
                           <td colspan="5">
                             <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
@@ -67,7 +67,7 @@
                               [curpage]="pagination.startpageval"></app-pager>
                           </td>
                         </tr>
-                      </tfoot> -->
+                      </tfoot>
                 </table>
             </div>
         </div>
