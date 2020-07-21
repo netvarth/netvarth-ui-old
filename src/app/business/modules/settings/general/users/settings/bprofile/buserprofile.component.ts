@@ -1374,20 +1374,20 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   showPasscode() {
     this.show_passcode = !this.show_passcode;
   }
-  // learnmore_clicked(mod, e) {
-  //   e.stopPropagation();
-  //   this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
-  // }
-  // specializations() {
-  //   this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);
-  // }
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+  }
+  specializations() {
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'specializations']);
+  }
    additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'additionalinfo']);
    }
-  // languagesKnown() {
-  //   this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'languages']);
-  // }
-  // galerySocialmedia() {
-  //   this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'media']);
-  // }
+  languagesKnown() {
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'languages']);
+  }
+  galerySocialmedia() {
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'media']);
+  }
 }
