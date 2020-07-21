@@ -4,6 +4,7 @@ import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/sha
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../../../../app.component';
 
 @Component({
     selector: 'app-user-services',
@@ -39,6 +40,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     domainList: any = [];
     subDomain;
     userId: any;
+    page_count = projectConstants.PERPAGING_LIMIT;
+    page = 1;
+    pagination: any = {
+        startpageval: 1,
+        totalCnt: 0,
+        perPage: this.page_count
+    };
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -56,7 +64,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        this.getServices();
+        this.getServiceCount();
+       // this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'q-manager->settings-services', 'classname': 'b-service',
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
@@ -94,11 +103,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                 this.breadcrumbs = breadcrumbs;
             });
     }
-    getServices() {
+    getServices(pgefilter?) {
         const filter = {};
-        filter['provider-eq'] = this.userId;
+     //   filter['provider-eq'] = this.userId;
         this.api_loading = true;
-        this.provider_services.getUserServicesList(filter)
+        this.provider_services.getUserServicesList(pgefilter)
             .subscribe(
                 data => {
                     this.service_list = data;
@@ -119,11 +128,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.disableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
 
@@ -131,11 +140,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.enableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
     editService(service) {
@@ -166,4 +175,38 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     getAppxTime(waitlist) {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
+
+    getServiceCount() {
+        const filter = { 'serviceType-neq': 'donationService', 'provider-eq': this.userId };
+        this.provider_services.getServiceCount(filter)
+            .subscribe(
+                data => {
+                    this.pagination.totalCnt = data;
+                    const pgefilter = {
+                        'from': 0,
+                        'count': this.pagination.totalCnt,
+                        'serviceType-neq': 'donationService',
+                        'provider-eq': this.userId
+                    };
+                    this.setPaginationFilter(pgefilter);
+                    this.getServices(pgefilter);
+                });
+    }
+    setPaginationFilter(api_filter) {
+        api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.page_count : 0;
+        api_filter['count'] = this.page_count;
+        return api_filter;
+    }
+    handle_pageclick(pg) {
+        this.pagination.startpageval = pg;
+        this.page = pg;
+        const pgefilter = {
+            'from' : this.pagination.startpageval,
+            'count': this.pagination.totalCnt,
+            'serviceType-neq': 'donationService',
+            'provider-eq': this.userId
+          };
+          this.setPaginationFilter(pgefilter);
+          this.getServices(pgefilter);
+      }
 }

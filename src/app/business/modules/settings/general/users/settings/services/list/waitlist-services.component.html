@@ -44,7 +44,7 @@
                               </td>
                               <td class="title td-two">
                               </td>
-                              <td class="td-three linkdisplay">
+                              <td class="td-three grid-flex">
                                 <button class="grid-btn" (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
                                     <i class="icon-edit chkin-mobic" [matTooltip]="'Edit'"></i>
                                 </button> 
@@ -58,7 +58,7 @@
                               </td>
                         </tr>
                     </tbody>
-                    <!-- <tfoot *ngIf="time_type == 3">
+                    <tfoot>
                         <tr>
                           <td colspan="5">
                             <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
@@ -66,7 +66,7 @@
                               [curpage]="pagination.startpageval"></app-pager>
                           </td>
                         </tr>
-                      </tfoot> -->
+                      </tfoot>
                 </table>
             </div>
         </div>

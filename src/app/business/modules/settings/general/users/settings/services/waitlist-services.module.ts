@@ -14,6 +14,7 @@ import { FormMessageDisplayModule } from '../../../../../../../shared/modules/fo
 import { GalleryModule } from '../../../../../../../shared/modules/gallery/gallery.module';
 import { ServicesService } from '../../../../../../../shared/modules/service/services.service';
 import { ServiceModule } from '../../../../../../../shared/modules/service/service.module';
+import { PagerModule } from '../../../../../../../shared/modules/pager/pager.module';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { ServiceModule } from '../../../../../../../shared/modules/service/servi
         ReactiveFormsModule,
         ModalGalleryModule,
         GalleryModule,
-        ServiceModule
+        ServiceModule,
+        PagerModule
     ],
     declarations: [
         WaitlistServicesComponent,
