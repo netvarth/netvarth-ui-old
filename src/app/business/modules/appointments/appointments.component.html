@@ -314,8 +314,8 @@
                       </td>
                       <td class="parent-selection parent-title td-one">
                         <div class="parent-name pull-left"
-                          [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0?true:false}"
-                          (click)="(slot.capacity-slot.noOfAvailbleSlots)!=0 && slotRowSelected(slotIndex)">
+                          [ngClass]="{'pointer-cursor': (slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]?true:false}"
+                          (click)="((slot.capacity-slot.noOfAvailbleSlots)!=0 || timeSlotAppts[slot.time]) && slotRowSelected(slotIndex)">
                           <span class="timeslot" #appSlots>{{getSingleTime(slot.time)}}</span><span
                             *ngIf="batchEnabled && timeSlotAppts[slot.time] && timeSlotAppts[slot.time].length>0"
                             class="slot">

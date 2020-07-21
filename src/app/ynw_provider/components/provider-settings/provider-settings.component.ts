@@ -15,7 +15,7 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
   templateUrl: './provider-settings.component.html'
 })
 
-export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChecked {
+export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   blogo: ArrayBuffer;
   weightageClass: string;
   progress_bar_four: number;
@@ -151,7 +151,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
   businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
-    private cdf:ChangeDetectorRef,
+    private cdf: ChangeDetectorRef,
     private routerobj: Router,
     private shared_services: SharedServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -203,9 +203,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
   normal_domainfield_show = 1;
   normal_subdomainfield_show = 1;
   field;
-  
+  bprofileLoaded = false;
   ngOnInit() {
-    //this.provider_datastorage.setWeightageArray([]);
+    // this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -244,7 +244,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-   
+
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -264,17 +264,17 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
   }
 
   calculateWeightage(data) {
-    var total = 0;
+    let total = 0;
     if (data != null && data.length > 0) {
       data.forEach(x => total += x.value);
     }
     return total;
 
   }
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.cdf.detectChanges();
 
-}  ngOnDestroy() {
+  } ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -294,57 +294,55 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
   }
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
-    let weightage = this.weightageValue;
-    if(weightage <=25){
+    const weightage = this.weightageValue;
+    if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'danger';
-      this.progress_bar_one=weightage;
-      this.progress_bar_two=0;
-      this.progress_bar_three=0;
-      this.progress_bar_four=0;
+      this.progress_bar_one = weightage;
+      this.progress_bar_two = 0;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
-     
+
     }
-    if (weightage>25 && weightage < 50) {
+    if (weightage > 25 && weightage < 50) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'warning';
-      this.progress_bar_one=25;
-      this.progress_bar_two=weightage-25;
-      this.progress_bar_three=0;
-      this.progress_bar_four=0;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = weightage - 25;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'info';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=weightage-50;
-      this.progress_bar_four=0;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = weightage - 50;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
       businessProfileWeightageText = Messages.GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'primary';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=25;
-      this.progress_bar_four=weightage-75;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = weightage - 75;
       return businessProfileWeightageText;
-    }
-
-    else if (weightage == 100) {
+    } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
       this.weightageClass = 'success';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=25;
-      this.progress_bar_four=25;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = 25;
       return businessProfileWeightageText;
 
     }
@@ -647,7 +645,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
       case 'queues':
         if (this.locationExists) {
           this.routerobj.navigate(['provider', 'settings', 'q-manager', 'queues']);
-        } else {
+        } else if (this.bprofileLoaded) {
           this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
         break;
@@ -838,7 +836,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
         });
   }
   getServiceCount() {
-    const filter = {  'serviceType-neq': 'donationService' };
+    const filter = { 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -846,7 +844,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
         });
   }
   getQueuesCount() {
-   // const filter = { 'scope-eq': 'account' };
+    // const filter = { 'scope-eq': 'account' };
     this.provider_services.getQueuesCount()
       .subscribe(
         data => {
@@ -918,6 +916,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        this.bprofileLoaded = true;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
@@ -1089,7 +1088,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
       );
   }
   getSchedulesCount() {
-    //const filter = { 'scope-eq': 'account' };
+    // const filter = { 'scope-eq': 'account' };
     this.provider_services.getSchedulesCount()
       .subscribe(
         data => {
@@ -1097,193 +1096,190 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy,AfterViewChe
         });
   }
 
-    //mandatory fields
-
-
-    getDomainVirtualFields() {
-      let weightageObjectOfDomain: any = {};
-      let checkArray = [];
-      this.getVirtualFields(this.bProfile['serviceSector']['domain'])
-        .then(
-          data => {
-            // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
-            //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
-            let mandatorydomain = false;
-            let mandatorydomainFilled = false;
-            let additionalInfoFilledStatus = false
-            this.domain_fields = data['fields'];
-            this.domain_questions = data['questions'] || [];
-            this.domain_fields.forEach(subdomain => {
-              checkArray.push(subdomain);
-            });
-            this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-            if (this.mandatoryfieldArray.length != 0 && this.domain_fields.some(domain=>domain.mandatory===true)) {
-              mandatorydomain = true
-              this.mandatoryfieldArray.forEach(mandatoryField => {
-                if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
-                  mandatorydomainFilled = true;
-                } else {
-                  mandatorydomainFilled = false;
-                  return;
-                }
-              });
-            
-  
-            } else {
-              mandatorydomain = false;
-            }
-  
-            if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
-              additionalInfoFilledStatus = true;
-            }
-            weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
-            weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
-            weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
-            console.log(this.mandatoryfieldArray);
-            console.log(weightageObjectOfDomain);
-            
-            
-            this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
-  
-  
-  
-          }
-        );
-    }
-  
-  
-    checkMandatoryFieldsInResultSet(domainFields, fieldname) {
-      let fullyfilledStatus=true;
-      domainFields.forEach(function (dom) {
-        if(dom.name===fieldname){
-          if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
-            fullyfilledStatus = false;
-            return;
-          }
-        }
-      });
-     return fullyfilledStatus;
-    }
-    checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
-      let fullyfilledStatus = true;
-      additionalInfoFields.forEach(function (field) {
-        if (fullyfilledStatus) {
-          if (!dom_subdom_list.some(domobject => domobject.name === field)) {
-            fullyfilledStatus = false;
-            return;
-          } else {
-            dom_subdom_list.forEach(function (data_object) {
-              if (data_object.name === field) {
-                console.log(field + "value" + data_object.value);
-                if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
-                  fullyfilledStatus = false;
-                  return;
-                }
+  // mandatory fields
+  getDomainVirtualFields() {
+    const weightageObjectOfDomain: any = {};
+    const checkArray = [];
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+      .then(
+        data => {
+          // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+          //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
+          let mandatorydomain = false;
+          let mandatorydomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.domain_fields = data['fields'];
+          this.domain_questions = data['questions'] || [];
+          this.domain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
+          if (this.mandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
+            mandatorydomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
+                mandatorydomainFilled = true;
+              } else {
+                mandatorydomainFilled = false;
+                return;
               }
             });
+
+
+          } else {
+            mandatorydomain = false;
           }
+
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+          weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
+          weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
+          weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
+          console.log(this.mandatoryfieldArray);
+          console.log(weightageObjectOfDomain);
+
+
+          this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
+
+
+
         }
-      });
-  
-      return fullyfilledStatus;
-    }
+      );
+  }
 
 
-    getVirtualFields(domain, subdomin = null) {
-      const _this = this;
-      return new Promise(function (resolve, reject) {
-        _this.provider_services.getVirtualFields(domain, subdomin)
-          .subscribe(
-            data => {
-              const set_data = [];
-              set_data['fields'] = _this.setFieldValue(data, subdomin);
-              set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
-              resolve(set_data);
-            },
-            () => {
-              reject();
-            }
-          );
-      });
-    }
-    setFieldValue(data, subdomin) {
-      let fields = [];
-      if (subdomin) {
-        fields = (this.bProfile['subDomainVirtualFields'] &&
-          this.bProfile['subDomainVirtualFields'][0]) ?
-          this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
-      } else {
-        fields = (this.bProfile['domainVirtualFields']) ?
-          this.bProfile['domainVirtualFields'] : [];
-      }
-      if (fields) {
-        for (const i in data) {
-          if (data[i]) {
-            const row = data[i];
-            if (fields[row.name]) {
-              data[i]['value'] = fields[row.name];
-            } else {
-              delete data[i]['value'];
-            }
-          }
+  checkMandatoryFieldsInResultSet(domainFields, fieldname) {
+    let fullyfilledStatus = true;
+    domainFields.forEach(function (dom) {
+      if (dom.name === fieldname) {
+        if (!dom['value'] || (dom.value === undefined || dom.value == null)) {
+          fullyfilledStatus = false;
+          return;
         }
-        return data;
-      } else {
-        return data;
       }
-    }
-
-    getSubDomainVirtualFields() {
-      let checkArray = [];
-      let weightageObjectOfSubDomain: any = {};
-      this.getVirtualFields(this.bProfile['serviceSector']['domain'],
-        this.bProfile['serviceSubSector']['subDomain']).then(
-          data => {
-            let mandatorysubdomain = false;
-            let mandatorySubDomainFilled = false;
-            let additionalInfoFilledStatus = false
-            this.subdomain_fields = data['fields'];
-            this.subdomain_fields.forEach(subdomain => {
-              checkArray.push(subdomain);
-            });
-            this.subdomain_questions = data['questions'] || [];
-            if (this.mandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain=>subdomain.mandatory===true) ) {
-              mandatorysubdomain = true;
-              this.mandatoryfieldArray.forEach(mandatoryField => {
-                if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
-                  mandatorySubDomainFilled = true;
-                } else {
-                  mandatorySubDomainFilled = false;
-                  return;
-                }
-              });
-  
+    });
+    return fullyfilledStatus;
+  }
+  checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
+    let fullyfilledStatus = true;
+    additionalInfoFields.forEach(function (field) {
+      if (fullyfilledStatus) {
+        if (!dom_subdom_list.some(domobject => domobject.name === field)) {
+          fullyfilledStatus = false;
+          return;
+        } else {
+          dom_subdom_list.forEach(function (data_object) {
+            if (data_object.name === field) {
+              console.log(field + 'value' + data_object.value);
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
+                fullyfilledStatus = false;
+                return;
+              }
             }
-            if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
-              additionalInfoFilledStatus = true;
-            }
-  
-            weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
-            weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
-            weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
-            this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
-            this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
-          }
-        );
-    }
+          });
+        }
+      }
+    });
 
-    getGalleryImages() {
-      this.provider_services.getGalleryImages()
+    return fullyfilledStatus;
+  }
+
+
+  getVirtualFields(domain, subdomin = null) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getVirtualFields(domain, subdomin)
         .subscribe(
           data => {
-            this.image_list = data;
-            this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
-  
+            const set_data = [];
+            set_data['fields'] = _this.setFieldValue(data, subdomin);
+            set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
+            resolve(set_data);
           },
           () => {
-  
+            reject();
           }
         );
+    });
+  }
+  setFieldValue(data, subdomin) {
+    let fields = [];
+    if (subdomin) {
+      fields = (this.bProfile['subDomainVirtualFields'] &&
+        this.bProfile['subDomainVirtualFields'][0]) ?
+        this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
+    } else {
+      fields = (this.bProfile['domainVirtualFields']) ?
+        this.bProfile['domainVirtualFields'] : [];
     }
-  
+    if (fields) {
+      for (const i in data) {
+        if (data[i]) {
+          const row = data[i];
+          if (fields[row.name]) {
+            data[i]['value'] = fields[row.name];
+          } else {
+            delete data[i]['value'];
+          }
+        }
+      }
+      return data;
+    } else {
+      return data;
+    }
+  }
+
+  getSubDomainVirtualFields() {
+    const checkArray = [];
+    const weightageObjectOfSubDomain: any = {};
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'],
+      this.bProfile['serviceSubSector']['subDomain']).then(
+        data => {
+          let mandatorysubdomain = false;
+          let mandatorySubDomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.subdomain_fields = data['fields'];
+          this.subdomain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.subdomain_questions = data['questions'] || [];
+          if (this.mandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+            mandatorysubdomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
+                mandatorySubDomainFilled = true;
+              } else {
+                mandatorySubDomainFilled = false;
+                return;
+              }
+            });
+
+          }
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+
+          weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
+          weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
+          weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
+          this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
+        }
+      );
+  }
+
+  getGalleryImages() {
+    this.provider_services.getGalleryImages()
+      .subscribe(
+        data => {
+          this.image_list = data;
+          this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
+
+        },
+        () => {
+
+        }
+      );
+  }
 }
