@@ -393,7 +393,7 @@
                                         <mat-expansion-panel-header class="min100">
                                             <mat-panel-title class="block-level">
                                                 {{profile_summary_cap}}
-                                                <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                                <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule ||reqFields.specilization" class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}
                                                     <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More
                                                     </a>
@@ -435,7 +435,7 @@
                                                             <div class="change">
                                                                 <span class="change-pic" (click)="logofile.click()">{{change_cap}}
                                                                     <br /> {{pic_cap}}</span>
-                                                                <span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
+                                                                <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -458,7 +458,7 @@
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                                                 Location
-                                                                    <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
+                                                                    <!-- <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i> -->
                                                               
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Manage your business location details here.
@@ -626,8 +626,8 @@
                                                         <span class="mat-content">
                                                             <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                                                 Specilization
-                                                                    <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
-                                                                    </i>
+                                                                    <!-- <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
+                                                                    </i> -->
                                                                
                                                                 <!--bindings={}-->
                                                                 <p class="form-level-settings">Mention your specilization here

@@ -10263,11 +10263,9 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
       } 
 span.active{
     color:green;
-    font-weight:bold;
 }
 span.inactive{
     color:red;
-    font-weight:bold;
 }
 
 

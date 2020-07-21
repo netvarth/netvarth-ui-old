@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject} from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -40,7 +40,9 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private provider_datastorageobj: ProviderDataStorageService,
     @Inject(DOCUMENT) public document,
-    public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>
+
+    public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
 
   ngOnInit() {
@@ -119,9 +121,87 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
         }
       );
   }
+  uploadLogo(passdata) {
+    this.provider_servicesobj.uploadLogo(passdata)
+      .subscribe(
+        data => {
+          this.provider_datastorageobj.updateProfilePicWeightage(true);
+          this.data.logoExist=true;
+        });
+  }
+
+
+
+  getBase64Image() {
+    var promise = new Promise(function (resolve, reject) {
+
+      var img = new Image();
+      var imge=new Image();
+      // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
+      img.crossOrigin = "Anonymous";
+      img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ""));
+      };
+      img.src = '../../../../assets/images/jaldee-logo.png';
+    });
+
+    return promise;
+  };
+
 
   // updating the primary field from the bprofile edit page
   UpdatePrimaryFields(pdata) {
+    console.log(this.data.logoExist);
+
+    if (!this.data.logoExist) {
+      let self = this;
+      var promise = this.getBase64Image();
+      promise.then(function (dataURL) {
+        let blob = b64toBlob(dataURL);
+        const submit_data: FormData = new FormData();
+        submit_data.append('files', blob, 'jaldee-logo.png');
+        const propertiesDet = {
+          'caption': 'Logo'
+        };
+        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        submit_data.append('properties', blobPropdata);
+        self.uploadLogo(submit_data);
+      });
+
+
+      function b64toBlob(b64Data) {
+        let contentType = 'image/png';
+        let sliceSize = 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+          var byteNumbers = new Array(slice.length);
+          for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+
+          var byteArray = new Uint8Array(byteNumbers);
+
+          byteArrays.push(byteArray);
+        }
+
+        var blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+      }
+
+    }
+
+
     this.disableButton = true;
     this.provider_servicesobj.updatePrimaryFields(pdata)
       .subscribe(
@@ -138,12 +218,16 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       );
   }
 
+
+
+
   // gets the bprofile details
   getBusinessProfile() {
     this.provider_servicesobj.getBussinessProfile()
       .subscribe(
         data => {
           this.bProfile = data;
+          console.log('bProfile..' + JSON.stringify(this.bProfile));
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
           const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
@@ -158,4 +242,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       );
 
   }
+
+
 }
+
+

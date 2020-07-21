@@ -33,8 +33,9 @@ import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_pro
 
 })
 
-export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
+export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  logoExist=false;
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
   progress_bar_four: number;
@@ -95,7 +96,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
   dynamicdialogRef: any;
 
   subdomain: any;
-  weightageValue=0;
+  weightageValue = 0;
   businessweightageArray: any[];
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
@@ -377,17 +378,17 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
 
   ngOnInit() {
-   
+
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
-    this.jaldee_online_enabled_msg=Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
-    this.jaldee_online_disabled_msg=Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
-    
+
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
@@ -443,21 +444,21 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessweightageArray = result;
-      if(this.businessweightageArray.length!==0){
-      this.weightageValue = this.calculateWeightage(result);
-   
-      // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
-      //   if(this.mandatoryfieldArray.length!==0){
-      //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
-      //   }
-      //   else{
-      //     this.changeJaldeeOnlineStatus(true);
-      //   }
-      // }else{
-      //   this.changeJaldeeOnlineStatus(false);
-      // }
-    }else
-        this.weightageValue=0;
+      if (this.businessweightageArray.length !== 0) {
+        this.weightageValue = this.calculateWeightage(result);
+
+        // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
+        //   if(this.mandatoryfieldArray.length!==0){
+        //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
+        //   }
+        //   else{
+        //     this.changeJaldeeOnlineStatus(true);
+        //   }
+        // }else{
+        //   this.changeJaldeeOnlineStatus(false);
+        // }
+      } else
+        this.weightageValue = 0;
 
 
     });
@@ -469,7 +470,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
 
 
   }
-  checkMandatoryFieldsAlsoFilled(){
+  checkMandatoryFieldsAlsoFilled() {
     return this.businessweightageArray.includes(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
   }
   checkAllRequiredFiedsOfJaldeeOnlineFilled() {
@@ -487,11 +488,11 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
     //   }
     // } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
     //   this.handle_jaldeeOnlinePresence();
-      
+
     // }
 
   }
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     this.changeDetectorRef.detectChanges();
   }
   ngOnDestroy() {
@@ -540,45 +541,45 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
     let weightage = this.weightageValue;
-    if(weightage <=25){
+    if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'danger';
-      this.progress_bar_one=weightage;
-      this.progress_bar_two=0;
-      this.progress_bar_three=0;
-      this.progress_bar_four=0;
+      this.progress_bar_one = weightage;
+      this.progress_bar_two = 0;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
-     
+
     }
-    if (weightage>25 && weightage < 50) {
+    if (weightage > 25 && weightage < 50) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
       this.weightageClass = 'warning';
-      this.progress_bar_one=25;
-      this.progress_bar_two=weightage-25;
-      this.progress_bar_three=0;
-      this.progress_bar_four=0;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = weightage - 25;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
     (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'info';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=weightage-50;
-      this.progress_bar_four=0;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = weightage - 50;
+      this.progress_bar_four = 0;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
       businessProfileWeightageText = Messages.GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'primary';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=25;
-      this.progress_bar_four=weightage-75;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = weightage - 75;
       return businessProfileWeightageText;
     }
 
@@ -586,10 +587,10 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
       this.weightageClass = 'success';
-      this.progress_bar_one=25;
-      this.progress_bar_two=25;
-      this.progress_bar_three=25;
-      this.progress_bar_four=25;
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = 25;
       return businessProfileWeightageText;
 
     }
@@ -633,6 +634,9 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
           this.jaldee_online_status = this.public_search;
           // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
+
+          // console.log('onlineStatus'+this.jaldee_online_status);
+          // console.log('profileSatus'+this.profile_status);
         },
         () => {
         }
@@ -649,7 +653,8 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
         });
   }
   confirm_searchStatus() {
-
+   console.log(this.normal_search_active);
+   
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
       // this.getPublicSearch();
@@ -712,6 +717,13 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.profile_status = this.onlinepresence_status ? true : false;
         this.profile_status_str = this.profile_status ? 'On' : 'Off';
+        console.log(this.profile_status +'and'+this.normal_search_active);
+        
+        if (this.profile_status == false && this.normal_search_active) {
+          this.handle_searchstatus();
+        }
+
+
         // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
     );
@@ -821,7 +833,7 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
               || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
-            
+
           }
           // check whether normal search section can be displayed
           this.normal_search_display = this.bProfile.enableSearch;
@@ -934,6 +946,8 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
   }
 
   showBPrimary() {
+    console.log('bProfile..'+JSON.stringify(this.bProfile));
+    
     this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -941,7 +955,8 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       autoFocus: true,
       data: {
         type: 'edit',
-        bprofile: this.bProfile
+        bprofile: this.bProfile,
+        logoExist:this.logoExist
       }
     });
     this.primarydialogRef.afterClosed().subscribe(result => {
@@ -1084,9 +1099,12 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
         this.success_error = this.sharedfunctionobj.imageValidation(file);
         if (this.success_error === true) {
           const reader = new FileReader();
+          console.log('src..'+input.files[0]);
           this.item_pic.files = input.files[0];
           this.selitem_pic = input.files[0];
           const fileobj = input.files[0];
+          console.log('itempic..'+JSON.stringify(this.selitem_pic));
+          
           reader.onload = (e) => {
             this.item_pic.base64 = e.target['result'];
           };
@@ -1094,6 +1112,9 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
           if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
             // generating the data to be submitted to change the logo
             const submit_data: FormData = new FormData();
+            console.log(this.selitem_pic);
+            console.log(this.selitem_pic['name']);
+            
             submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
             const propertiesDet = {
               'caption': 'Logo'
@@ -1121,19 +1142,18 @@ export class BProfileComponent implements OnInit, OnDestroy ,AfterViewChecked{
       .subscribe(
         data => {
           this.blogo = data;
-          let logoExist;
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider = dd;
           let logo = '';
           if (this.blogo[0]) {
-            logoExist = true;
+            this.logoExist = true;
             logo = this.blogo[0].url;
           } else {
             logo = '';
-            logoExist = false;
+           this.logoExist = false;
           }
-          this.provider_datastorage.updateProfilePicWeightage(logoExist);
+          this.provider_datastorage.updateProfilePicWeightage(this.logoExist);
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
