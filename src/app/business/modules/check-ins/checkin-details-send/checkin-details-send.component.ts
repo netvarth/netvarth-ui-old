@@ -34,6 +34,7 @@ export class CheckinDetailsSendComponent implements OnInit {
     date: string;
     time: any;
     consumer_email: any;
+    api_loading = false;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
