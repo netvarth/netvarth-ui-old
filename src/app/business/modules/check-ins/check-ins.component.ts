@@ -726,10 +726,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source?) {
-    this.activeQs = [];
+    this.activeQs = this.tempActiveQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeQs = this.tempActiveQs =  groupbyQs['ENABLED'];
+      this.activeQs = this.tempActiveQs = groupbyQs['ENABLED'];
     }
     const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
     if (view.name !== Messages.DEFAULTVIEWCAP) {
@@ -750,8 +750,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.selQIds = [];
         if (activeQ && activeQ.id) {
-        this.selQIds.push(activeQ.id);
-        this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+          this.selQIds.push(activeQ.id);
+          this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
         } else {
           this.loading = false;
         }
@@ -889,7 +889,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.history_waitlist_count = 0;
     this.check_in_filtered_list = [];
     this.activeQs = [];
-    this.tempActiveQs = [];
+    // this.tempActiveQs = [];
     this.scheduled_count = 0;
     this.started_count = 0;
     this.completed_count = 0;
@@ -926,6 +926,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptMultiSelection = false;
     this.chkAppointments = {};
     this.appointmentsChecked = [];
+    this.check_in_filtered_list = [];
   }
   loadApiSwitch(source) {
     // this.resetAll();
@@ -1788,11 +1789,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
   }
   checkinClicked(source) {
+    let deptId;
+    if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
+      const filteredDept = this.users.filter(user => user.id === this.selectedUser.id);
+      if (filteredDept[0] && filteredDept[0].deptId) {
+        deptId = filteredDept[0].deptId;
+      }
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         checkin_type: source,
-        calmode : this.calculationmode,
-        showtoken : this.showToken
+        calmode: this.calculationmode,
+        showtoken: this.showToken,
+        userId: this.selectedUser.id,
+        deptId: deptId
         // isFrom: 'checkin'
       }
     };
@@ -2300,6 +2310,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleUserSelection(user) {
+    this.resetFields();
     this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
     this.getQsByProvider();
@@ -2316,5 +2327,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.activeQs = qs;
     }
+    if (this.activeQs.length === 0) {
+      this.selQIds = [];
+    } else {
+      const qids = [];
+      for (const id of this.selQIds) {
+        for (const q of this.activeQs) {
+          if (id === q.id) {
+            qids.push(id);
+          }
+        }
+      }
+      if (qids.length > 0) {
+        this.selQIds = qids;
+      } else {
+        this.selQIds.push(this.activeQs[0].id);
+      }
+    }
+    if (this.time_type === 1) {
+      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+    } else if (this.time_type === 2) {
+      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+    } else {
+      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+    }
+    this.loadApiSwitch('reloadAPIs');
   }
 }

@@ -189,6 +189,8 @@ export class ProviderCheckinComponent implements OnInit {
     is_wtsap_empty = false;
     calculationMode: any;
     showtoken: any;
+    selectDept;
+    selectUser;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -212,6 +214,12 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (qparams.showtoken) {
                 this.showtoken = qparams.showtoken;
+            }
+            if (qparams.deptId) {
+                this.selectDept = JSON.parse(qparams.deptId);
+            }
+            if (qparams.userId) {
+                this.selectUser = JSON.parse(qparams.userId);
             }
             if (this.calculationMode !== 'NoCalc' || (this.calculationMode === 'NoCalc' && !this.showtoken)) {
                 this.breadcrumbs = [
@@ -453,22 +461,7 @@ export class ProviderCheckinComponent implements OnInit {
                                                 _this.handleDeptSelction(_this.selected_dept);
                                             },
                                             () => {
-                                                if (!this.filterDepart) {
-                                                    const filter = {
-                                                        'status-eq': 'ACTIVE'
-                                                    };
-                                                    this.provider_services.getUsers(filter).subscribe(
-                                                        (users: any) => {
-                                                            this.users = users.filter(user => !user.admin);
-                                                            this.users.push(this.userN);
-                                                            if (this.users.length !== 0) {
-                                                                this.selected_user = this.users[0];
-                                                                this.handleUserSelection(this.selected_user);
-                                                            } else {
-                                                                _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
-                                                            }
-                                                        });
-                                                }
+                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                                             }
                                         );
                                     }
@@ -499,7 +492,10 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 _this.deptLength = _this.departments.length;
                 // this.selected_dept = 'None';
-                if (_this.deptLength !== 0) {
+                if (_this.selectDept) {
+                    _this.selected_dept = _this.selectDept;
+                    resolve();
+                } else if (_this.deptLength !== 0) {
                     _this.selected_dept = _this.departments[0].departmentId;
                     resolve();
                 } else {
@@ -1272,8 +1268,12 @@ export class ProviderCheckinComponent implements OnInit {
                         this.users.push(this.userN);
                     }
                     if (this.users.length !== 0) {
-                        this.selected_user = this.users[0];
-                        this.handleUserSelection(this.selected_user);
+                        if (this.selectUser) {
+                            const userDetails = this.users.filter(user => user.id === this.selectUser);
+                            this.selected_user = userDetails[0];
+                        } else {
+                            this.selected_user = this.users[0];
+                        }
                     } else {
                         this.selected_user = null;
                         this.selectedUser = null;
@@ -1303,6 +1303,26 @@ export class ProviderCheckinComponent implements OnInit {
                     }
                 });
             // }
+        } else {
+            const filter = {
+                'status-eq': 'ACTIVE'
+            };
+            this.provider_services.getUsers(filter).subscribe(
+                (users: any) => {
+                    this.users = users.filter(user => !user.admin);
+                    this.users.push(this.userN);
+                    if (this.selectUser) {
+                        const userDetails = this.users.filter(user => user.id === this.selectUser);
+                        this.selected_user = userDetails[0];
+                        console.log(this.selected_user);
+                        this.handleUserSelection(this.selected_user);
+                    } else if (this.users.length !== 0) {
+                        this.selected_user = this.users[0];
+                        this.handleUserSelection(this.selected_user);
+                    } else {
+                        this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                    }
+                });
         }
         // if (obj === 'None') {
         //     this.servicesjson = this.serviceslist;

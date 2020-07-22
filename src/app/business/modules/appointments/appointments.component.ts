@@ -653,7 +653,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return qIds;
   }
   initView(view, source?) {
-    this.activeSchedules = [];
+    this.activeSchedules = this.tempActiveSchedules = [];
     const groupbyQs = this.shared_functions.groupBy(this.getSchedulesFromView(view, this.schedules), 'apptState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
       this.activeSchedules = this.tempActiveSchedules = groupbyQs['ENABLED'];
@@ -1587,10 +1587,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (time) {
         slot = time;
       }
-      const filteredDept = this.users.filter(user => user.id === this.selUser.id);
       let deptId;
-      if (filteredDept[0] && filteredDept[0].deptId) {
-        deptId = filteredDept[0].deptId;
+      if (this.selUser && this.selUser.id && this.selUser.id !== 'all') {
+        const filteredDept = this.users.filter(user => user.id === this.selUser.id);
+        if (filteredDept[0] && filteredDept[0].deptId) {
+          deptId = filteredDept[0].deptId;
+        }
       }
       this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { timeslot: slot, scheduleId: this.selQId, checkinType: type, userId: this.selUser.id, deptId: deptId } });
     }
@@ -2880,7 +2882,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getQsByProvider() {
     const qs = [];
-    if (this.selectedUser.id === 'all') {
+    if (this.selectedUser && this.selectedUser.id === 'all') {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
@@ -2890,5 +2892,26 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.activeSchedules = qs;
     }
+    if (this.activeSchedules.length === 0) {
+      this.selQId = [];
+    } else {
+      let found = 0;
+      for (const q of this.activeSchedules) {
+        if (this.selQId === q.id) {
+          found++;
+        }
+      }
+      if (found === 0) {
+        this.selQId = this.activeSchedules[0].id;
+      }
+    }
+    if (this.time_type === 1) {
+      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQId);
+    } else if (this.time_type === 2) {
+      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
+    } else {
+      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQId);
+    }
+    this.loadApiSwitch('reloadAPIs');
   }
 }
