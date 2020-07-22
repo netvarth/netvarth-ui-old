@@ -174,27 +174,7 @@
                                                          
                                                             <span class="custid custId-icon">
                                                                     <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
-                                                                <!-- <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegenerateOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i> -->
                                                             </span>
-                                                            <!-- <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
-                                                            </span> -->
-                                                            <!-- <span class="custid custId-icon">
-                                                                <i class="fa fa-share-alt custId-cursor" style="font-size:24px;" (click)="customizeId()" [matTooltip]="'Share Qr'"></i>
-                                                            </span> -->
-                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
-                                                                <button class="btn-primary-n" (click)="customizeId()">
-                                                                    <a>
-                                                                        Customize ID
-                                                                    </a>
-                                                                </button>
-                                                            </span> -->
-                                                       
-                                                        
-                                                  
-                                          
-
-
                                                     </li>
 
                                                     <li class="bstatus"><span class="inactive" *ngIf="!profile_status">
@@ -208,18 +188,17 @@
 
                                                         <strong> Here is your Jaldee Link :-</strong>
                                                         <span class="busns-id">
-
                                                             <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.accEncUid}}</a> </span>
                                                             <span class="custid custId-icon">
                                                                 <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                             </span>
-                                                            <!-- <span class="custid custId-icon" *ngIf="!bProfile.customId">
+                                                            <span style="padding-left: 40px;" *ngIf="!bProfile.customId">
                                                                 <button class="btn-default-n" (click)="customizeId()">
                                                                     <a>
                                                                         Customize ID
                                                                     </a>
                                                                 </button>
-                                                            </span> -->
+                                                            </span>
                                                         </span>
                                                         <br>
 
@@ -235,24 +214,6 @@
                                                     </li>
                                                 </ul>
                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_oId" #qrCodeOnlineId>
-                                        <div>
-                                            <i (click)="closeOnlineQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
-                                            </ngx-qrcode>
-                                        </div>
-                                        <div class="coupon-outer">
-                                            <button class="ngx-qr-btn">
-                                                <a class="ngx-qr-btn" [href]="qrCodePath" download>
-                                                    <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
-                                            </button>
-                                            <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
-                                            &nbsp;&nbsp;&nbsp;
-                                            <button (click)="closeOnlineQR()">close</button> -->
                                         </div>
                                     </div>
 
@@ -284,63 +245,65 @@
 
                                         </form>
                                     </div>
-                                    <div>
-                                        <div *ngIf="normal_customid_show==3">
-                                            <div class="sblinks">
-                                                <ul class="sbl">
-                                                    <li class="acc-url-li">
-                                                        <span class="custid" rel="noopener" target="_blank">{{wndw_path}}{{bProfile.customId}}</span>
-                                                        <span class="busns-id">
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
-                                                            </span>
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr" (click)="qrCodegenerateCustID(bProfile.customId)" [matTooltip]="'Generate QR code'"></i>
-                                                            </span>
-                                                            <span class="custid" style="padding-left: 40px;">
-                                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button" (click)="editCustomId(bProfile.customId)" mat-menu-item>
-                                                                        <i class="icon-edit"></i>
-                                                                        <span>{{edit_cap}}</span>
-                                                                    </button>
-                                                                    <button type="button" (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
-                                                                        <i class="icon-delete"></i>
-                                                                        <span>{{delete_btn}}</span>
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
-                                                        </span>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 coupon-outer" *ngIf="qr_code_cId" #qrCodeCustId>
+                                   
+                                    <div *ngIf="normal_customid_show==3">
                                         <div>
-                                            <i (click)="closeCustomQR()" class="fa fa-window-close fa-lg ngx-qr-close custId-cursor" aria-hidden="true"></i>
+                                            <ul class="sbl">
+                                                <li class="acc-url-li">
+                                    
+                                                     <strong> Here is your QR Code :- </strong>
+                                                     
+                                                        <span class="custid custId-icon">
+                                                                <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.customId)" [matTooltip]="'Generate QR code'"></i>
+                                                        </span>
+                                                </li>
+
+                                                <li class="bstatus"><span class="inactive" *ngIf="!profile_status">
+                                                        <i class="fa fa-times"></i> Inactive</span>
+                                                    <span class="active" *ngIf="profile_status">
+                                                        <i class="fa fa-check"></i> Active</span>
+
+                                                </li>
+
+                                                <li class="acc-url-li">
+
+                                                    <strong> Here is your Jaldee Link :-</strong>
+                                                    <span class="busns-id">
+                                                        <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.customId}}</a> </span>
+                                                        <span class="custid custId-icon">
+                                                            <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
+                                                        </span>
+                                                        <span class="custid" style="padding-left: 40px;">
+                                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="editCustomId(bProfile.customId)" mat-menu-item>
+                                                                    <i class="icon-edit"></i>
+                                                                    <span>{{edit_cap}}</span>
+                                                                </button>
+                                                                <button type="button" (click)="deleteCustomId(bProfile.customId)" mat-menu-item>
+                                                                    <i class="icon-delete"></i>
+                                                                    <span>{{delete_btn}}</span>
+                                                                </button>
+                                                            </mat-menu>
+                                                        </span>
+                                                    </span>
+                                                    <br>
+
+
+                                                </li>
+                                                <li class="bstatus">
+                                                        <span class="inactive"*ngIf="!profile_status">
+                                                                <i class="fa fa-times" ></i> Inactive</span>
+                                                            <span class="active" *ngIf="profile_status">
+                                                                <i class="fa fa-check" ></i> Active</span>
+                                                     
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <div class="ngx-qrcod">
-                                            <ngx-qrcode id="print-section" [qrc-element-type]="elementType" [qrc-value]="qr_value">
-                                            </ngx-qrcode>
-                                        </div>
-                                        <div class="coupon-outer">
-                                            <button class="ngx-qr-btn">
-                                                <a class="ngx-qr-btn" [href]="qrCodePath" download>
-                                                    <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
-                                            </button>
-                                        </div>
-                                        <!-- <div class="custId-prnt">
-                                            <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>
-                                            &nbsp;&nbsp;&nbsp;
-                                            <button (click)="closeCustomQR()">close</button>
-                                        </div> -->
                                     </div>
-
-
+                                   
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
                                         <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
                                             You are not allowed to do this operation. Please upgrade license package
@@ -430,12 +393,12 @@
                                                             <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)">
                                                             <div class="add">
                                                                 <span (click)="logofile.click()">{{add_cap}}
-                                                                    <br /> {{profile_pic_cap}}
+                                                                    <br/> {{profile_pic_cap}}
                                                                 </span>
                                                             </div>
                                                             <div class="change">
                                                                 <span class="change-pic" (click)="logofile.click()">{{change_cap}}
-                                                                    <br /> {{pic_cap}}</span>
+                                                                    <br/> {{pic_cap}}</span>
                                                                 <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                                                             </div>
                                                         </div>
