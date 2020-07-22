@@ -337,7 +337,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
           }
           //console.log(this.departments);
           this.api_loading1 = false;
-        },
+        }, 
         error => {
           this.api_loading1 = false;
           // this.sharedfunctionObj.apiErrorAutoHide(this, error);

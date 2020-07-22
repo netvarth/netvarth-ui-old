@@ -679,7 +679,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
            // this.users_list.push(this.defaultOption);
-        });
+        }); 
     }
     selectUserHandler(value) {
         this.providerId = value;

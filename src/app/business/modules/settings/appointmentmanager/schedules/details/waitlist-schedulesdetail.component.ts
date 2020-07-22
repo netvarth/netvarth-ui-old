@@ -345,7 +345,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
               this.departments.splice(j, 1);
             }
           }
-          this.api_loading1 = false;
+          this.api_loading1 = false; 
         },
         error => {
           this.api_loading1 = false;
