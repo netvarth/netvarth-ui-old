@@ -1489,4 +1489,51 @@ export class SharedFunctions {
       }
     }, 500);
   }
+
+  getBase64Image() {
+    var promise = new Promise(function (resolve, reject) {
+
+      var img = new Image();
+
+      // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
+      img.crossOrigin = "Anonymous";
+      img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ""));
+      };
+      img.src = '../../../../assets/images/jaldee-logo.png';
+    });
+
+    return promise;
+  }
+
+  b64toBlob(b64Data) {
+    let contentType = 'image/png';
+    let sliceSize = 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+  
 }

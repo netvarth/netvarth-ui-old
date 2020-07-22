@@ -890,35 +890,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       );
   }
 
-  getBase64Image() {
-    var promise = new Promise(function (resolve, reject) {
-      var img=document.createElement('img');
-      // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
-      img.crossOrigin = "Anonymous";
-      img.onload = function () {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ""));
-      };
-      img.src = '../../../../../../../../assets/images/jaldee-logo.png';
-    });
-
-    return promise;
-  };
 
 
   updatePrimaryFields(pdata) {
 
+    
  if(this.blogo.length==0){
 
   let self = this;
-      var promise = this.getBase64Image();
+      var promise = this.sharedfunctionobj.getBase64Image();
       promise.then(function (dataURL) {
-        let blob = b64toBlob(dataURL);
+        let blob = this.sharedfunctionobj.b64toBlob(dataURL);
         const submit_data: FormData = new FormData();
         submit_data.append('files', blob, 'jaldee-logo.png');
         const propertiesDet = {
@@ -930,29 +912,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       });
 
 
-      function b64toBlob(b64Data) {
-        let contentType = 'image/png';
-        let sliceSize = 512;
-
-        var byteCharacters = atob(b64Data);
-        var byteArrays = [];
-
-        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-          var byteNumbers = new Array(slice.length);
-          for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-          }
-
-          var byteArray = new Uint8Array(byteNumbers);
-
-          byteArrays.push(byteArray);
-        }
-
-        var blob = new Blob(byteArrays, { type: contentType });
-        return blob;
-      }
+    
 
     }
 

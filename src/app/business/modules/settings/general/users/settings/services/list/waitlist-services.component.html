@@ -42,7 +42,10 @@
                               </td>
                               <td class="title td-two">
                               </td>
-                              <td class="td-three grid-flex">
+                              <td class="td-three">
+                               
+                              </td>
+                              <td class="q-actions td-four grid-flex textcenter">
                                 <button class="grid-btn" (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
                                     <i class="icon-edit chkin-mobic" [matTooltip]="'Edit'"></i>
                                 </button> 
@@ -50,9 +53,6 @@
                                     <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
                                     <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon" [matTooltip]="'Disable Service'"></i>
                                 </button>
-                              </td>
-                              <td class="q-actions td-four">
-                               &nbsp;
                               </td>
                         </tr>
                     </tbody>
