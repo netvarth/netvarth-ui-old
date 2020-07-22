@@ -10,6 +10,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';
+import { remove } from '@syncfusion/ej2-base';
 
 @Component({
   selector: 'app-waitlist-queuedetail',
@@ -329,6 +330,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
               }
             }
           }
+          for (let j = 0; j < this.departments.length; j++) {
+            if (this.departments[j].serviceIds == '') {  /* triple equal is not working here*/
+              this.departments.splice(j, 1);
+            }
+          }
+          //console.log(this.departments);
           this.api_loading1 = false;
         },
         error => {
