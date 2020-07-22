@@ -25,6 +25,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+//import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 
 @Component({
@@ -36,7 +37,7 @@ import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.comp
 
 export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  logoExist=false;
+  logoExist = false;
   jaldee_online_disabled_msg: string;
   jaldee_online_enabled_msg: string;
   progress_bar_four: number;
@@ -172,6 +173,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   private qrCodeParent: ElementRef;
+  notedialogRef: any;
   @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -522,8 +524,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.delgaldialogRef) {
       this.delgaldialogRef.close();
     }
-    if(this.qrdialogRef)
-    {
+    if (this.qrdialogRef) {
       this.qrdialogRef.close();
     }
     //this.subscription.unsubscribe();
@@ -657,8 +658,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
   }
   confirm_searchStatus() {
-   console.log(this.normal_search_active);
-   
+    console.log(this.normal_search_active);
+
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
       // this.getPublicSearch();
@@ -721,8 +722,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.profile_status = this.onlinepresence_status ? true : false;
         this.profile_status_str = this.profile_status ? 'On' : 'Off';
-        console.log(this.profile_status +'and'+this.normal_search_active);
-        
+        console.log(this.profile_status + 'and' + this.normal_search_active);
+
         if (this.profile_status == false && this.normal_search_active) {
           this.handle_searchstatus();
         }
@@ -950,8 +951,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   showBPrimary() {
-    console.log('bProfile..'+JSON.stringify(this.bProfile));
-    
+    console.log('bProfile..' + JSON.stringify(this.bProfile));
+
     this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -960,7 +961,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
       data: {
         type: 'edit',
         bprofile: this.bProfile,
-        logoExist:this.logoExist
+        logoExist: this.logoExist
       }
     });
     this.primarydialogRef.afterClosed().subscribe(result => {
@@ -1103,12 +1104,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.success_error = this.sharedfunctionobj.imageValidation(file);
         if (this.success_error === true) {
           const reader = new FileReader();
-          console.log('src..'+input.files[0]);
+          console.log('src..' + input.files[0]);
           this.item_pic.files = input.files[0];
           this.selitem_pic = input.files[0];
           const fileobj = input.files[0];
-          console.log('itempic..'+JSON.stringify(this.selitem_pic));
-          
+          console.log('itempic..' + JSON.stringify(this.selitem_pic));
+
           reader.onload = (e) => {
             this.item_pic.base64 = e.target['result'];
           };
@@ -1118,7 +1119,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
             const submit_data: FormData = new FormData();
             console.log(this.selitem_pic);
             console.log(this.selitem_pic['name']);
-            
+
             submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
             const propertiesDet = {
               'caption': 'Logo'
@@ -1155,7 +1156,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
             logo = this.blogo[0].url;
           } else {
             logo = '';
-           this.logoExist = false;
+            this.logoExist = false;
           }
           this.provider_datastorage.updateProfilePicWeightage(this.logoExist);
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
@@ -1392,23 +1393,22 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     document.body.removeChild(selBox);
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
-  qrCodegeneraterOnlineID(accEncUid)
-{
-this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
-width: '50%',
-panelClass: ['popup-class', 'commonpopupmainclass'],
-disableClose: true,
-data: {
-accencUid:accEncUid
-}
-});
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid
+      }
+    });
 
-this.qrdialogRef.afterClosed().subscribe(result => {
-if (result === 'reloadlist') {
-this.getBusinessProfile();
-}
-});
-}
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getBusinessProfile();
+      }
+    });
+  }
 
 
 
@@ -2067,4 +2067,15 @@ this.getBusinessProfile();
       }
     });
   }
+
+  // changeProPic() {
+  //   this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: { }
+  //   });
+  //   this.notedialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 }
