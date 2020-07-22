@@ -443,7 +443,22 @@ export class AppointmentComponent implements OnInit {
                                                 this.handleDeptSelction(this.selected_dept);
                                             },
                                             () => {
-                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                if (!this.filterDepart) {
+                                                    const filter = {
+                                                        'status-eq': 'ACTIVE'
+                                                    };
+                                                    this.provider_services.getUsers(filter).subscribe(
+                                                        (users: any) => {
+                                                            this.users = users.filter(user => !user.admin);
+                                                            this.users.push(this.userN);
+                                                            if (this.users.length !== 0) {
+                                                                this.selected_user = this.users[0];
+                                                                this.handleUserSelection(this.selected_user);
+                                                            } else {
+                                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                            }
+                                                        });
+                                                }
                                             }
                                         );
                                     }

@@ -144,7 +144,7 @@ export class ConsumerCheckinComponent implements OnInit {
     userEmail;
     userPhone;
 
-    users = [];
+    users: any = [];
     emailExist = false;
     payEmail;
     payEmail1;
@@ -556,7 +556,9 @@ export class ConsumerCheckinComponent implements OnInit {
             }
         }
         this.servicesjson = newserviceArray;
-        this.handleServiceSel(this.servicesjson[0].id);
+        if (this.servicesjson[0] && this.servicesjson[0].id) {
+            this.handleServiceSel(this.servicesjson[0].id);
+        }
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -1181,6 +1183,9 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.handleDeptSelction(this.selected_dept);
                     }
                 }
+                if (!this.filterDepart) {
+                    this.getbusinessprofiledetails_json('departmentProviders', true);
+                }
             });
     }
     handleDeptSelction(obj) {
@@ -1490,6 +1495,21 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.showCouponWB = true;
                         }
                         break;
+                    case 'departmentProviders': {
+                        this.users = res;
+                        this.users.push(this.userN);
+                        if (this.users.length !== 0) {
+                            if (this.selectedUserParam) {
+                                const userDetail = this.users.filter(user => user.id === JSON.parse(this.selectedUserParam));
+                                this.selected_user = userDetail[0];
+                                this.handleUserSelection(this.selected_user);
+                            } else {
+                                this.selected_user = this.users[0];
+                                this.handleUserSelection(this.selected_user);
+                            }
+                        }
+                        break;
+                    }
                 }
             },
                 () => {

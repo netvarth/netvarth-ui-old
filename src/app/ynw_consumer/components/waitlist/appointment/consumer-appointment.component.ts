@@ -108,7 +108,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     maxsize;
     isFuturedate = false;
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-    userN =  { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
+    userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     fromKiosk = false;
@@ -142,7 +142,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     userEmail;
     userPhone;
 
-    users = [];
+    users: any = [];
     emailExist = false;
     payEmail;
     payEmail1;
@@ -548,7 +548,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             }
         }
         this.servicesjson = newserviceArray;
-        this.handleServiceSel(this.servicesjson[0].id);
+        if (this.servicesjson[0] && this.servicesjson[0].id) {
+            this.handleServiceSel(this.servicesjson[0].id);
+        }
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -634,7 +636,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
             return true;
         } else {
-            return false; 
+            return false;
         }
     }
     revealChk() {
@@ -736,7 +738,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
-        // if (this.apptTime) { 
+        // if (this.apptTime) {
         //     post_Data['appointmentTime'] = this.apptTime;
         // }
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
@@ -1179,6 +1181,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.handleDeptSelction(this.selected_dept);
                     }
                 }
+                if (!this.filterDepart) {
+                    this.getbusinessprofiledetails_json('departmentProviders', true);
+                }
             });
     }
     handleDeptSelction(obj) {
@@ -1519,6 +1524,21 @@ export class ConsumerAppointmentComponent implements OnInit {
                             this.showCouponWB = true;
                         }
                         break;
+                    case 'departmentProviders': {
+                        this.users = res;
+                        this.users.push(this.userN);
+                        if (this.users.length !== 0) {
+                            if (this.selectedUserParam) {
+                                const userDetail = this.users.filter(user => user.id === JSON.parse(this.selectedUserParam));
+                                this.selected_user = userDetail[0];
+                                this.handleUserSelection(this.selected_user);
+                            } else {
+                                this.selected_user = this.users[0];
+                                this.handleUserSelection(this.selected_user);
+                            }
+                        }
+                        break;
+                    }
                 }
             },
                 () => {
