@@ -21,6 +21,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     status;
     image_list: any = [];
     serviceExists = true;
+    showGallery = false;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -79,6 +80,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
+        setTimeout(() => this.showGallery = true, 1200);
         this.initServiceParams();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
