@@ -1,0 +1,28 @@
+<h1 class="mat-dialog-title"> Update Profile Picture<button mat-dialog-close class="modal_close" [disabled]="canceldisabled"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+
+<mat-dialog-content>
+    <div>
+        <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 3"
+        [resizeToWidth]="128"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+    
+    <img [src]="croppedImage" />
+    </div>
+    <div class="upload-doc" (click)="filed.click()">
+        <label class="col-form-label">Select img</label>
+        <span class="select-wrapper ">
+          <input type="file" name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">
+        </span>
+      </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+
+</mat-dialog-actions>
