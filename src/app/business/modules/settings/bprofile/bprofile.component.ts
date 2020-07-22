@@ -1412,49 +1412,49 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
 
-  qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
-    this.qr_code_oId = true;
-    this.changeDetectorRef.detectChanges();
-    setTimeout(() => {
-      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-    }, 50);
-  }
-  qrCodegenerateCustID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
-    this.qr_code_cId = true;
-    this.changeDetectorRef.detectChanges();
-    setTimeout(() => {
-      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-    }, 50);
-  }
-  closeOnlineQR() {
-    this.qr_code_oId = false;
-  }
-  closeCustomQR() {
-    this.qr_code_cId = false;
-  }
-  printQr(printSectionId) {
-    const printContent = document.getElementById(printSectionId);
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt.document.write('<html><head><title></title>');
-    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
-    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
-    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
-    WindowPrt.document.write(printContent.innerHTML);
-    WindowPrt.document.write('</div>');
-    WindowPrt.document.write('</body></html>');
-    WindowPrt.document.close();
-    WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
-  }
-  showPasscode() {
-    this.show_passcode = !this.show_passcode;
-  }
-  downloadQR() {
+  // qrCodegenerateOnlineID(valuetogenerate) {
+  //   this.qr_value = projectConstants.PATH + valuetogenerate;
+  //   this.qr_code_oId = true;
+  //   this.changeDetectorRef.detectChanges();
+  //   setTimeout(() => {
+  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+  //   }, 50);
+  // }
+  // qrCodegenerateCustID(valuetogenerate) {
+  //   this.qr_value = projectConstants.PATH + valuetogenerate;
+  //   this.qr_code_cId = true;
+  //   this.changeDetectorRef.detectChanges();
+  //   setTimeout(() => {
+  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+  //   }, 50);
+  // }
+  // closeOnlineQR() {
+  //   this.qr_code_oId = false;
+  // }
+  // closeCustomQR() {
+  //   this.qr_code_cId = false;
+  // }
+  // printQr(printSectionId) {
+  //   const printContent = document.getElementById(printSectionId);
+  //   const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+  //   WindowPrt.document.write('<html><head><title></title>');
+  //   WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+  //   WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+  //   WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+  //   WindowPrt.document.write(printContent.innerHTML);
+  //   WindowPrt.document.write('</div>');
+  //   WindowPrt.document.write('</body></html>');
+  //   WindowPrt.document.close();
+  //   WindowPrt.focus();
+  //   WindowPrt.print();
+  //   WindowPrt.close();
+  // }
+  // showPasscode() {
+  //   this.show_passcode = !this.show_passcode;
+  // }
+  // downloadQR() {
 
-  }
+  // }
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
