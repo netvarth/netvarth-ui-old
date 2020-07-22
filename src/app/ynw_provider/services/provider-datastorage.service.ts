@@ -30,8 +30,6 @@ export class ProviderDataStorageService {
     return this.observable_weightageArray.asObservable();
   }
   setWeightageArray(ArrayObject) {
-    console.log('insdfi'+ArrayObject);
-    
     this.observable_weightageArray.next(ArrayObject);
   }
   setWeightageObjectOfDomain(domainObject){
@@ -134,7 +132,6 @@ export class ProviderDataStorageService {
 
     //additionalInfo
      
-    console.log(this.weightageArray);
     
     this.setWeightageArray(this.weightageArray);
 
@@ -190,6 +187,10 @@ updateMandatoryAndAdditionalFieldWeightage(){
       this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
       this.setWeightageArray(this.weightageArray);
     
+   }
+   if(this.weightageObjectDomain.mandatoryDomain===false && this.weightageObjectSubDomain.mandatorySubDomain===false){
+    this.weightageArray = this.weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
+    this.setWeightageArray(this.weightageArray);
    }
   }
 
