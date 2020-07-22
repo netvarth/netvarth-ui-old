@@ -138,7 +138,7 @@ export class ConsumerCheckinComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-   
+
     providerlabel = '';
     userData: any = [];
     userEmail;
@@ -218,7 +218,7 @@ export class ConsumerCheckinComponent implements OnInit {
         public dateformat: DateFormatPipe,
         public provider_services: ProviderServices,
         public datastorage: CommonDataStorageService,
-        ) {
+    ) {
         this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
@@ -234,7 +234,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.selectedDeptParam = params.dept;
                 this.selectedUserParam = params.user;
             });
-          
+
     }
     ngOnInit() {
         // this.breadcrumbs = [
@@ -242,7 +242,7 @@ export class ConsumerCheckinComponent implements OnInit {
         //         title: 'Checkin'
         //     }
         // ];
-       
+
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -542,7 +542,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.selectedUser = user;
         this.servicesjson = this.serviceslist;
         const newserviceArray = [];
-        if (user.id && user.id !== 0) {
+        if (user && user.id && user.id !== 0) {
             for (let i = 0; i < this.servicesjson.length; i++) {
                 if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
                     newserviceArray.push(this.serviceslist[i]);
