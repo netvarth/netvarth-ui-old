@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
-       
+
     <div class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
@@ -36,7 +36,7 @@
                             </div> -->
                             <!-- <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3"> -->
                             <div class="card p0">
-                               
+
                                 <!-- <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
@@ -67,26 +67,32 @@
                                 <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
-                                                <h3>Business Profile
-                                                    </h3>
-                                                    <h6>Profile Strength- <span [className]="'text-' + weightageClass" >{{getBusinessProfileWeightageText()}} </span>
-                                                        
-                                                        </h6>
-                                                        <div>
-                                                        <div class="col-md-6 col-sm-6 mt-3"> <strong> {{weightageValue}} %</strong></div>
-                                                        <div class="col-md-6 col-sm-6 "><button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button></div>
-                                                    </div>
+                                            <h3>Business Profile
+                                            </h3>
+                                            <h6>Profile Strength-
+                                                <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
+
+                                            </h6>
+                                            <div>
+                                                <div class="col-md-6 col-sm-6 mt-3">
+                                                    <strong> {{weightageValue}} %</strong>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 ">
+                                                    <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass"
+                                                        style="font-weight:bold;float:right">{{bprofile_btn_text}}</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                               
-                                            <div class="col-md-12 ct-l col-xs-12 no-padding">
 
-                                                                                          
-                                                <div class="progress col-md-6 col-xs-12 mt-2 p0" style="height:10px;">
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
-                                                </div> 
-                                                <!-- <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
+                                    <div class="col-md-12 ct-l col-xs-12 no-padding">
+
+
+                                        <div class="progress col-md-6 col-xs-12 mt-2 p0" style="height:10px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
+                                                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <!-- <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
                                                         <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one" 
                                                             aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
                                                        
@@ -106,41 +112,41 @@
                                                     
                                                     
                                                     </div> -->
-                                                  
-        
-        
-                                            <!-- </div> -->
-                                              
-                                               
-                                             
-                                            </div>
+
+
+
+                                        <!-- </div> -->
+
+
+
+                                    </div>
 
                                 </div>
-                               
 
-                             <!--TEsting-->
-                        
-                           
-                  
+
+                                <!--TEsting-->
+
+
+
 
 
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
-                                 
-                                            <div class="ctrl">
-                                                <div class="ct-l">
-                                                    <h2 style="color:black;">Jaldee Online &nbsp;&nbsp;
-                                                            <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
-                                                                </mat-slide-toggle>
-                                                                &nbsp;{{profile_status_str}}</h2>
-                                                        
-                                                    
-                                               
-                                                </div>
-                                            </div>
-                                      
-                                             
-                                             
-<!-- 
+
+                                    <div class="ctrl">
+                                        <div class="ct-l">
+                                            <h2 style="color:black;">Jaldee Online &nbsp;&nbsp;
+                                                <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
+                                                </mat-slide-toggle>
+                                                &nbsp;{{profile_status_str}}</h2>
+
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- 
                                             <p class="form-level-settings" *ngIf="!profile_status">
                                                     {{frm_bpublic_search_off_cap}}<a class="learnmore-pointer" id="customer-help"
                                                         (click)="learnmore_clicked('business-profile', $event)">Learn
@@ -151,13 +157,13 @@
                                                         More</a> </p> 
 
                                             <br> -->
-                                            <div class="col-md-12 col-xs-12 col-sm-12">
-                                            <span class="inactive" *ngIf="!profile_status">{{jaldee_online_disabled_msg}} </span>
-                                            <span class="active" *ngIf="profile_status">{{jaldee_online_enabled_msg}}</span>
-                                            </div>
-                                      
-                                    
-                                   
+                                    <div class="col-md-12 col-xs-12 col-sm-12">
+                                        <span class="inactive" *ngIf="!profile_status">{{jaldee_online_disabled_msg}} </span>
+                                        <span class="active" *ngIf="profile_status">{{jaldee_online_enabled_msg}}</span>
+                                    </div>
+
+
+
                                     <!-- <p class="form-level-settings">{{jaldee_acc_url}}<a class="learnmore-pointer"{{jaldee_turn_on_or_off_cap}}
                                             id="customer-help"
                                             (click)="learnmore_clicked('jaldeebusiness-id', $event)">Learn
@@ -166,54 +172,60 @@
 
                                     <div *ngIf="!bProfile.customId && !is_customized">
                                         <div>
-                                       
-                                                <ul class="sbl">
-                                                    <li class="acc-url-li">
-                                        
-                                                         <strong> Here is your QR Code :- </strong>
-                                                         
-                                                            <span class="custid custId-icon">
-                                                                    <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
-                                                            </span>
-                                                    </li>
 
-                                                    <li class="bstatus"><span class="inactive" *ngIf="!profile_status">
-                                                            <i class="fa fa-times"></i> Inactive</span>
-                                                        <span class="active" *ngIf="profile_status">
-                                                            <i class="fa fa-check"></i> Active</span>
+                                            <ul class="sbl">
+                                                <li class="acc-url-li">
 
-                                                    </li>
+                                                    <strong> Here is your QR Code :- </strong>
 
-                                                    <li class="acc-url-li">
+                                                    <span class="custid custId-icon">
+                                                        <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                                                            [matTooltip]="'Generate QR code'"></i>
+                                                    </span>
+                                                </li>
 
-                                                        <strong> Here is your Jaldee Link :-</strong>
-                                                        <span class="busns-id">
-                                                            <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.accEncUid}}</a> </span>
-                                                            <span class="custid custId-icon">
-                                                                <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
-                                                            </span>
-                                                            <span style="padding-left: 40px;" *ngIf="!bProfile.customId">
-                                                                <button class="btn-default-n" (click)="customizeId()">
-                                                                    <a>
-                                                                        Customize ID
-                                                                    </a>
-                                                                </button>
-                                                            </span>
+                                                <li class="bstatus">
+                                                    <span class="inactive" *ngIf="!profile_status">
+                                                        <i class="fa fa-times"></i> Inactive</span>
+                                                    <span class="active" *ngIf="profile_status">
+                                                        <i class="fa fa-check"></i> Active</span>
+
+                                                </li>
+
+                                                <li class="acc-url-li">
+
+                                                    <strong> Here is your Jaldee Link :-</strong>
+                                                    <span class="busns-id">
+                                                        <span class="custid" rel="noopener" target="_blank">
+                                                            
+                                                            {{wndw_path}}{{bProfile.accEncUid}}
+                                                            
                                                         </span>
-                                                        <br>
+                                                        <span class="custid custId-icon">
+                                                            <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                        </span>
+                                                        <span style="padding-left: 40px;" *ngIf="!bProfile.customId">
+                                                            <button class="btn-default-n" (click)="customizeId()">
+                                                                <a>
+                                                                    Customize ID
+                                                                </a>
+                                                            </button>
+                                                        </span>
+                                                    </span>
+                                                    <br>
 
 
-                                                    </li>
-                                                    <li class="bstatus">
-                                                            <span class="inactive"*ngIf="!profile_status">
-                                                                    <i class="fa fa-times" ></i> Inactive</span>
-                                                                <span class="active" *ngIf="profile_status">
-                                                                    <i class="fa fa-check" ></i> Active</span>
-                                                           
+                                                </li>
+                                                <li class="bstatus">
+                                                    <span class="inactive" *ngIf="!profile_status">
+                                                        <i class="fa fa-times"></i> Inactive</span>
+                                                    <span class="active" *ngIf="profile_status">
+                                                        <i class="fa fa-check"></i> Active</span>
 
-                                                    </li>
-                                                </ul>
-                                          
+
+                                                </li>
+                                            </ul>
+
                                         </div>
                                     </div>
 
@@ -245,20 +257,22 @@
 
                                         </form>
                                     </div>
-                                   
+
                                     <div *ngIf="normal_customid_show==3">
                                         <div>
                                             <ul class="sbl">
                                                 <li class="acc-url-li">
-                                    
-                                                     <strong> Here is your QR Code :- </strong>
-                                                     
-                                                        <span class="custid custId-icon">
-                                                                <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.customId)" [matTooltip]="'Generate QR code'"></i>
-                                                        </span>
+
+                                                    <strong> Here is your QR Code :- </strong>
+
+                                                    <span class="custid custId-icon">
+                                                        <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                                                            [matTooltip]="'Generate QR code'"></i>
+                                                    </span>
                                                 </li>
 
-                                                <li class="bstatus"><span class="inactive" *ngIf="!profile_status">
+                                                <li class="bstatus">
+                                                    <span class="inactive" *ngIf="!profile_status">
                                                         <i class="fa fa-times"></i> Inactive</span>
                                                     <span class="active" *ngIf="profile_status">
                                                         <i class="fa fa-check"></i> Active</span>
@@ -269,9 +283,11 @@
 
                                                     <strong> Here is your Jaldee Link :-</strong>
                                                     <span class="busns-id">
-                                                        <span class="custid" rel="noopener" target="_blank"><a  (click)="customizeId()">{{wndw_path}}{{bProfile.customId}}</a> </span>
+                                                        <span class="custid" rel="noopener" target="_blank">
+                                                           {{wndw_path}}{{bProfile.customId}}
+                                                        </span>
                                                         <span class="custid custId-icon">
-                                                            <i class="fa fa-copy custId-cursor"  style="font-size:24px;"  (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
+                                                            <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
                                                         </span>
                                                         <span class="custid" style="padding-left: 40px;">
                                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -294,16 +310,16 @@
 
                                                 </li>
                                                 <li class="bstatus">
-                                                        <span class="inactive"*ngIf="!profile_status">
-                                                                <i class="fa fa-times" ></i> Inactive</span>
-                                                            <span class="active" *ngIf="profile_status">
-                                                                <i class="fa fa-check" ></i> Active</span>
-                                                     
+                                                    <span class="inactive" *ngIf="!profile_status">
+                                                        <i class="fa fa-times"></i> Inactive</span>
+                                                    <span class="active" *ngIf="profile_status">
+                                                        <i class="fa fa-check"></i> Active</span>
+
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="coupon-outer" *ngIf="!bProfile.customId">
                                         <div class="duration instantQ" *ngIf="normal_customid_show==2 && !showCustomId && licence_warn">
                                             You are not allowed to do this operation. Please upgrade license package
@@ -318,16 +334,16 @@
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2 style="color:black;">List my profile on Jaldee.com &nbsp;&nbsp;
-                                               
-                                                    <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-                                                        </mat-slide-toggle> {{jaldee_online_status_str}}
-                                                   
+
+                                                <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                                                </mat-slide-toggle> {{jaldee_online_status_str}}
+
                                             </h2>
-                                           
+
 
                                         </div>
 
-                                
+
                                     </div>
                                     <!-- <p class="form-level-settings" *ngIf="!normal_search_active">
                                             {{frm_public_search_cap}}
@@ -342,11 +358,11 @@
 
 
                                             <br> -->
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
-                                            <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
-                                        </div>
-                                   
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
+                                        <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
+                                    </div>
+
 
                                 </div>
 
@@ -414,63 +430,63 @@
                                         <div class="cd-b ">
                                             <mat-card class="custom">
 
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
-                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                                        <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                Location
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="true">
+                                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                            <span class="mat-content">
+                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                    Location
                                                                     <!-- <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i> -->
-                                                              
-                                                                <!--bindings={}-->
-                                                                <p class="form-level-settings">Manage your business location details here.
-                                                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
-                                                                </p>
-                                                            </mat-panel-title>
-                                                        </span>
-                                                        <!--bindings={
+
+                                                                    <!--bindings={}-->
+                                                                    <p class="form-level-settings">Manage your business location details here.
+                                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                                    </p>
+                                                                </mat-panel-title>
+                                                            </span>
+                                                            <!--bindings={
                                                     "ng-reflect-ng-if": "true"
                                                   }-->
-                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
                                                             style="transform: rotate(180deg);"></span> -->
-                                                    </mat-expansion-panel-header>
+                                                        </mat-expansion-panel-header>
 
-                                                    <div class="loc-i">
-                                                        <div class="warning" *ngIf="normal_locationinfo_show==1">
-                                                            <app-innerloading-spinner spinnerParams="loadingParams">
-                                                            </app-innerloading-spinner>
-                                                        </div>
-                                                        <div class="warning" *ngIf="normal_locationinfo_show==2">
-                                                            <i data-icon="m"></i>
-                                                            <p>
-                                                                <span>{{have_not_add_cap}}</span>
-                                                                <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
-                                                            <span class="cs-btn bt3" (click)="addLocation()">{{add_it_cap}}</span>
-                                                            <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="warning" *ngIf="normal_locationinfo_show==4">
-                                                            <i data-icon="m"></i>
-                                                            <p>
-                                                                <span>
-                                                                    <strong>{{base_loc_det_cap}}.</strong>
+                                                        <div class="loc-i">
+                                                            <div class="warning" *ngIf="normal_locationinfo_show==1">
+                                                                <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                </app-innerloading-spinner>
+                                                            </div>
+                                                            <div class="warning" *ngIf="normal_locationinfo_show==2">
+                                                                <i data-icon="m"></i>
+                                                                <p>
+                                                                    <span>{{have_not_add_cap}}</span>
+                                                                    <strong>{{location_cap}}*</strong> {{info_cap}}.</p>
+                                                                <span class="cs-btn bt3" (click)="addLocation()">{{add_it_cap}}</span>
+                                                                <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
+                                                                </p>
+                                                            </div>
+                                                            <div class="warning" *ngIf="normal_locationinfo_show==4">
+                                                                <i data-icon="m"></i>
+                                                                <p>
+                                                                    <span>
+                                                                        <strong>{{base_loc_det_cap}}.</strong>
+                                                                    </span>
+                                                                </p>
+                                                                <p>
+                                                                    <span>{{please_use_cap}}
+                                                                        <strong>{{edit_cap}} {{location_cap}}
+                                                                        </strong>
+                                                                        {{btn_to_compl_cap}}.</span>
+                                                                </p>
+                                                                <span class="cs-btn bt3" (click)="editLocation()">{{edit_cap}} {{location_cap}}
                                                                 </span>
-                                                            </p>
-                                                            <p>
-                                                                <span>{{please_use_cap}}
-                                                                    <strong>{{edit_cap}} {{location_cap}}
-                                                                    </strong>
-                                                                    {{btn_to_compl_cap}}.</span>
-                                                            </p>
-                                                            <span class="cs-btn bt3" (click)="editLocation()">{{edit_cap}} {{location_cap}}
-                                                            </span>
-                                                            <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
-                                                            <!-- <div class="title">
+                                                                <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
+                                                                </p>
+                                                            </div>
+                                                            <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
+                                                                <!-- <div class="title">
                                                         <h3>{{working_hours_cap}}</h3>
                                                         <span class="form-level-settings">{{frm_working_hr_cap}}<a
                                                                 class="learnmore-pointer" id="customer-help"
@@ -478,10 +494,10 @@
                                                                 More</a>
                                                         </span>
                                                     </div> -->
-                                                        </div>
-                                                        <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
+                                                            </div>
+                                                            <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
 
-                                                            <!-- <div class="title">
+                                                                <!-- <div class="title">
                                                         <h3>{{location_cap}}</h3>
                                                         <span class="form-level-settings">{{frm_loc_cap}}<a
                                                                 class="learnmore-pointer" id="customer-help"
@@ -489,35 +505,35 @@
                                                                 More</a>
                                                         </span>
                                                     </div> -->
-                                                            <div class="copy">
-                                                                <span (click)="editLocation()" class="editbt"></span>
-                                                                <div class="cop-l" *ngIf="loc_list.length>0">
-                                                                    <h4>{{base_loc.place | capitalizeFirst}}
-                                                                        <a rel="noopener" [href]="base_loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
-                                                                    </h4>
-                                                                    <span>{{base_loc.address | capitalizeFirst}}</span>
-                                                                    <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
-                                                                        {{pin_cap}} : {{base_loc.pinCode}}
-                                                                    </span>
+                                                                <div class="copy">
+                                                                    <span (click)="editLocation()" class="editbt"></span>
+                                                                    <div class="cop-l" *ngIf="loc_list.length>0">
+                                                                        <h4>{{base_loc.place | capitalizeFirst}}
+                                                                            <a rel="noopener" [href]="base_loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
+                                                                        </h4>
+                                                                        <span>{{base_loc.address | capitalizeFirst}}</span>
+                                                                        <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
+                                                                            {{pin_cap}} : {{base_loc.pinCode}}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="cop-r" *ngIf="loc_list.length>0">
+                                                                        <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                                                            <li>You can add more locations under
+                                                                                <a routerLink="/provider/settings/general/locations">settings</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="cop-r" *ngIf="loc_list.length>0">
-                                                                    <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                                                        <li>You can add more locations under
-                                                                            <a routerLink="/provider/settings/general/locations">settings</a>
+                                                                <div class="locSchedule time_align">
+                                                                    <span class="sub-title">{{loca_hours}}</span>
+                                                                    <ul *ngIf="display_schedule.length > 0">
+                                                                        <li *ngFor="let schedule of display_schedule">
+                                                                            <span class="day">{{schedule.dstr}}&nbsp;:</span>
+                                                                            <span class="time">{{schedule.time}}</span>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                            </div>
-                                                            <div class="locSchedule time_align">
-                                                                <span class="sub-title">{{loca_hours}}</span>
-                                                                <ul *ngIf="display_schedule.length > 0">
-                                                                    <li *ngFor="let schedule of display_schedule">
-                                                                        <span class="day">{{schedule.dstr}}&nbsp;:</span>
-                                                                        <span class="time">{{schedule.time}}</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <!-- <div class="whrs" >
+                                                                <!-- <div class="whrs" >
                                                         <span class="sub-title time_align"><b>General Business hours</b></span>
                                                         <ul  *ngIf="display_schedule.length > 0">
                                                             <li *ngFor="let schedule of display_schedule">
@@ -526,278 +542,278 @@
                                                             </li>
                                                         </ul>
                                                     </div> -->
-                                                            <!-- <ul class="whrs" *ngIf="display_schedule.length > 0">
+                                                                <!-- <ul class="whrs" *ngIf="display_schedule.length > 0">
                                                         <li *ngFor="let schedule of display_schedule">
                                                             <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
                                                                 class="time">{{schedule.time}}</span>
                                                         </li>
                                                     </ul> -->
-                                                            <ng-container *ngIf="display_schedule.length == 0">
-                                                                <div class="no-dta">
-                                                                    <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
-                                                                    <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
-                                                                </div>
-                                                            </ng-container>
-                                                            <div class="copy block-level">
-                                                                <h5>{{loc_amenities_cap}}
-                                                                    <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
-                                                                </h5>
-                                                                <p class="form-level-settings">{{frm_loc_amen_cap}}
-                                                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('locationAmenities', $event)">Learn More
-                                                                    </a>
-                                                                </p>
-                                                            </div>
-                                                            <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
-                                                                <div class="copy">
-                                                                    <ul class="amt-list">
-                                                                        <li [matTooltip]="park_type + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
-                                                                        </li>
-                                                                        <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
-                                                                        <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
-                                                                            <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
-                                                                                <li [matTooltip]="badge_map_arr[locvirtual]" *ngIf="badgeIcons[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
-                                                                                </li>
-                                                                            </ng-container>
-                                                                        </ng-container>
-                                                                    </ul>
-                                                                </div>
-                                                            </ng-container>
-                                                            <ng-container *ngIf="normal_locationamenities_show==2">
-                                                                <div class="warning">
-                                                                    <i data-icon="m"></i>
-                                                                    <p>
-                                                                        <span>{{have_not_add_cap}}</span>
-                                                                        <strong>{{loc_amenities_cap}}</strong>
+                                                                <ng-container *ngIf="display_schedule.length == 0">
+                                                                    <div class="no-dta">
+                                                                        <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
+                                                                        <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <div class="copy block-level">
+                                                                    <h5>{{loc_amenities_cap}}
+                                                                        <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
+                                                                    </h5>
+                                                                    <p class="form-level-settings">{{frm_loc_amen_cap}}
+                                                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('locationAmenities', $event)">Learn More
+                                                                        </a>
                                                                     </p>
-                                                                    <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_cap}}</span>
                                                                 </div>
-                                                            </ng-container>
+                                                                <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
+                                                                    <div class="copy">
+                                                                        <ul class="amt-list">
+                                                                            <li [matTooltip]="park_type + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
+                                                                            </li>
+                                                                            <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
+                                                                            <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
+                                                                                <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
+                                                                                    <li [matTooltip]="badge_map_arr[locvirtual]" *ngIf="badgeIcons[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
+                                                                                    </li>
+                                                                                </ng-container>
+                                                                            </ng-container>
+                                                                        </ul>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="normal_locationamenities_show==2">
+                                                                    <div class="warning">
+                                                                        <i data-icon="m"></i>
+                                                                        <p>
+                                                                            <span>{{have_not_add_cap}}</span>
+                                                                            <strong>{{loc_amenities_cap}}</strong>
+                                                                        </p>
+                                                                        <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_cap}}</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
-                                        </mat-card>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                            </mat-card>
                                         </div>
                                         <!-- specialization-->
                                         <div class="cd-b ">
-                                          <mat-card class="custom">
+                                            <mat-card class="custom">
 
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
-                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                                        <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                Specilization
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="true">
+                                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                            <span class="mat-content">
+                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                    Specilization
                                                                     <!-- <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
                                                                     </i> -->
-                                                               
-                                                                <!--bindings={}-->
-                                                                <p class="form-level-settings">Mention your specilization here
-                                                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
-                                                                </p>
-                                                            </mat-panel-title>
-                                                        </span>
-                                                        <!--bindings={
+
+                                                                    <!--bindings={}-->
+                                                                    <p class="form-level-settings">Mention your specilization here
+                                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                                    </p>
+                                                                </mat-panel-title>
+                                                            </span>
+                                                            <!--bindings={
                                                     "ng-reflect-ng-if": "true"
                                                   }-->
-                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
                                                             style="transform: rotate(180deg);"></span> -->
-                                                    </mat-expansion-panel-header>
+                                                        </mat-expansion-panel-header>
 
-                                                    <div class="card p0 w-dta active">
+                                                        <div class="card p0 w-dta active">
 
 
-                                                        <div class="no-dta" *ngIf="normal_specilization_show==1">
-                                                            <app-innerloading-spinner spinnerParams="loadingParams">
-                                                            </app-innerloading-spinner>
-                                                        </div>
-                                                        <div class="no-dta" *ngIf="normal_specilization_show==2">
-                                                            <p>{{have_not_add_cap}} {{special_cap}}.</p>
-                                                            <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
-                                                        </div>
-                                                        <div class="lang-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
-                                                            <span class="editbt" (click)="handleSpecialization()"></span>
-                                                            <div *ngFor="let spec of bProfile.specialization">
-                                                                {{getSpecializationName(spec)}}
+                                                            <div class="no-dta" *ngIf="normal_specilization_show==1">
+                                                                <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                </app-innerloading-spinner>
                                                             </div>
-                                                        </div>
+                                                            <div class="no-dta" *ngIf="normal_specilization_show==2">
+                                                                <p>{{have_not_add_cap}} {{special_cap}}.</p>
+                                                                <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                            </div>
+                                                            <div class="lang-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                                                                <span class="editbt" (click)="handleSpecialization()"></span>
+                                                                <div *ngFor="let spec of bProfile.specialization">
+                                                                    {{getSpecializationName(spec)}}
+                                                                </div>
+                                                            </div>
 
-                                                    </div>
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
                                             </mat-card>
 
                                         </div>
-                                       
+
 
                                         <!--mandatory fields -->
                                         <div class="cd-b ">
                                             <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
-                                            <div  *ngFor="let fields of domain_fields">
-                                                <ng-container *ngIf="fields.mandatory">
-                                                    <mat-card class="custom">
-                                                    <mat-accordion [class.acc-btn-data]="fields['value']">
-                                                        <mat-expansion-panel [expanded]="fields['value']"  [hideToggle]="!fields['value']">
-                                                            <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"  class="custom_business">
-                                                                <mat-panel-title>{{fields.displayName}}
-                                                                    
-                                                                    <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
-                                                                </mat-panel-title>
-                                                                
-                                                                    <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
-                                                                        <mat-icon>{{add_circle_outline}}</mat-icon>
-                                                                    </button>
-                                                               
-                                                            </mat-expansion-panel-header>
+                                                <div *ngFor="let fields of domain_fields">
+                                                    <ng-container *ngIf="fields.mandatory">
+                                                        <mat-card class="custom">
+                                                            <mat-accordion [class.acc-btn-data]="fields['value']">
+                                                                <mat-expansion-panel [expanded]="fields['value']" [hideToggle]="!fields['value']">
+                                                                    <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
+                                                                        <mat-panel-title>{{fields.displayName}}
 
-                                                            <ng-container [ngSwitch]="fields.dataType">
-                                                                <ng-container *ngSwitchCase="'TEXT'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{ fields.value | capitalizeFirst}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                            <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                                        </mat-panel-title>
 
-                                                                <ng-container *ngSwitchCase="'TEXT_MED'">
-                                                                    <div class="cont-btn">
-                                                                        <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
-                                                                            {{fields.value | nl2br | capitalizeFirst }}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
+                                                                            <mat-icon>{{add_circle_outline}}</mat-icon>
+                                                                        </button>
 
-                                                                <ng-container *ngSwitchCase="'Boolean'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{(fields.value == 'true' || fields.value == true
-                                                                            ) ? 'Yes' : 'No'}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
-                                                                <ng-container *ngSwitchCase="'Age'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                    </mat-expansion-panel-header>
 
-                                                                <ng-container *ngSwitchCase="'Number'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                    <ng-container [ngSwitch]="fields.dataType">
+                                                                        <ng-container *ngSwitchCase="'TEXT'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{ fields.value | capitalizeFirst}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'URL'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'TEXT_MED'">
+                                                                            <div class="cont-btn">
+                                                                                <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
+                                                                                    {{fields.value | nl2br | capitalizeFirst }}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
+                                                                        <ng-container *ngSwitchCase="'Boolean'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{(fields.value == 'true' || fields.value
+                                                                                    == true ) ? 'Yes' : 'No'}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-container *ngSwitchCase="'Age'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'Date'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value | date:dateFormat}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'Number'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'DOB'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
-
-                                                                <ng-container *ngSwitchCase="'Phone'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'URL'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
 
-                                                                <ng-container *ngSwitchCase="'Email'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'Date'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value | date:dateFormat}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'Enum'">
-                                                                    <div class="cont-btn">
-                                                                        <p>{{ getdispVal('domain', fields)}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'DOB'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'EnumList'">
-                                                                    <div class="cont-btn">
-                                                                        <p>{{ getdispVal('domain', fields)}}</p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'Phone'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'Gender'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value | capitalizeFirst}} </p>
-                                                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                                                       
-                                                                    </div>
-                                                                </ng-container>
 
-                                                                <ng-container *ngSwitchCase="'DataGrid'">
-                                                                    <div class="table-outer">
-                                                                        <table class="table table-striped">
-                                                                            <thead class="cf">
-                                                                                <tr>
-                                                                                    <th class="cth" *ngFor="let column of fields.Columns">
-                                                                                        {{column.displayName}}</th>
-                                                                                    <th></th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr *ngFor="let row of fields.value;let i = index">
-                                                                                    <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
-                                                                                        {{row[column.key]}}</td>
-                                                                                    <td class="action">
-                                                                                        <span class="mbt">
-                                                                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                                                                <mat-icon>more_vert
-                                                                                                </mat-icon>
-                                                                                            </button>
-                                                                                            <mat-menu #menu="matMenu">
-                                                                                                <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'domain_questions', i)">
-                                                                                                    <i class="icon-edit"></i>
-                                                                                                    <span>{{edit_cap}}</span>
-                                                                                                </button>
-                                                                                                <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
-                                                                                                    <i class="icon-delete"></i>
-                                                                                                    <span>{{delete_btn}}</span>
-                                                                                                </button>
-                                                                                            </mat-menu>
-                                                                                        </span>
+                                                                        <ng-container *ngSwitchCase="'Email'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
 
-                                                                                        <span class="mbt-mobile-show">
-                                                                                            <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
-                                                                                            <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
-                                                                                        </span>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <span (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
-                                                                    </div>
-                                                                </ng-container>
-                                                            </ng-container>
-                                                        </mat-expansion-panel>
-                                                    </mat-accordion>
-                                                </mat-card>
-                                                </ng-container>
+                                                                        <ng-container *ngSwitchCase="'Enum'">
+                                                                            <div class="cont-btn">
+                                                                                <p>{{ getdispVal('domain', fields)}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngSwitchCase="'EnumList'">
+                                                                            <div class="cont-btn">
+                                                                                <p>{{ getdispVal('domain', fields)}}</p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngSwitchCase="'Gender'">
+                                                                            <div class="cont-btn">
+                                                                                <p> {{fields.value | capitalizeFirst}} </p>
+                                                                                <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngSwitchCase="'DataGrid'">
+                                                                            <div class="table-outer">
+                                                                                <table class="table table-striped">
+                                                                                    <thead class="cf">
+                                                                                        <tr>
+                                                                                            <th class="cth" *ngFor="let column of fields.Columns">
+                                                                                                {{column.displayName}}</th>
+                                                                                            <th></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr *ngFor="let row of fields.value;let i = index">
+                                                                                            <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
+                                                                                                {{row[column.key]}}</td>
+                                                                                            <td class="action">
+                                                                                                <span class="mbt">
+                                                                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                                                        <mat-icon>more_vert
+                                                                                                        </mat-icon>
+                                                                                                    </button>
+                                                                                                    <mat-menu #menu="matMenu">
+                                                                                                        <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'domain_questions', i)">
+                                                                                                            <i class="icon-edit"></i>
+                                                                                                            <span>{{edit_cap}}</span>
+                                                                                                        </button>
+                                                                                                        <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
+                                                                                                            <i class="icon-delete"></i>
+                                                                                                            <span>{{delete_btn}}</span>
+                                                                                                        </button>
+                                                                                                    </mat-menu>
+                                                                                                </span>
+
+                                                                                                <span class="mbt-mobile-show">
+                                                                                                    <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
+                                                                                                    <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <span (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </mat-expansion-panel>
+                                                            </mat-accordion>
+                                                        </mat-card>
+                                                    </ng-container>
                                                 </div>
-                                                </ng-container>
+                                            </ng-container>
 
 
 
@@ -808,25 +824,24 @@
 
 
 
-                                                <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
-                                                    <div class="acc-cont" *ngFor="let fields of subdomain_fields">
-                                                        <ng-container *ngIf="fields.mandatory">
-                                                            <mat-card class="custom">
-                                                            <mat-accordion  [class.acc-btn-data]="fields['value']">
+                                            <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
+                                                <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                                    <ng-container *ngIf="fields.mandatory">
+                                                        <mat-card class="custom">
+                                                            <mat-accordion [class.acc-btn-data]="fields['value']">
                                                                 <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
                                                                     <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
                                                                         <mat-panel-title>
                                                                             {{fields.displayName}}
-                                                                            <span *ngIf="fields.mandatory == true"
-                                                                                class="red">&nbsp;*</span>
+                                                                            <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
                                                                             <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
                                                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2 weeks </span>
                                                                         </mat-panel-title>
-                                                                       
-                                                                            <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
-                                                                                <mat-icon>{{add_circle_outline}}</mat-icon>
-                                                                            </button>
-                                                                   
+
+                                                                        <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
+                                                                            <mat-icon>{{add_circle_outline}}</mat-icon>
+                                                                        </button>
+
                                                                     </mat-expansion-panel-header>
 
                                                                     <ng-container [ngSwitch]="fields.dataType">
@@ -924,7 +939,7 @@
                                                                             <div class="cont-btn">
                                                                                 <span style="margin-left:1%">{{fields.value | capitalizeFirst}} </span>
                                                                                 <span class="editbt" style="margin-left:5%" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                                                               
+
                                                                             </div>
                                                                         </ng-container>
 
@@ -975,88 +990,88 @@
                                                                 </mat-expansion-panel>
                                                             </mat-accordion>
                                                         </mat-card>
-                                                        </ng-container>
-                                                    </div>
+                                                    </ng-container>
+                                                </div>
 
-                                                </ng-container>
+                                            </ng-container>
 
-                                                <!-- 
+                                            <!-- 
                                                 </mat-expansion-panel>
 
 
                                             </mat-accordion> -->
 
 
-                                            </div>
-
-                                             <!---languages known-->
-                                        <div class="cd-b ">
-                                                <mat-card class="custom">
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="true">
-                                                    <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                                        role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                                        aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                                        <span class="mat-content">
-                                                            <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                                Languages Known
-                                                                    <!-- <i *ngIf="normal_language_show==2 ||normal_language_show==1" class="req-flds-cap">*required fields missing
-                                                                    </i> -->
-                                                                
-                                                                <!--bindings={}-->
-                                                                <p class="form-level-settings">Mention your languages here
-                                                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
-                                                                </p>
-                                                            </mat-panel-title>
-                                                        </span>
-                                                        <!--bindings={
-                                                            "ng-reflect-ng-if": "true"
-                                                          }-->
-                                                        <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
-                                                                    style="transform: rotate(180deg);"></span> -->
-                                                    </mat-expansion-panel-header>
-                                                    <div class="row">
-                                                        <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                                                            <div class="card p0 w-dta active">
-
-                                                                <div class="no-dta" *ngIf="normal_language_show==1">
-                                                                    <app-innerloading-spinner spinnerParams="loadingParams">
-                                                                    </app-innerloading-spinner>
-                                                                </div>
-                                                                <div class="no-dta" *ngIf="normal_language_show==2">
-                                                                    <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
-                                                                    <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
-                                                                </div>
-
-                                                                <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
-                                                                    <span class="editbt" (click)="handleSpokenLanguages()"></span>
-                                                                    <div *ngFor="let lang of bProfile.languagesSpoken">
-                                                                        {{getlanguageName(lang)}}
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
-                                            </mat-card>
                                         </div>
-                                            <!-- gallery and social media-->
-                                            <div class="cd-b">
 
-                                               <mat-card class="custom">
+                                        <!---languages known-->
+                                        <div class="cd-b ">
+                                            <mat-card class="custom">
                                                 <mat-accordion>
                                                     <mat-expansion-panel [expanded]="true">
                                                         <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
                                                             role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
                                                             aria-expanded="true" aria-disabled="false" style="height: 64px;">
                                                             <span class="mat-content">
-                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title mat-title-font" >
+                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                                    Languages Known
+                                                                    <!-- <i *ngIf="normal_language_show==2 ||normal_language_show==1" class="req-flds-cap">*required fields missing
+                                                                    </i> -->
+
+                                                                    <!--bindings={}-->
+                                                                    <p class="form-level-settings">Mention your languages here
+                                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                                    </p>
+                                                                </mat-panel-title>
+                                                            </span>
+                                                            <!--bindings={
+                                                            "ng-reflect-ng-if": "true"
+                                                          }-->
+                                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                                    style="transform: rotate(180deg);"></span> -->
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                                                                <div class="card p0 w-dta active">
+
+                                                                    <div class="no-dta" *ngIf="normal_language_show==1">
+                                                                        <app-innerloading-spinner spinnerParams="loadingParams">
+                                                                        </app-innerloading-spinner>
+                                                                    </div>
+                                                                    <div class="no-dta" *ngIf="normal_language_show==2">
+                                                                        <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                                                        <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                                    </div>
+
+                                                                    <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
+                                                                        <span class="editbt" (click)="handleSpokenLanguages()"></span>
+                                                                        <div *ngFor="let lang of bProfile.languagesSpoken">
+                                                                            {{getlanguageName(lang)}}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </mat-accordion>
+                                            </mat-card>
+                                        </div>
+                                        <!-- gallery and social media-->
+                                        <div class="cd-b">
+
+                                            <mat-card class="custom">
+                                                <mat-accordion>
+                                                    <mat-expansion-panel [expanded]="true">
+                                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                            <span class="mat-content">
+                                                                <mat-panel-title class="block-level mat-expansion-panel-header-title mat-title-font">
                                                                     Gallery and Social Media
-                                                                        <!-- <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                                    <!-- <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
                                                                         </i> -->
-                                                                  
+
                                                                     <!--bindings={}-->
                                                                     <p class="form-level-settings">Add your images and social media
                                                                         <a class="learnmore-pointer" id="customer-help">Learn More</a>
@@ -1086,7 +1101,7 @@
                                                                                         </p>
                                                                                     </mat-panel-title>
                                                                                 </mat-expansion-panel-header>
-                                            
+
                                                                                 <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'">
                                                                                 </app-jaldee-gallery>
                                                                             </mat-expansion-panel>
@@ -1152,24 +1167,24 @@
                                                 </mat-accordion>
                                             </mat-card>
 
-                                            </div>
-                                      
+                                        </div>
+
 
 
                                     </mat-expansion-panel>
                                 </mat-accordion>
-                                </div>
-
-
-
-
-
                             </div>
+
+
+
+
+
                         </div>
                     </div>
                 </div>
+            </div>
 
-<!-- 
+            <!-- 
                 <div class="w-dta">
                     <div class="row">
                         <div class="copy one col-xs-12 col-sm-12 no-padding">
@@ -1231,7 +1246,7 @@
                         </div>
                     </div>
                 </div>-->
-                <!-- <div class="row">
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
                         <h2>Specializations
@@ -1245,24 +1260,24 @@
                     </span>
                 </div>
             </div> -->
-                <div class="row">
-                    <div class="card p0">
-                        <span class="b-link" (click)="gotoAdditionalInfo()">
-                            <h2>
-                                Additional Info
-                                <!-- <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>  -->
-                             </h2>
-                            <span class="form-level-settings">{{frm_additional_cap}}
-                                <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
-                                </a>
-                            </span>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoAdditionalInfo()">
+                        <h2>
+                            Additional Info
+                            <!-- <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>  -->
+                        </h2>
+                        <span class="form-level-settings">{{frm_additional_cap}}
+                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
+                            </a>
                         </span>
-                    </div>
-                </div> 
+                    </span>
+                </div>
+            </div>
 
 
-                
-                <!-- <div class="row">
+
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
                         <h2>Languages Known</h2>
@@ -1273,7 +1288,7 @@
                     </span>
                 </div>
             </div> -->
-                <!-- <div class="row">
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPrivacy()">
                         <h2>Privacy</h2>
@@ -1284,7 +1299,7 @@
                     </span>
                 </div>
             </div> -->
-                <!-- <div class="row">
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoMedia()">
                         <h2>Gallery & Social Media</h2>
@@ -1306,7 +1321,7 @@
                     </span>
                 </div>
             </div> -->
-            </div>
-            <div class="clearfix"></div>
         </div>
+        <div class="clearfix"></div>
+    </div>
 </section>
