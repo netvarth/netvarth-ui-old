@@ -368,6 +368,7 @@ export class ProviderSharedFuctions {
     let ynwUuid;
     let uuid;
     let name;
+    let email;
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
@@ -382,9 +383,11 @@ export class ProviderSharedFuctions {
       if (appt) {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
+        email = waitlist[0].consumer.userProfile.emailVerified;
       } else {
         uuid = waitlist[0].ynwUuid || null;
         name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+        email = waitlist[0].waitlistingFor[0].email;
       }
     }
     if (type === 'single') {
@@ -405,7 +408,8 @@ export class ProviderSharedFuctions {
           type: 'send',
           terminologies: terminologies,
           name: name,
-          appt: appt
+          appt: appt,
+          email: email
         }
       });
 

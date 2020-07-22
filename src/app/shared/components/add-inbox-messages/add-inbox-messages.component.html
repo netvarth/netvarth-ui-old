@@ -16,21 +16,22 @@
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple'|| !api_loading && data.source === 'customer-list'">
+        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple' || !api_loading &&  source ==='provider-waitlist' || !api_loading && data.source === 'customer-list'">
             Send message via
             <div class="coupon-outer">
-                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox [disabled]="selectedMessage.files.length !== 0" class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
-                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="email"
+                <mat-checkbox [disabled]="selectedMessage.files.length !== 0 ||  typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id" class="mgright50 example-margin" [(ngModel)]="email"
                     [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
-                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="pushnotify"
+                <mat-checkbox [disabled]="selectedMessage.files.length !== 0" class="mgright50 example-margin" [(ngModel)]="pushnotify"
                     [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>
             </div>
         </div>
+        <div style="color: red;" *ngIf = "!api_loading &&  source ==='provider-waitlist' && selectedMessage.files.length !== 0">Messages with attachments can only be delivered to Jaldee consumer inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions>
