@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
