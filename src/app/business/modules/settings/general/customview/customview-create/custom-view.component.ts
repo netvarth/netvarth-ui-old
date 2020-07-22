@@ -489,8 +489,10 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.isDepartments = true;
-                    this.departments = data.departments;
-                    this.filterDepList = data.departments;
+                    this.departments = [];
+                    this.filterDepList = [];
+                    this.departments = data.departments.filter(depart => depart.departmentStatus === 'ACTIVE');
+                    this.filterDepList = this.departments;
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -550,6 +552,7 @@ export class CustomViewComponent implements OnInit {
     getUsers() {
         const apiFilter = {};
         apiFilter['userType-eq'] = 'PROVIDER';
+        apiFilter['status-eq'] = 'ACTIVE';
         if (this.selectedDeptIds.length > 0) {
             apiFilter['departmentId-eq'] = this.selectedDeptIds.toString();
         }
