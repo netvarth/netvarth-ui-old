@@ -340,7 +340,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
               }
             }
           }
-          this.api_loading1 = false;
+          for (let j = 0; j < this.departments.length; j++) {
+            if (this.departments[j].serviceIds == '') {  /* triple equal is not working here*/
+              this.departments.splice(j, 1);
+            }
+          }
+          this.api_loading1 = false; 
         },
         error => {
           this.api_loading1 = false;
