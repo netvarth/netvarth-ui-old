@@ -34,37 +34,58 @@
                                 <!-- <input type="checkbox" class="ckbx pull-left" />  -->
                             </td>
                             <td class="parent-selection parent-title td-one">
-                                <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a" (click)="goServiceDetail(service)">
+                                <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
+                                    (click)="goServiceDetail(service)">
                                     {{service.name | capitalizeFirst}}
                                 </div>
-                                <span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'" class="link"> (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)</span>
-                                <span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'" class="link"> (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)</span>
-                              </td>
-                              <td class="title td-two">
+                                <span
+                                    *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
+                                    class="link"> (<i class="fa fa-volume-up cal-mod-font"
+                                        aria-hidden="true"></i>)</span>
+                                <span
+                                    *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
+                                    class="link"> (<i class="fa fa-video-camera cal-mod-font"
+                                        aria-hidden="true"></i>)</span>
+                            </td>
+                            <td class="title td-two">
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
-                              </td>
-                              <td class="td-three">
-                              </td>
-                              <td class="q-actions td-four grid-flex textcenter">
-                                <button [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'" class="grid-btn" (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)" *ngIf="service.status=='ACTIVE'">
-                                    <i class="icon-edit chkin-mobic" *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'" [matTooltip]="'Edit'"></i>
-                                </button> 
-                                <button (click)="changeServiceStatus(service)" class="grid-btn createcheckinsty">
-                                    <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
-                                    <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon" [matTooltip]="'Disable Service'"></i>
-                                </button>
-                              </td>
+                            </td>
+                            <td class="td-three">
+                            </td>
+                            <td class="q-actions td-four textcenter">
+                                <div class="copy">
+                                    <span class="mbt" style="top: -18px;">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <mat-menu #appMenu="matMenu">
+                                        <button mat-menu-item 
+                                            (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)"
+                                            *ngIf="service.status=='ACTIVE'">
+                                            <i class="icon-edit chkin-mobic"
+                                                *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'"></i>Edit
+                                        </button>
+                                        <button mat-menu-item (click)="changeServiceStatus(service)">
+                                            <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
+                                            <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon"></i>
+                                            {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                          <td colspan="5">
-                            <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
-                              [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
-                              [curpage]="pagination.startpageval"></app-pager>
-                          </td>
+                            <td colspan="5">
+                                <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+                                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                                    [curpage]="pagination.startpageval"></app-pager>
+                            </td>
                         </tr>
-                      </tfoot>
+                    </tfoot>
                 </table>
             </div>
         </div>

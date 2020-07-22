@@ -45,14 +45,24 @@
                               <td class="td-three">
                                
                               </td>
-                              <td class="q-actions td-four grid-flex textcenter">
-                                <button class="grid-btn" (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
-                                    <i class="icon-edit chkin-mobic" [matTooltip]="'Edit'"></i>
+                              <td class="q-actions td-four textcenter">
+                                <div class="copy">
+                                    <span class="mbt" style="top: -18px;">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item  (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
+                                    <i class="icon-edit chkin-mobic"></i>Edit
                                 </button> 
-                                <button (click)="changeServiceStatus(service)" class="grid-btn createcheckinsty">
+                                <button mat-menu-item (click)="changeServiceStatus(service)">
                                     <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
-                                    <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon" [matTooltip]="'Disable Service'"></i>
+                                    <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon" ></i>
+                                    {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
                                 </button>
+                                </mat-menu>
+                                </div>
                               </td>
                         </tr>
                     </tbody>
