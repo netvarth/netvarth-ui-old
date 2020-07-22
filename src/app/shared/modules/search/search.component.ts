@@ -460,7 +460,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       }
       if (this.holdisplaySearchlist['onlineid']) {
         if (this.holdisplaySearchlist['onlineid'].length > 0) {
-          const groupdomainobj = { displayname: 'Online ID', name: 'onlineid' };
+          const groupdomainobj = { displayname: 'Business ID', name: 'onlineid' };
           keywordgroup_val.push(groupdomainobj);
         }
       }

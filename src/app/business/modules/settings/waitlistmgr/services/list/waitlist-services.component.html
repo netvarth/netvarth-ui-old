@@ -46,14 +46,27 @@
                               </td>
                               <td class="td-three">
                               </td>
-                              <td class="q-actions td-four grid-flex textcenter">
-                                <button [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'" class="grid-btn" (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)" *ngIf="service.status=='ACTIVE'">
-                                    <i class="icon-edit chkin-mobic" *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'" [matTooltip]="'Edit'"></i>
-                                </button> 
-                                <button  (click)="changeServiceStatus(service)" class="grid-btn createcheckinsty">
-                                    <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
-                                    <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon" [matTooltip]="'Disable Service'"></i>
-                                </button>
+                              <td class="q-actions td-four textcenter">
+                                  <div class="copy">
+                                    <span class="mbt"  style="top: -18px;">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <span>
+                                        <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)" *ngIf="service.status=='ACTIVE'">
+                                                <i class="icon-edit" *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'"></i>
+                                                Edit
+                                            </button>
+                                            <button mat-menu-item (click)="changeServiceStatus(service)">
+                                                <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable"></i>
+                                                <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
+                                                {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                            </button>
+                                        </mat-menu>
+                                    </span>
+                                  </div>
                               </td>
                         </tr>
                     </tbody>

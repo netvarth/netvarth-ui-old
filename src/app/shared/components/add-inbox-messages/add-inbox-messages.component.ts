@@ -41,6 +41,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   pushnotify = true;
   typeOfMsg;
   type;
+  email_id: any;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,6 +54,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;
+    this.email_id = this.data.email;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
@@ -254,9 +256,34 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           i++;
         }
       }
+      const foruuid = [];
+      foruuid.push(this.uuid);
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const postdata = {
+        medium: {
+          email: this.email,
+          sms: this.sms,
+          pushNotification: this.pushnotify
+        },
+        communicationMessage: post_data.communicationMessage,
+        uuid: foruuid
+      };
       if (this.type === 'appt') {
+        if (this.selectedMessage.files.length === 0) {
+          this.shared_services.consumerMassCommunication(postdata).
+          subscribe(() => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
+        } else {
         this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
           .subscribe(
             () => {
@@ -270,7 +297,22 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.disableButton = false;
             }
           );
+        }
       } else {
+        if (this.selectedMessage.files.length === 0) {
+          this.shared_services.consumerMassCommunication(postdata).
+          subscribe(() => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
+        } else {
         this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
           .subscribe(
             () => {
@@ -284,6 +326,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.disableButton = false;
             }
           );
+      }
       }
     }
   }
