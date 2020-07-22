@@ -152,10 +152,6 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
         submit_data.append('properties', blobPropdata);
         self.uploadLogo(submit_data);
       });
-
-
-    
-
     }
 
 

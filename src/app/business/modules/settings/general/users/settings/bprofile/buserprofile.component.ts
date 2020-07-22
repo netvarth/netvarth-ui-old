@@ -894,6 +894,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
   updatePrimaryFields(pdata) {
 
+    
  if(this.blogo.length==0){
 
   let self = this;

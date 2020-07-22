@@ -1511,7 +1511,7 @@ export class SharedFunctions {
 
     return promise;
   }
-  
+
   b64toBlob(b64Data) {
     let contentType = 'image/png';
     let sliceSize = 512;
@@ -1535,4 +1535,5 @@ export class SharedFunctions {
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
+  
 }
