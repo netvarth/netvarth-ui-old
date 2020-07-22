@@ -612,7 +612,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
-    let k = 0;
+    const k = 0;
     this.shared_services.getFavProvider()
       .subscribe(
         data => {
@@ -1005,7 +1005,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   getDonations() {
     const filter = {};
-    filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
+    if (this.server_date) {
+      filter['date-eq'] = moment(this.server_date).format('YYYY-MM-DD');
+    }
     this.shared_services.getConsumerDonations(filter).subscribe(
       (donations) => {
         this.donations = donations;
