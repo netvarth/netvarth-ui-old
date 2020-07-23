@@ -59,11 +59,19 @@ h1 {
     padding:4px 6px;
     font-size:70%;
     line-height: 1;
+    position: absolute!important; 
+    left:200px!important;
+    bottom: 5px;
   }
 }
 @media screen and (max-width: 768px) {
 h3{
 font-size:20px!important;
+}
+}
+@media screen and (max-width: 768px){
+h6{
+  font-size:.7rem!important;
 }
 }
 

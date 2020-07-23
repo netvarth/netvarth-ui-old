@@ -78,7 +78,7 @@
                                                     <strong> {{weightageValue}} %</strong>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 ">
-                                                    <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass"
+                                                    <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-responsive  btn-' + weightageClass"
                                                         style="font-weight:bold;float:right">{{bprofile_btn_text}}</button>
                                                 </div>
                                             </div>
@@ -205,7 +205,7 @@
                                                             <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                         </span>
                                                         <span style="padding-left: 40px;" *ngIf="!bProfile.customId">
-                                                            <button class="btn-default-n" (click)="customizeId()">
+                                                            <button class="btn-default-n btn1-responsive" (click)="customizeId()">
                                                                 <a>
                                                                     Customize ID
                                                                 </a>
