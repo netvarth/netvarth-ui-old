@@ -447,6 +447,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessweightageArray = result;
+      console.log(JSON.stringify(this.businessweightageArray));
+      
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
 
@@ -639,9 +641,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.jaldee_online_status = this.public_search;
           // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
-
-          // console.log('onlineStatus'+this.jaldee_online_status);
-          // console.log('profileSatus'+this.profile_status);
         },
         () => {
         }
@@ -658,8 +657,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
   }
   confirm_searchStatus() {
-    console.log(this.normal_search_active);
-
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
       // this.getPublicSearch();
@@ -722,8 +719,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.profile_status = this.onlinepresence_status ? true : false;
         this.profile_status_str = this.profile_status ? 'On' : 'Off';
-        console.log(this.profile_status + 'and' + this.normal_search_active);
-
         if (this.profile_status == false && this.normal_search_active) {
           this.handle_searchstatus();
         }
@@ -774,12 +769,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.bProfile = data;
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
-              console.log(domainfields);
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
-                  console.log(subdomainfields);
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
-                  console.log(this.reqFields);
                   this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
                   this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
                   this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
@@ -951,8 +943,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   showBPrimary() {
-    console.log('bProfile..' + JSON.stringify(this.bProfile));
-
     this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1104,12 +1094,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.success_error = this.sharedfunctionobj.imageValidation(file);
         if (this.success_error === true) {
           const reader = new FileReader();
-          console.log('src..' + input.files[0]);
           this.item_pic.files = input.files[0];
           this.selitem_pic = input.files[0];
           const fileobj = input.files[0];
-          console.log('itempic..' + JSON.stringify(this.selitem_pic));
-
           reader.onload = (e) => {
             this.item_pic.base64 = e.target['result'];
           };
@@ -1117,9 +1104,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
           if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
             // generating the data to be submitted to change the logo
             const submit_data: FormData = new FormData();
-            console.log(this.selitem_pic);
-            console.log(this.selitem_pic['name']);
-
             submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
             const propertiesDet = {
               'caption': 'Logo'
@@ -1564,9 +1548,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.getVirtualFields(this.bProfile['serviceSector']['domain'])
       .then(
         data => {
-          console.log(data);
-          // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
-          //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
           let mandatorydomain = false;
           let mandatorydomainFilled = false;
           let additionalInfoFilledStatus = false
@@ -1731,7 +1712,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
       this.bProfile['serviceSubSector']['subDomain']).then(
         data => {
-          console.log(data);
           let mandatorysubdomain = false;
           let mandatorySubDomainFilled = false;
           let additionalInfoFilledStatus = false

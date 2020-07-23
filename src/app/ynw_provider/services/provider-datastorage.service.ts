@@ -173,9 +173,6 @@ updateMandatoryAndAdditionalFieldWeightage(){
    let additionalObject=projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
    console.log(this.weightageObjectDomain);
    console.log(this.weightageObjectSubDomain);
-   
-   
-  
   if(!this.checkExistenceInWeightageArray(mandatoryObject)){
     if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)|| (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
         this.weightageArray.push(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);

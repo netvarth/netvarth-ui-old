@@ -78,7 +78,7 @@
                                                     <strong> {{weightageValue}} %</strong>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 ">
-                                                    <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-responsive  btn-' + weightageClass"
+                                                    <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass"
                                                         style="font-weight:bold;float:right">{{bprofile_btn_text}}</button>
                                                 </div>
                                             </div>
@@ -179,7 +179,7 @@
                                                     <strong> Here is your QR Code :- </strong>
 
                                                     <span class="custid custId-icon">
-                                                        <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                                                        <i class="fa fa-qrcode custId-cursor"  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
                                                             [matTooltip]="'Generate QR code'"></i>
                                                     </span>
                                                 </li>
@@ -202,7 +202,7 @@
                                                             
                                                         </span>
                                                         <span class="custid custId-icon">
-                                                            <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                                                            <i class="fa fa-copy custId-cursor"  (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
                                                         </span>
                                                         <span style="padding-left: 40px;" *ngIf="!bProfile.customId">
                                                             <button class="btn-default-n btn1-responsive" (click)="customizeId()">
@@ -216,7 +216,7 @@
 
 
                                                 </li>
-                                                <li class="bstatus">
+                                                <li class="bstatus pt-xs-3  pt-sm-3">
                                                     <span class="inactive" *ngIf="!profile_status">
                                                         <i class="fa fa-times"></i> Inactive</span>
                                                     <span class="active" *ngIf="profile_status">
@@ -266,7 +266,7 @@
                                                     <strong> Here is your QR Code :- </strong>
 
                                                     <span class="custid custId-icon">
-                                                        <i class="fa fa-qrcode custId-cursor custId-qr" style="font-size:36px;" (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                                                        <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)"
                                                             [matTooltip]="'Generate QR code'"></i>
                                                     </span>
                                                 </li>
@@ -287,10 +287,10 @@
                                                            {{wndw_path}}{{bProfile.customId}}
                                                         </span>
                                                         <span class="custid custId-icon">
-                                                            <i class="fa fa-copy custId-cursor" style="font-size:24px;" (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
+                                                            <i class="fa fa-copy custId-cursor"  (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
                                                         </span>
-                                                        <span class="custid" style="padding-left: 40px;">
-                                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <span class="custid custId-icon" >
+                                                            <button class="custId-edtbtn"type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
                                                             <mat-menu #menu="matMenu">
@@ -309,7 +309,7 @@
 
 
                                                 </li>
-                                                <li class="bstatus">
+                                                <li class="bstatus pt-xs-3 pt-sm-3">
                                                     <span class="inactive" *ngIf="!profile_status">
                                                         <i class="fa fa-times"></i> Inactive</span>
                                                     <span class="active" *ngIf="profile_status">

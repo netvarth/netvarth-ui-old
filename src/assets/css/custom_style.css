@@ -8911,10 +8911,30 @@ owl-carousel .bt3.active {
 }
 
 .custId-icon {
-  font-size: large;
+  font-size: xx-large;
   padding-left: 40px;
 }
-
+@media only screen and (max-width: 575px) {
+  .custId-icon {
+    font-size: medium;
+    padding-left: 10px;
+  }
+}
+@media   (max-width: 890px) {
+  .custId-icon {
+    font-size: large;
+    padding-left: 20px;
+  }
+}
+@media  (max-width: 1050px) {
+  .custId-icon {
+    font-size: larger;
+    padding-left: 30px;
+  }
+}
+.custId-edtbtn .mat-icon {
+  position:absolute;
+}
 .custId-cursor {
   cursor: pointer;
 }
@@ -9522,12 +9542,12 @@ button.cust-button-2.tme {
 }
 
 .busns-id {
-  padding-top: 0px;
+  padding-bottom:20px;
 }
 
 @media only screen and (max-width: 575px) {
   .busns-id {
-    padding-top: 5px;
+    padding-bottom:none;
   }
 }
 
