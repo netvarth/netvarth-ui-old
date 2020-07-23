@@ -461,7 +461,27 @@ export class ProviderCheckinComponent implements OnInit {
                                                 _this.handleDeptSelction(_this.selected_dept);
                                             },
                                             () => {
-                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                if (!this.filterDepart) {
+                                                    const filter = {
+                                                        'status-eq': 'ACTIVE'
+                                                    };
+                                                    this.provider_services.getUsers(filter).subscribe(
+                                                        (users: any) => {
+                                                            this.users = users.filter(user => !user.admin);
+                                                            this.users.push(this.userN);
+                                                            if (this.selectUser) {
+                                                                const userDetails = this.users.filter(user => user.id === this.selectUser);
+                                                                this.selected_user = userDetails[0];
+                                                                this.handleUserSelection(this.selected_user);
+                                                            } else if (this.users.length !== 0) {
+                                                                this.selected_user = this.users[0];
+                                                                this.handleUserSelection(this.selected_user);
+                                                            } else {
+                                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                            }
+                                                        });
+                                                }
+                                                // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                                             }
                                         );
                                     }
@@ -1303,26 +1323,6 @@ export class ProviderCheckinComponent implements OnInit {
                     }
                 });
             // }
-        } else {
-            const filter = {
-                'status-eq': 'ACTIVE'
-            };
-            this.provider_services.getUsers(filter).subscribe(
-                (users: any) => {
-                    this.users = users.filter(user => !user.admin);
-                    this.users.push(this.userN);
-                    if (this.selectUser) {
-                        const userDetails = this.users.filter(user => user.id === this.selectUser);
-                        this.selected_user = userDetails[0];
-                        console.log(this.selected_user);
-                        this.handleUserSelection(this.selected_user);
-                    } else if (this.users.length !== 0) {
-                        this.selected_user = this.users[0];
-                        this.handleUserSelection(this.selected_user);
-                    } else {
-                        this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                    }
-                });
         }
         // if (obj === 'None') {
         //     this.servicesjson = this.serviceslist;
