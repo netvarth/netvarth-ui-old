@@ -2031,6 +2031,15 @@ sup {
   line-height: 2;
   font-weight: normal !important;
 }
+.head-level-settings {
+  font-size: .85rem !important;
+  font-family: 'Roboto Slab', sans-serif !important;
+  color: #999999 !important;
+  font-style: italic !important;
+  text-align: justify;
+  line-height: 2;
+  font-weight: normal !important;
+}
 
 .learnmore-pointer {
   text-decoration: underline !important;
@@ -8915,6 +8924,20 @@ owl-carousel .bt3.active {
   padding-left: 40px;
   margin-bottom: 15px;
 }
+@media only screen and (max-width: 1050px) {
+  .custId-icon {
+    font-size: larger;
+    padding-left: 30px;
+    margin-bottom: 15px;
+  }
+}
+@media only screen and  (max-width: 890px) {
+  .custId-icon {
+    font-size: large;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+}
 @media only screen and (max-width: 575px) {
   .custId-icon {
     font-size: medium;
@@ -8922,20 +8945,8 @@ owl-carousel .bt3.active {
     margin-bottom: 15px;
   }
 }
-@media   (max-width: 890px) {
-  .custId-icon {
-    font-size: large;
-    padding-left: 20px;
-    margin-bottom: 15px;
-  }
-}
-@media  (max-width: 1050px) {
-  .custId-icon {
-    font-size: larger;
-    padding-left: 30px;
-    margin-bottom: 15px;
-  }
-}
+
+
 .custId-edtbtn .mat-icon {
   position:absolute;
 }
@@ -9295,6 +9306,7 @@ owl-carousel .bt3.active {
   list-style: none;
   flex-wrap: wrap;
 }
+
 
 .parentRow .parent-name {
   padding-top: 3px !important;
