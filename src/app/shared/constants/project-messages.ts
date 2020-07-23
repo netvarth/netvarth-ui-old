@@ -555,6 +555,7 @@ export const Messages = {
   'ADDRESS_FOUR': 'Kerala, India',
   'SUPPORT_EMAIL': 'E-mail : support@jaldee.com',
   'SUPPORT_PHONE': 'Phone : 0487-2325650',
+  'SUPPORT_MOBILE': 'Phone : 8880125000',
   'TERMS_CAP': 'Terms',
   'CONTACT_US': 'Contact Us',
   'FAQ_CAP': 'Faq',

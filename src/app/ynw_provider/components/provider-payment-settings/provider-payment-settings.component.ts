@@ -311,7 +311,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             let params;
             const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
             if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified) || (this.ccenabled && !this.razorpayVerified)) {
-                showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN');
+                showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN')
+                           + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_EMAIL')  + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_MOBILE');
                 panelclass = 'snackbarnormal'; // 'snackbarerror';
                 params = { 'duration': duration, 'panelClass': panelclass };
             } else {

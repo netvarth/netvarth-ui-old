@@ -35,6 +35,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   cancel_reason = '';
   cancel_reason_key = '';
   def_msg = '';
+  rep_date: string;
+  rep_time: string;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
@@ -68,8 +70,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     } else {
       if (this.data.appt) {
         this.rep_username = this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName);
+        this.rep_date = this.titleCaseWord(this.data.waitlist.appmtDate);
+        this.rep_time = this.titleCaseWord(this.data.waitlist.apptTakenTime);
       } else {
         this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
+        this.rep_date = this.titleCaseWord(this.data.waitlist.date);
+        this.rep_time = this.titleCaseWord(this.data.waitlist.checkInTime);
       }
       this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
       if (this.data.waitlist.providerAccount) {
@@ -175,9 +181,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       retmsg = this.default_message_arr[this.cancel_reason_key];
     }
     // retmsg = this.default_message;
-    retmsg = retmsg.replace(/\[username\]/g, this.rep_username);
+    retmsg = retmsg.replace(/\[consumer\]/g, this.rep_username);
     retmsg = retmsg.replace(/\[service\]/g, this.rep_service);
-    retmsg = retmsg.replace(/\[provider name\]/g, this.rep_provname);
+    retmsg = retmsg.replace(/\[date\]/g, this.rep_date);
+    retmsg = retmsg.replace(/\[time\]/g, this.rep_time);
+    retmsg =  retmsg .replace(/\[.*?\]/g,  this.rep_provname);
     if (this.cancel_reason && this.cancel_reason !== '') {
       retmsg = retmsg.replace('[reason]', this.cancel_reason);
     }
