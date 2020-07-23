@@ -9581,7 +9581,11 @@ button.cust-button-2.tme {
   padding-left: 110px;
   /* color: #3c8dbc; */
 }
-
+@media screen and (max-width: 768px){
+  .ngx-qrcod .qrcode img {
+  width: 200px !important;
+  }
+  }
 .tel-srv-cust-p {
   font-size: small;
   font-weight: 500;
