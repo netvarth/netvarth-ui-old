@@ -786,7 +786,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else if (this.kwtyp === 'onlineid') {
       let ptitle = this.kw.replace('/', '');
       ptitle = ptitle.replace(/'/g, '\\\'');
-      q_str = q_str + '(or unique_id: \'' + ptitle + '\')';
+      q_str = q_str + '(or custom_id: \'' + ptitle + '\') (or enc_uid: \'' + ptitle + '\')';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';

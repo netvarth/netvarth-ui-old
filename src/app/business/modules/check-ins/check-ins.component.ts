@@ -1790,18 +1790,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   checkinClicked(source) {
     let deptId;
+    let userId;
     if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
       const filteredDept = this.users.filter(user => user.id === this.selectedUser.id);
       if (filteredDept[0] && filteredDept[0].deptId) {
         deptId = filteredDept[0].deptId;
       }
+      userId = this.selectedUser.id;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         checkin_type: source,
         calmode: this.calculationmode,
         showtoken: this.showToken,
-        userId: this.selectedUser.id,
+        userId: userId,
         deptId: deptId
         // isFrom: 'checkin'
       }
