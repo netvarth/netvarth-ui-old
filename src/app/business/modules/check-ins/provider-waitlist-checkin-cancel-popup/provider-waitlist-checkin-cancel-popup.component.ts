@@ -51,7 +51,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     if (this.data.appt || this.data.type === 'appt') {
       this.checkin_label = 'Reject Appointment';
     } else {
-      this.checkin_label = this.cancel_cap + this.sharedfunctionObj.getTerminologyTerm('waitlist');
+      this.checkin_label = this.cancel_cap + ' ' + this.sharedfunctionObj.getTerminologyTerm('waitlist');
     }
   }
 
