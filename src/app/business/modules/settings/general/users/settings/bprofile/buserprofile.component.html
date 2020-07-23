@@ -10,7 +10,30 @@
                         <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12">
                             <div class="card p0">
                                 <div class="pubs card w-dta bprof">
-                                    <div class="ctrl">
+                                        <div class="ctrl">
+                                                <div class="col-md-10 col-sm-12 col-xs-12">
+                                                    <h3>Business Profile
+                                                    </h3>
+                                                    <h6>Profile Strength-
+                                                        <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
+        
+                                                    </h6>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="col-md-7 col-sm-8 col-xs-8 mt-3 mt-xs-8">
+                                                            <strong> {{weightageValue}} %</strong>
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-4 col-xs-4 pr-0 ">
+                                                            <button (click)="scroll(basicInfoSection)" type="button" [className]="'wght-btn btn btn-' + weightageClass"
+                                                                style="font-weight:bold;float:right">{{bprofile_btn_text}}</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress col-md-8 col-sm-12 col-xs-12 mt-2 p0" style="height:10px;">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
+                                                            aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <!-- <div class="ctrl">
                                         <div class="ct-l">
                                                 <h3>Business Profile
                                                     </h3>
@@ -23,21 +46,16 @@
                                                     </div>
                                         </div>
                                     </div>
-                               
-                                    <div class="col-md-12 ct-l col-xs-12 no-padding">
+                                -->
+                                    <!-- <div class="col-md-12 ct-l col-xs-12 no-padding">
 
-                                        <!-- <div class="col-md-10"> -->
-                                              
-                                        <!-- <div class="col-md-10 mt-2"> 
-                                             <strong>  {{weightageValue}} %</strong>
-                                                     <button (click)="scroll(basicInfoSection)" type="button" [className]="'btn btn-' + weightageClass" style="font-weight:bold;float:right" >{{bprofile_btn_text}}</button> 
-                                                    </div> -->
+                        
                                       
                                             
                                         <div class="progress col-md-6 col-xs-12 mt-2 p0" style="height:10px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                                                 aria-valuemax="100"></div>
-                                        </div> 
+                                        </div>  -->
                                         <!-- <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one" 
                                                     aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
@@ -65,7 +83,7 @@
                                       
                                        
                                      
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
