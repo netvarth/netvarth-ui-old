@@ -1234,10 +1234,15 @@ export class AppointmentComponent implements OnInit {
                     if (found) {
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
                         this.users.push(this.userN);
-                    } if (this.users.length !== 0) {
+                    }
+                    if (this.users.length !== 0) {
                         if (this.selectUser) {
                             const userDetails = this.users.filter(user => user.id === this.selectUser);
+                            if (userDetails && userDetails[0]) {
                             this.selected_user = userDetails[0];
+                            } else {
+                                this.selected_user = this.users[0];
+                            }
                         } else {
                             this.selected_user = this.users[0];
                         }

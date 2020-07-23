@@ -1291,10 +1291,15 @@ export class ProviderCheckinComponent implements OnInit {
                     if (this.users.length !== 0) {
                         if (this.selectUser) {
                             const userDetails = this.users.filter(user => user.id === this.selectUser);
+                            if (userDetails && userDetails[0]) {
                             this.selected_user = userDetails[0];
+                            } else {
+                                this.selected_user = this.users[0];
+                            }
                         } else {
                             this.selected_user = this.users[0];
                         }
+                        this.handleUserSelection(this.selected_user);
                     } else {
                         this.selected_user = null;
                         this.selectedUser = null;
@@ -1357,6 +1362,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.selectedUser = user;
         this.queuejson = [];
         this.servicesjson = this.serviceslist;
+        console.log(this.servicesjson);
+        console.log(user.id);
         const newserviceArray = [];
         if (user.id && user.id !== 0) {
             for (let i = 0; i < this.servicesjson.length; i++) {
@@ -1372,6 +1379,7 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
         this.servicesjson = newserviceArray;
+        console.log(this.servicesjson);
         if (this.servicesjson.length > 0) {
             this.sel_ser = this.servicesjson[0].id;
             this.setServiceDetails(this.sel_ser);
