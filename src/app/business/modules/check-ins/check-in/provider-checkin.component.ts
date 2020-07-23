@@ -463,7 +463,8 @@ export class ProviderCheckinComponent implements OnInit {
                                             () => {
                                                 if (!this.filterDepart) {
                                                     const filter = {
-                                                        'status-eq': 'ACTIVE'
+                                                        'status-eq': 'ACTIVE',
+                                                        'userType-neq': 'ASSISTANT'
                                                     };
                                                     this.provider_services.getUsers(filter).subscribe(
                                                         (users: any) => {
