@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="services()">
-                        <h2>Services</h2>
+                        <h2>Services({{schedules_count}})</h2>
                         <span class="form-level-settings">Add and manage services here.<a class="learnmore-pointer"
                             id="customer-help"
                             (click)="learnmore_clicked('settings-services', $event)">Learn
@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="Queues()">
-                        <h2>Tokens/checkins (Queues)</h2>
+                        <h2>Tokens/checkins (Queues)({{queues_count}})</h2>
                         <span class="form-level-settings">Add and manage your queues here.<a class="learnmore-pointer"
                             id="customer-help"
                             (click)="learnmore_clicked('settings-time_windows', $event)">Learn
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="schedules()">
-                        <h2>Appointment schedules</h2>
+                        <h2>Appointment schedules({{schedules_count}})</h2>
                         <span class="form-level-settings">Add and manage your schedules here.<a class="learnmore-pointer"
                             id="customer-help"
                             (click)="learnmore_clicked('schedules', $event)">Learn

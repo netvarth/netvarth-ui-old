@@ -210,7 +210,7 @@ export class ManageSettingsComponent implements OnInit {
   }
   getServiceCount() {
     // this.loading = true;
-    const filter = { 'provider-eq': this.userId };
+    const filter = { 'provider-eq': this.userId , 'serviceType-neq': 'donationService'};
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -248,24 +248,15 @@ export class ManageSettingsComponent implements OnInit {
     }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    if(mod === 'notifications')
-    {
+    if (mod === 'notifications') {
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
-    }
-    else if(mod === 'settings-services' || mod == 'settings-time_windows')
-    {
+    } else if (mod === 'settings-services' || mod == 'settings-time_windows') {
       this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->' + mod]);
-    }
-    else if(mod === 'schedules')
-    {
+    } else if (mod === 'schedules') {
       this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
-    }
-    else if(mod === 'nonworking')
-    {
+    }  else if (mod === 'nonworking') {
       this.routerobj.navigate(['/provider/' + this.domain + '/general->' + mod]);
-    }
-    else
-    {
+    }  else  {
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
   }

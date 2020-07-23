@@ -673,9 +673,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getUsers() {
         const filter = { 'userType-eq': 'PROVIDER' };
-        // if (this.departId) {
-        //     filter['departmentId-eq'] = this.departId.toString();
-        // }
+        if (this.departId) {
+            filter['departmentId-eq'] = this.departId.toString();
+        }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
            // this.users_list.push(this.defaultOption);
