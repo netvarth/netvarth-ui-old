@@ -25,7 +25,8 @@
                                         <div class="mgn-up-5 input-group mobile-error">
                                             <label *ngIf="edit" class="col-form-label">
                                                 <i class="fa fa-mobile chkin-mobic"></i>&nbsp;
-                                                <span class="chkin-ph" *ngIf="userPhone">{{userPhone}}</span>&nbsp;<i
+                                                <span class="chkin-ph" *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                <span class="chkin-ph" *ngIf="currentPhone && changePhno">{{currentPhone}}</span>&nbsp;<i
                                                     class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
                                             </label>
                                             <label *ngIf="!edit">

@@ -141,7 +141,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     userData: any = [];
     userEmail;
     userPhone;
-
+    currentPhone;
     users: any = [];
     emailExist = false;
     payEmail;
@@ -150,6 +150,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     email1error = null;
     phoneerror = null;
     edit = true;
+    changePhno = false;
     selected_phone;
     consumerPhoneNo;
     trackUuid;
@@ -439,10 +440,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
+            this.currentPhone = this.selected_phone;
             this.edit = true;
+            this.changePhno = true;
         }
     }
-    editPhone() {
+    editPhone() { 
         this.edit = false;
         this.selected_phone = this.userPhone;
     }
