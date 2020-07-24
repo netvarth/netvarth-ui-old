@@ -34,7 +34,7 @@
                                     </div>
                                     <ng-container
                                         *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
-                                        <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                        <div class="acc-cont" *ngFor="let fields of subdomain_fields_nonmandatory">
                                                 <ng-container *ngIf="fields.mandatory == false">
                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                 <mat-expansion-panel
@@ -234,7 +234,7 @@
                                     </ng-container>
 
                                     <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
-                                        <div class="acc-cont" *ngFor="let fields of domain_fields">
+                                        <div class="acc-cont" *ngFor="let fields of domain_fields_nonmandatory">
                                             <ng-container *ngIf="fields.mandatory == false">
                                             <mat-accordion class="acc-btn" [class.acc-btn-data]="fields['value']">
                                                 <mat-expansion-panel [expanded]="fields['value']"
