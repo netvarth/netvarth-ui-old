@@ -57,6 +57,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     clogo: any;
     showImages: any = [];
     openState: any = [];
+    type;
     @ViewChildren('msgId') msgIds: QueryList<ElementRef>;
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
@@ -162,14 +163,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
             },
                 () => {
                 });
-    }
+    } 
     sendMessage(messageToSend, inboxList, parentIndex) {
         // const userId = this.getReceiverId(inboxList);
         const userId = inboxList[0].accountId;
         let uuid = null;
         if (this.selectedMessage && this.selectedMessage[parentIndex]) {
             if (this.selectedMessage[parentIndex].message.waitlistid) {
-                uuid = 'h_' + this.selectedMessage[parentIndex].message.waitlistid;
+                uuid =  this.selectedMessage[parentIndex].message.waitlistid;
             }
         }
         if (uuid) {
@@ -293,19 +294,41 @@ export class MailboxComponent implements OnInit, OnDestroy {
     }
     providerToConsumerWaitlistNote(post_data, uuid) {
         // this.disableButton = true;
-        this.shared_services.addProviderWaitlistNote(uuid,
-            post_data)
-            .subscribe(
-                () => {
-                    this.messageToSend = '';
-                    this.selectedMessage = [];
-                    this.getInboxMessages();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    // this.disableButton = false;
-                }
-            );
+        if (uuid && uuid.indexOf('appt') >= 0) {
+            this.type = 'appt';
+          } else {
+            this.type = 'wl';
+          }
+          if (this.type === 'appt') {
+            this.shared_services.addProviderAppointmentNote(uuid,
+                post_data)
+                .subscribe(
+                    () => {
+                        this.messageToSend = '';
+                        this.selectedMessage = [];
+                        this.getInboxMessages();
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        // this.disableButton = false;
+                    }
+                );
+          } else {
+            this.shared_services.addProviderWaitlistNote(uuid,
+                post_data)
+                .subscribe(
+                    () => {
+                        this.messageToSend = '';
+                        this.selectedMessage = [];
+                        this.getInboxMessages();
+                    },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        // this.disableButton = false;
+                    }
+                );
+          }
+        
     }
     providerToConsumerNoteAdd(post_data, consumerid) {
         if (this.user_id !== null) {
