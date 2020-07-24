@@ -898,9 +898,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
  if(this.blogo.length==0){
 
   let self = this;
-      var promise = this.sharedfunctionobj.getBase64Image();
+      var promise = self.sharedfunctionobj.getBase64Image();
       promise.then(function (dataURL) {
-        let blob = this.sharedfunctionobj.b64toBlob(dataURL);
+        let blob = self.sharedfunctionobj.b64toBlob(dataURL);
         const submit_data: FormData = new FormData();
         submit_data.append('files', blob, 'jaldee-logo.png');
         const propertiesDet = {
