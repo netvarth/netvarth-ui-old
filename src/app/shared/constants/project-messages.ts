@@ -1181,8 +1181,8 @@ export const Messages = {
   'JALDEE_URL': 'Share your Free URL and QR code of your account among your potential [customer]s',
   
   //Jaldee Online
-  'JALDEE_ONLINE_DISABLED_MSG':'Your [customer]s cannot able to see u online,please enable Jaldee Online',
-  'JALDEE_ONLINE_ENABLED_MSG':'Your [customer] can see you online by clicking Jaldee link or scanning QR code',
+  'JALDEE_ONLINE_DISABLED_MSG':'Your [customer]s cannot  see you or access you online',
+  'JALDEE_ONLINE_ENABLED_MSG':'Your [customer]s can see you online by scanning QR code or clicking Jaldee link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP': 'Jaldee Bank',
