@@ -8927,7 +8927,18 @@ owl-carousel .bt3.active {
   
   }
 }
-
+.qrcode-icon{
+  font-size: xxx-large;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+@media only screen and (max-width: 575px) {
+  .qrcode-icon {
+    font-size: x-large;
+    padding-left: 10px;
+    margin-bottom: 5px;
+  }
+}
 
 .custId-icon {
   font-size: xx-large;
@@ -8943,14 +8954,14 @@ owl-carousel .bt3.active {
 }
 @media only screen and  (max-width: 890px) {
   .custId-icon {
-    font-size: large;
+    font-size: larger;
     padding-left: 20px;
     margin-bottom: 15px;
   }
 }
 @media only screen and (max-width: 575px) {
   .custId-icon {
-    font-size: medium;
+    font-size: large;
     padding-left: 10px;
     margin-bottom: 15px;
   }
@@ -9603,11 +9614,17 @@ button.cust-button-2.tme {
     padding-bottom:none;
   }
 }
+.wght-btn{
+ font-weight:bold;
+ float:left;
+ margin-left:20px;
+}
 @media only screen and (max-width: 575px) {
 .wght-btn{
   padding: 4px 6px;
   font-size: 70%;
-  margin-top: 25%;
+  float:left;
+  margin-left:20px;
 }
 }
 .ngx-qrcod {

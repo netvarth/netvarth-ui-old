@@ -618,7 +618,7 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Turn off" List my profile in jaldee.com, Your profile will not be visible online at Jaldee.com.';
+      msg = 'If you "Turn off" List my profile in jaldee.com, Your profile will not be visible online at jaldee.com.';
      
       // msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
