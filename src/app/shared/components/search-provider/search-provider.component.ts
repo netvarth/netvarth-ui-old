@@ -586,16 +586,25 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             this.api_loading = false;
             break;
           }
-          case 'providerservices': {
-            if (res[0] && res[0].services) {
-              user['wtlstservices'] = res[0].services;
-            }
-            break;
-          }
           case 'providerApptServices': {
             if (res[0] && res[0].services) {
               user['apptServices'] = res[0].services;
+            } else {
+              user['apptServices'] = res;
             }
+            break;
+          }
+          case 'providerservices': {
+            if (res[0] && res[0].services) {
+              user['wtlstservices'] = res[0].services;
+            } else {
+              user['wtlstservices'] = res;
+            }
+            setTimeout(() => {
+              const ids = new Set(user['wtlstservices'].map(d => d.id));
+              const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
+              user['wtlstservices'] = merged;
+            });
             break;
           }
         }

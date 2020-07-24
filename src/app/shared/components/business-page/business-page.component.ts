@@ -456,12 +456,18 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'apptServices': {
             this.apptServicesjson = res;
-            for (let i = 0; i < this.apptServicesjson.length; i++) {
-              if (i < 3) {
-                this.apptfirstArray.push(this.apptServicesjson[i]);
+            setTimeout(() => {
+              // merge two arrays without duplicates
+              const ids = new Set(this.apptServicesjson.map(d => d.id));
+              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+              this.apptServicesjson = merged;
+              for (let i = 0; i < this.apptServicesjson.length; i++) {
+                if (i < 3) {
+                  this.apptfirstArray.push(this.apptServicesjson[i]);
+                }
               }
-            }
-            this.apptTempArray = this.apptfirstArray;
+              this.apptTempArray = this.apptfirstArray;
+            });
             break;
           }
           case 'gallery': {
@@ -863,19 +869,29 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           case 'providerservices': {
             if (res[0] && res[0].services) {
               this.servicesjson = res[0].services;
+            } else {
+              this.servicesjson = res;
             }
             break;
           }
           case 'providerApptServices': {
             if (res[0] && res[0].services) {
               this.apptServicesjson = res[0].services;
+            } else {
+              this.apptServicesjson = res;
             }
-            for (let i = 0; i < this.apptServicesjson.length; i++) {
-              if (i < 3) {
-                this.apptfirstArray.push(this.apptServicesjson[i]);
+            setTimeout(() => {
+              // merge two arrays without duplicates
+              const ids = new Set(this.apptServicesjson.map(d => d.id));
+              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+              this.apptServicesjson = merged;
+              for (let i = 0; i < this.apptServicesjson.length; i++) {
+                if (i < 3) {
+                  this.apptfirstArray.push(this.apptServicesjson[i]);
+                }
               }
-            }
-            this.apptTempArray = this.apptfirstArray;
+              this.apptTempArray = this.apptfirstArray;
+            });
             break;
           }
         }

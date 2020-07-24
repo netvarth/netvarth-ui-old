@@ -420,6 +420,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             break;
           }
+          case 'apptServices': {
+            this.apptServicesjson = res;
+            setTimeout(() => {
+              // merge two arrays without duplicates
+              const ids = new Set(this.apptServicesjson.map(d => d.id));
+              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+              this.apptServicesjson = merged;
+              for (let i = 0; i < this.apptServicesjson.length; i++) {
+                if (i < 3) {
+                  this.apptfirstArray.push(this.apptServicesjson[i]);
+                }
+              }
+              this.apptTempArray = this.apptfirstArray;
+            });
+            break;
+          }
           case 'gallery': {
             this.tempgalleryjson = res;
             let indx = 0;
@@ -539,20 +555,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'donationServices': {
             this.donationServicesjson = res;
-            break;
-          }
-          case 'apptServices': {
-            this.apptServicesjson = res;
-            // merge two arrays without duplicates
-            const ids = new Set(this.apptServicesjson.map(d => d.id));
-            const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-            this.apptServicesjson = merged;
-            for (let i = 0; i < this.apptServicesjson.length; i++) {
-              if (i < 3) {
-                this.apptfirstArray.push(this.apptServicesjson[i]);
-              }
-            }
-            this.apptTempArray = this.apptfirstArray;
             break;
           }
           case 'departmentProviders': {
