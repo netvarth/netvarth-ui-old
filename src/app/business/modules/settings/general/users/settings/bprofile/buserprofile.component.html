@@ -14,25 +14,28 @@
                                                 <div class="col-md-10 col-sm-12 col-xs-12">
                                                     <h3>Business Profile
                                                     </h3>
-                                                    <h6>Profile Strength-
+                                                    <h5>Profile Strength-
                                                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
         
-                                                    </h6>
-                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    </h5>
+                                                    <!-- <div class="col-md-8 col-sm-12 col-xs-12">
                                                         <div class="col-md-7 col-sm-8 col-xs-8 mt-3 mt-xs-8">
                                                             <strong> {{weightageValue}} %</strong>
                                                         </div>
-                                                        <div class="col-md-5 col-sm-4 col-xs-4 pr-0 ">
-                                                            <button (click)="scroll(basicInfoSection)" type="button" [className]="'wght-btn btn btn-' + weightageClass"
-                                                                style="font-weight:bold;float:right">{{bprofile_btn_text}}</button>
+                                                    </div> -->
+                                                    <div class="col-md-8">
+                                                        <div class="progress col-md-7 col-sm-8 col-xs-8 mt-2 p0" style="height:10px;">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
+                                                                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+        
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-4 col-xs-4 p-0 ">
+                                                            <button (click)="scroll(basicInfoSection)" type="button" [className]="'wght-btn btn btn-' + weightageClass" >{{bprofile_btn_text}}</button>
                                                         </div>
                                                     </div>
-                                                    <div class="progress col-md-8 col-sm-12 col-xs-12 mt-2 p0" style="height:10px;">
-                                                        <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
-                                                            aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
                                             </div>
+                                        </div>
+                                    </div>
                                     <!-- <div class="ctrl">
                                         <div class="ct-l">
                                                 <h3>Business Profile
@@ -84,14 +87,14 @@
                                        
                                      
                                     <!-- </div> -->
-                                </div>
+                                
                                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2>Jaldee Online &nbsp;
                                                     <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
                                                         </mat-slide-toggle> &nbsp;{{jaldee_online_status_str}}</h2>
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 head-level-settings">
                                                             <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
                                                             <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
                                                         </div>
