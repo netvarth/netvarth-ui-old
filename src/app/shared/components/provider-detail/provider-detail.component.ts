@@ -96,7 +96,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   business_exists = false;
   gallery_exists = false;
   location_exists = false;
-  isInFav;
+  isInFav = false;
   terminologiesjson: any = null;
   futuredate_allowed = false;
   maxsize = 0;
@@ -420,16 +420,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             break;
           }
-          case 'apptServices': {
-            this.apptServicesjson = res;
-            for (let i = 0; i < this.apptServicesjson.length; i++) {
-              if (i < 3) {
-                this.apptfirstArray.push(this.apptServicesjson[i]);
-              }
-            }
-            this.apptTempArray = this.apptfirstArray;
-            break;
-          }
           case 'gallery': {
             this.tempgalleryjson = res;
             let indx = 0;
@@ -549,6 +539,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'donationServices': {
             this.donationServicesjson = res;
+            break;
+          }
+          case 'apptServices': {
+            this.apptServicesjson = res;
+            // merge two arrays without duplicates
+            const ids = new Set(this.apptServicesjson.map(d => d.id));
+            const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+            this.apptServicesjson = merged;
+            for (let i = 0; i < this.apptServicesjson.length; i++) {
+              if (i < 3) {
+                this.apptfirstArray.push(this.apptServicesjson[i]);
+              }
+            }
+            this.apptTempArray = this.apptfirstArray;
             break;
           }
           case 'departmentProviders': {
@@ -787,13 +791,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.shared_services.getFavProvider()
         .subscribe(data => {
           this.favprovs = data;
-          if (this.favprovs.length === 0) {
-            this.handle_Fav('add');
-          } else {
+          if (this.favprovs.length !== 0) {
             const provider = this.favprovs.filter(fav => fav.id === this.provider_bussiness_id);
-            if (provider.length === 0) {
-              this.handle_Fav('add');
-            } else {
+            if (provider.length !== 0) {
               this.isInFav = true;
             }
           }
