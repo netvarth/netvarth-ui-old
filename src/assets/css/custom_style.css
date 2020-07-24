@@ -9016,7 +9016,9 @@ owl-carousel .bt3.active {
 .custId-flex-form {
   display: flex;
 }
-
+.card-brdr{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
 @media only screen and (max-width: 575px) {
   .custId-flex-form {
     display: grid;

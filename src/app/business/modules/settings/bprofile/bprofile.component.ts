@@ -551,7 +551,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-      this.weightageClass = 'danger';
+      this.weightageClass = 'warning';
       this.progress_bar_one = weightage;
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;
@@ -680,7 +680,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         //this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
         // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
-        this.shared_functions.openSnackBar('List myProfile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
         // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
 
@@ -767,6 +767,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
+          console.log('businessprofile..'+JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
