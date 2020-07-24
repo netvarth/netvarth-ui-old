@@ -65,10 +65,10 @@
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
-                        <ng-container *ngIf="servicesjson.length == 0">
-                          <span class='no-queue-available'>{{no_services_avail_cap}}</span>
-                        </ng-container>
                       </ng-container>
+                    </div>
+                    <div class="service-outer" *ngIf="servicesjson.length == 0">
+                      <span class='no-queue-available'>No services available</span>
                     </div>
                     <div class="service-outer" *ngIf="queuejson.length > 0">
                       <ng-container>
@@ -84,18 +84,18 @@
                             </mat-option>
                           </mat-select>
                         </mat-form-field>
-                        <ng-container *ngIf="queuejson.length == 0">
-                          <span class='no-queue-available'>No schedules available</span>
-                        </ng-container>
                       </ng-container>
                     </div>
-                    <div class="form-group">
+                    <div class="service-outer" *ngIf="servicesjson.length > 0 && queuejson.length == 0">
+                      <span class='no-queue-available'>No schedules available</span>
+                    </div>
+                    <!-- <div class="form-group">
                       <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}}</span>
                       <span *ngIf="!instantQueue">
                         {{queue_schedule}}
                       </span>
-                    </div>
-                    <div class="brd-bt no-padding mgn-bt-10 mgn-up-10">
+                    </div> -->
+                    <div class="brd-bt no-padding mgn-bt-10 mgn-up-10" *ngIf="queuejson.length > 0">
                       <div class="row ">
                         <div class="col-md-6 col-6 mgn-bt-10">
                           <span>Total Appointments # {{today_checkins_count}}</span>
@@ -103,12 +103,12 @@
                         </div>
                       </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="queuejson.length > 0">
                       <label class="col-form-label">{{delay_cap}}</label>
                       <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
                       </ngb-timepicker>
                     </div>
-                    <div class="form-group inline">
+                    <div class="form-group inline" *ngIf="queuejson.length > 0">
                       <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
                     </div>
                     <div class="form-group">
@@ -124,7 +124,7 @@
                     <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
                   </div>
                   <div>
-                  <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;">
+                  <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;" *ngIf="queuejson.length > 0">
                     <button (click)="onCancel()" type="button"
                                         class="cs-btn bt2">{{ cancel_btn}}</button>&nbsp;
                     <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"

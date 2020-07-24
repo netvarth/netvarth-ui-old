@@ -110,12 +110,12 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // }
     const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
     this.sel_loc = loc.id;
-    this.getBussinessProfileApi()
+    this.getBussinessProfileApi() 
       .then(
         (data: any) => {
           this.account_id = data.id;
 
-          this.shared_services.getServicesByLocationId(this.sel_loc).subscribe(
+          this.shared_services.getServicesforAppontmntByLocationId(this.sel_loc).subscribe(
             (services: any) => {
               this.servicesjson = services;
               this.serviceslist = services;
@@ -463,6 +463,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   }
 
   getTodayAppointments(queueid) {
+    this.getScheduleDelay(queueid);
     const Mfilter = this.setFilterForApi(queueid);
     // Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayApptlist(Mfilter)
@@ -492,7 +493,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queuejson = [];
     if (locid && servid) {
-      this.shared_services.getSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
+      this.shared_services.getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid)
         .subscribe(data => {
           this.queuejson = data;
           if (this.queuejson.length === 1) {

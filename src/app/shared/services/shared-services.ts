@@ -779,4 +779,8 @@ export class SharedServices {
     const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
     return this.servicemeta.httpGet(url);
   }
+  getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid?){
+    const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid ;
+    return this.servicemeta.httpGet(url);
+  }
 }

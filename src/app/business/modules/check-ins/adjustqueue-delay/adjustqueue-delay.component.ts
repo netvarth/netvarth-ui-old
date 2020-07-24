@@ -456,6 +456,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   }
 
   getTodayCheckIn(queueid) {
+    this.getQueueDelay(queueid);
     const Mfilter = this.setFilterForApi(queueid);
     Mfilter[this.sortBy] = 'asc';
     this.provider_services.getTodayWaitlist(Mfilter)
