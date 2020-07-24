@@ -1307,7 +1307,11 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   customizeId() {
     if (this.normal_customid_show === 2 && !this.showCustomId) {
-      this.licence_warn = true;
+        this.licence_warn = true;
+      setTimeout(()=>{
+        this.licence_warn = false;
+      },3000);
+     
     } else {
       this.is_customized = true;
       this.editCustomId();
