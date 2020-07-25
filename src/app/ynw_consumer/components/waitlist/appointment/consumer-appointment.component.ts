@@ -438,7 +438,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
             return;
         } else {
-            this.consumerPhoneNo = this.selected_phone;
+           // this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.currentPhone = this.selected_phone;
             this.edit = true;
@@ -727,6 +727,12 @@ export class ConsumerAppointmentComponent implements OnInit {
             }
         }
         // }
+        let phNumber;
+        if (this.currentPhone && this.changePhno) {
+            phNumber = this.currentPhone;
+        } else {
+            phNumber = this.userPhone;
+        }
         const post_Data = {
             'schedule': {
                 'id': this.sel_queue_id
@@ -737,7 +743,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'phoneNumber': this.consumerPhoneNo,
+            'phoneNumber': phNumber,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
@@ -777,6 +783,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.api_error === null) {
             // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
+           // console.log(post_Data);
             if (!this.is_wtsap_empty) {
                 this.addCheckInConsumer(post_Data);
             }
@@ -1450,7 +1457,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.consumerPhoneNo = this.userPhone;
+                       // this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
