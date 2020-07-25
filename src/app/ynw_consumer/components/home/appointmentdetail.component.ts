@@ -27,7 +27,7 @@ export class ApptDetailComponent implements OnInit {
     api_loading = true;
     waitlistdata: any;
     go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
-    bname_cap = Messages.CHK_DET_BNAME;
+    bname_cap = 'Appointment';
     date_cap = Messages.CHECK_DET_DATE_CAP;
     location_cap = Messages.CHECK_DET_LOCATION_CAP;
     waitlist_for_cap = 'Appointment for';
