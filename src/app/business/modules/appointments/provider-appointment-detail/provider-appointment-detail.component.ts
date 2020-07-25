@@ -406,4 +406,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   setApptTime() {
     (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
   }
+  getSingleTime(slot) {
+    const slots = slot.split('-');
+    return this.shared_Functionsobj.convert24HourtoAmPm(slots[0]);
+  }
 }
