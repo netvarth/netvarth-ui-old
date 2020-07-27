@@ -298,7 +298,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
-      this.weightageClass = 'danger';
+      this.weightageClass = 'info';
       this.progress_bar_one = weightage;
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;

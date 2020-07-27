@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef, AfterViewChecked, AfterContentInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -25,7 +25,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
-//import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
+// import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 
 @Component({
@@ -35,7 +35,7 @@ import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.comp
 
 })
 
-export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , AfterContentInit {
 
   logoExist = false;
   jaldee_online_disabled_msg: string;
@@ -50,7 +50,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   profile_status;
 
   jaldee_online_status;
-  //social media and gallery
+  // social media and gallery
 
   frm_social_cap = '';
   frm_gallery_cap = '';
@@ -87,12 +87,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   selitem_pic = '';
   image_remaining_cnt = 0;
 
-  //languages
+  // languages
   languages_arr: any = [];
   langdialogRef;
   frm_lang_cap = '';
   normal_language_show = 1;
-  //virtual fields
+  // virtual fields
 
 
   dynamicdialogRef: any;
@@ -166,25 +166,26 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
+  progress_loading_url = false;
 
-  //jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
+  // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   private qrCodeParent: ElementRef;
   notedialogRef: any;
-  @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
-    if (content1) { // initially setter gets called with undefined
-      this.qrCodeParent = content1;
-    }
-  }
-  private qrCodeCustId: ElementRef;
-  @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
-    if (content2) { // initially setter gets called with undefined
-      this.qrCodeParent = content2;
-    }
-  }
+  // @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
+  //   if (content1) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content1;
+  //   }
+  // }
+  // private qrCodeCustId: ElementRef;
+  // @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
+  //   if (content2) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content2;
+  //   }
+  // }
   mandatoryfieldArray: any = [];
 
   additionalInfoDomainFields: any = [];
@@ -279,7 +280,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   ];
   businessConfig: any = [];
   multipeLocationAllowed = false;
-  //customer_label = '';
+  // customer_label = '';
   maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   loceditdialogRef;
@@ -295,7 +296,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   frm_adword_cap = '';
   frm_loc_amen_cap = '';
   frm_additional_cap = '';
-  //frm_gallery_cap = '';
+  // frm_gallery_cap = '';
   // frm_social_cap = '';
   frm_profile_name_cap = Messages.FRM_LEVEL_PROFILE_NAME_CAP;
   frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
@@ -311,7 +312,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   customForm: FormGroup;
   custId;
   active_user;
-  //frm_lang_cap = '';
+  // frm_lang_cap = '';
   current_license;
   domain;
   showCustomId = false;
@@ -330,7 +331,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   bprofile_btn_text = 'Complete Your Profile';
   profile_status_str = '';
   jaldee_online_status_str = '';
-  //mandatory fields
+  // mandatory fields
   domain_fields;
   domain_questions = [];
   subdomain_fields = [];
@@ -344,7 +345,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   showAddSection = false;
   showAddSection1 = false;
 
-  //specilization
+  // specilization
 
 
   specialization_arr: any = [];
@@ -395,7 +396,6 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.getBusinessConfiguration();
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
-    this.getBusinessConfiguration();
     this.getProviderLocations();
     this.initSpecializations();
     this.getGalleryImages();
@@ -448,7 +448,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
       this.businessweightageArray = result;
       console.log(JSON.stringify(this.businessweightageArray));
-      
+
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
 
@@ -462,12 +462,13 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         // }else{
         //   this.changeJaldeeOnlineStatus(false);
         // }
-      } else
+      } else {
         this.weightageValue = 0;
+      }
 
 
     });
-    //this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
+    // this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.getSpokenLanguages();
     this.setLanguages();
 
@@ -479,7 +480,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.businessweightageArray.includes(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
   }
   checkAllRequiredFiedsOfJaldeeOnlineFilled() {
-    let weightageArray = this.businessweightageArray.map(obj => obj.name);
+    const weightageArray = this.businessweightageArray.map(obj => obj.name);
     return projectConstantsLocal.REQUIRED_FIELDS_JALDEE_ONLINE.every(function (val) {
       return weightageArray.includes(val);
     });
@@ -495,6 +496,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     //   this.handle_jaldeeOnlinePresence();
 
     // }
+
+  }
+  ngAfterContentInit() {
+    console.log('afterContnet init');
 
   }
   ngAfterViewChecked() {
@@ -529,12 +534,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.qrdialogRef) {
       this.qrdialogRef.close();
     }
-    //this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 
   calculateWeightage(data) {
-    var total = 0;
+    let total = 0;
     if (data != null && data.length > 0) {
       data.forEach(x => total += x.value);
     }
@@ -547,7 +552,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
-    let weightage = this.weightageValue;
+    const weightage = this.weightageValue;
     if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
@@ -588,9 +593,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
       return businessProfileWeightageText;
-    }
-
-    else if (weightage == 100) {
+    } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
       this.weightageClass = 'success';
@@ -671,13 +674,13 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.handle_jaldeeOnlinePresence();
     }
   }
-  //regular button
+  // regular button
   handle_searchstatus() {
-    //const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
+    // const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
-        //this.jaldee_online_status=this.normal_search_active;
+        // this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
         // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
         this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
@@ -686,12 +689,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //this.getJaldeeOnlineStatus();
+        // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
       });
   }
 
-  // //without toggle
+  // without toggle
   // handle_searchstatus(event) {
   //   const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
   //  // const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
@@ -719,7 +722,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.profile_status = this.onlinepresence_status ? true : false;
         this.profile_status_str = this.profile_status ? 'On' : 'Off';
-        if (this.profile_status == false && this.normal_search_active) {
+        if (this.profile_status === false && this.normal_search_active) {
           this.handle_searchstatus();
         }
 
@@ -767,7 +770,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
       .then(
         data => {
           this.bProfile = data;
-          console.log('businessprofile..'+JSON.stringify(this.bProfile));
+          console.log('businessprofile..' + JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
@@ -1308,10 +1311,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   customizeId() {
     if (this.normal_customid_show === 2 && !this.showCustomId) {
         this.licence_warn = true;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.licence_warn = false;
-      },3000);
-     
+      }, 3000);
     } else {
       this.is_customized = true;
       this.editCustomId();
@@ -1463,7 +1465,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
   }
 
-  //specilization
+  // specilization
 
   initSpecializations() {
     this.bProfile = [];
@@ -1545,25 +1547,25 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
 
-  //mandatory fields
+  // mandatory fields
 
   getDomainVirtualFields() {
-    let weightageObjectOfDomain: any = {};
-    let checkArray = [];
+    const weightageObjectOfDomain: any = {};
+    const checkArray = [];
     this.getVirtualFields(this.bProfile['serviceSector']['domain'])
       .then(
         data => {
           let mandatorydomain = false;
           let mandatorydomainFilled = false;
-          let additionalInfoFilledStatus = false
+          let additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
           this.domain_questions = data['questions'] || [];
           this.domain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
           });
           this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-          if (this.mandatoryfieldArray.length != 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
-            mandatorydomain = true
+          if (this.mandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
+            mandatorydomain = true;
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
                 mandatorydomainFilled = true;
@@ -1597,7 +1599,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     let fullyfilledStatus = true;
     domainFields.forEach(function (dom) {
       if (dom.name === fieldname) {
-        if (!dom['value'] || (dom.value == undefined || dom.value == null)) {
+        if (!dom['value'] || (dom.value === undefined || dom.value == null)) {
           fullyfilledStatus = false;
           return;
         }
@@ -1616,7 +1618,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
         } else {
           dom_subdom_list.forEach(function (data_object) {
             if (data_object.name === field) {
-              if (!data_object['value'] || (data_object.value == undefined || data_object.value == null)) {
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
                 fullyfilledStatus = false;
                 return;
               }
@@ -1712,20 +1714,20 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   getSubDomainVirtualFields() {
-    let checkArray = [];
-    let weightageObjectOfSubDomain: any = {};
+    const checkArray = [];
+    const weightageObjectOfSubDomain: any = {};
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
       this.bProfile['serviceSubSector']['subDomain']).then(
         data => {
           let mandatorysubdomain = false;
           let mandatorySubDomainFilled = false;
-          let additionalInfoFilledStatus = false
+          let additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
           this.subdomain_fields.forEach(subdomain => {
             checkArray.push(subdomain);
           });
           this.subdomain_questions = data['questions'] || [];
-          if (this.mandatoryfieldArray.length != 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+          if (this.mandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             mandatorysubdomain = true;
             this.mandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
@@ -1903,7 +1905,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
 
-  //gallery
+  // gallery
 
 
 
@@ -1979,7 +1981,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.handleSocialmedia(key);
   }
 
-  //languages known
+  // languages known
 
   setLanguages() {
     this.bProfile = [];
@@ -2003,7 +2005,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.provider_services.getSpokenLanguages()
       .subscribe(data => {
         this.languages_arr = data;
-        //this.provider_datastorage.updateLanguagesWeightage(this.languages_arr);
+        // this.provider_datastorage.updateLanguagesWeightage(this.languages_arr);
       });
   }
   getlanguageName(n) {

@@ -1179,10 +1179,10 @@ export const Messages = {
   'WIZ_PUB_SEARCH_CAP': 'Public Search!',
   'CUSTM_ID': 'Create your own personalised URL and QR code of  your account to share among with your potential [customer]s',
   'JALDEE_URL': 'Share your Free URL and QR code of your account among your potential [customer]s',
-  
-  //Jaldee Online
-  'JALDEE_ONLINE_DISABLED_MSG':'Your [customer]s cannot  see you or access you online',
-  'JALDEE_ONLINE_ENABLED_MSG':'Your [customer]s can see you online by scanning QR code or clicking Jaldee link ',
+
+  // Jaldee Online
+  'JALDEE_ONLINE_DISABLED_MSG': 'Your [customer]s cannot  see you or access you online',
+  'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning QR code or clicking Jaldee link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP': 'Jaldee Bank',
@@ -1495,16 +1495,16 @@ export const Messages = {
 
   'DEFAULTVIEWCAP': 'My View',
   'NOUSERCAP': 'Global Services',
-  //New business profile revamp
-  'PROFILE_STRENGTH_CAP':'Profile Strength',
-  'PROFILE_INCOMPLETE_CAP':' Incomplete',
-  'PROFILE_MINIMALLY_COMPLETE_CAP':'Minimally Complete',
-  'PROFILE_COMPLETE_CAP':'Fully Complete',
-  'THREE_QUATERES_COMPLETE_CAP':'Three Quarters Complete',
-  'BTN_TEXT_COMPLETE_YOUR_PROFILE':'Complete Your Profile',
-  'BTN_TEXT_STRENGTHEN_YOUR_PROFILE':'Strengthen Your Profile',
-  'BTN_TEXT_MANAGE_YOUR_PROFILE':'Manage Your Profile',
-  'GOOD_CAP':'Good',
-  'VERY_GOOD_CAP':' Very Good'
-  
+  // New business profile revamp
+  'PROFILE_STRENGTH_CAP': 'Profile Strength',
+  'PROFILE_INCOMPLETE_CAP': ' Incomplete',
+  'PROFILE_MINIMALLY_COMPLETE_CAP': 'Minimally Complete',
+  'PROFILE_COMPLETE_CAP': 'Fully Complete',
+  'THREE_QUATERES_COMPLETE_CAP': 'Three Quarters Complete',
+  'BTN_TEXT_COMPLETE_YOUR_PROFILE': 'Complete Your Profile',
+  'BTN_TEXT_STRENGTHEN_YOUR_PROFILE': 'Strengthen Your Profile',
+  'BTN_TEXT_MANAGE_YOUR_PROFILE': 'Manage Your Profile',
+  'GOOD_CAP': 'Good',
+  'VERY_GOOD_CAP': ' Very Good'
+
 };

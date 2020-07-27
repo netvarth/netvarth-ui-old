@@ -23,7 +23,7 @@ export class SharedFunctions {
     private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
     private common_datastorage: CommonDataStorageService,
-    private providerDataStorage:ProviderDataStorageService
+    private providerDataStorage: ProviderDataStorageService
   ) { }
 
   logout() {
@@ -619,12 +619,12 @@ export class SharedFunctions {
     let msg = '';
     if (stat) {
       msg = 'If you "Turn off" List my profile in jaldee.com, Your profile will not be visible online at jaldee.com.';
-     
+
       // msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
       msg = '"Turn On" List my profile in jaldee.com?';
-    
+
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -640,7 +640,7 @@ export class SharedFunctions {
       if (result) {
         console.log(result);
         ob.handle_searchstatus();
-      }else{
+      } else {
         ob.getPublicSearch();
       }
     });
@@ -666,8 +666,7 @@ export class SharedFunctions {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         ob.handle_jaldeeOnlinePresence();
-      }
-      else{
+      } else {
         ob.getJaldeeIntegrationSettings();
       }
     });
@@ -1491,20 +1490,20 @@ export class SharedFunctions {
   }
 
   getBase64Image() {
-    var promise = new Promise(function (resolve, reject) {
+    const promise = new Promise(function (resolve, reject) {
 
-      var img = new Image();
+      const img = new Image();
 
       // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
-      img.crossOrigin = "Anonymous";
+      img.crossOrigin = 'Anonymous';
       img.onload = function () {
-        var canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ""));
+        const dataURL = canvas.toDataURL('image/png');
+        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ''));
       };
       img.src = '../../../../assets/images/jaldee-logo.png';
     });
@@ -1513,27 +1512,27 @@ export class SharedFunctions {
   }
 
   b64toBlob(b64Data) {
-    let contentType = 'image/png';
-    let sliceSize = 512;
+    const contentType = 'image/png';
+    const sliceSize = 512;
 
-    var byteCharacters = atob(b64Data);
-    var byteArrays = [];
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
 
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-      var byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
 
-      var byteArray = new Uint8Array(byteNumbers);
+      const byteArray = new Uint8Array(byteNumbers);
 
       byteArrays.push(byteArray);
     }
 
-    var blob = new Blob(byteArrays, { type: contentType });
+    const blob = new Blob(byteArrays, { type: contentType });
     return blob;
   }
-  
+
 }
