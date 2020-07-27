@@ -47,7 +47,6 @@ export class CheckinDetailsSendComponent implements OnInit {
    ngOnInit() {
     this.bname = this.data.qdata.providerAccount.businessName;
     if (this.chekintype === 'Waitlist') {
-
         this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
         this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
         this.consumer_email = this.data.qdata.waitlistingFor[0].email;
@@ -63,7 +62,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.splname = this.data.qdata.provider.lastName;
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].userName;
-        this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
+        if (this.data.qdata.consumer) {
+          this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
+        }
         this.serv_name = this.data.qdata.service.name;
         this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
