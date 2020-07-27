@@ -393,7 +393,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   getServiceList() {
-    const filter1 = { 'serviceType-neq': 'donationService' };
+    const filter1 = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
     this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {
@@ -1244,7 +1244,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    if (this.filter.waitlist_status === 'all') {
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistTodayCount(Mfilter)
         .subscribe(
@@ -1269,7 +1271,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    if (this.filter.waitlist_status === 'all') {
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     return new Promise((resolve) => {
       this.provider_services.getWaitlistFutureCount(Mfilter)
         .subscribe(
@@ -1294,7 +1298,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    if (this.filter.waitlist_status === 'all') {
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(

@@ -1113,7 +1113,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     return new Promise((resolve) => {
       this.provider_services.getTodayAppointmentsCount(Mfilter)
         .subscribe(
@@ -1138,7 +1140,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     return new Promise((resolve) => {
       this.provider_services.getFutureAppointmentsCount(Mfilter)
         .subscribe(
@@ -1163,7 +1167,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       no_filter = true;
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1234,7 +1240,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -1343,7 +1351,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
       this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQId);
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     const promise = this.getFutureAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1381,7 +1391,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.selQidsforHistory.length !== 0) {
       Mfilter['schedule-eq'] = this.selQidsforHistory.toString();
     }
-    Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    if (this.filter.apptStatus === 'all') {
+      Mfilter['apptStatus-neq'] = 'prepaymentPending';
+    }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -2389,10 +2401,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     let appt;
     if (!this.isBatch || this.time_type === 3) {
-      console.log('if');
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appt = _this.appointmentsChecked[apptIndex];
-        console.log(appt);
       });
       this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
         width: '50%',
@@ -2805,7 +2815,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
   }
   getServices() {
-    const filter1 = { 'serviceType-neq': 'donationService' };
+    const filter1 = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
     this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {

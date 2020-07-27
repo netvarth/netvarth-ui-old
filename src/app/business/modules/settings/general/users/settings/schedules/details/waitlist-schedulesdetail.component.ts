@@ -390,7 +390,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 timeSlot: ['', Validators.compose([Validators.required])],
             });
-            this.updateForm();
+            setTimeout(() => {
+                this.updateForm();
+                }, 1000);
         } else {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
