@@ -70,22 +70,22 @@
                     <div class="col-md-10 col-sm-12 col-xs-12">
                       <h3>Business Profile
                       </h3>
-                      <h6 *ngIf="normal_basicinfo_show!=1 && normal_specilization_show!=1" >Profile Strength-
+                      <h6 *ngIf="normal_basicinfo_show!=1" >Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
 
                       </h6>
-                      
+
                       <!-- <div class="col-md-8 col-sm-12 col-xs-12">
                                                 <div class="col-md-7 col-sm-8 col-xs-8 mt-3 mt-xs-5">
                                                     <strong> {{weightageValue}} %</strong>
                                                 </div>
 
                                             </div> -->
-                                            <div class="warning" *ngIf="normal_basicinfo_show==1 && normal_specilization_show==1">
+                                            <div class="warning" *ngIf="normal_basicinfo_show==1">
                                               <app-innerloading-spinner spinnerParams="loadingParams">
                                               </app-innerloading-spinner>
                                             </div>
-                      <div class="col-md-8" *ngIf="normal_basicinfo_show!=1 && normal_specilization_show!=1" >
+                      <div class="col-md-8" *ngIf="normal_basicinfo_show!=1" >
                         <div class="progress col-md-7 col-sm-8 col-xs-8 mt-2 p0" style="height:12px;">
                           <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
                             aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
