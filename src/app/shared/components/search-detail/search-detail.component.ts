@@ -846,7 +846,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       this.shared_functions.getCloudUrl()
         .then(url => {
-          this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
+          this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria, this.kwtyp)
             .subscribe(res => {
               this.search_data = res;
               this.result_provid = [];
