@@ -15,12 +15,13 @@
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
                                     *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue && !queue_data.provider"></span>
-                                    <span class="useredit"
-                                    *ngIf="queue_data.provider"><i class="fa fa-info-circle" matTooltip="User schedules can be edit in user level"></i></span> 
+                                <span class="useredit" *ngIf="queue_data.provider"><i class="fa fa-info-circle"
+                                        matTooltip="User schedules can be edit in user level"></i></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
-                                        <h4>{{queue_data.name | capitalizeFirst}} <span 
-                                            *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span></h4> 
+                                        <h4>{{queue_data.name | capitalizeFirst}} <span
+                                                *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span>
+                                        </h4>
                                         <span class="tspace" *ngIf="!queue_data.provider">
                                             <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
                                                 (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>
@@ -342,7 +343,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div> -->
-                            <div class="form-group" *ngIf="showAdvancedSettings">
+                            <div class="form-group" *ngIf="showAdvancedSettings && sbatchStatus">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
                                         placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
@@ -381,7 +382,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             (change)="changebatchStatus($event)" [ngModelOptions]="{standalone: true}">
                                         </mat-slide-toggle>
                                     </div>
-                                    <div *ngIf="showEditSection">
+                                    <div *ngIf="showEditSection || sbatchStatus">
                                         <div class="item">
                                             <mat-form-field>
                                                 <input
@@ -398,7 +399,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                     autocomplete="off" [ngModelOptions]="{standalone: true}">
                                             </mat-form-field>
                                         </div>
-                                        <div class="c-ot" *ngIf="!showEditSection">
+                                        <!-- <div class="c-ot" *ngIf="!showEditSection">
                                             <div class="item"
                                                 *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
                                                 <span class="ttle"> Prefix </span><span
@@ -409,7 +410,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                 <span class="ttle"> Suffix </span><span
                                                     class="day">{{queue_data.batchName.suffix}}</span>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

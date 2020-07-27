@@ -269,11 +269,11 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                         this.prefixName = this.queue_data.batchName.prefix;
                         this.suffixName = this.queue_data.batchName.suffix;
                     }
-                    if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-                        this.showEditSection = true;
-                    } else {
-                        this.showEditSection = false;
-                    }
+                    // if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
+                    //     this.showEditSection = true;
+                    // } else {
+                    //     this.showEditSection = false;
+                    // }
                     this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.apptSchedule) {
@@ -442,11 +442,11 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             this.sprefixName = this.queue_data.batchName.prefix;
             this.ssuffixName = this.queue_data.batchName.suffix;
         }
-        if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-            this.showEditSection = true;
-        } else {
-            this.showEditSection = false;
-        }
+        // if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
+        //     this.showEditSection = true;
+        // } else {
+        //     this.showEditSection = false;
+        // }
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
         // extracting the selected days
@@ -593,7 +593,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             };
             if (this.action === 'edit') {
                 schedulejson.startDate = this.queue_data.apptSchedule.startDate;
-              }
+            }
             // generating the data to be posted
             const post_data = {
                 'name': form_data.qname,
@@ -606,7 +606,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                 // 'tokenStarts': form_data.tokennum,
                 'timeDuration': form_data.timeSlot,
                 'provider': {
-                    'id' : this.userId
+                    'id': this.userId
                 },
                 'batchEnable': this.sbatchStatus,
                 'batchName': {
@@ -868,6 +868,9 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             this.showEditSection = true;
         } else {
             this.showEditSection = false;
+        }
+        if (event.checked) {
+            this.amForm.get('qserveonce').setValue(2);
         }
     }
 }
