@@ -453,13 +453,18 @@ export class CustomerSearchComponent implements OnInit {
         });
     }
     onSubmit(form_data) {
+        let date_format = null;
+        if (form_data.dob != null) {
+            const date = new Date(form_data.dob);
+            date_format = moment(date).format(projectConstants.POST_DATE_FORMAT);
+          }
         this.disableButton = true;
         // if (this.action === 'add') {
         const post_data = {
             //   'userProfile': {
             'firstName': form_data.first_name,
             'lastName': form_data.last_name,
-            'dob': form_data.dob,
+            'dob': date_format,
             'gender': form_data.gender,
             'phoneNo': form_data.mobile_number,
             'address': form_data.address,
