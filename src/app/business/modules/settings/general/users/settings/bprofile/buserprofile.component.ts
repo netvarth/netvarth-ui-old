@@ -340,7 +340,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       },
         () => {
 
-        });
+     });
   }
   getUserPublicSearch() {
     this.provider_services.getUserPublicSearch(this.userId)
