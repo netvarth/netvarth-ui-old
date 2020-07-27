@@ -740,7 +740,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let q_str = '';
     let locstr = '';
     // q_str = 'title:\'' + 'sony new business' + '\''; // ***** this line needs to be commented after testing
-    if (this.latitude) { // case of location is selected
+    if (this.latitude && this.kwtyp !== 'onlineid') { // case of location is selected
       // calling shared function to get the coordinates for nearybylocation
       const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, this.loctype);
       const coordinates = retcoordinates['locationRange'];
@@ -788,7 +788,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else if (this.kwtyp === 'onlineid') {
       let ptitle = this.kw.replace('/', '');
       ptitle = ptitle.replace(/'/g, '\\\'');
-      q_str = q_str + '(or custom_id: \'' + ptitle + '\') (or enc_uid: \'' + ptitle + '\')';
+      q_str = q_str + '(or custom_id: \'' + ptitle + '\'' + ' enc_uid: \'' + ptitle + '\')';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';

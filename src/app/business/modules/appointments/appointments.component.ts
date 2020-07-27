@@ -1941,19 +1941,21 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (selLength === 1) {
       Object.keys(this.apptsChecked).forEach(key => {
         if (Object.keys(this.apptsChecked[key]).length === 1) {
-          this.apptMultiSelection = false;
-          this.apptSingleSelection = true;
-          const activeAppt = this.apptsChecked[key][0];
-          if (this.time_type === 1 && activeAppt.apptStatus === 'Confirmed' && !activeAppt.virtualService) {
-            this.showArrived = true;
-          }
-          if (activeAppt.apptStatus !== 'Completed' && activeAppt.apptStatus !== 'Confirmed') {
-            this.showUndo = true;
-          }
-          if (activeAppt.apptStatus === 'Confirmed' || activeAppt.apptStatus === 'Arrived') {
-            this.showRejected = true;
-          }
-          return;
+          Object.keys(this.apptsChecked[key]).forEach(appt => {
+            this.apptMultiSelection = false;
+            this.apptSingleSelection = true;
+            const activeAppt = this.apptsChecked[key][appt];
+            if (this.time_type === 1 && activeAppt.apptStatus === 'Confirmed' && !activeAppt.virtualService) {
+              this.showArrived = true;
+            }
+            if (activeAppt.apptStatus !== 'Completed' && activeAppt.apptStatus !== 'Confirmed') {
+              this.showUndo = true;
+            }
+            if (activeAppt.apptStatus === 'Confirmed' || activeAppt.apptStatus === 'Arrived') {
+              this.showRejected = true;
+            }
+            return;
+          });
         } else {
           this.apptMultiSelection = true;
           this.apptSingleSelection = false;

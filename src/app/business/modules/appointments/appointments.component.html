@@ -57,7 +57,8 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db" *ngIf="account_type === 'BRANCH'">
+                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db"
+                  *ngIf="account_type === 'BRANCH'">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     style="padding-top: 12px !important;">
@@ -416,7 +417,8 @@
                                   </div>
                                 </td>
                                 <td class="q-actions td-four">
-                                  <a class="statusText btn-play pointer-cursor" *ngIf="board_count > 0 && time_type==1 "
+                                  <a class="statusText btn-play pointer-cursor"
+                                    *ngIf="board_count > 0 && !appt.virtualService && time_type == 1 && (appt.apptStatus === 'Confirmed' || appt.apptStatus === 'Arrived')"
                                     (click)="callingAppt(appt)" [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
                                     <i class="fa fa-phone" *ngIf="appt.callingStatus" style="color: red;"></i> <span
                                       *ngIf="!small_device_display && appt.callingStatus">&nbsp; Stop

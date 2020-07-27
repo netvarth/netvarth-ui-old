@@ -443,28 +443,8 @@ export class AppointmentComponent implements OnInit {
                                                 this.handleDeptSelction(this.selected_dept);
                                             },
                                             () => {
-                                                if (!this.filterDepart) {
-                                                    const filter = {
-                                                        'status-eq': 'ACTIVE',
-                                                        'userType-neq': 'ASSISTANT'
-                                                    };
-                                                    this.provider_services.getUsers(filter).subscribe(
-                                                        (users: any) => {
-                                                            this.users = users.filter(user => !user.admin);
-                                                            this.users.push(this.userN);
-                                                            if (this.selectUser) {
-                                                                const userDetails = this.users.filter(user => user.id === this.selectUser);
-                                                                this.selected_user = userDetails[0];
-                                                                this.handleUserSelection(this.selected_user);
-                                                            } else if (this.users.length !== 0) {
-                                                                this.selected_user = this.users[0];
-                                                                this.handleUserSelection(this.selected_user);
-                                                            } else {
-                                                                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                                            }
-                                                        });
-                                                }
                                                 // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                this.getAllUsers();
                                             }
                                         );
                                     }
@@ -1239,7 +1219,7 @@ export class AppointmentComponent implements OnInit {
                         if (this.selectUser) {
                             const userDetails = this.users.filter(user => user.id === this.selectUser);
                             if (userDetails && userDetails[0]) {
-                            this.selected_user = userDetails[0];
+                                this.selected_user = userDetails[0];
                             } else {
                                 this.selected_user = this.users[0];
                             }
@@ -1275,7 +1255,30 @@ export class AppointmentComponent implements OnInit {
                         }
                     }
                 });
+        } else {
+            this.getAllUsers();
         }
+    }
+    getAllUsers() {
+        const filter = {
+            'status-eq': 'ACTIVE',
+            'userType-neq': 'ASSISTANT'
+        };
+        this.provider_services.getUsers(filter).subscribe(
+            (users: any) => {
+                this.users = users.filter(user => !user.admin);
+                this.users.push(this.userN);
+                if (this.selectUser) {
+                    const userDetails = this.users.filter(user => user.id === this.selectUser);
+                    this.selected_user = userDetails[0];
+                    this.handleUserSelection(this.selected_user);
+                } else if (this.users.length !== 0) {
+                    this.selected_user = this.users[0];
+                    this.handleUserSelection(this.selected_user);
+                } else {
+                    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                }
+            });
     }
     handleUserSelection(user) {
         this.selectedUser = user;
