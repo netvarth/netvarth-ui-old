@@ -58,11 +58,11 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.qstarttime = this.data.qdata.queue.queueStartTime;
         this.qendtime = this.data.qdata.queue.queueEndTime;
         this.location = this.data.qdata.queue.location.address;
-        this.spfname = this.data.qdata.provider.firstName;
-        this.splname = this.data.qdata.provider.lastName;
+        // this.spfname = this.data.qdata.provider.firstName;
+        // this.splname = this.data.qdata.provider.lastName;
     } else {
         this.consumer_fname = this.data.qdata.appmtFor[0].userName;
-        if (this.data.qdata.consumer) {
+        if (this.data.qdata.consumer && this.data.qdata.consumer.userProfile && this.data.qdata.consumer.userProfile.emailVerified) {
           this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
         }
         this.serv_name = this.data.qdata.service.name;
@@ -74,8 +74,8 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.schedulename =  this.data.qdata.schedule.name;
         this.Schedulestime = this.data.qdata.schedule.apptSchedule.timeSlots[0].sTime ;
         this.Scheduleetime = this.data.qdata.schedule.apptSchedule.timeSlots[0].eTime;
-        this.spfname = this.data.qdata.provider.firstName;
-        this.splname = this.data.qdata.provider.lastName;
+        // this.spfname = this.data.qdata.provider.firstName;
+        // this.splname = this.data.qdata.provider.lastName;
     }
    }
     back() {

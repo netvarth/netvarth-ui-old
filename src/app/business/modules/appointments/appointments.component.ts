@@ -2389,8 +2389,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     let appt;
     if (!this.isBatch || this.time_type === 3) {
+      console.log('if');
       Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
         appt = _this.appointmentsChecked[apptIndex];
+        console.log(appt);
       });
       this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
         width: '50%',
@@ -2413,13 +2415,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
-          appt = _this.apptsChecked[apptIndex];
+          appt = _this.apptsChecked[slotIndex][apptIndex];
+          console.log(appt);
         });
         this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
           disableClose: true,
           data: {
+            qdata: appt,
             uuid: appt.uid,
             chekintype: 'appointment'
           }
