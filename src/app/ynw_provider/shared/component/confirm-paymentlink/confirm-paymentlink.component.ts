@@ -55,6 +55,8 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     'smsNotification' : null
   };
   emailId: any;
+  number: any;
+  mail: any;
     constructor(
       public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -77,7 +79,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   }
   createForm() {
     this.amForm = this.fb.group({
-      mobile_number: [this.mobilenumber, Validators.compose([Validators.required, Validators.maxLength(10),
+      mobile_number: [this.mobilenumber, Validators.compose([Validators.maxLength(10),
                        Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       email_id: [this.emailId, Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
       });
@@ -88,6 +90,14 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.api_error = null;
       this.api_success = null;
     }
+  }
+  onMbnmberChange(event) {
+    this.mobilenumber = event.target.value;
+     console.log(this.mobilenumber);
+  }
+  onEmailChange(event) {
+    this.emailId = event.target.value;
+     console.log(this.emailId);
   }
   isNumeric(evt) {
     if (evt === 'name') {
