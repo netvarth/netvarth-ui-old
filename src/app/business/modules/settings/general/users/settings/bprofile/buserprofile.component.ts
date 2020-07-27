@@ -86,7 +86,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   profile_strength_cap = Messages.PROFILE_STRENGTH_CAP;
-  weightageValue: number;
+  weightageValue = 0;
   profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
   minimally_complete_cap = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
   bprofile_btn_text = 'Complete Your Profile';
@@ -273,6 +273,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
 
   ngOnInit() {
+    this.user_datastorage.setWeightageArray([]);
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
@@ -309,10 +310,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
-      console.log('weightage...' + JSON.stringify(this.businessProfile_weightageArray));
+      console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
 
-    });
+    });  
   }
   ngAfterViewChecked(){
     this.cdref.detectChanges();
@@ -382,7 +383,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.getBussinessProfileApi()
       .then(
         data => {
-
           this.bProfile = data;
           this.provider_services.getVirtualFields(this.domain).subscribe(
             domainfields => {
@@ -390,7 +390,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getuserProfileRequiredFields(domainfields, subdomainfields);
                   this.userMandatoryfieldArray = this.provider_shared_functions.getUserAdditonalInfoMandatoryFields();
-
                   this.userAdditionalInfoDomainFields = this.provider_shared_functions.getUserAdditionalNonDomainMandatoryFields();
                   this.userAdditionalInfoSubDomainFields = this.provider_shared_functions.getUserAdditionalNonSubDomainMandatoryFields();
                   this.getDomainVirtualFields();
@@ -439,14 +438,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           if (this.social_arr.length < this.orgsocial_list.length) {
             this.showaddsocialmedia = true;
           }
-
-          
-
-
-
-
-
-
 
           this.user_datastorage.set('bProfile', this.bProfile);
           this.user_datastorage.setUserBusinessProfileWeightage(this.bProfile);
@@ -498,13 +489,15 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.api_success = null;
   }
   getUser() {
+    
+    
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
         this.subDomainId = data.subdomain;
         this.user_arr = data;
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
-          breadcrumbs.push(e);
+          breadcrumbs.push(e); 
         });
         breadcrumbs.push({
           title: this.user_arr.firstName,
