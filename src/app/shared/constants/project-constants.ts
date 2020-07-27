@@ -632,7 +632,7 @@ export const projectConstantsLocal = {
   BUSINESS_PROFILE_WEIGHTAGE : {
     BUSINESS_NAME : {'name' : 'BUSINESS_NAME', 'value' : 10 },
     BUSINESS_DESCRIPTION : {'name' : 'BUSINESS_DESCRIPTION', 'value' : 5 },
-    BASE_LOCATION : { 'name' : 'BASE_LOCATION','value' : 10 },
+    BASE_LOCATION : { 'name' : 'BASE_LOCATION', 'value' : 10 },
     LOCATION_SCHEDULE : { 'name' : 'LOCATION_SCHEDULE', 'value' : 10 },
     SPECIALIZATION : { 'name' : 'SPECIALIZATION', 'value' : 10 },
     LANGUAGES_KNOWN : {'name' : 'LANGUAGES_KNOWN', 'value' : 5 },
