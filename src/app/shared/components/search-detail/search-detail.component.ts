@@ -2130,10 +2130,26 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   onButtonAfterHook() { }
   showButton(searchData) {
     if (searchData.fields.online_profile === '1' && (searchData.fields.waitlist || searchData.fields.apptAllowed
-      || (searchData.fields.donation_status === '1' && searchData.fields.donationlength >= 1))) {
+      || searchData.fields.donation_status === '1')) {
       return true;
     } else {
       return false;
+    }
+  }
+  bookServiceClicked(searchData) {
+    if (searchData.fields.waitlist) {
+      if (searchData.fields['estimatedtime_det']['onlineCheckIn'] && searchData.fields['estimatedtime_det']['availableToday'] &&
+        searchData.fields['estimatedtime_det']['isAvailableToday']) {
+        this.checkinClicked(searchData, false);
+      } else if (searchData.fields['estimatedtime_det']['cdate'] && searchData.fields.future_checkins === '1') {
+        this.checkinClicked(searchData, true);
+      } else {
+        this.appointmentClicked(searchData, false);
+      }
+    } else if (searchData.fields.apptAllowed) {
+      this.appointmentClicked(searchData, false);
+    } else {
+      this.payClicked(searchData);
     }
   }
 }
