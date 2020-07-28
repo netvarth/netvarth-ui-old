@@ -458,14 +458,14 @@
                               <div class="pro-pic-img">
                                 <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url">
                               </div>
-                              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)">
+                              <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
                               <div class="add">
-                                <span (click)="logofile.click()">{{add_cap}}
+                                <span (click)="changeProPic()">{{add_cap}}
                                   <br/> {{profile_pic_cap}}
                                 </span>
                               </div>
                               <div class="change">
-                                <span class="change-pic" (click)="logofile.click()">{{change_cap}}
+                                <span class="change-pic" (click)="changeProPic()">{{change_cap}}
                                   <br/> {{pic_cap}}</span>
                                 <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                               </div>

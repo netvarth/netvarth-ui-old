@@ -25,7 +25,7 @@ import { GalleryService } from '../../../../shared/modules/gallery/galery-servic
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
-// import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
+import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 
 @Component({
@@ -2073,14 +2073,15 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
     });
   }
 
-  // changeProPic() {
-  //   this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: { }
-  //   });
-  //   this.notedialogRef.afterClosed().subscribe(result => {
-  //   });
-  // }
+  changeProPic() {
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: { }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      this.getProviderLogo();
+    });
+  }
 }

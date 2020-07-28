@@ -5,6 +5,8 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
+import { Messages } from '../../../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -24,6 +26,10 @@ export class ProPicPopupComponent implements OnInit {
     selitem_pic = '';
     bProfile;
     blogo: any = [];
+    fileToReturn: any;
+    api_success: string;
+    img_save_caption = 'Save';
+    savedisabled = false;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -40,7 +46,12 @@ export class ProPicPopupComponent implements OnInit {
         this.imageChangedEvent = event;
     }
     imageCropped(event: ImageCroppedEvent) {
-        this.croppedImage = event.base64;
+        this.croppedImage = event.base64; // preview
+        this.fileToReturn = this.base64ToFile(
+            event.base64,
+            this.imageChangedEvent.target.files[0].name,
+        );
+        return this.fileToReturn;
     }
     imageLoaded() {
         // show cropper
@@ -50,6 +61,17 @@ export class ProPicPopupComponent implements OnInit {
     }
     loadImageFailed() {
         // show message
+    }
+    base64ToFile(imgdata, filename) {
+        const arr = imgdata.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
     }
 
     getBusinessProfile() {
@@ -77,72 +99,72 @@ export class ProPicPopupComponent implements OnInit {
     }
 
     saveImages() {
-        const input = this.imageChangedEvent;
+        const file = this.fileToReturn;
         this.success_error = null;
         this.error_list = [];
         this.error_msg = '';
-        if (input.target.files && input.target.files[0]) {
-            for (const file of input.target.files) {
-                this.success_error = this.sharedfunctionobj.imageValidation(file);
-                if (this.success_error === true) {
-                    const reader = new FileReader();
-                    this.item_pic.files = input.target.files[0];
-                    this.selitem_pic = input.target.files[0];
-                    const fileobj = input.target.files[0];
-                    reader.onload = (e) => {
-                        this.item_pic.base64 = e.target['result'];
+        this.img_save_caption = 'Uploading .. ';
+        this.savedisabled = true;
+        if (file) {
+            this.success_error = this.sharedfunctionobj.imageValidation(file);
+            if (this.success_error === true) {
+                const reader = new FileReader();
+                this.item_pic.files = file;
+                this.selitem_pic = file;
+                const fileobj = file;
+                reader.onload = (e) => {
+                    this.item_pic.base64 = e.target['result'];
+                };
+                reader.readAsDataURL(fileobj);
+                if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+                    // generating the data to be submitted to change the logo
+                    const submit_data: FormData = new FormData();
+                    submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                    const propertiesDet = {
+                        'caption': 'Logo'
                     };
-                    reader.readAsDataURL(fileobj);
-                    if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-                        // generating the data to be submitted to change the logo
-                        const submit_data: FormData = new FormData();
-                        submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-                        const propertiesDet = {
-                            'caption': 'Logo'
-                        };
-                        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-                        submit_data.append('properties', blobPropdata);
-                        //this.uploadLogo(submit_data);
-                    }
-                } else {
-                    this.error_list.push(this.success_error);
-                    if (this.error_list[0].type) {
-                        this.error_msg = 'Selected image type not supported';
-                    } else if (this.error_list[0].size) {
-                        this.error_msg = 'Please upload images with size less than 15mb';
-                    }
-                    // this.error_msg = 'Please upload images with size < 5mb';
-                    this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+                    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                    submit_data.append('properties', blobPropdata);
+                    this.uploadLogo(submit_data);
                 }
+            } else {
+                this.error_list.push(this.success_error);
+                if (this.error_list[0].type) {
+                    this.error_msg = 'Selected image type not supported';
+                } else if (this.error_list[0].size) {
+                    this.error_msg = 'Please upload images with size less than 15mb';
+                }
+                // this.error_msg = 'Please upload images with size < 5mb';
+                this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
             }
         }
     }
 
     uploadLogo(passdata) {
         this.provider_services.uploadLogo(passdata)
-          .subscribe(
-            data => {
-              // this.getProviderLogo();
-              this.blogo = [];
-              this.blogo[0] = data;
-              // calling function which saves the business related details to show in the header
-              const today = new Date();
-              const tday = today.toString().replace(/\s/g, '');
-              const blogo = this.blogo[0].url + '?' + tday;
-
-            //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-            //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-            //   const pdata = { 'ttype': 'updateuserdetails' };
-            //   this.provider_datastorage.updateProfilePicWeightage(true);
-            //   this.sharedfunctionobj.sendMessage(pdata);
-
-              /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
-            },
-            error => {
-              this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              // this.api_error = error.error;
-            }
-          );
-      }
+            .subscribe(
+                data => {
+                    this.blogo = [];
+                    this.blogo[0] = data;
+                    // calling function which saves the business related details to show in the header
+                    const today = new Date();
+                    const tday = today.toString().replace(/\s/g, '');
+                    const blogo = this.blogo[0].url + '?' + tday;
+                    const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+                    this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+                        || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+                    const pdata = { 'ttype': 'updateuserdetails' };
+                    this.provider_datastorage.updateProfilePicWeightage(true);
+                    this.sharedfunctionobj.sendMessage(pdata);
+                    this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                    setTimeout(() => {
+                        this.dialogRef.close();
+                    }, projectConstantsLocal.TIMEOUT_DELAY);
+                },
+                error => {
+                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    // this.api_error = error.error;
+                }
+            );
+    }
 }
