@@ -93,6 +93,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
   qprefixName = '';
   qsuffixName = '';
   qbatchStatus = false;
+  startdateError = false;
+  enddateError = false;
+  minDate;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -117,6 +120,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
   ngOnInit() {
     this.getWaitlistMgr();
+    this.minDate = this.convertDate();
     this.api_loading = true;
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -298,7 +302,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   }
   getProviderQueues() {
     // const filter = {
-    //   'scope-eq': 'account' 
+    //   'scope-eq': 'account'
     // };
     this.provider_services.getProviderQueues().subscribe(data => {
       this.queue_list = data;
@@ -331,13 +335,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
             }
           }
           for (let j = 0; j < this.departments.length; j++) {
-            if (this.departments[j].serviceIds == '') {  /* triple equal is not working here*/
+            if (this.departments[j].serviceIds === '') {  /* triple equal is not working here*/
               this.departments.splice(j, 1);
             }
           }
-          //console.log(this.departments);
+          // console.log(this.departments);
           this.api_loading1 = false;
-        }, 
+        },
         error => {
           this.api_loading1 = false;
           // this.sharedfunctionObj.apiErrorAutoHide(this, error);
@@ -366,7 +370,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-
+        startdate: [''],
+        enddate: [''],
         // timeSlot: [0],
       });
       // this.updateForm();
@@ -382,9 +387,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-
+        startdate: [''],
+        enddate: [''],
         // timeSlot: [0]
       });
+      console.log(this.minDate);
+      this.amForm.get('startdate').setValue(this.minDate);
       this.provider_services.getQStartToken()
         .subscribe(
           (data) => {
@@ -420,7 +428,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
       qcapacity: this.queue_data.capacity || null,
       qserveonce: this.queue_data.parallelServing || null,
       // timeSlot: this.queue_data.timeInterval || 0,
-      tokennum: this.queue_data.tokenStarts || null
+      tokennum: this.queue_data.tokenStarts || null,
+      startdate: this.queue_data.queueSchedule.startDate || null,
+      enddate: this.queue_data.queueSchedule.terminator.endDate,
     });
     // this.amForm.get('qlocation').disable();
     this.qbatchStatus = this.queue_data.batch;
@@ -487,7 +497,51 @@ export class WaitlistQueueDetailComponent implements OnInit {
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
 
+  convertDate(date?) {
+    let today;
+    let mon;
+    let cdate;
+    if (date) {
+      cdate = new Date(date);
+    } else {
+      cdate = new Date();
+    }
+    mon = (cdate.getMonth() + 1);
+    if (mon < 10) {
+      mon = '0' + mon;
+    }
+    return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+  }
+  compareDate(dateValue, startOrend) {
+    const UserDate = dateValue;
+    this.startdateError = false;
+    this.enddateError = false;
+    const ToDate = new Date().toString();
+    const l = ToDate.split(' ').splice(0, 4).join(' ');
+    // const ToDate1 = new Date(UserDate);
+    const sDate = this.amForm.get('startdate').value;
+    const sDate1 = new Date(sDate).toString();
+    const l2 = sDate1.split(' ').splice(0, 4).join(' ');
+    if (startOrend === 0) {
+      if (new Date(UserDate) < new Date(l)) {
+        return this.startdateError = true;
+      }
+      return this.startdateError = false;
+    } else if (startOrend === 1 && dateValue) {
+      if (new Date(UserDate) < new Date(l2)) {
+        return this.enddateError = true;
+      }
+      return this.enddateError = false;
+    }
+  }
   onSubmit(form_data) {
+    let endDate;
+    const startDate = this.convertDate(form_data.startdate);
+    if (form_data.enddate) {
+      endDate = this.convertDate(form_data.enddate);
+    } else {
+      endDate = '';
+    }
     if (!form_data.qname.replace(/\s/g, '').length) {
       const error = 'Please enter queue name';
       // this.shared_Functionsobj.apiErrorAutoHide(this, error);
@@ -603,9 +657,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
       schedulejson = {
         'recurringType': 'Weekly',
         'repeatIntervals': daystr,
-        'startDate': today,
+        'startDate': startDate,
         'terminator': {
-          'endDate': '',
+          'endDate': endDate,
           'noOfOccurance': ''
         },
         'timeSlots': [{

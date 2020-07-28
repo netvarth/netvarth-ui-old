@@ -93,6 +93,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   sprefixName = '';
   ssuffixName = '';
   sbatchStatus = false;
+  startdateError = false;
+  enddateError = false;
+  minDate;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -131,6 +134,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
   }
   ngOnInit() {
+    this.minDate = this.convertDate();
     this.getWaitlistMgr();
     this.api_loading = true;
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -341,7 +345,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             }
           }
           for (let j = 0; j < this.departments.length; j++) {
-            if (this.departments[j].serviceIds == '') {  /* triple equal is not working here*/
+            if (this.departments[j].serviceIds === '') {  /* triple equal is not working here*/
               this.departments.splice(j, 1);
             }
           }
@@ -395,10 +399,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         timeSlot: ['', Validators.compose([Validators.required])],
+        startdate: [''],
+        enddate: [''],
       });
       setTimeout(() => {
         this.updateForm();
-        }, 1000);
+      }, 1000);
     } else {
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -408,8 +414,11 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        timeSlot: ['', Validators.compose([Validators.required])],
+        startdate: [''],
+        enddate: [''],
       });
+      this.amForm.get('startdate').setValue(this.minDate);
       this.provider_services.getQStartToken()
         .subscribe(
           (data) => {
@@ -443,7 +452,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       qendtime: edtime || null,
       // qcapacity: this.queue_data.capacity || null,
       qserveonce: this.queue_data.parallelServing || null,
-      timeSlot: this.queue_data.timeDuration || 0
+      timeSlot: this.queue_data.timeDuration || 0,
+      startdate: this.queue_data.apptSchedule.startDate || null,
+      enddate: this.queue_data.apptSchedule.terminator.endDate,
     });
 
     this.sbatchStatus = this.queue_data.batchEnable;
@@ -510,8 +521,52 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
+  convertDate(date?) {
+    let today;
+    let mon;
+    let cdate;
+    if (date) {
+      cdate = new Date(date);
+    } else {
+      cdate = new Date();
+    }
+    mon = (cdate.getMonth() + 1);
+    if (mon < 10) {
+      mon = '0' + mon;
+    }
+    return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+  }
+  compareDate(dateValue, startOrend) {
+    const UserDate = dateValue;
+    this.startdateError = false;
+    this.enddateError = false;
+    const ToDate = new Date().toString();
+    const l = ToDate.split(' ').splice(0, 4).join(' ');
+    // const ToDate1 = new Date(UserDate);
+    const sDate = this.amForm.get('startdate').value;
+    const sDate1 = new Date(sDate).toString();
+    const l2 = sDate1.split(' ').splice(0, 4).join(' ');
+    if (startOrend === 0) {
+      if (new Date(UserDate) < new Date(l)) {
+        return this.startdateError = true;
+      }
+      return this.startdateError = false;
+    } else if (startOrend === 1 && dateValue) {
+      if (new Date(UserDate) < new Date(l2)) {
+        return this.enddateError = true;
+      }
+      return this.enddateError = false;
+    }
+  }
 
   onSubmit(form_data) {
+    let endDate;
+    const startDate = this.convertDate(form_data.startdate);
+    if (form_data.enddate) {
+      endDate = this.convertDate(form_data.enddate);
+    } else {
+      endDate = '';
+    }
     if (!form_data.qname.replace(/\s/g, '').length) {
       const error = 'Please enter schedule name';
       this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -618,9 +673,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       schedulejson = {
         'recurringType': 'Weekly',
         'repeatIntervals': daystr,
-        'startDate': today,
+        'startDate': startDate,
         'terminator': {
-          'endDate': '',
+          'endDate': endDate,
           'noOfOccurance': ''
         },
         'timeSlots': [{
