@@ -913,14 +913,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
-  goCheckin(data, location, currdata, chdatereq, type) {
+  goCheckin(data, location, type) {
     let provider_data = null;
     if (type === 'fav_provider') {
       provider_data = data;
     } else {
       provider_data = data.provider || null;
     }
-    this.setCheckinData(provider_data, location, currdata, chdatereq);
+    let chdatereq;
+    if (location['onlineCheckIn'] && location['isAvailableToday'] && location['availableToday']) {
+      chdatereq = false;
+    } else {
+      chdatereq = false;
+    }
+    this.setCheckinData(provider_data, location, location['estimatedtime_det']['cdate'], chdatereq);
   }
   // showCheckin(locid, locname, curdate, origin?) {
   //   const navigationExtras: NavigationExtras = {

@@ -1245,16 +1245,20 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       }
     });
   }
-  checkinClicked(locid, locname, cdate, chdatereq) {
+  checkinClicked(location) {
     const current_provider = {
-      'id': locid,
-      'place': locname,
-      'cdate': cdate
+      'id': location.id,
+      'place': location.place,
+      'cdate': location['estimatedtime_det']['cdate']
     };
-    this.changedate_req = chdatereq;
+    if (location['isAvailableToday'] && location['availableToday'] && location['onlineCheckIn']) {
+      this.changedate_req = false;
+    } else {
+      this.changedate_req = true;
+    }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showCheckin(locid, locname, cdate, 'consumer');
+      this.showCheckin(location.id, location.place, location['estimatedtime_det']['cdate'], 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);

@@ -141,10 +141,12 @@
                                         <li *ngFor="let appointmentService of apptfirstArray"
                                             (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
                                             {{appointmentService.name}}
-                                            <span *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'videoService'">
+                                            <span
+                                                *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'videoService'">
                                                 (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
                                             </span>
-                                            <span *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'audioService'">
+                                            <span
+                                                *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'audioService'">
                                                 (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
                                             </span>
                                         </li>
@@ -451,24 +453,24 @@
                                                                 class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
                                                     </ng-container>
                                                 </ng-container>
-                                                <span class="checkin-btn"
-                                                    (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                                    *ngIf="loc['isAvailableToday'] && loc['availableToday'] && !loc['showToken'] && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
-                                                <span class="checkin-btn"
-                                                    (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                                    *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['showToken'] && loc['onlineCheckIn']">{{get_token_btn}}</span>
+                                                <span class="checkin-btn" (click)="checkinClicked(loc)"
+                                                    *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
+                                                    (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && !loc['showToken']">{{getTerminologyTerm('waitlist')}}</span>
+                                                <span class="checkin-btn" (click)="checkinClicked(loc)"
+                                                    *ngIf="((loc['isAvailableToday'] && loc['availableToday'] && loc['onlineCheckIn']) || 
+                                                    (loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist'])) && loc['showToken']">{{get_token_btn}}</span>
                                                 <span class="checkin-btn disabled" style="cursor: auto"
-                                                    *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
+                                                    *ngIf="!loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">{{getTerminologyTerm('waitlist')}}</span>
                                                 <span class="checkin-btn disabled" style="cursor: auto"
-                                                    *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
-                                                <span class="checkin-future pdetailbt10"
+                                                    *ngIf="loc['showToken'] && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday']) && (!loc['estimatedtime_det']['cdate'] || !settingsjson['futureDateWaitlist'])">{{get_token_btn}}</span>
+                                                <!-- <span class="checkin-future pdetailbt10"
                                                     *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                                     (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                     <span
                                                         *ngIf="!loc['showToken']">{{getTerminologyTerm('waitlist')}}</span>
                                                     <span *ngIf="loc['showToken']">{{get_token_btn}}</span>
                                                     {{for_cap}}
-                                                    <span>{{different_date_cap}}</span></span>
+                                                    <span>{{different_date_cap}}</span></span> -->
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail"

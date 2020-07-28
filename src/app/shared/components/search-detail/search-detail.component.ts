@@ -2138,7 +2138,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   bookServiceClicked(searchData) {
     if (searchData.fields.waitlist && !searchData.fields.apptAllowed
-      && searchData.fields.donation_status !== '1') {
+      && searchData.fields.donation_status === '0') {
       if (searchData.fields['estimatedtime_det']['onlineCheckIn'] && searchData.fields['estimatedtime_det']['availableToday'] &&
         searchData.fields['estimatedtime_det']['isAvailableToday']) {
         this.checkinClicked(searchData, false);
@@ -2146,29 +2146,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.checkinClicked(searchData, true);
       }
     } else if (!searchData.fields.waitlist && searchData.fields.apptAllowed
-      && searchData.fields.donation_status !== '1') {
-        this.appointmentClicked(searchData, false);
+      && searchData.fields.donation_status === '0') {
+      this.appointmentClicked(searchData, false);
     } else if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
       && searchData.fields.donation_status === '1') {
-        this.payClicked(searchData);
+      this.payClicked(searchData);
     } else {
       this.providerDetClicked(searchData);
     }
-
-
-    // if (searchData.fields.waitlist) {
-    //   if (searchData.fields['estimatedtime_det']['onlineCheckIn'] && searchData.fields['estimatedtime_det']['availableToday'] &&
-    //     searchData.fields['estimatedtime_det']['isAvailableToday']) {
-    //     this.checkinClicked(searchData, false);
-    //   } else if (searchData.fields['estimatedtime_det']['cdate'] && searchData.fields.future_checkins === '1') {
-    //     this.checkinClicked(searchData, true);
-    //   } else {
-    //     this.appointmentClicked(searchData, false);
-    //   }
-    // } else if (searchData.fields.apptAllowed) {
-    //   this.appointmentClicked(searchData, false);
-    // } else {
-    //   this.payClicked(searchData);
-    // }
   }
 }
