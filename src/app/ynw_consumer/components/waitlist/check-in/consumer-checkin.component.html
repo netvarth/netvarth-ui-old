@@ -150,11 +150,11 @@
                                     <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
                                     <div class="date-body">
                                         <span class="selected-date"> <span class="icon-minus"
-                                                [class.disable]="disableMinus()"
+                                                [class.disable]="disableMinus()" *ngIf="settingsjson.futureDateWaitlist"
                                                 (click)="calculateDate(-1)"></span>{{sel_day}}
                                             {{sel_checkindate | date: dateFormat}}
-                                            <span class="icon-add" (click)="calculateDate(1)"></span></span>
-                                        <div class="form-group dt">
+                                            <span class="icon-add" *ngIf="settingsjson.futureDateWaitlist" (click)="calculateDate(1)"></span></span>
+                                        <div class="form-group dt" *ngIf="settingsjson.futureDateWaitlist">
                                             <div class="pickerouter">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                 </mat-datepicker-toggle>

@@ -210,7 +210,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group row">
                                 <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
                                     <mat-form-field>
-                                        <input matInput [matDatepicker]="picker" [min]="minDate"
+                                        <input matInput [matDatepicker]="picker"
                                             (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
                                             formControlName="startdate">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -222,7 +222,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-xs-5">
                                     <mat-form-field>
-                                        <input matInput [matDatepicker]="picker1" [min]="minDate"
+                                        <input matInput [matDatepicker]="picker1"
                                             (dateChange)="compareDate($event.value,1)" placeholder="End Date"
                                             formControlName="enddate">
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
