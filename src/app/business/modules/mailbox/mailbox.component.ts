@@ -163,14 +163,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
             },
                 () => {
                 });
-    } 
+    }
     sendMessage(messageToSend, inboxList, parentIndex) {
         // const userId = this.getReceiverId(inboxList);
         const userId = inboxList[0].accountId;
         let uuid = null;
         if (this.selectedMessage && this.selectedMessage[parentIndex]) {
             if (this.selectedMessage[parentIndex].message.waitlistid) {
-                uuid =  this.selectedMessage[parentIndex].message.waitlistid;
+                uuid = this.selectedMessage[parentIndex].message.waitlistid;
             }
         }
         if (uuid) {
@@ -296,10 +296,10 @@ export class MailboxComponent implements OnInit, OnDestroy {
         // this.disableButton = true;
         if (uuid && uuid.indexOf('appt') >= 0) {
             this.type = 'appt';
-          } else {
+        } else {
             this.type = 'wl';
-          }
-          if (this.type === 'appt') {
+        }
+        if (this.type === 'appt') {
             this.shared_services.addProviderAppointmentNote(uuid,
                 post_data)
                 .subscribe(
@@ -313,7 +313,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         // this.disableButton = false;
                     }
                 );
-          } else {
+        } else {
             this.shared_services.addProviderWaitlistNote(uuid,
                 post_data)
                 .subscribe(
@@ -327,8 +327,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         // this.disableButton = false;
                     }
                 );
-          }
-        
+        }
+
     }
     providerToConsumerNoteAdd(post_data, consumerid) {
         if (this.user_id !== null) {
@@ -437,15 +437,19 @@ export class MailboxComponent implements OnInit, OnDestroy {
             }
         }
         const messageids = messageIds.toString();
+        const leng = messages.length;
         if (messageids) {
             this.provider_services.readConsumerMessages(messages[0].accountId, messageids.split(',').join('-')).subscribe(data => {
                 this.getInboxMessages();
                 this.getUnreadCount();
                 this.openState[index] = true;
+                setTimeout(() => {
+                    this.scrollToSection(messages[leng - 1]);
+                }, 1000);
             });
+        } else {
+            this.scrollToSection(messages[leng - 1]);
         }
-        const leng = messages.length;
-        this.scrollToSection(messages[leng - 1]);
     }
     scrollToSection(messageList) {
         this.msgIds.toArray().forEach(element => {

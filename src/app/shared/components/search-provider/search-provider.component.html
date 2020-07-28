@@ -98,9 +98,14 @@
                     <li *ngFor="let serv of search_result.wtlstservices"
                       (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name
                                             | capitalizeFirst}}
-                      <span *ngIf="serv.serviceType == 'virtualService'">
+                      <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'videoService'">
                         (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                      </span></li>
+                      </span>
+                      <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
+                        (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
+                      </span>
+                    
+                    </li>
                   </ul>
                 </div>
               </div>
