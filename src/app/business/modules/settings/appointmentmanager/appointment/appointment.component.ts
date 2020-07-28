@@ -197,6 +197,7 @@ export class AppointmentComponent implements OnInit {
     showSubq = 0;
     selectDept;
     selectUser;
+    accountType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -420,6 +421,7 @@ export class AppointmentComponent implements OnInit {
                     .then(
                         (data: any) => {
                             this.account_id = data.id;
+                            this.accountType = data.accountType;
                             this.domain = data.serviceSector.domain;
                             this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
                             if (this.domain === 'foodJoints') {

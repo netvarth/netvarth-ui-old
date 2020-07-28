@@ -209,6 +209,7 @@ export class ConsumerCheckinComponent implements OnInit {
     is_wtsap_empty = false;
     selectedDeptParam;
     selectedUserParam;
+    accountType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1478,6 +1479,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         break;
                     case 'businessProfile':
                         this.businessjson = res;
+                        this.accountType = this.businessjson.accountType;
                         this.getProviderDepart(this.businessjson.id);
                         this.domain = this.businessjson.serviceSector.domain;
                         if (this.domain === 'foodJoints') {

@@ -203,6 +203,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selectedDeptParam;
     selectedUserParam;
     selectedUser;
+    accountType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -438,14 +439,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
             return;
         } else {
-           // this.consumerPhoneNo = this.selected_phone;
+            // this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.currentPhone = this.selected_phone;
             this.edit = true;
             this.changePhno = true;
         }
     }
-    editPhone() { 
+    editPhone() {
         this.edit = false;
         this.selected_phone = this.userPhone;
     }
@@ -783,7 +784,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.api_error === null) {
             // post_Data['consumer'] = { id: this.customer_data.id };
             // post_Data['ignorePrePayment'] = true;
-           // console.log(post_Data);
+            // console.log(post_Data);
             if (!this.is_wtsap_empty) {
                 this.addCheckInConsumer(post_Data);
             }
@@ -1457,7 +1458,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                       // this.consumerPhoneNo = this.userPhone;
+                        // this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {
                         this.emailExist = true;
@@ -1517,6 +1518,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         break;
                     case 'businessProfile':
                         this.businessjson = res;
+                        this.accountType = this.businessjson.accountType;
                         this.getProviderDepart(this.businessjson.id);
                         this.domain = this.businessjson.serviceSector.domain;
                         if (this.domain === 'foodJoints') {

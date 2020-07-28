@@ -191,6 +191,7 @@ export class ProviderCheckinComponent implements OnInit {
     showtoken: any;
     selectDept;
     selectUser;
+    accountType;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -438,6 +439,7 @@ export class ProviderCheckinComponent implements OnInit {
                     .then(
                         (data: any) => {
                             _this.account_id = data.id;
+                            _this.accountType = data.accountType;
                             _this.domain = data.serviceSector.domain;
                             _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
                             if (_this.domain === 'foodJoints') {
