@@ -232,7 +232,7 @@
                                                    
                                                     <!--bindings={}-->
                                                     <p class="form-level-settings">Mention your specilization here
-                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                        <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn More</a>
                                                     </p>
                                                 </mat-panel-title>
                                             </span>
@@ -242,11 +242,11 @@
                                             <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
                                                 style="transform: rotate(180deg);"></span> -->
                                         </mat-expansion-panel-header>
-                                        <div class="row" *ngIf="bProfile  ">
+                                        <div class="row" *ngIf="bProfile && bProfile.businessName ">
                                         <div class="card p0 w-dta active">
 
 
-                                            <div class="no-dta" *ngIf="normal_specilization_show==1&&normal_basicinfo_show==1">
+                                            <div class="no-dta" *ngIf="normal_specilization_show==1 && normal_basicinfo_show==1">
                                                 <app-innerloading-spinner spinnerParams="loadingParams">
                                                 </app-innerloading-spinner>
                                             </div>
@@ -256,8 +256,8 @@
                                             </div>
                                             <div class="lang-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
                                                 <span class="editbt" (click)="handleSpecialization()"></span>
-                                                <div *ngFor="let spec of bProfile.specialization">
-                                                    {{getSpecializationName(spec)}}
+                                                <div *ngFor="let special of bProfile.specialization">
+                                                    {{getSpecializationName(special)}}
                                                 </div>
                                             </div>
 
@@ -283,7 +283,7 @@
                                                     
                                                     <!--bindings={}-->
                                                     <p class="form-level-settings">Mention your languages here
-                                                        <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                        <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('languages-known', $event)">Learn More</a>
                                                     </p>
                                                 </mat-panel-title>
                                             </span>
@@ -694,7 +694,7 @@
                                                       
                                                         <!--bindings={}-->
                                                         <p class="form-level-settings">{{frm_social_cap}}
-                                                            <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                                            <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('your-social-media', $event)">Learn More</a>
                                                         </p>
                                                     </mat-panel-title>
                                                 </span>

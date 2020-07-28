@@ -494,7 +494,7 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Manage your business location details here.
-                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('location', $event)">Learn More</a>
                                   </p>
                                 </mat-panel-title>
                               </span>
@@ -663,9 +663,9 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Mention your specialization here
-                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn More</a>
                                   </p>
-                                </mat-panel-title>
+                                </mat-panel-title> 
                               </span>
                               <!--bindings={
                                                     "ng-reflect-ng-if": "true"
@@ -1070,7 +1070,7 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Mention your languages here
-                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('languages-known', $event)" >Learn More</a>
                                   </p>
                                 </mat-panel-title>
                               </span>
@@ -1124,7 +1124,7 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Add your images and social media
-                                    <a class="learnmore-pointer" id="customer-help">Learn More</a>
+                                    <!-- <a class="learnmore-pointer" id="customer-help">Learn More</a> -->
                                   </p>
                                 </mat-panel-title>
                               </span>
