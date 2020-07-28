@@ -87,7 +87,6 @@ export class ProviderNotificationsComponent implements OnInit {
   SelchkincnclNotify = false;
   selDonatnNotify = false;
   mode_of_notify = '';
-  providerId;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -112,7 +111,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumbs = breadcrumbs;
   }
   getNotificationList() {
-    this.provider_services.getNotificationList()
+    this.provider_services.getUserNotificationList(0)
       .subscribe(
         data => {
           this.notificationList = data;
