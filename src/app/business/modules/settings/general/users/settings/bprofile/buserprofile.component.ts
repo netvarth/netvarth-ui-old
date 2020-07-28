@@ -438,7 +438,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           if (this.social_arr.length < this.orgsocial_list.length) {
             this.showaddsocialmedia = true;
           }
-
           this.user_datastorage.set('bProfile', this.bProfile);
           this.user_datastorage.setUserBusinessProfileWeightage(this.bProfile);
 
@@ -489,8 +488,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     this.api_success = null;
   }
   getUser() {
-    
-    
     this.provider_services.getUser(this.userId)
       .subscribe((data: any) => {
         this.subDomainId = data.subdomain;
@@ -518,19 +515,16 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
               if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                this.initSpecializations();
+                this.getSpecializations(this.domain,this.subDomain);
+                // this.initSpecializations();
                 this.bProfile['subDomain'] = this.subDomain;
                 this.getBusinessProfile();
+               
               }
             }
           }
         }
-
-
-
-
-
-      });
+ });
   }
 
   checkMandatoryFieldsInResultSet(domainFields, fieldname) {
@@ -1075,15 +1069,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     el.scrollIntoView({ behavior: 'smooth' });
   }
   initSpecializations() {
-
     this.bProfile = [];
     this.getBussinessProfileApi()
       .then(
         data => {
           this.bProfile = data;
-          this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+         (this.bProfile);
           this.getSpecializations(this.domain, this.subDomain);
+          this.specialization_arr;
           if (this.bProfile.specialization) {
+           
+            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
             } else {
@@ -1100,10 +1096,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
-      .subscribe(data => {
-        this.specialization_arr = data;
-      });
-  }
+      .subscribe((data:any) => {
+       this.specialization_arr = data;
+       });
+     }
   getSpecializationName(n) {
     for (let i = 0; i < this.specialization_arr.length; i++) {
       if (this.specialization_arr[i].name === n) {
