@@ -879,6 +879,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
             this.normal_customid_show = 3;
           }
 
+
+
          // specialization
          this.normal_specilization_show = 2;
          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
