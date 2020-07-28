@@ -397,7 +397,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
     this.getProviderLocations();
-    this.initSpecializations();
+   // this.initSpecializations();
     this.getGalleryImages();
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -878,6 +878,21 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
           if (this.bProfile.customId) {
             this.normal_customid_show = 3;
           }
+
+         // specialization
+         this.normal_specilization_show = 2;
+         this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+         this.specialization_title = (data['serviceSubSector']['displayName']) ?
+           data['serviceSubSector']['displayName'] : '';
+           this.normal_specilization_show = 2;
+         if (this.bProfile.specialization) {
+           if (this.bProfile.specialization.length > 0) {
+             this.normal_specilization_show = 3;
+           } else {
+             this.normal_specilization_show = 2;
+           }
+         }
+
           this.normal_socialmedia_show = 2;
           this.social_arr = [];
           if (this.bProfile.socialMedia) {
@@ -1477,6 +1492,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
           this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
           this.specialization_title = (data['serviceSubSector']['displayName']) ?
             data['serviceSubSector']['displayName'] : '';
+            this.normal_specilization_show = 2;
           if (this.bProfile.specialization) {
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
