@@ -581,6 +581,8 @@
                                             <div class="">
                                                 <span class="">Amount: {{rupee_symbol}} {{donation.donationAmount}}
                                                 </span>
+                                                <div><span *ngIf="donation.donor">Donor: {{donation.donor.firstName}}
+                                                </span></div>
                                             </div>
                                         </div>
 
