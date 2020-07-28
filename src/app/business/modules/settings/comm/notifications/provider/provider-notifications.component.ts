@@ -87,6 +87,7 @@ export class ProviderNotificationsComponent implements OnInit {
   SelchkincnclNotify = false;
   selDonatnNotify = false;
   mode_of_notify = '';
+  providerId;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -111,7 +112,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumbs = breadcrumbs;
   }
   getNotificationList() {
-    this.provider_services.getUserNotificationList(0)
+    this.provider_services.getNotificationList()
       .subscribe(
         data => {
           this.notificationList = data;
@@ -616,7 +617,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMessage = this.cheknpush;
-    this.savechekinNotification_json.providerId = 0;
+    //this.savechekinNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -641,7 +642,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMessage = this.cancelpush;
-    this.savecancelNotification_json.providerId = 0;
+    //this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   apptNotifications(source) {
@@ -665,7 +666,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.apptph_arr;
     this.savechekinNotification_json.email = this.apptem_arr;
     this.savechekinNotification_json.pushMessage = this.apptPush;
-    this.savechekinNotification_json.providerId = 0;
+   // this.savechekinNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -690,7 +691,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.apptph1_arr;
     this.savecancelNotification_json.email = this.apptem1_arr;
     this.savecancelNotification_json.pushMessage = this.cancelpushAppt;
-    this.savecancelNotification_json.providerId = 0;
+   // this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   donateNotifications(source){
@@ -714,7 +715,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.donateph_arr;
     this.savechekinNotification_json.email = this.donateem_arr;
     this.savechekinNotification_json.pushMessage = this.donatePush;
-    this.savechekinNotification_json.providerId = 0;
+   // this.savechekinNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
   saveNotifctnJson(saveNotification_json, mode, source) {

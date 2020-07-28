@@ -1086,7 +1086,7 @@ export class ProviderServices {
    updateuserlinkProfile(id, profid) {
       return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
    }
-   getUserNotificationList(id) {
+   getUserNotificationList(id?) {
       const url = 'provider/settings/notification/' + id;
       return this.servicemeta.httpGet(url);
    }
