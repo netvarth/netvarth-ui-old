@@ -157,6 +157,7 @@ export class ProPicPopupComponent implements OnInit {
                     this.provider_datastorage.updateProfilePicWeightage(true);
                     this.sharedfunctionobj.sendMessage(pdata);
                     this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                    this.img_save_caption = 'Uploaded';
                     setTimeout(() => {
                         this.dialogRef.close();
                     }, projectConstantsLocal.TIMEOUT_DELAY);
