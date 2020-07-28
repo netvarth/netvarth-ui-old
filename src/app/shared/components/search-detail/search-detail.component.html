@@ -271,7 +271,7 @@
                             <div class="tp-l">
                                 <div class="tp1">
                                     <div class="pro-img" (click)="providerDetClicked(search_result)">
-                                        <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="">
+                                        <img *ngIf="search_result.fields.logo" [src]="search_result.fields.logo" alt="" class="crop-img-fit">
                                     </div>
                                     <ul class="gal" *ngIf="search_result.fields.gallery_thumb_nails">
                                         <li>

@@ -10530,3 +10530,6 @@ a {
     height: 30px;
     font-size: 1rem;
   }
+  .crop-img-fit {
+   object-fit: fill !important;
+  }
