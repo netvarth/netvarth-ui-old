@@ -89,7 +89,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   prefixName = '';
   suffixName = '';
   batchStatus = false;
-  showEditSection = false;
   sprefixName = '';
   ssuffixName = '';
   sbatchStatus = false;
@@ -97,6 +96,8 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   enddateError = false;
   minDate;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  showBatchFields = false;
+  batch = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -267,11 +268,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             this.prefixName = this.queue_data.batchName.prefix;
             this.suffixName = this.queue_data.batchName.suffix;
           }
-          // if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-          //   this.showEditSection = true;
-          // } else {
-          //   this.showEditSection = false;
-          // }
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.apptSchedule) {
@@ -459,15 +455,16 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     });
 
     this.sbatchStatus = this.queue_data.batchEnable;
+    if (this.queue_data.parallelServing > 1) {
+      this.batch = true;
+      this.showBatchFields = true;
+    } else {
+      this.batch = false;
+    }
     if (this.queue_data.batchName) {
       this.sprefixName = this.queue_data.batchName.prefix;
       this.ssuffixName = this.queue_data.batchName.suffix;
     }
-    // if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-    //   this.showEditSection = true;
-    // } else {
-    //   this.showEditSection = false;
-    // }
     // this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -934,35 +931,21 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       'suffix': this.suffixName
     };
     this.provider_services.updateScheduleBatch(this.queue_id, post_data).subscribe(data => {
-      this.showEditSection = false;
       this.getScheduleDetail();
       // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
     });
   }
-  editBatchnames() {
-    this.showEditSection = true;
-  }
-  changeBatchStatus(event) {
-    const status = (event.checked) ? 'enabled' : 'disabled';
-    this.provider_services.changeScheduleBatchStatus(this.queue_id, event.checked).subscribe(data => {
-      this.batchStatus = event.checked;
-      this.getScheduleDetail();
-      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-    });
-
-
-  }
 
   changebatchStatus(event) {
     this.sbatchStatus = event.checked;
-    const status = (event.checked) ? 'enabled' : 'disabled';
-    if (status === 'enabled') {
-      this.showEditSection = true;
-    } else {
-      this.showEditSection = false;
-    }
-    if (event.checked) {
+  }
+  EnableBatch(ev) {
+    this.showBatchFields = ev.checked;
+    if (ev.checked) {
       this.amForm.get('qserveonce').setValue(2);
+    } else {
+      this.amForm.get('qserveonce').setValue(1);
+      this.sbatchStatus = false;
     }
   }
 }

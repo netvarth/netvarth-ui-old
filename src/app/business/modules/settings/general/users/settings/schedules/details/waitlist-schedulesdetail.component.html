@@ -99,57 +99,6 @@
                                                 </mat-slide-toggle>
                                             </div>
                                         </div> -->
-                                        <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
-                                            <div class="mgn-up-10" style="display: flex;">
-                                                <h6> Batch mode </h6>
-                                                <mat-slide-toggle class="example-margin mgn-lt-10"
-                                                    [(ngModel)]="batchStatus" (change)="changeBatchStatus($event)">
-                                                </mat-slide-toggle>
-                                                <span class="greenc mgn-lt-5" *ngIf="batchStatus">
-                                                    Enabled
-                                                </span>
-                                                <span class="disabled-text mgn-lt-5" *ngIf="!batchStatus">
-                                                    Disabled
-                                                </span>
-                                            </div>
-                                            <div class="mgn-up-10 ynw-common-form-nm" *ngIf="batchStatus">
-                                                <div class="c-ot" *ngIf="!showEditSection">
-                                                    <div class="item"
-                                                        *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
-                                                        <span class="ttle"> Prefix </span><span
-                                                            class="day">{{queue_data.batchName.prefix}}</span>
-                                                    </div>
-                                                    <div class="item"
-                                                        *ngIf="queue_data.batchName && queue_data.batchName.suffix && queue_data.batchName.suffix != ''">
-                                                        <span class="ttle"> Suffix </span><span
-                                                            class="day">{{queue_data.batchName.suffix}}</span>
-                                                    </div>
-                                                    <span class="editbt" (click)="editBatchnames()"></span>
-                                                </div>
-                                                <div *ngIf="showEditSection">
-                                                    <div class="item">
-                                                        <mat-form-field>
-                                                            <input
-                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Prefix" [(ngModel)]="prefixName"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="item">
-                                                        <mat-form-field>
-                                                            <input
-                                                                style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                                matInput placeholder="Suffix" [(ngModel)]="suffixName"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="mgn-up-20">
-                                                        <button class="btn bt3 btn-default" (click)="addBatchName()"
-                                                            type="button">ok</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -373,21 +322,6 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div> -->
-                            <div class="form-group" *ngIf="showAdvancedSettings && sbatchStatus">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
-                                        placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
-                                        formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)">
-                                </mat-form-field>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
-                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
-        {
-          'required' : 'Please enter the ' + customer_label + 's served per timeslot' ,
-          'maxlength' : 'Only 4 digits are allowed'
-        })">
-                                </app-field-error-display>
-                            </div>
                             <!-- <div class="form-group"
                                 *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
                                 <mat-form-field class="example-full-width">
@@ -406,45 +340,69 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                     <div class="mgn-up-10" style="display: flex;">
-                                        <h6> Batch mode </h6>
-                                        <mat-slide-toggle class="example-margin mgn-lt-10" [ngModel]="sbatchStatus"
-                                            (change)="changebatchStatus($event)" [ngModelOptions]="{standalone: true}">
+                                        <h6> Enable Batch mode </h6>
+                                        <mat-slide-toggle class="example-margin mgn-lt-10" [ngModel]="batch"
+                                            (change)="EnableBatch($event)" [ngModelOptions]="{standalone: true}">
                                         </mat-slide-toggle>
                                     </div>
-                                    <div *ngIf="showEditSection || sbatchStatus">
-                                        <div class="item">
-                                            <mat-form-field>
-                                                <input
-                                                    style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Prefix" [(ngModel)]="sprefixName"
-                                                    autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                    <div class="mgn-lt-10">
+                                        <div class="" *ngIf="showBatchFields">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput min="1" max="{{parallellimit}}" type="text"
+                                                    class="number-ip-sm"
+                                                    placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
+                                                    formControlName="qserveonce" autocomplete="off"
+                                                    (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                             </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
+                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+                {
+                  'required' : 'Please enter the ' + customer_label + 's served per timeslot' ,
+                  'maxlength' : 'Only 4 digits are allowed'
+                })">
+                                            </app-field-error-display>
                                         </div>
-                                        <div class="item">
-                                            <mat-form-field>
-                                                <input
-                                                    style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
-                                                    autocomplete="off" [ngModelOptions]="{standalone: true}">
-                                            </mat-form-field>
-                                        </div>
-                                        <!-- <div class="c-ot" *ngIf="!showEditSection">
-                                                <div class="item"
-                                                    *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
-                                                        <span class="ttle"> Prefix </span><span
-                                                        class="day">{{queue_data.batchName.prefix}}</span>
-                                                </div>
-                                                <div class="item"
-                                                    *ngIf="queue_data.batchName && queue_data.batchName.suffix && queue_data.batchName.suffix != ''">
-                                                    <span class="ttle"> Suffix </span><span
+                                        <mat-checkbox *ngIf="showBatchFields" class="example-margin"
+                                            (change)="changebatchStatus($event)" [checked]="sbatchStatus">Show Batch
+                                            name
+                                        </mat-checkbox>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                                            *ngIf="showBatchFields && sbatchStatus">
+                                            <div class="mgn-up-5" style="font-size: small;"> Prefix and suffix is not
+                                                mandatory</div>
+                                            <div class="item col-md-2 col-sm-3 col-xs-4">
+                                                <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Prefix" [(ngModel)]="sprefixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="item col-md-2 col-sm-3 col-xs-4">
+                                                <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- <div class="c-ot" *ngIf="!showEditSection">
+                                            <div class="item"
+                                                *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
+                                                <span class="ttle"> Prefix </span><span
+                                                    class="day">{{queue_data.batchName.prefix}}</span>
+                                            </div>
+                                            <div class="item"
+                                                *ngIf="queue_data.batchName && queue_data.batchName.suffix && queue_data.batchName.suffix != ''">
+                                                <span class="ttle"> Suffix </span><span
                                                     class="day">{{queue_data.batchName.suffix}}</span>
-                                                </div>
-                                            </div> -->
+                                            </div>
+                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="col-md-12 no-padding" style="margin-top: 15px;display: inline-flex;">
                                 <button type="button" (click)="closeClick()" class="cs-btn bt2"
                                     [disabled]="disableButton">{{cancel_btn}}</button> &nbsp;
