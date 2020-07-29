@@ -560,9 +560,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           this.appttime_arr = data;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             user['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-            user['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-            user['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
             if (this.appttime_arr[i]['availableSchedule']) {
+              user['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+              user['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               user['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
             }
           }
@@ -605,16 +605,26 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             break;
           }
           case 'providerApptServices': {
-            if (res[0] && res[0].services) {
-              user['apptServices'] = res[0].services;
+            user['apptServices'] = [];
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  user['apptServices'].push(dept.services);
+                }
+              }
             } else {
               user['apptServices'] = res;
             }
             break;
           }
           case 'providerservices': {
-            if (res[0] && res[0].services) {
-              user['wtlstservices'] = res[0].services;
+            user['wtlstservices'] = [];
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  user['wtlstservices'].push(dept.services);
+                }
+              }
             } else {
               user['wtlstservices'] = res;
             }

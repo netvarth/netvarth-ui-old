@@ -674,9 +674,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              this.fav_providers[index]['locations'][locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-              this.fav_providers[index]['locations'][locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
+                this.fav_providers[index]['locations'][locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+                this.fav_providers[index]['locations'][locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.fav_providers[index]['locations'][locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
             }

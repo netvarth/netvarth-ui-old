@@ -770,7 +770,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getUserbusinessprofiledetails_json(this.provider_id, userId, this.s3url, section, UTCstring)
-      .subscribe(res => {
+      .subscribe((res: any) => {
         switch (section) {
           case 'providerBusinessProfile': {
             this.socialMedialist = [];
@@ -870,16 +870,24 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             break;
           }
           case 'providerservices': {
-            if (res[0] && res[0].services) {
-              this.servicesjson = res[0].services;
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  this.servicesjson.push(dept.services);
+                }
+              }
             } else {
               this.servicesjson = res;
             }
             break;
           }
           case 'providerApptServices': {
-            if (res[0] && res[0].services) {
-              this.apptServicesjson = res[0].services;
+            if (this.settingsjson.filterByDept) {
+              for (const dept of res) {
+                if (dept.services && dept.services.length > 0) {
+                  this.apptServicesjson.push(dept.services);
+                }
+              }
             } else {
               this.apptServicesjson = res;
             }
@@ -1671,9 +1679,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-              this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+                this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
             }
