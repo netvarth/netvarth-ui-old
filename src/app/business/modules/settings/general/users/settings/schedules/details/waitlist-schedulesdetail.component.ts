@@ -734,7 +734,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.getScheduleDetail();
                     if (this.params.action === 'editFromList') {
-                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'settings', 'schedules']);
+                        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'schedules']);
                     } else if (this.params.source === 'location_detail') {
                         this._location.back();
                     } else {
