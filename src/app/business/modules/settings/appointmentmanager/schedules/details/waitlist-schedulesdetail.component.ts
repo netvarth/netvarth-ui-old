@@ -96,6 +96,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   startdateError = false;
   enddateError = false;
   minDate;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,

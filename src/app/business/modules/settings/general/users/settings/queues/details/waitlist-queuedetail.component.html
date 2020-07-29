@@ -78,6 +78,14 @@
                                                 <span>{{queue_data.tokenStarts}}</span>
                                             </div>
                                             <div class="item">
+                                                <span class="ttle">Start date</span>
+                                                <span>{{queue_data.queueSchedule.startDate | date: dateFormat}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">End date</span>
+                                                <span>{{queue_data.queueSchedule.terminator.endDate | date: dateFormat}}</span>
+                                            </div>
+                                            <div class="item">
                                                 <span class="ttle">Online check-ins</span> <span
                                                     *ngIf="queue_data.onlineCheckIn">On</span><span
                                                     *ngIf="!queue_data.onlineCheckIn">Off</span>
@@ -223,9 +231,9 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
-                                    <app-field-error-display [displayError]=startdateError
+                                    <!-- <app-field-error-display [displayError]=startdateError
                                         errorMsg="Please enter date greater or equal to today">
-                                    </app-field-error-display>
+                                    </app-field-error-display> -->
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-xs-5">
                                     <mat-form-field>
@@ -235,9 +243,9 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                         <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
-                                    <app-field-error-display [displayError]=enddateError
+                                    <!-- <app-field-error-display [displayError]=enddateError
                                         errorMsg="Please enter date greater or equal to startdate">
-                                    </app-field-error-display>
+                                    </app-field-error-display> -->
                                 </div>
                             </div>
                             <div class="form-group schedulesub_outer">
