@@ -3,10 +3,16 @@
 
 <mat-dialog-content>
   <div>
-    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
-      [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
-
+    <div>
+      <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+        [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" format="png"
+        (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"></image-cropper>
+    </div>
+    <div style="padding-top: 20px; text-align: center;" *ngIf="imageChangedEvent && imageChangedEvent.target.files">
+      <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;&nbsp;Left</i>
+      <i class="fa fa-repeat custId-cursor" aria-hidden="true" style="padding-left: 20px;" (click)="rotateRight()">&nbsp;&nbsp;Right</i>
+    </div>
     <!-- <img class="glbl-seting-img-smal" [src]="croppedImage" /> -->
   </div>
   <div *ngIf="!imageChangedEvent" class="upload-doc" (click)="filed.click()">

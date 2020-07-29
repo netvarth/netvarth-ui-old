@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ImageTransform } from './interfaces/index';
 
 
 @Component({
@@ -30,6 +31,8 @@ export class ProPicPopupComponent implements OnInit {
     api_success: string;
     img_save_caption = 'Save';
     savedisabled = false;
+    canvasRotation = 0;
+    transform: ImageTransform = {};
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -72,6 +75,23 @@ export class ProPicPopupComponent implements OnInit {
             u8arr[n] = bstr.charCodeAt(n);
         }
         return new File([u8arr], filename, { type: mime });
+    }
+    rotateLeft() {
+        this.canvasRotation--;
+        this.flipAfterRotate();
+    }
+    rotateRight() {
+        this.canvasRotation++;
+        this.flipAfterRotate();
+    }
+    private flipAfterRotate() {
+        const flippedH = this.transform.flipH;
+        const flippedV = this.transform.flipV;
+        this.transform = {
+            ...this.transform,
+            flipH: flippedV,
+            flipV: flippedH
+        };
     }
 
     getBusinessProfile() {
