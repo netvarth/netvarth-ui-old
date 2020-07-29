@@ -39,7 +39,8 @@
                                                 <ng-container *ngIf="galleryjson.length > 0">
                                                     <ng-container>
                                                         <img [src]="galleryjson[0].thumbUrl" alt=""
-                                                            (click)="openImageModalRow(image_list_popup[0])" alt="" class="crop-img-fit">
+                                                            (click)="openImageModalRow(image_list_popup[0])" alt=""
+                                                            class="crop-img-fit">
                                                     </ng-container>
                                                 </ng-container>
                                             </div>
@@ -533,8 +534,7 @@
                                             </div>
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
-                                                <span
-                                                    (click)="appointmentClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                                <span (click)="appointmentClicked(loc)"
                                                     class="checkin-btn">Appointment</span>
                                             </div>
                                         </div>

@@ -99,6 +99,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   @Input() location;
   @Input() selectedDeptOrUser;
   @Input() fiterByDept;
+  futureAllowed = true;
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
@@ -349,9 +350,17 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       this.doLogin('consumer', passParam);
     }
   }
-  appointmentClicked(obj, chdatereq) {
+  appointmentClicked(obj) {
+    this.futureAllowed = true;
     this.current_provider = obj;
-    this.changedate_req = chdatereq;
+    if (obj.todayAppt) {
+      this.changedate_req = false;
+    } else {
+      this.changedate_req = true;
+    }
+    if (!obj.futureAppt) {
+      this.futureAllowed = false;
+    }
     this.userType = this.shared_functions.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       this.showAppointment();
@@ -403,7 +412,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         account_id: this.businessjson.id,
         tel_serv_stat: this.businessjson.virtualServices,
         dept: this.current_provider.wtlstservices[0].department,
-        user: this.current_provider.id
+        user: this.current_provider.id,
+        futureAppt: this.futureAllowed
       }
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
@@ -550,6 +560,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           this.appttime_arr = data;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             user['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+            user['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+            user['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
             if (this.appttime_arr[i]['availableSchedule']) {
               user['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
             }

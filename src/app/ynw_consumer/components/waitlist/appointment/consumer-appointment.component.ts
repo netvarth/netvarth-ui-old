@@ -204,6 +204,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     selectedUserParam;
     selectedUser;
     accountType;
+    futureAppt = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -219,6 +220,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.sel_queue_id = params.qid;
                 }
                 this.change_date = params.cur;
+                this.futureAppt = params.futureAppt;
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
                 this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);

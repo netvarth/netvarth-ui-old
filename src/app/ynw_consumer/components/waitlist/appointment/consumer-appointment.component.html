@@ -172,11 +172,12 @@
                                     <div class="date-head">Appointment {{date_cap}}</div>
                                     <div class="date-body">
                                         <span class="selected-date"> <span class="icon-minus"
-                                                [class.disable]="disableMinus()"
+                                                [class.disable]="disableMinus()" *ngIf="futureAppt==='true'"
                                                 (click)="calculateDate(-1)"></span>{{sel_day}}
                                             {{sel_checkindate | date: dateFormat}}
-                                            <span class="icon-add" (click)="calculateDate(1)"></span></span>
-                                        <div class="form-group dt">
+                                            <span class="icon-add" *ngIf="futureAppt==='true'"
+                                                (click)="calculateDate(1)"></span></span>
+                                        <div class="form-group dt" *ngIf="futureAppt==='true'">
                                             <div class="pickerouter">
                                                 <mat-datepicker-toggle matSuffix [for]="picker">
                                                 </mat-datepicker-toggle>

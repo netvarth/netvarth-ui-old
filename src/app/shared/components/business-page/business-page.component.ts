@@ -215,6 +215,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   apptfirstArray: any = [];
   apptTempArray: any = [];
   showType = 'more';
+  futureAllowed = true;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -753,6 +754,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+              this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
@@ -1264,16 +1267,24 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-  appointmentClicked(locid, locname, cdate, chdatereq) {
+  appointmentClicked(location) {
+    this.futureAllowed = true;
     const current_provider = {
-      'id': locid,
-      'place': locname,
-      'cdate': cdate
+      'id': location.id,
+      'place': location.place,
+      'cdate': location['estimatedtime_det']['cdate']
     };
-    this.changedate_req = chdatereq;
+    if (location.todayAppt) {
+      this.changedate_req = false;
+    } else {
+      this.changedate_req = true;
+    }
+    if (!location.futureAppt) {
+      this.futureAllowed = false;
+    }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(locid, locname, cdate, 'consumer');
+      this.showAppointment(location.id, location.place, location['estimatedtime_det']['cdate'], 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1382,7 +1393,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
         dept: this.servicesjson[0].department,
-        user: this.userId
+        user: this.userId,
+        futureAppt: this.futureAllowed
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
@@ -1659,6 +1671,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+              this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }

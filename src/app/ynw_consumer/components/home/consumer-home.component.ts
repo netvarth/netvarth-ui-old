@@ -158,6 +158,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   appttime_arr: any = [];
   api_error: any;
   api_loading = false;
+  futureAllowed = true;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -673,6 +674,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.fav_providers[index]['locations'][locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+              this.fav_providers[index]['locations'][locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+              this.fav_providers[index]['locations'][locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.fav_providers[index]['locations'][locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               }
@@ -1475,14 +1478,24 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
     }
   }
-  goAppointment(data, location, currdata, chdatereq, type) {
+  goAppointment(data, location, type) {
+    this.futureAllowed = true;
     let provider_data = null;
     if (type === 'fav_provider') {
       provider_data = data;
     } else {
       provider_data = data.provider || null;
     }
-    this.setAppointmentData(provider_data, location, currdata, chdatereq);
+    let chdatereq;
+    if (location.todayAppt) {
+      chdatereq = false;
+    } else {
+      chdatereq = true;
+    }
+    if (!location.futureAppt) {
+      this.futureAllowed = false;
+    }
+    this.setAppointmentData(provider_data, location, location['estimatedtime_det']['cdate'], chdatereq);
   }
   setAppointmentData(provider, location, currdate, chdatereq = false) {
     const navigationExtras: NavigationExtras = {
@@ -1492,7 +1505,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         cur: chdatereq,
         unique_id: provider.uniqueId,
         account_id: provider.id,
-        tel_serv_stat: provider.virtulServiceStatus
+        tel_serv_stat: provider.virtulServiceStatus,
+        futureAppt: this.futureAllowed
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
