@@ -607,14 +607,39 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
 
   }
 
+  // getLicensemetrics() {
+  //   let pkgId;
+  //   const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+  //   if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+  //     pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+  //   }
+  //   this.provider_services.getLicenseMetadata().subscribe(data => {
+  //     this.licenseMetadata = data;
+  //     for (let i = 0; i < this.licenseMetadata.length; i++) {
+  //       if (this.licenseMetadata[i].pkgId === pkgId) {
+  //         for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+  //           if (this.licenseMetadata[i].metrics[k].id === 13) {
+  //             if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+  //               this.showCustomId = true;
+  //               return;
+  //             } else {
+  //               this.showCustomId = false;
+  //               return;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
   getLicensemetrics() {
     let pkgId;
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
-    this.provider_services.getLicenseMetadata().subscribe(data => {
-      this.licenseMetadata = data;
+    // this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.licenseMetadata = localStorage.getItem('license-metadata');
       for (let i = 0; i < this.licenseMetadata.length; i++) {
         if (this.licenseMetadata[i].pkgId === pkgId) {
           for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
@@ -630,7 +655,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
           }
         }
       }
-    });
+    // });
   }
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
@@ -1309,6 +1334,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
   }
   performActions(action) {
     if (action === 'learnmore') {
+      
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
     }
   }
