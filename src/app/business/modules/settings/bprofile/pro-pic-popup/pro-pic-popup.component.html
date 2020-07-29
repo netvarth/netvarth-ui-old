@@ -7,7 +7,7 @@
       [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
       (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
 
-    <img class="glbl-seting-img-smal" [src]="croppedImage" />
+    <!-- <img class="glbl-seting-img-smal" [src]="croppedImage" /> -->
   </div>
   <div *ngIf="!imageChangedEvent" class="upload-doc" (click)="filed.click()">
     <label class="col-form-label">Select a photo</label>
@@ -19,7 +19,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled">Cancel</button>
+    <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
     <button (click)="saveImages()" *ngIf="imageChangedEvent && imageChangedEvent.target.files" mat-button
       class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
   </div>
