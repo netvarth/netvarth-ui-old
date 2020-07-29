@@ -41,6 +41,7 @@
                             </td>
                             <td>
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
+                                <span *ngIf="!service.provider" class="setings">Global Service</span>
                             </td>
                             <td>
                                 {{service.deptName | capitalizeFirst}}
