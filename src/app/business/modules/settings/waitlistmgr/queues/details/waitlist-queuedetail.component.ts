@@ -918,4 +918,3 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
   }
 }
-
