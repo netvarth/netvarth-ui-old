@@ -271,7 +271,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       };
       if (this.type === 'appt') {
         if (this.selectedMessage.files.length === 0) {
-          this.shared_services.consumerMassCommunication(postdata).
+          this.shared_services.consumerMassCommunicationAppt(postdata).
           subscribe(() => {
             this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
             setTimeout(() => {
