@@ -330,7 +330,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   onOtpSubmit() {
     this.actionstarted = true;
-    this.joinClicked = false;
+    this.joinClicked = true;
     this.resetApiErrors();
     return new Promise((resolve, reject) => {
       this.shared_services.OtpSignUpProviderValidate(this.otp)

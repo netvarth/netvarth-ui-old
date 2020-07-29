@@ -195,9 +195,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                     </mat-dialog-actions>
                                     <div class="form-group form-button">
-                                        <input type="submit" [disabled]="!spForm.valid" name="signup" id="signup"
+                                        <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
                                             class="form-submit" value="Join Jaldee"
-                                            (click)="!joinClicked && onPasswordSubmit()">
+                                            (click)="onPasswordSubmit()">
                                     </div>
                                 </div>
                             </div>
