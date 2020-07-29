@@ -291,6 +291,129 @@
                               </ul>
                             </span>
                           </a>
+                          <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                            <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="filtericonTooltip">
+                            </i>
+                          </a>
+                        </div>
+                        <div class="pull-right">
+                          <aside class="filterSidebar" *ngIf="filter_sidebar">
+                            <section id="filterContainer" class="sidebar sidebar-bottom">
+                              <div class="filterClosebtn">
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Close filter window'"></i>
+                                <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                              </div>
+                              <ul class="sidebar-menu">
+                                <div class="filterTextinput">
+                                  <li class="filterli">
+                                    <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                      class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput">
+                                  <li class="filterli">
+                                    <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                                      class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
+                                      maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                  </li>
+                                </div>
+                                <div *ngIf="service_list.length > 0">
+                                  <label class="filterHeaders">Services</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allServiceSelected"
+                                      (change)="setFilterDataCheckbox('service', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox *ngFor="let service of service_list"
+                                      [checked]="services.indexOf(service.id) !== -1"
+                                      (change)="setFilterDataCheckbox('service', service.id, $event)">
+                                      {{service.name}}</mat-checkbox>
+                                  </li>
+                                </div>
+                                <div *ngIf="time_type === 3">
+                                  <label class="filterHeaders">Appointment Status</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allApptStatusSelected"
+                                      (change)="setFilterDataCheckbox('apptStatus', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                    *ngFor="let appt_status of check_in_statuses_filter">
+                                    <mat-checkbox [checked]="apptStatuses.indexOf(appt_status.value) !== -1"
+                                      (change)="setFilterDataCheckbox('apptStatus', appt_status.value, $event)">
+                                      {{appt_status.displayName}}</mat-checkbox>
+                                  </li>
+                                </div>
+                                <div *ngIf="time_type == 3">
+                                  <label class="filterHeaders">Payment Status</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allPayStatusSelected"
+                                      (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                    *ngFor="let pay_status of payStatusList">
+                                    <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                                      (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                                      {{pay_status.value}}</mat-checkbox>
+                                  </li>
+                                </div>
+                                <div>
+                                  <label class="filterHeaders">Appointment Mode</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allModeSelected"
+                                      (change)="setFilterDataCheckbox('appointmentMode', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                    *ngFor="let mode of appointmentModes">
+                                    <mat-checkbox [checked]="apptModes.indexOf(mode.mode) !== -1"
+                                      (change)="setFilterDataCheckbox('appointmentMode', mode.mode, $event)">
+                                      {{mode.value}}</mat-checkbox>
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli filterDatepicker">
+                                    <input type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday"
+                                      [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Start Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type == 3">
+                                  <li class="filterli filterDatepicker">
+                                    <input type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday"
+                                      [max]="maxday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="End Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </li>
+                                </div>
+                              </ul>
+                            </section>
+                          </aside>
                         </div>
                       </th>
                     </tr>
@@ -397,7 +520,9 @@
                                       *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                                       <i class="icon-note"></i>
                                     </span>
-                                    <span [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"   *ngIf="appt.hasAttachment"><i style="font-size: 20px;"  class="material-icons">attach_file</i></span>
+                                    <span [matTooltip]="'Attachment included'"
+                                      class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
+                                        style="font-size: 20px;" class="material-icons">attach_file</i></span>
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                     <span class="info-box-text" style="font-size: smaller;"
@@ -828,7 +953,9 @@
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i style="font-size: 20px;"  class="material-icons">attach_file</i></span>
+                          <span [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                            *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
+                              class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="" style="font-size: smaller;">
