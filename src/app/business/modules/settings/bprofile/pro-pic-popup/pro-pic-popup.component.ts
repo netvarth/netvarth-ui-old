@@ -8,7 +8,7 @@ import { ProviderDataStorageService } from '../../../../../ynw_provider/services
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImageTransform } from './interfaces/index';
-import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
+//import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
 
 
 @Component({
@@ -38,13 +38,13 @@ export class ProPicPopupComponent implements OnInit {
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
-        private user_datastorage: UserDataStorageService,
+       // private user_datastorage: UserDataStorageService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ProPicPopupComponent>) {
 
     }
     ngOnInit() {
-        this.getBusinessProfile();
+        this.bProfile = this.data.userdata;
     }
 
     imageSelect(event: any): void {
@@ -96,14 +96,14 @@ export class ProPicPopupComponent implements OnInit {
         };
     }
 
-    getBusinessProfile() {
-        this.bProfile = [];
-        this.getBussinessProfileApi()
-            .then(
-                data => {
-                    this.bProfile = data;
-                });
-    }
+    // getBusinessProfile() {
+    //     this.bProfile = [];
+    //     this.getBussinessProfileApi()
+    //         .then(
+    //             data => {
+    //                 this.bProfile = data;
+    //             });
+    // }
 
     getBussinessProfileApi() {
         const _this = this;
@@ -199,19 +199,19 @@ export class ProPicPopupComponent implements OnInit {
         this.provider_services.uploaduserLogo(passdata, this.data.userId)
           .subscribe(
             data => {
-              this.blogo = [];
-              this.blogo = data;
-              console.log(this.blogo);
+            //   this.blogo = [];
+            //   this.blogo = data;
+            //   console.log(this.blogo);
               // calling function which saves the business related details to show in the header
-              const today = new Date();
-              const tday = today.toString().replace(/\s/g, '');
-              const blogo = this.blogo.url + '?' + tday;
-              const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-              this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-                || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-              const pdata = { 'ttype': 'updateuserdetails' };
-              this.user_datastorage.updateProfilePicWeightage(true);
-              this.sharedfunctionobj.sendMessage(pdata);
+            //   const today = new Date();
+            //   const tday = today.toString().replace(/\s/g, '');
+            //   const blogo = this.blogo.url + '?' + tday;
+            //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+            //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+            //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+            //   const pdata = { 'ttype': 'updateuserdetails' };
+            //   this.user_datastorage.updateProfilePicWeightage(true);
+            //   this.sharedfunctionobj.sendMessage(pdata);
               this.api_success = Messages.BPROFILE_LOGOUPLOADED;
               this.img_save_caption = 'Uploaded';
               setTimeout(() => {

@@ -2104,10 +2104,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { }
+      data: { 'userdata': this.bProfile }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getProviderLogo();
+      this.getBusinessProfile();
     });
   }
 }

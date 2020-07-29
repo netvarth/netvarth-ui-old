@@ -1362,10 +1362,13 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: {'userId': this.userId}
+      data: {
+        'userId': this.userId,
+        'userdata': this.user_arr
+    }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getBusinessProfile();
+      this.getUser();
     });
   }
 }
