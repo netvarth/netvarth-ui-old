@@ -23,6 +23,7 @@ import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared
 import { QuestionService } from '../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { UserDataStorageService } from '../user-datastorage.service';
+import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.component';
 
 @Component({
   selector: 'app-buserprofile',
@@ -246,6 +247,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   jaldee_acc_url = Messages.JALDEE_URL;
   wndw_path = projectConstants.PATH;
   subdomain: any;
+  notedialogRef: MatDialogRef<unknown, any>;
 
 
 
@@ -1353,5 +1355,17 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   galerySocialmedia() {
     this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile', 'media']);
+  }
+
+  changeProPic() {
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {'userId': this.userId}
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      this.getBusinessProfile();
+    });
   }
 }
