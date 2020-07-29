@@ -332,8 +332,14 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         });
     }
   }
-  checkinClicked(obj, chdatereq) {
+  checkinClicked(obj) {
     this.current_provider = obj;
+    let chdatereq;
+    if (obj['estimatedtime_det']['onlineCheckIn'] && obj['estimatedtime_det']['isAvailableToday'] && obj['estimatedtime_det']['availableToday']) {
+      chdatereq = false;
+    } else {
+      chdatereq = true;
+    }
     this.changedate_req = chdatereq;
     this.userType = this.shared_functions.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {

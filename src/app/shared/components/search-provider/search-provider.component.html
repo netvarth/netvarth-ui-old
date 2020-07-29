@@ -104,7 +104,7 @@
                       <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
                         (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
                       </span>
-                    
+
                     </li>
                   </ul>
                 </div>
@@ -204,24 +204,29 @@
                 </div>
               </ng-container>
             </ng-container>
-            <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-              *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
+            <span class="checkin-btn" (click)="checkinClicked(search_result)"
+              *ngIf="((search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'])
+              || (search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist'])) && !search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
                             search_result)}}</span>
-            <span class="checkin-btn" (click)="checkinClicked(search_result, false)"
-              *ngIf="search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'] && search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+            <span class="checkin-btn" (click)="checkinClicked(search_result)"
+              *ngIf="((search_result['estimatedtime_det']['onlineCheckIn'] && search_result['estimatedtime_det']['isAvailableToday'] && search_result['estimatedtime_det']['availableToday'])
+              || (search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist'])) && search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
             <span class="checkin-btn disabled"
-              *ngIf="!search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
+              *ngIf="!search_result['estimatedtime_det']['showToken'] && 
+              (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || 
+              !search_result['estimatedtime_det']['availableToday']) && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
                             search_result)}}</span>
             <span class="checkin-btn disabled"
-              *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
-            <div class="future-date-link checkin-future">
+              *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])
+              && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>
+            <!-- <div class="future-date-link checkin-future">
               <span class="bt10" (click)="checkinClicked(search_result, true)"
                 *ngIf="search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist']">{{do_you_want_to_cap}}
                 <span *ngIf="search_result['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
                 <span
                   *ngIf="!search_result['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist', search_result)}}</span>
                 {{for_cap}} <span>{{different_date}}</span></span>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="bottom-sect pdetail" *ngIf="search_result.apptAllowed && businessjson.onlinePresence">
