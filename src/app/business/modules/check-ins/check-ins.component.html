@@ -675,12 +675,13 @@
                           (change)="chkAptHistoryClicked(i, checkin)" />
                       </td>
                       <td class="parent-selection parent-title td-one">
-                        <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=1">
-                          {{checkin.date | date: display_dateFormat}}</div>
-                        <div class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type==1 && checkin.token">
+                        <div class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
                           {{checkin.token}}</div>
+                        <div class="pull-left mgn-lt-5 date" [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}"
+                        *ngIf="time_type!=1">
+                          {{checkin.date | date: display_dateFormat}}</div>
                         <div class="bold pull-left mgn-lt-5 name pointer-cursor"
-                          [ngClass]="{'mgn-up-10' : (time_type==1 && checkin.token?true:false)}"
+                          [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                           (click)="goCheckinDetail(checkin)">
                           {{checkin.waitlistingFor[0].firstName}}
                           {{checkin.waitlistingFor[0].lastName}}</div>
