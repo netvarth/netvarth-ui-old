@@ -393,7 +393,7 @@
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
                             <i class="fa fa-comments-o "></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size2" *ngIf="apptSingleSelection && time_type!=3"
+                          <a class="icon-action pointer-cursor icon-size2" *ngIf="apptSingleSelection && time_type!=3 && !(this.activeAppointment.waitlistStatus=='cancelled')"
                             [matTooltip]="'Send via SMS/Email'">
                             <i class="fa fa-comment-o" (click)="smsCheckin()"></i>
                           </a>
