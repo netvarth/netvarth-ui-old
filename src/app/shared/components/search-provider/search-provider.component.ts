@@ -609,7 +609,11 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             if (this.settingsjson.filterByDept) {
               for (const dept of res) {
                 if (dept.services && dept.services.length > 0) {
-                  user['apptServices'].push(dept.services);
+                  for (const serv of dept.services) {
+                    if (user['apptServices'].indexOf(serv) === -1) {
+                      user['apptServices'].push(serv);
+                    }
+                  }
                 }
               }
             } else {
@@ -622,17 +626,23 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             if (this.settingsjson.filterByDept) {
               for (const dept of res) {
                 if (dept.services && dept.services.length > 0) {
-                  user['wtlstservices'].push(dept.services);
+                  for (const serv of dept.services) {
+                    if (user['wtlstservices'].indexOf(serv) === -1) {
+                      user['wtlstservices'].push(serv);
+                    }
+                  }
                 }
               }
             } else {
               user['wtlstservices'] = res;
             }
-            setTimeout(() => {
-              const ids = new Set(user['wtlstservices'].map(d => d.id));
-              const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
-              user['wtlstservices'] = merged;
-            });
+            if (user['apptServices'] && user['apptServices'].length > 0) {
+              setTimeout(() => {
+                const ids = new Set(user['wtlstservices'].map(d => d.id));
+                const merged = [...user['wtlstservices'], ...user['apptServices'].filter(d => !ids.has(d.id))];
+                user['wtlstservices'] = merged;
+              });
+            }
             break;
           }
         }

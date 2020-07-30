@@ -459,9 +459,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.apptServicesjson = res;
             setTimeout(() => {
               // merge two arrays without duplicates
-              const ids = new Set(this.apptServicesjson.map(d => d.id));
-              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-              this.apptServicesjson = merged;
+              if (this.servicesjson && this.servicesjson.length > 0) {
+                const ids = new Set(this.apptServicesjson.map(d => d.id));
+                const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+                this.apptServicesjson = merged;
+              }
               for (let i = 0; i < this.apptServicesjson.length; i++) {
                 if (i < 3) {
                   this.apptfirstArray.push(this.apptServicesjson[i]);
@@ -873,7 +875,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.settingsjson.filterByDept) {
               for (const dept of res) {
                 if (dept.services && dept.services.length > 0) {
-                  this.servicesjson.push(dept.services);
+                  for (const serv of dept.services) {
+                    if (this.servicesjson.indexOf(serv) === -1) {
+                      this.servicesjson.push(serv);
+                    }
+                  }
                 }
               }
             } else {
@@ -885,7 +891,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (this.settingsjson.filterByDept) {
               for (const dept of res) {
                 if (dept.services && dept.services.length > 0) {
-                  this.apptServicesjson.push(dept.services);
+                  for (const serv of dept.services) {
+                    if (this.apptServicesjson.indexOf(serv) === -1) {
+                      this.apptServicesjson.push(serv);
+                    }
+                  }
                 }
               }
             } else {
@@ -893,9 +903,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             }
             setTimeout(() => {
               // merge two arrays without duplicates
-              const ids = new Set(this.apptServicesjson.map(d => d.id));
-              const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
-              this.apptServicesjson = merged;
+              if (this.servicesjson && this.servicesjson.length > 0) {
+                const ids = new Set(this.apptServicesjson.map(d => d.id));
+                const merged = [...this.apptServicesjson, ...this.servicesjson.filter(d => !ids.has(d.id))];
+                this.apptServicesjson = merged;
+              }
               for (let i = 0; i < this.apptServicesjson.length; i++) {
                 if (i < 3) {
                   this.apptfirstArray.push(this.apptServicesjson[i]);
@@ -903,8 +915,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               }
               this.apptTempArray = this.apptfirstArray;
             });
-            break;
           }
+            break;
         }
       },
         () => {
