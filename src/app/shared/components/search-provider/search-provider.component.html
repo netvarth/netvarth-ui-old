@@ -38,7 +38,7 @@
           <div class="tp-l">
             <div class="tp1">
               <div class="pro-img" (click)="providerDetClicked(search_result)">
-                <img *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
+                <img class="crop-img-fit" *ngIf="search_result.bProfile?.logo && search_result.bProfile?.logo?.url"
                   [src]="search_result.bProfile.logo.url" alt="">
               </div>
               <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
