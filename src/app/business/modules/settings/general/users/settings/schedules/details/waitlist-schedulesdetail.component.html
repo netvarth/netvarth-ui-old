@@ -345,8 +345,8 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             (change)="EnableBatch($event)" [ngModelOptions]="{standalone: true}">
                                         </mat-slide-toggle>
                                     </div>
-                                    <div class="form-level-settings" style="font-size: small;"> 
-                                        Make your batch id visible to {{customer_label}}s</div>
+                                    <div class="form-level-settings" style="font-size: small;">
+                                        Enable batch mode to serve more than one {{customer_label}}s at a time.</div>
                                     <div class="mgn-lt-10">
                                         <div class="" *ngIf="showBatchFields">
                                             <mat-form-field class="example-full-width">
@@ -371,8 +371,9 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         </mat-checkbox>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                             *ngIf="showBatchFields && sbatchStatus">
-                                            <div class="form-level-settings" style="font-size: small;"> 
-                                                Add a prefix/suffix (optional) of your choice to the batch id</div>
+                                            <div class="form-level-settings" style="font-size: small;">
+                                                Make your batch id visible to {{customer_label}}s. Add a prefix/suffix
+                                                (optional) of your choice to the batch id</div>
                                             <div class="item col-md-2 col-sm-3 col-xs-4">
                                                 <mat-form-field>
                                                     <input
