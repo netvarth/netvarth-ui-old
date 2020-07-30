@@ -6,7 +6,7 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
-                    <mat-accordion>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showprofilesearch}">
                         <mat-expansion-panel id="public-search" [expanded]="showprofilesearch"
                             (click)="menu('jaldeeonline')">
                             <mat-expansion-panel-header class="accordion">
@@ -1191,7 +1191,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                       <!-- next -->
-                      <mat-accordion>
+                      <mat-accordion [ngClass]="{'learnmore_active' : showgeneral}">
                         <mat-expansion-panel [expanded]='showgeneral'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('general')">
@@ -1494,7 +1494,7 @@
                      </mat-accordion>
 
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showcheckinmanager}">
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('q-manager')">
@@ -2151,7 +2151,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showappointments}">
                             <mat-expansion-panel [expanded]='showappointments'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('appointmentmanager')">
@@ -2566,7 +2566,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                        <mat-accordion>
+                        <mat-accordion [ngClass]="{'learnmore_active' : showbilling}">
                             <mat-expansion-panel [expanded]='showbilling'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('billing')">
@@ -3058,7 +3058,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                        <mat-accordion>
+                        <mat-accordion [ngClass]="{'learnmore_active' : showpayments}">
                             <mat-expansion-panel [expanded]='showpayments'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('payments')">
@@ -3258,7 +3258,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                            <!-- next -->
-                           <mat-accordion>
+                           <mat-accordion [ngClass]="{'learnmore_active' : showdonations}">
                             <mat-expansion-panel [expanded]='showdonations'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('donationmanager')">
@@ -3312,7 +3312,7 @@
                                             </mat-expansion-panel>
                                         </mat-accordion>    
                            <!-- next -->
-                           <mat-accordion>
+                           <mat-accordion [ngClass]="{'learnmore_active' : showmiscellaneous}">
                             <mat-expansion-panel [expanded]='showmiscellaneous'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('miscellaneous')">
@@ -3534,7 +3534,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                        <mat-accordion>
+                        <mat-accordion [ngClass]="{'learnmore_active' : showcustomers}">
                             <mat-expansion-panel [expanded]='showcustomers  '>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('customers')">
@@ -3588,7 +3588,7 @@
                             </mat-expansion-panel>
                          </mat-accordion>
                          <!-- next -->
-                        <mat-accordion>
+                        <mat-accordion [ngClass]="{'learnmore_active' : showvirtualcallingmodes}">
                             <mat-expansion-panel [expanded]='showvirtualcallingmodes'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('comm')">
@@ -3844,7 +3844,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                          <!-- next -->
-                         <mat-accordion>
+                         <mat-accordion [ngClass]="{'learnmore_active' : showdashboard && showdashbord}">
                                 <mat-expansion-panel [expanded]='showdashboard && showdashbord'>
                                     <mat-expansion-panel-header class="accordion">
                                         <mat-panel-title class="accordion-title" (click)="handleScroll('dashboard-home', 'dashboard-home')">
@@ -4355,7 +4355,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <!-- next -->
-                            <mat-accordion>  
+                            <mat-accordion [ngClass]="{'learnmore_active' : showdbappointments}">  
                                 <mat-expansion-panel [expanded]='showdbappointments'>
                                     <mat-expansion-panel-header class="accordion">
                                         <mat-panel-title class="accordion-title" (click)="menu('appointments')">
@@ -4531,7 +4531,7 @@
                                             </mat-accordion>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
-                            <mat-accordion>
+                            <mat-accordion [ngClass]="{'learnmore_active' : showcheckins}">
                                 <mat-expansion-panel [expanded]='showcheckins'>
                                     <mat-expansion-panel-header class="accordion">
                                         <mat-panel-title class="accordion-title" (click)="menu('check-ins')">
@@ -4708,7 +4708,7 @@
                                                 </mat-expansion-panel>
                                             </mat-accordion>
                                             <!-- next -->
-                                            <mat-accordion>
+                                            <mat-accordion [ngClass]="{'learnmore_active' : showdbdonations}">
                                                 <mat-expansion-panel [expanded]='showdbdonations'>
                                                     <mat-expansion-panel-header class="accordion">
                                                         <mat-panel-title class="accordion-title" (click)="handleScroll('donations', 'donations')">
@@ -4720,7 +4720,7 @@
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
-                    <mat-accordion>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showcustomer}">
                         <mat-expansion-panel [expanded]='showcustomer'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
@@ -4745,7 +4745,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showinbox}">
                             <mat-expansion-panel [expanded]='showinbox'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="handleScroll('inbox', 'inbox')">
@@ -4905,7 +4905,7 @@
                     </div>
                 </mat-expansion-panel>
             </mat-accordion> -->
-            <mat-accordion>
+            <mat-accordion [ngClass]="{'learnmore_active' : showauditlog}">
                     <mat-expansion-panel [expanded]='showauditlog'>
                         <mat-expansion-panel-header class="accordion">
                             <mat-panel-title class="accordion-title" (click)="menu('auditlog')">
@@ -4923,7 +4923,7 @@
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
-                <mat-accordion>
+                <mat-accordion [ngClass]="{'learnmore_active' : showalert}">
                     <mat-expansion-panel [expanded]='showalert'>
                         <mat-expansion-panel-header class="accordion">
                             <mat-panel-title class="accordion-title" (click)="menu('alert')">
@@ -4941,7 +4941,7 @@
                     </mat-expansion-panel>
                 </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showlicense}">
                         <mat-expansion-panel [expanded]='showlicense'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('license')">
@@ -5736,7 +5736,7 @@
     
     <!-- next -->
     
-    <mat-accordion>
+    <mat-accordion  [ngClass]="{'learnmore_active' : showprofile}">
         <mat-expansion-panel [expanded]='showprofile'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('providerprofile')">
@@ -5778,7 +5778,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <!-- next -->
-    <mat-accordion>
+    <mat-accordion  [ngClass]="{'learnmore_active' : showdownpanel}"> 
         <mat-expansion-panel [expanded]='showdownpanel'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">

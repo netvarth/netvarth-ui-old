@@ -10530,6 +10530,10 @@ a {
     height: 30px;
     font-size: 1rem;
   }
+  .learnmore_active.mat-accordion{
+    order: -1;
+  }
+
   .crop-img-fit {
    object-fit: fill !important;
   }
