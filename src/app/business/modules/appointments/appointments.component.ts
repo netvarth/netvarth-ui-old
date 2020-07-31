@@ -2233,15 +2233,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  changeApptStatusByBatch(action, batchId, result?) {
+  changeApptStatusByBatch(action, appt, result?) {
     let post_data = {
-      date: new Date()
+      date: appt.appmtDate
     };
     if (result) {
       post_data = result;
-      post_data['date'] = new Date();
+      post_data['date'] = appt.appmtDate;
     }
-    this.provider_services.changeAppointmentStatusByBatch(batchId, action, post_data).subscribe(
+    this.provider_services.changeAppointmentStatusByBatch(appt.batchId, action, post_data).subscribe(
       () => {
         this.refresh();
       }, (error) => {
@@ -2249,7 +2249,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-  cancelBatchAppt(batchId) {
+  cancelBatchAppt(appt) {
+    console.log(appt.batchId);
     const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2257,12 +2258,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         isBatch: true,
         type: 'appt',
-        batchId: batchId
+        batchId: appt.batchId
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.cancelReason || result.rejectReason) {
-        this.changeApptStatusByBatch('Rejected', batchId, result);
+        this.changeApptStatusByBatch('Rejected', appt, result);
       }
     });
   }

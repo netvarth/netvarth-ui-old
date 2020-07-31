@@ -1057,7 +1057,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     promise.then(
       result => {
         // this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
+        // Mfilter = this.setPaginationFilter(Mfilter);
         this.provider_services.getFutureWaitlist(Mfilter)
           .subscribe(
             data => {
