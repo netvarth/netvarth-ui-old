@@ -35,7 +35,7 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 })
 
-export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , AfterContentInit {
+export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
 
   logoExist = false;
   jaldee_online_disabled_msg: string;
@@ -397,7 +397,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
     this.getPublicSearch();
     this.getJaldeeIntegrationSettings();
     this.getProviderLocations();
-   // this.initSpecializations();
+    // this.initSpecializations();
     this.getGalleryImages();
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -574,7 +574,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
       this.progress_bar_four = 0;
       return businessProfileWeightageText;
     } else if
-    (weightage >= 50 && weightage < 75) {
+      (weightage >= 50 && weightage < 75) {
       businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
       this.weightageClass = 'info';
@@ -638,8 +638,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
-    // this.provider_services.getLicenseMetadata().subscribe(data => {
-      this.licenseMetadata = localStorage.getItem('license-metadata');
+    this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.licenseMetadata = data;
+      // this.licenseMetadata = localStorage.getItem('license-metadata');
       for (let i = 0; i < this.licenseMetadata.length; i++) {
         if (this.licenseMetadata[i].pkgId === pkgId) {
           for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
@@ -655,7 +656,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
           }
         }
       }
-    // });
+    });
   }
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
@@ -747,10 +748,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
         this.profile_status = this.onlinepresence_status ? true : false;
         this.profile_status_str = this.profile_status ? 'On' : 'Off';
-        if (this.profile_status === false && this.normal_search_active) {
-          this.handle_searchstatus();
-        }
-
+        // if (this.profile_status === false && this.normal_search_active) {
+        //   this.handle_searchstatus();
+        // }
+        this.getPublicSearch();
 
         // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
@@ -906,19 +907,19 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
 
 
 
-         // specialization
-         this.normal_specilization_show = 2;
-         this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-         this.specialization_title = (data['serviceSubSector']['displayName']) ?
-           data['serviceSubSector']['displayName'] : '';
-           this.normal_specilization_show = 2;
-         if (this.bProfile.specialization) {
-           if (this.bProfile.specialization.length > 0) {
-             this.normal_specilization_show = 3;
-           } else {
-             this.normal_specilization_show = 2;
-           }
-         }
+          // specialization
+          this.normal_specilization_show = 2;
+          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+          this.specialization_title = (data['serviceSubSector']['displayName']) ?
+            data['serviceSubSector']['displayName'] : '';
+          this.normal_specilization_show = 2;
+          if (this.bProfile.specialization) {
+            if (this.bProfile.specialization.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
+          }
 
           this.normal_socialmedia_show = 2;
           this.social_arr = [];
@@ -1334,7 +1335,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
   }
   performActions(action) {
     if (action === 'learnmore') {
-      
+
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
     }
   }
@@ -1353,7 +1354,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
   }
   customizeId() {
     if (this.normal_customid_show === 2 && !this.showCustomId) {
-        this.licence_warn = true;
+      this.licence_warn = true;
       setTimeout(() => {
         this.licence_warn = false;
       }, 3000);
@@ -1520,7 +1521,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked , 
           this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
           this.specialization_title = (data['serviceSubSector']['displayName']) ?
             data['serviceSubSector']['displayName'] : '';
-            this.normal_specilization_show = 2;
+          this.normal_specilization_show = 2;
           if (this.bProfile.specialization) {
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;

@@ -2250,7 +2250,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   cancelBatchAppt(appt) {
-    console.log(appt.batchId);
     const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2427,7 +2426,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Object.keys(_this.apptsChecked).forEach(slotIndex => {
         Object.keys(_this.apptsChecked[slotIndex]).forEach(apptIndex => {
           appt = _this.apptsChecked[slotIndex][apptIndex];
-          console.log(appt);
         });
         this.smsdialogRef = this.dialog.open(CheckinDetailsSendComponent, {
           width: '50%',
