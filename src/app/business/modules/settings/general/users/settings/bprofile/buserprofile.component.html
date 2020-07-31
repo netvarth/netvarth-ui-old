@@ -268,58 +268,7 @@
                             </div>
 
                             </div>
-                            <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
-                                <div class="card card-brdr">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                                            role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                                            aria-expanded="true" aria-disabled="false" style="height: 64px;">
-                                            <span class="mat-content">
-                                                <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                                    Languages Known
-                                                        <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
-                                                        </i>
-                                                    
-                                                    <!--bindings={}-->
-                                                    <p class="form-level-settings">Mention your languages here
-                                                        <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('languages-known', $event)">Learn More</a>
-                                                    </p>
-                                                </mat-panel-title>
-                                            </span>
-                                            <!--bindings={
-                                                "ng-reflect-ng-if": "true"
-                                              }-->
-                                            <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
-                                                        style="transform: rotate(180deg);"></span> -->
-                                        </mat-expansion-panel-header>
-                                        <div class="row">
-                                            <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                                                <div class="card p0 w-dta active">
-
-                                                    <div class="no-dta" *ngIf="normal_language_show==1&&normal_basicinfo_show==1">
-                                                        <app-innerloading-spinner spinnerParams="loadingParams">
-                                                        </app-innerloading-spinner>
-                                                    </div>
-                                                    <div class="no-dta" *ngIf="normal_language_show==2">
-                                                        <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
-                                                        <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
-                                                    </div>
-
-                                                    <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
-                                                        <span class="editbt" (click)="handleSpokenLanguages()"></span>
-                                                        <div *ngFor="let lang of bProfile.languagesSpoken">
-                                                            {{getlanguageName(lang)}}
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </div>
-                            </div>
+                          
                              <!--mandatory fields -->
                              <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
                                 <ng-container *ngIf="normal_domainfield_show==3 || normal_domainfield_show==4">
@@ -676,7 +625,58 @@
 
 
                                 </div>
-                            
+                                <div class="cd-b " *ngIf="bProfile && bProfile.businessName ">
+                                    <div class="card card-brdr">
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                                                role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
+                                                aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                                                <span class="mat-content">
+                                                    <mat-panel-title class="block-level mat-expansion-panel-header-title">
+                                                        Languages Known
+                                                            <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                            </i>
+                                                        
+                                                        <!--bindings={}-->
+                                                        <p class="form-level-settings">Mention your languages here
+                                                            <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('languages-known', $event)">Learn More</a>
+                                                        </p>
+                                                    </mat-panel-title>
+                                                </span>
+                                                <!--bindings={
+                                                    "ng-reflect-ng-if": "true"
+                                                  }-->
+                                                <!-- <span class="mat-expansion-indicator ng-tns-c12-1 ng-trigger ng-trigger-indicatorRotate ng-star-inserted"
+                                                            style="transform: rotate(180deg);"></span> -->
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
+                                                <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                                                    <div class="card p0 w-dta active">
+    
+                                                        <div class="no-dta" *ngIf="normal_language_show==1&&normal_basicinfo_show==1">
+                                                            <app-innerloading-spinner spinnerParams="loadingParams">
+                                                            </app-innerloading-spinner>
+                                                        </div>
+                                                        <div class="no-dta" *ngIf="normal_language_show==2">
+                                                            <p>{{have_not_add_cap}} {{lang_known_cap}}.</p>
+                                                            <span (click)="handleSpokenLanguages()" class="cs-btn bt3">{{add_it_cap}}</span>
+                                                        </div>
+    
+                                                        <div class="lang-dta" *ngIf="normal_language_show==3 && languages_arr.length > 0">
+                                                            <span class="editbt" (click)="handleSpokenLanguages()"></span>
+                                                            <div *ngFor="let lang of bProfile.languagesSpoken">
+                                                                {{getlanguageName(lang)}}
+                                                            </div>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                                </div>
                                 <!-- gallery and social media-->
                                 <div class="cd-b" *ngIf="bProfile && bProfile.businessName ">
 
