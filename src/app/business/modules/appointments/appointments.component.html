@@ -908,8 +908,11 @@
                       </td>
                     </tr> -->
                     <tr>
-                      <td colspan="5" class="no-appt">
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length > 0">
                         No Appointments Found
+                      </td>
+                      <td colspan="5" class="no-appt" *ngIf="activeSchedules.length === 0">
+                        No schedules
                       </td>
                     </tr>
                   </tbody>

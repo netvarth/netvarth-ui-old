@@ -519,6 +519,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const activeQueues: any = [];
             let queue_list: any = [];
             const params = {};
+            params['state-eq'] = 'ENABLED';
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }
@@ -527,11 +528,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                         this.selectedCategory = 'SCHEDULE';
                     }
+                    this.display_schedule = data;
+                    this.display_scheduleList = data;
                     for (let ii = 0; ii < data.length; ii++) {
-                        if (data[ii].apptState === 'ENABLED') {
-                            this.display_schedule.push(data[ii]);
-                            this.display_scheduleList.push(data[ii]);
-                        }
+                        // if (data[ii].apptState === 'ENABLED') {
+                        //     this.display_schedule.push(data[ii]);
+                        //     this.display_scheduleList.push(data[ii]);
+                        // }
                         let schedule_arr = [];
                         if (data[ii].apptSchedule) {
                             schedule_arr = this.shared_Functionsobj.queueSheduleLoop(data[ii].apptSchedule);

@@ -554,6 +554,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getSchedules(date?) {
     const _this = this;
     const filterEnum = {};
+    filterEnum['state-eq'] = 'ENABLED';
     if (date === 'all') {
       filterEnum['location-eq'] = this.selected_location.id;
     }
@@ -1246,43 +1247,47 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
-    const promise = this.getTodayAppointmentsCount(Mfilter);
-    promise.then(
-      result => {
-        this.chkSelectAppointments = false;
-        this.provider_services.getTodayAppointments(Mfilter)
-          .subscribe(
-            (data: any) => {
-              this.appt_list = data;
-              this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'apptStatus');
-              if (this.filterapplied === true) {
-                this.noFilter = false;
-              } else {
-                this.noFilter = true;
-              }
-              this.setCounts(this.appt_list);
-              if (this.isBatch) {
-                this.resetCheckList();
-                this.getAppointmentsPerSlot(this.getActiveAppointments(this.todayAppointments, this.statusAction));
-              } else {
-                this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-              }
-              // this.loading = false;
-            },
-            () => {
-              // this.load_waitlist = 1;
-            },
-            () => {
-              this.loading = false;
-              setTimeout(() => {
-                const activeTimeSlot = this.getActiveTimeSlot(this.availableSlotDetails.availableSlots);
-                if (activeTimeSlot !== '') {
-                  this.scrollToSection(activeTimeSlot);
+    if (this.activeSchedules.length > 0) {
+      const promise = this.getTodayAppointmentsCount(Mfilter);
+      promise.then(
+        result => {
+          this.chkSelectAppointments = false;
+          this.provider_services.getTodayAppointments(Mfilter)
+            .subscribe(
+              (data: any) => {
+                this.appt_list = data;
+                this.todayAppointments = this.shared_functions.groupBy(this.appt_list, 'apptStatus');
+                if (this.filterapplied === true) {
+                  this.noFilter = false;
+                } else {
+                  this.noFilter = true;
                 }
-              }, 500);
+                this.setCounts(this.appt_list);
+                if (this.isBatch) {
+                  this.resetCheckList();
+                  this.getAppointmentsPerSlot(this.getActiveAppointments(this.todayAppointments, this.statusAction));
+                } else {
+                  this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                }
+                // this.loading = false;
+              },
+              () => {
+                // this.load_waitlist = 1;
+              },
+              () => {
+                this.loading = false;
+                setTimeout(() => {
+                  const activeTimeSlot = this.getActiveTimeSlot(this.availableSlotDetails.availableSlots);
+                  if (activeTimeSlot !== '') {
+                    this.scrollToSection(activeTimeSlot);
+                  }
+                }, 500);
 
-            });
-      });
+              });
+        });
+    } else {
+      this.loading = false;
+    }
   }
   setFutureCounts(appointments) {
     this.scheduled_count = this.getActiveAppointments(appointments, 'new').length;
@@ -2771,6 +2776,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onChangeLocationSelect(event) {
     const value = event;
+    this.resetFields();
     this.clearApptIdsFromStorage();
     this.locationSelected(this.locations[value] || []).then(
       (schedules: any) => {
@@ -2892,6 +2898,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleUserSelection(user) {
+    this.resetFields();
     this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
     this.getQsByProvider();
@@ -2910,7 +2917,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.activeSchedules = qs;
     }
     if (this.activeSchedules.length === 0) {
-      this.selQId = [];
+      this.selQId = null;
     } else {
       let found = 0;
       for (const q of this.activeSchedules) {
@@ -2930,5 +2937,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQId);
     }
     this.loadApiSwitch('reloadAPIs');
+  }
+  resetFields() {
+    this.today_waitlist_count = 0;
+    this.future_waitlist_count = 0;
+    this.history_waitlist_count = 0;
+    this.check_in_filtered_list = [];
+    this.activeSchedules = [];
+    this.scheduled_count = 0;
+    this.started_count = 0;
+    this.completed_count = 0;
+    this.cancelled_count = 0;
   }
 }
