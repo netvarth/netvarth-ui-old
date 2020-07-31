@@ -136,7 +136,7 @@
                                                 mat-menu-item (click)="manageSettings(user.id)">
                                                 Settings
                                             </button>
-                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser"
+                                            <button *ngIf="user.userType === 'PROVIDER' && !user.defaultAdminUser && user.status === 'ACTIVE'"
                                                 mat-menu-item (click)="makeDefalutAdmin(user.id)">
                                                 Change to superadmin
                                             </button>

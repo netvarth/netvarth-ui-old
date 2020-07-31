@@ -12,7 +12,7 @@
                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
                             </div>
                             <div class="col-md-12" *ngIf="actionparam.type !== 'view' && !api_loading">
-                                <div *ngIf="!filterBydept" class="create-dept">
+                                <div  class="create-dept">
                                     <ul class="info-lst serviceadd-info">
                                             <li> <a class="pointlist"
                                                         routerLink="/provider/license/addons">To create a User, You need to purchase a 'Multi User'
@@ -24,14 +24,14 @@
                                             </li> -->
                                     </ul>
                                 </div>
-                                <div *ngIf="filterBydept" class="create-dept">
+                                <!-- <div *ngIf="filterBydept" class="create-dept">
                                     <ul class="info-lst serviceadd-info">
                                         <li> <a class="pointlist"
                                             routerLink="/provider/license/addons">To create a User, You need to purchase a 'Multi User'
                                             add-on from the License section.</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                                 <form [formGroup]="userForm" (ngSubmit)="userForm.valid &&
 onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     <!-- <div class="col-md-6 col-sm-6 col-xs-12 " *ngIf="type !== 'ADMIN'">
