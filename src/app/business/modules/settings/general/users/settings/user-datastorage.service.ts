@@ -91,46 +91,46 @@ export class UserDataStorageService {
       }
 
 
-      updateMandatoryAndAdditionalFieldWeightage(){
-        console.log('inside.mandatory');
-        
+      updateMandatoryAndAdditionalFieldWeightage() {
 
-        let mandatoryObject=projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
-         let additionalObject=projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
-         console.log(this.weightageObjectDomain);
-         console.log(this.weightageObjectSubDomain);
-         
-         
-        
-        if(!this.checkExistenceInWeightageArray(mandatoryObject)){
-          if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus)|| (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)){
-              this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
-              this.setWeightageArray(this.user_weightageArray);
-          }
-         }
-        else{
-           if((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus===false)||(this.weightageObjectSubDomain.mandatorySubDomain &&this.weightageObjectSubDomain.mandatorySubDomainFilledStatus===false)){
-            this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
-            this.setWeightageArray(this.user_weightageArray);
-          
-         }
-        }
-        if(!this.checkExistenceInWeightageArray(additionalObject)){
-          if(this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled){
-           this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
-           // some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
-           if(!this.checkExistenceInWeightageArray(mandatoryObject) && this.weightageObjectDomain.mandatoryDomain===false && this.weightageObjectSubDomain.mandatorySubDomain===false){
+        const mandatoryObject = projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO;
+        const additionalObject = projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO;
+        console.log(this.weightageObjectDomain);
+        console.log(this.weightageObjectSubDomain);
+    
+        if (!this.checkExistenceInWeightageArray(mandatoryObject)) {
+          if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus)) {
             this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
             this.setWeightageArray(this.user_weightageArray);
           }
-           this.setWeightageArray(this.user_weightageArray);
-      
+        } else {
+          if ((this.weightageObjectDomain.mandatoryDomain && this.weightageObjectDomain.mandatoryDomainFilledStatus === false) || (this.weightageObjectSubDomain.mandatorySubDomain && this.weightageObjectSubDomain.mandatorySubDomainFilledStatus === false)) {
+            this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
+            this.setWeightageArray(this.user_weightageArray);
+    
           }
-        }else{
-      
-          if(this.weightageObjectDomain.additionalDomainFullyFilled===false || this.weightageObjectSubDomain.additionalSubDomainFullyFilled=== false ){
-           this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.name);
-           this.setWeightageArray(this.user_weightageArray);
+        }
+        if (!this.checkExistenceInWeightageArray(additionalObject)) {
+          if (this.weightageObjectDomain.additionalDomainFullyFilled && this.weightageObjectSubDomain.additionalSubDomainFullyFilled) {
+            this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO);
+            this.setWeightageArray(this.user_weightageArray);
+            // some domains don't have mandatory additional info so to correct the sum if domain not having mandatory , adding mandaoty weightage too
+            if (!this.checkExistenceInWeightageArray(mandatoryObject) && this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
+              this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
+              this.setWeightageArray(this.user_weightageArray);
+            }
+    
+    
+          }
+        } else {
+    
+          if (this.weightageObjectDomain.additionalDomainFullyFilled === false || this.weightageObjectSubDomain.additionalSubDomainFullyFilled === false) {
+            this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.ADDITIONAL_INFO.name);
+            if (this.weightageObjectDomain.mandatoryDomain === false && this.weightageObjectSubDomain.mandatorySubDomain === false) {
+              this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO.name);
+              this.setWeightageArray(this.user_weightageArray);
+            }
+            this.setWeightageArray(this.user_weightageArray);
           }
         }
       }
@@ -138,14 +138,14 @@ export class UserDataStorageService {
       updateSpecilizationWeightage(data){
         let specializationObject=projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION;
         if(this.checkExistenceInWeightageArray(specializationObject)){
-          if(data==null|| data==undefined||data.length===0){
+          if(data===null|| data===undefined||data.length===0){
          
            this.user_weightageArray = this.user_weightageArray.filter(obj => obj.name !== projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION.name);
            this.setWeightageArray(this.user_weightageArray);
           }
          
        }else if(!this.checkExistenceInWeightageArray(specializationObject)){
-         if(data!=null ||data!=undefined){
+         if(data!==null ||data!==undefined){
            if(data.length!==0){
              this.user_weightageArray.push(projectConstantsLocal.USER_BUSINESS_PROFILE_WEIGHTAGE.SPECIALIZATION);
            this.setWeightageArray(this.user_weightageArray);
