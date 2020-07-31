@@ -232,7 +232,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
-    if (this.ctype === 'provider') {
+    if (this.ctype === 'consumer') {
     this.getInboxUnreadCnt();
     }
   }
