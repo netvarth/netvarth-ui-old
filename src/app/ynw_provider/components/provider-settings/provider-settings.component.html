@@ -72,8 +72,11 @@
                                         <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule || reqFields.specialization || reqFields.domainvirtual || reqFields.subdomainvirtual"
                                             class="req-flds-cap">
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
-                                        <p class="settings_info">Enable this to get online visibility.</p>
-
+                                        <!-- <p class="settings_info">Enable this to get online visibility.</p> -->
+                                       
+                                            <p class="settings_info" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</p>
+                                            <p class="settings_info" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </p>
+                                            
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -89,8 +92,9 @@
                                         </span>
                                         <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
-                                        <p class="settings_info">{{frm_search_cap}}</p>
-
+                                        <!-- <p class="settings_info">{{frm_search_cap}}</p> -->
+                                        <p class="settings_info" *ngIf="!search_status">Your profile is not listed in jaldee.com</p>
+                                        <p class="settings_info" *ngIf="search_status">Your profile is listed in jaldee.com</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -107,6 +111,7 @@
                                         <span class="lnk setings" style="display: flex;">Jaldee.com Integration
                                         </span>
                                         <p class="settings_info">Manage your account integration with jaldee.com</p>
+                                       
                                     </a>
                                 </li>
                                 <!-- <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span

@@ -147,7 +147,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   schedules_count: any = 0;
   waitlistStatus;
   waitlistStatusStr;
-
+  jaldee_online_enabled_msg: string;
+  jaldee_online_disabled_msg: string;
   businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
@@ -223,6 +224,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    this.jaldee_online_enabled_msg = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.getProviderLogo();
     this.getGalleryImages();
     this.getDomainSubdomainSettings();
