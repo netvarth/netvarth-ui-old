@@ -1796,6 +1796,7 @@ sup {
 
 .sts-msg.error {
   font-size: small !important;
+  color: #f24949 !important;
 }
 
 .dashboard .card.w-dta {
