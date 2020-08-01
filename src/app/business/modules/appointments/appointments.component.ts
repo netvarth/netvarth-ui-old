@@ -297,6 +297,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
+  imageAllowed = ['JPEG', 'JPG', 'PNG'];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2981,11 +2982,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
             if (communications[comIndex].attachements) {
               for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+                const thumbPath =  communications[comIndex].attachements[attachIndex].thumbPath;
+                let imagePath = thumbPath;
+                const description = communications[comIndex].attachements[attachIndex].s3path;
+                const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+                if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                  imagePath = communications[comIndex].attachements[attachIndex].s3path;
+                }
                 const imgobj = new Image(
                   count,
                   { // modal
-                    img: communications[comIndex].attachements[attachIndex].s3path,
-                    description: communications[comIndex].attachements[attachIndex].s3path
+                    img: imagePath,
+                    description: description
                   },
                 );
                 this.image_list_popup_temp.push(imgobj);
@@ -2997,7 +3005,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.image_list_popup = this.image_list_popup_temp;
             setTimeout(() => {
               this.openImageModalRow(this.image_list_popup[0]);
-            }, 100);
+            }, 200);
           }
       },
       error => { }
@@ -3011,3 +3019,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
 }
+

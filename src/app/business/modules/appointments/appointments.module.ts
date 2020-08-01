@@ -19,6 +19,8 @@ import { CallingModesModule } from '../check-ins/calling-modes/calling-modes.mod
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
 import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
+import { ModalGalleryModule } from 'angular-modal-gallery';
+
 
 @NgModule({
     imports: [
@@ -38,7 +40,8 @@ import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/chec
         ProviderWaitlistCheckInConsumerNoteModule,
         CallingModesModule,
         CheckinDetailsSendModule,
-        NgxQRCodeModule
+        NgxQRCodeModule,
+        ModalGalleryModule.forRoot()
     ],
     declarations: [
         AppointmentsComponent,
