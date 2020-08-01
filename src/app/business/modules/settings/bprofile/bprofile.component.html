@@ -302,7 +302,7 @@
                             <span class="custid custId-icon">
                               <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
                             </span>
-                            <span class="custid custId-icon">
+                            <!-- <span class="custid custId-icon">
                               <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon>more_vert</mat-icon>
                               </button>
@@ -316,6 +316,13 @@
                                   <span>{{delete_btn}}</span>
                                 </button>
                               </mat-menu>
+                            </span> -->
+                            <span class="custbtn">
+                              <button class="btn-default-n btn1-responsive" (click)="editCustomId(bProfile.customId)">
+                                <a>
+                                  Customize ID
+                                </a>
+                              </button>
                             </span>
                           </span>
                           <br>
