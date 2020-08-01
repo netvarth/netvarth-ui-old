@@ -144,7 +144,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 donat-service"
-                                    *ngIf="apptServicesjson.length > 0 && !showDepartments">
+                                    *ngIf="apptServicesjson.length > 0 && (!showDepartments || userId)">
                                     <span class="sub-title-donate">Service(s)</span>
                                     <ul>
                                         <li *ngFor="let appointmentService of apptfirstArray"
