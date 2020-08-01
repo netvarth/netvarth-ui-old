@@ -988,8 +988,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.servicesjson[0].department,
-        user: this.userId,
         futureAppt: this.futureAllowed
       }
     };

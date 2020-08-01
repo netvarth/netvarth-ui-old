@@ -387,6 +387,10 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
   showCheckin() {
+    let deptId;
+    if (this.current_provider.wtlstservices[0] && this.current_provider.wtlstservices[0].department) {
+      deptId = this.current_provider.wtlstservices[0].department;
+    }
     const seldate = this.current_provider['estimatedtime_det']['cdate'];
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -396,7 +400,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         unique_id: this.provider_id,
         account_id: this.businessjson.id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.current_provider.wtlstservices[0].department,
+        dept: deptId,
         user: this.current_provider.id
       }
     };
@@ -404,6 +408,10 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
 
   showAppointment() {
+    let deptId;
+    if (this.current_provider.wtlstservices[0] && this.current_provider.wtlstservices[0].department) {
+      deptId = this.current_provider.wtlstservices[0].department;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: this.locationjson[0].id,
@@ -411,7 +419,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         unique_id: this.provider_id,
         account_id: this.businessjson.id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.current_provider.wtlstservices[0].department,
+        dept: deptId,
         user: this.current_provider.id,
         futureAppt: this.futureAllowed
       }

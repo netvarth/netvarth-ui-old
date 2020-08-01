@@ -1390,6 +1390,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
   }
   showCheckin(locid, locname, curdate, origin?) {
+    let deptId;
+    if (this.servicesjson[0] && this.servicesjson[0].department) {
+      deptId = this.servicesjson[0].department;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
@@ -1398,13 +1402,17 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.servicesjson[0].department,
+        dept: deptId,
         user: this.userId
       }
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showAppointment(locid, locname, curdate, origin?) {
+    let deptId;
+    if (this.servicesjson[0] && this.servicesjson[0].department) {
+      deptId = this.servicesjson[0].department;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         loc_id: locid,
@@ -1412,7 +1420,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         tel_serv_stat: this.businessjson.virtualServices,
-        dept: this.servicesjson[0].department,
+        dept: deptId,
         user: this.userId,
         futureAppt: this.futureAllowed
       }
