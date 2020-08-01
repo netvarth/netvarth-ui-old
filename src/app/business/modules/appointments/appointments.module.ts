@@ -21,6 +21,7 @@ import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-d
 import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 
+
 @NgModule({
     imports: [
         AppointmentsRoutingModule,

@@ -3018,3 +3018,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
 }
+
