@@ -9521,6 +9521,7 @@ button.cust-button-3 {
   button.cust-button-1 {
     max-width: 80px;
     min-width: 70px;
+    height: 35px !important;
   }
 }
 

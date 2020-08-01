@@ -2387,14 +2387,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openAttachmentGallery (checkin) {
     this.image_list_popup_temp = [];
+    this.image_list_popup = [];
     this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
       (communications: any) => {
         let count = 0;
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            console.log(JSON.stringify(communications[comIndex]));
             if (communications[comIndex].attachements) {
               for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-                console.log(communications[comIndex].attachements[attachIndex]);
                 const imgobj = new Image(
                   count,
                   { // modal
@@ -2419,7 +2418,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    alert(index);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {

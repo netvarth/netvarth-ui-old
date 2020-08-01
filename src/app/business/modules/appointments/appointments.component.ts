@@ -18,6 +18,8 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { CheckinDetailsSendComponent } from '../check-ins/checkin-details-send/checkin-details-send.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -276,6 +278,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   slotsloading = false;
   showNoSlots: boolean;
   smsdialogRef: any;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
+  image_list_popup: Image[];
+  image_list_popup_temp: Image[];
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2948,5 +2969,44 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.started_count = 0;
     this.completed_count = 0;
     this.cancelled_count = 0;
+  }
+
+  openAttachmentGallery (appt) {
+    this.image_list_popup_temp = [];
+    this.image_list_popup = [];
+    this.provider_services.getProviderAttachments(appt.uid).subscribe(
+      (communications: any) => {
+        let count = 0;
+          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+            if (communications[comIndex].attachements) {
+              for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+                const imgobj = new Image(
+                  count,
+                  { // modal
+                    img: communications[comIndex].attachements[attachIndex].s3path,
+                    description: communications[comIndex].attachements[attachIndex].s3path
+                  },
+                );
+                this.image_list_popup_temp.push(imgobj);
+                count++;
+              }
+            }
+          }
+          if (count > 0) {
+            this.image_list_popup = this.image_list_popup_temp;
+            setTimeout(() => {
+              this.openImageModalRow(this.image_list_popup[0]);
+            }, 100);
+          }
+      },
+      error => { }
+    );
+  }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
   }
 }
