@@ -52,27 +52,27 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     'phNo': null,
     'email': null,
     'emailNotification': null,
-    'smsNotification' : null
+    'smsNotification': null
   };
   emailId: any;
   number: any;
   mail: any;
-    constructor(
-      public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any,
-      private fb: FormBuilder,
-      public fed_service: FormMessageDisplayService,
-      public provider_services: ProviderServices,
-      public shared_functions: SharedFunctions ) {
-      this.uuid = this.data.uuid;
-      this.mobilenumber =   this.data.mobilenumber;
-      this.emailId = this.data.emailId;
-      this.source = this.data.source;
-      this.calculationMode = this.data.calc_mode;
-      this.showToken = this.data.showToken;
-      this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-      this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    }
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmPatmentLinkComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder,
+    public fed_service: FormMessageDisplayService,
+    public provider_services: ProviderServices,
+    public shared_functions: SharedFunctions) {
+    this.uuid = this.data.uuid;
+    this.mobilenumber = this.data.mobilenumber;
+    this.emailId = this.data.emailId;
+    this.source = this.data.source;
+    this.calculationMode = this.data.calc_mode;
+    this.showToken = this.data.showToken;
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+  }
   ngOnInit() {
     this.blankPattern = projectConstantsLocal.VALIDATOR_BLANK;
     this.createForm();
@@ -80,9 +80,9 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       mobile_number: [this.mobilenumber, Validators.compose([Validators.maxLength(10),
-                       Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       email_id: [this.emailId, Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-      });
+    });
   }
   resetApiErrors(e) {
     if (e.keyCode !== 13) {
@@ -93,11 +93,11 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   }
   onMbnmberChange(event) {
     this.mobilenumber = event.target.value;
-     console.log(this.mobilenumber);
+    console.log(this.mobilenumber);
   }
   onEmailChange(event) {
     this.emailId = event.target.value;
-     console.log(this.emailId);
+    console.log(this.emailId);
   }
   isNumeric(evt) {
     if (evt === 'name') {
@@ -113,7 +113,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   // addemail() {
   //   this.alternateemail = true;
   // }
-   onClick(data) {
+  onClick(data) {
     this.dialogRef.close(data);
   }
   onSend(form_data) {
@@ -132,10 +132,13 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.pay_link.emailNotification = 'false';
     }
     this.provider_services.Paymentlink(this.pay_link)
-    .subscribe((pData: any) => {
-      this.dialogRef.close();
-      this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
-      });
+      .subscribe((pData: any) => {
+        this.dialogRef.close();
+        this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
 
 }
