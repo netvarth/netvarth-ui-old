@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef, AfterViewChecked, AfterContentInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
@@ -17,13 +17,89 @@ import { AddProviderWaitlistLocationsComponent } from '../../../../ynw_provider/
 import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSearchAdwordsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-declare let cordova: any;
+import { Subscription, of } from 'rxjs';
+import { AddProviderBprofileSpecializationsComponent } from '../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
+import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
+import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
+import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
+import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
+
+
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html'
+
+
 })
 
-export class BProfileComponent implements OnInit, OnDestroy {
+export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
+
+  logoExist = false;
+  jaldee_online_disabled_msg: string;
+  jaldee_online_enabled_msg: string;
+  progress_bar_four: number;
+  progress_bar_three: number;
+  progress_bar_two: number;
+  progress_bar_one: number;
+  weightageClass = 'danger';
+  weightageObjectOfDomainAndSubDomain: any;
+  vkeyNameMap = {};
+  profile_status;
+
+  jaldee_online_status;
+  // social media and gallery
+
+  frm_social_cap = '';
+  frm_gallery_cap = '';
+  error_msg = '';
+  socialdialogRef;
+  gallerydialogRef;
+  delgaldialogRef;
+  social_media_cap = Messages.BPROFILE_SOCIAL_MEDIA_CAP;
+  add_social_media = Messages.BPROFILE_ADD_SOCIAL_MEDIA_CAP;
+  no_social_media = Messages.NO_SOCIAL_MEDIA;
+  gallery_cap = Messages.GALLERY_CAP;
+  photos_to_cap = Messages.BPROFILE_PHOTOS_CAP;
+  photo_cap = Messages.BPROFILE_PHOT0_CAP;
+  have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+  add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+  orgsocial_list: any = [];
+  social_arr: any = [];
+  social_list: any = [];
+  showaddsocialmedia = false;
+  normal_gallery_show = 1;
+  normal_socialmedia_show = 1;
+  customer_label = '';
+  error_list = [];
+  // image_list: any = [];
+  // image_list_popup: Image[];
+  image_showlist: any = [];
+
+  item_pic = {
+    files: [],
+    base64: null
+  };
+  profimg_exists = false;
+  success_error = null;
+  selitem_pic = '';
+  image_remaining_cnt = 0;
+
+  // languages
+  languages_arr: any = [];
+  langdialogRef;
+  frm_lang_cap = '';
+  normal_language_show = 1;
+  // virtual fields
+
+
+  dynamicdialogRef: any;
+
+  subdomain: any;
+  weightageValue = 0;
+  businessweightageArray: any[];
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
@@ -54,12 +130,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
   create_adword_cap = Messages.BPROFILE_CREATE_ADWORD_CAP;
   more_adword_cap = Messages.BPROFILE_MOR_ADOWRDS_CAP;
   license_cap = Messages.BPROFILE_LICENSE_INVOICE_CAP;
-  have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+  // have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
   basic_info_cap = Messages.BPROFILE_BASIC_INFORMATION_CAP;
   such_as_cap = Messages.BPROFILE_SUCH_AS_CAP;
   name_summary_cap = Messages.BPROFILE_BUSINESS_NAME_CAP;
   profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
-  add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+  // add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
   to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   pic_cap = Messages.BPROFILE_PICTURE_CAP;
@@ -90,26 +166,35 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level_premium = Messages.VERIFIED_LEVEL_PREMIUM;
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
+  progress_loading_url = false;
+
+  // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
+  // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
-    if (content1) { // initially setter gets called with undefined
-      this.qrCodeParent = content1;
-    }
-  }
-  private qrCodeCustId: ElementRef;
-  @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
-    if (content2) { // initially setter gets called with undefined
-      this.qrCodeParent = content2;
-    }
-  }
+  notedialogRef: any;
+  // @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
+  //   if (content1) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content1;
+  //   }
+  // }
+  // private qrCodeCustId: ElementRef;
+  // @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
+  //   if (content2) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content2;
+  //   }
+  // }
+  mandatoryfieldArray: any = [];
+
+  additionalInfoDomainFields: any = [];
+  additionalInfoSubDomainFields: any = [];
   checked = false;
   bProfile = null;
   serviceSector = null;
   public_search = false;
-  error_msg = '';
+  // error_msg = '';
 
   loc_badges: any = [];
   badge_map_arr: any = [];
@@ -135,12 +220,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
   currentlicense_details: any = [];
 
   blogo: any = [];
-  item_pic = {
-    files: [],
-    base64: null
-  };
-  selitem_pic = '';
-  profimg_exists = false;
+  // item_pic = {
+  //   files: [],
+  //   base64: null
+  // };
+  // selitem_pic = '';
+  // profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
 
@@ -195,7 +280,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   ];
   businessConfig: any = [];
   multipeLocationAllowed = false;
-  customer_label = '';
+  // customer_label = '';
   maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   loceditdialogRef;
@@ -211,8 +296,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   frm_adword_cap = '';
   frm_loc_amen_cap = '';
   frm_additional_cap = '';
-  frm_gallery_cap = '';
-  frm_social_cap = '';
+  // frm_gallery_cap = '';
+  // frm_social_cap = '';
   frm_profile_name_cap = Messages.FRM_LEVEL_PROFILE_NAME_CAP;
   frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
   frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
@@ -222,13 +307,12 @@ export class BProfileComponent implements OnInit, OnDestroy {
   verified_level = Messages.VERIFIED_LEVEL;
   loca_hours = Messages.LOCATION_HOURS_CAP;
   isCheckin;
-  success_error = null;
-  error_list = [];
+  qrdialogRef: any;
   editMode = 3;
   customForm: FormGroup;
   custId;
   active_user;
-  frm_lang_cap = '';
+  // frm_lang_cap = '';
   current_license;
   domain;
   showCustomId = false;
@@ -243,6 +327,33 @@ export class BProfileComponent implements OnInit, OnDestroy {
   is_customized = false;
   licence_warn = false;
   adword_loading = true;
+  subscription: Subscription;
+  bprofile_btn_text = 'Complete Your Profile';
+  profile_status_str = '';
+  jaldee_online_status_str = '';
+  // mandatory fields
+  domain_fields;
+  domain_questions = [];
+  subdomain_fields = [];
+  subdomain_questions = [];
+  que_type = 'domain_questions';
+  normal_domainfield_show = 1;
+  normal_subdomainfield_show = 1;
+  field;
+  grid_row_index;
+
+  showAddSection = false;
+  showAddSection1 = false;
+
+  // specilization
+
+
+  specialization_arr: any = [];
+  special_cap = Messages.BPROFILE_SPECIAL_CAP;
+  specialization_title = '';
+  specialdialogRef;
+  normal_specilization_show = 1;
+  image_list: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -253,8 +364,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
+    private qservice: QuestionService,
+    private galleryService: GalleryService,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.provider_datastorage.setWeightageArray([]);
     this.shared_functions.getMessage().subscribe(data => {
       this.getLicensemetrics();
       switch (data.ttype) {
@@ -265,11 +379,45 @@ export class BProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   ngOnInit() {
+
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
+    this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
+    this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
+    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+
+    this.getBusinessConfiguration();
+    this.getPublicSearch();
+    this.getJaldeeIntegrationSettings();
+    this.getProviderLocations();
+    // this.initSpecializations();
+    this.getGalleryImages();
+    // this.getBusinessProfile();
+    this.subscription = this.galleryService.getMessage().subscribe(input => {
+      if (input.ttype === 'image-upload') {
+        this.provider_services.uploadGalleryImages(input.value)
+          .subscribe(
+            () => {
+              this.getGalleryImages();
+              this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+            },
+            error => {
+              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+            }
+          );
+      } else if (input.ttype === 'delete-image') {
+        this.deleteImage(input.value);
+      }
+    });
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -286,11 +434,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.sharedfunctionobj.arrageScheduleforDisplay(this.schedule_arr);
-    this.getPublicSearch();
-    // this.getBusinessProfile();
-    this.getJaldeeIntegrationSettings();
-    this.getBusinessConfiguration();
-    this.getProviderLocations();
+
     // this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'jaldeeonline->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
@@ -301,7 +445,65 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
-    // this.getLicensemetrics();
+    this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
+      this.businessweightageArray = result;
+      console.log(JSON.stringify(this.businessweightageArray));
+
+      if (this.businessweightageArray.length !== 0) {
+        this.weightageValue = this.calculateWeightage(result);
+
+        // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
+        //   if(this.mandatoryfieldArray.length!==0){
+        //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
+        //   }
+        //   else{
+        //     this.changeJaldeeOnlineStatus(true);
+        //   }
+        // }else{
+        //   this.changeJaldeeOnlineStatus(false);
+        // }
+      } else {
+        this.weightageValue = 0;
+      }
+
+
+    });
+    // this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
+    this.getSpokenLanguages();
+    this.setLanguages();
+
+
+
+
+  }
+  checkMandatoryFieldsAlsoFilled() {
+    return this.businessweightageArray.includes(projectConstantsLocal.BUSINESS_PROFILE_WEIGHTAGE.MANDATORY_INFO);
+  }
+  checkAllRequiredFiedsOfJaldeeOnlineFilled() {
+    const weightageArray = this.businessweightageArray.map(obj => obj.name);
+    return projectConstantsLocal.REQUIRED_FIELDS_JALDEE_ONLINE.every(function (val) {
+      return weightageArray.includes(val);
+    });
+
+  }
+  changeJaldeeOnlineStatus(requiredFieldFilledStatus) {
+    // if (requiredFieldFilledStatus==true && this.onlinepresence_status === false) {
+    //   if(!localStorage.getItem('popupShown')) {
+    //   this.sharedfunctionobj.confirmOPSearchChangeStatus(this, this.onlinepresence_status);
+    //   localStorage.setItem('popupShown', 'true');
+    //   }
+    // } else if (requiredFieldFilledStatus==false && this.onlinepresence_status===true) {
+    //   this.handle_jaldeeOnlinePresence();
+
+    // }
+
+  }
+  ngAfterContentInit() {
+    console.log('afterContnet init');
+
+  }
+  ngAfterViewChecked() {
+    this.changeDetectorRef.detectChanges();
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -319,33 +521,142 @@ export class BProfileComponent implements OnInit, OnDestroy {
     if (this.adworddialogRef) {
       this.adworddialogRef.close();
     }
+
+    if (this.socialdialogRef) {
+      this.socialdialogRef.close();
+    }
+    if (this.gallerydialogRef) {
+      this.gallerydialogRef.close();
+    }
+    if (this.delgaldialogRef) {
+      this.delgaldialogRef.close();
+    }
+    if (this.qrdialogRef) {
+      this.qrdialogRef.close();
+    }
+    // this.subscription.unsubscribe();
   }
 
+
+  calculateWeightage(data) {
+    let total = 0;
+    if (data != null && data.length > 0) {
+      data.forEach(x => total += x.value);
+    }
+    return total;
+
+  }
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  getBusinessProfileWeightageText() {
+    let businessProfileWeightageText = '';
+    const weightage = this.weightageValue;
+    if (weightage <= 25) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'warning';
+      this.progress_bar_one = weightage;
+      this.progress_bar_two = 0;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+
+    }
+    if (weightage > 25 && weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'warning';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = weightage - 25;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+    } else if
+      (weightage >= 50 && weightage < 75) {
+      businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      this.weightageClass = 'info';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = weightage - 50;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+
+    } else if (weightage >= 75 && weightage < 100) {
+      businessProfileWeightageText = Messages.GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      this.weightageClass = 'primary';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = weightage - 75;
+      return businessProfileWeightageText;
+    } else if (weightage === 100) {
+      businessProfileWeightageText = Messages.VERY_GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      this.weightageClass = 'success';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = 25;
+      return businessProfileWeightageText;
+
+    }
+
+  }
+
+  // getLicensemetrics() {
+  //   let pkgId;
+  //   const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+  //   if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+  //     pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+  //   }
+  //   this.provider_services.getLicenseMetadata().subscribe(data => {
+  //     this.licenseMetadata = data;
+  //     for (let i = 0; i < this.licenseMetadata.length; i++) {
+  //       if (this.licenseMetadata[i].pkgId === pkgId) {
+  //         for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+  //           if (this.licenseMetadata[i].metrics[k].id === 13) {
+  //             if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+  //               this.showCustomId = true;
+  //               return;
+  //             } else {
+  //               this.showCustomId = false;
+  //               return;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
   getLicensemetrics() {
     let pkgId;
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
-    // this.provider_services.getLicenseMetadata().subscribe(data => {
-    this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
-    // this.licenseMetadata = data;
-    for (let i = 0; i < this.licenseMetadata.length; i++) {
-      if (this.licenseMetadata[i].pkgId === pkgId) {
-        for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-          if (this.licenseMetadata[i].metrics[k].id === 13) {
-            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-              this.showCustomId = true;
-              return;
-            } else {
-              this.showCustomId = false;
-              return;
+    this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.licenseMetadata = data;
+      // this.licenseMetadata = localStorage.getItem('license-metadata');
+      for (let i = 0; i < this.licenseMetadata.length; i++) {
+        if (this.licenseMetadata[i].pkgId === pkgId) {
+          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+            if (this.licenseMetadata[i].metrics[k].id === 13) {
+              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                this.showCustomId = true;
+                return;
+              } else {
+                this.showCustomId = false;
+                return;
+              }
             }
           }
         }
       }
-    }
-    // });
+    });
   }
   getAdwordDisplayName(name) {
     return name.split(projectConstants.ADWORDSPLIT).join(' ');
@@ -355,6 +666,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.public_search = (data && data.toString() === 'true') ? true : false;
+          this.jaldee_online_status_str = (this.public_search === true) ? 'On' : 'Off';
+          this.jaldee_online_status = this.public_search;
+          // this.jaldee_online_status_str = (this.public_search) ? 'On' : 'Off';
           this.normal_search_active = this.public_search;
         },
         () => {
@@ -374,6 +688,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   confirm_searchStatus() {
     if (this.normal_search_active) {
       this.sharedfunctionobj.confirmSearchChangeStatus(this, this.normal_search_active);
+      // this.getPublicSearch();
     } else {
       this.handle_searchstatus();
     }
@@ -385,18 +700,44 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.handle_jaldeeOnlinePresence();
     }
   }
+  // regular button
   handle_searchstatus() {
+    // const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
     const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
+        // this.jaldee_online_status=this.normal_search_active;
         const status = (this.normal_search_active === true) ? 'disable' : 'enable';
-        this.shared_functions.openSnackBar('Public Search ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        // this.jaldee_online_status_str=(this.normal_search_active === true) ? 'on' : 'off';
+        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully', { ' panelclass': 'snackbarerror' });
+        // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
+
       }, error => {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        // this.getJaldeeOnlineStatus();
         this.getPublicSearch();
       });
   }
+
+  // without toggle
+  // handle_searchstatus(event) {
+  //   const is_jaldee_online = (event.checked) ? 'Enable' : 'Disable';
+  //  // const changeTostatus = (this.normal_search_active === true) ? 'DISABLE' : 'ENABLE';
+  //   this.provider_services.updatePublicSearch(is_jaldee_online)
+  //     .subscribe(() => {
+  //      // const status = (this.normal_search_active === true) ? 'disable' : 'enable';
+  //       this.shared_functions.openSnackBar('Public Search ' + is_jaldee_online + 'd successfully', { ' panelclass': 'snackbarerror' });
+  //      // this.getJaldeeOnlineStatus();
+  //       this.getPublicSearch();
+
+  //     }, error => {
+  //       this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       //this.getJaldeeOnlineStatus();
+  //       this.getPublicSearch();
+  //     });
+  // }
+
   getJaldeeIntegrationSettings() {
     this.provider_services.getJaldeeIntegrationSettings().subscribe(
       (data: any) => {
@@ -405,19 +746,30 @@ export class BProfileComponent implements OnInit, OnDestroy {
         // this.jaldeeintegration_status = data.onlinePresence;
         // this.walkinConsumer_statusstr = (this.walkinConsumer_status) ? 'On' : 'Off';
         this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+        this.profile_status = this.onlinepresence_status ? true : false;
+        this.profile_status_str = this.profile_status ? 'On' : 'Off';
+        // if (this.profile_status === false && this.normal_search_active) {
+        //   this.handle_searchstatus();
+        // }
+        this.getPublicSearch();
+
         // this.jaldeeintegration_statusstr = (this.jaldeeintegration_status) ? 'On' : 'Off';
       }
     );
   }
   handle_jaldeeOnlinePresence() {
+
     const is_check = this.onlinepresence_status ? 'Disable' : 'Enable';
+
+    // this.businessProfile_status=(is_check==='Disable'? false: true);
+    // this.businessProfile_status_str=(this.businessProfile_status===true? 'On':'Off');
     const data = {
       'onlinePresence': !this.onlinepresence_status
     };
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Business profile ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
@@ -437,25 +789,45 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   getBusinessProfile() {
     this.bProfile = [];
+    this.additionalInfoDomainFields = [];
+    this.additionalInfoSubDomainFields = [];
+    this.mandatoryfieldArray = [];
     this.getBussinessProfileApi()
       .then(
         data => {
           this.bProfile = data;
+          console.log('businessprofile..' + JSON.stringify(this.bProfile));
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
+                  this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+                  this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
+                  this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
+                  this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+                  this.getProviderLogo();
+                  this.getDomainVirtualFields();
+                  if (this.bProfile['serviceSubSector']['subDomain']) {
+                    this.getSubDomainVirtualFields();
+                  }
+
                 });
+
+
+
             });
-          this.provider_datastorage.set('bProfile', data);
+          this.provider_datastorage.set('bProfile', this.bProfile);
+
           for (let i = 0; i < this.businessConfig.length; i++) {
             if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
               if (this.businessConfig[i].multipleLocation) {
                 this.multipeLocationAllowed = true;
               }
             }
+
           }
+
           const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
@@ -488,7 +860,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
               || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
-            this.getProviderLogo();
+
           }
           // check whether normal search section can be displayed
           this.normal_search_display = this.bProfile.enableSearch;
@@ -532,8 +904,43 @@ export class BProfileComponent implements OnInit, OnDestroy {
           if (this.bProfile.customId) {
             this.normal_customid_show = 3;
           }
+
+
+
+          // specialization
+          this.normal_specilization_show = 2;
+          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+          this.specialization_title = (data['serviceSubSector']['displayName']) ?
+            data['serviceSubSector']['displayName'] : '';
+          this.normal_specilization_show = 2;
+          if (this.bProfile.specialization) {
+            if (this.bProfile.specialization.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
+          }
+
+          this.normal_socialmedia_show = 2;
+          this.social_arr = [];
+          if (this.bProfile.socialMedia) {
+            if (this.bProfile.socialMedia.length > 0) {
+              this.normal_socialmedia_show = 3;
+              for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
+                if (this.bProfile.socialMedia[i].resource !== '') {
+                  this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                }
+              }
+            }
+          }
+          if (this.social_arr.length < this.orgsocial_list.length) {
+            this.showaddsocialmedia = true;
+          }
+
+
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
+          this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
           this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
 
         },
@@ -542,6 +949,23 @@ export class BProfileComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  getGalleryImages() {
+    this.provider_services.getGalleryImages()
+      .subscribe(
+        data => {
+          this.image_list = data;
+          this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
+
+        },
+        () => {
+
+        }
+      );
+  }
+
+
+
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -573,7 +997,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
       autoFocus: true,
       data: {
         type: 'edit',
-        bprofile: this.bProfile
+        bprofile: this.bProfile,
+        logoExist: this.logoExist
       }
     });
     this.primarydialogRef.afterClosed().subscribe(result => {
@@ -695,6 +1120,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
+
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -703,6 +1129,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
       }
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
+
   }
   // handles the image display on load and on change
   imageSelect(input) {
@@ -756,10 +1183,13 @@ export class BProfileComponent implements OnInit, OnDestroy {
           this.cacheavoider = dd;
           let logo = '';
           if (this.blogo[0]) {
+            this.logoExist = true;
             logo = this.blogo[0].url;
           } else {
             logo = '';
+            this.logoExist = false;
           }
+          this.provider_datastorage.updateProfilePicWeightage(this.logoExist);
           const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
@@ -790,6 +1220,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
             || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
 
           const pdata = { 'ttype': 'updateuserdetails' };
+          this.provider_datastorage.updateProfilePicWeightage(true);
           this.sharedfunctionobj.sendMessage(pdata);
           /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
         },
@@ -808,6 +1239,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
         // calling function which saves the business related details to show in the header
         this.blogo = [];
         this.profimg_exists = false;
+        this.provider_datastorage.updateProfilePicWeightage(this.profimg_exists);
         const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
         this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
           || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '', true);
@@ -903,6 +1335,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   performActions(action) {
     if (action === 'learnmore') {
+
       this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline']);
     }
   }
@@ -922,6 +1355,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
   customizeId() {
     if (this.normal_customid_show === 2 && !this.showCustomId) {
       this.licence_warn = true;
+      setTimeout(() => {
+        this.licence_warn = false;
+      }, 3000);
     } else {
       this.is_customized = true;
       this.editCustomId();
@@ -992,59 +1428,68 @@ export class BProfileComponent implements OnInit, OnDestroy {
     document.body.removeChild(selBox);
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
-  qrCodegenerateOnlineID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
-    this.qr_code_oId = true;
-    this.changeDetectorRef.detectChanges();
-    setTimeout(() => {
-      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-    }, 50);
-  }
-  qrCodegenerateCustID(valuetogenerate) {
-    this.qr_value = projectConstants.PATH + valuetogenerate;
-    this.qr_code_cId = true;
-    this.changeDetectorRef.detectChanges();
-    setTimeout(() => {
-      this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-    }, 50);
-  }
-  closeOnlineQR() {
-    this.qr_code_oId = false;
-  }
-  closeCustomQR() {
-    this.qr_code_cId = false;
-  }
-  printQr(printSectionId) {
-    setTimeout(() => {
-    const printContent = document.getElementById(printSectionId);
-    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    // WindowPrt.document.write('<html><head><title></title>');
-    // WindowPrt.document.write('</head><body style="width:300px;height:400px">');
-    // WindowPrt.document.write('<div style="padding-left:300px;padding-top: 100px;">');
-    // WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;"></p>');
-    // WindowPrt.document.write(printContent.innerHTML);
-    // WindowPrt.document.write('</div>');
-    // WindowPrt.document.write('</body></html>');
-    // WindowPrt.document.close();
-    // WindowPrt.focus();
-    // WindowPrt.print();
-    // WindowPrt.close();
-    let printsection = '<html><head><title></title>';
-    printsection += '</head><body style="width:300px;height:400px">';
-    printsection += '<div style="padding-left:300px;padding-top: 100px;">';
-    printsection += '<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;"></p>';
-    printsection += printContent.innerHTML;
-    printsection += '</div>';
-    printsection += '</body></html>';
-    cordova.plugins.printer.print(printsection);
-  });
-  }
-  showPasscode() {
-    this.show_passcode = !this.show_passcode;
-  }
-  downloadQR() {
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid
+      }
+    });
 
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.getBusinessProfile();
+      }
+    });
   }
+
+
+
+  // qrCodegenerateOnlineID(valuetogenerate) {
+  //   this.qr_value = projectConstants.PATH + valuetogenerate;
+  //   this.qr_code_oId = true;
+  //   this.changeDetectorRef.detectChanges();
+  //   setTimeout(() => {
+  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+  //   }, 50);
+  // }
+  // qrCodegenerateCustID(valuetogenerate) {
+  //   this.qr_value = projectConstants.PATH + valuetogenerate;
+  //   this.qr_code_cId = true;
+  //   this.changeDetectorRef.detectChanges();
+  //   setTimeout(() => {
+  //     this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+  //   }, 50);
+  // }
+  // closeOnlineQR() {
+  //   this.qr_code_oId = false;
+  // }
+  // closeCustomQR() {
+  //   this.qr_code_cId = false;
+  // }
+  // printQr(printSectionId) {
+  //   const printContent = document.getElementById(printSectionId);
+  //   const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+  //   WindowPrt.document.write('<html><head><title></title>');
+  //   WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+  //   WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+  //   WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+  //   WindowPrt.document.write(printContent.innerHTML);
+  //   WindowPrt.document.write('</div>');
+  //   WindowPrt.document.write('</body></html>');
+  //   WindowPrt.document.close();
+  //   WindowPrt.focus();
+  //   WindowPrt.print();
+  //   WindowPrt.close();
+  // }
+  // showPasscode() {
+  //   this.show_passcode = !this.show_passcode;
+  // }
+  // downloadQR() {
+
+  // }
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
@@ -1062,5 +1507,608 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   gotoAdditionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
+  }
+
+  // specilization
+
+  initSpecializations() {
+    this.bProfile = [];
+    this.getBussinessProfileApi()
+      .then(
+        data => {
+          this.bProfile = data;
+          this.provider_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+          this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
+          this.specialization_title = (data['serviceSubSector']['displayName']) ?
+            data['serviceSubSector']['displayName'] : '';
+          this.normal_specilization_show = 2;
+          if (this.bProfile.specialization) {
+            if (this.bProfile.specialization.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
+          } else {
+            this.normal_specilization_show = 2;
+          }
+        });
+
+  }
+  getSpecializations(domain, subdomain) {
+    this.provider_services.getSpecializations(domain, subdomain)
+      .subscribe(data => {
+        this.specialization_arr = data;
+
+      });
+  }
+  getSpecializationName(n) {
+    for (let i = 0; i < this.specialization_arr.length; i++) {
+      if (this.specialization_arr[i].name === n) {
+        return this.specialization_arr[i].displayName;
+      }
+    }
+  }
+
+  handleSpecialization() {
+    let holdselspec;
+    if (this.bProfile && this.bProfile.specialization) {
+      holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
+    } else {
+      holdselspec = [];
+    }
+
+    const bprof = holdselspec;
+    const special = this.specialization_arr;
+    this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        selspecializations: bprof,
+        specializations: special
+      }
+    });
+
+    this.specialdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result['mod'] === 'reloadlist') {
+          // this.getBusinessProfile();
+          this.bProfile = result['data'];
+          this.initSpecializations();
+          if (this.bProfile && this.bProfile.selspecializations) {
+            if (this.bProfile.selspecializations.length > 0) {
+              this.normal_specilization_show = 3;
+            } else {
+              this.normal_specilization_show = 2;
+            }
+          } else {
+            this.normal_specilization_show = 2;
+          }
+        }
+      }
+    });
+  }
+
+
+
+  // mandatory fields
+
+  getDomainVirtualFields() {
+    const weightageObjectOfDomain: any = {};
+    const checkArray = [];
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+      .then(
+        data => {
+          let mandatorydomain = false;
+          let mandatorydomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.domain_fields = data['fields'];
+          this.domain_questions = data['questions'] || [];
+          this.domain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
+          if (this.mandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
+            mandatorydomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
+                mandatorydomainFilled = true;
+              } else {
+                mandatorydomainFilled = false;
+                return;
+              }
+            });
+
+
+          } else {
+            mandatorydomain = false;
+          }
+
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+          weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
+          weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
+          weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
+
+
+
+        }
+      );
+  }
+
+
+  checkMandatoryFieldsInResultSet(domainFields, fieldname) {
+    let fullyfilledStatus = true;
+    domainFields.forEach(function (dom) {
+      if (dom.name === fieldname) {
+        if (!dom['value'] || (dom.value === undefined || dom.value == null)) {
+          fullyfilledStatus = false;
+          return;
+        }
+      }
+    });
+    return fullyfilledStatus;
+  }
+
+  checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
+    let fullyfilledStatus = true;
+    additionalInfoFields.forEach(function (field) {
+      if (fullyfilledStatus) {
+        if (!dom_subdom_list.some(domobject => domobject.name === field)) {
+          fullyfilledStatus = false;
+          return;
+        } else {
+          dom_subdom_list.forEach(function (data_object) {
+            if (data_object.name === field) {
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
+                fullyfilledStatus = false;
+                return;
+              }
+            }
+          });
+        }
+      }
+    });
+
+    return fullyfilledStatus;
+  }
+
+  addDynamicField(field, type) {
+    if (field.dataType === 'DataGrid') {
+      this.editGridDynamicField(field.name, type, null);
+    } else {
+      this.editDynamicField(field.name, type);
+    }
+  }
+  editGridDynamicField(field_name, type, index = 0) {
+    const field = JSON.parse(JSON.stringify(this.getFieldQuestion(field_name, type)));
+    // We need to pass only selected row to edit page
+    // Create the data for passing to dynamicform
+    if (index !== null) {
+      const column = field[0]['columns'][index] || [];
+      field[0]['columns'] = [];
+      field[0]['columns'].push(column);
+      const selected_row = field[0]['value'][index] || [];
+      field[0]['value'] = [];
+      field[0]['value'].push(selected_row);
+    } else {
+      const column = field[0]['columns'][0] || [];
+      field[0]['columns'] = [];
+      field[0]['columns'].push(column);
+      column.map((e) => { delete e.value; });
+    }
+    this.showDynamicFieldPopup(field, type, index);
+  }
+  deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
+    const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
+      JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
+    // JSON.parse(JSON.stringify used to remove reference
+    const grid_list = pre_value[field_name] || [];
+    if (grid_list.length === 1 && index === 0) {
+      delete pre_value[field_name];
+    } else {
+      grid_list.splice(index, 1);
+      pre_value[field_name] = grid_list;
+    }
+    if (type === 'domain_questions') {
+      this.onDomainFormSubmit(pre_value);
+    } else if (type === 'subdomain_questions') {
+      this.onSubDomainFormSubmit(pre_value);
+    }
+  }
+  editDynamicField(field_name, type) {
+    const field = this.getFieldQuestion(field_name, type);
+    this.showDynamicFieldPopup(field, type);
+  }
+  showDynamicFieldPopup(field, type, grid_row_index = null) {
+    this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        type: type,
+        questions: field,
+        bProfile: this.bProfile,
+        grid_row_index: grid_row_index
+      }
+    });
+    this.dynamicdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result === 'reloadlist') {
+          this.getBussinessProfileApi()
+            .then(
+              data => {
+                this.bProfile = data;
+                if (type === 'domain_questions') {
+                  this.getDomainVirtualFields();
+                } else {
+                  this.getSubDomainVirtualFields();
+                }
+              },
+              () => {
+
+              }
+            );
+        }
+      }
+    });
+  }
+
+  getSubDomainVirtualFields() {
+    const checkArray = [];
+    const weightageObjectOfSubDomain: any = {};
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'],
+      this.bProfile['serviceSubSector']['subDomain']).then(
+        data => {
+          let mandatorysubdomain = false;
+          let mandatorySubDomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.subdomain_fields = data['fields'];
+          this.subdomain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.subdomain_questions = data['questions'] || [];
+          if (this.mandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+            mandatorysubdomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
+                mandatorySubDomainFilled = true;
+              } else {
+                mandatorySubDomainFilled = false;
+                return;
+              }
+            });
+
+          }
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+
+          weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
+          weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
+          weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
+          this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
+          for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {
+            // tslint:disable-next-line:no-unused-expression
+            if (this.subdomain_fields[fdIndex]['dataType'] === 'DataGrid') {
+              for (let colIndex = 0; colIndex < this.subdomain_fields[fdIndex]['Columns'].length; colIndex++) {
+                if (this.subdomain_fields[fdIndex]['Columns'][colIndex]['type'] === 'Enum') {
+                  for (let enumIndex = 0; enumIndex < this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'].length; enumIndex++) {
+                    this.vkeyNameMap[this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['name']] = this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['displayName'];
+                  }
+                }
+              }
+            }
+          }
+
+          this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
+        }
+      );
+  }
+
+
+  getdispVal(typ, field) {
+    let retfield = '';
+    let passArray = [];
+    if (typ === 'domain') {
+      passArray = this.domain_fields;
+    } else if (typ === 'subdomain') {
+      passArray = this.subdomain_fields;
+    }
+    let str = '';
+    if (field.value !== undefined) {
+      if (field.dataType === 'Enum') {
+        retfield = this.getFieldDetails(passArray, field.value, field.name);
+      } else if (field.dataType === 'EnumList') {
+        for (let i = 0; i < field.value.length; i++) {
+          if (str !== '') {
+            str += ', ';
+          }
+          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          str += this.getFieldDetails(passArray, field.value[i], field.name);
+        }
+        retfield = str;
+      } else {
+        retfield = field.value;
+      }
+    }
+    return retfield;
+  }
+
+  getFieldDetails(passedArray, fieldvalue, fieldname) {
+    let retfield;
+    if (fieldvalue !== undefined) {
+      for (let i = 0; i < passedArray.length; i++) {
+        if (fieldname === passedArray[i].name) {
+          for (let j = 0; j < passedArray[i].enumeratedConstants.length; j++) {
+            if (fieldvalue === passedArray[i].enumeratedConstants[j].name) {
+              retfield = passedArray[i].enumeratedConstants[j].displayName;
+            }
+          }
+        }
+      }
+    }
+    return retfield;
+  }
+  showValueswithComma(fld) {
+    let str = '';
+    if (fld.value !== undefined) {
+      for (let i = 0; i < fld.value.length; i++) {
+        if (str !== '') {
+          str += ', ';
+        }
+        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+      }
+      return str;
+    }
+  }
+  getVirtualFields(domain, subdomin = null) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getVirtualFields(domain, subdomin)
+        .subscribe(
+          data => {
+            const set_data = [];
+            set_data['fields'] = _this.setFieldValue(data, subdomin);
+            set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
+            resolve(set_data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  setFieldValue(data, subdomin) {
+    let fields = [];
+    if (subdomin) {
+      fields = (this.bProfile['subDomainVirtualFields'] &&
+        this.bProfile['subDomainVirtualFields'][0]) ?
+        this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
+    } else {
+      fields = (this.bProfile['domainVirtualFields']) ?
+        this.bProfile['domainVirtualFields'] : [];
+    }
+    if (fields) {
+      for (const i in data) {
+        if (data[i]) {
+          const row = data[i];
+          if (fields[row.name]) {
+            data[i]['value'] = fields[row.name];
+          } else {
+            delete data[i]['value'];
+          }
+        }
+      }
+      return data;
+    } else {
+      return data;
+    }
+  }
+  getFieldQuestion(field_key = null, type = 'domain_questions') {
+    const questions = (type === 'subdomain_questions') ? this.subdomain_questions : this.domain_questions;
+    if (field_key != null) {
+      const field = [];
+      for (const que of questions) {
+        if (que.key === field_key) {
+          field.push(que);
+        }
+      }
+      return field;
+    }
+  }
+  onDomainFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data,
+      this.bProfile['serviceSector']['domain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  onSubDomainFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data, null,
+      this.bProfile['serviceSubSector']['subDomain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+
+  // gallery
+
+
+
+  deleteImage(file) {
+    this.provider_services.deleteProviderGalleryImage(file)
+      .subscribe(
+        () => {
+          this.getGalleryImages();
+        },
+        () => {
+
+        }
+      );
+  }
+
+  getSocialdet(key, field) {
+    const retdet = this.orgsocial_list.filter(
+      soc => soc.key === key);
+    const returndet = retdet[0][field];
+    return returndet;
+  }
+
+  check_alreadyexists(v) {
+    for (let i = 0; i < this.social_arr.length; i++) {
+      if (this.social_arr[i].Sockey === v) {
+        return true;
+      }
+    }
+    return false;
+  }
+  handleSocialmedia(key) {
+    this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
+      width: '50%',
+      // panelClass: 'socialmediamainclass',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        bprofile: this.bProfile,
+        editkey: key || ''
+      }
+    });
+    this.socialdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result === 'reloadlist') {
+          this.getBusinessProfile();
+        }
+      }
+    });
+  }
+  deleteSocialmedia(sockey) {
+    const post_data: any = [];
+    for (let i = 0; i < this.social_arr.length; i++) {
+      if (this.social_arr[i].Sockey !== sockey) {
+        post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
+      }
+    }
+    const submit_data = {
+      'socialMedia': post_data
+    };
+    this.provider_services.updateSocialMediaLinks(submit_data)
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        () => {
+
+        }
+      );
+
+  }
+  editSocialmedia(key) {
+    this.handleSocialmedia(key);
+  }
+
+  // languages known
+
+  setLanguages() {
+    this.bProfile = [];
+    this.getBussinessProfileApi()
+      .then(
+        data => {
+          this.bProfile = data;
+          if (this.bProfile.languagesSpoken) {
+            this.provider_datastorage.updateLanguagesWeightage(this.bProfile.languagesSpoken);
+            if (this.bProfile.languagesSpoken.length > 0) {
+              this.normal_language_show = 3;
+            } else {
+              this.normal_language_show = 2;
+            }
+          } else {
+            this.normal_language_show = 2;
+          }
+        });
+  }
+  getSpokenLanguages() {
+    this.provider_services.getSpokenLanguages()
+      .subscribe(data => {
+        this.languages_arr = data;
+        // this.provider_datastorage.updateLanguagesWeightage(this.languages_arr);
+      });
+  }
+  getlanguageName(n) {
+    for (let i = 0; i < this.languages_arr.length; i++) {
+      if (this.languages_arr[i].name === n) {
+        return this.languages_arr[i].displayName;
+      }
+    }
+  }
+  handleSpokenLanguages() {
+    let holdsellang;
+    if (this.bProfile.languagesSpoken) {
+      holdsellang = JSON.parse(JSON.stringify(this.bProfile.languagesSpoken)); // to avoid pass by reference
+    } else {
+      holdsellang = [];
+    }
+
+    const bprof = holdsellang;
+    const lang = this.languages_arr;
+    this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        sellanguages: bprof,
+        languagesSpoken: lang
+      }
+    });
+    this.langdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result['mod'] === 'reloadlist') {
+          // this.getBusinessProfile();
+          this.bProfile = result['data'];
+          this.setLanguages();
+          if (this.bProfile.sellanguages) {
+            if (this.bProfile.sellanguages.length > 0) {
+              this.normal_language_show = 3;
+            } else {
+              this.normal_language_show = 2;
+            }
+          } else {
+            this.normal_language_show = 2;
+          }
+        }
+      }
+    });
+  }
+
+  changeProPic() {
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: { 'userdata': this.bProfile }
+    });
+    this.notedialogRef.afterClosed().subscribe(result => {
+      this.getBusinessProfile();
+    });
   }
 }

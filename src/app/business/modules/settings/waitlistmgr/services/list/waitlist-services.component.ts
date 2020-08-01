@@ -4,6 +4,7 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../../../app.component';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -38,6 +39,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     serv_list;
     liveTrackStatus: any;
     is_virtual_enbl = true;
+    page_count = projectConstants.PERPAGING_LIMIT;
+    page = 1;
+    pagination: any = {
+        startpageval: 1,
+        totalCnt: 0,
+        perPage: this.page_count
+      };
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -57,7 +65,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.api_loading = true;
         this.getDomainSubdomainSettings();
-        this.getServices();
+        this.getServiceCount();
+       // this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'q-manager->settings-services', 'classname': 'b-service',
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
@@ -75,20 +84,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-services']);
         }
     }
-    getServices() {
+    getServices(pgefilter?) {
         this.api_loading = true;
-        const filter = { 'scope-eq': 'account' };
-        this.provider_services.getProviderServices(filter)
+      //  const filter = { 'scope-eq': 'account' };
+        this.provider_services.getProviderServices(pgefilter)
             .subscribe(
                 data => {
-                    this.service_list = [];
-                    this.serv_list = data;
-                    for (const serv of this.serv_list) {
-                        if (serv.serviceType !== 'donationService') {
-                            this.service_list.push(serv);
-                        }
-                    }
-                  //  this.service_list = data;
+                    this.service_list = data;
                     this.api_loading = false;
                 },
                 error => {
@@ -125,11 +127,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.disableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
 
@@ -137,11 +139,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.enableService(service.id)
             .subscribe(
                 () => {
-                    this.getServices();
+                    this.getServiceCount();
                 },
                 (error) => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.getServices();
+                    this.getServiceCount();
                 });
     }
     editService(service) {
@@ -180,4 +182,35 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     getAppxTime(waitlist) {
         return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
     }
+    handle_pageclick(pg) {
+        this.pagination.startpageval = pg;
+        this.page = pg;
+        const pgefilter = {
+            'from' : this.pagination.startpageval,
+            'count': this.pagination.totalCnt,
+            'serviceType-neq': 'donationService'
+          };
+          this.setPaginationFilter(pgefilter);
+          this.getServices(pgefilter);
+      }
+      setPaginationFilter(api_filter) {
+        api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.page_count : 0;
+        api_filter['count'] = this.page_count;
+        return api_filter;
+      }
+      getServiceCount() {
+        const filter = {  'serviceType-neq': 'donationService' };
+        this.provider_services.getServiceCount(filter)
+          .subscribe(
+            data => {
+              this.pagination.totalCnt = data;
+              const pgefilter = {
+                'from' : 0,
+                'count': this.pagination.totalCnt,
+                'serviceType-neq': 'donationService'
+              };
+              this.setPaginationFilter(pgefilter);
+              this.getServices(pgefilter);
+            });
+      }
 }

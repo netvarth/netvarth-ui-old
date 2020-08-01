@@ -96,6 +96,7 @@
                                                                 class="btn btn-warning btn-flat"
                                                                 (click)="logofile.click()">
                                                                 <input #logofile type="file"
+                                                                accept="/*;capture=camera"
                                                                     style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>

@@ -5,7 +5,9 @@
             *ngIf="service_data.status=='ACTIVE'"
             [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
         <div class="ot-it">
-            <h4>{{service_data.name | capitalizeFirst}}</h4>
+            <h4>{{service_data.name | capitalizeFirst}}
+                <span  *ngIf="service.provider && !userId ">({{service.provider.firstName}})</span>
+            </h4>
             <div class="it-des">
                 {{service_data.description | capitalizeFirst}}
             </div>
@@ -24,23 +26,23 @@
                     <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.isPrePayment">
-                    <span class=" ttle">{{pre_pay_amt}}</span>
+                    <span class="ttle">{{pre_pay_amt}}</span>
                     <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
-                    <span class=" ttle">Service Type</span>
+                    <span class="ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
                     <span *ngIf="service_data.serviceType==='physicalService'">Onsiteservice</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
-                    <span class=" ttle">Service Mode</span>
+                    <span class="ttle">Service Mode</span>
                     <span *ngIf="service_data.virtualServiceType === 'audioService'">Audio</span>
                     <span *ngIf="service_data.virtualServiceType === 'videoService'">Video</span>
                 </div>
             </div>
             <div class="c-ot" *ngIf="service_data.virtualServiceType">
                 <div class="item">
-                    <span class=" ttle">Tele Mode</span>
+                    <span class="ttle">Tele Mode</span>
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
@@ -54,19 +56,19 @@
             </div>
             <div class="c-ot" *ngIf="is_donation">
                 <div class="item" *ngIf="service_data.minDonationAmount">
-                    <span class=" ttle">Min Amount</span>
+                    <span class="ttle">Min Amount</span>
                     <span>{{service_data.minDonationAmount}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.maxDonationAmount">
-                    <span class=" ttle">Max Amount</span>
+                    <span class="ttle">Max Amount</span>
                     <span>{{service_data.maxDonationAmount}}</span>
                 </div>
                 <div class="item" *ngIf="service_data.multiples">
-                    <span class=" ttle">Multiples</span>
+                    <span class="ttle">Multiples</span>
                     <span>{{service_data.multiples}}</span>
                 </div>
             </div>
-            <div class="c-ot m0" *ngIf="is_donation">
+            <div class="c-ot" *ngIf="is_donation">
                 <div class="item" style="width: 70%;">
                     <span
                         *ngIf="service_data.serviceType === 'donationService' && service_data.notification === true">{{end_cause_notify_cap}}:
@@ -76,8 +78,8 @@
                             *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                 </div>
             </div>
-            <div class="c-ot m0" *ngIf="!is_donation">
-                <div class="item" *ngIf="subdomainsettings.serviceBillable">
+            <div class="c-ot" *ngIf="!is_donation">
+                <div class="item" style="margin-right: 10px;" *ngIf="subdomainsettings.serviceBillable">
                     <span>{{tax_applicable_cap}}:
                         <span class="noti-it" [class.yes]="service_data.taxable==true"
                             [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
@@ -188,7 +190,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         <mat-option *ngIf="include_audio" [value]="'audioService'">
                             Audio
                         </mat-option>
-                        <mat-option [value]="'videoService'">
+                        <mat-option *ngIf="include_video" [value]="'videoService'">
                             Video
                         </mat-option>
                     </mat-select>
@@ -226,8 +228,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         [ngModelOptions]="{standalone: true}"> </textarea>
                 </mat-form-field>
             </div>
-            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH' && users_list.length >= 1 && !serviceFrom && action === 'add' && !is_donation">
-                <mat-form-field class="example-full-width">
+            <div class="form-group" *ngIf="bprofile.accountType === 'BRANCH'  && !serviceFrom && action === 'add' && !is_donation">
+                            <mat-checkbox   [(ngModel)]="userspecific"  [ngModelOptions]="{standalone: true}">
+                                User specific
+                            </mat-checkbox>
+                <mat-form-field class="example-full-width" *ngIf="userspecific && users_list.length >= 1">
                     <mat-select [(value)]="selectedUser"  placeholder="Select user" #userlist
                         (selectionChange)="selectUserHandler(userlist.value)">
                         <mat-option *ngFor="let usr of users_list" [value]="usr.id">

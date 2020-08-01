@@ -16,8 +16,10 @@ import { SpecializationsComponent } from './specializations/specializations.comp
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { DynamicFormModule } from '../../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
-import { PrivacyModule } from './privacy/privacy.module';
+import { ProPicPopupModule } from './pro-pic-popup/pro-pic-popup.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
+
 @NgModule({
     imports: [
         BProfileRoutingModule,
@@ -30,7 +32,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         Nl2BrPipeModule,
         DynamicFormModule,
         GalleryModule,
-        PrivacyModule,
+        ProPicPopupModule,
         NgxQRCodeModule
     ],
     declarations: [
@@ -39,11 +41,13 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         AddProviderBprofileSpokenLanguagesComponent,
         ProviderBprofileSearchDynamicComponent,
         LanguagesComponent,
+        QRCodeGeneratorComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,
+        QRCodeGeneratorComponent,
         ProviderBprofileSearchDynamicComponent
     ],
     exports: [

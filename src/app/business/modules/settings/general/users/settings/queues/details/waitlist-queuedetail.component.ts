@@ -93,6 +93,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
     qprefixName = '';
     qsuffixName = '';
     qbatchStatus = false;
+    startdateError = false;
+    enddateError = false;
+    minDate;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -130,7 +134,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     },
                     {
                         url: '/provider/settings/general/users/' + this.userId + '/settings/queues',
-                        title: 'Queues'
+                        title: 'Tokens/checkins'
                     }
                 );
                 if (this.action === 'add') {
@@ -146,6 +150,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             });
     }
     ngOnInit() {
+        this.minDate = this.convertDate();
         this.getUser();
         this.getWaitlistMgr();
         this.api_loading = true;
@@ -306,7 +311,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     // get the list of services
     getProviderServices() {
         this.api_loading1 = true;
-        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId ,'serviceType-neq': 'donationService'};
+        const filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.userId, 'serviceType-neq': 'donationService' };
         this.provider_services.getProviderServices(filter)
             .subscribe(data => {
                 this.services_list = data;
@@ -356,9 +361,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                startdate: [''],
+                enddate: [''],
                 // timeSlot: ['', Validators.compose([Validators.required])],
             });
-            this.updateForm();
+            setTimeout(() => {
+                this.updateForm();
+            }, 1000);
         } else {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -368,8 +377,11 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
+                startdate: [''],
+                enddate: [''],
                 // timeSlot: ['', Validators.compose([Validators.required])]
             });
+            this.amForm.get('startdate').setValue(this.minDate);
             this.provider_services.getQStartToken()
                 .subscribe(
                     (data) => {
@@ -403,6 +415,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qendtime: edtime || null,
             qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
+            startdate: this.queue_data.queueSchedule.startDate || null,
+            enddate: this.queue_data.queueSchedule.terminator.endDate,
             // timeSlot: this.queue_data.timeInterval || 0
         });
         // this.qbatchStatus = this.queue_data.batch;
@@ -441,8 +455,50 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
         this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     }
-
+    convertDate(date?) {
+        let today;
+        let mon;
+        let cdate;
+        if (date) {
+            cdate = new Date(date);
+        } else {
+            cdate = new Date();
+        }
+        mon = (cdate.getMonth() + 1);
+        if (mon < 10) {
+            mon = '0' + mon;
+        }
+        return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+    }
+    compareDate(dateValue, startOrend) {
+        const UserDate = dateValue;
+        this.startdateError = false;
+        this.enddateError = false;
+        const ToDate = new Date().toString();
+        const l = ToDate.split(' ').splice(0, 4).join(' ');
+        const sDate = this.amForm.get('startdate').value;
+        const sDate1 = new Date(sDate).toString();
+        const l2 = sDate1.split(' ').splice(0, 4).join(' ');
+        if (startOrend === 0) {
+            if (new Date(UserDate) < new Date(l)) {
+                return this.startdateError = true;
+            }
+            return this.startdateError = false;
+        } else if (startOrend === 1 && dateValue) {
+            if (new Date(UserDate) < new Date(l2)) {
+                return this.enddateError = true;
+            }
+            return this.enddateError = false;
+        }
+    }
     onSubmit(form_data) {
+        let endDate;
+        const startDate = this.convertDate(form_data.startdate);
+        if (form_data.enddate) {
+            endDate = this.convertDate(form_data.enddate);
+        } else {
+            endDate = '';
+        }
         if (!form_data.qname.replace(/\s/g, '').length) {
             const error = 'Please enter queue name';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -549,9 +605,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
             schedulejson = {
                 'recurringType': 'Weekly',
                 'repeatIntervals': daystr,
-                'startDate': today,
+                'startDate': startDate,
                 'terminator': {
-                    'endDate': '',
+                    'endDate': endDate,
                     'noOfOccurance': ''
                 },
                 'timeSlots': [{
@@ -571,7 +627,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum,
                 'timeInterval': form_data.timeSlot,
-                'provider': this.userId
+                'provider': {
+                    'id': this.userId
+                }
                 // 'batch': this.qbatchStatus,
                 // 'batchPatternSettings': {
                 //     'prefix': this.qprefixName,

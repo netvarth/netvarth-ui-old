@@ -5,55 +5,82 @@
 <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
-            <div class="row" *ngFor="let service of service_list">
-                <div class="card" *ngIf="api_loading">
-                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                </div>
-                <div class="card" [class.disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
-                    <div class="copy">
-                        <span class="mbt">
-                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                        </span>
-                        <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
-                        <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
-                                capitalizeFirst}}</h3>
-                                <span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'" class="link"> (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)</span>
-                                <span *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'" class="link"> (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)</span>
-                        <div class="c-ot m0">
-                            <div class="item" >
-                                <span class="ttle">{{est_duration_cap}}</span>
-                                <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
-                            </div>
-                            <div class="item" *ngIf="service.totalAmount!=0">
-                                <span class="ttle">{{price_cap}}</span>
-                                <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
-                            </div>
-                            <div class="item">
-                                <span class="ttle">Service Type</span>
-                                <span *ngIf="service.serviceType==='virtualService'">Teleservice</span>
-                                <span *ngIf="service.serviceType!=='virtualService'">Physical Service</span>
-                            </div>
-                        </div>
-                        <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item (click)="editService(service)" *ngIf="service.status=='ACTIVE'">
-                                <i class="icon-edit"></i>
-                                Edit
-                            </button>
-                            <button mat-menu-item (click)="changeServiceStatus(service)">
-                                <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable"></i>
-                                <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
-                                {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                            </button>
-                        </mat-menu>
-                    </div>
-                </div>
+            <div class="card p0 w-dta">
+                <table class="table childDetails singleDash" style="font-size: .875rem;">
+                    <thead id="childActionBar" class="qBoardselected-table">
+                        <tr>
+                            <th style="padding: 20px;"></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="!api_loading && service_list.length === 0">
+                        <tr>
+                            <td colspan="5" class="no-appt">
+                                No services added.
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngFor="let service of service_list">
+                        <tr class="grid-pad" [class.grid-disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
+                            <td>
+                                <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
+                                    (click)="goServiceDetail(service)">
+                                    {{service.name | capitalizeFirst}}
+                                </div>
+                                <span
+                                    *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
+                                    class="link"> (<i class="fa fa-volume-up cal-mod-font"
+                                        aria-hidden="true"></i>)</span>
+                                <span
+                                    *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
+                                    class="link"> (<i class="fa fa-video-camera cal-mod-font"
+                                        aria-hidden="true"></i>)</span>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                {{service.deptName | capitalizeFirst}}
+                            </td>
+                            <td>
+                                <div class="copy">
+                                    <span class="mbt" style="top: -18px;">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <mat-menu #appMenu="matMenu">
+                                        <button mat-menu-item (click)="editService(service)"
+                                            *ngIf="service.status=='ACTIVE'">
+                                            <i class="icon-edit chkin-mobic"></i>Edit
+                                        </button>
+                                        <button mat-menu-item (click)="changeServiceStatus(service)">
+                                            <i *ngIf="service.status=='INACTIVE' || !service.status"
+                                                class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>
+                                            <i *ngIf="service.status=='ACTIVE'" class="icon-disable phone-in-icon"></i>
+                                            {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+                                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                                    [curpage]="pagination.startpageval"></app-pager>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
-        <div class="card" *ngIf="!api_loading && service_list.length === 0">
+        <!-- <div class="card" *ngIf="!api_loading && service_list.length === 0">
             No services added.
-        </div>
+        </div> -->
         <div class="clearfix"></div>
     </div>
 </section>

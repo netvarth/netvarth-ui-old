@@ -6,7 +6,7 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
-                    <mat-accordion>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showprofilesearch}">
                         <mat-expansion-panel [expanded]="showprofilesearch" (click)="menu('jaldeeonline')">
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title">
@@ -1151,7 +1151,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                      <!-- next -->
-                     <mat-accordion>
+                     <mat-accordion   [ngClass]="{'learnmore_active' : showgeneral}">
                         <mat-expansion-panel [expanded]='showgeneral'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('general')">
@@ -1236,7 +1236,7 @@
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
-                                    <mat-accordion>
+                                    <mat-accordion >
                                         <mat-expansion-panel [expanded]="showdepartment && showgeneral">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
@@ -1327,7 +1327,7 @@
                                     <div class="helpcontent"></div>
                                 </mat-expansion-panel>
                             </mat-accordion>
-                            <mat-accordion>
+                            <mat-accordion >
                                 <mat-expansion-panel [expanded]="shownonworking && showgeneral">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1458,7 +1458,7 @@
 
 
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showcheckinmanager}">
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('q-manager')">
@@ -2051,7 +2051,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showappointments}">
                         <mat-expansion-panel [expanded]='showappointments'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('appointmentmanager')">
@@ -2467,7 +2467,7 @@
                     </mat-accordion>
                     <!-- next -->
                      
-    <mat-accordion>
+    <mat-accordion [ngClass]="{'learnmore_active' : showbilling}">
         <mat-expansion-panel [expanded]='showbilling'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('billing')">
@@ -2943,7 +2943,7 @@
         </mat-expansion-panel> 
     </mat-accordion>
     <!-- next -->
-    <mat-accordion>
+    <mat-accordion [ngClass]="{'learnmore_active' : showpayments}">
         <mat-expansion-panel [expanded]='showpayments'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('payments')">
@@ -3143,7 +3143,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
        <!-- next -->
-       <mat-accordion>
+       <mat-accordion  [ngClass]="{'learnmore_active' : showdonations}">
         <mat-expansion-panel [expanded]='showdonations'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('donationmanager')">
@@ -3197,7 +3197,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>    
        <!-- next -->
-       <mat-accordion>
+       <mat-accordion  [ngClass]="{'learnmore_active' : showmiscellaneous}">
         <mat-expansion-panel [expanded]='showmiscellaneous'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('miscellaneous')">
@@ -3420,7 +3420,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <!-- next -->
-     <mat-accordion>
+     <mat-accordion [ngClass]="{'learnmore_active' : showcustomers}">
         <mat-expansion-panel [expanded]='showcustomers  '>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('customers')">
@@ -3474,7 +3474,7 @@
         </mat-expansion-panel>
      </mat-accordion>
      <!-- next -->
-    <mat-accordion>
+    <mat-accordion [ngClass]="{'learnmore_active' : showvirtualcallingmodes}">
         <mat-expansion-panel [expanded]='showvirtualcallingmodes  '>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('comm')">
@@ -3730,7 +3730,7 @@
         </mat-expansion-panel>
     </mat-accordion>
      <!-- next -->
-     <mat-accordion>
+     <mat-accordion [ngClass]="{'learnmore_active' : showdashboard && showdashbord}">
         <mat-expansion-panel [expanded]='showdashboard && showdashbord'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="handleScroll('dashboard-home', 'dashboard-home')">
@@ -4241,7 +4241,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <!-- next -->
-    <mat-accordion>  
+    <mat-accordion [ngClass]="{'learnmore_active' : showdbappointments}">  
         <mat-expansion-panel [expanded]='showdbappointments'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('appointments')">
@@ -4418,7 +4418,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
      <!-- next -->
-     <mat-accordion>
+     <mat-accordion [ngClass]="{'learnmore_active' : showcheckins}" >
         <mat-expansion-panel [expanded]='showcheckins'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('check-ins')">
@@ -4595,7 +4595,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion  [ngClass]="{'learnmore_active' : showdbdonations}" >
                         <mat-expansion-panel [expanded]='showdbdonations'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('donations', 'donations')">
@@ -4608,7 +4608,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                      <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showcustomer}" >
                         <mat-expansion-panel [expanded]='showcustomer'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
@@ -4633,7 +4633,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showinbox}" >
                             <mat-expansion-panel [expanded]='showinbox'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="handleScroll('inbox', 'inbox')">
@@ -4788,7 +4788,7 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion> -->
-        <mat-accordion>
+        <mat-accordion  [ngClass]="{'learnmore_active' : showauditlog}" >
                 <mat-expansion-panel [expanded]='showauditlog'>
                     <mat-expansion-panel-header class="accordion">
                         <mat-panel-title class="accordion-title" (click)="menu('auditlog')">
@@ -4806,7 +4806,7 @@
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>
-            <mat-accordion>
+            <mat-accordion  [ngClass]="{'learnmore_active' : showalert}" >
                 <mat-expansion-panel [expanded]='showalert'>
                     <mat-expansion-panel-header class="accordion">
                         <mat-panel-title class="accordion-title" (click)="menu('alert')">
@@ -4824,7 +4824,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
                     <!-- next -->
-                    <mat-accordion>
+                    <mat-accordion [ngClass]="{'learnmore_active' : showlicense}">
                         <mat-expansion-panel [expanded]='showlicense'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('license')">
@@ -5578,483 +5578,10 @@
     
 
     <!-- next -->
-    <mat-accordion>
-        <mat-expansion-panel [expanded]='showbilling'>
-            <mat-expansion-panel-header class="accordion">
-                <mat-panel-title class="accordion-title" (click)="menu('billing')">
-                        Jaldee Billing
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="helpcontent">
-                <span>Billing/POS page is the one-stop-shop for adding items, discounts, coupons and tax
-                    settings.
-                    Discounts and coupons play a major role in driving customers toward a
-                    product/service
-                    and in
-                    boosting sales. Jaldee gives flexibility and ease of adding items and providing
-                    discounts or
-                    coupons to customers.<strong> This is only available from Team License
-                        package.</strong></span>
-                <ul class="ul-normal">
-                    <li>A provider can add/remove the item, service, discounts, and coupons anytime in
-                        the
-                        bill.
-                        The
-                        changes in the bill will be reflected immediately.</li>
-                    <li>A provider can settle the bill only after the full amount is paid (either by
-                        paying the
-                        full
-                        amount, or applying discount/coupon/on demand discount).</li>
-                    <li>Once settled a bill cannot be updated. The settled bill can be emailed.</li>
-                </ul>
-                <!-- <mat-accordion>
-                    <mat-expansion-panel [expanded]="showpayment && showbilling">
-                        <mat-expansion-panel-header class="accordion" expandedHeight="48px" collapsedHeight="32px">
-                            <mat-panel-title class="accordion-title">
-                                <span class="helpcontent" (click)="handleScroll('payment-settings', 'billing')">Payment
-                                    Settings</span>
-                            </mat-panel-title>
-
-                        </mat-expansion-panel-header>
-                        <div class="helpcontent">
-                            <h6>PAYMENTS</h6>
-                            <section>
-                                <span>In this section, a provider can select the payment mode with which he/she wishes
-                                    to
-                                    accept/settle payments.
-                                </span>
-                            </section>
-                            <section>
-                                <ul class="ul-normal">
-                                    <li>To enable online payments using any payment system, a provider has to switch
-                                        on the
-                                        "Customer's Self pay�? mode. Initially, this is set to off mode.</li>
-                                    <li>If a provider has not entered an email address before, click on the link
-                                        <strong>“Go
-                                            To
-                                            Email Settings�?</strong> (Payment Settings) to add the email id. This
-                                        can be set
-                                        directly from My Account.</li>
-                                </ul>
-                                <h6 id="payment-settings">Payment Settings</h6>
-                                <ul class="ul-normal">
-                                    <li>Two modes of payments can be enabled. These are:</li>
-                                    <ul ol class="ol-normal">
-                                        <li><strong>Jaldee Bank :</strong>
-                                            When a provider choose Jaldee bank to accept online payments from customers,
-                                            customer can pay online for the services directly to the <strong>Jaldee
-                                                Bank</strong> and in turn, the <strong>Jaldee team</strong> will
-                                            reimburse the amount (charging a commission for each transaction) to the
-                                            service provider. The providers may or may not opt Jaldee bank for accepting
-                                            online payments from customers.
-                                            <br>
-                                            <span><strong>How is commission charged for each transaction when a provider
-                                                    selects Jaldee Bank for online payment?</strong></span>
-                                            <span>
-                                                <ul>
-                                                    <li>If the provider choose either Jaldee bank or My Own Bank account
-                                                        for accepting online payment, the payment is transferred
-                                                        directly to Jaldee bank or My Own Bank account respectively,
-                                                        with an additional payment gateway commision of 2%, which is
-                                                        deducted from the total bill amount .
-                                                    </li>
-                                                    <li>If the provider choose Jaldee Bank for accepting online
-                                                        payments, a total of 5 % will be deducted from the total bill
-                                                        amount, ie 2% payment gateway commision and 3% Jaldee
-                                                        transaction charge.
-                                                    </li>
-                                                    <li>Providers using their own bank account for accepting online
-                                                        payments from customers, will be eliminated from imposing jaldee
-                                                        transaction charge.
-                                                    </li>
-                                                </ul>
-                                            </span>
-                                        </li>
-
-                                        <li><strong>My Own Bank Account :</strong> In this section, a provider is
-                                            required to
-                                            submit the account details of <strong>Paytm/CC/DC/Net
-                                                Banking/UPI</strong>. In case
-                                            the
-                                            provider has not added an email address, click on the link <strong>“Go To
-                                                Email
-                                                Settings�?</strong> (Payment Settings) to add the email address.
-                                            Furthermore,
-                                            a
-                                            provider needs to click on any mode of payment (with which he/she wants to
-                                            settle
-                                            the
-                                            bill). The mode of payment can be either <strong>“Paytm"</strong> or
-                                            <strong>“CC/DC/Net Banking/UPI�?</strong> or both.
-                                            <ul class="ul-normal">
-                                                <li><strong>Paytm :</strong> This is an effortless mode of online
-                                                    payment
-                                                    commonly used these days. If the provider has a business Paytm
-                                                    account, he/she
-                                                    needs to
-                                                    provide the following details (Login to Paytm to get these
-                                                    production keys):
-                                                    <ul class="ul-normal">
-                                                        <li><strong>Mobile Number</strong></li>
-                                                        <li><strong>Merchant Id</strong></li>
-                                                        <li><strong>Merchant Key</strong></li>
-                                                        <li><strong>Website Web</strong></li>
-                                                        <li><strong>Website App</strong></li>
-                                                        <li><strong>Industry Type</strong></li>
-                                                    </ul>
-                                                </li>
-                                                <li><strong>CC/DC/Net Banking/UPI :</strong> To settle the bill
-                                                    using this mode
-                                                    of
-                                                    payment, a provider has to provide the following information:
-                                                    <ul class="ul-normal">
-                                                        <li><strong>Account Holder Name</strong></li>
-                                                        <li><strong>Bank Account Number</strong></li>
-                                                        <li><strong>Pan Card Number</strong></li>
-                                                        <li><strong>Bank Name</strong></li>
-                                                        <li><strong>IFSC Code</strong></li>
-                                                        <li><strong>Name on Pan Card</strong></li>
-                                                        <li><strong>Branch Name</strong></li>
-                                                        <li><strong>Business Filing Status</strong></li>
-                                                        <li><strong>Account Type</strong></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                    <li>To verify the <strong>Paytm/CC/DC/Net</strong> Banking and to start
-                                        accepting
-                                        digital
-                                        payments, please call the Jaldee team on 0487-2325650 or mail us to
-                                        support@jaldee.com.
-                                    </li>
-                                </ul>
-                            </section>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <mat-accordion>
-                    <mat-expansion-panel [expanded]="showtax && showbilling">
-                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                            <mat-panel-title class="accordion-title">
-                                <span class="helpcontent"
-                                    (click)="handleScroll('tax-settings','billing')">Tax-Settings</span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <div class="helpcontent">
-                            <span>Before setting up the taxes, ensure that one is familiar with the tax
-                                requirements of
-                                one’s
-                                business. The following instructions will help the provider through the
-                                tax setup of the
-                                business
-                                services in Jaldee:</span>
-                            <ul ol class="ol-normal">
-                                <li>When the provider clicks on the tax settings under the Billing/PoS
-                                    section, a window
-                                    appears.
-                                    The provider is required to fill the textbox (Enter the GST number of
-                                    the business and the
-                                    tax
-                                    percentage for the respective sector here).</li>
-                                <li>At first, enter the <strong>GST</strong> number of the business.
-                                </li>
-                                <li>Next, enter the <strong>Tax Percentage</strong> (5%, 12%, 18%, 28%).</li>
-                                <li>After the complete insertion of the details, click
-                                    <strong>“Save�?.</strong></li>
-                                <li>This tax will be applied to the services offered and the items that
-                                    are being sold at
-                                    the
-                                    time of billing, only if the <strong>“Tax Applicable�?</strong>
-                                    toggle button is enabled
-                                    in
-                                    the respective section (i.e. Settings -> QManager
-                                    ->Services).</li>
-                                <li>Jaldee has no role in paying taxes paid by the customer to the
-                                    service provider. All types
-                                    of
-                                    taxes are collected directly by the service provider, so it is the
-                                    provider’s responsibility
-                                    to
-                                    remit the taxes to the Government.</li>
-                            </ul>
-                        </div>
-
-                    </mat-expansion-panel>
-                </mat-accordion> -->
-                <mat-accordion>
-                    <mat-expansion-panel [expanded]="showitem && showbilling">
-                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                            <mat-panel-title class="accordion-title">
-                                <span class="helpcontent" (click)="handleScroll('items', 'billing')">Items</span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <div class="helpcontent">
-                            <span> Under Items a provider can create and publish a list of items that
-                                are
-                                being sold at the
-                                premise. To add a new item, click <strong>“Add Item“.</strong> A new
-                                window appears where
-                                the
-                                provider can insert the information regarding the item such as its name,
-                                price, a short
-                                description, and a detailed description. If the item is taxable, the
-                                provider is required to
-                                enable the <strong>“Taxable“</strong> toggle button (the percentage of
-                                tax can be set in
-                                <strong>tax settings</strong>). This can be enabled only if the
-                                <strong>Tax
-                                    settings</strong> is
-                                already set. Click <strong>“Submit“</strong> when all the information is
-                                filled. The provider
-                                can
-                                always change the quantity of the service or item in the bill. The
-                                changes will be reflected
-                                right away in the bill. <strong>This is only available from Team
-                                    License
-                                    package.</strong>
-                            </span>
-                        </div>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <mat-accordion>
-                    <mat-expansion-panel [expanded]="showdiscount && showbilling">
-                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                            <mat-panel-title class="accordion-title">
-                                <span class="helpcontent" (click)="handleScroll('discount','billing')">Discount</span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <div class="helpcontent">
-                            <span>To add a discount for the first time, click
-                                <strong>“Discounts“.</strong> Here the provider
-                                needs to enter the discount name, its type (Percentage/Fixed), and
-                                provide a description to
-                                the
-                                discount along with the value in Rupees. The discounts can be applied to
-                                the total bill as
-                                well
-                                as to each item and service. A provider can set up two types of
-                                Discounts:</span>
-                            <ol class="ol-normal adjust-delay-num">
-                                <li><strong>Fixed Amount: </strong> A specified amount will be deducted
-                                    from either the
-                                    total
-                                    amount or from each specified item/service in the bill.</li>
-                                <li><strong>Percentage: </strong> A specific percentage of the total
-                                    amount from the invoice
-                                    or
-                                    from each item will be deducted in this case.
-                                    <strong>“Percentage“</strong> type
-                                    discounts
-                                    can be applied either to the total amount on the invoice or to each
-                                    specified
-                                    item/service
-                                    in the bill.
-                                </li>
-                            </ol>
-                            <span>The discount dashboard shows all the existing discounts that have been
-                                created in Jaldee
-                                settings. Discount name, value, and description of each discount is
-                                visible here. A provider
-                                can
-                                create, delete and edit the discount. For creating more discounts, click
-                                on
-                                <strong>“(+)“</strong> symbol.</span>
-                            <span>* Note: <strong>On Demand Discount</strong> is created during the
-                                account creation and its
-                                price is set to zero by default. It can only be applied to the total
-                                bill. It can be viewed
-                                under discounts list, right after the account creation. Its price cannot
-                                be updated. It can
-                                be
-                                used to waive the bill amount. At the time of bill updation, the
-                                provider
-                                can give any amount
-                                of
-                                on-demand discount by selecting this discount.</span>
-                        </div>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <mat-accordion>
-                    <mat-expansion-panel [expanded]="showcoupon && showbilling">
-                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                            <mat-panel-title class="accordion-title">
-                                <span class="helpcontent" (click)="handleScroll('coupon','billing')">Coupons</span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <div class="helpcontent">
-                            <span>This section is divided into two main sections, viz. <strong>Jaldee
-                                    Coupons</strong> and
-                                <strong>My Coupons. Coupons, either Jaldee coupons or My
-                                    Coupons</strong> can only be
-                                applied to
-                                the total bill amount.</span><br><br>
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
-                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                        <mat-panel-title>
-                                            <span class="helpcontent"> Jaldee Coupons</span>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="helpcontent">
-                                        <ol class="ol-normal adjust-delay-num">
-                                            <ul class="ul-normal">
-                                                <li>The coupons provided by Jaldee are listed here. Each
-                                                    coupon has a code, name,
-                                                    validity date (from and to), status. The option to
-                                                    enable/disable the coupon is
-                                                    also
-                                                    available in the three dots menu.</li>
-                                                <li>The coupons with no three dots menu are enabled by
-                                                    the Jaldee. The provider has no
-                                                    option to enable/disable the coupon.</li>
-                                                <li>To view the details of a particular coupon, click on
-                                                    the coupon code.</li>
-                                                <li>In the detailed view, the provider can see the valid
-                                                    dates, discount value or
-                                                    percentage, rules, and the coupon stats as well.
-                                                </li>
-                                            </ul>
-                                            <span>Following are the rules for each coupon. “✅“ or “x"
-                                                indicates
-                                                whether the rules are applicable or not.</span>
-                                            <ol class="ol-normal adjust-delay-num">
-                                                <li><strong>Always Enabled :</strong> This coupon will
-                                                    always be enabled. A provider
-                                                    has
-                                                    no option over enabling or disabling these coupons.
-                                                </li>
-                                                <li><strong>Default Enabled :</strong> This coupon is
-                                                    enabled by default, but its
-                                                    status
-                                                    can be changed by the provider.</li>
-                                                <li><strong>Online Check in Required :</strong> This
-                                                    coupon is available only for
-                                                    those
-                                                    customers who check-in online.</li>
-                                                <li><strong>Self Payment Required :</strong> This coupon
-                                                    is available only for those
-                                                    customers who pay online for the services.</li>
-                                                <li><strong>Combine with Other Coupons :</strong> This
-                                                    coupon can be used with other
-                                                    available coupons.</li>
-                                                <li><strong>First Check-in Only :</strong> This coupon
-                                                    is available only for those
-                                                    customers who checks-in for the first time on
-                                                    Jaldee.
-                                                </li>
-                                                <li><strong>First Check-in Per Provider Only : </strong>
-                                                    This coupon is available
-                                                    only
-                                                    for those customers who check-in for the first time
-                                                    for a particular provider.
-                                                </li>
-                                                <li><strong>Consumer Use Limit Per Provider :</strong>
-                                                    This refers to the number of
-                                                    limited customers on whom a provider can apply the
-                                                    coupon.</li>
-                                                <li><strong>Minimum Bill Amount :</strong> This refers
-                                                    to the minimum bill amount to
-                                                    which the coupon can be applied.</li>
-                                                <li><strong>Consumer Use Limit :</strong> This refers to
-                                                    the number of times a
-                                                    customer
-                                                    can apply the coupon.</li>
-                                                <li><strong>Provider Use Limit :</strong> This refers to
-                                                    the number of times a
-                                                    provider
-                                                    can apply the coupon.</li>
-                                            </ol>
-                                            <ul class="ul-normal">
-                                                <li>Here a provider can view the terms and conditions as
-                                                    well as the provider
-                                                    description
-                                                    for the coupon.</li>
-                                                <li>Corresponding customer description is displayed to
-                                                    him/her at their dashboard.
-                                                </li>
-                                                <li>Coupon status is visible in the bottom of the page.
-                                                    The provider has the option to
-                                                    enable/disable the coupon here (only if permitted).
-                                                </li>
-                                                <li>In addition, a coupon stat section is given where
-                                                    the following is shown:</li>
-                                                <ol class="ol-normal adjust-delay-num">
-                                                    <li><strong>Check ins Applied :</strong> This shows
-                                                        the number of times
-                                                        check-ins
-                                                        applied for the coupon.</li>
-                                                    <li><strong>Total Amount Discounted :</strong> This
-                                                        shows the total amount
-                                                        waived to
-                                                        the customers by the provider using the coupon.
-                                                    </li>
-                                                    <li><strong>Amount Reimbursed by Jaldee.com
-                                                            :</strong> This shows the amount
-                                                        given
-                                                        to the provider by Jaldee.</li>
-                                                </ol>
-                                            </ul>
-                                        </ol>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
-                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
-                                        <mat-panel-title>
-                                            <span class="helpcontent"> My Coupons</span>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="helpcontent">
-                                        <span>These coupons are created by providers. To add a coupon
-                                            for
-                                            the
-                                            first time click <strong>“Add Coupon“.</strong> Here enter
-                                            the name of the coupon,
-                                            type
-                                            of the coupon (Percentage/Fixed) and provide a brief
-                                            description to the discount. A
-                                            coupon can only be applied to the total bill. A provider can
-                                            set up two types of
-                                            Coupons:
-                                        </span>
-                                        <ol class="ol-normal adjust-delay-num">
-                                            <li><strong>Fixed Amount: </strong> A specified amount will
-                                                be deducted from the
-                                                total
-                                                bill.</li>
-                                            <li><strong>Percentage: </strong> A specific percentage of
-                                                the amount from the total
-                                                bill will be deducted in this case.
-                                                <strong>“Percentage“</strong> type coupons
-                                                can
-                                                be applied to the total bill.</li>
-                                        </ol>
-                                        <span>The Coupons dashboard shows all the existing coupons that
-                                            have
-                                            been created on the profile. Here a provider can create,
-                                            delete and edit a coupon. To
-                                            create more coupons, click on the “(+)“ symbol. </span>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                        </div>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+   
     <!-- next -->
    
-    <mat-accordion>
+    <mat-accordion [ngClass]="{'learnmore_active' : showprofile}">
         <mat-expansion-panel [expanded]='showprofile'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="menu('providerprofile')">
@@ -6098,7 +5625,7 @@
         </mat-expansion-panel>
     </mat-accordion>
     <!-- next -->
-    <mat-accordion>
+    <mat-accordion  [ngClass]="{'learnmore_active' : showdownpanel}" >
         <mat-expansion-panel [expanded]='showdownpanel'>
             <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">

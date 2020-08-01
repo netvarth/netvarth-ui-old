@@ -80,7 +80,7 @@
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUsers.length > 0">
                     <p>
-                      Selected {{provider_label}}s:
+                      Selected  {{provider_label | capitalizeFirst}}s:
                     </p>
                     <ul *ngFor="let users of selectedUsers">
                       <li>

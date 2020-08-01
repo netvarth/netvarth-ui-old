@@ -8,9 +8,16 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 
 @Injectable()
 export class ProviderSharedFuctions {
+  user_nonMandatorySubDomainAdditionalInfo: any=[];
+  user_nonMandatoryDomainAdditionalInfo: any=[];
+  user_mandatoryAdditionalInfo: any=[];
+  nonMandatorySubDomainAdditionalInfo: any=[];
+  nonMandatoryDomainAdditionalInfo: any=[];
+  nonMandatoryAdditionalInfo: any=[];
   private activeQueues: any = [];
   sendglobalmsgdialogRef;
   jaldeecoupon_list: any = [];
+  mandatoryAdditionalInfo:any=[];
   constructor(public dialog: MatDialog, public shared_functions: SharedFunctions,
     public common_datastorage: CommonDataStorageService) {
 
@@ -92,6 +99,9 @@ export class ProviderSharedFuctions {
    * Funtion will return the required fields set
    */
   getProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields, subdomain?) {
+    this.mandatoryAdditionalInfo=[];
+    this.nonMandatoryDomainAdditionalInfo=[];
+    this.nonMandatorySubDomainAdditionalInfo=[];
     const reqFields = {};
     if (!profile.specialization) {
       reqFields['specialization'] = true;
@@ -109,22 +119,84 @@ export class ProviderSharedFuctions {
     if (domainMandatoryFields) {
       for (const domainfield of domainMandatoryFields) {
         if (domainfield.mandatory) {
+          this.mandatoryAdditionalInfo.push(domainfield.name);
           if (!profile['domainVirtualFields'][domainfield.name]) {
             reqFields['domainvirtual'] = true;
           }
+        }else if(!domainfield.mandatory){
+          this.nonMandatoryDomainAdditionalInfo.push(domainfield.name);
         }
       }
     }
     if (subdomainMandatoryFields) {
       for (const domainfield of subdomainMandatoryFields) {
         if (domainfield.mandatory) {
+          this.mandatoryAdditionalInfo.push(domainfield.name);
           if (!profile['subDomainVirtualFields'] || !profile['subDomainVirtualFields'][0][subdomain][domainfield.name]) {
             reqFields['subdomainvirtual'] = true;
           }
         }
+        else {
+          this.nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
+        }
       }
     }
+
     return reqFields;
+  }
+  getuserProfileRequiredFields( domainMandatoryFields, subdomainMandatoryFields) {
+
+    const reqFields = {};
+    this.user_mandatoryAdditionalInfo=[];
+    this.user_nonMandatoryDomainAdditionalInfo=[];
+    this.user_nonMandatorySubDomainAdditionalInfo=[];
+    
+    if (domainMandatoryFields) {
+      for (const domainfield of domainMandatoryFields) {
+        if (domainfield.mandatory) {
+
+          reqFields['domainvirtual'] = true;
+          this.user_mandatoryAdditionalInfo.push(domainfield.name);
+         
+        }else if(!domainfield.mandatory){
+          this.user_nonMandatoryDomainAdditionalInfo.push(domainfield.name);
+        }
+      }
+    }
+    if (subdomainMandatoryFields) {
+      for (const domainfield of subdomainMandatoryFields) {
+        if (domainfield.mandatory) {
+          this.user_mandatoryAdditionalInfo.push(domainfield.name);
+          reqFields['subdomainvirtual'] = true;
+        }
+        else {
+          this.user_nonMandatorySubDomainAdditionalInfo.push(domainfield.name);
+        }
+      }
+    }
+    
+    return reqFields;
+    
+  }
+  getAdditonalInfoMandatoryFields(){
+    return this.mandatoryAdditionalInfo;
+  }
+  getAdditionalNonDomainMandatoryFields() {
+    return this.nonMandatoryDomainAdditionalInfo
+  }
+  getAdditionalNonSubDomainMandatoryFields() {
+    return this.nonMandatorySubDomainAdditionalInfo;
+  }
+
+  //user
+  getUserAdditonalInfoMandatoryFields(){
+    return this.user_mandatoryAdditionalInfo;
+  }
+  getUserAdditionalNonDomainMandatoryFields() {
+    return this.user_nonMandatoryDomainAdditionalInfo
+  }
+  getUserAdditionalNonSubDomainMandatoryFields() {
+    return this.user_nonMandatorySubDomainAdditionalInfo;
   }
 
   serviceReloadApi(ob, source = 'service_list') {
@@ -296,6 +368,7 @@ export class ProviderSharedFuctions {
     let ynwUuid;
     let uuid;
     let name;
+    let email;
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
@@ -310,9 +383,11 @@ export class ProviderSharedFuctions {
       if (appt) {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName + ' ' + waitlist[0].appmtFor[0].lastName;
+        email = waitlist[0].consumer.userProfile.emailVerified;
       } else {
         uuid = waitlist[0].ynwUuid || null;
         name = waitlist[0].consumer.firstName + ' ' + waitlist[0].consumer.lastName;
+        email = waitlist[0].waitlistingFor[0].email;
       }
     }
     if (type === 'single') {
@@ -333,7 +408,8 @@ export class ProviderSharedFuctions {
           type: 'send',
           terminologies: terminologies,
           name: name,
-          appt: appt
+          appt: appt,
+          email: email
         }
       });
 

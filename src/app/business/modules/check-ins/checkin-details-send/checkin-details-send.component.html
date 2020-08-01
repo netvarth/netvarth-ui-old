@@ -1,0 +1,47 @@
+ <mat-dialog-content>        
+        <div class="form-group">
+                <div  *ngIf="data.chekintype === 'Waitlist'" class="example-full-width" style="padding-top: 30px;">
+                        <div>
+                            <div><span style="font-size: x-large;">Checkin Details</span></div><br>
+                            <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+                            <p>Service : {{serv_name}}</p>
+                            <p *ngIf = "deptName">Department : {{deptName}}</p>
+                            <p *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
+                            <p>Date & Time: {{date}}, {{time}}</p>
+                            <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
+                            <p>Location: {{location}}</p>
+                        </div>
+                    </div>
+        </div>
+        <div *ngIf="data.chekintype === 'appointment'" class="example-full-width" style="padding-top: 30px;">
+                <div>
+                        <div><span style="font-size: x-large;">Appointment Details</span></div><br>
+                        <p>Appointment for : {{consumer_fname}}</p>
+                        <p>Service : {{serv_name}}</p>
+                        <p>Appointment Date & Time: {{date}}, {{appttime}}</p>
+                        <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
+                        <p *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
+                        <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
+                        <p>Location: {{location}}</p>
+                 </div>
+            </div>
+        <div class="mgtop40 form-group">
+            Send message via
+            <div class="coupon-outer">
+                <mat-checkbox class="mgright50 example-margin" [(ngModel)]="sms"  [ngModelOptions]="{standalone: true}">
+                    SMS
+                </mat-checkbox>
+                <mat-checkbox [disabled]="!consumer_email" class="mgright50 example-margin" [(ngModel)]="email"
+                    [ngModelOptions]="{standalone: true}">Email
+                </mat-checkbox>
+            </div>
+        </div>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" class="cs-btn bt2 travelmodeEdit" (click)="back()">Cancel</button>
+        <button type="button" class="cs-btn bt1"  mat-button [disabled]="(!sms &&!email)" (click)="sendMessage()">Send</button>
+    </mat-dialog-actions>
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display> -->

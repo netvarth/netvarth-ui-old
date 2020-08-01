@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -7,13 +7,24 @@ import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
+import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 
 @Component({
   selector: 'app-provider-settings',
   templateUrl: './provider-settings.component.html'
 })
 
-export class ProviderSettingsComponent implements OnInit, OnDestroy {
+export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
+  blogo: ArrayBuffer;
+  weightageClass: string;
+  progress_bar_four: number;
+  progress_bar_three: number;
+  progress_bar_two: number;
+  progress_bar_one: number;
+  subdomain: any;
+  bprofile_btn_text: string;
+  weightageValue: any;
   accountType;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
@@ -136,10 +147,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   schedules_count: any = 0;
   waitlistStatus;
   waitlistStatusStr;
+  jaldee_online_enabled_msg: string;
+  jaldee_online_disabled_msg: string;
+  businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
+    private cdf: ChangeDetectorRef,
     private routerobj: Router,
     private shared_services: SharedServices,
+    private provider_datastorage: ProviderDataStorageService,
+    private qservice: QuestionService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -175,7 +192,21 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   departmentCount: any = 0;
   filterbydepartment = false;
   locationExists = false;
+  mandatoryfieldArray: any = [];
+  additionalInfoDomainFields: any = [];
+  additionalInfoSubDomainFields: any = [];
+  domain_fields;
+  domain_questions = [];
+  subdomain_fields = [];
+  image_list: any = [];
+  subdomain_questions = [];
+  que_type = 'domain_questions';
+  normal_domainfield_show = 1;
+  normal_subdomainfield_show = 1;
+  field;
+  bprofileLoaded = false;
   ngOnInit() {
+    // this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -193,7 +224,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+    this.jaldee_online_enabled_msg = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
+    this.getProviderLogo();
+    this.getGalleryImages();
     this.getDomainSubdomainSettings();
+    this.getBusinessConfiguration();
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();
@@ -211,7 +247,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-    this.getBusinessConfiguration();
+
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -223,8 +259,25 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             this.getWaitlistMgr();
           }
         });
+    this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
+      this.businessProfile_weightageArray = result;
+      this.weightageValue = this.calculateWeightage(result);
+
+    });
   }
-  ngOnDestroy() {
+
+  calculateWeightage(data) {
+    let total = 0;
+    if (data != null && data.length > 0) {
+      data.forEach(x => total += x.value);
+    }
+    return total;
+
+  }
+  ngAfterViewChecked() {
+    this.cdf.detectChanges();
+
+  } ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -241,6 +294,81 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.futurewaitlist_statusstr = (this.futureDateWaitlist) ? 'On' : 'Off';
           this.filterbydepartment = data['filterByDept'];
         });
+  }
+  getBusinessProfileWeightageText() {
+    let businessProfileWeightageText = '';
+    const weightage = this.weightageValue;
+    if (weightage <= 25) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'warning';
+      this.progress_bar_one = weightage;
+      this.progress_bar_two = 0;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+
+    }
+    if (weightage > 25 && weightage < 50) {
+      businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'warning';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = weightage - 25;
+      this.progress_bar_three = 0;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+    } else if
+      (weightage >= 50 && weightage < 75) {
+      businessProfileWeightageText = Messages.PROFILE_MINIMALLY_COMPLETE_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
+      this.weightageClass = 'info';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = weightage - 50;
+      this.progress_bar_four = 0;
+      return businessProfileWeightageText;
+
+    } else if (weightage >= 75 && weightage < 100) {
+      businessProfileWeightageText = Messages.GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_STRENGTHEN_YOUR_PROFILE;
+      this.weightageClass = 'primary';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = weightage - 75;
+      return businessProfileWeightageText;
+    } else if (weightage === 100) {
+      businessProfileWeightageText = Messages.VERY_GOOD_CAP;
+      this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
+      this.weightageClass = 'success';
+      this.progress_bar_one = 25;
+      this.progress_bar_two = 25;
+      this.progress_bar_three = 25;
+      this.progress_bar_four = 25;
+      return businessProfileWeightageText;
+
+    }
+
+  }
+  getProviderLogo() {
+    this.provider_services.getProviderLogo()
+      .subscribe(
+        data => {
+          this.blogo = data;
+          let logoExist;
+
+          let logo = '';
+          if (this.blogo[0]) {
+            logoExist = true;
+            logo = this.blogo[0].url;
+          } else {
+            logo = '';
+            logoExist = false;
+          }
+          this.provider_datastorage.updateProfilePicWeightage(logoExist);
+        }
+      );
   }
 
   getApptlistMgr() {
@@ -520,7 +648,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'queues':
         if (this.locationExists) {
           this.routerobj.navigate(['provider', 'settings', 'q-manager', 'queues']);
-        } else {
+        } else if (this.bprofileLoaded) {
           this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
         break;
@@ -711,7 +839,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getServiceCount() {
-    const filter = { 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    const filter = { 'serviceType-neq': 'donationService' };
     this.provider_services.getServiceCount(filter)
       .subscribe(
         data => {
@@ -719,8 +847,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getQueuesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getQueuesCount(filter)
+    // const filter = { 'scope-eq': 'account' };
+    this.provider_services.getQueuesCount()
       .subscribe(
         data => {
           this.queues_count = data;
@@ -785,14 +913,27 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       });
   }
   getBussinessProfile() {
+    this.additionalInfoDomainFields = [];
+    this.additionalInfoSubDomainFields = [];
+    this.mandatoryfieldArray = [];
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        this.bprofileLoaded = true;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields, this.bProfile['serviceSubSector']['subDomain']);
+                console.log(this.reqFields);
+                this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+                this.additionalInfoDomainFields = this.provider_shared_functions.getAdditionalNonDomainMandatoryFields();
+                this.additionalInfoSubDomainFields = this.provider_shared_functions.getAdditionalNonSubDomainMandatoryFields();
+                this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+                this.getDomainVirtualFields();
+                if (this.bProfile['serviceSubSector']['subDomain']) {
+                  this.getSubDomainVirtualFields();
+                }
               });
           });
         if (this.bProfile.baseLocation) {
@@ -813,6 +954,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
             }
           }
         }
+        this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
       });
   }
   getAssistantCount() {
@@ -949,11 +1091,198 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       );
   }
   getSchedulesCount() {
-    const filter = { 'scope-eq': 'account' };
-    this.provider_services.getSchedulesCount(filter)
+    // const filter = { 'scope-eq': 'account' };
+    this.provider_services.getSchedulesCount()
       .subscribe(
         data => {
           this.schedules_count = data;
         });
+  }
+
+  // mandatory fields
+  getDomainVirtualFields() {
+    const weightageObjectOfDomain: any = {};
+    const checkArray = [];
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+      .then(
+        data => {
+          // this.mandatoryfieldArray = this.provider_shared_functions.getAdditonalInfoMandatoryFields();
+          //  this.additionalInfoFields = this.provider_shared_functions.getAdditionalNonMandatoryFields();
+          let mandatorydomain = false;
+          let mandatorydomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.domain_fields = data['fields'];
+          this.domain_questions = data['questions'] || [];
+          this.domain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
+          if (this.mandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
+            mandatorydomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
+                mandatorydomainFilled = true;
+              } else {
+                mandatorydomainFilled = false;
+                return;
+              }
+            });
+
+
+          } else {
+            mandatorydomain = false;
+          }
+
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoDomainFields, this.domain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+          weightageObjectOfDomain.mandatoryDomain = mandatorydomain;
+          weightageObjectOfDomain.mandatoryDomainFilledStatus = mandatorydomainFilled;
+          weightageObjectOfDomain.additionalDomainFullyFilled = additionalInfoFilledStatus;
+          console.log(this.mandatoryfieldArray);
+          console.log(weightageObjectOfDomain);
+
+
+          this.provider_datastorage.setWeightageObjectOfDomain(weightageObjectOfDomain);
+
+
+
+        }
+      );
+  }
+
+
+  checkMandatoryFieldsInResultSet(domainFields, fieldname) {
+    let fullyfilledStatus = true;
+    domainFields.forEach(function (dom) {
+      if (dom.name === fieldname) {
+        if (!dom['value'] || (dom.value === undefined || dom.value == null)) {
+          fullyfilledStatus = false;
+          return;
+        }
+      }
+    });
+    return fullyfilledStatus;
+  }
+  checkAdditionalFieldsFullyFilled(additionalInfoFields, dom_subdom_list) {
+    let fullyfilledStatus = true;
+    additionalInfoFields.forEach(function (field) {
+      if (fullyfilledStatus) {
+        if (!dom_subdom_list.some(domobject => domobject.name === field)) {
+          fullyfilledStatus = false;
+          return;
+        } else {
+          dom_subdom_list.forEach(function (data_object) {
+            if (data_object.name === field) {
+              console.log(field + 'value' + data_object.value);
+              if (!data_object['value'] || (data_object.value === undefined || data_object.value == null)) {
+                fullyfilledStatus = false;
+                return;
+              }
+            }
+          });
+        }
+      }
+    });
+
+    return fullyfilledStatus;
+  }
+
+
+  getVirtualFields(domain, subdomin = null) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getVirtualFields(domain, subdomin)
+        .subscribe(
+          data => {
+            const set_data = [];
+            set_data['fields'] = _this.setFieldValue(data, subdomin);
+            set_data['questions'] = _this.qservice.getQuestions(set_data['fields']);
+            resolve(set_data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  setFieldValue(data, subdomin) {
+    let fields = [];
+    if (subdomin) {
+      fields = (this.bProfile['subDomainVirtualFields'] &&
+        this.bProfile['subDomainVirtualFields'][0]) ?
+        this.bProfile['subDomainVirtualFields'][0][subdomin] : [];
+    } else {
+      fields = (this.bProfile['domainVirtualFields']) ?
+        this.bProfile['domainVirtualFields'] : [];
+    }
+    if (fields) {
+      for (const i in data) {
+        if (data[i]) {
+          const row = data[i];
+          if (fields[row.name]) {
+            data[i]['value'] = fields[row.name];
+          } else {
+            delete data[i]['value'];
+          }
+        }
+      }
+      return data;
+    } else {
+      return data;
+    }
+  }
+
+  getSubDomainVirtualFields() {
+    const checkArray = [];
+    const weightageObjectOfSubDomain: any = {};
+    this.getVirtualFields(this.bProfile['serviceSector']['domain'],
+      this.bProfile['serviceSubSector']['subDomain']).then(
+        data => {
+          let mandatorysubdomain = false;
+          let mandatorySubDomainFilled = false;
+          let additionalInfoFilledStatus = false;
+          this.subdomain_fields = data['fields'];
+          this.subdomain_fields.forEach(subdomain => {
+            checkArray.push(subdomain);
+          });
+          this.subdomain_questions = data['questions'] || [];
+          if (this.mandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
+            mandatorysubdomain = true;
+            this.mandatoryfieldArray.forEach(mandatoryField => {
+              if (this.checkMandatoryFieldsInResultSet(this.subdomain_fields, mandatoryField)) {
+                mandatorySubDomainFilled = true;
+              } else {
+                mandatorySubDomainFilled = false;
+                return;
+              }
+            });
+
+          }
+          if (this.checkAdditionalFieldsFullyFilled(this.additionalInfoSubDomainFields, this.subdomain_fields)) {
+            additionalInfoFilledStatus = true;
+          }
+
+          weightageObjectOfSubDomain.mandatorySubDomain = mandatorysubdomain;
+          weightageObjectOfSubDomain.mandatorySubDomainFilledStatus = mandatorySubDomainFilled;
+          weightageObjectOfSubDomain.additionalSubDomainFullyFilled = additionalInfoFilledStatus;
+          this.provider_datastorage.setWeightageObjectOfSubDomain(weightageObjectOfSubDomain);
+          this.provider_datastorage.updateMandatoryAndAdditionalFieldWeightage();
+        }
+      );
+  }
+
+  getGalleryImages() {
+    this.provider_services.getGalleryImages()
+      .subscribe(
+        data => {
+          this.image_list = data;
+          this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
+
+        },
+        () => {
+
+        }
+      );
   }
 }

@@ -22,6 +22,7 @@ const routes: Routes = [
     },
     { path: 'maintenance', component: MaintenanceComponent }
 ];
+
 @NgModule({
     imports: [RouterModule.forRoot(routes, { useHash: true
         // preloadingStrategy: PreloadAllModules

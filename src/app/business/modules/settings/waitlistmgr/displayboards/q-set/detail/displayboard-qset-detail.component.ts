@@ -262,9 +262,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         }
                     }
                     if (j < this.displayBoardData.qBoardConditions.departments.length) {
-                        this.departmentSelection();
                         this.getUsers();
-                        this.getProviderServices();
+                        if (this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
+                            this.getProviderServices();
+                        }
+                        setTimeout(() => {
+                            this.departmentSelection();
+                        }, 500);
                     }
                 }
             } else {
@@ -336,7 +340,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'departmentId': id
             };
-            departmentIds.push(ids);
+            if (departmentIds.indexOf(ids) === -1) {
+                departmentIds.push(ids);
+            }
         }
 
         const userIds = [];
@@ -344,7 +350,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'id': id
             };
-            userIds.push(ids);
+            if (userIds.indexOf(ids) === -1) {
+                userIds.push(ids);
+            }
         }
 
         const serviceIds = [];
@@ -352,14 +360,18 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const ids = {
                 'id': id
             };
-            serviceIds.push(ids);
+            if (serviceIds.indexOf(ids) === -1) {
+                serviceIds.push(ids);
+            }
         }
         const qIds = [];
         for (const id of this.qIds) {
             const ids = {
                 'id': id
             };
-            qIds.push(ids);
+            if (qIds.indexOf(ids) === -1) {
+                qIds.push(ids);
+            }
         }
         this.qboardConditions = {
             'departments': departmentIds,
@@ -502,6 +514,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             const activeQueues: any = [];
             let queue_list: any = [];
             const params = {};
+            params['queueState-eq'] = 'ENABLED';
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
             }
@@ -519,11 +532,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         }
                         queue_list = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
                         this.display_schedule[ii].displayQ = queue_list[0];
-                        if (this.display_schedule[ii].queueState === 'ENABLED') {
-                            activeQueues.push(this.display_schedule[0]);
-                        }
                     }
-                    this.provider_shared_functions.setActiveQueues(activeQueues);
                     resolve();
                 });
         });
@@ -669,9 +678,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
                 if (j < this.displayBoardData.qBoardConditions.providers.length) {
-                    this.userSelection();
                     this.getProviderServices();
                     this.getProviderQueues();
+                    setTimeout(() => {
+                        this.userSelection();
+                    }, 500);
                 }
             }
         } else {

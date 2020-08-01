@@ -14,11 +14,15 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue && !queue_data.provider"></span>
+                                <span class="useredit" *ngIf="queue_data.provider"><i class="fa fa-info-circle"
+                                        matTooltip="User schedules can be edit in user level"></i></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
-                                        <h4>{{queue_data.name | capitalizeFirst}}</h4>
-                                        <span class="tspace">
+                                        <h4>{{queue_data.name | capitalizeFirst}} <span
+                                                *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span>
+                                        </h4>
+                                        <span class="tspace" *ngIf="!queue_data.provider">
                                             <mat-slide-toggle [checked]="queue_data.apptState=='ENABLED'"
                                                 (change)="changeProviderScheduleStatus(queue_data)"></mat-slide-toggle>
                                         </span>
@@ -72,6 +76,14 @@
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
                                             </div> -->
+                                            <div class="item">
+                                                <span class="ttle">Start date</span>
+                                                <span>{{queue_data.apptSchedule.startDate | date: dateFormat}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">End date</span>
+                                                <span>{{queue_data.apptSchedule.terminator.endDate | date: dateFormat}}</span>
+                                            </div>
                                             <div class="item">
                                                 <span class="ttle">Online Appointments</span> <span
                                                     *ngIf="queue_data.todayAppt">On</span><span
@@ -208,6 +220,32 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     </div>
                                 </section>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                            formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=startdateError
+                                        errorMsg="Please enter date greater or equal to today">
+                                    </app-field-error-display> -->
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-5">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1"
+                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                            formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display> -->
+                                </div>
+                            </div>
                             <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
                                     <div class="starttimediv">
@@ -339,21 +377,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div> -->
-                            <div class="form-group" *ngIf="showAdvancedSettings">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
-                                        placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
-                                        formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)">
-                                </mat-form-field>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
-                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
-        {
-          'required' : 'Please enter the ' + customer_label + 's served per timeslot' ,
-          'maxlength' : 'Only 4 digits are allowed'
-        })">
-                                </app-field-error-display>
-                            </div>
+
                             <!-- <div class="form-group"
                                 *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
                                 <mat-form-field class="example-full-width">
@@ -369,33 +393,61 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div> -->
-
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                     <div class="mgn-up-10" style="display: flex;">
-                                        <h6> Batch mode </h6>
-                                        <mat-slide-toggle class="example-margin mgn-lt-10" [ngModel]="sbatchStatus"
-                                            (change)="changebatchStatus($event)" [ngModelOptions]="{standalone: true}">
+                                        <h6> Enable Batch mode </h6>
+                                        <mat-slide-toggle class="example-margin mgn-lt-10" [ngModel]="batch"
+                                            (change)="EnableBatch($event)" [ngModelOptions]="{standalone: true}">
                                         </mat-slide-toggle>
                                     </div>
-                                    <div *ngIf="showEditSection">
-                                        <div class="item">
-                                            <mat-form-field>
-                                                <input
-                                                    style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Prefix" [(ngModel)]="sprefixName"
-                                                    autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                    <div class="form-level-settings" style="font-size: small;">
+                                        Enable batch mode to serve more than one {{customer_label}}s at a time.
+                                    </div>
+                                    <div class="mgn-lt-10">
+                                        <div class="" *ngIf="showBatchFields">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput min="1" max="{{parallellimit}}" type="text"
+                                                    class="number-ip-sm"
+                                                    placeholder="{{customer_label | capitalizeFirst}}s served per timeslot *"
+                                                    formControlName="qserveonce" autocomplete="off"
+                                                    (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                             </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
+                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+                {
+                  'required' : 'Please enter the ' + customer_label + 's served per timeslot' ,
+                  'maxlength' : 'Only 4 digits are allowed'
+                })">
+                                            </app-field-error-display>
                                         </div>
-                                        <div class="item">
-                                            <mat-form-field>
-                                                <input
-                                                    style="padding-top: 20px!important;padding-bottom: 5px !important;"
-                                                    matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
-                                                    autocomplete="off" [ngModelOptions]="{standalone: true}">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="c-ot" *ngIf="!showEditSection">
+                                        <mat-checkbox *ngIf="showBatchFields" class="example-margin"
+                                            (change)="changebatchStatus($event)" [checked]="sbatchStatus">Show Batch
+                                            name
+                                        </mat-checkbox>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                                            *ngIf="showBatchFields && sbatchStatus">
+                                            <div class="form-level-settings" style="font-size: small;">
+                                                Make your batch id visible to {{customer_label}}s. Add a prefix/suffix
+                                                (optional) of your choice to the batch id</div>
+                                            <div class="item col-md-2 col-sm-3 col-xs-4">
+                                                <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Prefix" [(ngModel)]="sprefixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="item col-md-2 col-sm-3 col-xs-4">
+                                                <mat-form-field>
+                                                    <input
+                                                        style="padding-top: 20px!important;padding-bottom: 5px !important;"
+                                                        matInput placeholder="Suffix" [(ngModel)]="ssuffixName"
+                                                        autocomplete="off" [ngModelOptions]="{standalone: true}">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- <div class="c-ot" *ngIf="!showEditSection">
                                             <div class="item"
                                                 *ngIf="queue_data.batchName && queue_data.batchName.prefix != ''">
                                                 <span class="ttle"> Prefix </span><span
@@ -406,11 +458,11 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                                 <span class="ttle"> Suffix </span><span
                                                     class="day">{{queue_data.batchName.suffix}}</span>
                                             </div>
+                                        </div> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12 no-padding" style="margin-top: 15px;display: inline-flex;">
                                 <button type="button" (click)="closeClick()" class="cs-btn bt2"
                                     [disabled]="disableButton">{{cancel_btn}}</button> &nbsp;
@@ -423,5 +475,6 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 </section>

@@ -92,6 +92,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     is_donation = false;
     userId: any;
     departmentId: any;
+    userspecific = false;
     teleCallingModes = {
         'callingMode': '',
         'status': 'ACTIVE',
@@ -121,6 +122,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         'firstName': 'Global',
         'lastName' : 'Service'
     };
+    include_video = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -427,11 +429,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            if (this.providerId && this.providerId !== '0') {
+            console.log(this.userspecific);
+            if (this.providerId && this.providerId !== '0' && this.userspecific) {
                 this.provider = {
                     'id' : this.providerId
                 };
                 form_data['provider'] = this.provider;
+            } else {
+                if (form_data['provider']) {
+                    delete form_data['provider'];
+                }
             }
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
@@ -626,12 +633,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 } else {
                     this.include_audio = false;
+                    this.include_video = false;
                     for (let i = 0; i < this.vcallmodes.length; i++) {
                         if (this.vcallmodes[i].status === 'ACTIVE') {
                             this.telemodes.push(this.vcallmodes[i]);
-                        }
-                        if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
-                            this.include_audio = true;
+                            if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
+                                this.include_audio = true;
+                            }
+                            if (this.vcallmodes[i].callingMode !== 'Phone') {
+                                this.include_video = true;
+                            }
                         }
                     }
                 }
@@ -667,8 +678,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
-            this.users_list.push(this.defaultOption);
-        });
+           // this.users_list.push(this.defaultOption);
+        }); 
     }
     selectUserHandler(value) {
         this.providerId = value;

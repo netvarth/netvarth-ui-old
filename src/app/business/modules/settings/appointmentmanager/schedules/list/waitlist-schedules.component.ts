@@ -298,10 +298,10 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     }
     getQs() {
         return new Promise((resolve, reject) => {
-            const filter = {
-                'scope-eq': 'account'
-            };
-            this.provider_services.getProviderSchedules(filter)
+            // const filter = {
+            //     'scope-eq': 'account'
+            // };
+            this.provider_services.getProviderSchedules()
                 .subscribe(
                     (data) => {
                         let allQs: any = [];

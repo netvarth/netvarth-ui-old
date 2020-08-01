@@ -82,7 +82,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <h2 class="form-title">Select your area of specialization </h2>
                         <div class="col-md-7 col-sm-12 col-xs-12 no-padding-small">
                             <mat-accordion class="acc-btn acc-doms">
-                                <mat-expansion-panel [expanded]="domainIndex[i]" *ngFor="let domain of business_domains; let i = index"
+                                <mat-expansion-panel [expanded]="domainIndex[i]"
+                                    *ngFor="let domain of business_domains; let i = index"
                                     [class.active]="domain===selectedDomain">
                                     <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight]="'50px'"
                                         class="acc-header">
@@ -194,9 +195,9 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div>
                                     </mat-dialog-actions>
                                     <div class="form-group form-button">
-                                        <input type="submit" [disabled]="!spForm.valid" name="signup" id="signup"
+                                        <input type="submit" [disabled]="!spForm.valid || joinClicked" name="signup" id="signup"
                                             class="form-submit" value="Join Jaldee"
-                                            (click)="!joinClicked && onPasswordSubmit()">
+                                            (click)="onPasswordSubmit()">
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +213,8 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <mat-dialog-actions>
                                         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                                             <button type="button" class="cs-btn bt2"
-                                                (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button> &nbsp;&nbsp;&nbsp;
+                                                (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+                                            &nbsp;&nbsp;&nbsp;
                                             <button (click)="resendViaEmail()" mat-button
                                                 class="cs-btn bt1">{{resend_btn_cap}}</button>
                                         </div>
@@ -243,9 +245,39 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <img src="../../../../assets/images/home/signup/sales.png" width="25" height="25" />
                                     <h6>Sales Reps</h6>
                                     <div class="sc-frm" *ngIf="hearus=='SalesReps'">
-                                        <app-saleschannel (retfromSC)="onReferalSubmit($event)"
+                                        <!-- <app-saleschannel (retfromSC)="onReferalSubmit($event)"
                                             (resetApiErrors)="resetApiErrors()">
-                                        </app-saleschannel>
+                                        </app-saleschannel> -->
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                            <div class="form-group mgn-up-10" *ngIf="action!='view'">
+                                                <div class="col-md-9 col-xs-10 col-sm-10">
+                                                    <mat-form-field>
+                                                        <input matInput placeholder="Sales Partner Id/ Phone"
+                                                            type="text" class="form-control"
+                                                            (keypress)="handlekeyup($event)" [(ngModel)]="scCode_Ph"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-xs-2 col-sm-2">
+                                                    <i class="fa fa-search pointer-cursor"
+                                                        (click)="findSC_ByScCode(scCode_Ph)"></i>
+                                                </div>
+                                            </div>
+                                            <div class="salesChannelDetails" *ngIf="scfound">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                                    SC Code: {{scInfo.scId}}
+                                                </div>
+                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                                    SC Name: {{scInfo.scName}}
+                                                </div>
+                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                                    SC Phone No: {{scInfo.primaryPhoneNo}}
+                                                </div>
+                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10">
+                                                    Name : {{scInfo.contactFirstName}} {{scInfo.contactLastName}}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
 
@@ -294,7 +326,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <figure><img src="../../../../assets/images/home/signup/how.png" alt="sin up image" width="1800"
                                 height="1792">
                         </figure>
-                        <a (click)="submitHearus()" class="signup-image-link">Skip</a>
+                        <!-- <a (click)="submitHearus()" class="signup-image-link">Skip</a> -->
                     </div>
                 </div>
             </div>

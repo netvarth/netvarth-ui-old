@@ -1,0 +1,34 @@
+<h1 class="mat-dialog-title"> Update Profile Picture<button mat-dialog-close class="modal_close"><i
+      class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+
+<mat-dialog-content>
+  <div>
+    <div>
+      <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+        [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" format="png"
+        (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"></image-cropper>
+    </div>
+    <div class="crop-img-div" *ngIf="imageChangedEvent && imageChangedEvent.target.files">
+      <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;&nbsp;Left</i>
+      <i class="fa fa-repeat custId-cursor pad-left-20" aria-hidden="true" (click)="rotateRight()">&nbsp;&nbsp;Right</i>
+    </div>
+    <!-- <img class="glbl-seting-img-smal" [src]="croppedImage" /> -->
+  </div>
+  <div *ngIf="!imageChangedEvent" class="upload-doc" (click)="filed.click()">
+    <label class="col-form-label">Select a photo</label>
+    <span class="select-wrapper ">
+      <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
+        (change)="imageSelect($event)">
+    </span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+    <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+    <button (click)="saveImages()" *ngIf="imageChangedEvent && imageChangedEvent.target.files" mat-button
+      class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
+  </div>
+</mat-dialog-actions>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

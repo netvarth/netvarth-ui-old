@@ -45,6 +45,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     userId: any;
     userDetails: any;
+    showGallery = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -73,6 +74,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
+        setTimeout(() => this.showGallery = true, 1200);
         this.getUserDetails(this.userId).then(
             (userInfo) => {
                 this.userDetails = userInfo;

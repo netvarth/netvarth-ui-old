@@ -18,6 +18,7 @@ import { ProviderWaitlistCheckInConsumerNoteModule } from '../check-ins/provider
 import { CallingModesModule } from '../check-ins/calling-modes/calling-modes.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-delay.component';
+import { CheckinDetailsSendModule } from '../check-ins/checkin-details-send/checkin-details-send.modules';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { AdjustscheduleDelayComponent } from './schedule-delay/adjust-schedule-d
         AddProviderWaitlistCheckInProviderNoteModule,
         ProviderWaitlistCheckInConsumerNoteModule,
         CallingModesModule,
+        CheckinDetailsSendModule,
         NgxQRCodeModule
     ],
     declarations: [

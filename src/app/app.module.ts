@@ -58,7 +58,7 @@ import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefi
 import { WindowRefService } from './shared/services/windowRef.service';
 import { RazorpayService } from './shared/services/razorpay.service';
 import { PaymentLinkComponent } from './shared/components/payment-link/payment-link.component';
-
+import { ProviderDataStorageService } from './ynw_provider/services/provider-datastorage.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -140,6 +140,7 @@ export function init_app(globalService: GlobalService) {
     GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
+    ProviderDataStorageService,
     Title,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService, GlobalFunctions
     ], multi: true },

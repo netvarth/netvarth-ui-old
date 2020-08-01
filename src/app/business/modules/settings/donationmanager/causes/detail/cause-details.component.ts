@@ -43,6 +43,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
     click_here_cap = Messages.CLICK_HERE_CAP;
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
+    showGallery = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,
@@ -80,6 +81,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
+        setTimeout(() => this.showGallery = true, 1200);
         this.initServiceParams();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {

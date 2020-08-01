@@ -10,9 +10,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { UserDataStorageService } from './settings/user-datastorage.service';
 // import { ManageOnlineProfileComponent } from './settings/bprofile/manageonlineprofile.component';
 import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+
 
 @NgModule({
     declarations: [
@@ -36,6 +38,7 @@ import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
 
     ],
     entryComponents: [LinkProfileComponent],
+    providers: [UserDataStorageService],
     exports: [BranchUsersComponent]
 })
 export class UsersModule {}

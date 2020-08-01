@@ -1,5 +1,5 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="ynw-common-form">
-  <h1 class="mat-dialog-title">{{cancel_cap}} {{checkin_label | capitalizeFirst}}
+  <h1 class="mat-dialog-title"> {{checkin_label | capitalizeFirst}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>

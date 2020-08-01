@@ -11,7 +11,7 @@
                     <mat-form-field>
                         <div>
                             <input matInput type="text" class="form-control" id="mobile_number"
-                                (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
+                                (change)="onMbnmberChange($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
                                 autocomplete="off" maxlength=10>
                         </div>
                     </mat-form-field>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <input matInput type="text" class="form-control" id="email_id" placeholder="Email(user@xyz.com)"
-                        formControlName="email_id" autocomplete="off">
+                        formControlName="email_id" autocomplete="off"  (change)="onEmailChange($event)">
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')"
                         errorMsg="Please enter valid email.">
                     </app-field-error-display>
@@ -43,7 +43,7 @@
         <mat-dialog-actions>
             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                 <button tabindex="-1" class="cs-btn bt2" (click)="onClick(0)">Cancel</button>
-                <button class="cs-btn bt1" mat-button [disabled]="!amForm.valid"
+                <button class="cs-btn bt1" mat-button [disabled]="!amForm.valid || (mobilenumber == null && emailId == null)"
                     (click)="onSend(amForm.value)">Send</button>
             </div>
         </mat-dialog-actions>

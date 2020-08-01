@@ -14,11 +14,15 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue && !queue_data.provider"></span>
+                                <span class="useredit" *ngIf="queue_data.provider"><i class="fa fa-info-circle"
+                                        matTooltip="User queues can be edit in user level"></i></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft" style="display: flex;">
-                                        <h4>{{queue_data.name | capitalizeFirst}}</h4>
-                                        <span class="tspace">
+                                        <h4>{{queue_data.name | capitalizeFirst}}<span
+                                                *ngIf="queue_data.provider">({{queue_data.provider.firstName}})</span>
+                                        </h4>
+                                        <span class="tspace" *ngIf="!queue_data.provider">
                                             <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
                                                 (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
                                         </span>
@@ -66,10 +70,17 @@
                                                     time</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
                                             </div>
-                                            <div class="item"
-                                                *ngIf="queue_data.showToken">
+                                            <div class="item" *ngIf="queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">Start date</span>
+                                                <span>{{queue_data.queueSchedule.startDate | date: dateFormat}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">End date</span>
+                                                <span>{{queue_data.queueSchedule.terminator.endDate | date: dateFormat}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Online check-ins</span> <span
@@ -203,6 +214,32 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
                                     </div>
                                 </section>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                            formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=startdateError
+                                        errorMsg="Please enter date greater or equal to today">
+                                    </app-field-error-display> -->
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-5">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1"
+                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                            formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display> -->
+                                </div>
                             </div>
                             <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
@@ -343,8 +380,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
         })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group"
-                                *ngIf="showAdvancedSettings && waitlist_manager.showTokenId">
+                            <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.showTokenId">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"

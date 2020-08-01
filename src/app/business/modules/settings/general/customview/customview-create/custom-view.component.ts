@@ -112,6 +112,7 @@ export class CustomViewComponent implements OnInit {
             });
         setTimeout(() => {
             if (this.viewId) {
+                this.resetFields();
                 this.getView(this.viewId);
             } else {
                 this.loading = false;
@@ -230,6 +231,18 @@ export class CustomViewComponent implements OnInit {
                     this.queuestoDisplay = this.qstoDisplay;
                 });
     }
+    resetFields() {
+        this.selectedDepartments = [];
+        this.selectedDeptIds = [];
+        this.selectedUsers = [];
+        this.selectedUsersId = [];
+        this.selectedServices = [];
+        this.selectedServiceids = [];
+        this.selectedQs = [];
+        this.selectedQIds = [];
+        this.selectedScheduls = [];
+        this.selectedScheduleIds = [];
+    }
     getView(viewId) {
         this.provider_services.getCustomViewDetail(viewId)
             .subscribe(
@@ -237,9 +250,6 @@ export class CustomViewComponent implements OnInit {
                     this.customViewDetails = data;
                     this.customViewName = this.customViewDetails.name;
                     this.customViewFor = this.customViewDetails.type;
-                    this.selectedDepartments = [];
-                    this.selectedUsers = [];
-                    this.selectedScheduls = [];
                     if (this.waitlistMngr.filterByDept && this.customViewDetails.customViewConditions.departments && this.customViewDetails.customViewConditions.departments.length > 0) {
                         for (let j = 0; j < this.customViewDetails.customViewConditions.departments.length; j++) {
                             for (let i = 0; i < this.departments.length; i++) {
@@ -273,8 +283,6 @@ export class CustomViewComponent implements OnInit {
     }
 
     departmentSelection() {
-        this.selectedServices = [];
-        this.selectedQs = [];
         if (this.customViewDetails.customViewConditions.users && this.customViewDetails.customViewConditions.users.length > 0) {
             for (let j = 0; j < this.customViewDetails.customViewConditions.users.length; j++) {
                 for (let i = 0; i < this.filterUsersList.length; i++) {
@@ -319,10 +327,17 @@ export class CustomViewComponent implements OnInit {
                 }
                 if (j < this.customViewDetails.customViewConditions.services.length) {
                     if (this.customViewFor === 'Appointment') {
-                        this.apptServiceSelection();
+                        this.getAppointmentSchedules();
                     } else {
-                        this.checkinServiceSelection();
+                        this.getAccountQs();
                     }
+                    setTimeout(() => {
+                        if (this.customViewFor === 'Appointment') {
+                            this.apptServiceSelection();
+                        } else {
+                            this.checkinServiceSelection();
+                        }
+                    }, 500);
                 }
             }
         } else {
@@ -403,8 +418,6 @@ export class CustomViewComponent implements OnInit {
         }
     }
     checkinServiceSelection() {
-        this.selectedQs = [];
-        this.selectedQIds = [];
         this.qstoDisplay = [];
         if (this.selectedServices && this.selectedServices.length > 0) {
             for (let i = 0; i < this.selectedServices.length; i++) {
@@ -439,8 +452,6 @@ export class CustomViewComponent implements OnInit {
     }
 
     apptServiceSelection() {
-        this.selectedScheduls = [];
-        this.selectedScheduleIds = [];
         this.todaysQs = [];
         if (this.selectedServices && this.selectedServices.length > 0) {
             for (let i = 0; i < this.selectedServices.length; i++) {
@@ -478,8 +489,10 @@ export class CustomViewComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.isDepartments = true;
-                    this.departments = data.departments;
-                    this.filterDepList = data.departments;
+                    this.departments = [];
+                    this.filterDepList = [];
+                    this.departments = data.departments.filter(depart => depart.departmentStatus === 'ACTIVE');
+                    this.filterDepList = this.departments;
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
@@ -539,6 +552,7 @@ export class CustomViewComponent implements OnInit {
     getUsers() {
         const apiFilter = {};
         apiFilter['userType-eq'] = 'PROVIDER';
+        apiFilter['status-eq'] = 'ACTIVE';
         if (this.selectedDeptIds.length > 0) {
             apiFilter['departmentId-eq'] = this.selectedDeptIds.toString();
         }

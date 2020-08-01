@@ -127,9 +127,9 @@ export class ConsumerNotificationUserComponent implements OnInit {
   }
 
   getNotificationList() {
-    const filter = {};
-        filter['provider-eq'] = this.userId;
-    this.provider_services.getUserConsumerNotificationSettings(filter)
+    // const filter = {};
+    //     filter['provider-eq'] = this.userId;
+    this.provider_services.getUserConsumerNotificationSettings(this.userId)
       .subscribe(
         data => {
           this.notificationList = data;
@@ -219,7 +219,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     } else if (type === 'PREFINAL_APPT') {
       activeInput = this.prefinalAPPTNotificationSettings;
     } else if (type === 'FINAL_APPT') {
-      activeInput = this.finalAPPTNotificationSettings;
+      activeInput = this.finalAPPTNotificationSettings; 
     }
     if (this.cSettings[type]) {
       activeInput.providerId = this.userId;

@@ -20,6 +20,7 @@ import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/pro
 import { UserSpecializationComponent } from './specializations/userspecialization/userspecialization.component';
 import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
+import { ProPicPopupModule } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.module';
 @NgModule({
     imports: [
         BuserProfileRoutingModule,
@@ -32,7 +33,8 @@ import { ProviderUserBprofileSearchSocialMediaComponent } from './media/provider
         Nl2BrPipeModule,
         DynamicFormModule,
         GalleryModule,
-        NgxQRCodeModule
+        NgxQRCodeModule,
+        ProPicPopupModule
     ],
     declarations: [
         BuserProfileComponent,

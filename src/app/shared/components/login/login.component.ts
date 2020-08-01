@@ -164,7 +164,13 @@ export class LoginComponent implements OnInit {
               this.dialogRef.close('success');
             },
             error => {
+             if (error.status === 401 && error.error === 'Session already exists.') {
+               this.shared_functions.doLogout().then( () => {
+                 this.onSubmit(data);
+               });
+             } else {
               ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            }
               this.api_loading = false;
             }
           );

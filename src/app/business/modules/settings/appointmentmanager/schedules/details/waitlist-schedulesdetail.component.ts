@@ -89,10 +89,15 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   prefixName = '';
   suffixName = '';
   batchStatus = false;
-  showEditSection = false;
   sprefixName = '';
   ssuffixName = '';
   sbatchStatus = false;
+  startdateError = false;
+  enddateError = false;
+  minDate;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  showBatchFields = false;
+  batch = false;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -131,6 +136,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
   }
   ngOnInit() {
+    this.minDate = this.convertDate();
     this.getWaitlistMgr();
     this.api_loading = true;
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -153,6 +159,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         this.createForm();
       }
     }, 500);
+
   }
   getWaitlistMgr() {
     this.api_loading = true;
@@ -261,11 +268,6 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
             this.prefixName = this.queue_data.batchName.prefix;
             this.suffixName = this.queue_data.batchName.suffix;
           }
-          if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-            this.showEditSection = true;
-          } else {
-            this.showEditSection = false;
-          }
           this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
           let schedule_arr = [];
           if (this.queue_data.apptSchedule) {
@@ -286,17 +288,25 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
           if (this.action === 'edit') {
             this.createForm();
           }
+          this.getProviderServices();
         },
         () => {
           this.api_loading = false;
           this.goBack();
         }
       );
+
   }
   // get the list of services
   getProviderServices() {
     this.api_loading1 = true;
-    const filter = { 'status-eq': 'ACTIVE', 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    let filter;
+    console.log(this.queue_data);
+    if (this.queue_data && this.queue_data.provider) {
+      filter = { 'status-eq': 'ACTIVE', 'provider-eq': this.queue_data.provider.id };
+    } else {
+      filter = { 'status-eq': 'ACTIVE', 'scope-eq': 'account', 'serviceType-neq': 'donationService' };
+    }
     this.provider_services.getProviderServices(filter)
       .subscribe(data => {
         this.services_list = data;
@@ -329,6 +339,11 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
               if (parseInt(this.departments[j].serviceIds[k])) {
                 delete this.departments[j].serviceIds[k];
               }
+            }
+          }
+          for (let j = 0; j < this.departments.length; j++) {
+            if (this.departments[j].serviceIds === '') {  /* triple equal is not working here*/
+              this.departments.splice(j, 1);
             }
           }
           this.api_loading1 = false;
@@ -381,8 +396,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         timeSlot: ['', Validators.compose([Validators.required])],
+        startdate: [''],
+        enddate: [''],
       });
-      this.updateForm();
+      setTimeout(() => {
+        this.updateForm();
+      }, 1000);
     } else {
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -392,8 +411,11 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        timeSlot: ['', Validators.compose([Validators.required])],
+        startdate: [''],
+        enddate: [''],
       });
+      this.amForm.get('startdate').setValue(this.minDate);
       this.provider_services.getQStartToken()
         .subscribe(
           (data) => {
@@ -427,18 +449,21 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       qendtime: edtime || null,
       // qcapacity: this.queue_data.capacity || null,
       qserveonce: this.queue_data.parallelServing || null,
-      timeSlot: this.queue_data.timeDuration || 0
+      timeSlot: this.queue_data.timeDuration || 0,
+      startdate: this.queue_data.apptSchedule.startDate || null,
+      enddate: this.queue_data.apptSchedule.terminator.endDate,
     });
 
     this.sbatchStatus = this.queue_data.batchEnable;
+    if (this.queue_data.parallelServing > 1) {
+      this.batch = true;
+      this.showBatchFields = true;
+    } else {
+      this.batch = false;
+    }
     if (this.queue_data.batchName) {
       this.sprefixName = this.queue_data.batchName.prefix;
       this.ssuffixName = this.queue_data.batchName.suffix;
-    }
-    if (!this.queue_data.batchName || (!this.queue_data.batchName.prefix && !this.queue_data.batchName.suffix) || (this.queue_data.batchName.prefix === '' && this.queue_data.batchName.suffix === '')) {
-      this.showEditSection = true;
-    } else {
-      this.showEditSection = false;
     }
     // this.amForm.get('qlocation').disable();
     this.selday_arr = [];
@@ -494,8 +519,52 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
+  convertDate(date?) {
+    let today;
+    let mon;
+    let cdate;
+    if (date) {
+      cdate = new Date(date);
+    } else {
+      cdate = new Date();
+    }
+    mon = (cdate.getMonth() + 1);
+    if (mon < 10) {
+      mon = '0' + mon;
+    }
+    return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+  }
+  compareDate(dateValue, startOrend) {
+    const UserDate = dateValue;
+    this.startdateError = false;
+    this.enddateError = false;
+    const ToDate = new Date().toString();
+    const l = ToDate.split(' ').splice(0, 4).join(' ');
+    // const ToDate1 = new Date(UserDate);
+    const sDate = this.amForm.get('startdate').value;
+    const sDate1 = new Date(sDate).toString();
+    const l2 = sDate1.split(' ').splice(0, 4).join(' ');
+    if (startOrend === 0) {
+      if (new Date(UserDate) < new Date(l)) {
+        return this.startdateError = true;
+      }
+      return this.startdateError = false;
+    } else if (startOrend === 1 && dateValue) {
+      if (new Date(UserDate) < new Date(l2)) {
+        return this.enddateError = true;
+      }
+      return this.enddateError = false;
+    }
+  }
 
   onSubmit(form_data) {
+    let endDate;
+    const startDate = this.convertDate(form_data.startdate);
+    if (form_data.enddate) {
+      endDate = this.convertDate(form_data.enddate);
+    } else {
+      endDate = '';
+    }
     if (!form_data.qname.replace(/\s/g, '').length) {
       const error = 'Please enter schedule name';
       this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -602,9 +671,9 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       schedulejson = {
         'recurringType': 'Weekly',
         'repeatIntervals': daystr,
-        'startDate': today,
+        'startDate': startDate,
         'terminator': {
-          'endDate': '',
+          'endDate': endDate,
           'noOfOccurance': ''
         },
         'timeSlots': [{
@@ -862,32 +931,21 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       'suffix': this.suffixName
     };
     this.provider_services.updateScheduleBatch(this.queue_id, post_data).subscribe(data => {
-      this.showEditSection = false;
       this.getScheduleDetail();
       // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
     });
   }
-  editBatchnames() {
-    this.showEditSection = true;
-  }
-  changeBatchStatus(event) {
-    const status = (event.checked) ? 'enabled' : 'disabled';
-    this.provider_services.changeScheduleBatchStatus(this.queue_id, event.checked).subscribe(data => {
-      this.batchStatus = event.checked;
-      this.getScheduleDetail();
-      this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-    });
-
-
-  }
 
   changebatchStatus(event) {
     this.sbatchStatus = event.checked;
-    const status = (event.checked) ? 'enabled' : 'disabled';
-    if (status === 'enabled') {
-      this.showEditSection = true;
+  }
+  EnableBatch(ev) {
+    this.showBatchFields = ev.checked;
+    if (ev.checked) {
+      this.amForm.get('qserveonce').setValue(2);
     } else {
-      this.showEditSection = false;
+      this.amForm.get('qserveonce').setValue(1);
+      this.sbatchStatus = false;
     }
   }
 }

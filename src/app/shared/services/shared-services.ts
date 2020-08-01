@@ -106,15 +106,21 @@ export class SharedServices {
     url = url + '/suggest';
     return this.servicemeta.httpGet(url, '', params);
   }
-  DocloudSearch(url, params) {
-    let sort_prefix;
+  DocloudSearch(url, params, type) {
+    let sort_prefix = '';
     if (params.sort.trim() !== '') {
       sort_prefix = params.sort;
-    } else {
+    } else if (type !== 'onlineid') {
       sort_prefix = 'claimable asc, ynw_verified_level desc, distance asc';
     }
     url = url + '/search';
     // rebuilding the parameters to accomodate q.parser and q.options
+    let returnvalue = '';
+    if (type === 'onlineid') {
+      returnvalue = '_all_fields';
+    } else {
+      returnvalue = '_all_fields,distance';
+    }
     const pass_params = {
       'start': params.start,
       // 'return': params.return,
@@ -126,7 +132,7 @@ export class SharedServices {
       'sort': sort_prefix,
       // 'q.sort': params.sort,
       'expr.distance': params.distance,
-      'return': '_all_fields,distance'
+      'return': returnvalue
     };
     return this.servicemeta.httpGet(url, '', pass_params);
   }
@@ -431,7 +437,7 @@ export class SharedServices {
   consumerPaymentStatus(data) {
     const url = 'consumer/payment/status';
     return this.servicemeta.httpPost(url, data);
- }
+  }
   getConsumerPayments() {
     const url = 'consumer/payment';
     return this.servicemeta.httpGet(url);
@@ -773,5 +779,14 @@ export class SharedServices {
       }
     });
     return promise;
+  }
+
+  getProviderSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid + '/date/' + pdate;
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderSchdulesbyLocatinIdandServiceIdwithoutDate(locid, servid, accountid?) {
+    const url = 'provider/appointment/schedule/location/' + locid + '/service/' + servid;
+    return this.servicemeta.httpGet(url);
   }
 }

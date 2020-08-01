@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject} from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -9,6 +9,7 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
+
 
 @Component({
   selector: 'app-provider-bprofile-search-primary',
@@ -40,7 +41,9 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private provider_datastorageobj: ProviderDataStorageService,
     @Inject(DOCUMENT) public document,
-    public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>
+
+    public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
 
   ngOnInit() {
@@ -119,9 +122,40 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
         }
       );
   }
+  uploadLogo(passdata) {
+    this.provider_servicesobj.uploadLogo(passdata)
+      .subscribe(
+        data => {
+          this.provider_datastorageobj.updateProfilePicWeightage(true);
+          this.data.logoExist=true;
+        });
+  }
+
+
+
+
 
   // updating the primary field from the bprofile edit page
   UpdatePrimaryFields(pdata) {
+    console.log(this.data.logoExist);
+
+    if (!this.data.logoExist) {
+      let self = this;
+      var promise = this.sharedfunctionObj.getBase64Image();
+      promise.then(function (dataURL) {
+        let blob = this.sharedfunctionObj.b64toBlob(dataURL);
+        const submit_data: FormData = new FormData();
+        submit_data.append('files', blob, 'jaldee-logo.png');
+        const propertiesDet = {
+          'caption': 'Logo'
+        };
+        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        submit_data.append('properties', blobPropdata);
+        self.uploadLogo(submit_data);
+      });
+    }
+
+
     this.disableButton = true;
     this.provider_servicesobj.updatePrimaryFields(pdata)
       .subscribe(
@@ -138,12 +172,16 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       );
   }
 
+
+
+
   // gets the bprofile details
   getBusinessProfile() {
     this.provider_servicesobj.getBussinessProfile()
       .subscribe(
         data => {
           this.bProfile = data;
+          console.log('bProfile..' + JSON.stringify(this.bProfile));
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
           const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
@@ -158,4 +196,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
       );
 
   }
+
+
 }
+
+

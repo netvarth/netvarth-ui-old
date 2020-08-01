@@ -117,6 +117,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
             this.locationExists = false;
           }
           this.provider_datastorage.set('bProfile', data);
+        
 
         });
     this.loading = false;

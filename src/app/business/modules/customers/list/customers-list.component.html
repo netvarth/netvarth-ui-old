@@ -50,7 +50,7 @@
         </div>
 
         <aside class="filterSidebar" *ngIf="filter_sidebar">
-          <section class="sidebar sidebar-bottom">
+          <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
             <div class="filterClosebtn">
               <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
@@ -67,7 +67,7 @@
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
-                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
+                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date of birth">
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>

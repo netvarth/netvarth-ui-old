@@ -9,6 +9,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
+import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 @Injectable()
 
 export class SharedFunctions {
@@ -21,7 +22,8 @@ export class SharedFunctions {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
-    private common_datastorage: CommonDataStorageService
+    private common_datastorage: CommonDataStorageService,
+    private providerDataStorage: ProviderDataStorageService
   ) { }
 
   logout() {
@@ -85,6 +87,7 @@ export class SharedFunctions {
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
+          this.providerDataStorage.setWeightageArray([]);
           this.clearLocalstorage();
           this.clearSessionStorage();
           resolve();
@@ -138,7 +141,8 @@ export class SharedFunctions {
       this.shared_service.ProviderLogin(post_data)
         .subscribe(
           data => {
-            this.setitemonLocalStorage('jld', post_data.password);
+            this.providerDataStorage.setWeightageArray([]);
+            localStorage.setItem('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
             this.router.navigate(['/provider']);
@@ -333,14 +337,14 @@ export class SharedFunctions {
 
   public showlogoicon(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return './assets/images/no_image_icon.png';
+      return '../../assets/images/no_image_icon.png';
     } else {
       return logo;
     }
   }
   public showitemimg(logo, moreparams?) {
     if (logo == null || logo === '') {
-      return './assets/images/no_image_icon.png';
+      return 'assets/images/no_image_icon.png';
     } else {
       return logo;
     }
@@ -614,11 +618,13 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Turn off" public search, You will not be visible online in Jaldee.com.';
+      msg = 'If you "Turn off" List my profile in jaldee.com, Your profile will not be visible online at jaldee.com.';
+
       // msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
-      msg = '"Turn On" the Public Search?';
+      msg = '"Turn On" List my profile in jaldee.com?';
+
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -632,17 +638,20 @@ export class SharedFunctions {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
         ob.handle_searchstatus();
+      } else {
+        ob.getPublicSearch();
       }
     });
   }
   confirmOPSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Turn off" Business profile, Your profile will not be visible online at Jaldee.com.';
+      msg = 'If you " Turn off" Jaldee Online, You will not be visible online in Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
-      msg = '"Turn On" the Business profile?';
+      msg = '"Turn On" Jaldee Online?';
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -657,6 +666,8 @@ export class SharedFunctions {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         ob.handle_jaldeeOnlinePresence();
+      } else {
+        ob.getJaldeeIntegrationSettings();
       }
     });
   }
@@ -1477,4 +1488,51 @@ export class SharedFunctions {
       }
     }, 500);
   }
+
+  getBase64Image() {
+    const promise = new Promise(function (resolve, reject) {
+
+      const img = new Image();
+
+      // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
+      img.crossOrigin = 'Anonymous';
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL('image/png');
+        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ''));
+      };
+      img.src = '../../../../assets/images/jaldee-logo.png';
+    });
+
+    return promise;
+  }
+
+  b64toBlob(b64Data) {
+    const contentType = 'image/png';
+    const sliceSize = 512;
+
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
 }

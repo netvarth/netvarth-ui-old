@@ -16,17 +16,17 @@
                                 <span class="editbt" (click)="addEditProviderQueue()"
                                     *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
-                                        <div class="row col-sm-12 padleft" style="display: flex;">
-                                                <h4>{{queue_data.name | capitalizeFirst}}</h4>
-                                                <span class="tspace">
-                                                    <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
-                                                        (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
-                                                </span>
-                                                <span class='greenc mgn-lt-5'
-                                                    *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
-                                                <span class='disabled mgn-lt-5'
-                                                    *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
-                                            </div>
+                                    <div class="row col-sm-12 padleft" style="display: flex;">
+                                        <h4>{{queue_data.name | capitalizeFirst}}</h4>
+                                        <span class="tspace">
+                                            <mat-slide-toggle [checked]="queue_data.queueState=='ENABLED'"
+                                                (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
+                                        </span>
+                                        <span class='greenc mgn-lt-5'
+                                            *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
+                                        <span class='disabled mgn-lt-5'
+                                            *ngIf="queue_data.queueState=='DISABLED'">{{disabled_cap}}</span>
+                                    </div>
                                     <!-- <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
                                         <span class="tspace">
@@ -73,10 +73,17 @@
                                                     time</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
                                             </div>
-                                            <div class="item"
-                                                *ngIf="queue_data.showToken">
+                                            <div class="item" *ngIf="queue_data.showToken">
                                                 <span class="ttle">Token starts from</span>
                                                 <span>{{queue_data.tokenStarts}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">Start date</span>
+                                                <span>{{queue_data.queueSchedule.startDate | date: dateFormat}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">End date</span>
+                                                <span>{{queue_data.queueSchedule.terminator.endDate | date: dateFormat}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Online check-ins</span> <span
@@ -183,10 +190,10 @@
                     </div>
                 </nav>
                 <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
-                        <div class="card que p0" *ngIf="services_list.length === 0">
-                                Atleast one service need to create queue
-                            </div>
-                    <div class="copy ynw-common-form-nm pro-schedule"*ngIf="amForm && services_list.length>0">
+                    <div class="card que p0" *ngIf="services_list.length === 0">
+                        Atleast one service need to create queue
+                    </div>
+                    <div class="copy ynw-common-form-nm pro-schedule" *ngIf="amForm && services_list.length>0">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group queue-selection">
@@ -213,6 +220,33 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
                                     </div>
                                 </section>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                            formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=startdateError
+                                        errorMsg="Please enter date greater or equal to today">
+                                    </app-field-error-display> -->
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-5">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1"
+                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                            formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display> -->
+                                </div>
                             </div>
                             <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
@@ -353,7 +387,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </app-field-error-display>
                             </div>
                             <div class="form-group"
-                                *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
+                                *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList' && waitlist_manager.showTokenId">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"

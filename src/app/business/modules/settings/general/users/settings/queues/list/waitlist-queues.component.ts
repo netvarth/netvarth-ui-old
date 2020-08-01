@@ -151,7 +151,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                     url: '/provider/settings/general/users/' + this.userId + '/settings'
                 });
                 breadcrumbs.push({
-                    title: 'Queues'
+                    title: 'Tokens/checkins'
                 });
                 this.breadcrumbs = breadcrumbs;
             });
@@ -600,7 +600,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         instantQInput['capacity'] = instantQ.qcapacity;
         instantQInput['queueState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;
-        instantQInput['provider'] = this.userId;
+        instantQInput['provider'] = {'id': this.userId};
         if (isNaN(instantQ.qcapacity)) {
             const error = 'Please enter a numeric value for capacity';
             this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

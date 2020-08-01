@@ -230,6 +230,10 @@ export class ProviderServices {
       const url = 'provider/logo/' + name;
       return this.servicemeta.httpDelete(url);
    }
+   deleteuserLogo(name, userid) {
+      const url = 'provider/user/logo/' + userid + '/' + name;
+      return this.servicemeta.httpDelete(url);
+   }
    // Addwords
    getAdwords() {
       return this.servicemeta.httpGet('provider/license/adwords');
@@ -913,18 +917,18 @@ export class ProviderServices {
       const url = 'provider/account/settings/smsCount';
       return this.servicemeta.httpGet(url);
    }
-   getUserConsumerNotificationSettings(filter) {
+   getUserConsumerNotificationSettings(id) {
       // const url = 'provider/consumerNotification/settings/' + id;
       // return this.servicemeta.httpGet(url);
-      const url = 'provider/consumerNotification/settings';
-      return this.servicemeta.httpGet(url, null, filter);
+      const url = 'provider/consumerNotification/settings/provider/' + id;
+      return this.servicemeta.httpGet(url);
    }
    saveUserConsumerNotificationSettings(data) {
       const url = 'provider/consumerNotification/settings';
       return this.servicemeta.httpPost(url, data);
    }
    updateUserConsumerNotificationSettings(data) {
-      const url = 'provider/consumerNotification/settings';
+      const url = 'provider/consumerNotification/settings/provider';
       return this.servicemeta.httpPut(url, data);
    }
    getConsumerNotificationSettings() {
@@ -1082,7 +1086,7 @@ export class ProviderServices {
    updateuserlinkProfile(id, profid) {
       return this.servicemeta.httpPut('provider/user/providerBprofile/linkProfile/' + id + '/' + profid);
    }
-   getUserNotificationList(id) {
+   getUserNotificationList(id?) {
       const url = 'provider/settings/notification/' + id;
       return this.servicemeta.httpGet(url);
    }
@@ -1481,5 +1485,13 @@ export class ProviderServices {
    linkPayment(data) {
       const url = 'provider/payment/paylink/order/create';
       return this.servicemeta.httpPost(url, data);
+   }
+   makeDefalutAdmin(id) {
+      const url = 'provider/user/makeDefalutAdminUser/' + id;
+      return this.servicemeta.httpPut(url);
+   }
+   getProviderAttachments(uuid) {
+      const url = 'provider/communications/' + uuid;
+      return this.servicemeta.httpGet(url);
    }
 }

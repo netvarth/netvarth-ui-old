@@ -231,6 +231,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
+    if (this.ctype === 'consumer') {
+    this.getInboxUnreadCnt();
+    }
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
