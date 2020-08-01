@@ -956,7 +956,7 @@
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
                           </span>
-                          <span [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
+                          <span (click)="openAttachmentGallery(appt)" [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.hasAttachment"><i style="font-size: 20px;"
                               class="material-icons">attach_file</i></span>
                         </div>
