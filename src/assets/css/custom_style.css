@@ -9509,12 +9509,13 @@ button.cust-button-3 {
   button.cust-button-2 {
     max-width: 80px;
     min-width: 70px;
+    height: 35px !important;
   }
 }
 
 @media (max-width: 890px) {
   button.cust-button-2 {
-    max-width: 65px;
+    max-width: 75px;
     min-width: 65px;
   }
   button.cust-button-1 {
@@ -9531,7 +9532,9 @@ button.cust-button-3 {
   button.cust-button-2 {
     max-width: 80px;
     min-width: 70px;
+    height:35px !important;
   }
+  
   .wl-tp-cont1 {
     place-content: center !important;
   }
@@ -9903,7 +9906,7 @@ td.chkWth, th.chkWth {
 
 @media (max-width:375px) {
   .tbl-qboard .td-one {
-    width: 130px !important;
+    width: 120px !important;
     white-space: pre-wrap !important;
   }
   .tbl-qboard .td-two-full {
@@ -9913,7 +9916,7 @@ td.chkWth, th.chkWth {
     width: 100px !important;
   }
   .tbl-qboard .td-three {
-    width: 40px !important;
+    width: 50px !important;
   }
 }
 
@@ -10546,4 +10549,8 @@ a {
   }
   .pad-right-30 {
     padding-right: 30px !important;
+  }
+
+  span.icon-cloud, .cnote i {
+    font-size:15px !important;
   }

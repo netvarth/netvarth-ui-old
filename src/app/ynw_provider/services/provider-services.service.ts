@@ -1490,4 +1490,8 @@ export class ProviderServices {
       const url = 'provider/user/makeDefalutAdminUser/' + id;
       return this.servicemeta.httpPut(url);
    }
+   getProviderAttachments(uuid) {
+      const url = 'provider/communications/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
 }

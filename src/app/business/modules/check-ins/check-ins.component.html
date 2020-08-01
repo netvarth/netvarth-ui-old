@@ -713,7 +713,7 @@
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"  class="material-icons">attach_file</i></span>
+                          <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"  class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="" style="font-size: smaller;">
@@ -803,6 +803,10 @@
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
   </div>
+  <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+    [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+    [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"
+    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
   <div class="clearfix"></div>
   <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
     <button>
