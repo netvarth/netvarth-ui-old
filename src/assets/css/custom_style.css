@@ -1357,7 +1357,15 @@ sup {
 .mgn-up-10 {
   margin-top: 10px !important;
 }
-
+.mgn-m-up-5{
+  margin-top: -5px !important;
+}
+.mgn-m-up-10{
+  margin-top: -10px !important;
+}
+.mgn-m-up-2{
+  margin-top: -2px !important;
+}
 .mgn-up-5 {
   margin-top: 5px !important;
 }
@@ -9613,7 +9621,7 @@ button.cust-button-2.tme {
 }
 
 .busns-id {
-  padding-bottom:15px;
+  padding-bottom:10px;
 }
 
 @media only screen and (max-width: 575px) {
@@ -10555,4 +10563,22 @@ a {
 
   span.icon-cloud, .cnote i {
     font-size:15px !important;
+  }
+
+  h3.bus-prof-head {
+    font-weight:500 !important;
+    font-size:1.35rem !important;
+  }
+  h6.bus-prof-strength {
+    margin-top: 20px !important;
+    margin-bottom:0 !important;
+  }
+
+  .bus-bprof-strength .wght-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+  }
+  .bus-prof-qr-sec ul.sbl {
+    padding-left:5px !important;
   }

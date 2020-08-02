@@ -1,5 +1,6 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
+    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
 
@@ -67,12 +68,10 @@
 
                 <div class="pubs card w-dta bprof">
                   <div class="ctrl">
-                    <div class="col-md-10 col-sm-12 col-xs-12">
-                      <h3>Business Profile
-                      </h3>
-                      <h6 *ngIf="normal_basicinfo_show!=1" >Profile Strength-
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                      <h3 class="bus-prof-head">Business Profile</h3>
+                      <h6 *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
                         <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
-
                       </h6>
 
                       <!-- <div class="col-md-8 col-sm-12 col-xs-12">
@@ -81,30 +80,25 @@
                                                 </div>
 
                                             </div> -->
-                                            <div class="warning" *ngIf="normal_basicinfo_show==1">
-                                              <app-innerloading-spinner spinnerParams="loadingParams">
-                                              </app-innerloading-spinner>
-                                            </div>
-                      <div class="col-md-8" *ngIf="normal_basicinfo_show!=1" >
-                        <div class="progress col-md-7 col-sm-8 col-xs-8 mt-2 p0" style="height:12px;">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
-                            aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
-
+                      <div class="warning" *ngIf="normal_basicinfo_show==1">
+                        <app-innerloading-spinner spinnerParams="loadingParams">
+                        </app-innerloading-spinner>
+                      </div>
+                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding" *ngIf="normal_basicinfo_show!=1">
+                        <div class="progress col-md-7 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"
+                            [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
+                            aria-valuemax="100"></div>
                         </div>
-                        <div class="col-md-5 col-sm-4 col-xs-4 p-0 ">
-                          <button (click)="scroll(basicInfoSection)" type="button" [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                        <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small">
+                          <button (click)="scroll(basicInfoSection)" type="button"
+                            [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                         </div>
                       </div>
-
                     </div>
-
                   </div>
                 </div>
-
                 <!-- <div class="col-md-12 ct-l col-xs-12 no-padding">
-
-
-
                                     </div> -->
                 <!-- <div class="progress col-md-10 mt-2 p0"  style="height: 15px;">
                                                         <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one"
@@ -121,39 +115,19 @@
                                                         </div>
                                                         <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four"
                                                             aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
-
                                                         </div>
-
-
                                                     </div> -->
-
-
-
                 <!-- </div> -->
-
-
-
-
-
                 <!-- </div> -->
-
-
                 <!--TEsting-->
-
-
-
-
-
                 <div class="pubs card w-dta bprof" *ngIf="bProfile">
-
                   <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
-                        <mat-slide-toggle [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
                         </mat-slide-toggle>
                         &nbsp;{{profile_status_str}}</h2>
-
-                      <div class="col-md-12 col-sm-12 col-xs-12 head-level-settings">
+                      <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
                         <span class="inactive" *ngIf="!profile_status">{{jaldee_online_disabled_msg}} </span>
                         <span class="active" *ngIf="profile_status">{{jaldee_online_enabled_msg}}</span>
                       </div>
@@ -186,19 +160,20 @@
 
 
                   <div *ngIf="!bProfile.customId && !is_customized">
-                    <div>
+                    <div class="bus-prof-qr-sec">
 
                       <ul class="sbl">
-                        <li class="acc-url-li pb-1 mb-1">
+                        <li class="acc-url-li">
 
                           <strong> Here is your QR Code :- </strong>
 
                           <span class="custid qrcode-icon">
-                            <i class="fa fa-qrcode custId-cursor" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" [matTooltip]="'Generate QR code'"></i>
+                            <i class="fa fa-qrcode custId-cursor" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                              [matTooltip]="'Generate QR code'"></i>
                           </span>
                         </li>
 
-                        <p class="head-level-settings">
+                        <p class="head-level-settings mgn-up-5">
                           <span class="inactive" *ngIf="!profile_status">
                             <i class="fa fa-times"></i> Inactive</span>
                           <span class="active" *ngIf="profile_status">
@@ -206,17 +181,18 @@
 
                         </p>
 
-                        <li class="acc-url-li pb-1 mb-1">
+                        <li class="acc-url-li mgn-up-10">
 
                           <strong> Here is your Jaldee Link :-</strong>
                           <span class="busns-id">
-                            <span class="custid pl-2" rel="noopener" target="_blank">
+                            <span class="custid" rel="noopener" target="_blank">
 
                               {{wndw_path}}{{bProfile.accEncUid}}
 
                             </span>
                             <span class="custid custId-icon">
-                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)" [matTooltip]="'Copy link'"></i>
+                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)"
+                                [matTooltip]="'Copy link'"></i>
                             </span>
                             <span class="custbtn" *ngIf="!bProfile.customId && profile_status">
                               <button class="btn-default-n btn1-responsive" (click)="customizeId()">
@@ -244,16 +220,19 @@
                   </div>
 
                   <div class="col-md-12 col-12" *ngIf="normal_customid_show==1">
-                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form" *ngIf="editMode==1 || editMode==0">
+                    <form [formGroup]="customForm" class="ynw-common-form-nm change-mob-style custId-flex-form"
+                      *ngIf="editMode==1 || editMode==0">
                       <div class="form-group custId-flex">
                         <mat-form-field class="custId-ip-wdth">
-                          <input matInput type="text" minlength="4" maxlength="25" class="form-control" autocomplete="off" value="www.jaldee.com/"
-                            [readonly]="true" style="color: #a5a2a2;">
+                          <input matInput type="text" minlength="4" maxlength="25" class="form-control"
+                            autocomplete="off" value="www.jaldee.com/" [readonly]="true" style="color: #a5a2a2;">
                         </mat-form-field>
                         <mat-form-field>
-                          <input matInput type="text" minlength="4" maxlength="25" class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
+                          <input matInput type="text" minlength="4" maxlength="25"
+                            class="form-control custId-ip-max-wdth" id="customid" formControlName="customid"
                             autocomplete="off">
-                          <app-field-error-display [displayError]="fed_service.isFieldValid(customForm,'customid')" [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
+                          <app-field-error-display [displayError]="fed_service.isFieldValid(customForm,'customid')"
+                            [errorMsgs]="fed_service.getErrorMessage(customForm,'customid',
                                                                     {
                                                                     'required' : 'Please enter your Custom Business ID',
                                                                     'minlength' : 'Minimum 4 characters are required',
@@ -266,25 +245,27 @@
                       </div>
                       <div class="form-group custId-btns">
                         <button (click)="cancelCusUpdt()" class="cs-btn bt2 custId-btn-bt2">Cancel</button>
-                        <button (click)="add_updateCustomId(customForm.value)" mat-button [disabled]="!customForm.valid" class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
+                        <button (click)="add_updateCustomId(customForm.value)" mat-button [disabled]="!customForm.valid"
+                          class="cs-btn bt1 custmIdOk custId-btn-bt2">Ok</button>
                       </div>
 
                     </form>
                   </div>
 
-                  <div *ngIf="normal_customid_show==3">
-                    <div>
+                  <div *ngIf="normal_customid_show==3" >
+                    <div class="bus-prof-qr-sec">
                       <ul class="sbl">
-                        <li class="acc-url-li  pb-1 mb-1">
+                        <li class="acc-url-li">
 
                           <strong> Here is your QR Code :- </strong>
 
                           <span class="custid qrcode-icon">
-                            <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)" [matTooltip]="'Generate QR code'"></i>
+                            <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                              [matTooltip]="'Generate QR code'"></i>
                           </span>
                         </li>
 
-                        <p class="head-level-settings">
+                        <p class="head-level-settings mgn-up-5">
                           <span class="inactive" *ngIf="!profile_status">
                             <i class="fa fa-times"></i> Inactive</span>
                           <span class="active" *ngIf="profile_status">
@@ -292,15 +273,16 @@
 
                         </p>
 
-                        <li class="acc-url-li h-xs-0 h-sm-0 pb-1 mb-1">
+                        <li class="acc-url-li h-xs-0 h-sm-0 mgn-up-10">
 
                           <strong> Here is your Jaldee Link :-</strong>
                           <span class="busns-id">
-                            <span class="custid pl-2" rel="noopener" target="_blank">
+                            <span class="custid" rel="noopener" target="_blank">
                               {{wndw_path}}{{bProfile.customId}}
                             </span>
                             <span class="custid custId-icon">
-                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)" [matTooltip]="'Copy link'"></i>
+                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)"
+                                [matTooltip]="'Copy link'"></i>
                             </span>  
                             <!-- <span class="custid custId-icon">
                               <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -352,16 +334,16 @@
 
                 <div class="pubs card w-dta bprof">
                   <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
-                        <mat-slide-toggle [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
-                        </mat-slide-toggle> {{jaldee_online_status_str}} </h2>
-                      <div class="col-md-12 col-sm-12 col-xs-12 head-level-settings">
-                        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in jaldee.com</span>
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                        </mat-slide-toggle>&nbsp;{{jaldee_online_status_str}} </h2>
+                      <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
+                        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in
+                          jaldee.com</span>
                         <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
                       </div>
                     </div>
-
                   </div>
 
 
@@ -388,7 +370,7 @@
                 </div>
                 <div class="pubs card w-dta bprof">
                   <div class="ctrl">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
 
                       <i *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="fa fa-star" style="color:grey"> </i>
                       <span *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="bold">
@@ -403,22 +385,27 @@
                       <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'">
                         <img height="80" width="70" src="./assets/images/PremiumOrg.png" alt="Advanced">
                       </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="fa fa-star-half-o" style="color:goldenrod"></i>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="fa fa-star-half-o"
+                        style="color:goldenrod"></i>
                       <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'" class="bold">
                         {{verified_level_basic}}.
                       </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="fa fa-star-half-o" style="color:goldenrod"></i>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="fa fa-star-half-o"
+                        style="color:goldenrod"></i>
                       <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'" class="bold">
                         {{verified_level_basicplus}}.
                       </span>
-                      <i *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="fa fa-star" style="color:goldenrod"></i>
+                      <i *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="fa fa-star"
+                        style="color:goldenrod"></i>
                       <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'" class="bold">
                         {{verified_level_premium}}.
                       </span>
                       <br>
 
-                      <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'" class="form-level-settings">{{frm_verified_cap}}
-                        <a class="learnmore-pointer" id="verified-levels" (click)="learnmore_clicked('verified-levels', $event)">Learn More
+                      <span *ngIf="bProfile && bProfile.verifyLevel != 'ADVANCED'"
+                        class="form-level-settings">{{frm_verified_cap}}
+                        <a class="learnmore-pointer" id="verified-levels"
+                          (click)="learnmore_clicked('verified-levels', $event)">Learn More
                         </a>
                       </span>
                     </div>
@@ -432,9 +419,11 @@
                     <mat-expansion-panel-header class="min100">
                       <mat-panel-title class="block-level">
                         {{profile_summary_cap}}
-                        <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule ||reqFields.specilization" class="req-flds-cap">*required fields missing</i>
+                        <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule ||reqFields.specilization"
+                          class="req-flds-cap">*required fields missing</i>
                         <p class="form-level-settings">{{frm_profile_name_cap}}
-                          <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More
+                          <a class="learnmore-pointer" id="customer-help"
+                            (click)="learnmore_clicked('basic-information', $event)">Learn More
                           </a>
                         </p>
                       </mat-panel-title>
@@ -468,19 +457,20 @@
                               <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
                               <div class="add">
                                 <span (click)="changeProPic()">{{add_cap}}
-                                  <br/> {{profile_pic_cap}}
+                                  <br /> {{profile_pic_cap}}
                                 </span>
                               </div>
                               <div class="change">
                                 <span class="change-pic" (click)="changeProPic()">{{change_cap}}
-                                  <br/> {{pic_cap}}</span>
+                                  <br /> {{pic_cap}}</span>
                                 <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
                               </div>
                             </div>
                           </div>
                           <div class="bi-r">
                             <h3>{{bProfile.businessName | capitalizeFirst }}</h3>
-                            <p class="profile-des-p" [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">{{bProfile.businessDesc | capitalizeFirst}}
+                            <p class="profile-des-p" [innerHTML]="bProfile.businessDesc | nl2br | capitalizeFirst">
+                              {{bProfile.businessDesc | capitalizeFirst}}
                             </p>
                           </div>
                         </div>
@@ -491,9 +481,11 @@
 
                         <mat-accordion>
                           <mat-expansion-panel [expanded]="true">
-                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                              role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                              aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                            <mat-expansion-panel-header
+                              class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                              role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                              aria-controls="cdk-accordion-child-0" aria-expanded="true" aria-disabled="false"
+                              style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                   Location
@@ -501,7 +493,8 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Manage your business location details here.
-                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('location', $event)">Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help"
+                                      (click)="learnmore_clicked('location', $event)">Learn More</a>
                                   </p>
                                 </mat-panel-title>
                               </span>
@@ -568,7 +561,8 @@
                                   <span (click)="editLocation()" class="editbt"></span>
                                   <div class="cop-l" *ngIf="loc_list.length>0">
                                     <h4>{{base_loc.place | capitalizeFirst}}
-                                      <a rel="noopener" [href]="base_loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
+                                      <a rel="noopener" [href]="base_loc.googleMapUrl" target="_blank"
+                                        class="icon-location" matTooltip="Click to navigate"></a>
                                     </h4>
                                     <span>{{base_loc.address | capitalizeFirst}}</span>
                                     <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
@@ -615,22 +609,29 @@
                                 </ng-container>
                                 <div class="copy block-level">
                                   <h5>{{loc_amenities_cap}}
-                                    <span (click)="editLocation('badge')" class="editbt" *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
+                                    <span (click)="editLocation('badge')" class="editbt"
+                                      *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span>
                                   </h5>
                                   <p class="form-level-settings">{{frm_loc_amen_cap}}
-                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('locationAmenities', $event)">Learn More
+                                    <a class="learnmore-pointer" id="customer-help"
+                                      (click)="learnmore_clicked('locationAmenities', $event)">Learn More
                                     </a>
                                   </p>
                                 </div>
                                 <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                   <div class="copy">
                                     <ul class="amt-list">
-                                      <li [matTooltip]="park_type + ' parking'" [class]="badgeIcons['parkingtype']['class']" *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
+                                      <li [matTooltip]="park_type + ' parking'"
+                                        [class]="badgeIcons['parkingtype']['class']"
+                                        *ngIf="bProfile.baseLocation.parkingType && bProfile.baseLocation.parkingType !=='none'">
                                       </li>
-                                      <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="bProfile.baseLocation.open24hours"></li>
+                                      <li [matTooltip]="'24 Hours Open'" [class]="badgeIcons['24hour']['class']"
+                                        *ngIf="bProfile.baseLocation.open24hours"></li>
                                       <ng-container *ngIf="bProfile.baseLocation.locationVirtualFields">
-                                        <ng-container *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
-                                          <li [matTooltip]="badge_map_arr[locvirtual]" *ngIf="badgeIcons[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
+                                        <ng-container
+                                          *ngFor="let locvirtual of objectKeys(bProfile.baseLocation.locationVirtualFields)">
+                                          <li [matTooltip]="badge_map_arr[locvirtual]" *ngIf="badgeIcons[locvirtual]"
+                                            [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['icon-emergency']['class']">
                                           </li>
                                         </ng-container>
                                       </ng-container>
@@ -659,9 +660,11 @@
 
                         <mat-accordion>
                           <mat-expansion-panel [expanded]="true">
-                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                              role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                              aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                            <mat-expansion-panel-header
+                              class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                              role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                              aria-controls="cdk-accordion-child-0" aria-expanded="true" aria-disabled="false"
+                              style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                   Specialization
@@ -670,9 +673,10 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Mention your specialization here
-                                    <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help"
+                                      (click)="learnmore_clicked('specializations', $event)">Learn More</a>
                                   </p>
-                                </mat-panel-title> 
+                                </mat-panel-title>
                               </span>
                               <!--bindings={
                                                     "ng-reflect-ng-if": "true"
@@ -692,7 +696,8 @@
                                 <p>{{have_not_add_cap}} {{special_cap}}.</p>
                                 <span (click)="handleSpecialization()" class="cs-btn bt3">{{add_it_cap}}</span>
                               </div>
-                              <div class="lang-dta" *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
+                              <div class="lang-dta"
+                                *ngIf="normal_specilization_show==3 && specialization_arr.length > 0">
                                 <span class="editbt" (click)="handleSpecialization()"></span>
                                 <div *ngFor="let spec of bProfile.specialization">
                                   {{getSpecializationName(spec)}}
@@ -715,13 +720,15 @@
                             <div class="card card-brdr">
                               <mat-accordion [class.acc-btn-data]="fields['value']">
                                 <mat-expansion-panel [expanded]="fields['value']" [hideToggle]="!fields['value']">
-                                  <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
+                                  <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
+                                    class="custom_business">
                                     <mat-panel-title>{{fields.displayName}}
 
                                       <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
                                     </mat-panel-title>
 
-                                    <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
+                                    <button mat-icon-button *ngIf="!fields['value']"
+                                      (click)="addDynamicField(fields, 'domain_questions')">
                                       <mat-icon>{{add_circle_outline}}</mat-icon>
                                     </button>
 
@@ -731,7 +738,8 @@
                                     <ng-container *ngSwitchCase="'TEXT'">
                                       <div class="cont-btn">
                                         <p> {{ fields.value | capitalizeFirst}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -739,34 +747,39 @@
                                       <div class="cont-btn">
                                         <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
                                           {{fields.value | nl2br | capitalizeFirst }}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Boolean'">
                                       <div class="cont-btn">
                                         <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
                                     <ng-container *ngSwitchCase="'Age'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Number'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'URL'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -774,21 +787,24 @@
                                     <ng-container *ngSwitchCase="'Date'">
                                       <div class="cont-btn">
                                         <p> {{fields.value | date:dateFormat}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'DOB'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Phone'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -796,28 +812,32 @@
                                     <ng-container *ngSwitchCase="'Email'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Enum'">
                                       <div class="cont-btn">
                                         <p>{{ getdispVal('domain', fields)}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'EnumList'">
                                       <div class="cont-btn">
                                         <p>{{ getdispVal('domain', fields)}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Gender'">
                                       <div class="cont-btn">
                                         <p> {{fields.value | capitalizeFirst}} </p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'domain_questions')"></span>
 
                                       </div>
                                     </ng-container>
@@ -834,7 +854,8 @@
                                           </thead>
                                           <tbody>
                                             <tr *ngFor="let row of fields.value;let i = index">
-                                              <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
+                                              <td *ngFor="let column of fields.Columns;let j = index"
+                                                [attr.data-title]="fields.Columns[j].displayName">
                                                 {{row[column.key]}}</td>
                                               <td class="action">
                                                 <span class="mbt">
@@ -843,11 +864,13 @@
                                                     </mat-icon>
                                                   </button>
                                                   <mat-menu #menu="matMenu">
-                                                    <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'domain_questions', i)">
+                                                    <button type="button" mat-menu-item
+                                                      (click)="editGridDynamicField(fields.name,'domain_questions', i)">
                                                       <i class="icon-edit"></i>
                                                       <span>{{edit_cap}}</span>
                                                     </button>
-                                                    <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
+                                                    <button type="button" mat-menu-item
+                                                      (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
                                                       <i class="icon-delete"></i>
                                                       <span>{{delete_btn}}</span>
                                                     </button>
@@ -855,14 +878,17 @@
                                                 </span>
 
                                                 <span class="mbt-mobile-show">
-                                                  <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
-                                                  <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
+                                                  <button class="editcls" type="button"
+                                                    (click)="editGridDynamicField(fields.name,'domain_questions', i)">{{edit_cap}}</button>
+                                                  <button class="deletecls" type="button"
+                                                    (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">{{delete_btn}}</button>
                                                 </span>
                                               </td>
                                             </tr>
                                           </tbody>
                                         </table>
-                                        <span (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
+                                        <span (click)="editGridDynamicField(fields.name,'domain_questions', null)"
+                                          class="addbt"></span>
                                       </div>
                                     </ng-container>
                                   </ng-container>
@@ -887,16 +913,20 @@
                           <ng-container *ngIf="fields.mandatory">
                             <div class="card card-brdr">
                               <mat-accordion [class.acc-btn-data]="fields['value']">
-                                <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''" [disabled]="!fields['value']" [hideToggle]="!fields['value']">
-                                  <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" class="custom_business">
+                                <mat-expansion-panel [expanded]="fields['value'] && fields['value'] != ''"
+                                  [disabled]="!fields['value']" [hideToggle]="!fields['value']">
+                                  <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'"
+                                    class="custom_business">
                                     <mat-panel-title>
                                       {{fields.displayName}}
                                       <span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
                                       <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
-                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2 weeks </span>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"> </i> Fill within 2
+                                        weeks </span>
                                     </mat-panel-title>
 
-                                    <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
+                                    <button mat-icon-button *ngIf="!fields['value']"
+                                      (click)="addDynamicField(fields, 'subdomain_questions')">
                                       <mat-icon>{{add_circle_outline}}</mat-icon>
                                     </button>
 
@@ -908,7 +938,8 @@
                                       <div class="cont-btn">
                                         <p> {{fields.value | capitalizeFirst}}</p>
 
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -916,35 +947,40 @@
                                       <div class="cont-btn">
                                         <p [innerHTML]="fields.value | nl2br | capitalizeFirst">
                                           {{fields.value | nl2br | capitalizeFirst}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Boolean'">
                                       <div class="cont-btn">
                                         <p> {{(fields.value == 'true' || fields.value == true ) ? 'Yes' : 'No'}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Age'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Number'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'URL'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -952,21 +988,24 @@
                                     <ng-container *ngSwitchCase="'Date'">
                                       <div class="cont-btn">
                                         <p> {{fields.value | date:dateFormat}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'DOB'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Phone'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
@@ -974,28 +1013,32 @@
                                     <ng-container *ngSwitchCase="'Email'">
                                       <div class="cont-btn">
                                         <p> {{fields.value}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Enum'">
                                       <div class="cont-btn">
                                         <p> {{ getdispVal('subdomain',fields)}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'EnumList'">
                                       <div class="cont-btn">
                                         <p>{{ getdispVal('subdomain', fields)}}</p>
-                                        <span class="editbt" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                       </div>
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'Gender'">
                                       <div class="cont-btn">
                                         <span style="margin-left:1%">{{fields.value | capitalizeFirst}} </span>
-                                        <span class="editbt" style="margin-left:5%" (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                        <span class="editbt" style="margin-left:5%"
+                                          (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
 
                                       </div>
                                     </ng-container>
@@ -1012,7 +1055,8 @@
                                           </thead>
                                           <tbody>
                                             <tr *ngFor="let row of fields.value;let i = index">
-                                              <td *ngFor="let column of fields.Columns;let j = index" [attr.data-title]="fields.Columns[j].displayName">
+                                              <td *ngFor="let column of fields.Columns;let j = index"
+                                                [attr.data-title]="fields.Columns[j].displayName">
                                                 {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}
                                               </td>
                                               <td class="action">
@@ -1022,25 +1066,30 @@
                                                     </mat-icon>
                                                   </button>
                                                   <mat-menu #menu="matMenu">
-                                                    <button type="button" mat-menu-item (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
+                                                    <button type="button" mat-menu-item
+                                                      (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
                                                       <i class="icon-edit"></i>
                                                       <span>{{edit_cap}}</span>
                                                     </button>
-                                                    <button type="button" mat-menu-item (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
+                                                    <button type="button" mat-menu-item
+                                                      (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
                                                       <i class="icon-delete"></i>
                                                       <span>{{delete_btn}}</span>
                                                     </button>
                                                   </mat-menu>
                                                 </span>
                                                 <span class="mbt-mobile-show">
-                                                  <button class="editcls" type="button" (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">{{edit_cap}}</button>
-                                                  <button class="deletecls" type="button" (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">{{delete_btn}}</button>
+                                                  <button class="editcls" type="button"
+                                                    (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">{{edit_cap}}</button>
+                                                  <button class="deletecls" type="button"
+                                                    (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">{{delete_btn}}</button>
                                                 </span>
                                               </td>
                                             </tr>
                                           </tbody>
                                         </table>
-                                        <span (click)="editGridDynamicField(fields.name,'subdomain_questions', null)" class="addbt"></span>
+                                        <span (click)="editGridDynamicField(fields.name,'subdomain_questions', null)"
+                                          class="addbt"></span>
                                       </div>
                                     </ng-container>
                                   </ng-container>
@@ -1066,9 +1115,11 @@
                       <div class="card card-brdr">
                         <mat-accordion>
                           <mat-expansion-panel [expanded]="true">
-                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                              role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                              aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                            <mat-expansion-panel-header
+                              class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                              role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                              aria-controls="cdk-accordion-child-0" aria-expanded="true" aria-disabled="false"
+                              style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title">
                                   Languages Known
@@ -1077,7 +1128,8 @@
 
                                   <!--bindings={}-->
                                   <p class="form-level-settings">Mention your languages here
-                                    <a class="learnmore-pointer" id="customer-help"  (click)="learnmore_clicked('languages-known', $event)" >Learn More</a>
+                                    <a class="learnmore-pointer" id="customer-help"
+                                      (click)="learnmore_clicked('languages-known', $event)">Learn More</a>
                                   </p>
                                 </mat-panel-title>
                               </span>
@@ -1120,9 +1172,11 @@
                       <div class="card card-brdr">
                         <mat-accordion>
                           <mat-expansion-panel [expanded]="true">
-                            <mat-expansion-panel-header class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
-                              role="button" id="mat-expansion-panel-header-0" tabindex="0" aria-controls="cdk-accordion-child-0"
-                              aria-expanded="true" aria-disabled="false" style="height: 64px;">
+                            <mat-expansion-panel-header
+                              class="min100 mat-expansion-panel-header ng-tns-c12-1 ng-trigger ng-trigger-expansionHeight ng-star-inserted mat-expanded"
+                              role="button" id="mat-expansion-panel-header-0" tabindex="0"
+                              aria-controls="cdk-accordion-child-0" aria-expanded="true" aria-disabled="false"
+                              style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title mat-title-font">
                                   Gallery and Social Media
@@ -1153,13 +1207,15 @@
                                           <mat-panel-title class="block-level">
                                             <span style="font-size:15px;">{{gallery_cap}}</span>
                                             <p class="form-level-settings">{{frm_gallery_cap}}
-                                              <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)">Learn More
+                                              <a class="learnmore-pointer" id="customer-help"
+                                                (click)="learnmore_clicked('photo-gallery', $event)">Learn More
                                               </a>
                                             </p>
                                           </mat-panel-title>
                                         </mat-expansion-panel-header>
 
-                                        <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'">
+                                        <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list"
+                                          [source]="'gallery'">
                                         </app-jaldee-gallery>
                                       </mat-expansion-panel>
                                     </mat-accordion>
@@ -1173,7 +1229,8 @@
                                           <mat-panel-title class="block-level">
                                             <span style="font-size:15px;">{{social_media_cap}}</span>
                                             <p class="form-level-settings">{{frm_social_cap}}
-                                              <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)">Learn More
+                                              <a class="learnmore-pointer" id="customer-help"
+                                                (click)="learnmore_clicked('your-social-media', $event)">Learn More
                                               </a>
                                             </p>
                                           </mat-panel-title>
@@ -1189,28 +1246,33 @@
                                         <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
                                           <div class="sblinks">
                                             <ul class="sbl">
-                                              <li *ngFor="let social of social_arr;let i = index" [class]="getSocialdet(social.Sockey, 'iconClass')">
+                                              <li *ngFor="let social of social_arr;let i = index"
+                                                [class]="getSocialdet(social.Sockey, 'iconClass')">
                                                 <!-- <a [href]="social.Socurl" class="mbt">222</a> -->
                                                 <span class="mbt">
                                                   <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                     <mat-icon>more_vert</mat-icon>
                                                   </button>
                                                   <mat-menu #menu="matMenu">
-                                                    <button type="button" (click)="editSocialmedia(social.Sockey)" mat-menu-item>
+                                                    <button type="button" (click)="editSocialmedia(social.Sockey)"
+                                                      mat-menu-item>
                                                       <i class="icon-edit"></i>
                                                       <span>{{edit_cap}}</span>
                                                     </button>
-                                                    <button type="button" (click)="deleteSocialmedia(social.Sockey)" mat-menu-item>
+                                                    <button type="button" (click)="deleteSocialmedia(social.Sockey)"
+                                                      mat-menu-item>
                                                       <i class="icon-delete"></i>
                                                       <span>{{delete_btn}}</span>
                                                     </button>
                                                   </mat-menu>
                                                 </span>
-                                                <a rel="noopener" [href]="social.Socurl" target="_blank">{{getSocialdet(social.Sockey, 'displayName')}}
+                                                <a rel="noopener" [href]="social.Socurl"
+                                                  target="_blank">{{getSocialdet(social.Sockey, 'displayName')}}
                                                 </a>
                                               </li>
                                             </ul>
-                                            <span (click)="handleSocialmedia()" class="addbt" *ngIf="showaddsocialmedia"></span>
+                                            <span (click)="handleSocialmedia()" class="addbt"
+                                              *ngIf="showaddsocialmedia"></span>
                                           </div>
                                         </div>
                                       </mat-expansion-panel>
@@ -1325,24 +1387,26 @@
               <!-- <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">*required fields missing</i>  -->
             </h2>
             <span class="form-level-settings">{{frm_additional_cap}}
-              <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More
+              <a class="learnmore-pointer" id="customer-help"
+                (click)="learnmore_clicked('additional-info', $event)">Learn More
               </a>
             </span>
           </span>
         </div>
       </div>
       <div class="row">
-       <div class="card p0">
-         <span class="b-link" (click)="gotoPrivacy()">
-          <h2>
-            Privacy
-          </h2>
-          <span class="form-level-settings">Manage the privacy of your contact details here.
-              <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn More
-                </a>
+        <div class="card p0">
+          <span class="b-link" (click)="gotoPrivacy()">
+            <h2>
+              Privacy
+            </h2>
+            <span class="form-level-settings">Manage the privacy of your contact details here.
+              <a class="learnmore-pointer" id="customer-help"
+                (click)="learnmore_clicked('privacy-settings', $event)">Learn More
+              </a>
+            </span>
           </span>
-         </span>
-       </div> 
+        </div>
       </div>
 
 
