@@ -229,7 +229,7 @@ export class ItemDetailsComponent implements OnInit {
     onSubmit(form_data) {
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
-            this.api_error = 'Please enter the price';
+            this.api_error = 'Please enter valid price';
             return;
         }
         if (iprice < 0) {

@@ -1506,6 +1506,7 @@ export const Messages = {
   'BTN_TEXT_STRENGTHEN_YOUR_PROFILE': 'Strengthen Your Profile',
   'BTN_TEXT_MANAGE_YOUR_PROFILE': 'Manage Your Profile',
   'GOOD_CAP': 'Good',
-  'VERY_GOOD_CAP': ' Very Good'
+  'VERY_GOOD_CAP': ' Very Good',
 
+  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
 };
