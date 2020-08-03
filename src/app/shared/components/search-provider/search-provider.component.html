@@ -214,11 +214,11 @@
             <span class="checkin-btn disabled"
               *ngIf="!search_result['estimatedtime_det']['showToken'] && 
               (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || 
-              !search_result['estimatedtime_det']['availableToday']) && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
+              !search_result['estimatedtime_det']['availableToday']) && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
                             search_result)}}</span>
             <span class="checkin-btn disabled"
               *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])
-              && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>
+              && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>
             <!-- <div class="future-date-link checkin-future">
               <span class="bt10" (click)="checkinClicked(search_result, true)"
                 *ngIf="search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist']">{{do_you_want_to_cap}}
