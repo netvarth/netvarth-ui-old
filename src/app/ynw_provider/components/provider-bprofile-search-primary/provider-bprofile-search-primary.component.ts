@@ -111,6 +111,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
   // saving the primary fields from the bprofile create page
   createPrimaryFields(pdata) {
+  
+ 
     this.provider_servicesobj.createPrimaryFields(pdata)
       .subscribe(
         () => {
@@ -126,8 +128,9 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.provider_servicesobj.uploadLogo(passdata)
       .subscribe(
         data => {
+         
           this.provider_datastorageobj.updateProfilePicWeightage(true);
-          this.data.logoExist=true;
+          this.data.logoExist  = true;
         });
   }
 
@@ -137,13 +140,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
   // updating the primary field from the bprofile edit page
   UpdatePrimaryFields(pdata) {
-    console.log(this.data.logoExist);
-
-    if (!this.data.logoExist) {
-      let self = this;
-      var promise = this.sharedfunctionObj.getBase64Image();
+     if (!this.data.logoExist) {
+      const self = this;
+      const promise = this.sharedfunctionObj.getBase64Image();
       promise.then(function (dataURL) {
-        let blob = this.sharedfunctionObj.b64toBlob(dataURL);
+        const blob = self.sharedfunctionObj.b64toBlob(dataURL);
         const submit_data: FormData = new FormData();
         submit_data.append('files', blob, 'jaldee-logo.png');
         const propertiesDet = {

@@ -861,11 +861,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   // updating the primary field from the bprofile edit page
   createPrimaryFields(pdata) {
-    if(this.blogo.length==0){
-     let self = this;
-      var promise = self.sharedfunctionobj.getBase64Image();
+    if (this.blogo.length === 0) {
+     const self = this;
+      const promise = self.sharedfunctionobj.getBase64Image();
       promise.then(function (dataURL) {
-        let blob = self.sharedfunctionobj.b64toBlob(dataURL);
+        const blob = self.sharedfunctionobj.b64toBlob(dataURL);
         const submit_data: FormData = new FormData();
         submit_data.append('files', blob, 'jaldee-logo.png');
         const propertiesDet = {
@@ -897,14 +897,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   updatePrimaryFields(pdata) {
-
-    
- if(this.blogo.length==0){
-
-  let self = this;
-      var promise = self.sharedfunctionobj.getBase64Image();
-      promise.then(function (dataURL) {
-        let blob = self.sharedfunctionobj.b64toBlob(dataURL);
+      if (this.blogo.length === 0) {
+        const self = this;
+        const  promise = self.sharedfunctionobj.getBase64Image();
+        promise.then(function (dataURL) {
+        const blob = self.sharedfunctionobj.b64toBlob(dataURL);
         const submit_data: FormData = new FormData();
         submit_data.append('files', blob, 'jaldee-logo.png');
         const propertiesDet = {
@@ -914,11 +911,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
         submit_data.append('properties', blobPropdata);
         self.uploadLogo(submit_data);
       });
-
-
-    
-
-    }
+      }
 
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
