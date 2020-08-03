@@ -42,6 +42,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   typeOfMsg;
   type;
   email_id: any;
+  phone: any;
+  SEND_MESSAGE = '';
+  customer_label = '';
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,10 +54,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     public common_datastorage: CommonDataStorageService
   ) {
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;
     this.email_id = this.data.email;
+    this.phone = this.data.phone;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
@@ -88,6 +93,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.createForm();
   }
   ngOnDestroy() {
