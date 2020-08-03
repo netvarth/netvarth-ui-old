@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { projectConstants } from '../../../../../app.component';
-
+declare let cordova: any;
 @Component({
     selector: 'app-qrcodegenerator',
     templateUrl: './qrcodegenerator.component.html'
@@ -18,7 +17,7 @@ export class QRCodeGeneratorComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
     }
-     private qrCodeParent: ElementRef;
+    private qrCodeParent: ElementRef;
     @ViewChild('qrCodeOnlineId', { static: false, read: ElementRef }) set content1(content1: ElementRef) {
         if (content1) { // initially setter gets called with undefined
             this.qrCodeParent = content1;
@@ -59,29 +58,19 @@ export class QRCodeGeneratorComponent implements OnInit {
     //   closeCustomQR() {
     //     this.qr_code_cId = false;
     //   }
-     //   showPasscode() {
+    //   showPasscode() {
     //     this.show_passcode = !this.show_passcode;
     //   }
     printQr(printSectionId) {
         const printContent = document.getElementById(printSectionId);
-        const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-        WindowPrt.document.write('<html><head><title></title>');
-        WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
-        WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
-        WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
-        WindowPrt.document.write(printContent.innerHTML);
-        WindowPrt.document.write('</div>');
-        WindowPrt.document.write('</body></html>');
-        WindowPrt.document.close();
-        WindowPrt.focus();
-        WindowPrt.print();
-        WindowPrt.close();
+        let printsection = '<html><head><title></title>';
+        printsection += '</head><body style="margin-top:200px">';
+        printsection += '<div style="text-align:center!important">';
+        printsection += printContent.innerHTML;
+        printsection += '</div>';
+        printsection += '</body></html>';
+        cordova.plugins.printer.print(printsection);
     }
-   
     downloadQR() {
-
     }
 }
-
-
-
