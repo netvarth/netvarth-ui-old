@@ -250,6 +250,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showUndo = false;
   pos = false;
   showRejected = false;
+  showShare = false;
   historyCheckins: any = [];
   apiloading = false;
   showSlotsN = false;
@@ -1453,6 +1454,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apptMultiSelection = false;
     this.activeAppointment = null;
     this.showRejected = false;
+    this.showShare = false;
     this.showUndo = false;
     this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
@@ -1472,6 +1474,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.activeAppointment.apptStatus === 'Confirmed' || this.activeAppointment.apptStatus === 'Arrived') {
         this.showRejected = true;
+      }
+      if (this.activeAppointment.apptStatus !== 'Rejected' && this.activeAppointment.apptStatus !== 'Cancelled') {
+        this.showShare = true;
       }
       if (this.activeAppointment.apptStatus === 'Confirmed' && this.activeAppointment.jaldeeApptDistanceTime && this.activeAppointment.jaldeeApptDistanceTime.jaldeeDistanceTime && (this.activeAppointment.jaldeeStartTimeType === 'ONEHOUR' || this.activeAppointment.jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
@@ -1970,6 +1975,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showArrived = false;
     this.showRejected = false;
+    this.showShare = false;
     const selLength = Object.keys(this.apptsChecked).length;
     if (selLength === 0) {
       this.apptSingleSelection = false;
@@ -1989,6 +1995,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             if (activeAppt.apptStatus === 'Confirmed' || activeAppt.apptStatus === 'Arrived') {
               this.showRejected = true;
+            }
+            if (activeAppt.apptStatus !== 'Rejected' || activeAppt.apptStatus !== 'Cancelled') {
+              this.showShare = true;
             }
             return;
           });
