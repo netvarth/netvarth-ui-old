@@ -102,7 +102,7 @@
                             <th></th>
                         </tr>
                     </thead> -->
-                    <tbody *ngIf="users_list.length==0">
+                    <tbody *ngIf="users_list.length==0 && !api_loading">
                         <tr>
                             <td colspan="5" class="no-appt">
                                 No Users Found.

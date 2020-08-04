@@ -10501,8 +10501,6 @@ a {
   list-style:none !important;
 
 }
-
-
 @media (max-width: 575px) {
   ckeditor .ck-dropdown__panel-visible {
     max-width: 240px;
@@ -10591,3 +10589,7 @@ a {
   -webkit-appearance: none; 
   margin: 0; 
   }
+  .itemerror .sts-msg.error {
+    color: #f53404 !important;
+  }
+  
