@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { IfStmt } from '@angular/compiler';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-checkin-details-send',
@@ -35,6 +36,8 @@ export class CheckinDetailsSendComponent implements OnInit {
     time: any;
     consumer_email: any;
     api_loading = false;
+    phone: any;
+    SEND_MESSAGE = '';
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -42,9 +45,11 @@ export class CheckinDetailsSendComponent implements OnInit {
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
+            console.log(data.qdata);
             this.chekintype = this.data.chekintype;
         }
    ngOnInit() {
+    this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
     if (this.chekintype === 'Waitlist') {
         this.consumer_fname = this.data.qdata.waitlistingFor[0].firstName;
@@ -58,6 +63,9 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.qstarttime = this.data.qdata.queue.queueStartTime;
         this.qendtime = this.data.qdata.queue.queueEndTime;
         this.location = this.data.qdata.queue.location.address;
+        if (this.data.qdata.waitlistingFor[0].phoneNo) {
+          this.phone = this.data.qdata.waitlistingFor[0].phoneNo;
+        }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
     } else {
@@ -74,6 +82,12 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.schedulename =  this.data.qdata.schedule.name;
         this.Schedulestime = this.data.qdata.schedule.apptSchedule.timeSlots[0].sTime ;
         this.Scheduleetime = this.data.qdata.schedule.apptSchedule.timeSlots[0].eTime;
+        if (this.data.qdata.providerConsumer.phoneNo) {
+         this.phone = this.data.qdata.providerConsumer.phoneNo;
+        }
+        if (this.data.qdata.providerConsumer.email) {
+          this.consumer_email = this.data.qdata.providerConsumer.email;
+        }
         // this.spfname = this.data.qdata.provider.firstName;
         // this.splname = this.data.qdata.provider.lastName;
     }
