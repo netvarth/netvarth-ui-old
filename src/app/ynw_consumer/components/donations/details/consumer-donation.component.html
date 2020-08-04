@@ -1,0 +1,103 @@
+<section class="container no-padding">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section class="container no-padding">
+    <div class="content loc-list p-checkin ynw-common-form-nm">
+        <div class="col-md-12 no-padding">
+            <div class="card p0">
+                <div class="copy locd">
+                    <div class="lbl col-sm-12 col-md-7 col-lg-7">
+                        <div class="mainouter checkin-page ">
+                            <ng-container *ngIf="!api_loading1">
+                                <div class="servicefor-outer col-md-12 col-sm-12 col-xs-12 no-padding">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20 no-padding centeralign pad-bt-10 brd-bt">
+                                        <div><h6>{{this.businessjson.businessName}}</h6></div>
+                                        <div><span class="selected-date">Date: {{sel_day}}
+                                                {{todaydate | date: dateFormat}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="servicesjson.length > 0">
+                                    <ng-container>
+                                        <div>Donate for <label *ngIf="servicesjson.length == 1"> {{sel_ser_det.name | capitalizeFirst}}</label></div>
+                                        <!-- <mat-form-field *ngIf="servicesjson.length == 1">
+                                            <input  [readonly]="true"
+                                                placeholder="Service" matInput value="{{sel_ser.name | capitalizeFirst}}">
+                                        </mat-form-field> -->
+                                        <mat-form-field *ngIf="servicesjson.length > 1">
+                                            <mat-select placeholder="Donate for" [ngModel]="sel_ser" #servsel
+                                                (selectionChange)="handleServiceSel(servsel.value)">
+                                                <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
+                                                    {{serv.name | capitalizeFirst}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <ng-container *ngIf="servicesjson.length == 0">
+                                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
+                        </div>
+                        <div class="mainouter checkin-page ">
+                            <p class="form-level-settings applybill"> <i
+                                class="icon-bell"></i>&nbsp;Amount must be in range between <span class="bold">{{rupee_symbol}}{{sel_ser_det.minDonationAmount}}</span> and <span class="bold">{{rupee_symbol}}{{sel_ser_det.maxDonationAmount}}</span> <span *ngIf="sel_ser_det.multiples"> (multiples of <span class="bold">{{rupee_symbol}}{{sel_ser_det.multiples}}</span>)</span></p>
+                            <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
+                                <div class="form-group m0">
+                                    <mat-form-field>
+                                        <input class="form-control " matInput placeholder="&#8377; Donor Name"
+                                            [(ngModel)]="donorName">
+                                    </mat-form-field>
+                                </div>
+                                <!-- <ul class="availer-ul">
+                                    <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
+                                        <li>
+                                            {{waitfor.firstName | capitalizeFirst}}
+                                            {{waitfor.lastName | capitalizeFirst}}
+                                        </li>
+                                    </ng-container>
+                                </ul> -->
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 no-padding-small">
+                                <div class="form-group m0 donation-ip">
+                                    <mat-form-field>
+                                        <input type="number" class="form-control number-ip" matInput
+                                            placeholder="&#8377; Enter Amount" [(ngModel)]="donationAmount">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="mainouter checkin-page mgn-up-20">
+                            <div style="padding-bottom: 10px">Payment Options
+                                <div>
+                                    <p class="settings_info" style="display: inline;">Choose your payment
+                                        options from here</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mainouter checkin-page ">
+                            <div class="col-md-12 cc-dc-nb no-padding mgn-bt-20" style="display: flex">
+                                <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net
+                                    Banking/UPI</button>
+                                <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+                            </div>
+                        </div>
+                        <!-- <ng-container>
+                            <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
+                                    [class.confirmbtn]="step == 1" (click)="donateClicked()"
+                                    [disabled]="api_loading">Donate</button>
+                            </div>
+                        </ng-container> -->
+                    </div>
+                    <div class="lbr col-sm-12 col-md-5 col-lg-5">&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+    </div>
+</section>
