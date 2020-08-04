@@ -887,26 +887,32 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                     this.search_data.hits.hit[i].fields.provider_label = this.getTerminologyTerm('provider', this.search_data.hits.hit[i].fields) + 's';
                   }
                 }
-                // try {
-                if (this.search_data.hits.hit[i].fields.services) {
-                  this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
-                  this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
+                try {
+                  if (this.search_data.hits.hit[i].fields.services) {
+                      this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
+                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
+                  }
+                  if (this.search_data.hits.hit[i].fields.appt_services) {
+                      this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
+                    if (this.search_data.hits.hit[i].fields.appointmentServiceList && this.search_data.hits.hit[i].fields.appointmentServiceList.length > 0) {
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                    }
+                  }
+                  if (this.search_data.hits.hit[i].fields.donation_services) {
+                      this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
+                    this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
+                    if (this.search_data.hits.hit[i].fields.donationServices && this.search_data.hits.hit[i].fields.donationServices.length > 0) {
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.donationServices);
+                    }
+                  }
+                  function getUniqueListBy(arr, key) {
+                    return [...new Map(arr.map(item => [item[key], item])).values()];
+                  }
+                  if (this.search_data.hits.hit[i].fields.allServices && this.search_data.hits.hit[i].fields.allServices.length > 0) {
+                    this.search_data.hits.hit[i].fields.allServices = getUniqueListBy(this.search_data.hits.hit[i].fields.allServices, 'id');
+                  }
+                } catch (e) {
                 }
-                if (this.search_data.hits.hit[i].fields.appt_services) {
-                  this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
-                  const ids = new Set(this.search_data.hits.hit[i].fields.allServices.map(d => d.id));
-                  const merged = [...this.search_data.hits.hit[i].fields.allServices, ...this.search_data.hits.hit[i].fields.appointmentServiceList.filter(d => !ids.has(d.id))];
-                  this.search_data.hits.hit[i].fields.allServices = merged;
-                }
-                if (this.search_data.hits.hit[i].fields.donation_services) {
-                  this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
-                  this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
-                  const ids = new Set(this.search_data.hits.hit[i].fields.allServices.map(d => d.id));
-                  const merged = [...this.search_data.hits.hit[i].fields.allServices, ...this.search_data.hits.hit[i].fields.donationServices.filter(d => !ids.has(d.id))];
-                  this.search_data.hits.hit[i].fields.allServices = merged;
-                }
-                // } catch (e) {
-                // }
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
                 const addres = this.search_data.hits.hit[i].fields['address1'];
                 const place = this.search_data.hits.hit[i].fields['place1'];
