@@ -120,7 +120,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
-        'lastName' : 'Service'
+        'lastName': 'Service'
     };
     include_video = false;
     constructor(private fb: FormBuilder,
@@ -391,9 +391,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (!this.subdomainsettings.serviceBillable) {
                 form_data.bType = 'Waitlist';
                 form_data['totalAmount'] = 0;
-             //   form_data['minDonationAmount'] = 0;
-            //    form_data['maxDonationAmount'] = 0;
-             //   form_data['multiples'] = 0;
+                //   form_data['minDonationAmount'] = 0;
+                //    form_data['maxDonationAmount'] = 0;
+                //   form_data['multiples'] = 0;
                 form_data['isPrePayment'] = false;
                 form_data['taxable'] = false;
             } else {
@@ -418,7 +418,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
                     0 : form_data.minPrePaymentAmount;
                 form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
-                const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
+                const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
             }
             if (this.departmentId) {
@@ -429,10 +429,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            console.log(this.userspecific);
             if (this.providerId && this.providerId !== '0' && this.userspecific) {
                 this.provider = {
-                    'id' : this.providerId
+                    'id': this.providerId
                 };
                 form_data['provider'] = this.provider;
             } else {
@@ -678,8 +677,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
         this.provider_services.getUsers(filter).subscribe(data => {
             this.users_list = data;
-           // this.users_list.push(this.defaultOption);
-        }); 
+            // this.users_list.push(this.defaultOption);
+        });
     }
     selectUserHandler(value) {
         this.providerId = value;
