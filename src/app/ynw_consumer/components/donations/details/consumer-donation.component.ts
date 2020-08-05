@@ -462,8 +462,10 @@ export class ConsumerDonationComponent implements OnInit {
                 'firstName': this.donorName
             }
         };
-        if (this.api_error === null) {
+        if (this.api_error === null && this.donationAmount) {
             this.addDonationConsumer(post_Data, paymentWay);
+        } else {
+            this.sharedFunctionobj.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }
     addDonationConsumer(post_Data, paymentWay) {
