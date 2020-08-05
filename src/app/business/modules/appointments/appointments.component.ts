@@ -252,7 +252,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showRejected = false;
   showShare = false;
   historyCheckins: any = [];
-  apiloading = false;
+  apiloading = true;
   showSlotsN = false;
   slotsForQ: any = [];
   filter_sidebar = false;
@@ -299,6 +299,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  apptStatus = false;
+  locationExist = false;
+  serviceExist = false;
+  scheduleExist = false;
+  profileExist = false;
+  message = '';
+  message1 = '';
+  showDashbard = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -364,6 +372,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.getAllServices();
+    this.getBusinessdetFromLocalstorage();
+    this.getGlobalSettings();
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -587,6 +598,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
+          if (schedules.length > 0) {
+            _this.scheduleExist = true;
+          } else {
+            _this.scheduleExist = false;
+          }
+          this.checkDashboardVisibility();
           resolve(schedules);
         });
     });
@@ -635,6 +652,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           (data: any) => {
             const locations = data;
             self.locations = [];
+            if (data.length > 0) {
+              self.locationExist = true;
+            } else {
+              self.locationExist = false;
+            }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
                 self.locations.push(loc);
@@ -2981,40 +3003,40 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = 0;
   }
 
-  openAttachmentGallery (appt) {
+  openAttachmentGallery(appt) {
     this.image_list_popup_temp = [];
     this.image_list_popup = [];
     this.provider_services.getProviderAttachments(appt.uid).subscribe(
       (communications: any) => {
         let count = 0;
-          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            if (communications[comIndex].attachements) {
-              for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-                const thumbPath =  communications[comIndex].attachements[attachIndex].thumbPath;
-                let imagePath = thumbPath;
-                const description = communications[comIndex].attachements[attachIndex].s3path;
-                const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-                if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                  imagePath = communications[comIndex].attachements[attachIndex].s3path;
-                }
-                const imgobj = new Image(
-                  count,
-                  { // modal
-                    img: imagePath,
-                    description: description
-                  },
-                );
-                this.image_list_popup_temp.push(imgobj);
-                count++;
+        for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+          if (communications[comIndex].attachements) {
+            for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+              const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+              let imagePath = thumbPath;
+              const description = communications[comIndex].attachements[attachIndex].s3path;
+              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                imagePath = communications[comIndex].attachements[attachIndex].s3path;
               }
+              const imgobj = new Image(
+                count,
+                { // modal
+                  img: imagePath,
+                  description: description
+                },
+              );
+              this.image_list_popup_temp.push(imgobj);
+              count++;
             }
           }
-          if (count > 0) {
-            this.image_list_popup = this.image_list_popup_temp;
-            setTimeout(() => {
-              this.openImageModalRow(this.image_list_popup[0]);
-            }, 200);
-          }
+        }
+        if (count > 0) {
+          this.image_list_popup = this.image_list_popup_temp;
+          setTimeout(() => {
+            this.openImageModalRow(this.image_list_popup[0]);
+          }, 200);
+        }
       },
       error => { }
     );
@@ -3025,6 +3047,62 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
+  }
+  getGlobalSettings() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.apptStatus = data.appointment;
+      });
+  }
+  getBusinessdetFromLocalstorage() {
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    if (bdetails) {
+      this.bname = bdetails.bn || '';
+    }
+    if (this.bname === '') {
+      this.profileExist = false;
+    } else {
+      this.profileExist = true;
+    }
+  }
+  getAllServices() {
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    this.provider_services.getServicesList(filter1)
+      .subscribe(
+        data => {
+          if (this.service_list.length > 0) {
+            this.serviceExist = true;
+          } else {
+            this.serviceExist = false;
+          }
+        },
+        () => { }
+      );
+  }
+  checkDashboardVisibility() {
+    console.log('apptStatus ' + this.apptStatus);
+    console.log('profileExist ' + this.profileExist);
+    console.log('locationExist ' + this.locationExist);
+    console.log('serviceExist ' + this.serviceExist);
+    console.log('scheduleExist ' + this.scheduleExist);
+    if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+      if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';
+      } else {
+        this.message1 = 'Appointment manager is disabled in your settings.';
+      }
+      this.apiloading = false;
+      this.showDashbard = false;
+    } else {
+      this.apiloading = false;
+      this.showDashbard = true;
+    }
+  }
+  gotoAppt() {
+    this.router.navigate(['/provider/settings/appointmentmanager']);
+  }
+  gotoSettings() {
+    this.router.navigate(['/provider/settings']);
   }
 }
 

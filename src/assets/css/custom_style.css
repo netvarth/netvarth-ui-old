@@ -10599,3 +10599,11 @@ a {
   .font-bolder {
     font-weight: bolder;
   }  
+  .center-align {
+    display: -webkit-box;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    font-weight: 600;
+  }

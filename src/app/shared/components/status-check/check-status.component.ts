@@ -26,6 +26,7 @@ export class CheckYourStatusComponent implements OnInit {
   token_no = Messages.TOKEN_NO;
   server_date;
   placeText;
+  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   breadcrumbs = [
     {
       title: 'Know Your Status'
