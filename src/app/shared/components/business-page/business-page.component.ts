@@ -752,14 +752,39 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          let cdate;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-              this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+                this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+                this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
+                cdate = new Date(this.appttime_arr[i]['availableSchedule']['availableDate']);
+                if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+                  this.locationjson[locindx]['apptAvailableToday'] = true;
+                } else {
+                  this.locationjson[locindx]['apptAvailableToday'] = false;
+                }
               }
             }
           }
@@ -1294,7 +1319,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       'place': location.place,
       'cdate': location['estimatedtime_det']['cdate']
     };
-    if (location.todayAppt) {
+    if (location.todayAppt && location['apptAvailableToday']) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
@@ -1695,6 +1720,25 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          let cdate;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
@@ -1703,6 +1747,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+                cdate = new Date(this.appttime_arr[i]['availableSchedule']['availableDate']);
+                if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+                  this.locationjson[locindx]['apptAvailableToday'] = true;
+                } else {
+                  this.locationjson[locindx]['apptAvailableToday'] = false;
+                }
               }
             }
           }
