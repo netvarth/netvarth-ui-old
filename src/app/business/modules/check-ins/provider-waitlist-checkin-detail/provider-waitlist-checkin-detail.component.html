@@ -155,8 +155,9 @@
                 <div class="ttle mgn-bt-10" style="font-weight: 500;
               font-size: 1rem;">Calling Modes</div>
                 <div class="mgn-bt-5" *ngFor="let mode of waitlist_data.virtualService | keyvalue">
-                  {{callingModes[mode.key]}}: <span style="font-weight: 600;">
-                    {{mode.value}} </span></div>
+                  <span style="font-weight: 600;"> {{mode.key}}: 
+                    {{mode.value}} </span>
+                  </div>
               </div>
               <div class="clearfix"></div>
               <div class="btm" *ngIf="waitlist_data">
