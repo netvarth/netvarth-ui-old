@@ -770,7 +770,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          let cdate;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
@@ -779,7 +778,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                cdate = new Date(this.appttime_arr[i]['availableSchedule']['availableDate']);
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
                 } else {
@@ -1738,7 +1736,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          let cdate;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
@@ -1747,7 +1744,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-                cdate = new Date(this.appttime_arr[i]['availableSchedule']['availableDate']);
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
                 } else {

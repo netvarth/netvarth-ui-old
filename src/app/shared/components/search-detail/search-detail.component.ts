@@ -1035,7 +1035,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
-          let cdate;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids[i]) {
               srchindx = provids[i].searchindx;
@@ -1044,7 +1043,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.search_data.hits.hit[srchindx].fields['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.search_data.hits.hit[srchindx].fields['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.search_data.hits.hit[srchindx].fields['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-                cdate = new Date(this.appttime_arr[i]['availableSchedule']['availableDate']);
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = true;
                 } else {
@@ -1671,12 +1669,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   appointmentClicked(obj) {
     this.futureAllowed = true;
     this.current_provider = obj;
-    if (obj.todayAppt && obj['apptAvailableToday']) {
+    if (obj.fields.todayAppt && obj.fields['apptAvailableToday']) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
     }
-    if (!obj.futureAppt) {
+    if (!obj.fields.futureAppt) {
       this.futureAllowed = false;
     }
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
