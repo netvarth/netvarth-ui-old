@@ -32,16 +32,16 @@
                                 </div>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
-                                    class="link"> (<i class="fa fa-volume-up cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link">&nbsp; <i class="fa fa-volume-up cal-mod-font"
+                                        aria-hidden="true"></i></span>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
-                                    class="link"> (<i class="fa fa-video-camera cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link">&nbsp; <i class="fa fa-video-camera cal-mod-font"
+                                        aria-hidden="true"></i></span>
                             </td>
                             <td>
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
-                                <span *ngIf="!service.provider" class="setings">Global Service</span>
+                                <!-- <span *ngIf="!service.provider" class="setings">Global Service</span> -->
                             </td>
                             <td class="pad-right-30">
                                 {{service.deptName | capitalizeFirst}}
