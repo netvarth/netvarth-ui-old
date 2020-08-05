@@ -5,13 +5,15 @@
   <div>
     <div>
       <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
-        [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" format="png"
+        [resizeToWidth]="500" [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
         (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
         (loadImageFailed)="loadImageFailed()"></image-cropper>
     </div>
     <div class="crop-img-div" *ngIf="imageChangedEvent && imageChangedEvent.target.files">
-      <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;&nbsp;Left</i>
-      <i class="fa fa-repeat custId-cursor pad-left-20" aria-hidden="true" (click)="rotateRight()">&nbsp;&nbsp;Right</i>
+      <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;Left</i>
+      <i class="fa fa-repeat custId-cursor pad-left-20" aria-hidden="true" (click)="rotateRight()">&nbsp;Right</i>
+      <i class="fa fa-search-plus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomIn()">&nbsp;Zoom+</i>
+      <i class="fa fa-search-minus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomOut()">&nbsp;Zoom-</i>
     </div>
     <!-- <img class="glbl-seting-img-smal" [src]="croppedImage" /> -->
   </div>
