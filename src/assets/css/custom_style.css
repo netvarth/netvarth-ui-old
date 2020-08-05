@@ -10592,4 +10592,7 @@ a {
   .itemerror .sts-msg.error {
     color: #f53404 !important;
   }
-  
+  image-cropper img {
+    max-width: 300px !important;
+    max-height: 300px ! important;
+    }
