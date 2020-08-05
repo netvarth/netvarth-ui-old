@@ -3080,11 +3080,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   checkDashboardVisibility() {
-    console.log('apptStatus ' + this.apptStatus);
-    console.log('profileExist ' + this.profileExist);
-    console.log('locationExist ' + this.locationExist);
-    console.log('serviceExist ' + this.serviceExist);
-    console.log('scheduleExist ' + this.scheduleExist);
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
         this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';

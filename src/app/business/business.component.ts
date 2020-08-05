@@ -20,6 +20,7 @@ export class BusinessComponent implements OnInit {
   apiloading = false;
   activeSkin;
   subscription: Subscription;
+  source;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -32,13 +33,15 @@ export class BusinessComponent implements OnInit {
         this._navigationInterceptor(event);
       }
     );
-
+    this.route.queryParams.subscribe(qparams => {
+      this.source = qparams.source;
+    });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
           this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
-              if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
+              if ((router.url === '\/provider' || router.url === '\/provider\/check-ins' || router.url === '\/provider\/appointments') && !this.source) {
                 setTimeout(() => {
                   if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
                     if (data.waitlist) {
