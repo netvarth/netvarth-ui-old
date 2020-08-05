@@ -37,6 +37,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   qExist = false;
   scheduleExist = false;
   profileExist = false;
+  settings;
+  showToken = false;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -210,12 +212,23 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getSchedules();
     this.isAvailableNow();
     this.getGlobalSettings();
+    this.getProviderSettings();
+
   }
 
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        console.log(this.showToken)
+      }, () => {
+      });
   }
   isAvailableNow() {
     this.shared_service.isAvailableNow()
