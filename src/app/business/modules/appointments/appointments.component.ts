@@ -3069,8 +3069,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const filter1 = { 'serviceType-neq': 'donationService' };
     this.provider_services.getServicesList(filter1)
       .subscribe(
-        data => {
-          if (this.service_list.length > 0) {
+        (data: any) => {
+          if (data.length > 0) {
             this.serviceExist = true;
           } else {
             this.serviceExist = false;

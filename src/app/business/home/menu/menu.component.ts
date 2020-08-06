@@ -6,8 +6,6 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { MatDialog } from '@angular/material';
-import { ProviderErrorMesagePopupComponent } from '../../modules/provider-error-message-popup/provider-error-message-popup.component';
 
 @Component({
   selector: 'app-menu',
@@ -29,14 +27,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   iswiz = false; // is cur page is wizard
   isCheckin;
   customer_label = '';
-  appointmentStatus = false;
-  checkinStatus = false;
-  donationstatus;
-  locationExist = false;
-  serviceExist = false;
-  qExist = false;
-  scheduleExist = false;
-  profileExist = false;
   settings;
   showToken = false;
   constructor(
@@ -44,7 +34,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private router: Router,
     private renderer: Renderer2,
-    private dialog: MatDialog,
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions
   ) {
@@ -104,29 +93,8 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.jsonlist = message.target;
         //   this.popular_search(this.jsonlist);
         //   break;
-        case 'apptStatus':
-          this.appointmentStatus = message.apptStatus;
-          break;
-        case 'checkinStatus':
-          this.checkinStatus = message.checkinStatus;
-          break;
-        case 'donationStatus':
-          this.donationstatus = message.donationStatus;
-          break;
-        case 'serviceChange':
-          this.serviceExist = true;
-          break;
-        case 'qChange':
-          this.qExist = true;
-          break;
-        case 'scheduleChange':
-          this.scheduleExist = true;
-          break;
-        case 'locationChange':
-          this.locationExist = true;
-          break;
-        case 'profileChange':
-          this.profileExist = true;
+        case 'waitlistSettings':
+          this.showToken = message.value;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -139,11 +107,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
-    }
-    if (this.bname === '') {
-      this.profileExist = false;
-    } else {
-      this.profileExist = true;
     }
   }
   closeMenu() {
@@ -206,14 +169,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.accountType = user.accountType;
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
-    this.getProviderLocations();
-    this.getServices();
-    this.getQs();
-    this.getSchedules();
     this.isAvailableNow();
-    this.getGlobalSettings();
     this.getProviderSettings();
-
   }
 
   ngOnDestroy() {
@@ -226,7 +183,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        console.log(this.showToken)
       }, () => {
       });
   }
@@ -237,99 +193,5 @@ export class MenuComponent implements OnInit, OnDestroy {
       },
         () => {
         });
-  }
-
-  getGlobalSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
-      (data: any) => {
-        this.appointmentStatus = data.appointment;
-        this.donationstatus = data.donationFundRaising;
-        this.checkinStatus = data.waitlist;
-      });
-  }
-
-  getProviderLocations() {
-    this.provider_services.getProviderLocations()
-      .subscribe((data: any) => {
-        if (data.length > 0) {
-          this.locationExist = true;
-        } else {
-          this.locationExist = false;
-        }
-      });
-  }
-
-  getServices() {
-    const filter = { 'serviceType-neq': 'donationService' };
-    this.provider_services.getProviderServices(filter)
-      .subscribe((data: any) => {
-        if (data.length > 0) {
-          this.serviceExist = true;
-        } else {
-          this.serviceExist = false;
-        }
-      });
-  }
-
-  getSchedules() {
-    this.provider_services.getProviderSchedules()
-      .subscribe(
-        (data: any) => {
-          if (data.length > 0) {
-            this.scheduleExist = true;
-          } else {
-            this.scheduleExist = false;
-          }
-        });
-  }
-
-  getQs() {
-    this.provider_services.getProviderQueues()
-      .subscribe(
-        (data: any) => {
-          if (data.length > 0) {
-            this.qExist = true;
-          } else {
-            this.qExist = false;
-          }
-        });
-  }
-  menuClick(source) {
-    if (source === 'checkin') {
-      if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-        let status;
-        if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-          status = 'inactive';
-        }
-        this.showPopup(source, this.checkinStatus, status);
-      } else {
-        this.router.navigate(['provider/check-ins']);
-      }
-    } else {
-      if (!this.appointmentStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-        let status;
-        if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-          status = 'inactive';
-        }
-        this.showPopup(source, this.appointmentStatus, status);
-      } else {
-        this.router.navigate(['provider/appointments']);
-      }
-    }
-  }
-  showPopup(source, status, profileExist) {
-    const dialogrefd = this.dialog.open(ProviderErrorMesagePopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'menupopup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        source: source,
-        status: status,
-        profile: profileExist
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
-
-    });
   }
 }

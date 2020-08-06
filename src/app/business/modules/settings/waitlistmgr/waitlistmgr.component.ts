@@ -144,6 +144,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.waitlist_manager = data;
+                    this.shared_functions.sendMessage({ ttype: 'waitlistSettings', value: this.waitlist_manager.showTokenId });
                     if (this.waitlist_manager.showTokenId) {
                         this.qSystem = 'token';
                         if (this.waitlist_manager.showTokenId && this.waitlist_manager.calculationMode === 'Conventional') {
