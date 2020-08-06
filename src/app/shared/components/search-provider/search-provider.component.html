@@ -107,7 +107,7 @@
                         <i class="fa fa-phone" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Phone'"></i>
                         <i class="fa meet-icon" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                         <i class="fa zoom-icon"*ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                        <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                       </span>
                       <!-- <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
                         (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)

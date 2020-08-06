@@ -197,17 +197,17 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       } else {
         this.gets3curl().then(
           () => {
+            const waitTimearr = [];
+            const apptTimearr = [];
             for (let i = 0; i < this.usersList.length; i++) {
-              const waitTimearr = [];
-              const apptTimearr = [];
               this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.usersList[i], true);
               this.getUserbusinessprofiledetails_json('providerservices', this.usersList[i], true);
               this.getUserbusinessprofiledetails_json('providerApptServices', this.usersList[i], true);
               apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
-              waitTimearr.push({ 'locid': this.usersList[i].id + '-' + this.locationjson[0].id, 'locindx': i });
-              this.getUserWaitingTime(waitTimearr, this.usersList[i]);
-              this.getUserApptTime(apptTimearr, this.usersList[i]);
+              waitTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + this.usersList[i].id, 'locindx': i });
             }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
           });
       }
 
@@ -242,7 +242,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   providerDetClicked(obj) {
     this.routerobj.navigate([this.provider_id], { queryParams: { userId: obj.id, pId: this.businessjson.id, psource: this.psource } });
   }
-  getUserWaitingTime(provids, user) {
+  getUserWaitingTime(provids) {
     if (provids.length > 0) {
       const post_provids: any = [];
       for (let i = 0; i < provids.length; i++) {
@@ -276,58 +276,59 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
           const check_dtoday = new Date(dtoday);
+          let srchindx;
           let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
-            user['waitingtime_res'] = this.waitlisttime_arr[i];
-            user['estimatedtime_det'] = [];
-            user['waitingtime_res'] = this.waitlisttime_arr[i];
+            srchindx = provids[i].locindx;
+            // this.usersList[srchindx]['waitingtime_res'] = this.waitlisttime_arr[i];
+            this.usersList[srchindx]['estimatedtime_det'] = [];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-              user['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-              user['estimatedtime_det']['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
-              user['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
-              user['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
-              user['estimatedtime_det']['futureWaitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['futureWaitlist'];
-              user['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
-              user['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
-              user['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
-              user['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-              user['estimatedtime_det']['queue_available'] = 1;
-              user['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
+              this.usersList[srchindx]['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.usersList[srchindx]['estimatedtime_det']['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
+              this.usersList[srchindx]['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
+              this.usersList[srchindx]['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
+              this.usersList[srchindx]['estimatedtime_det']['futureWaitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['futureWaitlist'];
+              this.usersList[srchindx]['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
+              this.usersList[srchindx]['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
+              this.usersList[srchindx]['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
+              this.usersList[srchindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
+              this.usersList[srchindx]['estimatedtime_det']['queue_available'] = 1;
+              this.usersList[srchindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
               cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
               if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-                user['estimatedtime_det']['availableToday'] = true;
+                this.usersList[srchindx]['estimatedtime_det']['availableToday'] = true;
               } else {
-                user['estimatedtime_det']['availableToday'] = false;
+                this.usersList[srchindx]['estimatedtime_det']['availableToday'] = false;
               }
-              if (!user['opennow']) {
-                user['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
+              if (!this.usersList[srchindx]['opennow']) {
+                this.usersList[srchindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-                    user['estimatedtime_det']['date'] = 'Today';
+                    this.usersList[srchindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    user['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                    this.usersList[srchindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
-                  user['estimatedtime_det']['time'] = user['estimatedtime_det']['date']
+                  this.usersList[srchindx]['estimatedtime_det']['time'] = this.usersList[srchindx]['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
-                  user['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                  this.usersList[srchindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
                     + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
-                user['estimatedtime_det']['nextAvailDate'] = user['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                this.usersList[srchindx]['estimatedtime_det']['nextAvailDate'] = this.usersList[srchindx]['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
-                user['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
+                this.usersList[srchindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  user['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                  this.usersList[srchindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
-                  user['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                  user['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  this.usersList[srchindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                  this.usersList[srchindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 }
               }
             } else {
-              user['estimatedtime_det']['queue_available'] = 0;
+              this.usersList[srchindx]['estimatedtime_det']['queue_available'] = 0;
             }
             if (this.waitlisttime_arr[i]['message']) {
-              user['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
+              this.usersList[srchindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
             }
           }
         });
@@ -554,7 +555,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       }
     }
   }
-  getUserApptTime(provids_locid, user) {
+  getUserApptTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
@@ -584,16 +585,18 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             cmon = '' + mm;
           }
           const dtoday = yyyy + '-' + cmon + '-' + cday;
+          let srchindx;
           for (let i = 0; i < this.appttime_arr.length; i++) {
-            user['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
+            srchindx = provids_locid[i].locindx;
+            this.usersList[srchindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
             if (this.appttime_arr[i]['availableSchedule']) {
-              user['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-              user['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-              user['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              this.usersList[srchindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+              this.usersList[srchindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
+              this.usersList[srchindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
               if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
-                user['apptAvailableToday'] = true;
+                this.usersList[srchindx]['apptAvailableToday'] = true;
               } else {
-                user['apptAvailableToday'] = false;
+                this.usersList[srchindx]['apptAvailableToday'] = false;
               }
             }
           }
