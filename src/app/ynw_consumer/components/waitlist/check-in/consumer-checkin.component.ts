@@ -924,10 +924,10 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
             if (exists) {
-                if (this.waitlist_for.length === 1) {
-                    this.getFamilyMembers();
-                    return false;
-                }
+                // if (this.waitlist_for.length === 1) {
+                //     this.getFamilyMembers();
+                //     return false;
+                // }
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
