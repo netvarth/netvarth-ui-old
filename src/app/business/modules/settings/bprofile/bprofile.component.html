@@ -570,7 +570,7 @@
                                     </span>
                                   </div>
                                   <div class="cop-r" *ngIf="loc_list.length>0">
-                                    <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                    <ul class="info-lst" *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
                                       <li>You can add more locations under
                                         <a routerLink="/provider/settings/general/locations">settings</a>
                                       </li>

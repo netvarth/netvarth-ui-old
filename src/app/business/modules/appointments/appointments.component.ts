@@ -603,7 +603,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             _this.scheduleExist = false;
           }
-          this.checkDashboardVisibility();
+          setTimeout(() => {
+            this.checkDashboardVisibility();
+          }, 500);
           resolve(schedules);
         });
     });

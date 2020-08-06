@@ -901,9 +901,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               _this.qExist = false;
             }
-            // setTimeout(() => {
-            this.checkDashboardVisibility();
-            // }, 3000);
+            setTimeout(() => {
+              this.checkDashboardVisibility();
+            }, 500);
             resolve(queues);
           });
       });
