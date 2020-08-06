@@ -27,15 +27,15 @@
                             <td>
                                 <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                     (click)="goServiceDetail(service)">
-                                    <span *ngIf="service.serviceType === 'virtualService'">
+                                    <span>
                                         <i class="fa fa-phone" style="color: black;"
-                                            *ngIf="service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                         <i class="fa meet-icon"
-                                            *ngIf="service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                         <i class="fa zoom-icon"
-                                            *ngIf="service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                         <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                            *ngIf="service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                     </span>
                                     {{service.name | capitalizeFirst}}
                                 </div>
