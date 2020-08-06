@@ -30,7 +30,18 @@
         <div class="outer">
             <div class="outer1 line">
                 <div class="name">
-                    <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">{{data.serdet.name | capitalizeFirst}} </span>
+                    <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">{{data.serdet.name | capitalizeFirst}}
+                       <span>
+                        <i class="fa fa-phone"
+                        *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Phone' || data.serdet.virtualCallingModes[0].callingMode == 3)"></i>
+                        <i class="fa meet-icon"
+                        *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'GoogleMeet' || data.serdet.virtualCallingModes[0].callingMode == 2)"></i>
+                        <i class="fa zoom-icon"
+                        *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Zoom' || data.serdet.virtualCallingModes[0].callingMode == 1)"></i>
+                        <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                        *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0)"></i>
+                       </span> 
+                    </span>
                     <span *ngIf="this.data.serdet.taxable"><sup>Tax</sup></span>
                 </div>
                 <div class="description" *ngIf="data.serdet && data.serdet.description">
