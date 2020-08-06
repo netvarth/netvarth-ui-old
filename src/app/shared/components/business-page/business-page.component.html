@@ -152,13 +152,13 @@
                                             {{appointmentService.name}}
                                             <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                 <i class="fa fa-phone"
-                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                               <i class="fa meet-icon"
-                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                 <i class="fa zoom-icon"
-                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                 <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                             </span></li>
                                         <a *ngIf="apptServicesjson.length > 3 && showType === 'more'"
                                             (click)="showmore('less')">
