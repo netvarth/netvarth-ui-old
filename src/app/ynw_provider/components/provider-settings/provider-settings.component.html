@@ -343,7 +343,7 @@
                                         <p class="settings_info">Set up your locations here</p>
                                     </a>
                                 </li>
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')">
+                                <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Departments
                                             <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>
