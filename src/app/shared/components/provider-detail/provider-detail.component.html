@@ -142,13 +142,15 @@
                                         <li *ngFor="let appointmentService of apptfirstArray"
                                             (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
                                             {{appointmentService.name}}
-                                            <span
-                                                *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'videoService'">
-                                                (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                            </span>
-                                            <span
-                                                *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.virtualServiceType == 'audioService'">
-                                                (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
+                                            <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                <i class="fa fa-phone"
+                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                              <i class="fa meet-icon"
+                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                <i class="fa zoom-icon"
+                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                                *ngIf="appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                             </span>
                                         </li>
                                         <a *ngIf="apptServicesjson.length > 3 && showType === 'more'"
