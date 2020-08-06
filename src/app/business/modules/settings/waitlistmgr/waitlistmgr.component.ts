@@ -509,3 +509,4 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         }
     }
 }
+
