@@ -488,11 +488,15 @@
                                             <li *ngFor="let appointmentService of search_result.fields.allServices"
                                                 (click)="!btn_clicked && checkserviceClicked(appointmentService,search_result, 'appointmentList')">
                                                 {{appointmentService.name}}
-                                                <span *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.type == 'videoService'">
-                                                    (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
-                                                </span>
-                                                <span *ngIf="appointmentService.serviceType == 'virtualService' && appointmentService.type == 'audioService'">
-                                                    (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
+                                                <span *ngIf="appointmentService.serviceType == 'virtualService'">
+                                                    <i class="fa fa-phone"
+                                      *ngIf="appointmentService.virtualCallingModes &&appointmentService.virtualCallingModes[0].callingMode == 3"></i>
+                                                    <i class="fa meet-icon"
+                                      *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 2"></i>
+                                      <i class="fa zoom-icon"
+                                      *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 1"></i>
+                                      <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                      *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode == 0"></i>
                                                 </span>
                                             </li>
                                         </ul>

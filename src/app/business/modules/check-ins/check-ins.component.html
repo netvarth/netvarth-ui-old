@@ -2,7 +2,16 @@
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs_init"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
-<section class="dashboard content pro-dash">
+<app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+<section *ngIf="!showDashbard && !apiloading">
+  <div class="center-align col-md-12" *ngIf="message">
+    {{message}} Go to <span class="cs-btn bt3 pay_statment_btn" (click)="gotoSettings()"> Settings</span>
+  </div>
+  <div class="center-align col-md-12" *ngIf="message1">
+    {{message1}} Go to <span class="cs-btn bt3 pay_statment_btn" (click)="gotoQmanager()"> Jaldee QManager</span>
+  </div>
+</section>
+<section class="dashboard content pro-dash" *ngIf="showDashbard">
   <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
     <div class="row">
       <div class="card p0 w-dta">
@@ -56,7 +65,8 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db" *ngIf="account_type === 'BRANCH'">
+                <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db"
+                  *ngIf="account_type === 'BRANCH'">
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     style="padding-top: 12px !important;">
@@ -393,8 +403,9 @@
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
                             <i class="fa fa-comments-o "></i>
                           </a>
-                          <a class="icon-action pointer-cursor icon-size2" *ngIf="apptSingleSelection && time_type!=3 && !(this.activeAppointment.waitlistStatus=='cancelled')"
-                            [matTooltip]="'Send via SMS/Email'">
+                          <a class="icon-action pointer-cursor icon-size2"
+                            *ngIf="apptSingleSelection && time_type!=3 && !(this.activeAppointment.waitlistStatus=='cancelled')"
+                            [matTooltip]="'Send details via SMS/Email'">
                             <i class="fa fa-comment-o" (click)="smsCheckin()"></i>
                           </a>
                           <!-- <a class="icon-action pointer-cursor icon-size3" *ngIf="apptSingleSelection  && time_type!=3"
@@ -514,6 +525,12 @@
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput" *ngIf="time_type != 3">
+                                  <li class="filterli">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Status code">
                                   </li>
                                 </div>
                                 <!-- <div *ngIf="time_type == 3">
@@ -677,8 +694,8 @@
                       <td class="parent-selection parent-title td-one">
                         <div class="pull-left mgn-lt-5 date circle-token bold" *ngIf="time_type!==3 && checkin.token">
                           {{checkin.token}}</div>
-                        <div class="pull-left mgn-lt-5 date" [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}"
-                        *ngIf="time_type!=1">
+                        <div class="pull-left mgn-lt-5 date"
+                          [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
                           {{checkin.date | date: display_dateFormat}}</div>
                         <div class="bold pull-left mgn-lt-5 name pointer-cursor"
                           [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
@@ -713,7 +730,9 @@
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
                           </span>
-                          <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i style="font-size: 20px;"  class="material-icons">attach_file</i></span>
+                          <span (click)="openAttachmentGallery(checkin)" [matTooltip]="'Attachment included'"
+                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
+                              style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                           <span class="" style="font-size: smaller;">
@@ -803,10 +822,9 @@
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
   </div>
-  <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
-    [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-    [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)"
-    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+  <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+    (buttonBeforeHook)="onButtonBeforeHook($event)" (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
   <div class="clearfix"></div>
   <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
     <button>

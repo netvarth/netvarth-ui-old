@@ -188,6 +188,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     ]
   };
+  futureAllowed = true;
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -894,12 +895,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
-                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.merge_array(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                    if (this.search_data.hits.hit[i].fields.appointmentServiceList && this.search_data.hits.hit[i].fields.appointmentServiceList.length > 0) {
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                    }
                   }
                   if (this.search_data.hits.hit[i].fields.donation_services) {
                     this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
                     this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
-                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.merge_array(this.search_data.hits.hit[i].fields.donationServices);
+                    if (this.search_data.hits.hit[i].fields.donationServices && this.search_data.hits.hit[i].fields.donationServices.length > 0) {
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.donationServices);
+                    }
+                  }
+                  function getUniqueListBy(arr, key) {
+                    return [...new Map(arr.map(item => [item[key], item])).values()];
+                  }
+                  if (this.search_data.hits.hit[i].fields.allServices && this.search_data.hits.hit[i].fields.allServices.length > 0) {
+                    this.search_data.hits.hit[i].fields.allServices = getUniqueListBy(this.search_data.hits.hit[i].fields.allServices, 'id');
                   }
                 } catch (e) {
                 }
@@ -1006,12 +1017,37 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.appttime_arr = data;
           let srchindx;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids[i]) {
               srchindx = provids[i].searchindx;
               this.search_data.hits.hit[srchindx].fields['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
               if (this.appttime_arr[i]['availableSchedule']) {
+                this.search_data.hits.hit[srchindx].fields['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
+                this.search_data.hits.hit[srchindx].fields['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
                 this.search_data.hits.hit[srchindx].fields['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+                if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+                  this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = true;
+                } else {
+                  this.search_data.hits.hit[srchindx].fields['apptAvailableToday'] = false;
+                }
               }
             }
           }
@@ -1630,9 +1666,17 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.doLogin('checkin', 'consumer', passParam);
     }
   }
-  appointmentClicked(obj, chdatereq) {
+  appointmentClicked(obj) {
+    this.futureAllowed = true;
     this.current_provider = obj;
-    this.changedate_req = chdatereq;
+    if (obj.fields.todayAppt && obj.fields['apptAvailableToday']) {
+      this.changedate_req = false;
+    } else {
+      this.changedate_req = true;
+    }
+    if (!obj.fields.futureAppt) {
+      this.futureAllowed = false;
+    }
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (usertype === 'consumer') {
       this.showAppointment('consumer');
@@ -1772,7 +1816,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         cur: this.changedate_req,
         unique_id: unique_id,
         account_id: acc_loc_id[0],
-        tel_serv_stat: this.current_provider.fields.virtual_service_status
+        tel_serv_stat: this.current_provider.fields.virtual_service_status,
+        futureAppt: this.futureAllowed
       }
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
@@ -2147,7 +2192,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     } else if (!searchData.fields.waitlist && searchData.fields.apptAllowed
       && searchData.fields.donation_status === '0') {
-      this.appointmentClicked(searchData, false);
+      this.appointmentClicked(searchData);
     } else if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
       && searchData.fields.donation_status === '1') {
       this.payClicked(searchData);

@@ -353,7 +353,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   appointmentClicked(obj) {
     this.futureAllowed = true;
     this.current_provider = obj;
-    if (obj.todayAppt) {
+    if (obj.todayAppt && obj['apptAvailableToday']) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
@@ -566,12 +566,35 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
           for (let i = 0; i < this.appttime_arr.length; i++) {
             user['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
             if (this.appttime_arr[i]['availableSchedule']) {
               user['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
               user['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
               user['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
+              if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
+                user['apptAvailableToday'] = true;
+              } else {
+                user['apptAvailableToday'] = false;
+              }
             }
           }
         });

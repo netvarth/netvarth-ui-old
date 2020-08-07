@@ -283,6 +283,11 @@ export class BranchUsersComponent implements OnInit {
                 );
         });
     }
+    handle_pageclick(pg) {
+        this.pagination.startpageval = pg;
+        this.filter.page = pg;
+        this.getUsers();
+      }
     makeDefalutAdmin(id) {
         this.provider_services.makeDefalutAdmin(id)
         .subscribe(

@@ -68,6 +68,7 @@ export class CheckinDetailComponent implements OnInit {
     statusUpdatedTime: any;
     callingModes;
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    phonenumber;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -83,14 +84,14 @@ export class CheckinDetailComponent implements OnInit {
                 this.waitlistdata = qParams;
             });
         this.waitlist = this.waitlistdata.waitlist || null;
-        const waitlistjson = JSON.parse(this.waitlist);
+        const waitlistjson = JSON.parse(this.waitlist); 
         this.BusinessName = waitlistjson.providerAccount.businessName;
         this.ProviderId = waitlistjson.providerAccount.id;
         this.ynwUuid = waitlistjson.ynwUuid;
         this.date = waitlistjson.date;
         this.locn = waitlistjson.queue.location.place;
-        this.firstname = waitlistjson.consumer.firstName;
-        this.lastname = waitlistjson.consumer.lastName;
+        this.firstname = waitlistjson.waitlistingFor[0].firstName;
+        this.lastname = waitlistjson.waitlistingFor[0].lastName;
         this.service = waitlistjson.service.name;
         this.deptName = waitlistjson.service.deptName;
         this.queueStart = waitlistjson.queue.queueStartTime;
@@ -105,6 +106,7 @@ export class CheckinDetailComponent implements OnInit {
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+        this.phonenumber = waitlistjson.waitlistPhoneNumber;
     }
     ngOnInit() {
     }

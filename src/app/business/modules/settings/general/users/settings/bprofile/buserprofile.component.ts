@@ -159,7 +159,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     subdomainvirtual: false,
     specialization: false
   };
-  blogo : any = [];
+  blogo: any = [];
   item_pic = {
     files: [],
     base64: null
@@ -262,7 +262,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
     private routerobj: Router,
     private activated_route: ActivatedRoute,
     public fed_service: FormMessageDisplayService,
-    private cdref:ChangeDetectorRef,
+    private cdref: ChangeDetectorRef,
     @Inject(DOCUMENT) public document,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UserBprofileSearchPrimaryComponent>,
@@ -314,8 +314,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       this.businessProfile_weightageArray = result;
       console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
-
-    });  
+    });
   }
   ngAfterViewChecked(){
     this.cdref.detectChanges();
@@ -407,7 +406,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
-          }else{
+          } {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
           if (this.bProfile.status === 'ACTIVE') {
@@ -456,6 +455,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       _this.provider_services.getUserBussinessProfile(_this.userId)
         .subscribe(
           data => {
+            console.log(data);
             resolve(data);
           },
           () => {
@@ -517,12 +517,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
             for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
               if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
-                this.getSpecializations(this.domain,this.subDomain);
+                this.getSpecializations(this.domain, this.subDomain);
                 // this.initSpecializations();
                 this.bProfile['subDomain'] = this.subDomain;
                 this.getBusinessProfile();
-               
-              }
+                }
             }
           }
         }
@@ -650,18 +649,18 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   getDomainVirtualFields() {
-    let userWeightageObjectOfDomain: any = {};
+    const userWeightageObjectOfDomain: any = {};
     this.getVirtualFields(this.domain)
       .then(
         data => {
           let user_mandatorydomain = false;
           let user_mandatorydomainFilled = false;
-          let user_additionalInfoFilledStatus = false
+          let user_additionalInfoFilledStatus = false;
           this.domain_fields = data['fields'];
           this.domain_questions = data['questions'] || [];
           this.normal_domainfield_show = (this.normal_domainfield_show === 2) ? 4 : 3;
-          if (this.userMandatoryfieldArray.length != 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
-            user_mandatorydomain = true
+          if (this.userMandatoryfieldArray.length !== 0 && this.domain_fields.some(domain => domain.mandatory === true)) {
+            user_mandatorydomain = true;
             this.userMandatoryfieldArray.forEach(mandatoryField => {
               if (this.checkMandatoryFieldsInResultSet(this.domain_fields, mandatoryField)) {
                 user_mandatorydomainFilled = true;
@@ -692,7 +691,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
 
   getSubDomainVirtualFields() {
-    let userWeightageObjectOfSubDomain: any = {};
+    const userWeightageObjectOfSubDomain: any = {};
     this.getVirtualFields(this.domain,
       this.subDomain).then(
         data => {
@@ -861,21 +860,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   // updating the primary field from the bprofile edit page
   createPrimaryFields(pdata) {
-    if(this.blogo.length==0){
-     let self = this;
-      var promise = self.sharedfunctionobj.getBase64Image();
-      promise.then(function (dataURL) {
-        let blob = self.sharedfunctionobj.b64toBlob(dataURL);
-        const submit_data: FormData = new FormData();
-        submit_data.append('files', blob, 'jaldee-logo.png');
-        const propertiesDet = {
-          'caption': 'Logo'
-        };
-        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        submit_data.append('properties', blobPropdata);
-        self.uploadLogo(submit_data);
-      });
-    }
+    // if (this.blogo.length === 0) {
+    //  const self = this;
+    //   const promise = self.sharedfunctionobj.getBase64Image();
+    //   promise.then(function (dataURL) {
+    //     const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+    //     const submit_data: FormData = new FormData();
+    //     submit_data.append('files', blob, 'jaldee-logo.png');
+    //     const propertiesDet = {
+    //       'caption': 'Logo'
+    //     };
+    //     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    //     submit_data.append('properties', blobPropdata);
+    //     self.uploadLogo(submit_data);
+    //   });
+    // }
     this.disableButton = true;
     this.provider_services.patchUserbProfile(pdata, this.userId)
       .subscribe(
@@ -897,28 +896,21 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
 
   updatePrimaryFields(pdata) {
-
-    
- if(this.blogo.length==0){
-
-  let self = this;
-      var promise = self.sharedfunctionobj.getBase64Image();
-      promise.then(function (dataURL) {
-        let blob = self.sharedfunctionobj.b64toBlob(dataURL);
-        const submit_data: FormData = new FormData();
-        submit_data.append('files', blob, 'jaldee-logo.png');
-        const propertiesDet = {
-          'caption': 'Logo'
-        };
-        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        submit_data.append('properties', blobPropdata);
-        self.uploadLogo(submit_data);
-      });
-
-
-    
-
-    }
+      // if (this.blogo.length === 0) {
+      //   const self = this;
+      //   const  promise = self.sharedfunctionobj.getBase64Image();
+      //   promise.then(function (dataURL) {
+      //   const blob = self.sharedfunctionobj.b64toBlob(dataURL);
+      //   const submit_data: FormData = new FormData();
+      //   submit_data.append('files', blob, 'jaldee-logo.png');
+      //   const propertiesDet = {
+      //     'caption': 'Logo'
+      //   };
+      //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+      //   submit_data.append('properties', blobPropdata);
+      //   self.uploadLogo(submit_data);
+      // });
+      // }
 
     this.disableButton = true;
     this.provider_services.createUserbProfile(pdata, this.userId)
@@ -1018,7 +1010,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   getBusinessProfileWeightageText() {
     let businessProfileWeightageText = '';
-    let weightage = this.weightageValue;
+    const weightage = this.weightageValue;
     if (weightage <= 25) {
       businessProfileWeightageText = Messages.PROFILE_INCOMPLETE_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_COMPLETE_YOUR_PROFILE;
@@ -1059,9 +1051,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
       return businessProfileWeightageText;
-    }
-
-    else if (weightage == 100) {
+    } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
       this.bprofile_btn_text = Messages.BTN_TEXT_MANAGE_YOUR_PROFILE;
       this.weightageClass = 'success';
@@ -1075,7 +1065,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
 
   }
   calculateWeightage(data) {
-    var total = 0;
+    let total = 0;
     if (data != null && data.length > 0) {
       data.forEach(x => total += x.value);
     }
@@ -1091,12 +1081,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
       .then(
         data => {
           this.bProfile = data;
-         (this.bProfile);
           this.getSpecializations(this.domain, this.subDomain);
-          this.specialization_arr;
           if (this.bProfile.specialization) {
-           
-            this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
+           this.user_datastorage.updateSpecilizationWeightage(this.bProfile.specialization);
             if (this.bProfile.specialization.length > 0) {
               this.normal_specilization_show = 3;
             } else {
@@ -1113,7 +1100,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
   getSpecializations(domain, subdomain) {
     this.provider_services.getSpecializations(domain, subdomain)
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
        this.specialization_arr = data;
        });
      }

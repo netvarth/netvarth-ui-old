@@ -88,7 +88,9 @@
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>
         </a> -->
-        <a class="pointer-cursor" (click)="menuClick('appt');closeMenu()" routerLinkActive="active-lnk">
+        <!-- (click)="menuClick('appt');closeMenu()" -->
+        <a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
+          routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>
         </a>
@@ -98,13 +100,16 @@
           <i class="fa fa-check-circle"></i>
           <span> Token/Check-ins</span>
         </a> -->
-        <a class="pointer-cursor" (click)="menuClick('checkin');closeMenu()" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()"
+          routerLinkActive="active-lnk">
           <i class="fa fa-check-circle"></i>
-          <span> Token/Check-ins</span>
+          <span *ngIf="showToken"> Tokens</span>
+          <span *ngIf="!showToken"> Check-ins</span>
         </a>
       </li>
-      <li class="treeview" >
-        <a *ngIf="donationstatus" class="pointer-cursor"  routerLink="donations" (click)="closeMenu()" routerLinkActive="active-lnk">
+      <li class="treeview">
+        <a *ngIf="donationstatus" class="pointer-cursor" routerLink="donations" (click)="closeMenu()"
+          routerLinkActive="active-lnk">
           <i class="fa fa-stack fa-inr"></i>
           <span>Donations</span>
         </a>
@@ -146,11 +151,12 @@
         </a>
       </li>
       <li *ngIf="accountType=='BRANCH'">
-        <a class="pointer-cursor"  routerLink="settings/general/users" (click)="closeMenu()" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="settings/general/users" (click)="closeMenu()"
+          routerLinkActive="active-lnk">
           <i class="fa fa-users"></i> <span> Users</span>
         </a>
       </li>
-      
+
       <li class="separator"></li>
       <!-- <li>
           <a class="pointer-cursor" target="_blank" routerLink="/kiosk" routerLinkActive="active-lnk">
@@ -158,8 +164,9 @@
           </a>
         </li> -->
       <li><a class="pointer-cursor" (click)="closeMenu();gotoHelp()" routerLinkActive="active-lnk"><i
-        class="fa fa-book"  ></i> <span>Help</span></a></li>
-      <li><a routerLink="faq" (click)="closeMenu()" routerLinkActive="active-lnk"><i class="fa fa-question-circle-o"></i>
+            class="fa fa-book"></i> <span>Help</span></a></li>
+      <li><a routerLink="faq" (click)="closeMenu()" routerLinkActive="active-lnk"><i
+            class="fa fa-question-circle-o"></i>
           <span>FAQ</span></a></li>
       <!-- <li><a routerLink="/kiosk" target="_blank"><i class="icon-tourist">&#xe900;</i>
           <span>Kiosk</span></a></li> -->

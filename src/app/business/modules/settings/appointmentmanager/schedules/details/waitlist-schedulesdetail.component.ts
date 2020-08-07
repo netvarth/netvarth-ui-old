@@ -455,7 +455,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     });
 
     this.sbatchStatus = this.queue_data.batchEnable;
-    if (this.queue_data.parallelServing > 1) {
+    if (this.queue_data.parallelServing > 1 || this.sbatchStatus) {
       this.batch = true;
       this.showBatchFields = true;
     } else {

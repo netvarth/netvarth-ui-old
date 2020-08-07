@@ -34,6 +34,7 @@ export class ProPicPopupComponent implements OnInit {
     savedisabled = false;
     canvasRotation = 0;
     transform: ImageTransform = {};
+    scale = 1;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -85,6 +86,20 @@ export class ProPicPopupComponent implements OnInit {
     rotateRight() {
         this.canvasRotation++;
         this.flipAfterRotate();
+    }
+    zoomOut() {
+        this.scale -= .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    zoomIn() {
+        this.scale += .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
     }
     private flipAfterRotate() {
         const flippedH = this.transform.flipH;
@@ -157,8 +172,10 @@ export class ProPicPopupComponent implements OnInit {
                 this.error_list.push(this.success_error);
                 if (this.error_list[0].type) {
                     this.error_msg = 'Selected image type not supported';
+                    this.dialogRef.close();
                 } else if (this.error_list[0].size) {
                     this.error_msg = 'Please upload images with size less than 15mb';
+                    this.dialogRef.close();
                 }
                 // this.error_msg = 'Please upload images with size < 5mb';
                 this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });

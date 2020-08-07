@@ -1254,17 +1254,17 @@ export const Messages = {
   // App-ynw_provider-components-provider-waitlist-checkin-detail
   'CHECK_DET_GO_BACK_CAP': 'Go Back',
   'CHECK_DET_DETAILS_CAP': 'Details',
-  'CHECK_DET_NAME_CAP': 'Name:',
-  'CHECK_DET_DATE_CAP': 'Date:',
-  'CHECK_DET_LOCATION_CAP': 'Location:',
-  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for:',
-  'CHECK_DET_SERVICE_CAP': 'Service:',
-  'CHECK_DET_QUEUE_CAP': 'Queue:',
-  'CHECK_DET_PAY_STATUS_CAP': 'Payment Status:',
+  'CHECK_DET_NAME_CAP': 'Name',
+  'CHECK_DET_DATE_CAP': 'Date',
+  'CHECK_DET_LOCATION_CAP': 'Location',
+  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for',
+  'CHECK_DET_SERVICE_CAP': 'Service',
+  'CHECK_DET_QUEUE_CAP': 'Queue',
+  'CHECK_DET_PAY_STATUS_CAP': 'Payment Status',
   'CHECK_DET_NOT_PAID_CAP': 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP': 'Partially Paid',
   'CHECK_DET_PAID_CAP': 'Paid',
-  'CHECK_DET_PARTY_SIZE_CAP': 'Party Size:',
+  'CHECK_DET_PARTY_SIZE_CAP': 'Party Size',
   'CHECK_DET_SEND_MSG_CAP': 'Send Message',
   'CHECK_DET_ADD_PRVT_NOTE_CAP': 'Add Private note',
   'CHECK_DET_CANCEL_CAP': 'Cancel',
@@ -1506,6 +1506,7 @@ export const Messages = {
   'BTN_TEXT_STRENGTHEN_YOUR_PROFILE': 'Strengthen Your Profile',
   'BTN_TEXT_MANAGE_YOUR_PROFILE': 'Manage Your Profile',
   'GOOD_CAP': 'Good',
-  'VERY_GOOD_CAP': ' Very Good'
+  'VERY_GOOD_CAP': ' Very Good',
 
+  'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
 };

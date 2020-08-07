@@ -12,7 +12,7 @@
                 {{service_data.description | capitalizeFirst}}
             </div>
             <div class="c-ot">
-                <div class="item" *ngIf="departmentName && !is_donation">
+                <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
                     <span class="ttle">Department Name</span>
                     <span>{{departmentName}}</span>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class="ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
-                    <span *ngIf="service_data.serviceType==='physicalService'">Onsiteservice</span>
+                    <span *ngIf="service_data.serviceType==='physicalService'">Onsite Service</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class="ttle">Service Mode</span>

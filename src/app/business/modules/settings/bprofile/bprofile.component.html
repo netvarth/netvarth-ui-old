@@ -85,7 +85,7 @@
                         </app-innerloading-spinner>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding" *ngIf="normal_basicinfo_show!=1">
-                        <div class="progress col-md-7 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
+                        <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
                           <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"
                             [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
                             aria-valuemax="100"></div>
@@ -570,7 +570,7 @@
                                     </span>
                                   </div>
                                   <div class="cop-r" *ngIf="loc_list.length>0">
-                                    <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                    <ul class="info-lst" *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
                                       <li>You can add more locations under
                                         <a routerLink="/provider/settings/general/locations">settings</a>
                                       </li>

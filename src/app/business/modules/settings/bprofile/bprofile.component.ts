@@ -354,6 +354,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   specialdialogRef;
   normal_specilization_show = 1;
   image_list: any = [];
+  user_accountType;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -402,6 +403,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input.ttype === 'image-upload') {
+        console.log(input);
         this.provider_services.uploadGalleryImages(input.value)
           .subscribe(
             () => {
@@ -421,6 +423,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.user_accountType = user.accountType;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]

@@ -144,7 +144,7 @@
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.apptStatus">
                         <div class="done-label">
-                          Status: {{getStatusLabel(statusInfo.apptStatus)}}
+                          {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
                         </div>
                       </div>
                     </div>

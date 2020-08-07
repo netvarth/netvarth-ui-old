@@ -83,6 +83,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
+    checkinEncId: '',
     queue: 'all',
     service: 'all',
     waitlist_status: 'all',
@@ -101,6 +102,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
+    checkinEncId: false,
     queue: false,
     service: false,
     waitlist_status: false,
@@ -233,7 +235,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showArrived = false;
   showUndo = false;
   showRejected = false;
-  apiloading = false;
+  apiloading = true;
   breadcrumbs_init = [];
   breadcrumb_moreoptions: any = [];
   apptModes: any = [];
@@ -279,6 +281,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  checkinStatus = false;
+  locationExist = false;
+  serviceExist = false;
+  qExist = false;
+  profileExist = false;
+  message = '';
+  message1 = '';
+  showDashbard = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -307,7 +317,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.no_completed_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
     this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
     this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
-  
+
     this.waitlist_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
       { name: this.cancelled_upper, value: 'cancelled' },
@@ -357,7 +367,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    // this.apiloading = true;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -373,10 +382,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDisplayboardCount();
     this.getPos();
-    this.getServiceList();
     this.getLabel();
     this.getDepartments();
     this.getProviders();
+    this.getServiceList();
     this.image_list_popup_temp = [];
     const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
@@ -394,6 +403,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
+
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
       data => {
@@ -837,6 +847,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           (data: any) => {
             const locations = data;
             self.locations = [];
+            if (data.length > 0) {
+              self.locationExist = true;
+            } else {
+              self.locationExist = false;
+            }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
                 self.locations.push(loc);
@@ -880,6 +895,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
           (queues: any) => {
+            if (queues.length > 0) {
+              _this.qExist = true;
+            } else {
+              _this.qExist = false;
+            }
             resolve(queues);
           });
       });
@@ -930,6 +950,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getQs('all').then(
         (queues: any) => {
           _this.queues = queues;
+          _this.getGlobalSettings().then(
+            () => {
+              _this.getAllServices().then(
+                () => {
+                  _this.getBusinessdetFromLocalstorage();
+                }
+              );
+            }
+          );
           resolve(queues);
         },
         () => {
@@ -1508,6 +1537,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
+    if (this.filter.checkinEncId !== '') {
+      api_filter['checkinEncId-eq'] = this.filter.checkinEncId;
+    }
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
     }
@@ -1583,7 +1615,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.waitlist_status !== 'all') {
       this.filterapplied = true;
@@ -1611,6 +1643,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
+      checkinEncId: false,
       queue: false,
       service: false,
       waitlist_status: false,
@@ -1626,6 +1659,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
+      checkinEncId: '',
       queue: 'all',
       service: 'all',
       waitlist_status: 'all',
@@ -2168,7 +2202,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + checkinlist.service.name + '</td></tr>';
       if (checkinlist.provider && checkinlist.provider.firstName && checkinlist.provider.lastName) {
-        checkin_html += '<tr><td>' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName + '</td></tr>';
+        checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + checkinlist.provider.firstName.charAt(0).toUpperCase() + checkinlist.provider.firstName.substring(1) + ' ' + checkinlist.provider.lastName + '</td></tr>';
       }
       checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + checkinlist.queue.name + ' [' + checkinlist.queue.queueStartTime + ' - ' + checkinlist.queue.queueEndTime + ']' + '</td></tr>';
       checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
@@ -2386,41 +2420,40 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
 
-
-  openAttachmentGallery (checkin) {
+  openAttachmentGallery(checkin) {
     this.image_list_popup_temp = [];
     this.image_list_popup = [];
     this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
       (communications: any) => {
         let count = 0;
-          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            if (communications[comIndex].attachements) {
-              for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-                const thumbPath =  communications[comIndex].attachements[attachIndex].thumbPath;
-                let imagePath = thumbPath;
-                const description = communications[comIndex].attachements[attachIndex].s3path;
-                const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-                if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                  imagePath = communications[comIndex].attachements[attachIndex].s3path;
-                }
-                const imgobj = new Image(
-                  count,
-                  { // modal
-                    img: imagePath,
-                    description: description
-                  },
-                );
-                this.image_list_popup_temp.push(imgobj);
-                count++;
+        for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+          if (communications[comIndex].attachements) {
+            for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+              const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+              let imagePath = thumbPath;
+              const description = communications[comIndex].attachements[attachIndex].s3path;
+              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                imagePath = communications[comIndex].attachements[attachIndex].s3path;
               }
+              const imgobj = new Image(
+                count,
+                { // modal
+                  img: imagePath,
+                  description: description
+                },
+              );
+              this.image_list_popup_temp.push(imgobj);
+              count++;
             }
           }
-          if (count > 0) {
-            this.image_list_popup = this.image_list_popup_temp;
-            setTimeout(() => {
-              this.openImageModalRow(this.image_list_popup[0]);
-            }, 200);
-          }
+        }
+        if (count > 0) {
+          this.image_list_popup = this.image_list_popup_temp;
+          setTimeout(() => {
+            this.openImageModalRow(this.image_list_popup[0]);
+          }, 200);
+        }
       },
       error => { }
     );
@@ -2432,5 +2465,68 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
+  getGlobalSettings() {
+    return new Promise((resolve) => {
+      this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+          this.checkinStatus = data.waitlist;
+          resolve();
+        });
+    });
+  }
+  getBusinessdetFromLocalstorage() {
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    if (bdetails) {
+      this.bname = bdetails.bn || '';
+    }
+    if (this.bname === '') {
+      this.profileExist = false;
+    } else {
+      this.profileExist = true;
+    }
+    setTimeout(() => {
+      this.checkDashboardVisibility();
+    }, 500);
+  }
+  getAllServices() {
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    return new Promise((resolve) => {
+      this.provider_services.getServicesList(filter1)
+        .subscribe(
+          (data: any) => {
+            if (data.length > 0) {
+              this.serviceExist = true;
+            } else {
+              this.serviceExist = false;
+            }
+            resolve();
+          },
+          () => { }
+        );
+    });
+  }
+  checkDashboardVisibility() {
+    console.log('checkinStatus' + this.checkinStatus);
+    console.log('locationExist' + this.locationExist);
+    console.log('serviceExist' + this.serviceExist);
+    console.log('qExist' + this.qExist);
+    if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
+      if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
+        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
+      } else {
+        this.message1 = 'QManager is disabled in your settings';
+      }
+      this.apiloading = false;
+      this.showDashbard = false;
+    } else {
+      this.apiloading = false;
+      this.showDashbard = true;
+    }
+  }
+  gotoQmanager() {
+    this.router.navigate(['/provider/settings/q-manager']);
+  }
+  gotoSettings() {
+    this.router.navigate(['/provider/settings']);
+  }
 }
-

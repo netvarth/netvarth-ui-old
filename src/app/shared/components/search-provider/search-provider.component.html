@@ -25,8 +25,14 @@
   <div class="dept-services" *ngIf="!api_loading && showService && serviceJson && serviceJson.length > 0">
     <h6 class="mgn-bt-10">{{services_offered}}</h6>
     <ul>
-      <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">{{service.name
-                                        | capitalizeFirst}}</li>
+      <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">
+        <span *ngIf="service.serviceType === 'virtualService'">
+          <i class="fa fa-phone" *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+          <i class="fa meet-icon" *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+          <i class="fa zoom-icon"*ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+          <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+        </span>
+        {{service.name | capitalizeFirst}}</li>
     </ul>
   </div>
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
@@ -96,14 +102,16 @@
                     Service(s)</span>
                   <ul>
                     <li *ngFor="let serv of search_result.wtlstservices"
-                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name
-                                            | capitalizeFirst}}
-                      <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'videoService'">
-                        (<i class="fa fa-video-camera cal-mod-font" aria-hidden="true"></i>)
+                      (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name | capitalizeFirst}}
+                      <span *ngIf="serv.serviceType == 'virtualService'">
+                        <i class="fa fa-phone" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa meet-icon" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon"*ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                       </span>
-                      <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
+                      <!-- <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
                         (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)
-                      </span>
+                      </span> -->
 
                     </li>
                   </ul>
@@ -214,11 +222,11 @@
             <span class="checkin-btn disabled"
               *ngIf="!search_result['estimatedtime_det']['showToken'] && 
               (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || 
-              !search_result['estimatedtime_det']['availableToday']) && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
+              !search_result['estimatedtime_det']['availableToday']) && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{getTerminologyTerm('waitlist',
                             search_result)}}</span>
             <span class="checkin-btn disabled"
               *ngIf="search_result['estimatedtime_det']['showToken'] && (!search_result['estimatedtime_det']['onlineCheckIn'] || !search_result['estimatedtime_det']['isAvailableToday'] || !search_result['estimatedtime_det']['availableToday'])
-              && (search_result['estimatedtime_det']['cdate'] || search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>
+              && (!search_result['estimatedtime_det']['cdate'] || !search_result['estimatedtime_det']['futureWaitlist'])">{{get_token_btn}}</span>
             <!-- <div class="future-date-link checkin-future">
               <span class="bt10" (click)="checkinClicked(search_result, true)"
                 *ngIf="search_result['estimatedtime_det']['cdate'] && search_result['estimatedtime_det']['futureWaitlist']">{{do_you_want_to_cap}}

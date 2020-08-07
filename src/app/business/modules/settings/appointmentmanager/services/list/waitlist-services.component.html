@@ -27,16 +27,26 @@
                             <td>
                                 <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                     (click)="goServiceDetail(service)">
+                                    <span>
+                                        <i class="fa fa-phone" style="color: black;"
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                        <i class="fa meet-icon"
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                        <i class="fa zoom-icon"
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                        <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                            *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                    </span>
                                     {{service.name | capitalizeFirst}}
                                 </div>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
-                                    class="link"> (<i class="fa fa-volume-up cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link"> <i class="fa fa-volume-up cal-mod-font"
+                                        aria-hidden="true"></i></span>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
-                                    class="link"> (<i class="fa fa-video-camera cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link"> <i class="fa fa-video-camera cal-mod-font"
+                                        aria-hidden="true"></i></span>
                             </td>
                             <td>
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>

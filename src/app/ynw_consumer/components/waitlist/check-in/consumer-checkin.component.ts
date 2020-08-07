@@ -924,10 +924,10 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
             if (exists) {
-                if (this.waitlist_for.length === 1) {
-                    this.getFamilyMembers();
-                    return false;
-                }
+                // if (this.waitlist_for.length === 1) {
+                //     this.getFamilyMembers();
+                //     return false;
+                // }
                 this.waitlist_for.splice(existindx, 1);
             } else {
                 if (this.ismoreMembersAllowedtopush()) {
@@ -1480,7 +1480,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     case 'businessProfile':
                         this.businessjson = res;
                         this.accountType = this.businessjson.accountType;
+                        if (this.accountType === 'BRANCH') {
                         this.getProviderDepart(this.businessjson.id);
+                        }
                         this.domain = this.businessjson.serviceSector.domain;
                         if (this.domain === 'foodJoints') {
                             this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;

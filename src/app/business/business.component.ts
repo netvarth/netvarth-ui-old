@@ -32,13 +32,12 @@ export class BusinessComponent implements OnInit {
         this._navigationInterceptor(event);
       }
     );
-
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
           this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
-              if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
+              if (router.url === '\/provider') {
                 setTimeout(() => {
                   if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
                     if (data.waitlist) {
