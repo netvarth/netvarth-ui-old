@@ -1,274 +1,287 @@
 
 <header>
-        <div class="container">
-          <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0 ">
-            <div class="linkpagestyle">
-              <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-            </div>
-             <div class="content comn-cls" *ngIf="bill_data.amountDue > 0">     
-             <div *ngIf ="paidStatus == 'false'">
-                <section>
-                   <div class="content settings">
-                      <div class="row">
-                           <div class="col-md-12 no-padding linkdisplay">
-                              <div class="linkpage">
-                                 <div class="box box-widget widget-user-2">
-                                     <div><h4 style="text-align: center;"> Jaldee Pay</h4></div>
-                                        <div class="box-footer no-padding">
-                                           <ul class="nav nav-stacked"><br>
-                                            <span class="lnk setings"> <p style="text-align: center;"> Dear {{this.firstname}} ,Welcome to Jaldee PAY <br> Your contactless Bill is ready</p></span>
-                                            <li></li> 
-                                             <li>
-                                                <span  style="text-align: left;">Pay To</span>
-                                                <span class="lnk "><p class=" setings textcenter">{{this.businessname}}</p></span>
-                                                <p class="textcenter"><span> {{this.location}}</span><br>{{billtime}},{{billdate}}</p>
-                                                <h2 class="textcenter"> Rs.{{this.amountDue}}/-</h2>
-                                                <h2 class="textcenter"><button class="pay" (click)="pay()"><h2>Pay</h2></button></h2>
-                                             </li>
-                                             <li>
-                                              <a class="learnmore-pointer" (click)="billview()"> <p class="textcenter"> View bill</p></a>
-                                             </li>  
-                                            </ul>                                          
-                                            <div class="col-md-12 no-padding-small" *ngIf="showbill">
-                                                            <div class="w-dta">
-                                                              <div class="linkstyle">
-                                                                <div class="copy one" style="width: 100%">
-                                                                  <!-- <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8"> -->
-                                                                    <div class="linkpagepadding bill-section">
-                                                                      <div class="bill-section-content" id="receipt">
-                                                                        <div class="bill-wrapper ">
-                                                                         
-                                                                            <div class="bill-header">
-                                                                              <div class="section-one" >
-                                                                                  <h3>{{this.businessname}}</h3>
-                                                                                  <div class="details">
-                                                                                      <span class="columns">
-                                                                                        {{this.firstname}} 
-                                                                                      </span> <span class="columns rightalign"><span class="dynamic">{{billdate}}
-                                                                                              {{billtime}}</span>
-                                                                                      </span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
-                                                                                          <span class="dynamic">{{billnumber}}</span>
-                                                                                      </span> <span class="columns rightalign" *ngIf="gstnumber"> <span
-                                                                                              class="title">{{gstin_cap}}</span>
-                                                                                          <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
-                                                                                      </span>
-                                                                                  </div>
+    <div class="content comn-cls" *ngIf="bill_data.amountDue > 0">     
+         <div *ngIf ="paidStatus == 'false'">
+            <section>
+               <div class="content settings">
+                  <div class="row">
+                       <div class="col-md-12 no-padding linkdisplay">
+                          <div class="linkpage">
+                             <div class="box box-widget widget-user-2">
+                                  <div style="float:right;"><a routerLink="/"><img style="width: 150px;" src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a></div>
+                                      <div style= "padding-top: 20px; color: navy;"><b> Jaldee Pay</b></div>
+                                            <br><br>
+                                   <div class="box-footer no-padding">
+                                       <ul class="nav nav-stacked">
+                                        <span class="lnk setings"> <p style="text-align:left;"> Dear {{this.firstname}},</p></span>
+                                        <span class="lnk setings"> <p style="text-align:left;">Welcome to Jaldee PAY. <br> Your contactless bill is ready.</p></span>
+                                        <br>
+                                        <li> <p class="textcenter">Pay To</p></li>
+                                        
+                                         <li>
+                                            <p class="textcenter"><span>{{this.businessname}}</span><br><span> {{this.location}}</span><br>{{billtime}}, {{billdate}}</p> <br><br>
+                                            <h2 class="textcenter" style="font-size: -webkit-xxx-large; font-weight: 400;"> Rs.{{this.amountDue}}/-</h2><br>
+                                            <h2 class="textcenter"><button class="pay" (click)="pay()"><h6 style="padding-top: 10px;">PAY</h6></button></h2>
+                                         </li>
+                                         <li>
+                                          <a class="learnmore-pointer" (click)="billview()"> <p class="textcenter" style="color: navy;"> View bill</p></a>
+                                         </li>  
+                                        </ul>   
+                                        <div class="col-md-12 no-padding-small" *ngIf="showbill">
+                                            <div class="w-dta">
+                                              <div class="linkstyle">
+                                                <div class="copy one" style="width: 100%">
+                                                    <div class="linkpagepadding bill-section">
+                                                      <div class="bill-section-content" id="receipt">
+                                                        <div class="bill-wrapper ">
+                                                         
+                                                            <div class="bill-header">
+                                                              <div class="section-one" >
+                                                                  <h3>{{this.businessname}}</h3>
+
+                                                                  <!-- <div class="details">
+                                                                    <div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
+                                                                        <span class="dynamic">
+                                                                            {{this.firstname}} 
+                                                                        </span> &nbsp;  
+                                                                        <span class="dynamic">{{billdate}}
+                                                                            {{billtime}}</span>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
+                                                                        <span *ngIf="billnumber">
+                                                                            <span class="title">{{bill_no_cap}} </span>
+                                                                            <span class="dynamic">{{billnumber}}</span>
+                                                                        </span>
+                                                                        <span class="dynamic fl-right" *ngIf="gstnumber">
+                                                                            <span class="title">{{gstin_cap}} </span>
+                                                                            <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div> -->
+                                                                  <div class="details">
+                                                                      <span class="columns">
+                                                                        {{this.firstname}} 
+                                                                      </span> <span class="columns rightalign"><span class="dynamic">{{billdate}}
+                                                                              {{billtime}}</span>
+                                                                      </span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
+                                                                          <span class="dynamic">{{billnumber}}</span>
+                                                                      </span> <span class="columns rightalign" *ngIf="gstnumber"> <span
+                                                                              class="title">{{gstin_cap}}</span>
+                                                                          <span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
+                                                                      </span>
+                                                                  </div>
+                                                              </div>
+                                                            </div>
+                      
+                                                            <div class="bill-content">
+                                                                <div class="section-three bill-responsive">
+                                                                    <div class="bill-breakup">
+                                                                        <div class="list" *ngFor="let service of bill_data.service; let i = index">
+                                                                            <div class="list-content">
+                                                                                <div class="c-row one">
+                                                                                    <div class="name">
+                                                                                        {{service.serviceName | capitalizeFirst}}  {{service.price | currency:'&#8377; '}} <span
+                                                                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+                                                                                            *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
+                                                                                    </div>
+                                                                                    <div class="quantity">{{qnty_cap}}
+                                                                                        {{service.quantity}}</div>
+                                                                                    <div class="price" style="flex-basis: 30% !important">{{(service.quantity * service.price) |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two">
+                                                                                    <div class="discount-row two-col" *ngFor="let discount of service.discount">
+                                                                                        <div class="name">{{discount.name}}</div>
+                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{discount.discountValue |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                                <div class="c-row one three two-col"
+                                                                                    *ngIf="service.discount &&service.discount.length > 0">
+                                                                                    <div class="name">
+                                                                                        {{sub_tot_cap}}
+                                                                                    </div>
+                                                                                    <div class="price"  style="flex-basis: 30% !important">{{service.netRate |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="list" *ngFor="let item of bill_data.items; let i = index">
+                                                                            <div class="list-content">
+                                                                                <div class="c-row one">
+                                                                                    <div class="name">
+                                                                                        {{item.itemName | capitalizeFirst}} - {{item.price |
+                                                                                            currency:'&#8377; '}} <span
+                                                                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+                                                                                            *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
+                                                                                    </div>
+                                                                                    <div class="quantity">{{qnty_cap}}
+                                                                                        {{item.quantity}}</div>
+                                                                                    <div class="price" style="flex-basis: 30% !important">{{(item.quantity * item.price) |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two">
+                                                                                    <div class="discount-row two-col" *ngFor="let discount of item.discount">
+                                                                                        <div class="name">{{discount.name}}</div>
+                                                                                        <div class="price">(-){{discount.discountValue |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="c-row one three two-col"
+                                                                                    *ngIf="item.discount && item.discount.length > 0">
+                                                                                    <div class="name">
+                                                                                        {{sub_tot_cap}}
+                                                                                    </div>
+                                                                                    <div class="price" style="flex-basis: 30% !important">{{item.netRate |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="list bill-summary">
+                                                                            <div class="list-content">
+                                                                                <div class="c-row two section-two">
+                                                                                    <div class="discount-row two-col">
+                                                                                          <div class="name st">
+                                                                                        {{gross_amnt_cap}}
+                                                                                      
+                                                                                    </div>
+                                                                                    <div class="price"  style="flex-basis:30% !important">{{bill_data.netTotal | currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                              </div>
+                                                                                <div class="c-row two section-two">
+                                                                                    <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
+                                                                                        <div class="name">JDN</div>
+                                                                                        <div class="price" style="flex-basis:30% !important">(-){{bill_data.jdn.discount |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div> 
+                                                                                <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
+                                                                                    <div class="discount-row two-col" >
+                                                                                        <div class="name">
+                                                                                            {{discount.name}}
+                                                                                        </div>
+                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{discount.discValue |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two" *ngFor="let coupon of bill_data.providerCoupon">
+                                                                                    <div class="discount-row two-col">
+                                                                                        <div class="name">
+                                                                                            {{coupon.name}}
+                                                                                        </div>
+                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{coupon.couponValue |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two"
+                                                                                    *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+                                                                                    <div class="discount-row two-col">
+                                                                                        <div class="name">
+                                                                                            {{jcoupon.key}}
+                                                                                        </div>
+                                                                                        <div class="price" style="flex-basis: 30% !important">
+                                                                                            <span>(-)</span>
+                                                                                            <span (click)="showJCCouponNote(jcoupon)"
+                                                                                                [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
+                                                                                currency:'&#8377; '}}</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two" *ngIf="bill_data.taxableTotal">
+                                                                                    <div class="discount-row two-col">
+                                                                                        <div class="name">
+                                                                                            <span class="tax-top">Tax
+                                                                                                {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
+                                                                                                currency:'&#8377; '}}</span><br /><span
+                                                                                                class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+                                                                                                SGST-{{bill_data.taxPercentage/2}}%)</span>
+                                                                                        </div>
+                                                                                        <div class="price">(+){{bill_data.totalTaxAmount |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                            
+                                                                                </div>
+                                                                                <div class="c-row two section-two" *ngIf="bill_data.netRate > 0">
+                                                                                    <div class="discount-row two-col">
+                                                                                   <div class="name st"> 
+                                                                                        Net Total
+                                                                                    </div>
+                                                                                    <div class="price" style="flex-basis:30% !important">{{bill_data.netRate |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                      </div>
+                      
+                                                                                </div>
+                                                                                <div class="c-row two section-two"   *ngIf="bill_data.totalAmountPaid > 0">
+                                                                                    <div class="discount-row two-col" >
+                                                                                        <div class="name st">
+                                                                                            Amount Paid
+                                                                                        </div>
+                                                                                        <div class="price" style="flex-basis: 30% !important">{{bill_data.totalAmountPaid |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="c-row two section-two" *ngIf="bill_data.amountDue >= 0">
+                                                                                    <div class="discount-row two-col">
+                                                                                          <div class="name st"> 
+                                                                                        Amount Due
+                                                                                    </div>
+                                                                                    <div class="price" style="flex-basis:30% !important">{{bill_data.amountDue |
+                                                                                        currency:'&#8377; '}}</div>
+                                                                                </div>
                                                                               </div>
                                                                             </div>
-                                      
-                                                                            <div class="bill-content">
-                                                                                <div class="section-three bill-responsive">
-                                                                                    <div class="bill-breakup">
-                                                                                        <div class="list" *ngFor="let service of bill_data.service; let i = index">
-                                                                                            <div class="list-content">
-                                                                                                <div class="c-row one">
-                                                                                                    <div class="name">
-                                                                                                        {{service.serviceName | capitalizeFirst}}  {{service.price | currency:'&#8377; '}} <span
-                                                                                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
-                                                                                                            *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
-                                                                                                    </div>
-                                                                                                    <div class="quantity">{{qnty_cap}}
-                                                                                                        {{service.quantity}}</div>
-                                                                                                    <div class="price" style="flex-basis: 30% !important">{{(service.quantity * service.price) |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two">
-                                                                                                    <div class="discount-row two-col" *ngFor="let discount of service.discount">
-                                                                                                        <div class="name">{{discount.name}}</div>
-                                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{discount.discountValue |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                
-                                                                                                <div class="c-row one three two-col"
-                                                                                                    *ngIf="service.discount &&service.discount.length > 0">
-                                                                                                    <div class="name">
-                                                                                                        {{sub_tot_cap}}
-                                                                                                    </div>
-                                                                                                    <div class="price"  style="flex-basis: 30% !important">{{service.netRate |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="list" *ngFor="let item of bill_data.items; let i = index">
-                                                                                            <div class="list-content">
-                                                                                                <div class="c-row one">
-                                                                                                    <div class="name">
-                                                                                                        {{item.itemName | capitalizeFirst}} - {{item.price |
-                                                                                                            currency:'&#8377; '}} <span
-                                                                                                            [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
-                                                                                                            *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
-                                                                                                    </div>
-                                                                                                    <div class="quantity">{{qnty_cap}}
-                                                                                                        {{item.quantity}}</div>
-                                                                                                    <div class="price" style="flex-basis: 30% !important">{{(item.quantity * item.price) |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two">
-                                                                                                    <div class="discount-row two-col" *ngFor="let discount of item.discount">
-                                                                                                        <div class="name">{{discount.name}}</div>
-                                                                                                        <div class="price">(-){{discount.discountValue |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="c-row one three two-col"
-                                                                                                    *ngIf="item.discount && item.discount.length > 0">
-                                                                                                    <div class="name">
-                                                                                                        {{sub_tot_cap}}
-                                                                                                    </div>
-                                                                                                    <div class="price" style="flex-basis: 30% !important">{{item.netRate |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="list bill-summary">
-                                                                                            <div class="list-content">
-                                                                                                <div class="c-row two section-two">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                          <div class="name st">
-                                                                                                        {{gross_amnt_cap}}
-                                                                                                      
-                                                                                                    </div>
-                                                                                                    <div class="price"  style="flex-basis:30% !important">{{bill_data.netTotal | currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                              </div>
-                                                                                                <div class="c-row two section-two">
-                                                                                                    <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
-                                                                                                        <div class="name">JDN</div>
-                                                                                                        <div class="price" style="flex-basis:30% !important">(-){{bill_data.jdn.discount |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div> 
-                                                                                                <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
-                                                                                                    <div class="discount-row two-col" >
-                                                                                                        <div class="name">
-                                                                                                            {{discount.name}}
-                                                                                                        </div>
-                                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{discount.discValue |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two" *ngFor="let coupon of bill_data.providerCoupon">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                        <div class="name">
-                                                                                                            {{coupon.name}}
-                                                                                                        </div>
-                                                                                                        <div class="price" style="flex-basis: 30% !important">(-){{coupon.couponValue |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two"
-                                                                                                    *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                        <div class="name">
-                                                                                                            {{jcoupon.key}}
-                                                                                                        </div>
-                                                                                                        <div class="price" style="flex-basis: 30% !important">
-                                                                                                            <span>(-)</span>
-                                                                                                            <span (click)="showJCCouponNote(jcoupon)"
-                                                                                                                [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
-                                                                                                currency:'&#8377; '}}</span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two" *ngIf="bill_data.taxableTotal">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                        <div class="name">
-                                                                                                            <span class="tax-top">Tax
-                                                                                                                {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
-                                                                                                                currency:'&#8377; '}}</span><br /><span
-                                                                                                                class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
-                                                                                                                SGST-{{bill_data.taxPercentage/2}}%)</span>
-                                                                                                        </div>
-                                                                                                        <div class="price">(+){{bill_data.totalTaxAmount |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                            
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two" *ngIf="bill_data.netRate > 0">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                   <div class="name st"> 
-                                                                                                        Net Total
-                                                                                                    </div>
-                                                                                                    <div class="price" style="flex-basis:30% !important">{{bill_data.netRate |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                      </div>
-                                      
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two"   *ngIf="bill_data.totalAmountPaid > 0">
-                                                                                                    <div class="discount-row two-col" >
-                                                                                                        <div class="name st">
-                                                                                                            Amount Paid
-                                                                                                        </div>
-                                                                                                        <div class="price" style="flex-basis: 30% !important">{{bill_data.totalAmountPaid |
-                                                                                                            currency:'&#8377; '}}</div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="c-row two section-two" *ngIf="bill_data.amountDue >= 0">
-                                                                                                    <div class="discount-row two-col">
-                                                                                                          <div class="name st"> 
-                                                                                                        Amount Due
-                                                                                                    </div>
-                                                                                                    <div class="price" style="flex-basis:30% !important">{{bill_data.amountDue |
-                                                                                                        currency:'&#8377; '}}</div>
-                                                                                                </div>
-                                                                                              </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                       
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="section-three" *ngIf="bill_data && billNoteExists">
-                                                                                    <a class="learnmore-pointer" id="customer-help" (click)="billNotesClicked()">Bill notes</a>
-                                                                                    <div class="bill-notes" *ngIf="showBillNotes && billNoteExists">
-                                                                                        <ul>
-                                                                                            <li *ngIf="bill_data.displayNotes">
-                                                                                                {{bill_data.displayNotes.displayNotes}}</li>
-                                                                                            <div class *ngFor="let discount of bill_data.discount">
-                                                                                                <li *ngIf="discount.displayNote">
-                                                                                                    <span style="font-weight: 600"> {{discount.name}} - </span>
-                                                                                                    {{discount.displayNote}}
-                                                                                                </li>
-                                                                                            </div>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                                                  
-                                                                              </div>
-                                                                              </div>
-                                                                          </div>
                                                                         </div>
-                                                                      </div>
+                                                                       
                                                                     </div>
-                                                                  </div>
-                                            </div>
-                                        </div>
+                                                                </div>
+                                                                <div class="section-three" *ngIf="bill_data && billNoteExists">
+                                                                    <a class="learnmore-pointer" id="customer-help" (click)="billNotesClicked()">Bill notes</a>
+                                                                    <div class="bill-notes" *ngIf="showBillNotes && billNoteExists">
+                                                                        <ul>
+                                                                            <li *ngIf="bill_data.displayNotes">
+                                                                                {{bill_data.displayNotes.displayNotes}}</li>
+                                                                            <div class *ngFor="let discount of bill_data.discount">
+                                                                                <li *ngIf="discount.displayNote">
+                                                                                    <span style="font-weight: 600"> {{discount.name}} - </span>
+                                                                                    {{discount.displayNote}}
+                                                                                </li>
+                                                                            </div>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                                  
+                                                              </div>
+                                                              </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                             </div>                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-             </div>   
-             <div style="text-align: center;" *ngIf ="paidStatus == 'true'" >
-                  <div style="padding-bottom: 10px"><b>&#8377;{{this.amountDue}}</b></div> 
-                   <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br>
-                    <div  style="font-size:14px;" class="ivc">
-                      <div class="pay-det-row">
-                           <span style="padding-right: 60px;"><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
-                       </div> 
-                       <div class="pay-det-row">
-                           <span><b>Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
-                       </div> 
-                        <div class="pay-det-row">
-                           <span><b>Transaction Id:</b>&nbsp;<span>{{razorpay_order_id}}</span></span>
-                        </div> 
-                    </div>       
-             </div>            
-           </div>
-           <div class="linkexpired"  *ngIf="bill_data.amountDue == 0" >This Link has expired </div>
-           
-        </div>
-       </div>
-     </header>
-    
+                </div>
+            </section>
+         </div> 
+         <div style="text-align: center;" *ngIf ="paidStatus == 'true'" >
+            <div style="padding-bottom: 10px"><b>&#8377;{{this.amountDue}}</b></div> 
+             <i class="fa fa-check-circle"  style="color: green;"><span style="font-size: large;">Paid Successfully</span> </i><br>
+              <div  style="font-size:14px;" class="ivc">
+                <div class="pay-det-row">
+                     <span style="padding-right: 60px;"><b>Payment Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
+                 </div> 
+                 <div class="pay-det-row">
+                     <span><b>Payment Ref Id:</b>&nbsp;<span>{{razorpay_payment_id}}</span></span>
+                 </div> 
+                  <div class="pay-det-row">
+                     <span><b>Transaction Id:</b>&nbsp;<span>{{razorpay_order_id}}</span></span>
+                  </div> 
+              </div>       
+       </div> 
+       </div>     
+       <div class="linkexpired"  *ngIf="bill_data.amountDue == 0" >This Link has expired </div> 
+ </header>

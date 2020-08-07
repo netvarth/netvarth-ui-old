@@ -10367,11 +10367,12 @@ a {
   height: auto;
   background: transparent;
   border: 1px solid #00aef2;
-  padding: 5px 15px;
-  color: #00aef2;
+  padding: 1px 40px;
+  color: white;
+  background-color: navy;
   font-size: .75rem;
   font-weight: 600;
-  border-radius: 5px;
+  border-radius: 60px;
 }
 
 .linkpage {
