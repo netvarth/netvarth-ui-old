@@ -285,6 +285,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.userId) {
         this.userId = qparams.userId;
       }
+      if (qparams.src) {
+        this.pSource = qparams.src;
+      }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
       // }
@@ -1859,7 +1862,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
   providerDetClicked(userId) {
     const account = this.provider_id + '_' + userId;
-    this.routerobj.navigate([account]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'bp'
+      }
+    };
+    this.routerobj.navigate([account], navigationExtras );
     // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
   }
 
@@ -1898,5 +1906,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   goBack() {
     this.locationobj.back();
     this.userId = null;
+    this.pSource = null;
   }
 }
