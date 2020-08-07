@@ -83,14 +83,14 @@ export class CheckinDetailComponent implements OnInit {
                 this.waitlistdata = qParams;
             });
         this.waitlist = this.waitlistdata.waitlist || null;
-        const waitlistjson = JSON.parse(this.waitlist);
+        const waitlistjson = JSON.parse(this.waitlist); 
         this.BusinessName = waitlistjson.providerAccount.businessName;
         this.ProviderId = waitlistjson.providerAccount.id;
         this.ynwUuid = waitlistjson.ynwUuid;
         this.date = waitlistjson.date;
         this.locn = waitlistjson.queue.location.place;
-        this.firstname = waitlistjson.consumer.firstName;
-        this.lastname = waitlistjson.consumer.lastName;
+        this.firstname = waitlistjson.waitlistingFor[0].firstName;
+        this.lastname = waitlistjson.waitlistingFor[0].lastName;
         this.service = waitlistjson.service.name;
         this.deptName = waitlistjson.service.deptName;
         this.queueStart = waitlistjson.queue.queueStartTime;
