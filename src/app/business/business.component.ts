@@ -20,7 +20,6 @@ export class BusinessComponent implements OnInit {
   apiloading = false;
   activeSkin;
   subscription: Subscription;
-  source;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -33,20 +32,17 @@ export class BusinessComponent implements OnInit {
         this._navigationInterceptor(event);
       }
     );
-    this.route.queryParams.subscribe(qparams => {
-      this.source = qparams.origin;
-    });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
           this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
-              if ((router.url === '\/provider' || router.url === '\/provider\/check-ins' || router.url === '\/provider\/appointments') && this.source === 'login') {
+              if (router.url === '\/provider') {
                 setTimeout(() => {
                   if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (router.url === '\/provider\/check-ins' && data.waitlist) {
+                    if (data.waitlist) {
                       router.navigate(['provider', 'check-ins']);
-                    } else if (router.url === '\/provider\/appointments' && data.appointment) {
+                    } else if (data.appointment) {
                       router.navigate(['provider', 'appointments']);
                     } else {
                       router.navigate(['provider', 'settings']);

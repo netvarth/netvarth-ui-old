@@ -374,9 +374,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.getAllServices();
-    this.getBusinessdetFromLocalstorage();
-    this.getGlobalSettings();
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -605,9 +602,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             _this.scheduleExist = false;
           }
-          setTimeout(() => {
-            this.checkDashboardVisibility();
-          }, 500);
           resolve(schedules);
         });
     });
@@ -2860,7 +2854,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.getSchedules('all').then(
         (queues: any) => {
-          _this.schedules = queues;
+          _this.schedules = queues;          
+          _this.getGlobalSettings().then(
+            () => {
+              _this.getAllServices().then(
+                () => {
+                  _this.getBusinessdetFromLocalstorage();
+                }
+              );
+            }
+          );
           resolve(queues);
         },
         () => {
@@ -3058,10 +3061,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
   getGlobalSettings() {
+    return new Promise((resolve) => {
     this.provider_services.getGlobalSettings().subscribe(
       (data: any) => {
         this.apptStatus = data.appointment;
+        resolve();
       });
+    });
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
@@ -3073,9 +3079,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.profileExist = true;
     }
+    setTimeout(() => {
+      this.checkDashboardVisibility();
+    }, 500);
   }
   getAllServices() {
     const filter1 = { 'serviceType-neq': 'donationService' };
+    return new Promise((resolve) => {
     this.provider_services.getServicesList(filter1)
       .subscribe(
         (data: any) => {
@@ -3084,9 +3094,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.serviceExist = false;
           }
+          resolve();
         },
         () => { }
       );
+    });
   }
   checkDashboardVisibility() {
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {

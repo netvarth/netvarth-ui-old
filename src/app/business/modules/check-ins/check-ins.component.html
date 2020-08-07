@@ -527,7 +527,7 @@
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
-                                <div class="filterTextinput" *ngIf="time_type !== 3">
+                                <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
                                       (blur)="doSearch()" class="filterTextbox" placeholder="Status code">

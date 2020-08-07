@@ -367,9 +367,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.getAllServices();
-    this.getBusinessdetFromLocalstorage();
-    this.getGlobalSettings();
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
@@ -903,9 +900,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               _this.qExist = false;
             }
-            setTimeout(() => {
-              this.checkDashboardVisibility();
-            }, 500);
             resolve(queues);
           });
       });
@@ -956,6 +950,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getQs('all').then(
         (queues: any) => {
           _this.queues = queues;
+          _this.getGlobalSettings().then(
+            () => {
+              _this.getAllServices().then(
+                () => {
+                  _this.getBusinessdetFromLocalstorage();
+                }
+              );
+            }
+          );
           resolve(queues);
         },
         () => {
@@ -2463,10 +2466,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
   getGlobalSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
-      (data: any) => {
-        this.checkinStatus = data.waitlist;
-      });
+    return new Promise((resolve) => {
+      this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+          this.checkinStatus = data.waitlist;
+          resolve();
+        });
+    });
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
@@ -2478,22 +2484,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.profileExist = true;
     }
+    setTimeout(() => {
+      this.checkDashboardVisibility();
+    }, 500);
   }
   getAllServices() {
     const filter1 = { 'serviceType-neq': 'donationService' };
-    this.provider_services.getServicesList(filter1)
-      .subscribe(
-        (data: any) => {
-          if (data.length > 0) {
-            this.serviceExist = true;
-          } else {
-            this.serviceExist = false;
-          }
-        },
-        () => { }
-      );
+    return new Promise((resolve) => {
+      this.provider_services.getServicesList(filter1)
+        .subscribe(
+          (data: any) => {
+            if (data.length > 0) {
+              this.serviceExist = true;
+            } else {
+              this.serviceExist = false;
+            }
+            resolve();
+          },
+          () => { }
+        );
+    });
   }
   checkDashboardVisibility() {
+    console.log('checkinStatus' + this.checkinStatus);
+    console.log('locationExist' + this.locationExist);
+    console.log('serviceExist' + this.serviceExist);
+    console.log('qExist' + this.qExist);
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
         this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
@@ -2514,4 +2530,3 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/provider/settings']);
   }
 }
-

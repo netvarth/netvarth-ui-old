@@ -145,7 +145,7 @@ export class SharedFunctions {
             localStorage.setItem('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
-            this.router.navigate(['/provider'], {queryParams: {origin: 'login'}});
+            this.router.navigate(['/provider']);
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
