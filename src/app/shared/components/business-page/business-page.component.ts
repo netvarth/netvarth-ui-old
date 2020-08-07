@@ -563,7 +563,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               if (this.businessid && this.userId) {
                 appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-                wait_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
               }
             }
             if (this.userId) {
