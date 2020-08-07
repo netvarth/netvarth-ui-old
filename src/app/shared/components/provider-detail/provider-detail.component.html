@@ -76,9 +76,12 @@
                                                         " *ngIf="jdnlength > 0" (click)="openJdn()"
                                                     [matTooltip]="jdnTooltip"><img height="35" width="35"
                                                         src="./assets/images/JDN.png"></span></h3>
-                                            <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
-                                                        | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
-                                                        capitalizeFirst}})</span>
+                                            <span class="category" *ngIf="businessjson.serviceSector?.displayName">
+                                                <!-- {{businessjson.serviceSector.displayName
+                                                        | capitalizeFirst}} -->
+                                                         {{businessjson.serviceSubSector.displayName |
+                                                        capitalizeFirst}}
+                                                    </span>
 
                                             <div class="clr">
                                                 <div class="pro-desc">
