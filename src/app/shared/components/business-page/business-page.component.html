@@ -253,43 +253,6 @@
                                     <div class="font-open-now" *ngIf="loc.opennow || loc.apptopennow">
                                         &nbsp;{{open_now_cap}}
                                     </div>
-<<<<<<< HEAD
-=======
-                                    <div>
-                                        <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                                src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                        <span *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img class="img_sizenew"
-                                                src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
-                                        <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                                src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 donat-service"
-                                    *ngIf="apptServicesjson.length > 0 && (!showDepartments || userId)">
-                                    <span class="sub-title-donate">Service(s)</span>
-                                    <ul>
-                                        <li *ngFor="let appointmentService of apptfirstArray"
-                                            (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
-                                            {{appointmentService.name}}
-                                            <span *ngIf="appointmentService.serviceType == 'virtualService'">
-                                                <i class="fa fa-phone"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                              <i class="fa meet-icon"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                <i class="fa zoom-icon"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
-                                            </span></li>
-                                        <a *ngIf="apptServicesjson.length > 3 && showType === 'more'"
-                                            (click)="showmore('less')">
-                                            more
-                                        </a>
-                                        <a *ngIf="showType === 'less'" (click)="showmore('more')">
-                                            less
-                                        </a>
-                                    </ul>
->>>>>>> branch '1.3.0' of https://github.com/netvarth/calpine-ui
                                 </div>
                             </div>
                             <div class="clearfix"></div>
