@@ -68,6 +68,7 @@ export class CheckinDetailComponent implements OnInit {
     statusUpdatedTime: any;
     callingModes;
     callingModesDisplayName = projectConstants.CALLING_MODES;
+    phonenumber;
     constructor(
         private activated_route: ActivatedRoute,
         private dialog: MatDialog,
@@ -105,6 +106,7 @@ export class CheckinDetailComponent implements OnInit {
         this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
         this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('checkin');
         this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+        this.phonenumber = waitlistjson.waitlistPhoneNumber;
     }
     ngOnInit() {
     }

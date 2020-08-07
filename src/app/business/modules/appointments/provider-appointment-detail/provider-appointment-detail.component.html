@@ -51,7 +51,7 @@
                   </div>
                 </div>
                 <div class="item" *ngIf="waitlist_data.batchId"><span
-                    class="ttle">Batch:</span><span>{{waitlist_data.batchId}}</span></div>
+                    class="ttle">Batch</span><span>{{waitlist_data.batchId}}</span></div>
                 <div class="item" *ngIf="waitlist_data.appointmentEncId"><span class="ttle">Status
                     code</span><span>{{waitlist_data.appointmentEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span>
@@ -82,6 +82,8 @@
                         class="text">Refund</span></span>
                   </ng-container>
                 </div>
+                <div class="item" *ngIf="waitlist_data.phoneNumber"><span
+                    class="ttle">Phonenumber</span><span>{{waitlist_data.phoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints' && waitlist_data.partySize"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>

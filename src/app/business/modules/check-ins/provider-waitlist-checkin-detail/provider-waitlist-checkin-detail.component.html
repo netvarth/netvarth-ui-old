@@ -107,6 +107,8 @@
                         class="text">Refund</span></span>
                   </ng-container>
                 </div>
+                <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span
+                  class="ttle">Phonenumber</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>
