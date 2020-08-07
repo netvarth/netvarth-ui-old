@@ -2514,3 +2514,4 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/provider/settings']);
   }
 }
+
