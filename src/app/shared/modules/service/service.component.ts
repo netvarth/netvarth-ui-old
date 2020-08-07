@@ -292,10 +292,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectServiceHandler(event) {
         this.serv_type = event;
         if (event === 'virtualService') {
+            this.serviceForm.controls['virtualServiceType'].enable();
             this.serviceForm.get('virtualServiceType').setValue('');
             this.is_virtual_serv = true;
             this.is_physical = 1;
         } else {
+            this.serviceForm.controls['virtualServiceType'].disable();
             this.is_virtual_serv = false;
             this.is_tool = false;
             this.modeselected = false;
