@@ -89,7 +89,7 @@
           <span> Appointments</span>
         </a> -->
         <!-- (click)="menuClick('appt');closeMenu()" -->
-        <a class="pointer-cursor" routerLink="appointments" [queryParams]="{source:'menu'}" (click)="closeMenu()"
+        <a class="pointer-cursor" routerLink="appointments" (click)="closeMenu()"
           routerLinkActive="active-lnk">
           <i class="fa fa-calendar"></i>
           <span> Appointments</span>
@@ -100,7 +100,7 @@
           <i class="fa fa-check-circle"></i>
           <span> Token/Check-ins</span>
         </a> -->
-        <a class="pointer-cursor" routerLink="check-ins" [queryParams]="{source:'menu'}" (click)="closeMenu()"
+        <a class="pointer-cursor" routerLink="check-ins" (click)="closeMenu()"
           routerLinkActive="active-lnk">
           <i class="fa fa-check-circle"></i>
           <span *ngIf="showToken"> Tokens</span>

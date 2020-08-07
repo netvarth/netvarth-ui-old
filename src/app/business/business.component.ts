@@ -34,19 +34,19 @@ export class BusinessComponent implements OnInit {
       }
     );
     this.route.queryParams.subscribe(qparams => {
-      this.source = qparams.source;
+      this.source = qparams.origin;
     });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
           this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
-              if ((router.url === '\/provider' || router.url === '\/provider\/check-ins' || router.url === '\/provider\/appointments') && !this.source) {
+              if ((router.url === '\/provider' || router.url === '\/provider\/check-ins' || router.url === '\/provider\/appointments') && this.source === 'login') {
                 setTimeout(() => {
                   if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (data.waitlist) {
+                    if (router.url === '\/provider\/check-ins' && data.waitlist) {
                       router.navigate(['provider', 'check-ins']);
-                    } else if (data.appointment) {
+                    } else if (router.url === '\/provider\/appointments' && data.appointment) {
                       router.navigate(['provider', 'appointments']);
                     } else {
                       router.navigate(['provider', 'settings']);
