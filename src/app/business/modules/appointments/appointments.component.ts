@@ -90,6 +90,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
+    appointmentEncId: '',
     appointmentMode: 'all',
     queue: 'all',
     service: 'all',
@@ -108,6 +109,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
+    appointmentEncId: false,
     appointmentMode: false,
     queue: false,
     service: false,
@@ -818,6 +820,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
+      appointmentEncId: false,
       appointmentMode: false,
       queue: false,
       service: false,
@@ -833,6 +836,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
+      appointmentEncId: '',
       appointmentMode: 'all',
       queue: 'all',
       service: 'all',
@@ -1549,6 +1553,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
+    if (this.filter.appointmentEncId !== '') {
+      api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
+    }
     if (this.services.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.services.toString();
     }
@@ -1622,7 +1629,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;

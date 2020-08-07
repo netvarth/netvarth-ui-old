@@ -336,6 +336,12 @@
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
+                                <div class="filterTextinput" *ngIf="time_type !== 3">
+                                  <li class="filterli">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Status code">
+                                  </li>
+                                </div>
                                 <div *ngIf="service_list.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -753,6 +759,13 @@
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.phone_number" #Fmobile
                                       (blur)="doSearch()" (keyup)="keyPressed($event)" (keypress)="isNumeric($event)"
                                       maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                                  </li>
+                                </div>
+
+                                <div class="filterTextinput">
+                                  <li class="filterli">
+                                    <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
+                                      (blur)="doSearch()" class="filterTextbox" placeholder="Phone Number">
                                   </li>
                                 </div>
                                 <!-- <div *ngIf="time_type == 3">
