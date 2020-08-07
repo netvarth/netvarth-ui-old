@@ -29,6 +29,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   customer_label = '';
   settings;
   showToken = false;
+  donationstatus: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -95,6 +96,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   break;
         case 'waitlistSettings':
           this.showToken = message.value;
+          break;
+        case 'donationStatus':
+          this.donationstatus = message.donationStatus;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -168,6 +172,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.domain = user.sector;
+    this.getGlobalSettings();
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();
     this.getProviderSettings();
@@ -193,5 +198,11 @@ export class MenuComponent implements OnInit, OnDestroy {
       },
         () => {
         });
+  }
+  getGlobalSettings() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.donationstatus = data.donationFundRaising;
+      });
   }
 }
