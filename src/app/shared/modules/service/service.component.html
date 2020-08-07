@@ -46,10 +46,10 @@
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp
-                        Number</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom
-                        ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class=" ttle">GoogleMeet ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -187,10 +187,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     class="example-full-width mat-select-virtualservice">
                     <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
                         (selectionChange)="selectServiceTypeHandler(type.value)">
-                        <mat-option *ngIf="include_audio" [value]="'audioService'">
+                        <mat-option [value]="'audioService'">
                             Audio
                         </mat-option>
-                        <mat-option *ngIf="include_video" [value]="'videoService'">
+                        <mat-option [value]="'videoService'">
                             Video
                         </mat-option>
                     </mat-select>
@@ -202,21 +202,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <mat-form-field class="mat-select-virtualsrvcategory">
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
-                        <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
-                            <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"
-                                aria-hidden="true"></i>
-                            <i *ngIf="mode.callingMode === 'Zoom'" class="fa zoom-icon"></i>
-                            <i *ngIf="mode.callingMode === 'GoogleMeet'" class="fa meet-icon" ></i>
-                            <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
-                           <span class="dash">{{mode.callingMode}}</span> 
+                        <mat-option *ngFor="let mode of telemodes" [value]="mode">
+                            <i *ngIf="mode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
+                            <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
+                            <i *ngIf="mode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                           <span class="dash">{{mode}}</span> 
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field
                     *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
                     class="example-full-width mat-select-virtualservice">
-                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
-                        placeholder="{{selctd_tool}} ID" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
             <div class="form-group"
