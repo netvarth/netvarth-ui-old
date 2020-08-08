@@ -62,6 +62,13 @@
                     </span>
                 </div>
             </div>
+            <div class="outer4" *ngIf="data.serdet && data.serdet.prePayment">
+                <div class="prepayment">
+                    <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
+                        <span>&#8377; </span>{{data.serdet.minAmount}}
+                    </span>
+                </div>
+            </div>
             <div class="outer5" *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
                 <div class="duration">
                     <span>{{service_duration}} : </span><span style="font-weight: bold">

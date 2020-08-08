@@ -140,7 +140,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   createForm() {
     this.amForm = this.fb.group({
-      message: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_ALPHANUMERIC_DOT)])]
+      message: ['', Validators.compose([Validators.required])]
     });
   }
   onSubmit(form_data) {

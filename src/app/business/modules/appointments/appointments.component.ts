@@ -654,6 +654,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               self.locationExist = true;
             } else {
               self.locationExist = false;
+              self.checkDashboardVisibility();
             }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
@@ -2854,16 +2855,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.getSchedules('all').then(
         (queues: any) => {
-          _this.schedules = queues;          
-          _this.getGlobalSettings().then(
-            () => {
-              _this.getAllServices().then(
-                () => {
-                  _this.getBusinessdetFromLocalstorage();
-                }
-              );
-            }
-          );
+          _this.schedules = queues;
+          if (_this.locationExist) {
+            _this.getGlobalSettings().then(
+              () => {
+                _this.getAllServices().then(
+                  () => {
+                    _this.getBusinessdetFromLocalstorage();
+                  }
+                );
+              }
+            );
+          }
           resolve(queues);
         },
         () => {
@@ -3062,11 +3065,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getGlobalSettings() {
     return new Promise((resolve) => {
-    this.provider_services.getGlobalSettings().subscribe(
-      (data: any) => {
-        this.apptStatus = data.appointment;
-        resolve();
-      });
+      this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+          this.apptStatus = data.appointment;
+          resolve();
+        });
     });
   }
   getBusinessdetFromLocalstorage() {
@@ -3086,26 +3089,26 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getAllServices() {
     const filter1 = { 'serviceType-neq': 'donationService' };
     return new Promise((resolve) => {
-    this.provider_services.getServicesList(filter1)
-      .subscribe(
-        (data: any) => {
-          if (data.length > 0) {
-            this.serviceExist = true;
-          } else {
-            this.serviceExist = false;
-          }
-          resolve();
-        },
-        () => { }
-      );
+      this.provider_services.getServicesList(filter1)
+        .subscribe(
+          (data: any) => {
+            if (data.length > 0) {
+              this.serviceExist = true;
+            } else {
+              this.serviceExist = false;
+            }
+            resolve();
+          },
+          () => { }
+        );
     });
   }
   checkDashboardVisibility() {
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';
+        this.message = 'To access the dashboard, go to Settings > Jaldee Online > Business Profile and set up your profile. You also need to create a service and a schedule and enable Jaldee Appointment Manager.';
       } else {
-        this.message1 = 'Appointment manager is disabled in your settings.';
+        this.message1 = 'Enable Jaldee Appointment Manager in your settings to access Appointments dashboard.';
       }
       this.apiloading = false;
       this.showDashbard = false;
@@ -3121,4 +3124,3 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/provider/settings']);
   }
 }
-

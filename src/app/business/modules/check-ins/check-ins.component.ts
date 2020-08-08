@@ -289,6 +289,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   message = '';
   message1 = '';
   showDashbard = true;
+  tokenOrCheckin;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -420,8 +421,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.showToken = this.settings.showTokenId;
         if (this.showToken) {
           this.breadcrumbs_init = [{ title: 'Tokens' }];
+          this.tokenOrCheckin = 'Tokens';
         } else {
           this.breadcrumbs_init = [{ title: 'Check-ins' }];
+          this.tokenOrCheckin = 'Check-ins';
         }
       }, () => {
       });
@@ -851,6 +854,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               self.locationExist = true;
             } else {
               self.locationExist = false;
+              self.checkDashboardVisibility();
             }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
@@ -950,15 +954,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getQs('all').then(
         (queues: any) => {
           _this.queues = queues;
-          _this.getGlobalSettings().then(
-            () => {
-              _this.getAllServices().then(
-                () => {
-                  _this.getBusinessdetFromLocalstorage();
-                }
-              );
-            }
-          );
+          if (_this.locationExist) {
+            _this.getGlobalSettings().then(
+              () => {
+                _this.getAllServices().then(
+                  () => {
+                    _this.getBusinessdetFromLocalstorage();
+                  }
+                );
+              }
+            );
+          }
           resolve(queues);
         },
         () => {
@@ -2506,15 +2512,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   checkDashboardVisibility() {
-    console.log('checkinStatus' + this.checkinStatus);
-    console.log('locationExist' + this.locationExist);
-    console.log('serviceExist' + this.serviceExist);
-    console.log('qExist' + this.qExist);
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
-        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
+        this.message = 'To access the dashboard, go to Settings > Jaldee Online > Business Profile and set up your profile. You also need to create a service and a queue and enable Jaldee QManager.';
       } else {
-        this.message1 = 'QManager is disabled in your settings';
+        this.message1 = 'Enable Jaldee QManager in your settings to access ' + this.tokenOrCheckin + ' dashboard.';
       }
       this.apiloading = false;
       this.showDashbard = false;
