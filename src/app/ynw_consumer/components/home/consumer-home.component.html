@@ -55,13 +55,13 @@
                                     <span class="service">
                                         <span>
                                             <i class="fa fa-phone"
-                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                             <i class="fa meet-icon"
-                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                             <i class="fa zoom-icon"
-                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                             <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                *ngIf="appointment.service.serviceType === 'virtualService' && appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                         </span>
                                         {{appointment.service.name | capitalizeFirst}}</span>
                                     for <span class="forwhom" *ngFor="let user of appointment.appmtFor">
@@ -316,10 +316,10 @@
                                         <div class="lt0 pointlist" (click)="showcheckindetails(waitlist)">
                                             <span class="service">
                                                 <span>
-                                                    <i class="fa fa-phone" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                    <i class="fa meet-icon" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                    <i class="fa zoom-icon"*ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                    <i class="fa fa-phone" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                    <i class="fa meet-icon" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                    <i class="fa zoom-icon"*ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                    <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="waitlist.service.serviceType === 'virtualService' && waitlist.service.virtualCallingModes && waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                                 </span>
                                                 {{waitlist.service.name | capitalizeFirst}}</span> for <span
                                                 class="forwhom" *ngFor="let user of waitlist.waitlistingFor">
