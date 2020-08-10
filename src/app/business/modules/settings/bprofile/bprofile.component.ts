@@ -275,7 +275,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       url: '/provider/settings'
     },
     {
-      title: 'Jaldee Online'
+      title: 'Jaldee Profile'
     }
   ];
   businessConfig: any = [];
@@ -1431,6 +1431,21 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     document.execCommand('copy');
     document.body.removeChild(selBox);
     this.shared_functions.openSnackBar('Link copied to clipboard');
+  }
+  copyProfileId(valuetocopy) {
+    const path = valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Profile ID copied to clipboard');
   }
   qrCodegeneraterOnlineID(accEncUid) {
     this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
