@@ -44,17 +44,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   waitlist_notes: any = [];
   waitlist_history: any = [];
   settings: any = [];
+  showToken = false;
   esttime: string = null;
   apptTime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
-  breadcrumbs_init: any = [
-    {
-      title: 'Check-ins',
-      url: '/provider/check-ins'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  breadcrumbs_init: any = [];
   api_success = null;
   api_error = null;
   userDet;
@@ -80,6 +75,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   showTimePicker = false;
   availableSlots: any = [];
   callingModes = projectConstants.CALLING_MODES;
+  pos = false;
+  breadcrumbs;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -97,11 +94,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-    this.breadcrumbs_init.push({
-      'title': this.checkin_upper
-    });
   }
   ngOnInit() {
+    this.getPos();
     // this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
@@ -130,6 +125,30 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        if (this.showToken) {
+          this.breadcrumbs_init = [
+            {
+              title: 'Tokens',
+              url: '/provider/check-ins'
+            },
+            {
+              title: 'Token'
+            }
+          ];
+         this.breadcrumbs = this.breadcrumbs_init;
+        } else {
+          this.breadcrumbs_init = [
+            {
+              title: 'Check-ins',
+              url: '/provider/check-ins'
+            },
+            {
+              title: 'Check-in'
+            }
+          ];
+          this.breadcrumbs = this.breadcrumbs_init;
+        }
         this.getWaitlistDetail();
         this.api_loading = false;
       }, () => {
@@ -476,5 +495,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   setApptTime() {
     (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
   }
 }
