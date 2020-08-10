@@ -200,7 +200,7 @@
                                 <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyInputMessage(bProfile.accEncUid)"
                                   [matTooltip]="'Copy link'"></i>
                               </span>
-                              <span class="custbtn" *ngIf="!bProfile.customId && profile_status">
+                              <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && profile_status">
                                 <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
                                     Personalize
                                 </button>
@@ -311,7 +311,7 @@
                                 </button>
                               </mat-menu>
                             </span> -->
-                            <span class="custbtn">
+                            <span class="custbtn pad-left-20">
                               <button class="btn btn-info jld-lnk-btn" (click)="editCustomId(bProfile.customId)">
                                   Personalize
                               </button>

@@ -9929,6 +9929,18 @@ td.chkWth, th.chkWth {
   .tbl-qboard .td-three {
     width: 50px !important;
   }
+  .jld-lnk-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+    font-size: 70%;
+  }
+  .jld-link {
+    font-size: small !important;
+    font-style: italic;
+    font-weight: 400;
+    color: rgb(54, 127, 169);
+  }
 }
 
 .cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price, .cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .servlist .name, .cons-check-bill .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .itemlist .name {
