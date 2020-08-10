@@ -9321,9 +9321,9 @@ owl-carousel .bt3.active {
   max-height: 500px !important;
 }
 
-.wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+/* .wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
   background-color: #29b6f6 !important;
-}
+} */
 
 .wtmgr .mat-checkbox-disabled .mat-checkbox-label {
   color: black !important;
