@@ -81,6 +81,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     advanced = false;
     duration = { hour: 0, minute: 0 };
     showAdvancedSettings = false;
+    showBillingInfo = false;
     departments: any = [];
     filterDepart = false;
     departmentName;
@@ -588,6 +589,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
+    }
+    billingInfoClicked() {
+        (this.showBillingInfo) ? this.showBillingInfo = false : this.showBillingInfo = true;
     }
     getBusinessProfile() {
         this.provider_services.getBussinessProfile()
