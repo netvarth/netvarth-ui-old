@@ -162,7 +162,7 @@ export class LocationsListComponent implements OnInit {
                 this.provider_services.changeProviderLocationStatus(obj.id, msg_data['chgstatus'])
                     .subscribe(() => {
                         if (msg_data['chgstatus'] === 'enable') {
-                            msg_data['msg'] = msg_data['msg'] + '. ' + Messages.ENBALE_QUEUES;
+                            msg_data['msg'] = msg_data['msg'];
                         }
                         this.shared_Functionsobj.openSnackBar(msg_data['msg']);
                         this.getProviderLocations();

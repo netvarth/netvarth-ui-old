@@ -2032,7 +2032,7 @@ sup {
 }
 
 .form-level-settings {
-  font-size: .65rem !important;
+  font-size: .8rem !important;
   font-family: 'Roboto Slab', sans-serif !important;
   color: #999999 !important;
   font-style: italic !important;
@@ -5622,7 +5622,7 @@ li.separator.setsplit {
 }
 
 .settings_info {
-  font-size: .65rem !important;
+  font-size: .75rem !important;
   font-family: 'Roboto Slab', sans-serif !important;
   color: #999999 !important;
   text-align: justify;
