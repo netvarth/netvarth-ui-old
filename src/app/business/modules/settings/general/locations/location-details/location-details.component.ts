@@ -375,7 +375,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         // if (this.schedule_arr.length === 0) {
         //     this.schedule_json = [];
         // } else {
-        // this.schedule_json = [];
+        this.schedule_json = [];
         let mon;
         const cdate = new Date();
         mon = (cdate.getMonth() + 1);
