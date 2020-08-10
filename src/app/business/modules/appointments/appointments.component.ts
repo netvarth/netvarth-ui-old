@@ -3106,7 +3106,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkDashboardVisibility() {
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
-        this.message = 'To access the dashboard, go to Settings > Jaldee Online > Business Profile and set up your profile. You also need to create a service and a schedule and enable Jaldee Appointment Manager.';
+        this.message = 'To access the dashboard, go to Settings > Jaldee Profile > Business Profile and set up your profile. You also need to create a service and a schedule and enable Jaldee Appointment Manager.';
       } else {
         this.message1 = 'Enable Jaldee Appointment Manager in your settings to access Appointments dashboard.';
       }

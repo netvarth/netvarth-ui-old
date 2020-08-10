@@ -13,9 +13,9 @@ export class ProviderErrorMesagePopupComponent {
 
     if (this.data.profile === 'inactive') {
       if (this.data.source === 'checkin') {
-        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
+        this.message = 'Your profile is incomplete. Go to Jaldee Profile > Business profile to setup your profile. You also need to create service, queue to access your dashboard.';
       } else {
-        this.message = 'Your profile is incomplete. Go to Jaldee Online > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';
+        this.message = 'Your profile is incomplete. Go to Jaldee Profile > Business profile to setup your profile. You also need to create service, schedule to access your dashboard.';
       }
     } else {
       if (this.data.source === 'checkin') {

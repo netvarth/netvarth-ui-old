@@ -9649,8 +9649,9 @@ button.cust-button-2.tme {
 
 .ngx-qr-btn {
   /* background: #3c8dbc; */
-  color: black;
+  color: white;
   font-size:larger;
+  font-weight: 500;
 }
 
 .ngx-qrcod .qrcode img {
@@ -10607,4 +10608,21 @@ a {
     width: 100%;
     height: 400px;
     font-weight: 600;
+  }
+  .pad-top-5 {
+    padding-top: 5px !important;
+  }
+  .jld-link {
+    font-size: medium;
+    font-style: italic;
+    font-weight: 500;
+    color: rgb(54, 127, 169);
+  }
+  .jld-lnk-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+  }
+  .font-lrge {
+    font-size: large !important;
   }
