@@ -1187,6 +1187,8 @@ export const Messages = {
   'JALDEEONLINE_ENABLED_MSG':'Your [customer]s can see you online',
   'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning Jaldee QR code and link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
+  'PROFILE_ENABLED_MSG': 'Your [customer]s can search and find you on Jaldee.com',
+  'PROFILE_DISABLED_MSG': 'Your [customer]s cannot search and find you on Jaldee.com',
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP': 'Jaldee Bank',
   'PAY_SET_MY_OWN_ACCOUNT_CAP': 'My Own Bank Account',
@@ -1330,7 +1332,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, services, service-time window and waitlist here. Enable "Online Check-in" and also book a future date for [customer]\'s check-in here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Use the Jaldee QManager to manage the services you offer using a queue system.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',

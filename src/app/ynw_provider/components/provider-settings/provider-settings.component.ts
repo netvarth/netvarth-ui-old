@@ -56,6 +56,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
+ 
   frm_waitlist_cap = '';
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
   frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
@@ -149,6 +150,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   waitlistStatusStr;
   jaldee_online_enabled_msg: string;
   jaldee_online_disabled_msg: string;
+  profile_enabled_msg: string;
+  profile_disabled_msg: string;
   businessProfile_weightageArray: any[];
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
@@ -226,6 +229,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.jaldee_online_enabled_msg = Messages.JALDEEONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
+    this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.getProviderLogo();
     this.getGalleryImages();
     this.getDomainSubdomainSettings();

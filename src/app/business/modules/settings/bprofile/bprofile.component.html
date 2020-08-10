@@ -355,9 +355,8 @@
                           (change)="confirm_searchStatus();">
                         </mat-slide-toggle>&nbsp;{{jaldee_online_status_str}} </h2>
                       <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
-                        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in
-                          jaldee.com</span>
-                        <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
+                        <span class="inactive" *ngIf="!jaldee_online_status">{{profile_disabled_msg}}</span>
+                        <span class="active" *ngIf="jaldee_online_status">{{profile_enabled_msg}}</span>
                       </div>
                     </div>
                   </div>
@@ -588,8 +587,8 @@
                                   <div class="cop-r" *ngIf="loc_list.length>0">
                                     <ul class="info-lst"
                                       *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
-                                      <li>You can add more locations under
-                                        <a routerLink="/provider/settings/general/locations">settings</a>
+                                      <li>Click here to see all your locations
+                                        <a routerLink="/provider/settings/general/locations">here.</a>
                                       </li>
                                     </ul>
                                   </div>

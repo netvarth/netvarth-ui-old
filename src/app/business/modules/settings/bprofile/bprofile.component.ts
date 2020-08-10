@@ -341,7 +341,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   normal_subdomainfield_show = 1;
   field;
   grid_row_index;
-
+  profile_enabled_msg: string;
+  profile_disabled_msg: string;
   showAddSection = false;
   showAddSection1 = false;
 
@@ -393,6 +394,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
 
     this.getBusinessConfiguration();
     this.getPublicSearch();
