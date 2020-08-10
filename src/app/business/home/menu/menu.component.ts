@@ -30,6 +30,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   settings;
   showToken = false;
   donationstatus: any;
+  count = 0;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -188,6 +189,19 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
+        if (this.domain === 'healthCare' && this.count === 0) {
+          let postData;
+          postData = {
+            calculationMode: 'NoCalc',
+            showTokenId: true
+          };
+          this.provider_services.setWaitlistMgr(postData)
+            .subscribe(
+              () => {
+                this.count++;
+                this.getProviderSettings();
+              });
+        }
       }, () => {
       });
   }

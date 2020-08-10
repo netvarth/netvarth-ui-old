@@ -10660,3 +10660,8 @@ a {
   .jld-option {
     display: flex;
   }
+  @media (min-width: 500px) {
+  .serv-name {
+    width: 300px !important;
+  }
+}

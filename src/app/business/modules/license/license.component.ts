@@ -371,9 +371,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     showUnpaidInvoice() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
-        if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-        } else {
+        // if (this.corpSettings && this.corpSettings.isCentralised) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        // } else {
             this.loadingTb = true;
             if (this.invoices.length === 1) {
                 this.getInvoicePay(this.invoices[0], 1);
@@ -381,7 +381,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
             }
             this.loadingTb = false;
-        }
+        // }
     }
     getInvoice(invoice) {
         const invoiceJson = JSON.stringify(invoice);

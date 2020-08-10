@@ -469,7 +469,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (this.kwsubdomain !== '') {
           this.subsector = this.kwsubdomain;
           const domdet = this.getdomainofaSubdomain(this.kwsubdomain);
-          if (domdet.dom !== '') {
+          if (domdet && domdet.dom !== '') {
             this.domain = domdet.dom;
           } else {
             this.domain = 'All';
