@@ -341,13 +341,13 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
             </div>
             <div class="mgn-bt-20">
-                <div class="no-padding"  *ngIf="!is_donation"
+                <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
-                    Billing Info</div>
+                    Payment Info</a>
                 <div class="settings_info" *ngIf="!is_donation"> 
-                    Service price, Prepayment and more</div>
+                    Service price, advance amount and more</div>
             </div>
-            <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
                 <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
