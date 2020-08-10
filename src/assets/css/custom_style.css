@@ -9649,8 +9649,9 @@ button.cust-button-2.tme {
 
 .ngx-qr-btn {
   /* background: #3c8dbc; */
-  color: black;
+  color: white;
   font-size:larger;
+  font-weight: 500;
 }
 
 .ngx-qrcod .qrcode img {
