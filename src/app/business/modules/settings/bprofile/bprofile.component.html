@@ -84,7 +84,8 @@
                         <app-innerloading-spinner spinnerParams="loadingParams">
                         </app-innerloading-spinner>
                       </div>
-                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding" *ngIf="normal_basicinfo_show!=1">
+                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
+                        *ngIf="normal_basicinfo_show!=1">
                         <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
                           <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"
                             [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
@@ -124,7 +125,8 @@
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status"
+                          (change)="confirm_opsearchStatus()">
                         </mat-slide-toggle>
                         &nbsp;{{profile_status_str}}</h2>
                       <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
@@ -252,7 +254,7 @@
                     </form>
                   </div>
 
-                  <div *ngIf="normal_customid_show==3" >
+                  <div *ngIf="normal_customid_show==3">
                     <div class="bus-prof-qr-sec">
                       <ul class="sbl">
                         <li class="acc-url-li">
@@ -283,7 +285,7 @@
                             <span class="custid custId-icon">
                               <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)"
                                 [matTooltip]="'Copy link'"></i>
-                            </span>  
+                            </span>
                             <!-- <span class="custid custId-icon">
                               <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon>more_vert</mat-icon>
@@ -336,7 +338,8 @@
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status"
+                          (change)="confirm_searchStatus();">
                         </mat-slide-toggle>&nbsp;{{jaldee_online_status_str}} </h2>
                       <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
                         <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in
@@ -570,14 +573,15 @@
                                     </span>
                                   </div>
                                   <div class="cop-r" *ngIf="loc_list.length>0">
-                                    <ul class="info-lst" *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
+                                    <ul class="info-lst"
+                                      *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
                                       <li>You can add more locations under
                                         <a routerLink="/provider/settings/general/locations">settings</a>
                                       </li>
                                     </ul>
                                   </div>
                                 </div>
-                                <div class="locSchedule time_align">
+                                <!-- <div class="locSchedule time_align">
                                   <span class="sub-title">{{loca_hours}}</span>
                                   <ul *ngIf="display_schedule.length > 0">
                                     <li *ngFor="let schedule of display_schedule">
@@ -585,7 +589,7 @@
                                       <span class="time">{{schedule.time}}</span>
                                     </li>
                                   </ul>
-                                </div>
+                                </div> -->
                                 <!-- <div class="whrs" >
                                                         <span class="sub-title time_align"><b>General Business hours</b></span>
                                                         <ul  *ngIf="display_schedule.length > 0">
@@ -601,12 +605,12 @@
                                                                 class="time">{{schedule.time}}</span>
                                                         </li>
                                                     </ul> -->
-                                <ng-container *ngIf="display_schedule.length == 0">
+                                <!-- <ng-container *ngIf="display_schedule.length == 0">
                                   <div class="no-dta">
                                     <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
                                     <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
                                   </div>
-                                </ng-container>
+                                </ng-container> -->
                                 <div class="copy block-level">
                                   <h5>{{loc_amenities_cap}}
                                     <span (click)="editLocation('badge')" class="editbt"

@@ -54,7 +54,7 @@
                                                     </div>
                                                 </li>
                                             </ul>
-                                            <div class="rating-stars">
+                                            <div class="rating-stars" *ngIf="ratingenabledArr.length > 0">
                                                 <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
                                                     src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" *ngIf="ratingenabledHalf"
@@ -79,9 +79,9 @@
                                             <span class="category" *ngIf="businessjson.serviceSector?.displayName">
                                                 <!-- {{businessjson.serviceSector.displayName
                                                         | capitalizeFirst}} -->
-                                                         {{businessjson.serviceSubSector.displayName |
+                                                {{businessjson.serviceSubSector.displayName |
                                                         capitalizeFirst}}
-                                                    </span>
+                                            </span>
 
                                             <div class="clr">
                                                 <div class="pro-desc">
@@ -140,20 +140,20 @@
                                 </div>
                                 <div class="col-md-12 donat-service"
                                     *ngIf="apptServicesjson.length > 0 && !showDepartments">
-                                    <span class="sub-title-donate">Service(s)</span>
+                                    <span class="sub-title-donate">Services</span>
                                     <ul>
                                         <li *ngFor="let appointmentService of apptfirstArray"
                                             (click)="showServiceDetail(appointmentService, businessjson.businessName,'servicedetails')">
                                             {{appointmentService.name}}
                                             <span *ngIf="appointmentService.serviceType == 'virtualService'">
                                                 <i class="fa fa-phone"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                              <i class="fa meet-icon"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                    *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                <i class="fa meet-icon"
+                                                    *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                 <i class="fa zoom-icon"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                    *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                 <i class="fa fa-whatsapp whtsap-ic font-bolder"
-                                                *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                                    *ngIf="appointmentService.virtualCallingModes && appointmentService.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                                             </span>
                                         </li>
                                         <a *ngIf="apptServicesjson.length > 3 && showType === 'more'"
@@ -270,21 +270,27 @@
                                         style="background-color: white !important;">
                                         <mat-panel-title>
                                             <div class="location-accord">
-                                                <h3 *ngIf="!isPlaceisSame">{{loc.place | capitalizeFirst}}<sup
-                                                        class="font-open-now"
-                                                        *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
-                                                    </sup>
-                                                    <a rel="noopener" class="directions mgn-lt-20"
+                                                <h3 *ngIf="!isPlaceisSame">
+                                                    <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
+                                                        target="_blank">{{loc.place | capitalizeFirst}}</a>
+                                                    <!-- <a rel="noopener" class="directions mgn-lt-20"
                                                         [href]="loc.googleMapUrl" target="_blank"
-                                                        *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a></h3>
+                                                        *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a> -->
+                                                    <!-- <sup class="font-open-now"
+                                                        *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
+                                                    </sup> -->
+                                                </h3>
                                                 <div *ngIf="!isPlaceisSame" class="ft-smlr">
                                                     {{loc.address.length <= 50 ? (loc.address | capitalizeFirst) : (loc.address.substr(0, 50) | capitalizeFirst)+"..."}}
                                                 </div>
                                                 <h3 *ngIf="isPlaceisSame">
-                                                    {{loc.address.length <= 50 ? (loc.address | capitalizeFirst) : (loc.address.substr(0, 50) | capitalizeFirst)+"..."}}<sup
-                                                        class="font-open-now"
+                                                    <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
+                                                        target="_blank">
+                                                        {{loc.address.length <= 50 ? (loc.address | capitalizeFirst) : (loc.address.substr(0, 50) | capitalizeFirst)+"..."}}</a>
+                                                    <!-- <sup class="font-open-now"
                                                         *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
-                                                    </sup></h3>
+                                                    </sup>  -->
+                                                </h3>
                                             </div>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -297,8 +303,8 @@
                                                         <span class="count">{{loc.checkins.length}}
                                                             {{getTerminologyTerm('waitlist')}}</span>
                                                         {{at_this_loc_cap}}</span>
-                                                    <div class="clr">
-                                                        <div class="schedule"
+                                                    <!-- <div class="clr"> -->
+                                                    <!-- <div class="schedule"
                                                             *ngIf="loc.display_schedule && loc.display_schedule.length > 0">
                                                             <span class="sub-title">Business Working Hours</span>
                                                             <ul>
@@ -312,9 +318,9 @@
                                                                     </span>
                                                                 </li>
                                                             </ul>
-                                                        </div>
+                                                        </div> -->
 
-                                                        <!-- <div class="services" *ngIf="loc.departments">
+                                                    <!-- <div class="services" *ngIf="loc.departments">
                                                                         <span class="sub-title">Departments</span>
                                                                         <ul>
                                                                             <li *ngFor="let dept of loc.departments"
@@ -322,7 +328,7 @@
                                                                                 {{dept}}</li>
                                                                         </ul>
                                                                     </div> -->
-                                                        <!-- <div class="services"
+                                                    <!-- <div class="services"
                                                                         *ngIf="!loc.departments && loc.serviceList && loc.serviceList.length > 0">
                                                                         <span class="sub-title">{{services_offered}}</span>
                                                                         <ul>
@@ -331,7 +337,7 @@
                                                                                 {{serv.name}}</li>
                                                                         </ul>
                                                                     </div> -->
-                                                        <!-- <div class="services"
+                                                    <!-- <div class="services"
                                                                     *ngIf="!loc.departments && !loc.serviceList && loc.services && loc.services.length > 0">
                                                                     <span class="sub-title">{{services_offered}}</span>
                                                                     <ul>
@@ -340,7 +346,7 @@
                                                                             {{serv}}</li>
                                                                     </ul>
                                                                 </div> -->
-                                                    </div>
+                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                             <div class="tp-r">
@@ -548,7 +554,7 @@
                                             <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="donat-service">
-                                                        <span class="sub-title-donate">Donation Service(s)</span>
+                                                        <span class="sub-title-donate">Donation Services</span>
                                                         <ul>
                                                             <li *ngFor="let donationService of donationServicesjson"
                                                                 (click)="showServiceDetail(donationService, businessjson.businessName,'servicedetails')">

@@ -27,10 +27,14 @@
     <ul>
       <li *ngFor="let service of serviceJson" (click)="showServiceDetail(service, businessjson.businessName)">
         <span *ngIf="service.serviceType === 'virtualService'">
-          <i class="fa fa-phone" *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-          <i class="fa meet-icon" *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-          <i class="fa zoom-icon"*ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-          <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+          <i class="fa fa-phone"
+            *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+          <i class="fa meet-icon"
+            *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+          <i class="fa zoom-icon"
+            *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+          <i class="fa fa-whatsapp whtsap-ic font-bolder"
+            *ngIf="service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
         </span>
         {{service.name | capitalizeFirst}}</li>
     </ul>
@@ -68,9 +72,11 @@
             <div class="tp2">
               <h3 [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
                 <span (click)="providerDetClicked(search_result)">
-                  {{search_result.bProfile?.businessName | capitalizeFirst}}<sup class="font-open-now"
+                  {{search_result.bProfile?.businessName | capitalizeFirst}}
+                  <!-- <sup class="font-open-now"
                     *ngIf="search_result['opennow'] || search_result['apptopennow']">&nbsp;{{open_now_cap}}
-                  </sup></span> <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0" (click)="openJdn()"
+                  </sup> -->
+                </span> <span class="mgn-lt-10 pointer-cursor" *ngIf="jdnlength > 0" (click)="openJdn()"
                   [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
               </h3>
               <span *ngIf="locationjson[0].place">{{locationjson[0].place | capitalizeFirst }}
@@ -85,7 +91,7 @@
                       *ngFor="let spec of search_result.bProfile?.specialization; let i = index"><span *ngIf="i>0"
                         class="spacer"></span>{{spec}}</span></span>
                 </div>
-                <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
+                <!-- <div class="schedule" *ngIf="locationjson[0]?.display_schedule">
                   <ul>
                     <li *ngFor="let schedule of locationjson[0]?.display_schedule">
                       <div class="day">{{schedule.dstr}}&nbsp;:</div>
@@ -95,19 +101,23 @@
                       </div>
                     </li>
                   </ul>
-                </div>
+                </div> -->
                 <div class="donat-service"
                   *ngIf="search_result.wtlstservices && search_result.wtlstservices.length > 0">
                   <span class="sub-title-donate checkin-service-group">
-                    Service(s)</span>
+                    Services</span>
                   <ul>
                     <li *ngFor="let serv of search_result.wtlstservices"
                       (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv.name | capitalizeFirst}}
                       <span *ngIf="serv.serviceType == 'virtualService'">
-                        <i class="fa fa-phone" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                        <i class="fa meet-icon" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                        <i class="fa zoom-icon"*ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                        <i class="fa fa-whatsapp whtsap-ic font-bolder" *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                        <i class="fa fa-phone"
+                          *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                        <i class="fa meet-icon"
+                          *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                        <i class="fa zoom-icon"
+                          *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                        <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                          *ngIf="serv.virtualCallingModes && serv.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
                       </span>
                       <!-- <span *ngIf="serv.serviceType == 'virtualService' && serv.virtualServiceType == 'audioService'">
                         (<i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i>)

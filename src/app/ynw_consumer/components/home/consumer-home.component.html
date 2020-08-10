@@ -694,9 +694,9 @@
                                 <div class="location" *ngFor="let loc of provider.locations">
                                     <div class="locationname">
                                         <span class="icon-location"></span> {{loc.place | capitalizeFirst}}
-                                        <sup class="font-open-now"
+                                        <!-- <sup class="font-open-now"
                                             *ngIf="loc.opennow || loc.apptopennow">&nbsp;{{open_now_cap}}
-                                        </sup>
+                                        </sup> -->
                                     </div>
                                     <div class="bt-l" *ngIf="loc['waitlist'] && provider.onlinePresence">
                                         <div style="display: block;" class="wt-tme" *ngIf="loc['estimatedtime_det']">
