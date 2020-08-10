@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 donat-service"
-                                    *ngIf="apptServicesjson.length > 0 && !showDepartments">
+                                    *ngIf="apptfirstArray.length > 0 && !showDepartments">
                                     <span class="sub-title-donate">Services</span>
                                     <ul>
                                         <li *ngFor="let appointmentService of apptfirstArray"
@@ -167,12 +167,12 @@
                                 </div>
                             </div>
                             <div class="tp-r list-style">
-                                <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
+                                <!-- <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
                                     <span class="icon-male" *ngIf="genderType=='male'"
                                         [matTooltip]="maleTooltip"></span>
                                     <span class="icon-female" *ngIf="genderType=='female'"
                                         [matTooltip]="femaleTooltip"></span>
-                                </div>
+                                </div> -->
                                 <span class="claim-business" *ngIf="businessjson.claimStatus === 'Unclaimed'"
                                     (click)="claimBusiness()">
                                     {{claim_my_business_cap}} <i style="font-size: 1.1rem;" class="fa fa-hand-o-up"

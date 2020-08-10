@@ -200,7 +200,7 @@
                                 <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyInputMessage(bProfile.accEncUid)"
                                   [matTooltip]="'Copy link'"></i>
                               </span>
-                              <span class="custbtn" *ngIf="!bProfile.customId && profile_status">
+                              <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && profile_status">
                                 <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
                                     Personalize
                                 </button>
@@ -214,14 +214,14 @@
                           <span class="active" *ngIf="profile_status">
                             <i class="fa fa-check"></i> Active</span>
                         </p>
-                        <li class="acc-url-li mgn-up-10">
+                        <!-- <li class="acc-url-li mgn-up-10">
                           <strong> Jaldee Provider Id :</strong>
                         <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.accEncUid}}</span>
                         <span class="custid">
                           <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.accEncUid)"
                             [matTooltip]="'Copy Id'"></i>
                         </span>
-                        </li>
+                        </li> -->
                       </ul>
 
                     </div>
@@ -282,7 +282,6 @@
                         </p> -->
 
                         <li class="acc-url-li h-xs-0 h-sm-0 mgn-up-10">
-
                           <strong> Jaldee QR code and link: </strong>
                           <span class="consumr-loc-icon pad-top-5">
                             <span class="custid jld-link" rel="noopener" target="_blank">
@@ -311,15 +310,13 @@
                                 </button>
                               </mat-menu>
                             </span> -->
-                            <span class="custbtn">
+                            <span class="custbtn pad-left-20">
                               <button class="btn btn-info jld-lnk-btn" (click)="editCustomId(bProfile.customId)">
                                   Personalize
                               </button>
                             </span>
                           </span>
                           <br>
-
-
                         </li>
                         <p class="head-level-settings mt-xs-3">
                           <span class="inactive" *ngIf="!profile_status">
@@ -328,14 +325,14 @@
                             <i class="fa fa-check"></i> Active</span>
 
                         </p>
-                        <li class="acc-url-li mgn-up-10">
+                        <!-- <li class="acc-url-li mgn-up-10">
                           <strong> Jaldee Provider Id :</strong>
                         <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.customId}}</span>
                         <span class="custid">
                           <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.customId)"
                             [matTooltip]="'Copy Id'"></i>
                         </span>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -1405,7 +1402,7 @@
                   <h2>
                     Contact Information
                   </h2>
-                  <span class="form-level-settings">Manage the privacy of your contact details here.
+                  <span class="form-level-settings">Manage your contact related information here.
                     <a class="learnmore-pointer" id="customer-help"
                       (click)="learnmore_clicked('privacy-settings', $event)">Learn More
                     </a>

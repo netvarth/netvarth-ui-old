@@ -16,7 +16,7 @@ export class IntegrationSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Online',
+            title: 'Jaldee Profile',
             url: '/provider/settings/bprofile'
         },
         {

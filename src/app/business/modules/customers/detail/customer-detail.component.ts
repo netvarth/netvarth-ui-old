@@ -91,7 +91,7 @@ export class CustomerDetailComponent implements OnInit {
                 this.breadcrumbs_init = [
 
                     {
-                        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1),
+                        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1) + 's',
                         url: 'provider/customers'
                     }
 

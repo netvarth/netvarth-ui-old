@@ -16,8 +16,8 @@
                 <span class="backtodashboard" (click)="gotoPrev()"><span class="strong">{{go_back_cap}}</span></span>
               </div>
               <!-- <button (click)="gotoPrev()">Back</button> -->
-              <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
-
+              <h2 *ngIf="!showToken">{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+              <h2 *ngIf="showToken">Token {{details_cap}}</h2>
               <div class="tp" *ngIf="waitlist_data">
                 <div class="item"><span class="ttle">{{name_cap}}</span> <span>
                     {{waitlist_data.consumer.firstName | capitalizeFirst}}
@@ -81,7 +81,8 @@
                     code</span><span>{{waitlist_data.checkinEncId}}</span></div>
                 <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
                     | capitalizeFirst}}</span></div>
-                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
+                <div class="item"><span class="ttle" *ngIf="!showToken">{{waitlist_for_cap}}</span>
+                  <span class="ttle" *ngIf="showToken">Token for</span>
                   <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
                     {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                     <span
@@ -95,7 +96,7 @@
                   <!-- <span> {{waitlist_data.queue.name |
                     capitalizeFirst}}</span> -->
                   {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}</div>
-                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                <div class="item" *ngIf="pos"><span class="ttle">{{pay_status_cap}}</span>
                   <ng-container *ngIf="waitlist_data && waitlist_data.paymentStatus">
                     <span class="paid-n" *ngIf="waitlist_data.paymentStatus == 'NotPaid'"><span
                         class="text">{{not_paid_cap}}</span></span>
@@ -108,7 +109,7 @@
                   </ng-container>
                 </div>
                 <div class="item" *ngIf="waitlist_data.waitlistPhoneNumber"><span
-                  class="ttle">Phonenumber</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
+                    class="ttle">Phonenumber</span><span>{{waitlist_data.waitlistPhoneNumber}}</span></div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span
                     class="ttle">{{party_size_cap}}</span><span>
                     {{waitlist_data.partySize}}</span></div>
@@ -172,7 +173,8 @@
                 <button class="cs-btn bt7 cancel" (click)="changeWaitlistStatus()"
                   *ngIf="!waitlist_data.history &&
                                   ( waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">{{cancel_cap}}
-                  {{checkin_label |capitalizeFirst}}</button>
+                  <span *ngIf="!showToken"> {{checkin_label |capitalizeFirst}} </span>
+                  <span *ngIf="showToken"> Token </span> </button>
               </div>
             </div>
           </div>
@@ -230,7 +232,8 @@
         </div>
         <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
-            <h2>{{checkin_label |capitalizeFirst}} History</h2>
+            <h2 *ngIf="!showToken">{{checkin_label |capitalizeFirst}} History</h2>
+            <h2 *ngIf="showToken">Token History</h2>
             <div class="c-history-outer">
               <ul class="c-history">
                 <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">

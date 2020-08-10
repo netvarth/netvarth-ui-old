@@ -899,7 +899,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                       this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
                     }
                   }
-                  if (this.search_data.hits.hit[i].fields.donation_services) {
+                  if (this.search_data.hits.hit[i].fields.donation_services && this.search_data.hits.hit[i].fields.donation_status === '1') {
                     this.search_data.hits.hit[i].fields.donationServices = JSON.parse(this.search_data.hits.hit[i].fields.donation_services);
                     this.search_data.hits.hit[i].fields.donationlength = this.search_data.hits.hit[i].fields.donationServices.length;
                     if (this.search_data.hits.hit[i].fields.donationServices && this.search_data.hits.hit[i].fields.donationServices.length > 0) {
