@@ -10608,3 +10608,20 @@ a {
     height: 400px;
     font-weight: 600;
   }
+  .pad-top-5 {
+    padding-top: 5px !important;
+  }
+  .jld-link {
+    font-size: medium;
+    font-style: italic;
+    font-weight: 500;
+    color: rgb(54, 127, 169);
+  }
+  .jld-lnk-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+  }
+  .font-lrge {
+    font-size: large !important;
+  }
