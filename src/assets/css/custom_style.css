@@ -9936,10 +9936,13 @@ td.chkWth, th.chkWth {
     font-size: 70%;
   }
   .jld-link {
-    font-size: small !important;
+    font-size: smaller !important;
     font-style: italic;
     font-weight: 400;
     color: rgb(54, 127, 169);
+  }
+  .font-lrge{
+    font-size: 0.97rem;
   }
 }
 
@@ -10636,7 +10639,7 @@ a {
     font-weight: 600;
   }
   .font-lrge {
-    font-size: large !important;
+    font-size: large;
   }
   .jld-lnk-font {
     font-size: .76rem;

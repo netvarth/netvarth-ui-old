@@ -222,7 +222,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
-      title: 'Jaldee Online'
+      title: 'Jaldee Profile'
     }
   ];
   businessConfig: any = [];

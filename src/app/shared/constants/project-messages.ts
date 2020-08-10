@@ -256,7 +256,7 @@ export const Messages = {
   'CHECKINS_TIME_CAPTION': 'Next Available Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
-  'PROFILE_TOOLTIP': 'Jaldee Online',
+  'PROFILE_TOOLTIP': 'Jaldee Profile',
   'SETTINGS_TOOLTIP': 'Settings',
   'LOCATION_TOOLTIP': 'Location',
   'WORKINGHOUR_TOOLTIP': 'Working Hour',

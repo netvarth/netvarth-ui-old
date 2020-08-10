@@ -113,7 +113,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     url: '/provider/settings/general/users/' + this.userId + '/settings'
                   });
                 breadcrumbs.push({
-                    title: 'Jaldee Online',
+                    title: 'Jaldee Profile',
                     url: '/provider/settings/general/users/' + this.userId + '/settings/bprofile',
                 });
                 breadcrumbs.push({
