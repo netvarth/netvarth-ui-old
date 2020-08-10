@@ -9641,6 +9641,12 @@ button.cust-button-2.tme {
   float:left;
   margin-left:20px;
 }
+.jld-lnk-btn {
+  font-size: 70%;
+  margin-left: 0 !important;
+  padding: 3px 6px !important;
+  font-weight: 600;
+}
 }
 .ngx-qrcod {
   border: outset;
@@ -9936,13 +9942,13 @@ td.chkWth, th.chkWth {
     font-size: 70%;
   }
   .jld-link {
-    font-size: smaller !important;
+    font-size: 0.8rem !important;
     font-style: italic;
     font-weight: 400;
     color: rgb(54, 127, 169);
   }
   .font-lrge{
-    font-size: 0.97rem;
+    font-size: 0.97rem !important;
   }
 }
 
@@ -10628,7 +10634,7 @@ a {
     padding-top: 5px !important;
   }
   .jld-link {
-    font-size: medium;
+    /* font-size: medium; */
     font-style: italic;
     font-weight: 500;
     color: rgb(54, 127, 169);
@@ -10639,7 +10645,7 @@ a {
     font-weight: 600;
   }
   .font-lrge {
-    font-size: large;
+    font-size: 1.1rem ;
   }
   .jld-lnk-font {
     font-size: .76rem;
@@ -10647,4 +10653,10 @@ a {
   }
   .jld-link-pad {
     padding: 15px 0px 4px 0px !important;
+  }
+  .jld-lnk-visible {
+    display: none;
+  }
+  .jld-option {
+    display: flex;
   }
