@@ -507,7 +507,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
           url: '/provider/settings/general/users/' + this.userId + '/settings'
         });
         breadcrumbs.push({
-          title: 'Jaldee Online'
+          title: 'Jaldee Profile'
         });
 
         this.breadcrumbs = breadcrumbs;

@@ -1453,7 +1453,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        accencUid: accEncUid
+        accencUid: accEncUid,
+        path: this.wndw_path
       }
     });
 
