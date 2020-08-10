@@ -173,8 +173,8 @@
                             <div class="mgn-bt-5">
                                 <mat-checkbox [checked]="true" [disabled]="true">
                                     Number of persons ahead
-                                    <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
-                                            style="font-size: 1rem;"></i>
+                                    <!-- <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
+                                            style="font-size: 1rem;"></i> -->
                                 </mat-checkbox>
                             </div>
                             <div class="mgn-bt-5">
@@ -227,14 +227,14 @@
                             <div class="mgn-bt-5">
                                 <mat-checkbox [checked]="true" [disabled]="true">
                                     Number of persons ahead
-                                    <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
-                                            style="font-size: 1rem;"></i>
+                                    <!-- <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
+                                            style="font-size: 1rem;"></i> -->
                                 </mat-checkbox>
                             </div>
                             <div class="mgn-bt-5">
                                 <mat-checkbox (change)="setWaitingTime($event)" [checked]="est_time">
                                     Estimated waiting time
-                                    <i [matTooltip]="'waiting time'" class="fa fa-info-circle"
+                                    <i [matTooltip]="'Real-time alerts will be send to your '+ customer_label +'s about the changes in their waiting time.'" class="fa fa-info-circle"
                                     style="font-size: 1rem;"></i>
 
                                 </mat-checkbox>
