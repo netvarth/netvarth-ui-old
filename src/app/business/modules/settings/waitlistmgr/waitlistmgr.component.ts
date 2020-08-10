@@ -67,6 +67,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     isManualMode = false;
     is_data_chnge: any;
     confirmdialogRef;
+    sector;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -175,7 +176,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getBussinessProfile()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.bProfile = data;
+                    this.sector = this.bProfile.serviceSector.domain;
                     if (this.bProfile.baseLocation) {
                         this.locationExists = true;
                     } else {
