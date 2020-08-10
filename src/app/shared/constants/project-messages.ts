@@ -670,6 +670,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
+  'SPECIALIZATIONS_CHOOSE': ' Select your Specializations',
   'SPECIALIZATIONS_CAPS': 'Choose your specializations from the list below',
   'NO_SPECI_FOUND_CAP': 'Sorry no specializations found.',
 
@@ -871,6 +872,7 @@ export const Messages = {
   'BPROFILE_PHONE_CAP': 'Phone',
   'BPROFILE_VISIBLE_CAP': 'Visible to',
   'BPROFILE_SPECIAL_CAP': 'Specialization',
+  'BPROFILE_SPECIAL': 'Specializations',
   'BPROFILE_ADDOTIONAL_INFO_CAP': 'Additional Info',
   'BPROFILE_ADDITIONAL_CAP': 'Additional',
   'BPROFILE_ADD_CIRCLE_CAP': 'add_circle_outline',

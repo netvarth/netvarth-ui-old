@@ -41,7 +41,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
             url: '/provider/settings/bprofile'
         },
         {
-            title: 'Privacy'
+            title: 'Contact Information'
         }
     ];
     breadcrumb_moreoptions: any = [];

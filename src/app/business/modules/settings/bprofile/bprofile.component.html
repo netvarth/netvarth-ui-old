@@ -671,7 +671,7 @@
                               style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                  Specialization
+                                  Specializations
                                   <!-- <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
                                                                     </i> -->
 
@@ -1383,6 +1383,20 @@
                     </span>
                 </div>
             </div> -->
+            <div class="row">
+              <div class="card p0">
+                <span class="b-link" (click)="gotoPrivacy()">
+                  <h2>
+                    Contact Information
+                  </h2>
+                  <span class="form-level-settings">Manage the privacy of your contact details here.
+                    <a class="learnmore-pointer" id="customer-help"
+                      (click)="learnmore_clicked('privacy-settings', $event)">Learn More
+                    </a>
+                  </span>
+                </span>
+              </div>
+            </div>
       <div class="row">
         <div class="card p0">
           <span class="b-link" (click)="gotoAdditionalInfo()">
@@ -1398,20 +1412,7 @@
           </span>
         </div>
       </div>
-      <div class="row">
-        <div class="card p0">
-          <span class="b-link" (click)="gotoPrivacy()">
-            <h2>
-              Privacy
-            </h2>
-            <span class="form-level-settings">Manage the privacy of your contact details here.
-              <a class="learnmore-pointer" id="customer-help"
-                (click)="learnmore_clicked('privacy-settings', $event)">Learn More
-              </a>
-            </span>
-          </span>
-        </div>
-      </div>
+   
 
 
 
