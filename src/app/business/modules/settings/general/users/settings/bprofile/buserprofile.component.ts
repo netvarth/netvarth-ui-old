@@ -406,7 +406,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
             const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
             this.cacheavoider = dd;
             this.user_datastorage.updateProfilePicWeightage(true);
-          } {
+          }  else {
             this.user_datastorage.updateProfilePicWeightage(false);
           }
           if (this.bProfile.status === 'ACTIVE') {

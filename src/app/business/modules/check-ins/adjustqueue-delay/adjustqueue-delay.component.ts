@@ -68,6 +68,8 @@ export class AdjustqueueDelayComponent implements OnInit {
   selected_user;
   domain: any;
   qdata_list;
+  settings: any;
+  showToken: any;
 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
@@ -86,15 +88,16 @@ export class AdjustqueueDelayComponent implements OnInit {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.breadcrumbs = [
-      {
-        title: 'Check-ins',
-        url: 'provider/check-ins'
-      },
-      {
-        title: 'Adjust delay'
-      }
-    ];
+    this.getProviderSettings();
+    // this.breadcrumbs = [
+    //   {
+    //     title: 'Check-ins',
+    //     url: 'provider/check-ins'
+    //   },
+    //   {
+    //     title: 'Adjust delay'
+    //   }
+    // ];
     this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
     // this.arrived_cnt = this.data.arrived_count;
     // this.checkedin_cnt = this.data.checkedin_count;
@@ -164,6 +167,36 @@ export class AdjustqueueDelayComponent implements OnInit {
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        console.log(this.showToken);
+        if (this.showToken) {
+          this.breadcrumbs = [
+            {
+              title: 'Tokens',
+              url: 'provider/check-ins'
+            },
+            {
+              title: 'Adjust delay'
+            }
+          ];
+        } else {
+          this.breadcrumbs = [
+            {
+              title: 'Check-ins',
+              url: 'provider/check-ins'
+            },
+            {
+              title: 'Adjust delay'
+            }
+          ];
+        }
+      }, () => {
+      });
   }
   performActions(actions) {
     if (actions === 'learnmore') {

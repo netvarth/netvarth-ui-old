@@ -2,8 +2,10 @@
         <div class="form-group">
                 <div  *ngIf="data.chekintype === 'Waitlist'" class="example-full-width" style="padding-top: 30px;">
                         <div>
-                            <div><span style="font-size: x-large;">Checkin Details</span></div><br>
-                            <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+                            <div *ngIf="!showToken"><span style="font-size: x-large;">Checkin Details</span></div>
+                            <div *ngIf="showToken"><span style="font-size: x-large;">Token Details</span></div><br>
+                            <p *ngIf="!showToken">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+                            <p *ngIf = "showToken">Token for : {{consumer_fname}} {{consumer_lname}}</p>
                             <p>Service : {{serv_name}}</p>
                             <p *ngIf = "deptName">Department : {{deptName}}</p>
                             <p *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>

@@ -143,12 +143,14 @@
                   <span *ngIf="customer.phoneNo && customer.phoneNo.length === 10"><i
                       class="fa fa-mobile"></i>&nbsp;{{customer.phoneNo}}</span>
                 </td>
-                <td class="three hidden-xs hidden-sm">
+                <td class="hidden-xs hidden-sm">
                   <span *ngIf="customer.email" class="pad-rt-5"><i
                       class="fa fa-envelope"></i>&nbsp;{{customer.email}}</span>
-                  <span> </span>
+                </td>
+                <td class="hidden-xs hidden-sm">
                   <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
-                      Id:</b> {{customer.jaldeeId}}</span>
+                      Id:</b> {{customer.jaldeeId}}</span></td>
+                      <td class="hidden-xs hidden-sm">
                   <span *ngIf="customer.lastVisitedDate">Last visited on
                     {{customer.lastVisitedDate | date: dateFormat }}</span>
                 </td>

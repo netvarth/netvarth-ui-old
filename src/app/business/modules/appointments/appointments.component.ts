@@ -597,11 +597,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
-          if (schedules.length > 0) {
-            _this.scheduleExist = true;
-          } else {
-            _this.scheduleExist = false;
-          }
+          // if (schedules.length > 0) {
+          //   _this.scheduleExist = true;
+          // } else {
+          //   _this.scheduleExist = false;
+          // }
           resolve(schedules);
         });
     });
@@ -652,6 +652,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             self.locations = [];
             if (data.length > 0) {
               self.locationExist = true;
+              self.getAllShedules();
             } else {
               self.locationExist = false;
               self.checkDashboardVisibility();
@@ -2856,17 +2857,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getSchedules('all').then(
         (queues: any) => {
           _this.schedules = queues;
-          if (_this.locationExist) {
-            _this.getGlobalSettings().then(
-              () => {
-                _this.getAllServices().then(
-                  () => {
-                    _this.getBusinessdetFromLocalstorage();
-                  }
-                );
-              }
-            );
-          }
           resolve(queues);
         },
         () => {
@@ -2914,7 +2904,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         uuid: modes.uid,
         consumerid: this.consumr_id,
         qdata: modes,
-        type: 'appt'
+        type: 'appt',
+        action: action
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -3103,6 +3094,26 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           () => { }
         );
     });
+  }
+  getAllShedules() {
+    this.provider_services.getProviderSchedules().subscribe(
+      (schedules: any) => {
+        if (schedules.length > 0) {
+          this.scheduleExist = true;
+          this.getGlobalSettings().then(
+            () => {
+              this.getAllServices().then(
+                () => {
+                  this.getBusinessdetFromLocalstorage();
+                }
+              );
+            }
+          );
+        } else {
+          this.scheduleExist = false;
+          this.checkDashboardVisibility();
+        }
+      });
   }
   checkDashboardVisibility() {
     if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {

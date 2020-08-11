@@ -8,16 +8,16 @@ import { CommonDataStorageService } from '../../../shared/services/common-datast
 
 @Injectable()
 export class ProviderSharedFuctions {
-  user_nonMandatorySubDomainAdditionalInfo: any=[];
-  user_nonMandatoryDomainAdditionalInfo: any=[];
-  user_mandatoryAdditionalInfo: any=[];
-  nonMandatorySubDomainAdditionalInfo: any=[];
-  nonMandatoryDomainAdditionalInfo: any=[];
-  nonMandatoryAdditionalInfo: any=[];
+  user_nonMandatorySubDomainAdditionalInfo: any = [];
+  user_nonMandatoryDomainAdditionalInfo: any = [];
+  user_mandatoryAdditionalInfo: any = [];
+  nonMandatorySubDomainAdditionalInfo: any = [];
+  nonMandatoryDomainAdditionalInfo: any = [];
+  nonMandatoryAdditionalInfo: any = [];
   private activeQueues: any = [];
   sendglobalmsgdialogRef;
   jaldeecoupon_list: any = [];
-  mandatoryAdditionalInfo:any=[];
+  mandatoryAdditionalInfo: any = [];
   constructor(public dialog: MatDialog, public shared_functions: SharedFunctions,
     public common_datastorage: CommonDataStorageService) {
 
@@ -99,9 +99,9 @@ export class ProviderSharedFuctions {
    * Funtion will return the required fields set
    */
   getProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields, subdomain?) {
-    this.mandatoryAdditionalInfo=[];
-    this.nonMandatoryDomainAdditionalInfo=[];
-    this.nonMandatorySubDomainAdditionalInfo=[];
+    this.mandatoryAdditionalInfo = [];
+    this.nonMandatoryDomainAdditionalInfo = [];
+    this.nonMandatorySubDomainAdditionalInfo = [];
     const reqFields = {};
     if (!profile.specialization) {
       reqFields['specialization'] = true;
@@ -123,7 +123,7 @@ export class ProviderSharedFuctions {
           if (!profile['domainVirtualFields'][domainfield.name]) {
             reqFields['domainvirtual'] = true;
           }
-        }else if(!domainfield.mandatory){
+        } else if (!domainfield.mandatory) {
           this.nonMandatoryDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -144,21 +144,21 @@ export class ProviderSharedFuctions {
 
     return reqFields;
   }
-  getuserProfileRequiredFields( domainMandatoryFields, subdomainMandatoryFields) {
+  getuserProfileRequiredFields(domainMandatoryFields, subdomainMandatoryFields) {
 
     const reqFields = {};
-    this.user_mandatoryAdditionalInfo=[];
-    this.user_nonMandatoryDomainAdditionalInfo=[];
-    this.user_nonMandatorySubDomainAdditionalInfo=[];
-    
+    this.user_mandatoryAdditionalInfo = [];
+    this.user_nonMandatoryDomainAdditionalInfo = [];
+    this.user_nonMandatorySubDomainAdditionalInfo = [];
+
     if (domainMandatoryFields) {
       for (const domainfield of domainMandatoryFields) {
         if (domainfield.mandatory) {
 
           reqFields['domainvirtual'] = true;
           this.user_mandatoryAdditionalInfo.push(domainfield.name);
-         
-        }else if(!domainfield.mandatory){
+
+        } else if (!domainfield.mandatory) {
           this.user_nonMandatoryDomainAdditionalInfo.push(domainfield.name);
         }
       }
@@ -174,11 +174,11 @@ export class ProviderSharedFuctions {
         }
       }
     }
-    
+
     return reqFields;
-    
+
   }
-  getAdditonalInfoMandatoryFields(){
+  getAdditonalInfoMandatoryFields() {
     return this.mandatoryAdditionalInfo;
   }
   getAdditionalNonDomainMandatoryFields() {
@@ -189,7 +189,7 @@ export class ProviderSharedFuctions {
   }
 
   //user
-  getUserAdditonalInfoMandatoryFields(){
+  getUserAdditonalInfoMandatoryFields() {
     return this.user_mandatoryAdditionalInfo;
   }
   getUserAdditionalNonDomainMandatoryFields() {
@@ -304,7 +304,7 @@ export class ProviderSharedFuctions {
     }
   }
 
-  changeApptStatusApi(ob, waitlist, action, post_data = {}) {
+  changeApptStatusApi(ob, waitlist, action, post_data = {}, showMessage?) {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderApptStatus(waitlist.uid, action, post_data)
         .subscribe(
@@ -319,7 +319,9 @@ export class ProviderSharedFuctions {
               case 'Rejected': status_msg = 'cancelled'; break;
             }
             // const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
-            this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
+            if (!showMessage) {
+              this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
+            }
           },
           error => {
             // waitlist.disableDonebtn = false;
@@ -333,7 +335,7 @@ export class ProviderSharedFuctions {
     });
   }
 
-  changeWaitlistStatusApi(ob, waitlist, action, post_data = {}) {
+  changeWaitlistStatusApi(ob, waitlist, action, post_data = {}, showMessage?) {
     return new Promise((resolve, reject) => {
       ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
         .subscribe(
@@ -347,8 +349,10 @@ export class ProviderSharedFuctions {
               case 'CHECK_IN': status_msg = '[waitlisted]'; break;
               case 'DONE': status_msg = 'completed'; break;
             }
-            const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
-            this.shared_functions.openSnackBar(msg);
+            if (!showMessage) {
+              const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+              this.shared_functions.openSnackBar(msg);
+            }
           },
           error => {
             waitlist.disableDonebtn = false;
@@ -483,7 +487,7 @@ export class ProviderSharedFuctions {
   getActiveQueues() {
     return this.activeQueues;
   }
-  formatTime (hours, minutes) {
+  formatTime(hours, minutes) {
     let sHours = hours.toString();
     let sMinutes = minutes.toString();
     if (hours < 10) {

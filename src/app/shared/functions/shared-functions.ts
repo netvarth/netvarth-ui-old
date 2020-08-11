@@ -349,7 +349,13 @@ export class SharedFunctions {
       return logo;
     }
   }
-
+  public showjplimg(logo, moreparams?) {
+    if (logo == null || logo === '') {
+      return 'assets/images/img-null.svg';
+    } else {
+      return logo;
+    }
+  }
   public tosentenceCase(str) { /* Convert string to sentence case*/
     if ((str === null) || (str === '')) {
       return false;

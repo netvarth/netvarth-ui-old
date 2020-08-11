@@ -91,7 +91,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   waitlisttime_arr: any = [];
   favprovs: any = [];
   specializationslist: any = [];
-  specializationslist_more: any = [];
   socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
@@ -105,7 +104,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   viewallServices = false;
   viewallSpec = false;
   showmoreDesc = false;
-  showmoreSpec = false;
   bNameStart = '';
   bNameEnd = '';
   image_list: any = [];
@@ -120,7 +118,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
-  showMore = false;
+
   gender = '';
   bLogo = '';
   orgsocial_list;
@@ -209,6 +207,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   userId;
   domainList: any = [];
   subDomainList: any = [];
+  businessid;
   departmentId;
   deptUsers: any = [];
   loading = false;
@@ -217,8 +216,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   apptTempArray: any = [];
   showType = 'more';
   futureAllowed = true;
-  galleryenabledArr = [];
-  gallerydisabledArr = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -231,15 +228,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     private locationobj: Location
   ) {
     this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
   }
 
   ngOnInit() {
     this.api_loading = true;
-    this.userId = null;
-    this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
@@ -285,12 +277,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       if (qparams.userId) {
         this.userId = qparams.userId;
       }
-      if (qparams.src) {
-        this.pSource = qparams.src;
+      if (qparams.pId) {
+        this.businessid = qparams.pId;
       }
-      // if (qparams.pId) {
-      //   this.businessid = qparams.pId;
-      // }
       this.businessjson = [];
       this.servicesjson = [];
       this.apptServicesjson = [];
@@ -315,25 +304,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         // this.provider_id = params.get('id');
         const customId = params.get('id').replace(/\s/g, '');
-
-        const inputValues = customId.split('_');
-
-        if (inputValues.length > 1) {
-          this.provider_id = inputValues[0];
-          this.userId = inputValues[1];
-          this.gets3curl();
-        } else {
-          this.shared_services.getBusinessUniqueId(customId).subscribe(
-            id => {
-              this.provider_id = id;
-              this.gets3curl();
-            },
-            error => {
-              this.provider_id = customId;
-              this.gets3curl();
-            }
-          );
-        }
+        this.shared_services.getBusinessUniqueId(customId).subscribe(
+          id => {
+            this.provider_id = id;
+            this.gets3curl();
+          },
+          error => {
+            this.provider_id = customId;
+            this.gets3curl();
+          }
+        );
       });
   }
   ngOnDestroy() {
@@ -373,12 +353,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       .then(
         res => {
           this.s3url = res;
-          this.getbusinessprofiledetails_json('settings', true);
-          this.getbusinessprofiledetails_json('terminologies', true);
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.getbusinessprofiledetails_json('jaldeediscount', true);
           if (this.userId) {
-            this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
+            this.getbusinessprofiledetails_json('location', true);
           } else {
             this.getbusinessprofiledetails_json('businessProfile', true);
             this.getbusinessprofiledetails_json('virtualFields', true);
@@ -387,6 +363,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.getbusinessprofiledetails_json('donationServices', true);
             this.getbusinessprofiledetails_json('departmentProviders', true);
           }
+          this.getbusinessprofiledetails_json('settings', true);
+          this.getbusinessprofiledetails_json('terminologies', true);
+          this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('jaldeediscount', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -420,18 +400,8 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             } else {
               this.bLogo = '';
             }
-            this.specializationslist = [];
-            this.specializationslist_more = [];
             if (this.businessjson.specialization) {
-              // this.specializationslist = this.businessjson.specialization;
-
-              for (let i = 0; i < this.businessjson.specialization.length; i++) {
-                if (i <= 1) {
-                  this.specializationslist.push(this.businessjson.specialization[i]);
-                } else {
-                  this.specializationslist_more.push(this.businessjson.specialization[i]);
-                }
-              }
+              this.specializationslist = this.businessjson.specialization;
             }
             if (this.businessjson.socialMedia) {
               this.socialMedialist = this.businessjson.socialMedia;
@@ -504,31 +474,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             break;
           }
           case 'gallery': {
-            this.galleryenabledArr = []; // For showing gallery 
-
             this.tempgalleryjson = res;
             let indx = 0;
             if (this.bLogo !== '') {
               this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
-              this.galleryenabledArr.push(0);
-            }
-
-            for (let i = 0; i < this.galleryjson.length; i++) {
-              this.galleryenabledArr.push(i);
             }
             for (let i = 0; i < this.tempgalleryjson.length; i++) {
               this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-              if (this.galleryenabledArr.length < 5) {
-                this.galleryenabledArr.push(i + indx);
-              }
-            }
-
-            const count = 5 - this.galleryenabledArr.length;
-            if (count > 0) {
-              for (let ind = 0; ind < count; ind++) {
-                this.gallerydisabledArr.push(ind);
-              }
             }
             this.gallery_exists = true;
             this.image_list_popup = [];
@@ -559,6 +512,12 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
+            if (this.userId) {
+              this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerVirtualFields', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerservices', this.userId, true);
+              this.getUserbusinessprofiledetails_json('providerApptServices', this.userId, true);
+            }
             this.location_exists = true;
             let schedule_arr: any = [];
             const locarr = [];
@@ -568,9 +527,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               const addres = this.locationjson[i].address;
               const place = this.locationjson[i].place;
               if (addres && addres.includes(place)) {
-                this.locationjson['isPlaceisSame'] = true;
+                this.isPlaceisSame = true;
               } else {
-                this.locationjson['isPlaceisSame'] = false;
+                this.isPlaceisSame = false;
               }
               schedule_arr = [];
               if (this.locationjson[i].bSchedule) {
@@ -597,15 +556,14 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              this.getApptServiceByLocationid(this.locationjson[i].id, i);
               this.locationjson[i]['checkins'] = [];
               if (this.userType === 'consumer') {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
-              if (this.businessjson.id && this.userId) {
-                appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-                wait_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+              if (this.businessid && this.userId) {
+                appt_locarr.push({ 'locid': this.businessid + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
+                wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
               }
             }
             if (this.userId) {
@@ -615,7 +573,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.getWaitingTime(locarr);
               this.getApptTime(locarr);
             }
-            this.api_loading = false;
             break;
           }
           case 'terminologies': {
@@ -794,9 +751,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.providerdetailserviceobj.getUserApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
-          if (this.appttime_arr === '"Account doesn\'t exist"') {
-            this.appttime_arr = [];
-          }
           let locindx;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
@@ -819,19 +773,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.appttime_arr.length; i++) {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
-              this.locationjson[locindx]['appttime_det'] = [];
+              this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
               if (this.appttime_arr[i]['availableSchedule']) {
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Take Appointment for';
-                  this.locationjson[locindx]['appttime_det']['date'] = 'Today';
                 } else {
-                this.locationjson[locindx]['apptAvailableToday'] = false;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Date';
-                  this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['availableSchedule']['availableDate'], { 'rettype': 'monthname' });
+                  this.locationjson[locindx]['apptAvailableToday'] = false;
                 }
               }
             }
@@ -918,11 +868,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             for (let i = 0; i < this.ratingdisabledCnt; i++) {
               this.ratingdisabledArr.push(i);
             }
-            this.getUserbusinessprofiledetails_json('providerVirtualFields', this.userId, true);
-            this.getUserbusinessprofiledetails_json('providerservices', this.userId, true);
-            this.getUserbusinessprofiledetails_json('providerApptServices', this.userId, true);
-            this.getbusinessprofiledetails_json('location', true);
-            // this.api_loading = false;
+            this.api_loading = false;
             break;
           }
           case 'providerVirtualFields': {
@@ -949,7 +895,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             break;
           }
           case 'providerservices': {
-            // this.showDepartments = this.settingsjson.filterByDept;
             if (this.settingsjson.filterByDept) {
               for (const dept of res) {
                 if (dept.services && dept.services.length > 0) {
@@ -1000,7 +945,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
   sortVfields(dataF) {
     let temp;
     const temp1 = new Array();
@@ -1149,13 +1093,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.showmoreDesc = true;
     }
   }
-  showSpec() {
-    if (this.showmoreSpec) {
-      this.showmoreSpec = false;
-    } else {
-      this.showmoreSpec = true;
-    }
-  }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -1164,21 +1101,9 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     return image ? images.indexOf(image) : -1;
   }
   getServiceByLocationid(locid, passedIndx) {
-    this.locationjson[passedIndx]['wlservices'] = [];
     this.shared_services.getServicesByLocationId(locid)
       .subscribe(data => {
         this.locationjson[passedIndx]['services'] = data;
-        this.locationjson[passedIndx]['wlservices'] = data;
-      },
-        error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
-        });
-  }
-  getApptServiceByLocationid(locid, passedIndx) {
-    this.locationjson[passedIndx]['apptservices'] = [];
-    this.shared_services.getServicesforAppontmntByLocationId(locid)
-      .subscribe(data => {
-        this.locationjson[passedIndx]['apptservices'] = data;
       },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -1792,9 +1717,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
       this.providerdetailserviceobj.getApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
-          if (this.appttime_arr === '"Account doesn\'t exist"') {
-            this.appttime_arr = [];
-          }
           let locindx;
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
@@ -1818,24 +1740,15 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             if (provids_locid[i]) {
               locindx = provids_locid[i].locindx;
               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-              this.locationjson[locindx]['appttime_det'] = [];
               if (this.appttime_arr[i]['availableSchedule']) {
                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];     
+                this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
                 if (dtoday === this.appttime_arr[i]['availableSchedule']['availableDate']) {
                   this.locationjson[locindx]['apptAvailableToday'] = true;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Take Appointment for';
-                  this.locationjson[locindx]['appttime_det']['date'] = 'Today';
                 } else {
-                this.locationjson[locindx]['apptAvailableToday'] = false;
-                  this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Date';
-                  this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['availableSchedule']['availableDate'], { 'rettype': 'monthname' });
+                  this.locationjson[locindx]['apptAvailableToday'] = false;
                 }
-              }
-              console.log(this.locationjson[locindx]);
-              if (this.appttime_arr[i]['message']) {
-                this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
               }
             }
           }
@@ -1859,53 +1772,5 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     } else {
       this.apptfirstArray = this.apptTempArray;
     }
-  }
-  providerDetClicked(userId) {
-    const account = this.provider_id + '_' + userId;
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        src: 'bp'
-      }
-    };
-    this.routerobj.navigate([account], navigationExtras );
-    // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
-  }
-
-  getBusinessHours(location) {
-    let message = '';
-    for (let i = 0; i < location.display_schedule.length; i++) {
-      message += location.display_schedule[i].dstr + ' ' + location.display_schedule[i].time;
-
-      if (location.display_schedule[i].recurrtype === 'Once') {
-        message += '(only for today)';
-      }
-
-      message += '\r\n';
-    }
-    return message;
-  }
-  getContactInfo(phonelist, emaillist) {
-    const contactinfo = [];
-    if ((phonelist && phonelist.length > 0) || (emaillist && emaillist.length > 0)) {
-      if (phonelist.length > 0) {
-        for (let i = 0; i < phonelist.length; i++) {
-          contactinfo.push(phonelist[i].instance + '-' + this.phonelist[i].label) ;
-        }
-      }
-      if (emaillist && emaillist.length > 0) {
-        for (let i = 0; i < emaillist.length; i++) {
-          contactinfo.push(emaillist[i].instance + '-' + emaillist[i].label);
-        }
-      }
-    }
-    return contactinfo;
-  }
-  showMoreInfo() {
-    this.showMore = !this.showMore;
-  }
-  goBack() {
-    this.locationobj.back();
-    this.userId = null;
-    this.pSource = null;
   }
 }

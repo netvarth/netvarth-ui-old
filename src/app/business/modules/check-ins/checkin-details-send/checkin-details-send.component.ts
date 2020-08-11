@@ -38,6 +38,8 @@ export class CheckinDetailsSendComponent implements OnInit {
     api_loading = false;
     phone: any;
     SEND_MESSAGE = '';
+    settings: any = [];
+    showToken = false;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,
@@ -45,10 +47,10 @@ export class CheckinDetailsSendComponent implements OnInit {
         public dialogRef: MatDialogRef<CheckinDetailsSendComponent>) {
             this.customer_label = this.shared_functions.getTerminologyTerm('customer');
             this.uuid = this.data.uuid;
-            console.log(data.qdata);
             this.chekintype = this.data.chekintype;
         }
    ngOnInit() {
+    this.getProviderSettings();
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
     this.bname = this.data.qdata.providerAccount.businessName;
     if (this.chekintype === 'Waitlist') {
@@ -92,11 +94,18 @@ export class CheckinDetailsSendComponent implements OnInit {
         // this.splname = this.data.qdata.provider.lastName;
     }
    }
+   getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
+  }
     back() {
         this.dialogRef.close();
     }
     sendMessage() {
-      console.log(this.chekintype);
       if (this.chekintype === 'Waitlist') {
           if (this.sms === true) {
               this.provider_services.smsCheckin(this.uuid).subscribe(
@@ -121,7 +130,7 @@ export class CheckinDetailsSendComponent implements OnInit {
                   );
           }
         } else {
-          if (this.sms === true) {
+          if (this.sms === true && this.phone) {
               this.provider_services.smsAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();
@@ -132,7 +141,7 @@ export class CheckinDetailsSendComponent implements OnInit {
                 }
               );
             }
-          if (this.email === true && this.consumer_email === true) {
+          if (this.email === true && this.consumer_email) {
               this.provider_services.emailAppt(this.uuid).subscribe(
                 () => {
                   this.dialogRef.close();

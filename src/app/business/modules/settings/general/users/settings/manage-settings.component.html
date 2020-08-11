@@ -5,16 +5,50 @@
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
             <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="gotoOnlineProfile()">
-                        <h2>Jaldee Profile</h2>
-                        <span class="form-level-settings">Manage your profile here.<a class="learnmore-pointer"
-                            id="customer-help"
-                            (click)="learnmore_clicked('jaldeeonline', $event)">Learn
-                            More</a></span>
-                    </span>
+                <div class="card p0" >
+                <span class="bi-link prof-link" (click)="gotoOnlineProfile()">
+                <h2>Jaldee Profile</h2>
+                <span class="form-level-settings">Manage your profile here.<a class="learnmore-pointer"
+                id="customer-help"
+                (click)="learnmore_clicked('jaldeeonline', $event)">Learn
+                More</a></span>
+                <br> 
+                <br>
+                <a class="pointer-cursor">
+                <div class="row" *ngIf="businessname">
+                <div class="col-md-4 col-xs-4 col-sm-3" >
+                <img class="rounded float-left imgresponsive " [src]="showimg()" alt="" />
                 </div>
+                <div class="col-md-6 col-xs-6 col-sm-4">
+                <div class="card-body-right">
+                <h4 class="card-title"> {{bProfile.businessName | capitalizeFirst }}</h4>
+                <p class="card-text">{{bProfile.businessDesc | capitalizeFirst}}</p>
+                </div>
+                </div>
+                </div>  
+                <span class="lnk setings">Jaldee Online&nbsp;&nbsp;
+                <span class="inactive" *ngIf="!jaldee_online_status">{{jaldee_online_status_str}}</span>
+                <span class="active" *ngIf="jaldee_online_status">{{jaldee_online_status_str}}</span>
+                </span> 
+                <span class="lnk setings"> 
+                <p> Profile Strength -
+                <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span>
+                </p>
+                <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding">
+                <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:10px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
+                aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12 no-padding-small">
+                <button (click)="scroll(basicInfoSection)" type="button" [className]="'wght-btn btn btn-' + weightageClass" >{{bprofile_btn_text}}</button>
+                </div>
+                </div>
+                </span>
+                </a>
+                </span>
             </div>
+            </div>
+        
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="services()">
