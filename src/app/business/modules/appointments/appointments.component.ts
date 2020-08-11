@@ -2903,7 +2903,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         uuid: modes.uid,
         consumerid: this.consumr_id,
         qdata: modes,
-        type: 'appt'
+        type: 'appt',
+        action: action
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

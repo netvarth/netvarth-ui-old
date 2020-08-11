@@ -246,12 +246,12 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" pattern="[0-9]+" type="text"
-                                        placeholder="Time Slot (min) *" formControlName="timeSlot" autocomplete="off"
+                                        placeholder="Time Slot Duration (min) *" formControlName="timeSlot" autocomplete="off"
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'timeSlot')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'timeSlot',
-    {'required' : 'Please enter a timeslot',
+    {'required' : 'Please enter a timeslot duration',
     'pattern' : 'Enter a valid timeslot'})">
                                 </app-field-error-display>
                             </div>

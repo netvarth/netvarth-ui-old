@@ -4,12 +4,14 @@
 </section>
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <section *ngIf="!showDashbard && !apiloading">
-  <div class="center-align col-md-12" *ngIf="message">
-    {{message}} Go to <span class="cs-btn bt3 pay_statment_btn" (click)="gotoSettings()"> Settings</span>
+  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
+  <div class="token-appt" *ngIf="message">
+    {{message}} Go to <a class="underline" (click)="gotoSettings()"> Settings</a>
   </div>
-  <div class="center-align col-md-12" *ngIf="message1">
-    {{message1}} Go to <span class="cs-btn bt3 pay_statment_btn" (click)="gotoQmanager()"> Jaldee QManager</span>
+  <div class="token-appt" *ngIf="message1">
+    {{message1}} Go to <a class="underline" (click)="gotoQmanager()"> Jaldee QManager</a>
   </div>
+</div>
 </section>
 <section class="dashboard content pro-dash" *ngIf="showDashbard">
   <div class="col-md-12 no-padding-small" *ngIf="!apiloading">
@@ -764,12 +766,17 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor" (click)="changeWaitlistStatus('STARTED', checkin)"
-                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && !checkin.virtualService"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                          <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
+                        </a>
+                        <a class="statusText btn-play pointer-cursor" (click)="showCallingModes(checkin, 'normalStart')"
+                          *ngIf="(checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn') && time_type!=2 && checkin.virtualService"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor"
-                          *ngIf="time_type==1 && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn')"
+                          *ngIf="time_type==1 && checkin.virtualService && (checkin.waitlistStatus == 'arrived' || checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'started')"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'"
                           (click)="showCallingModes(checkin, 'STARTED')">
                           <!-- <i *ngIf="getVirtualServiceCount(checkin.virtualService)" class="fa fa-whatsapp fa-lg whtsap-ic"></i>

@@ -48,6 +48,7 @@ export class CallingModesComponent implements OnInit {
     serv_provider: any;
     is_started = false;
     btndisabled = false;
+    launch = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -55,7 +56,7 @@ export class CallingModesComponent implements OnInit {
         private provider_shared_functions: ProviderSharedFuctions,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<CallingModesComponent>) {
-            this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.busnes_name = this.data.qdata.providerAccount.businessName;
@@ -138,13 +139,13 @@ export class CallingModesComponent implements OnInit {
     }
     selectAlrdyWaiting() {
         if (this.callingModes === 'WhatsApp' && this.data.qdata.service.virtualServiceType === 'videoService') {
-         //   this.msg_to_user = this.busnes_name + ' is already waiting';
-         this.msg_to_user = 'I am waiting for you to start the video call';
+            //   this.msg_to_user = this.busnes_name + ' is already waiting';
+            this.msg_to_user = 'I am waiting for you to start the video call';
         } else if (this.data.qdata.service.virtualServiceType === 'audioService') {
             this.msg_to_user = 'I am waiting for you to start the audio call';
         } else {
-          //  this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
-          this.msg_to_user = 'I am waiting for you to start the video call. Here is the meeting details ' + this.temp_msglink;
+            //  this.msg_to_user = this.busnes_name + ' is already waiting. Please click the link to join ' + this.temp_msglink;
+            this.msg_to_user = 'I am waiting for you to start the video call. Here is the meeting details ' + this.temp_msglink;
         }
     }
     clicktoSend() {
@@ -156,9 +157,17 @@ export class CallingModesComponent implements OnInit {
     }
     selectCompleted() {
         if (this.data.type === 'checkin') {
-            this.changeWaitlistStatus(this.data.qdata, 'DONE');
+            if (this.data.qdata.waitlistStatus === 'started') {
+                this.changeWaitlistStatus(this.data.qdata, 'DONE');
+            } else {
+                this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+            }
         } else {
-            this.changeWaitlistStatus(this.data.qdata, 'Completed');
+            if (this.data.qdata.apptStatus === 'Started') {
+                this.changeWaitlistStatus(this.data.qdata, 'Completed');
+            } else {
+                this.changeWaitlistStatus(this.data.qdata, 'Started');
+            }
         }
     }
     sendMessage() {
@@ -172,26 +181,26 @@ export class CallingModesComponent implements OnInit {
             communicationMessage: this.msg_to_user,
             uuid: [this.data.uuid]
         };
-        if ( this.data.type === 'checkin') {
+        if (this.data.type === 'checkin') {
             this.shared_services.consumerMassCommunication(post_data).
-            subscribe(() => {
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                this.step = 1;
-                setTimeout(() => {
-                    this.api_success = '';
-                }, 5000);
-            }
-            );
+                subscribe(() => {
+                    this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    this.step = 1;
+                    setTimeout(() => {
+                        this.api_success = '';
+                    }, 5000);
+                }
+                );
         } else {
             this.shared_services.consumerMassCommunicationAppt(post_data).
-            subscribe(() => {
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                this.step = 1;
-                setTimeout(() => {
-                    this.api_success = '';
-                }, 5000);
-            }
-            );
+                subscribe(() => {
+                    this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                    this.step = 1;
+                    setTimeout(() => {
+                        this.api_success = '';
+                    }, 5000);
+                }
+                );
         }
     }
     chkinTeleserviceJoinLink() {
@@ -232,21 +241,35 @@ export class CallingModesComponent implements OnInit {
     }
     changeWaitlistStatusApi(waitlist, action, post_data = {}) {
         if (this.data.type === 'checkin') {
-            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+            this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(
                     result => {
                         if (action === 'DONE') {
-                              this.dialogRef.close('reloadlist');
+                            this.dialogRef.close('reloadlist');
+                        }
+                        if (action === 'STARTED') {
+                            if (this.data.action === 'normalStart') {
+                                this.dialogRef.close('reloadlist');
+                            } else {
+                                this.changeWaitlistStatus(this.data.qdata, 'DONE');
+                            }
                         }
                     }
                 );
         } else {
-            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
+            this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data, true)
                 .then(
                     result => {
-                       if (action === 'Completed') {
-                         this.dialogRef.close('reloadlist');
-                       }
+                        if (action === 'Completed') {
+                            this.dialogRef.close('reloadlist');
+                        }
+                        if (action === 'Started') {
+                            if (this.data.action === 'normalStart') {
+                                this.dialogRef.close('reloadlist');
+                            } else {
+                                this.changeWaitlistStatus(this.data.qdata, 'Completed');
+                            }
+                        }
                     }
                 );
         }
@@ -299,7 +322,7 @@ export class CallingModesComponent implements OnInit {
         this.clicktoSend();
     }
     makeCompleted() {
-        if (this.is_started) {
+        if (this.launch) {
             this.step = 5;
         } else {
             this.dialogRef.close('reloadlist');
@@ -307,36 +330,40 @@ export class CallingModesComponent implements OnInit {
     }
     asktoLaunch() {
         this.btndisabled = true;
-        this.getMeetingDetails();
-        this.step = 6;
+        this.launch = true;
+        setTimeout(() => {
+            this.btndisabled = false;
+        }, 100);
+        // this.getMeetingDetails();
+        // this.step = 6;
     }
     makeStarted() {
         this.btndisabled = false;
         if (this.data.type === 'checkin') {
-            this.changeWaitlistStatus(this.data.qdata, 'STARTED');
+            // this.changeWaitlistStatus(this.data.qdata, 'STARTED');
             this.step = 1;
             this.is_started = true;
         } else {
-            this.changeWaitlistStatus(this.data.qdata, 'Started');
+            // this.changeWaitlistStatus(this.data.qdata, 'Started');
             this.step = 1;
             this.is_started = true;
         }
     }
     copyInfo() {
         let info;
-    if (this.data.type === 'checkin') {
-         info = document.getElementById('meetinInfochekin');
-    } else {
-         info = document.getElementById('meetinInfoappt');
-    }
-    if (window.getSelection) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(info);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        document.execCommand('Copy');
-        this.shared_functions.openSnackBar('Meeting details copied to clipboard');
-      }
+        if (this.data.type === 'checkin') {
+            info = document.getElementById('meetinInfochekin');
+        } else {
+            info = document.getElementById('meetinInfoappt');
+        }
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(info);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand('Copy');
+            this.shared_functions.openSnackBar('Meeting details copied to clipboard');
+        }
     }
 }
