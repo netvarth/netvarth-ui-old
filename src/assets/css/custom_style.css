@@ -10672,7 +10672,7 @@ a {
     width: 300px !important;
   }
 }
-@media screen and (max-width: 768px){
+/* @media screen and (max-width: 768px){
   h4{
   font-size:.7rem!important;
   }
@@ -10708,4 +10708,4 @@ a {
   color: #f2cd61 !important
   }
   
-  
+   */
