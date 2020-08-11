@@ -1345,17 +1345,15 @@ export class BuserProfileComponent implements OnInit, OnDestroy,AfterViewChecked
   }
 
   changeProPic() {
-    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        'userId': this.userId,
-        'userdata': this.user_arr
-    }
-    });
-    this.notedialogRef.afterClosed().subscribe(result => {
-      this.getUser();
-    });
+    // this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   data: { 'userdata': this.bProfile }
+    // });
+    // this.notedialogRef.afterClosed().subscribe(result => {
+    //   this.getBusinessProfile();
+    // });
+    this.shared_functions.openSnackBar('Visit our website "www.jaldee.com" to change your profile picture', { 'panelclass': 'snackbarerror' });
   }
 }
