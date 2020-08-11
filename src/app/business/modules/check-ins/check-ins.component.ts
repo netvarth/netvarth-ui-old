@@ -852,6 +852,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             self.locations = [];
             if (data.length > 0) {
               self.locationExist = true;
+              self.getAllQs();
             } else {
               self.locationExist = false;
               self.checkDashboardVisibility();
@@ -899,11 +900,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
           (queues: any) => {
-            if (queues.length > 0) {
-              _this.qExist = true;
-            } else {
-              _this.qExist = false;
-            }
+            // if (queues.length > 0) {
+            //   _this.qExist = true;
+            // } else {
+            //   _this.qExist = false;
+            // }
             resolve(queues);
           });
       });
@@ -954,17 +955,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getQs('all').then(
         (queues: any) => {
           _this.queues = queues;
-          if (_this.locationExist) {
-            _this.getGlobalSettings().then(
-              () => {
-                _this.getAllServices().then(
-                  () => {
-                    _this.getBusinessdetFromLocalstorage();
-                  }
-                );
-              }
-            );
-          }
           resolve(queues);
         },
         () => {
@@ -2510,6 +2500,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           () => { }
         );
     });
+  }
+  getAllQs() {
+    this.provider_services.getProviderQueues()
+      .subscribe(
+        (data: any) => {
+          if (data.length > 0) {
+            this.qExist = true;
+            this.getGlobalSettings().then(
+              () => {
+                this.getAllServices().then(
+                  () => {
+                    this.getBusinessdetFromLocalstorage();
+                  }
+                );
+              }
+            );
+          } else {
+            this.qExist = false;
+            this.checkDashboardVisibility();
+          }
+        });
   }
   checkDashboardVisibility() {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
