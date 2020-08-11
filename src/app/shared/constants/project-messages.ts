@@ -1332,7 +1332,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Use the Jaldee QManager to manage the services you offer using a queue system.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Setup the queue system so that your [customer] can avoid on-site waiting time. Enable the queue manager by setting up your services and adding them to the queue.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
