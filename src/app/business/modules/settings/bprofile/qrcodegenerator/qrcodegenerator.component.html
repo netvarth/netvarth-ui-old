@@ -14,7 +14,7 @@
             </div>
             <div class="coupon-outer">
                 <button class="btn btn-info jld-lnk-btn">
-                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                    <a class="ngx-qr-btn" [href]="qrCodePath" (click)="printQr('print-section')">
                     <i class="fa fa-cloud-download" aria-hidden="true" style="padding-right: 2px;"></i>Download</a>
                 </button>
                         <!-- <a [href]="href" (click)="downloadQR()" download><i class="fa fa-download" aria-hidden="true"></i></a>

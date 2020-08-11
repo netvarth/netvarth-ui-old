@@ -65,13 +65,22 @@ export class QRCodeGeneratorComponent implements OnInit {
     //   }
     printQr(printSectionId) {
         const printContent = document.getElementById(printSectionId);
-        let printsection = '<html><head><title></title>';
-        printsection += '</head><body style="margin-top:200px">';
-        printsection += '<div style="text-align:center!important">';
-        printsection += printContent.innerHTML;
-        printsection += '</div>';
-        printsection += '</body></html>';
-        cordova.plugins.printer.print(printsection);
+        setTimeout(() => {
+            // const params = [
+            //     'height=' + screen.height,
+            //     'width=' + screen.width,
+            //     'fullscreen=yes'
+            // ].join(',');
+            // const printWindow = window.open('', '', params);
+            let printsection = '<html><head><title></title>';
+            printsection += '</head><body style="margin-top:200px">';
+            printsection += '<div style="text-align:center!important">';
+            printsection += printContent.innerHTML;
+            printsection += '</div>';
+            printsection += '</body></html>';
+            cordova.plugins.printer.print(printsection);
+            // printWindow.print();
+        });
     }
     downloadQR() {
     }
