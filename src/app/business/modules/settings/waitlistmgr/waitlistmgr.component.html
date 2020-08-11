@@ -1,5 +1,6 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
@@ -119,8 +120,13 @@
                             <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
                         </h4>
+                        <span class="form-level-settings">
+                            Use the Jaldee QManager to manage the services you offer using a queue system.
+                        </span>
                     </div>
-                    <div class="mgn-bt-30">
+                    <div *ngIf="domain=='healthCare'" class="mgn-bt-10" style="font-weight: 600;color:green;">Token
+                        system</div>
+                    <div class="mgn-bt-30" *ngIf="domain !=='healthCare'">
                         <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
                         <mat-radio-group [(ngModel)]="qSystem">
                             <mat-radio-button class="mgn-rt-10" [value]="'token'"
@@ -135,11 +141,16 @@
                     </div>
                     <div *ngIf="qSystem=='fifo'">
                         <div class="mgn-bt-20">
-                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your {{customer_label}}s can see</div>
+                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your {{customer_label}}s can
+                                see</div>
                             <div class="mgn-bt-5 col-md-12 col-xs-12 col-sm-12 no-padding">
-                                <mat-checkbox [checked]="true" [disabled]="true">
+                                <!-- <mat-checkbox [checked]="true" [disabled]="true">
                                     Show waiting time
-                                </mat-checkbox>
+                                </mat-checkbox> -->
+                                <div>
+                                    <i class="fa fa-check"></i>
+                                    <span class="mgn-lt-5" style="font-weight: bold;"> Show waiting time </span>
+                                </div>
                                 <div class="mgn-lt-20">
                                     <div class="mgn-bt-10"> Calculate estimated waiting time based on</div>
                                     <mat-radio-group [(ngModel)]="calcMode">
@@ -147,8 +158,8 @@
                                             class="mgn-lt-5 col-xs-12 col-sm-12 col-md-12 no-padding mgn-bt-5"
                                             [value]="'conventional'" (change)="fixedModeChanged('conventional')">
                                             Conventional waiting time calculation
-                                            <i [matTooltip]="'Calculated using average of service time'" class="fa fa-info-circle"
-                                            style="font-size: 1rem;"></i>
+                                            <i [matTooltip]="'Calculated using average of service time'"
+                                                class="fa fa-info-circle" style="font-size: 1rem;"></i>
                                         </mat-radio-button>
                                         <mat-radio-button
                                             class="mgn-lt-5 col-xs-3 col-sm-2 col-md-1 no-padding mgn-rt-10"
@@ -170,28 +181,38 @@
                                 </div>
                             </div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [checked]="true" [disabled]="true">
-                                    Number of persons ahead
-                                </mat-checkbox>
+                                <!-- <mat-checkbox [checked]="true" [disabled]="true">
+                                    Number of persons ahead -->
+                                <!-- <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
+                                            style="font-size: 1rem;"></i> -->
+                                <!-- </mat-checkbox> -->
+                                <i class="fa fa-check"></i>
+                                <span class="mgn-lt-5" style="font-weight: bold;">  Number of persons ahead </span>
                             </div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [disabled]="true">
+                                <!-- <mat-checkbox [disabled]="true">
                                     Sequence/Priority number in queue
-                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                                </mat-checkbox> -->
+                                <span>Sequence/Priority number in queue</span>
+                                <span class="coming-soon">coming soon</span>
                             </div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [disabled]="true">
+                                <!-- <mat-checkbox [disabled]="true">
                                     Queue check-in barcode
-                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                                </mat-checkbox> -->
+                                <span>Queue check-in barcode</span>
+                                <span class="coming-soon">coming soon</span>
                             </div>
-                            <div class="mgn-bt-5">
+                            <!-- <div class="mgn-bt-5">
                                 <mat-checkbox [disabled]="true">
                                     Jaldee check status link
                                 </mat-checkbox><span class="coming-soon">coming soon</span>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="">
                             <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online queue check-in
+                                <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
+                                class="fa fa-info-circle" style="font-size: 1rem;"></i>
                             </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
@@ -209,37 +230,52 @@
                         </div>
                     </div>
 
-                    <div *ngIf="qSystem=='token'">
+                    <div *ngIf="qSystem =='token'">
                         <div class="mgn-bt-20">
-                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your {{customer_label}}s can see</div>
+                            <div class="mgn-bt-10" style="font-weight: 600"> Select what your {{customer_label}}s can
+                                see</div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [checked]="true" [disabled]="true">
-                                    Token number
-                                </mat-checkbox>
+                                <!-- <mat-checkbox [checked]="true" [disabled]="true">
+                                </mat-checkbox> -->
+                                <div>
+                                    <i class="fa fa-check"></i>
+                                    <span class="mgn-lt-5" style="font-weight: bold;"> Token number </span>
+                                </div>
                             </div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [checked]="true" [disabled]="true">
-                                    Number of persons ahead
-                                </mat-checkbox>
+                                <!-- <mat-checkbox [checked]="true" [disabled]="true">
+                                    Number of persons ahead -->
+                                <!-- <i [matTooltip]="'persons ahead'" class="fa fa-info-circle"
+                                            style="font-size: 1rem;"></i> -->
+                                <!-- </mat-checkbox> -->
+                                <i class="fa fa-check"></i>
+                                <span class="mgn-lt-5" style="font-weight: bold;"> Show waiting time </span>
                             </div>
                             <div class="mgn-bt-5">
                                 <mat-checkbox (change)="setWaitingTime($event)" [checked]="est_time">
                                     Estimated waiting time
+                                    <i [matTooltip]="'Real-time alerts will be send to your '+ customer_label +'s about the changes in their waiting time.'"
+                                        class="fa fa-info-circle" style="font-size: 1rem;"></i>
+
                                 </mat-checkbox>
                             </div>
                             <div class="mgn-bt-5">
-                                <mat-checkbox [disabled]="true">
+                                <!-- <mat-checkbox [disabled]="true">
                                     Queue check-in barcode
-                                </mat-checkbox><span class="coming-soon">coming soon</span>
+                                </mat-checkbox> -->
+                                <span>Queue check-in barcode</span>
+                                <span class="coming-soon">coming soon</span>
                             </div>
-                            <div class="mgn-bt-5">
+                            <!-- <div class="mgn-bt-5">
                                 <mat-checkbox [disabled]="true">
                                     Jaldee check status link
                                 </mat-checkbox><span class="coming-soon">coming soon</span>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="">
-                            <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online tokens </div>
+                            <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Issue online tokens
+                                <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
+                                    class="fa fa-info-circle" style="font-size: 1rem;"></i> </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
                                     (change)="handle_waitliststatus($event)">
@@ -260,9 +296,14 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="goService()">
-                        <h2>{{services_cap}} ({{service_count}})</h2>
-                        <span class="form-level-settings">{{frm_set_ser_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-services', $event)">Learn
+                        <h2>{{services_cap}} offered ({{service_count}})</h2>
+                        <span *ngIf="domain !== 'healthCare'" class="form-level-settings">{{frm_set_ser_cap}}<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-services', $event)">Learn
+                                More</a></span>
+                        <span *ngIf="domain == 'healthCare'" class="form-level-settings">All kinds of consultation and
+                            services you offer to patients.<a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-services', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

@@ -64,7 +64,7 @@ export class MediaComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Online',
+            title: 'Jaldee Profile',
             url: '/provider/settings/bprofile'
         },
         {

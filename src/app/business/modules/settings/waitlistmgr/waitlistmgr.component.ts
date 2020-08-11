@@ -144,13 +144,18 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.waitlist_manager = data;
+                    this.shared_functions.sendMessage({ ttype: 'waitlistSettings', value: this.waitlist_manager.showTokenId });
                     if (this.waitlist_manager.showTokenId) {
                         this.qSystem = 'token';
                         if (this.waitlist_manager.showTokenId && this.waitlist_manager.calculationMode === 'Conventional') {
                             this.est_time = true;
                         }
                     } else {
-                        this.qSystem = 'fifo';
+                        // if (this.domain === 'healthCare') {
+                        //     this.qSystem = 'token';
+                        // } else {
+                        //     this.qSystem = 'fifo';
+                        // }
                         if (this.waitlist_manager.calculationMode === 'Fixed') {
                             this.calcMode = 'manual';
                             this.isManualMode = true;
@@ -174,6 +179,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.getBussinessProfile()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.bProfile = data;
                     if (this.bProfile.baseLocation) {
                         this.locationExists = true;
@@ -508,3 +514,4 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         }
     }
 }
+

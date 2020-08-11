@@ -53,11 +53,13 @@
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <div class="col-md-12 mgn-up-10 no-padding">
-                                                {{callingMode.value.displayName}} &nbsp; <mat-slide-toggle
+                                                <!-- {{callingMode.value.displayName}} -->
+                                                
+                                                <!-- <mat-slide-toggle
                                                     [disabled]="callingMode.value.actualValue== ''"
                                                     [(ngModel)]="callingMode.value.enabled"
                                                     (change)="triggerChange(callingMode, callingMode.key)">
-                                                </mat-slide-toggle>
+                                                </mat-slide-toggle> -->
                                                 <mat-form-field>
                                                     <div class="input-group">
                                                         <input [(ngModel)]="callingMode.value.actualValue" matInput
@@ -103,11 +105,13 @@
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <div class="col-md-12 mgn-up-10 no-padding">
-                                                {{callingMode.value.displayName}} &nbsp; <mat-slide-toggle
+                                                <!-- {{callingMode.value.displayName}} -->
+
+                                                 <!-- <mat-slide-toggle
                                                     [disabled]="callingMode.value.actualValue== ''"
                                                     [(ngModel)]="callingMode.value.enabled"
                                                     (change)="triggerChange(callingMode, callingMode.key)">
-                                                </mat-slide-toggle>
+                                                </mat-slide-toggle> -->
                                                 <mat-form-field>
                                                     <div class="input-group">
                                                         <input [(ngModel)]="callingMode.value.actualValue" matInput

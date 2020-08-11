@@ -90,6 +90,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
+    appointmentEncId: '',
     appointmentMode: 'all',
     queue: 'all',
     service: 'all',
@@ -108,6 +109,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: false,
     last_name: false,
     phone_number: false,
+    appointmentEncId: false,
     appointmentMode: false,
     queue: false,
     service: false,
@@ -252,7 +254,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showRejected = false;
   showShare = false;
   historyCheckins: any = [];
-  apiloading = false;
+  apiloading = true;
   showSlotsN = false;
   slotsForQ: any = [];
   filter_sidebar = false;
@@ -299,6 +301,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  apptStatus = false;
+  locationExist = false;
+  serviceExist = false;
+  scheduleExist = false;
+  profileExist = false;
+  message = '';
+  message1 = '';
+  showDashbard = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -587,6 +597,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
+          if (schedules.length > 0) {
+            _this.scheduleExist = true;
+          } else {
+            _this.scheduleExist = false;
+          }
           resolve(schedules);
         });
     });
@@ -635,6 +650,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           (data: any) => {
             const locations = data;
             self.locations = [];
+            if (data.length > 0) {
+              self.locationExist = true;
+            } else {
+              self.locationExist = false;
+              self.checkDashboardVisibility();
+            }
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
                 self.locations.push(loc);
@@ -791,6 +812,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: false,
       last_name: false,
       phone_number: false,
+      appointmentEncId: false,
       appointmentMode: false,
       queue: false,
       service: false,
@@ -806,6 +828,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
+      appointmentEncId: '',
       appointmentMode: 'all',
       queue: 'all',
       service: 'all',
@@ -1522,6 +1545,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
+    if (this.filter.appointmentEncId !== '') {
+      api_filter['appointmentEncId-eq'] = this.filter.appointmentEncId;
+    }
     if (this.services.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.services.toString();
     }
@@ -1595,7 +1621,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     this.labelSelection();
     // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.future_appt_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
       || this.filter.check_in_end_date !== null || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.labelMultiCtrl.length > 0 || this.filter.apptStatus !== 'all') {
       this.filterapplied = true;
@@ -2830,6 +2856,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       _this.getSchedules('all').then(
         (queues: any) => {
           _this.schedules = queues;
+          if (_this.locationExist) {
+            _this.getGlobalSettings().then(
+              () => {
+                _this.getAllServices().then(
+                  () => {
+                    _this.getBusinessdetFromLocalstorage();
+                  }
+                );
+              }
+            );
+          }
           resolve(queues);
         },
         () => {
@@ -2982,40 +3019,40 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = 0;
   }
 
-  openAttachmentGallery (appt) {
+  openAttachmentGallery(appt) {
     this.image_list_popup_temp = [];
     this.image_list_popup = [];
     this.provider_services.getProviderAttachments(appt.uid).subscribe(
       (communications: any) => {
         let count = 0;
-          for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-            if (communications[comIndex].attachements) {
-              for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-                const thumbPath =  communications[comIndex].attachements[attachIndex].thumbPath;
-                let imagePath = thumbPath;
-                const description = communications[comIndex].attachements[attachIndex].s3path;
-                const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-                if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                  imagePath = communications[comIndex].attachements[attachIndex].s3path;
-                }
-                const imgobj = new Image(
-                  count,
-                  { // modal
-                    img: imagePath,
-                    description: description
-                  },
-                );
-                this.image_list_popup_temp.push(imgobj);
-                count++;
+        for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+          if (communications[comIndex].attachements) {
+            for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+              const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+              let imagePath = thumbPath;
+              const description = communications[comIndex].attachements[attachIndex].s3path;
+              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+                imagePath = communications[comIndex].attachements[attachIndex].s3path;
               }
+              const imgobj = new Image(
+                count,
+                { // modal
+                  img: imagePath,
+                  description: description
+                },
+              );
+              this.image_list_popup_temp.push(imgobj);
+              count++;
             }
           }
-          if (count > 0) {
-            this.image_list_popup = this.image_list_popup_temp;
-            setTimeout(() => {
-              this.openImageModalRow(this.image_list_popup[0]);
-            }, 200);
-          }
+        }
+        if (count > 0) {
+          this.image_list_popup = this.image_list_popup_temp;
+          setTimeout(() => {
+            this.openImageModalRow(this.image_list_popup[0]);
+          }, 200);
+        }
       },
       error => { }
     );
@@ -3027,5 +3064,64 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
+  getGlobalSettings() {
+    return new Promise((resolve) => {
+      this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+          this.apptStatus = data.appointment;
+          resolve();
+        });
+    });
+  }
+  getBusinessdetFromLocalstorage() {
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    if (bdetails) {
+      this.bname = bdetails.bn || '';
+    }
+    if (this.bname === '') {
+      this.profileExist = false;
+    } else {
+      this.profileExist = true;
+    }
+    setTimeout(() => {
+      this.checkDashboardVisibility();
+    }, 500);
+  }
+  getAllServices() {
+    const filter1 = { 'serviceType-neq': 'donationService' };
+    return new Promise((resolve) => {
+      this.provider_services.getServicesList(filter1)
+        .subscribe(
+          (data: any) => {
+            if (data.length > 0) {
+              this.serviceExist = true;
+            } else {
+              this.serviceExist = false;
+            }
+            resolve();
+          },
+          () => { }
+        );
+    });
+  }
+  checkDashboardVisibility() {
+    if (!this.apptStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+      if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.scheduleExist) {
+        this.message = 'To access the dashboard, go to Settings > Jaldee Profile > Business Profile and set up your profile. You also need to create a service and a schedule and enable Jaldee Appointment Manager.';
+      } else {
+        this.message1 = 'Enable Jaldee Appointment Manager in your settings to access Appointments dashboard.';
+      }
+      this.apiloading = false;
+      this.showDashbard = false;
+    } else {
+      this.apiloading = false;
+      this.showDashbard = true;
+    }
+  }
+  gotoAppt() {
+    this.router.navigate(['/provider/settings/appointmentmanager']);
+  }
+  gotoSettings() {
+    this.router.navigate(['/provider/settings']);
+  }
 }
-

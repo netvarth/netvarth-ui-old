@@ -1,0 +1,107 @@
+<section class="container">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content comn-cls checkin-details">
+        <div class="container">
+            <div class="row">
+                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
+                    <div class="card" *ngIf="!api_loading">
+                        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                    </div>
+                    <div class="card" *ngIf="api_loading">
+                        <div class="c-details">
+                            <div class="bk-ctrl">
+                                <span class="backtodashboard" (click)="gotoPrev()"><span
+                                        class="strong">{{go_back_cap}}</span></span>
+                            </div>
+                            <h2>{{checkin_label | capitalizeFirst}} {{details_cap}}</h2>
+                            <div class="tp" *ngIf="waitlistdata">
+                                <div class="item"><span class="ttle">{{bname_cap}}</span> <span>
+                                        {{BusinessName | capitalizeFirst}}
+                                    </span></div>
+                                <div class="item"><span class="ttle">{{date_cap}}</span> <span>
+                                        {{date| date:dateFormatSp}}
+                                    </span></div>
+                                <div class="item"><span class="ttle">{{location_cap}}</span><span>{{locn
+    | capitalizeFirst}}</span></div>
+                                <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
+                                    <span class="waitlist_for">
+                                        {{firstname | capitalizeFirst}} {{lastname | capitalizeFirst}}</span></div>
+                                <!-- <span
+    *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
+    </span> 
+    </div> -->
+                                <div class="item"><span class="ttle">{{service_cap}}</span> {{service |
+    capitalizeFirst}} <span *ngIf="deptName">({{deptName}}) </span></div>
+                                <div class="item"><span class="ttle">{{queue_cap}}</span>
+                                    {{queueStart}} - {{queueEnd}}</div>
+                                <div class="item"><span class="ttle">{{pay_status_cap}}</span>
+                                    {{paymntstats}} </div>
+                                    <div class="item" *ngIf="phonenumber"><span class="ttle">Phonenumber</span>
+                                        {{phonenumber}} </div>
+                                <div class="item" *ngIf="batchName"><span class="ttle">Batch</span><span>{{batchName}}</span></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- <div class="mgn-bt-20" *ngIf="callingModes">
+                                <h2> Calling modes </h2>
+                                <div class="mgn-bt-5" *ngFor="let mode of callingModes | keyvalue">
+                                    <span>{{callingModesDisplayName[mode.key]}}: </span> <span> {{mode.value}}</span>
+                                </div>
+                            </div> -->
+                            <div class="clearfix"></div>
+                            <div class="btm" *ngIf="waitlistdata">
+                                <button class="cs-btn bt3 communicate"
+                                    (click)="addCommonMessage(waitlistdata)">{{send_msg_cap}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p0">
+                        <mat-accordion class="communication-history">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{comm_history_cap}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <app-inbox-list [messages]="communication_history" [fromsource]="'consumer-waitlist'"
+                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+                <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+                    <div class="card">
+                        <h2>{{checkin_label |capitalizeFirst}} waitlistStatus</h2>
+                        <div class="c-history-outer">
+                            <ul class="c-history">
+                                <li class="{{status}}">
+                                    <div class="action">{{status}}</div>
+                                    <div class="time">{{ statusUpdatedTime| date: dateTimeFormat}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card p0">
+                        <mat-accordion class="provider-notes">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <!-- {{provider_label |capitalizeFirst}} Notes -->
+                                        {{cust_notes_cap | capitalizeFirst}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="pnotes" *ngIf="waitlistdata && consumerNote &&consumerNote !== ''">
+                                    <p>{{consumerNote}}</p>
+                                </div>
+                                <div *ngIf="waitlistdata &&consumerNote === '' || !consumerNote">
+                                    <p>{{no_cus_notes_cap}}</p>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

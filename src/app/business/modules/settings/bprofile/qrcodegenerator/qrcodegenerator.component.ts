@@ -12,6 +12,7 @@ export class QRCodeGeneratorComponent implements OnInit {
     qr_code_oId = false;
     qr_value;
     qrCodePath: string;
+    wpath: any;
     constructor(private changeDetectorRef: ChangeDetectorRef,
         public dialogRef: MatDialogRef<QRCodeGeneratorComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -34,6 +35,7 @@ export class QRCodeGeneratorComponent implements OnInit {
     }
     ngOnInit() {
         this.accuid = this.data.accencUid;
+        this.wpath = this.data.path;
         this.qrCodegenerateOnlineID(this.accuid);
     }
     qrCodegenerateOnlineID(valuetogenerate) {

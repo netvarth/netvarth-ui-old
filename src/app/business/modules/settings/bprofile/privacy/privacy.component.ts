@@ -37,11 +37,11 @@ export class PrivacyComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Jaldee Online',
+            title: 'Jaldee Profile',
             url: '/provider/settings/bprofile'
         },
         {
-            title: 'Privacy'
+            title: 'Contact Information'
         }
     ];
     breadcrumb_moreoptions: any = [];

@@ -2032,7 +2032,7 @@ sup {
 }
 
 .form-level-settings {
-  font-size: .65rem !important;
+  font-size: .8rem !important;
   font-family: 'Roboto Slab', sans-serif !important;
   color: #999999 !important;
   font-style: italic !important;
@@ -5622,7 +5622,7 @@ li.separator.setsplit {
 }
 
 .settings_info {
-  font-size: .65rem !important;
+  font-size: .75rem !important;
   font-family: 'Roboto Slab', sans-serif !important;
   color: #999999 !important;
   text-align: justify;
@@ -9321,9 +9321,9 @@ owl-carousel .bt3.active {
   max-height: 500px !important;
 }
 
-.wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+/* .wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
   background-color: #29b6f6 !important;
-}
+} */
 
 .wtmgr .mat-checkbox-disabled .mat-checkbox-label {
   color: black !important;
@@ -9641,6 +9641,12 @@ button.cust-button-2.tme {
   float:left;
   margin-left:20px;
 }
+.jld-lnk-btn {
+  font-size: 70%;
+  margin-left: 0 !important;
+  padding: 3px 6px !important;
+  font-weight: 600;
+}
 }
 .ngx-qrcod {
   border: outset;
@@ -9649,8 +9655,9 @@ button.cust-button-2.tme {
 
 .ngx-qr-btn {
   /* background: #3c8dbc; */
-  color: black;
+  color: white;
   font-size:larger;
+  font-weight: 500;
 }
 
 .ngx-qrcod .qrcode img {
@@ -9927,6 +9934,21 @@ td.chkWth, th.chkWth {
   }
   .tbl-qboard .td-three {
     width: 50px !important;
+  }
+  .jld-lnk-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+    font-size: 70%;
+  }
+  .jld-link {
+    font-size: 0.8rem !important;
+    font-style: italic;
+    font-weight: 400;
+    color: rgb(54, 127, 169);
+  }
+  .font-lrge{
+    font-size: 0.97rem !important;
   }
 }
 
@@ -10367,11 +10389,12 @@ a {
   height: auto;
   background: transparent;
   border: 1px solid #00aef2;
-  padding: 5px 15px;
-  color: #00aef2;
+  padding: 1px 40px;
+  color: white;
+  background-color: navy;
   font-size: .75rem;
   font-weight: 600;
-  border-radius: 5px;
+  border-radius: 60px;
 }
 
 .linkpage {
@@ -10501,8 +10524,6 @@ a {
   list-style:none !important;
 
 }
-
-
 @media (max-width: 575px) {
   ckeditor .ck-dropdown__panel-visible {
     max-width: 240px;
@@ -10591,3 +10612,56 @@ a {
   -webkit-appearance: none; 
   margin: 0; 
   }
+  .itemerror .sts-msg.error {
+    color: #f53404 !important;
+  }
+  image-cropper img {
+    max-width: 300px !important;
+    max-height: 300px ! important;
+    }
+  .font-bolder {
+    font-weight: bolder;
+  }  
+  .center-align {
+    display: -webkit-box;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    font-weight: 600;
+  }
+  .pad-top-5 {
+    padding-top: 5px !important;
+  }
+  .jld-link {
+    /* font-size: medium; */
+    font-style: italic;
+    font-weight: 500;
+    color: rgb(54, 127, 169);
+  }
+  .jld-lnk-btn {
+    margin-left: 0 !important;
+    padding: 3px 6px !important;
+    font-weight: 600;
+  }
+  .font-lrge {
+    font-size: 1.1rem ;
+  }
+  .jld-lnk-font {
+    font-size: .76rem;
+    font-weight: 600;
+  }
+  .jld-link-pad {
+    padding: 15px 0px 4px 0px !important;
+  }
+  .jld-lnk-visible {
+    display: none;
+  }
+  .jld-option {
+    display: flex;
+  }
+  @media (min-width: 500px) {
+  .serv-name {
+    width: 300px !important;
+  }
+}

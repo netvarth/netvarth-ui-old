@@ -84,7 +84,8 @@
                         <app-innerloading-spinner spinnerParams="loadingParams">
                         </app-innerloading-spinner>
                       </div>
-                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding" *ngIf="normal_basicinfo_show!=1">
+                      <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
+                        *ngIf="normal_basicinfo_show!=1">
                         <div class="progress col-md-4 col-sm-12 col-xs-12 mt-2 no-padding" style="height:12px;">
                           <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"
                             [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
@@ -124,7 +125,8 @@
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status" (change)="confirm_opsearchStatus()">
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="profile_status"
+                          (change)="confirm_opsearchStatus()">
                         </mat-slide-toggle>
                         &nbsp;{{profile_status_str}}</h2>
                       <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
@@ -163,7 +165,7 @@
                     <div class="bus-prof-qr-sec">
 
                       <ul class="sbl">
-                        <li class="acc-url-li">
+                        <!-- <li class="acc-url-li">
 
                           <strong> Here is your QR Code :- </strong>
 
@@ -171,49 +173,55 @@
                             <i class="fa fa-qrcode custId-cursor" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
                               [matTooltip]="'Generate QR code'"></i>
                           </span>
-                        </li>
+                        </li> -->
 
-                        <p class="head-level-settings mgn-up-5">
+                        <!-- <p class="head-level-settings mgn-up-5">
                           <span class="inactive" *ngIf="!profile_status">
                             <i class="fa fa-times"></i> Inactive</span>
                           <span class="active" *ngIf="profile_status">
                             <i class="fa fa-check"></i> Active</span>
 
-                        </p>
+                        </p> -->
 
                         <li class="acc-url-li mgn-up-10">
 
-                          <strong> Here is your Jaldee Link :-</strong>
-                          <span class="busns-id">
-                            <span class="custid" rel="noopener" target="_blank">
+                          <strong> Jaldee QR code and link:</strong>
+                          <span class="consumr-loc-icon pad-top-5">
+                            <span class="custid jld-link" rel="noopener" target="_blank">
 
                               {{wndw_path}}{{bProfile.accEncUid}}
 
                             </span>
-                            <span class="custid custId-icon">
-                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.accEncUid)"
-                                [matTooltip]="'Copy link'"></i>
-                            </span>
-                            <span class="custbtn" *ngIf="!bProfile.customId && profile_status">
-                              <button class="btn-default-n btn1-responsive" (click)="customizeId()">
-                                <a>
-                                  Customize ID
-                                </a>
-                              </button>
-                            </span>
+                              <span class="custid">
+                                <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge" (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)"
+                              [matTooltip]="'Generate QR code'"></i>
+                              </span>
+                              <span class="custid">
+                                <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyInputMessage(bProfile.accEncUid)"
+                                  [matTooltip]="'Copy link'"></i>
+                              </span>
+                              <span class="custbtn pad-left-20" *ngIf="!bProfile.customId && profile_status">
+                                <button class="btn btn-info jld-lnk-btn" (click)="customizeId()">
+                                    Personalize
+                                </button>
+                              </span>
                           </span>
                           <br>
-
-
                         </li>
                         <p class="head-level-settings mt-xs-3">
                           <span class="inactive" *ngIf="!profile_status">
                             <i class="fa fa-times"></i> Inactive</span>
                           <span class="active" *ngIf="profile_status">
                             <i class="fa fa-check"></i> Active</span>
-
-
                         </p>
+                        <!-- <li class="acc-url-li mgn-up-10">
+                          <strong> Jaldee Provider Id :</strong>
+                        <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.accEncUid}}</span>
+                        <span class="custid">
+                          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.accEncUid)"
+                            [matTooltip]="'Copy Id'"></i>
+                        </span>
+                        </li> -->
                       </ul>
 
                     </div>
@@ -252,10 +260,10 @@
                     </form>
                   </div>
 
-                  <div *ngIf="normal_customid_show==3" >
+                  <div *ngIf="normal_customid_show==3">
                     <div class="bus-prof-qr-sec">
                       <ul class="sbl">
-                        <li class="acc-url-li">
+                        <!-- <li class="acc-url-li">
 
                           <strong> Here is your QR Code :- </strong>
 
@@ -263,27 +271,30 @@
                             <i class="fa fa-qrcode custId-cursor " (click)="qrCodegeneraterOnlineID(bProfile.customId)"
                               [matTooltip]="'Generate QR code'"></i>
                           </span>
-                        </li>
+                        </li> -->
 
-                        <p class="head-level-settings mgn-up-5">
+                        <!-- <p class="head-level-settings mgn-up-5">
                           <span class="inactive" *ngIf="!profile_status">
                             <i class="fa fa-times"></i> Inactive</span>
                           <span class="active" *ngIf="profile_status">
                             <i class="fa fa-check"></i> Active</span>
 
-                        </p>
+                        </p> -->
 
                         <li class="acc-url-li h-xs-0 h-sm-0 mgn-up-10">
-
-                          <strong> Here is your Jaldee Link :-</strong>
-                          <span class="busns-id">
-                            <span class="custid" rel="noopener" target="_blank">
+                          <strong> Jaldee QR code and link: </strong>
+                          <span class="consumr-loc-icon pad-top-5">
+                            <span class="custid jld-link" rel="noopener" target="_blank">
                               {{wndw_path}}{{bProfile.customId}}
                             </span>
-                            <span class="custid custId-icon">
-                              <i class="fa fa-copy custId-cursor" (click)="copyInputMessage(bProfile.customId)"
+                            <span class="custid">
+                              <i class="fa fa-qrcode custId-cursor pad-left-20 font-lrge" (click)="qrCodegeneraterOnlineID(bProfile.customId)"
+                            [matTooltip]="'Generate QR code'"></i>
+                            </span>
+                            <span class="custid">
+                              <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyInputMessage(bProfile.customId)"
                                 [matTooltip]="'Copy link'"></i>
-                            </span>  
+                            </span>
                             <!-- <span class="custid custId-icon">
                               <button class="custId-edtbtn" type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon>more_vert</mat-icon>
@@ -299,17 +310,13 @@
                                 </button>
                               </mat-menu>
                             </span> -->
-                            <span class="custbtn">
-                              <button class="btn-default-n btn1-responsive" (click)="editCustomId(bProfile.customId)">
-                                <a>
-                                  Customize ID
-                                </a>
+                            <span class="custbtn pad-left-20">
+                              <button class="btn btn-info jld-lnk-btn" (click)="editCustomId(bProfile.customId)">
+                                  Personalize
                               </button>
                             </span>
                           </span>
                           <br>
-
-
                         </li>
                         <p class="head-level-settings mt-xs-3">
                           <span class="inactive" *ngIf="!profile_status">
@@ -318,6 +325,14 @@
                             <i class="fa fa-check"></i> Active</span>
 
                         </p>
+                        <!-- <li class="acc-url-li mgn-up-10">
+                          <strong> Jaldee Provider Id :</strong>
+                        <span class="jld-link consumr-loc-icon" rel="noopener" target="_blank">{{bProfile.customId}}</span>
+                        <span class="custid">
+                          <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyProfileId(bProfile.customId)"
+                            [matTooltip]="'Copy Id'"></i>
+                        </span>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -336,12 +351,12 @@
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
-                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status" (change)="confirm_searchStatus();">
+                        <mat-slide-toggle class="mgn-m-up-2" [(ngModel)]="jaldee_online_status"
+                          (change)="confirm_searchStatus();">
                         </mat-slide-toggle>&nbsp;{{jaldee_online_status_str}} </h2>
                       <div class="col-md-12 col-sm-12 col-xs-12 no-padding head-level-settings">
-                        <span class="inactive" *ngIf="!jaldee_online_status">Your profile is not listed in
-                          jaldee.com</span>
-                        <span class="active" *ngIf="jaldee_online_status">Your profile is listed in jaldee.com</span>
+                        <span class="inactive" *ngIf="!jaldee_online_status">{{profile_disabled_msg}}</span>
+                        <span class="active" *ngIf="jaldee_online_status">{{profile_enabled_msg}}</span>
                       </div>
                     </div>
                   </div>
@@ -570,14 +585,15 @@
                                     </span>
                                   </div>
                                   <div class="cop-r" *ngIf="loc_list.length>0">
-                                    <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                      <li>You can add more locations under
-                                        <a routerLink="/provider/settings/general/locations">settings</a>
+                                    <ul class="info-lst"
+                                      *ngIf="multipeLocationAllowed && user_accountType === 'INDEPENDENT_SP'">
+                                      <li>Click <a routerLink="/provider/settings/general/locations">here</a> to see all your locations
+                                       
                                       </li>
                                     </ul>
                                   </div>
                                 </div>
-                                <div class="locSchedule time_align">
+                                <!-- <div class="locSchedule time_align">
                                   <span class="sub-title">{{loca_hours}}</span>
                                   <ul *ngIf="display_schedule.length > 0">
                                     <li *ngFor="let schedule of display_schedule">
@@ -585,7 +601,7 @@
                                       <span class="time">{{schedule.time}}</span>
                                     </li>
                                   </ul>
-                                </div>
+                                </div> -->
                                 <!-- <div class="whrs" >
                                                         <span class="sub-title time_align"><b>General Business hours</b></span>
                                                         <ul  *ngIf="display_schedule.length > 0">
@@ -601,12 +617,12 @@
                                                                 class="time">{{schedule.time}}</span>
                                                         </li>
                                                     </ul> -->
-                                <ng-container *ngIf="display_schedule.length == 0">
+                                <!-- <ng-container *ngIf="display_schedule.length == 0">
                                   <div class="no-dta">
                                     <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
                                     <span class="cs-btn bt3" (click)="change_schedulepopup()">{{add_it_cap}}</span>
                                   </div>
-                                </ng-container>
+                                </ng-container> -->
                                 <div class="copy block-level">
                                   <h5>{{loc_amenities_cap}}
                                     <span (click)="editLocation('badge')" class="editbt"
@@ -667,7 +683,7 @@
                               style="height: 64px;">
                               <span class="mat-content">
                                 <mat-panel-title class="block-level mat-expansion-panel-header-title">
-                                  Specialization
+                                  Specializations
                                   <!-- <i *ngIf="normal_specilization_show==2 || normal_specilization_show==1" class="req-flds-cap">*required fields missing
                                                                     </i> -->
 
@@ -1379,6 +1395,20 @@
                     </span>
                 </div>
             </div> -->
+            <div class="row">
+              <div class="card p0">
+                <span class="b-link" (click)="gotoPrivacy()">
+                  <h2>
+                    Contact Information
+                  </h2>
+                  <span class="form-level-settings">Manage your contact related information here.
+                    <a class="learnmore-pointer" id="customer-help"
+                      (click)="learnmore_clicked('privacy-settings', $event)">Learn More
+                    </a>
+                  </span>
+                </span>
+              </div>
+            </div>
       <div class="row">
         <div class="card p0">
           <span class="b-link" (click)="gotoAdditionalInfo()">
@@ -1394,20 +1424,7 @@
           </span>
         </div>
       </div>
-      <div class="row">
-        <div class="card p0">
-          <span class="b-link" (click)="gotoPrivacy()">
-            <h2>
-              Privacy
-            </h2>
-            <span class="form-level-settings">Manage the privacy of your contact details here.
-              <a class="learnmore-pointer" id="customer-help"
-                (click)="learnmore_clicked('privacy-settings', $event)">Learn More
-              </a>
-            </span>
-          </span>
-        </div>
-      </div>
+   
 
 
 

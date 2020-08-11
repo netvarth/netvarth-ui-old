@@ -256,7 +256,7 @@ export const Messages = {
   'CHECKINS_TIME_CAPTION': 'Next Available Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
-  'PROFILE_TOOLTIP': 'Jaldee Online',
+  'PROFILE_TOOLTIP': 'Jaldee Profile',
   'SETTINGS_TOOLTIP': 'Settings',
   'LOCATION_TOOLTIP': 'Location',
   'WORKINGHOUR_TOOLTIP': 'Working Hour',
@@ -670,6 +670,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
+  'SPECIALIZATIONS_CHOOSE': ' Select your Specializations',
   'SPECIALIZATIONS_CAPS': 'Choose your specializations from the list below',
   'NO_SPECI_FOUND_CAP': 'Sorry no specializations found.',
 
@@ -871,6 +872,7 @@ export const Messages = {
   'BPROFILE_PHONE_CAP': 'Phone',
   'BPROFILE_VISIBLE_CAP': 'Visible to',
   'BPROFILE_SPECIAL_CAP': 'Specialization',
+  'BPROFILE_SPECIAL': 'Specializations',
   'BPROFILE_ADDOTIONAL_INFO_CAP': 'Additional Info',
   'BPROFILE_ADDITIONAL_CAP': 'Additional',
   'BPROFILE_ADD_CIRCLE_CAP': 'add_circle_outline',
@@ -1183,8 +1185,10 @@ export const Messages = {
   // Jaldee Online
   'JALDEE_ONLINE_DISABLED_MSG': 'Your [customer]s cannot  see you or access you online',
   'JALDEEONLINE_ENABLED_MSG':'Your [customer]s can see you online',
-  'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning QR code or clicking Jaldee link ',
+  'JALDEE_ONLINE_ENABLED_MSG': 'Your [customer]s can see you online by scanning Jaldee QR code and link ',
   'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
+  'PROFILE_ENABLED_MSG': 'Your [customer]s can search and find you on Jaldee.com',
+  'PROFILE_DISABLED_MSG': 'Your [customer]s cannot search and find you on Jaldee.com',
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP': 'Jaldee Bank',
   'PAY_SET_MY_OWN_ACCOUNT_CAP': 'My Own Bank Account',
@@ -1254,17 +1258,17 @@ export const Messages = {
   // App-ynw_provider-components-provider-waitlist-checkin-detail
   'CHECK_DET_GO_BACK_CAP': 'Go Back',
   'CHECK_DET_DETAILS_CAP': 'Details',
-  'CHECK_DET_NAME_CAP': 'Name:',
-  'CHECK_DET_DATE_CAP': 'Date:',
-  'CHECK_DET_LOCATION_CAP': 'Location:',
-  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for:',
-  'CHECK_DET_SERVICE_CAP': 'Service:',
-  'CHECK_DET_QUEUE_CAP': 'Queue:',
-  'CHECK_DET_PAY_STATUS_CAP': 'Payment Status:',
+  'CHECK_DET_NAME_CAP': 'Name',
+  'CHECK_DET_DATE_CAP': 'Date',
+  'CHECK_DET_LOCATION_CAP': 'Location',
+  'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for',
+  'CHECK_DET_SERVICE_CAP': 'Service',
+  'CHECK_DET_QUEUE_CAP': 'Queue',
+  'CHECK_DET_PAY_STATUS_CAP': 'Payment Status',
   'CHECK_DET_NOT_PAID_CAP': 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP': 'Partially Paid',
   'CHECK_DET_PAID_CAP': 'Paid',
-  'CHECK_DET_PARTY_SIZE_CAP': 'Party Size:',
+  'CHECK_DET_PARTY_SIZE_CAP': 'Party Size',
   'CHECK_DET_SEND_MSG_CAP': 'Send Message',
   'CHECK_DET_ADD_PRVT_NOTE_CAP': 'Add Private note',
   'CHECK_DET_CANCEL_CAP': 'Cancel',
@@ -1328,7 +1332,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, services, service-time window and waitlist here. Enable "Online Check-in" and also book a future date for [customer]\'s check-in here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Setup the queue system so that your [customer] can avoid on-site waiting time. Enable the queue manager by setting up your services and adding them to the queue.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
@@ -1371,7 +1375,7 @@ export const Messages = {
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
   'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
-  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG': 'If you are experiencing no showups , Jaldee recommends you to setup the prepayment at your own responsibility.' ,
+  'FRM_LEVEL_PREPAYMENT_SETTINGS_MSG': 'If you are experiencing no showups , Jaldee recommends you to setup the advance payment at your own responsibility.' ,
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
   'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here. ',
@@ -1499,7 +1503,7 @@ export const Messages = {
   // New business profile revamp
   'PROFILE_STRENGTH_CAP': 'Profile Strength',
   'PROFILE_INCOMPLETE_CAP': ' Incomplete',
-  'PROFILE_MINIMALLY_COMPLETE_CAP': 'Minimally Complete',
+  'PROFILE_MINIMALLY_COMPLETE_CAP': 'Fair',
   'PROFILE_COMPLETE_CAP': 'Fully Complete',
   'THREE_QUATERES_COMPLETE_CAP': 'Three Quarters Complete',
   'BTN_TEXT_COMPLETE_YOUR_PROFILE': 'Complete Your Profile',
@@ -1510,3 +1514,4 @@ export const Messages = {
 
   'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
 };
+

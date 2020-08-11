@@ -143,7 +143,7 @@ export class VideoSettingsComponent implements OnInit {
                 const mode = {
                     'callingMode': callingMode,
                     'value': resultMode['value'].actualValue,
-                    'status': status
+                    'status': 'ACTIVE'
                 };
                 virtualCallingModes.push(mode);
                 found = true;
@@ -160,7 +160,7 @@ export class VideoSettingsComponent implements OnInit {
             const mode = {
                 'callingMode': callingMode,
                 'value': resultMode['value'].actualValue,
-                'status': status
+                'status': 'ACTIVE'
             };
             virtualCallingModes.push(mode);
         }

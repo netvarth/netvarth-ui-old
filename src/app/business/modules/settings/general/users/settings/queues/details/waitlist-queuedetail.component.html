@@ -222,32 +222,6 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 </section>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="picker"
-                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
-                                            formControlName="startdate">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                    <!-- <app-field-error-display [displayError]=startdateError
-                                        errorMsg="Please enter date greater or equal to today">
-                                    </app-field-error-display> -->
-                                </div>
-                                <div class="col-md-2 col-sm-3 col-xs-5">
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="picker1"
-                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
-                                            formControlName="enddate">
-                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker1></mat-datepicker>
-                                    </mat-form-field>
-                                    <!-- <app-field-error-display [displayError]=enddateError
-                                        errorMsg="Please enter date greater or equal to startdate">
-                                    </app-field-error-display> -->
-                                </div>
-                            </div>
                             <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
                                     <div class="starttimediv">
@@ -325,6 +299,37 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
             })">
                                 </app-field-error-display>
                             </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
+                                        class="form-control number-ip-sm"
+                                        placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
+                                        formControlName="qcapacity" autocomplete="off" (keypress)="isNumeric($event)"
+                                        (keyup)="isvalid($event)">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
+        {
+          'required' : 'Please enter the capacity',
+          'maxlength' : 'Only 4 digits are allowed'
+        })">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
+                                        placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
+                                        formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
+                                        (keyup)="isvalid($event)">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+        {
+          'required' : 'Please enter the ' + customer_label + 's served at a time' ,
+          'maxlength' : 'Only 4 digits are allowed'
+        })">
+                                </app-field-error-display>
+                            </div>
                             <!-- <div class="form-group col-md-6 mgn-up-10" *ngIf="params.source !== 'location_detail'">
                                     <div *ngIf="action!='edit' && action != 'editFromList'">
                                         <mat-form-field *ngIf="loc_list.length > 1">
@@ -355,36 +360,31 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
-                                        class="form-control number-ip-sm"
-                                        placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
-                                        formControlName="qcapacity" autocomplete="off" (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)">
-                                </mat-form-field>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')"
-                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
-        {
-          'required' : 'Please enter the capacity',
-          'maxlength' : 'Only 4 digits are allowed'
-        })">
-                                </app-field-error-display>
-                            </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
-                                        placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
-                                        formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)">
-                                </mat-form-field>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
-                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
-        {
-          'required' : 'Please enter the ' + customer_label + 's served at a time' ,
-          'maxlength' : 'Only 4 digits are allowed'
-        })">
-                                </app-field-error-display>
+                            <div class="form-group row" *ngIf="showAdvancedSettings">
+                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                            formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=startdateError
+                                        errorMsg="Please enter date greater or equal to today">
+                                    </app-field-error-display> -->
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-5">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1"
+                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                            formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display> -->
+                                </div>
                             </div>
                             <div class="form-group"
                                 *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList' && waitlist_manager.showTokenId">

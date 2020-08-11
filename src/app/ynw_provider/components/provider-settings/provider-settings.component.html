@@ -12,7 +12,7 @@
                     <div class="box box-widget widget-user-2">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">Jaldee Online
+                            <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">Jaldee Profile
                                 <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
                         </div>
@@ -93,8 +93,8 @@
                                         <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
                                         <!-- <p class="settings_info">{{frm_search_cap}}</p> -->
-                                        <p class="settings_info" *ngIf="!search_status">Your profile is not listed in jaldee.com</p>
-                                        <p class="settings_info" *ngIf="search_status">Your profile is listed in jaldee.com</p>
+                                        <p class="settings_info" *ngIf="!search_status">{{profile_disabled_msg}}</p>
+                                        <p class="settings_info" *ngIf="search_status">{{profile_enabled_msg}}</p>
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -204,7 +204,7 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('services')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}}
+                                        <span class="lnk setings">{{services_cap}} offered
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
                                         <p class="settings_info">Add and manage services here</p>
@@ -289,7 +289,7 @@
                                     </a></li> -->
                                 <li (click)="redirecTo('appservices')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">{{services_cap}}
+                                        <span class="lnk setings">{{services_cap}} offered
                                             <span class="pull-right badge bg-blue">{{service_count}}</span>
                                         </span>
                                         <p class="settings_info">Add and manage services here</p>
@@ -343,7 +343,7 @@
                                         <p class="settings_info">Set up your locations here</p>
                                     </a>
                                 </li>
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('departments')">
+                                <li *ngIf="accountType=='BRANCH'" (click)="redirecTo('departments')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Departments
                                             <span *ngIf="filterbydepartment" class="pull-right badge bg-blue">{{departmentCount}}</span>

@@ -275,7 +275,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       url: '/provider/settings'
     },
     {
-      title: 'Jaldee Online'
+      title: 'Jaldee Profile'
     }
   ];
   businessConfig: any = [];
@@ -341,7 +341,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   normal_subdomainfield_show = 1;
   field;
   grid_row_index;
-
+  profile_enabled_msg: string;
+  profile_disabled_msg: string;
   showAddSection = false;
   showAddSection1 = false;
 
@@ -354,6 +355,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   specialdialogRef;
   normal_specilization_show = 1;
   image_list: any = [];
+  user_accountType;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -392,6 +394,8 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
+    this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
 
     this.getBusinessConfiguration();
     this.getPublicSearch();
@@ -402,6 +406,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     // this.getBusinessProfile();
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input.ttype === 'image-upload') {
+        console.log(input);
         this.provider_services.uploadGalleryImages(input.value)
           .subscribe(
             () => {
@@ -421,6 +426,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.user_accountType = user.accountType;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
@@ -1429,13 +1435,29 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     document.body.removeChild(selBox);
     this.shared_functions.openSnackBar('Link copied to clipboard');
   }
+  copyProfileId(valuetocopy) {
+    const path = valuetocopy;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = path;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.shared_functions.openSnackBar('Profile ID copied to clipboard');
+  }
   qrCodegeneraterOnlineID(accEncUid) {
     this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        accencUid: accEncUid
+        accencUid: accEncUid,
+        path: this.wndw_path
       }
     });
 

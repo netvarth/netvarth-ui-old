@@ -12,7 +12,7 @@
                 {{service_data.description | capitalizeFirst}}
             </div>
             <div class="c-ot">
-                <div class="item" *ngIf="departmentName && !is_donation">
+                <div class="item" *ngIf="filterDepart && departmentName && !is_donation">
                     <span class="ttle">Department Name</span>
                     <span>{{departmentName}}</span>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="item" *ngIf="service_data.serviceType && !is_donation">
                     <span class="ttle">Service Type</span>
                     <span *ngIf="service_data.serviceType==='virtualService'">Teleservice</span>
-                    <span *ngIf="service_data.serviceType==='physicalService'">Onsiteservice</span>
+                    <span *ngIf="service_data.serviceType==='physicalService'">Onsite Service</span>
                 </div>
                 <div class="item" *ngIf="service_data.virtualServiceType">
                     <span class="ttle">Service Mode</span>
@@ -46,10 +46,10 @@
                     <span>{{service_data.virtualCallingModes[0].callingMode}}</span>
                 </div>
                 <div class="item">
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp
-                        Number</span>
-                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom
-                        ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'WhatsApp'" class=" ttle">WhatsApp Number</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Zoom'" class=" ttle">Zoom ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'GoogleMeet'" class=" ttle">GoogleMeet ID</span>
+                    <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number</span>
                     <span>{{service_data.virtualCallingModes[0].value}}</span>
                 </div>
 
@@ -187,10 +187,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     class="example-full-width mat-select-virtualservice">
                     <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
                         (selectionChange)="selectServiceTypeHandler(type.value)">
-                        <mat-option *ngIf="include_audio" [value]="'audioService'">
+                        <mat-option [value]="'audioService'">
                             Audio
                         </mat-option>
-                        <mat-option *ngIf="include_video" [value]="'videoService'">
+                        <mat-option [value]="'videoService'">
                             Video
                         </mat-option>
                     </mat-select>
@@ -202,21 +202,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <mat-form-field class="mat-select-virtualsrvcategory">
                     <mat-label>Select <span *ngIf="serv_mode === 'videoService'">Video</span><span *ngIf="serv_mode === 'audioService'">Audio</span> Call App</mat-label>
                     <mat-select #tool (selectionChange)="selectToolTypeHandler(tool.value)" [(ngModel)]="tool_name" name="toolname" [ngModelOptions]="{standalone: true}">
-                        <mat-option *ngFor="let mode of telemodes" [value]="mode.callingMode">
-                            <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic"
-                                aria-hidden="true"></i>
-                            <i *ngIf="mode.callingMode === 'Zoom'" class="fa zoom-icon"></i>
-                            <i *ngIf="mode.callingMode === 'GoogleMeet'" class="fa meet-icon" ></i>
-                            <i *ngIf="mode.callingMode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
-                           <span class="dash">{{mode.callingMode}}</span> 
+                        <mat-option *ngFor="let mode of telemodes" [value]="mode">
+                            <i *ngIf="mode === 'WhatsApp'" class="fa fa-whatsapp whtsap-ic" aria-hidden="true"></i>
+                            <i *ngIf="mode === 'Zoom'" class="fa zoom-icon"></i>
+                            <i *ngIf="mode === 'GoogleMeet'" class="fa meet-icon" ></i>
+                            <i *ngIf="mode === 'Phone'" class="fa fa-mobile fa-lg" aria-hidden="true"></i>
+                           <span class="dash">{{mode}}</span> 
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field
                     *ngIf="is_tool || (service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
                     class="example-full-width mat-select-virtualservice">
-                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}"
-                        placeholder="{{selctd_tool}} ID" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" class="form-control" autocomplete="off" value="{{tool_id}}" placeholder="{{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}">
                 </mat-form-field>
             </div>
             <div class="form-group"
@@ -259,7 +257,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
   })"> </app-field-error-display> -->
                 </ng-container>
             </div>
-            <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+            <!-- <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
                 <div>
                     <label style="margin-bottom: 0 !important;">{{enable_prepayment_cap}}
                         <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
@@ -284,7 +282,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                         </app-field-error-display>
                     </div>
                 </ng-container>
-            </div>
+            </div> -->
             <div class="form-group glbl-preview"
                 *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
                 <div>
@@ -343,14 +341,77 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-radio-group>
             </div>
             <div class="mgn-bt-20">
+                <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
+                    style="font-size: 1.1rem;">
+                    Payment Info</a>
+                <div class="settings_info" *ngIf="!is_donation"> 
+                    Service price, advance amount and more</div>
+            </div>
+            <div class="row mgn-lt-5 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
+                <section class="mgn-bt-30">
+                    <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
+                    <div class="settings_info">
+                        {{frm_service_price}}</div>
+                    <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                        <mat-form-field>
+                            <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                                id="price" maxlength="10" (keypress)="isNumeric($event)"
+                                (keyup)="isvalid($event, 'totalAmount')"
+                                placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
+                                autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')"
+                            [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
+                        {'required' : 'Please enter price',
+                        'pattern' : 'Enter a valid price',
+                        'maxlength' : 'Only 10 digits are allowed'})">
+                        </app-field-error-display>
+                    </div>
+                    <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                        <div>
+                            <label style="margin-bottom: 0 !important;">Advance payment
+                                <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
+                                    (change)="changePrepayment()">
+                                </mat-slide-toggle>
+                                <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div>
+                            </label>
+                        </div>
+                        <ng-container *ngIf="subdomainsettings.serviceBillable && !is_donation">
+                            <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
+                                <mat-form-field>
+                                    <input matInput min="0" max={{maxlimit}} type="text"
+                                        (keyup)="isvalid($event, 'minPrePaymentAmount')" (keypress)="isNumeric($event)"
+                                        maxlength="10" class="form-control number-ip-sm" id="prepayment_amount"
+                                        placeholder="Advance payment amount ({{rupee_symbol}}) *"
+                                        formControlName="minPrePaymentAmount" autocomplete="off">
+                                </mat-form-field>
+                                <app-field-error-display
+                                    [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
+                  {'required' : 'Please enter prepayment amount',
+                  'pattern' : 'Enter a valid amount'})">
+                                </app-field-error-display>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
+                        <label class="col-form-label">{{tax_applicable_cap}}</label>
+                        <mat-slide-toggle class="example-margin" formControlName="taxable"
+                            (change)="taxapplicableChange()">
+                        </mat-slide-toggle>
+                    </div>
+                </section>
+                <!-- </mat-expansion-panel>
+</mat-accordion> -->
+            </div>
+            <div class="mgn-bt-20">
                 <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
                     style="font-size: 1.1rem;">
                     Additional Info</a>
                 <div class="settings_info" *ngIf="!is_donation"> 
-                    Service price, Live tracking and more</div>
+                    Live tracking and more</div>
             </div>
             <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
-                <section class="mgn-bt-30">
+                <!-- <section class="mgn-bt-30">
                     <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
                     <div class="settings_info">
                         {{frm_service_price}}</div>
@@ -375,7 +436,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                             (change)="taxapplicableChange()">
                         </mat-slide-toggle>
                     </div>
-                </section>
+                </section> -->
                 <div class="form-group inline" *ngIf="!is_donation">
                     <label class="col-form-label">{{end_service_notify_cap}}</label>
                     <mat-slide-toggle class="example-margin" formControlName="notification"

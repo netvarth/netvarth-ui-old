@@ -372,34 +372,35 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         this.disableButton = true;
         let post_itemdata2;
         // Check whether atleast one schedule is added
-        if (this.schedule_arr.length === 0) {
-            this.schedule_json = [];
-        } else {
-            this.schedule_json = [];
-            let mon;
-            const cdate = new Date();
-            mon = (cdate.getMonth() + 1);
-            if (mon < 10) {
-                mon = '0' + mon;
-            }
-            const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
-            const save_schedule = this.shared_Functionsobj.prepareScheduleforSaving(this.schedule_arr);
-            for (const schedule of save_schedule) {
-                this.schedule_json.push({
-                    'recurringType': 'Weekly',
-                    'repeatIntervals': schedule.daystr,
-                    'startDate': today,
-                    'terminator': {
-                        'endDate': '',
-                        'noOfOccurance': ''
-                    },
-                    'timeSlots': [{
-                        'sTime': schedule.stime,
-                        'eTime': schedule.etime
-                    }]
-                });
-            }
+        // if (this.schedule_arr.length === 0) {
+        //     this.schedule_json = [];
+        // } else {
+        this.schedule_json = [];
+        let mon;
+        const cdate = new Date();
+        mon = (cdate.getMonth() + 1);
+        if (mon < 10) {
+            mon = '0' + mon;
         }
+        const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+        const daystr = ['1', '2', '3', '4', '5', '6', '7'];
+        // const save_schedule = this.shared_Functionsobj.prepareScheduleforSaving(this.schedule_arr);
+        // for (const schedule of save_schedule) {
+        this.schedule_json.push({
+            'recurringType': 'Weekly',
+            'repeatIntervals': daystr,
+            'startDate': today,
+            'terminator': {
+                'endDate': '',
+                'noOfOccurance': ''
+            },
+            'timeSlots': [{
+                'sTime': '09:00 AM',
+                'eTime': '06:00 PM'
+            }]
+        });
+        // }
+        // }
         if (this.forbadge === true) {
             post_itemdata2 = {
                 'open24hours': (form_data.loct24hour) ? true : false
@@ -460,14 +461,15 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     (data) => {
                         this.location_id = data;
                         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
-                        this.shared_Functionsobj.sendMessage({'ttype': 'locationChange' });
+                        this.shared_Functionsobj.sendMessage({ 'ttype': 'locationChange' });
                         this.getLocationDetail();
+                        this.getLocationBadges();
                         if (this.params.action === 'addbase') {
                             this.router.navigate(['provider', 'settings', 'bprofile']);
                         } else {
                             this.action = 'view';
                         }
-                        this.shared_Functionsobj.sendMessage({'ttype': 'locationChange' });
+                        this.shared_Functionsobj.sendMessage({ 'ttype': 'locationChange' });
                         this.disableButton = false;
                     },
                     error => {

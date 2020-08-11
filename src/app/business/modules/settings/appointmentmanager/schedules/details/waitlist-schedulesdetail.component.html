@@ -220,32 +220,6 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     </div>
                                 </section>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="picker"
-                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
-                                            formControlName="startdate">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                    <!-- <app-field-error-display [displayError]=startdateError
-                                        errorMsg="Please enter date greater or equal to today">
-                                    </app-field-error-display> -->
-                                </div>
-                                <div class="col-md-2 col-sm-3 col-xs-5">
-                                    <mat-form-field>
-                                        <input matInput [matDatepicker]="picker1"
-                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
-                                            formControlName="enddate">
-                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker1></mat-datepicker>
-                                    </mat-form-field>
-                                    <!-- <app-field-error-display [displayError]=enddateError
-                                        errorMsg="Please enter date greater or equal to startdate">
-                                    </app-field-error-display> -->
-                                </div>
-                            </div>
                             <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
                                     <div class="starttimediv">
@@ -326,11 +300,17 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="example-full-width">
-                                    <input matInput min="0" max="100000" type="text" placeholder="Time Slot (min) *"
-                                        formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)">
+                                    <input matInput min="0" max="100000" pattern="[0-9]+" type="text"
+                                        placeholder="Time Slot (min) *" formControlName="timeSlot" autocomplete="off"
+                                        (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'timeSlot')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'timeSlot',
+    {'required' : 'Please enter a timeslot',
+    'pattern' : 'Enter a valid timeslot'})">
+                                </app-field-error-display>
                             </div>
+
                             <!-- <div class="form-group col-md-6 mgn-up-10" *ngIf="params.source !== 'location_detail'">
                                     <div *ngIf="action!='edit' && action != 'editFromList'">
                                         <mat-form-field *ngIf="loc_list.length > 1">
@@ -393,6 +373,32 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div> -->
+                            <div class="form-group row" *ngIf="showAdvancedSettings">
+                                <div class="col-md-2 col-sm-3 col-xs-4 no-padding-small">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker"
+                                            (dateChange)="compareDate($event.value,0)" placeholder="Start Date"
+                                            formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=startdateError
+                                        errorMsg="Please enter date greater or equal to today">
+                                    </app-field-error-display> -->
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-5">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1"
+                                            (dateChange)="compareDate($event.value,1)" placeholder="End Date"
+                                            formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <app-field-error-display [displayError]=enddateError
+                                        errorMsg="Please enter date greater or equal to startdate">
+                                    </app-field-error-display> -->
+                                </div>
+                            </div>
                             <div class="form-group" *ngIf="showAdvancedSettings">
                                 <div class="batch col-sm-12 mgn-bt-15 mgn-up-10">
                                     <div class="mgn-up-10" style="display: flex;">

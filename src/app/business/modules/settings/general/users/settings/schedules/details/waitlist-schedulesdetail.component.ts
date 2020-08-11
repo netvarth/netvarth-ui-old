@@ -448,7 +448,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
             enddate: this.queue_data.apptSchedule.terminator.endDate,
         });
         this.sbatchStatus = this.queue_data.batchEnable;
-        if (this.queue_data.parallelServing > 1) {
+        if (this.queue_data.parallelServing > 1 || this.sbatchStatus) {
             this.batch = true;
             this.showBatchFields = true;
         } else {

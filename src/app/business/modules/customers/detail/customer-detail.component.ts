@@ -91,7 +91,7 @@ export class CustomerDetailComponent implements OnInit {
                 this.breadcrumbs_init = [
 
                     {
-                        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1),
+                        title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1) + 's',
                         url: 'provider/customers'
                     }
 
@@ -218,7 +218,7 @@ export class CustomerDetailComponent implements OnInit {
             this.loading = false;
         } else {
             this.amForm = this.fb.group({
-                mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+                mobile_number: ['', Validators.compose([Validators.maxLength(10),
                 Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
                 customer_id: [''],
                 first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],

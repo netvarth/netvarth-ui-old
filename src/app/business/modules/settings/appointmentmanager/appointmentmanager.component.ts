@@ -37,6 +37,7 @@ export class AppointmentmanagerComponent implements OnInit {
     apptlist_statusstr = 'Off';
     futureapptlist_statusstr = 'off';
     breadcrumb_moreoptions: any = [];
+    frm_set_ser_cap = '';
 
     constructor(
         private router: Router,
@@ -57,6 +58,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+        this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
     }
     gotoschedules() {
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);

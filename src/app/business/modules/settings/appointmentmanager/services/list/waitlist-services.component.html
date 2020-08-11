@@ -13,6 +13,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody *ngIf="!api_loading && service_list.length === 0">
@@ -24,23 +25,34 @@
                     </tbody>
                     <tbody *ngFor="let service of service_list">
                         <tr class="grid-pad" [class.grid-disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
-                            <td>
+                            <td class="serv-name">
                                 <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
                                     (click)="goServiceDetail(service)">
                                     {{service.name | capitalizeFirst}}
                                 </div>
+                            </td>
+                            <td>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'audioService'"
-                                    class="link"> (<i class="fa fa-volume-up cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link"> <i class="fa fa-volume-up cal-mod-font" aria-hidden="true"></i></span>
                                 <span
                                     *ngIf="service.serviceType==='virtualService' && service.virtualServiceType === 'videoService'"
-                                    class="link"> (<i class="fa fa-video-camera cal-mod-font"
-                                        aria-hidden="true"></i>)</span>
+                                    class="link"> <i class="fa fa-video-camera cal-mod-font"
+                                        aria-hidden="true"></i></span>&nbsp;
+                                <span>
+                                    <i class="fa fa-phone" style="color: black;"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                    <i class="fa meet-icon"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                    <i class="fa zoom-icon"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                    <i class="fa fa-whatsapp whtsap-ic font-bolder"
+                                        *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp'"></i>
+                                </span>
                             </td>
                             <td>
                                 <span *ngIf="service.provider" class="setings">{{service.provider.firstName}}</span>
-                                <span *ngIf="!service.provider" class="setings">Global Service</span>
+                                <!-- <span *ngIf="!service.provider" class="setings">Global Service</span> -->
                             </td>
                             <td class="pad-right-30">
                                 {{service.deptName | capitalizeFirst}}
@@ -53,12 +65,19 @@
                                         </button>
                                     </span>
                                     <mat-menu #appMenu="matMenu">
-                                        <button mat-menu-item
-                                            (click)="(is_virtual_enbl || service.serviceType !== 'virtualService') && editService(service)"
-                                            *ngIf="service.status=='ACTIVE'">
-                                            <i class="icon-edit chkin-mobic"
-                                                *ngIf="is_virtual_enbl || service.serviceType !== 'virtualService'"></i>Edit
-                                        </button>
+                                        <button mat-menu-item 
+                                        (click)="editService(service)"
+                                        *ngIf="service.status=='ACTIVE' && service.serviceType !== 'virtualService'">
+                                        <i class="icon-edit chkin-mobic"
+                                            ></i>Edit
+                                    </button>
+                                    <button mat-menu-item [class.disabled]="!is_virtual_enbl && service.serviceType === 'virtualService'"
+                                    (click)="(is_virtual_enbl && service.serviceType === 'virtualService') && editService(service)"
+                                    *ngIf="service.status=='ACTIVE'&& service.serviceType === 'virtualService'">
+                                    <i class="icon-edit chkin-mobic"
+                                        *ngIf="is_virtual_enbl && service.serviceType === 'virtualService'"></i>
+                                         <i [matTooltip]="'Please turn on Teleservice in settings'" *ngIf="!is_virtual_enbl && service.serviceType === 'virtualService'" class="material-icons" style="cursor: help;">help</i>Edit
+                                </button>
                                         <button mat-menu-item (click)="changeServiceStatus(service)">
                                             <i *ngIf="service.status=='INACTIVE' || !service.status"
                                                 class="icon-enable phone-in-icon" [matTooltip]="'Enable Service'"></i>

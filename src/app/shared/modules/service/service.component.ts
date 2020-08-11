@@ -81,6 +81,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     advanced = false;
     duration = { hour: 0, minute: 0 };
     showAdvancedSettings = false;
+    showBillingInfo = false;
     departments: any = [];
     filterDepart = false;
     departmentName;
@@ -292,10 +293,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectServiceHandler(event) {
         this.serv_type = event;
         if (event === 'virtualService') {
+            this.serviceForm.controls['virtualServiceType'].enable();
             this.serviceForm.get('virtualServiceType').setValue('');
             this.is_virtual_serv = true;
             this.is_physical = 1;
         } else {
+            this.serviceForm.controls['virtualServiceType'].disable();
             this.is_virtual_serv = false;
             this.is_tool = false;
             this.modeselected = false;
@@ -587,6 +590,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
     }
+    billingInfoClicked() {
+        (this.showBillingInfo) ? this.showBillingInfo = false : this.showBillingInfo = true;
+    }
     getBusinessProfile() {
         this.provider_services.getBussinessProfile()
             .subscribe(
@@ -619,38 +625,45 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.telemodes = [];
                 this.vcallmodes = data.virtualCallingModes;
                 if (this.serv_mode && this.serv_mode === 'audioService') {
-                    for (let i = 0; i < this.vcallmodes.length; i++) {
-                        if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
-                            this.telemodes.push(this.vcallmodes[i]);
-                        }
-                    }
+                    // for (let i = 0; i < this.vcallmodes.length; i++) {
+                    //     if (this.vcallmodes[i].status === 'ACTIVE' && (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp')) {
+                    //         this.telemodes.push(this.vcallmodes[i]);
+                    //     }
+                    // }
+                    this.telemodes = ['WhatsApp', 'Phone'];
+
                 } else if (this.serv_mode && this.serv_mode === 'videoService') {
-                    for (let i = 0; i < this.vcallmodes.length; i++) {
-                        if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode !== 'Phone') {
-                            this.telemodes.push(this.vcallmodes[i]);
-                        }
-                    }
+                    // for (let i = 0; i < this.vcallmodes.length; i++) {
+                    //     if (this.vcallmodes[i].status === 'ACTIVE' && this.vcallmodes[i].callingMode !== 'Phone') {
+                    //         this.telemodes.push(this.vcallmodes[i]);
+                    //     }
+                    // }
+                    this.telemodes = ['WhatsApp', 'Zoom', 'GoogleMeet'];
                 } else {
-                    this.include_audio = false;
-                    this.include_video = false;
-                    for (let i = 0; i < this.vcallmodes.length; i++) {
-                        if (this.vcallmodes[i].status === 'ACTIVE') {
-                            this.telemodes.push(this.vcallmodes[i]);
-                            if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
-                                this.include_audio = true;
-                            }
-                            if (this.vcallmodes[i].callingMode !== 'Phone') {
-                                this.include_video = true;
-                            }
-                        }
-                    }
+                    this.telemodes = ['WhatsApp', 'Zoom', 'GoogleMeet', 'Phone'];
                 }
-                if (this.telemodes.length === 0) {
-                    this.is_virtual_enable = false;
-                }
-                for (let i = 0; i < this.telemodes.length; i++) {
-                    if (this.selctd_tool === this.telemodes[i].callingMode) {
-                        this.tool_id = this.telemodes[i].value;
+                // else {
+                //     this.include_audio = false;
+                //     this.include_video = false;
+                //     for (let i = 0; i < this.vcallmodes.length; i++) {
+                //         if (this.vcallmodes[i].status === 'ACTIVE') {
+                //             this.telemodes.push(this.vcallmodes[i]);
+                //             if (this.vcallmodes[i].callingMode === 'Phone' || this.vcallmodes[i].callingMode === 'WhatsApp') {
+                //                 this.include_audio = true;
+                //             }
+                //             if (this.vcallmodes[i].callingMode !== 'Phone') {
+                //                 this.include_video = true;
+                //             }
+                //         }
+                //     }
+                // }
+
+                // if (this.telemodes.length === 0) {
+                //     this.is_virtual_enable = false;
+                // }
+                for (let i = 0; i < this.vcallmodes.length; i++) {
+                    if (this.selctd_tool === this.vcallmodes[i].callingMode) {
+                        this.tool_id = this.vcallmodes[i].value;
                         break;
                     } else {
                         this.tool_id = '';

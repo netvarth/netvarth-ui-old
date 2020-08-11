@@ -34,6 +34,7 @@ export class ProPicPopupComponent implements OnInit {
     savedisabled = false;
     canvasRotation = 0;
     transform: ImageTransform = {};
+    scale = 1;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -85,6 +86,20 @@ export class ProPicPopupComponent implements OnInit {
     rotateRight() {
         this.canvasRotation++;
         this.flipAfterRotate();
+    }
+    zoomOut() {
+        this.scale -= .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    zoomIn() {
+        this.scale += .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
     }
     private flipAfterRotate() {
         const flippedH = this.transform.flipH;

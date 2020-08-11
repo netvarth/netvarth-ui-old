@@ -13,7 +13,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class AddProviderBprofileSpecializationsComponent implements OnInit {
 
-  specializations_cap = Messages.SPECIALIZATIONS_CAP;
+  specializations_cap = Messages.SPECIALIZATIONS_CHOOSE;
   no_speci_found_cap = Messages.NO_SPECI_FOUND_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
