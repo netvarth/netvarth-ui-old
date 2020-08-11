@@ -1514,3 +1514,4 @@ export const Messages = {
 
   'SEND_MESSAGE': 'The [customer] does not have a mobile number/email'
 };
+
