@@ -10665,3 +10665,40 @@ a {
     width: 300px !important;
   }
 }
+@media screen and (max-width: 768px){
+  h4{
+  font-size:.7rem!important;
+  }
+  }
+  @media screen and (max-width: 768px){
+  h4,P{
+  font-size:.7rem!important;
+  }
+  }
+  img{
+  width:150px;
+  height:200%;
+  }
+  @media screen and (max-width: 768px){
+  .imgresponsive{
+  width: 75px;
+  height: auto;
+  }
+  }
+  .bi-link h2 {
+  color: #3c8dbc !important;
+  margin-bottom: 0;
+  font-size: 1.25rem;
+  font-weight: 500 !important;
+  display: flex;
+  }
+  
+  .prof-link{
+  padding-left: 20px;
+  margin: 20px;
+  }
+  .content.w-manager .card .bi-link:hover .learnmore-pointer {
+  color: #f2cd61 !important
+  }
+  
+  
