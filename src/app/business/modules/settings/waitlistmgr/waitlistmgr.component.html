@@ -211,6 +211,8 @@
                         </div>
                         <div class="">
                             <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Online queue check-in
+                                <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
+                                class="fa fa-info-circle" style="font-size: 1rem;"></i>
                             </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
@@ -272,7 +274,7 @@
                         </div>
                         <div class="">
                             <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Issue online tokens
-                                <i [matTooltip]="'Your' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
+                                <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your' + customer_label +'s'"
                                     class="fa fa-info-circle" style="font-size: 1rem;"></i> </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"

@@ -189,7 +189,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        if (this.domain === 'healthCare' && this.count === 0) {
+        if (this.domain === 'healthCare' && !this.showToken && this.count === 0) {
           let postData;
           postData = {
             calculationMode: 'NoCalc',
