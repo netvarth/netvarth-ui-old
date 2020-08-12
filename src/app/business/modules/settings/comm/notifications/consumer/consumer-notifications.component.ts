@@ -72,6 +72,8 @@ export class ConsumerNotificationsComponent implements OnInit {
   wltstPersonsahead;
   apptPersonsahead;
   donatPersonsahead ;
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -97,6 +99,16 @@ export class ConsumerNotificationsComponent implements OnInit {
       title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        console.log(this.showToken);
+        }, () => {
+      });
   }
   // isNumeric(evt) {
   //   return this.sharedfunctionObj.isNumeric(evt);

@@ -69,7 +69,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   domain: any;
   qdata_list;
   settings: any;
-  showToken: any;
+  showToken = false;
 
   constructor(
     // public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,

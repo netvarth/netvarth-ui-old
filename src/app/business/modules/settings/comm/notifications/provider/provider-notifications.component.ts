@@ -87,6 +87,8 @@ export class ProviderNotificationsComponent implements OnInit {
   SelchkincnclNotify = false;
   selDonatnNotify = false;
   mode_of_notify = '';
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -109,6 +111,15 @@ export class ProviderNotificationsComponent implements OnInit {
         title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
   }
   getNotificationList() {
     this.provider_services.getUserNotificationList(0)
