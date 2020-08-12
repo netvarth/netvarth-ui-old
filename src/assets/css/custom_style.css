@@ -10672,7 +10672,7 @@ a {
     width: 300px !important;
   }
 }
-@media screen and (max-width: 768px){
+ @media screen and (max-width: 768px){ 
   h4{
   font-size:.7rem!important;
   }
@@ -10682,12 +10682,12 @@ a {
   font-size:.7rem!important;
   }
   }
-  img{
+  .usrimgess{
   width:150px;
   height:200%;
   }
   @media screen and (max-width: 768px){
-  .imgresponsive{
+  .usrimgessresponsive{
   width: 75px;
   height: auto;
   }
@@ -10708,4 +10708,4 @@ a {
   color: #f2cd61 !important
   }
   
-  
+   

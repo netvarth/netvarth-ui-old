@@ -43,7 +43,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <div class="form-group">
                             <label for="Lastname"><i class="zmdi-account material-icons-name"></i></label>
                             <input type="text" formControlName="last_name" name="Lastname" id="Lastname"
-                                placeholder="Last name" />
+                                placeholder="Last name*" />
                             <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')"
                                 [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
                                 {

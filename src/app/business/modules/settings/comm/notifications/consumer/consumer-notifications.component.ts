@@ -72,6 +72,11 @@ export class ConsumerNotificationsComponent implements OnInit {
   wltstPersonsahead;
   apptPersonsahead;
   donatPersonsahead ;
+  appointment_status: any;
+  waitlistStatus: any;
+  donations_status: any;
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -87,6 +92,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationSettings();
     this.getNotificationList();
+    this.getGlobalSettingsStatus();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     const breadcrumbs = [];
@@ -97,6 +103,16 @@ export class ConsumerNotificationsComponent implements OnInit {
       title: this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        console.log(this.showToken);
+        }, () => {
+      });
   }
   // isNumeric(evt) {
   //   return this.sharedfunctionObj.isNumeric(evt);
@@ -108,6 +124,14 @@ export class ConsumerNotificationsComponent implements OnInit {
     boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) { return false; } return true;
+  }
+  getGlobalSettingsStatus() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.appointment_status = data.appointment;
+        this.waitlistStatus = data.waitlist;
+        this.donations_status = data.donationFundRaising;
+      });
   }
 
   getNotificationList() {

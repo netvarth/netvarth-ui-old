@@ -564,8 +564,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             } else {
-                if (form_data.qserveonce === 0) {
-                    const error = this.customer_label + 's served at a time should be greater than 0';
+                if (form_data.qserveonce === 0 || (form_data.qserveonce > form_data.qcapacity)) {
+                    const error = this.customer_label + 's served at a time should be greater than 0 and smaller than Maximum ' + this.customer_label + 's served';
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     return;
                 }
@@ -637,7 +637,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 // }
             };
             if (this.action === 'edit') {
-                this.editProviderQueue(post_data);
+               this.editProviderQueue(post_data);
             } else {
                 this.addProviderQueue(post_data);
             }
