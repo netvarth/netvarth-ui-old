@@ -1,11 +1,18 @@
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
 </section>
+<section *ngIf="!waitlistStatus && !appointment_status">
+  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
+  <div class="token-appt">
+    Enable Jaldee Appointment Manager or Q Manager in your settings to access Notifications. 
+  </div>
+</div>
+</section>
 <section class="content comn-cls lic-page notifications">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card w-dta p0 ">
-        <mat-accordion>
+        <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
               <mat-panel-title class="block-level">Check-in Notifications</mat-panel-title>
@@ -126,7 +133,7 @@
           </mat-expansion-panel>
         </mat-accordion>
 
-        <mat-accordion>
+        <mat-accordion *ngIf="appointment_status">
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level">Appointment Notifications<br>

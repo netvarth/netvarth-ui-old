@@ -2,7 +2,14 @@
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
     (performAction)="performActions($event)"></app-breadcrumb>
 </section>
-<section class="content comn-cls lic-page notifications">
+<section *ngIf="!waitlistStatus && !appointment_status && !donations_status">
+  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
+  <div class="token-appt">
+    Enable Jaldee Appointment Manager or Q Manager or Accept Donations in your settings to access Notifications. 
+  </div>
+</div>
+</section>
+<section class="content comn-cls lic-page notifications" *ngIf="waitlistStatus || appointment_status || donations_status">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card w-dta p0 ">
@@ -14,7 +21,7 @@
               <mat-panel-title class="block-level">{{provdr_domain_name|capitalizeFirst}} Notifications</mat-panel-title>
             </mat-expansion-panel-header> -->
 
-        <mat-accordion>
+        <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level" *ngIf="showToken">Token Notifications<br>
@@ -142,7 +149,7 @@
           </mat-expansion-panel>
 
         </mat-accordion>
-        <mat-accordion>
+        <mat-accordion *ngIf="appointment_status">
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level">Appointment Notifications<br>
@@ -266,7 +273,7 @@
         </mat-accordion>
         <!-- </mat-expansion-panel>
         </mat-accordion> -->
-        <mat-accordion>
+        <mat-accordion *ngIf="donations_status">
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
               <mat-panel-title class="block-level">Donation Notifications<br>
