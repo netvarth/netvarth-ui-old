@@ -18,9 +18,8 @@
             <label class="notifi-togl" style="display: flex">Send Notifications&nbsp;&nbsp;
               <mat-slide-toggle class="example-margin" [(ngModel)]="consumerNotification"
                 (change)="handleNotificationSettings($event)">
-              </mat-slide-toggle>
+              </mat-slide-toggle> &nbsp;<p class="sts" [class.active]="consumerNotification">{{notification_statusstr}}</p>
             </label>
-            <p class="sts" [class.active]="consumerNotification">{{notification_statusstr}}</p>
           </div>
         </div>
         <mat-accordion *ngIf="waitlistStatus">

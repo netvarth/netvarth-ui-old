@@ -143,7 +143,7 @@ export class ConsumerCheckinComponent implements OnInit {
     userData: any = [];
     userEmail;
     userPhone;
-
+    currentPhone;
     users: any = [];
     emailExist = false;
     payEmail;
@@ -152,6 +152,7 @@ export class ConsumerCheckinComponent implements OnInit {
     email1error = null;
     phoneerror = null;
     edit = true;
+    changePhno = false;
     selected_phone;
     consumerPhoneNo;
     trackUuid;
@@ -446,9 +447,11 @@ export class ConsumerCheckinComponent implements OnInit {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
             return;
         } else {
-            this.consumerPhoneNo = this.selected_phone;
+           // this.consumerPhoneNo = this.selected_phone;
+            this.currentPhone = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
+            this.changePhno = true;
         }
     }
     editPhone() {
@@ -731,6 +734,12 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             }
         }
+        let phNumber;
+        if (this.currentPhone && this.changePhno) {
+            phNumber = this.currentPhone;
+        } else {
+            phNumber = this.userPhone;
+        }
         // }
         const post_Data = {
             'queue': {
@@ -777,11 +786,12 @@ export class ConsumerCheckinComponent implements OnInit {
             this.holdenterd_partySize = this.enterd_partySize;
             post_Data['partySize'] = Number(this.holdenterd_partySize);
         }
-        post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
+        post_Data['waitlistPhoneNumber'] = phNumber;
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             if (!this.is_wtsap_empty) {
-                this.addCheckInConsumer(post_Data);
+                console.log(post_Data);
+               this.addCheckInConsumer(post_Data);
             }
         }
     }

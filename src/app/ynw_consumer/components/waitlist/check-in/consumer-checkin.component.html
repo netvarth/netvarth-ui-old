@@ -21,6 +21,29 @@
                                             </li>
                                         </ng-container>
                                     </ul>
+                                    <ng-container>
+                                        <div class="mgn-up-5 input-group mobile-error">
+                                            <label *ngIf="edit" class="col-form-label">
+                                                <i class="fa fa-mobile chkin-mobic"></i>&nbsp;
+                                                <span class="chkin-ph"
+                                                    *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                <span class="chkin-ph"
+                                                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span>&nbsp;<i
+                                                    class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
+                                            </label>
+                                            <label *ngIf="!edit">
+                                                <input type="text" maxlength="10"
+                                                    style="width: 85px; border-bottom: 1px solid; font-size:.75rem"
+                                                    placeholder="Contact number" class=" emailPrepay"
+                                                    [(ngModel)]="selected_phone" />
+                                                <span (click)="addPhone()"
+                                                    style="color: #00aef2; padding-left:5px">Ok</span>
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
+                                                </app-field-error-display>
+                                            </label>
+                                        </div>
+                                    </ng-container>
                                     <div class="date-outer" *ngIf="partySizeRequired">
                                         <div class="form-group party-size">
                                             <label class="col-form-label">{{enter_party_size_cap}}</label>
