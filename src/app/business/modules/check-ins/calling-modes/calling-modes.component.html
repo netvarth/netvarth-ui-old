@@ -16,10 +16,10 @@
                             (click)="asktoLaunch()">
                             <i class="fa fa-whatsapp fa-lg whtsap-ic"></i>
                             <a class="tspace" [ngClass]="{'teli-wtsap-a': !btndisabled, 'tel-serv-a': btndisabled}"
-                                *ngIf="callingModes !== 'Phone'" style="color:white" target="_blank"
+                                *ngIf="callingModes !== 'Phone'" target="_blank"
                                 [href]="starting_url">Launch WhatsApp</a>
                             <a class="tspace" [ngClass]="{'teli-wtsap-a': !btndisabled, 'tel-serv-a': btndisabled}"
-                                *ngIf="callingModes === 'Phone'" style="color:white" target="_blank"
+                                *ngIf="callingModes === 'Phone'" target="_blank"
                                 [href]="'tel:' + starting_url">Launch WhatsApp</a>
                         </button>
                         <button *ngIf="is_web" class="cs-btn bt2 disabled">
