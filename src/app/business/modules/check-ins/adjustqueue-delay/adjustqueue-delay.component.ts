@@ -39,7 +39,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   checkedin_cnt = 0;
   tot_checkin_count = 0;
   customer_label = '';
-  frm_adjust_del_cap = '';
+  frm_adjust_del_cap =  Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
   disableButton = false;
   instantQueue;
   breadcrumbs;
@@ -166,7 +166,7 @@ export class AdjustqueueDelayComponent implements OnInit {
       );
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     //  this.selected_queue = this.data.queue_id;
-    this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
+    // this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG_CNGE;
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
