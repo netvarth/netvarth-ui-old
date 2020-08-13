@@ -9321,10 +9321,11 @@ owl-carousel .bt3.active {
 .checklist, .apptlist {
   width: 325px !important;
   max-width: 325px !important;
-  min-width: 290px !important;
+  min-width: 300px !important;
   min-height: 500px !important;
   max-height: 500px !important;
 }
+
 
 /* .wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
   background-color: #29b6f6 !important;
