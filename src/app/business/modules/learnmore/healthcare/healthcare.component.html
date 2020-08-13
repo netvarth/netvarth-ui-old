@@ -1558,7 +1558,23 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
-                                    <div class="helpcontent"></div>
+                                    <div class="helpcontent">
+                                        <span><strong>What is Jaldee Livetracking?</strong></span>
+                                        <li>
+                                            Jaldee Livetracking enables the service provider to know the location and the time taken by the consumer
+                                        </li>
+                                        <span><strong>How to activate Livetracking?
+                                            </strong></span>
+                                        <li>
+                                                Go to <strong>license</strong>,upgrade your license to <strong>premium</strong> or above and then in <strong>General</strong> options, click on Livetracking and ON the toggle button
+                                        </li>
+                                        <span><strong>How Livetracking works?</strong></span>
+                                        <li>After enabling the Livetracking feature, a service provider can click ON the <strong>ENABLE LIVETRACK</strong> option under additional info of a service </li>
+                                        <li>
+                                            To track a consumer after a checkin/appointment, a service provider can click on the <strong>“Where is my customer” option which shows the distance and time to reach provider
+                                            </strong>    
+                                        </li>  
+                                    </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
@@ -1685,7 +1701,34 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
-                                    <div class="helpcontent"></div>
+                                    <div class="helpcontent">
+                                        <span><strong>What is JALDEE CustomView?</strong></span>
+                                        <li>Jaldee CustomView is a feature which provides the service provider to view the selected Check-ins/tokens or Appoinments on the dashboard
+                                        </li>
+                                        <span><strong>How to setup CustomView?</strong></span>
+                                        <ul class="ul-normal">
+                                            <li> Go to<strong> General</strong>, select the <strong>“Custom Views”</strong></li>
+                                            <li>Click on <strong>ADD VIEW</strong>
+                                            </li>
+                                            <li>Give the Name for the view</li>
+                                            <li>Select whether <strong>Check-in/Token</strong> or <strong>Appointment</strong></li>
+                                            <li>Choose the <strong>services</strong> or <strong>schedules</strong>(a provider can choose one service or multiple services)
+                                            </li>
+                                            <li>Choose the Queues and save
+
+                                            </li>
+                                        </ul>
+                                        <span><strong>How to initiate CustomView?</strong></span>
+                                        <li>After setup, service provider can select the custom view option from 
+                                           <strong> “My view”</strong> which is in the top of the dashboard
+                                            </li>
+                                         <span><strong>How to add and update/delete a CustomView</strong></span> 
+                                         <ul class="ul-normal">
+                                         <li>To add a new view, go to CustomView and click on<strong> Create view</strong></li> 
+                                         <li>If you want to update/delete the CustomView, go to CustomView and click on the ፧ and choose the required option
+                                        </li> 
+                                    </ul>
+                                    </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
@@ -1719,11 +1762,16 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>The QManager helps the doctor in managing the working hours and ensuring
-                                    the seamless workflow from the point of the check-in to the completion of service.
+                                <span><strong>What is Jaldee Qmanager?</strong>
                                 </span>
+                                <ul class="ul-normal">
+                                    <li>Jaldee Qmanager manages the working hours, wait-time calculation, services, service-time window and waitlist
+                                        </li>
+                                    <li>Provider can give permissions to online check-ins for Today and Future
+                                    </li>
+                                </ul>
                             </div>
-                            <mat-accordion>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -1799,7 +1847,7 @@
                                     </div>
 
                                 </mat-expansion-panel>
-                            </mat-accordion>
+                            </mat-accordion> -->
                             <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="showlocations && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -1886,37 +1934,21 @@
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
-                                        <span>This page lists all the services offered to the patients. While listing
+                                        <!-- <span>This page lists all the services offered to the patients. While listing
                                             the services,
                                             please
                                             keep the name of services simple and comprehensible which will help the
                                             patients easily
                                             know
-                                            more about the services offered by the doctor.</span>
+                                            more about the services offered by the doctor.</span> -->
 
                                         <ul class="ul-normal">
-                                            <li>When the doctor clicks on the <strong>“Services“</strong>, a page
-                                                appears where one can
-                                                view
-                                                a service by default name “Consultation“(If doctor has edited the
-                                                default service during
-                                                the
-                                                initial profile set up, the updated service details is seen here). Other
-                                                details such as
-                                                Estimated duration, End of Service notification fields also have values
-                                                by default. The
-                                                doctor can edit this section by clicking on the pencil button.</li>
-                                            <li>Tax Applicable field can be set to “Yes“, only if tax settings is
-                                                completed under the
-                                                Payments section in Settings.</li>
-                                            <li>Service status is enabled by default. Only enabled services are
-                                                available for patients
-                                                to
-                                                proceed with the check-in process.</li>
-                                            <li>The doctor, at his/her convenience, can enable/disable the status of any
-                                                service by
-                                                clicking
-                                                on the three dots menu.</li>
+                                            <li>Go to Jaldee Qmanager and select Services
+                                            </li>
+                                            <li>Default service will be given, provider can edit/disable this service or create a new service</li>
+                                            <li>Provider can create a new service by clicking on the Add Service
+                                            </li>
+                                            <li>Give service name</li>
                                             <li>All the services created are displayed here.</li>
                                             <li>To view the complete details of a service, click on the service names.
                                                 One can edit the
@@ -2034,7 +2066,7 @@
 
                                     <div class="helpcontent">
 
-                                        <span>Queues simply means the active time of the business. One can add
+                                        <!-- <span>Queues simply means the active time of the business. One can add
                                             multiple Working
                                             Hours
                                             according to the business schedule. To understand this with an example,
@@ -2045,63 +2077,25 @@
                                             operates only for 4 hours (9 am to 1 pm). In such cases, one can create two
                                             working hours,
                                             one
-                                            for weekdays and the other one for the Weekends.</span>
+                                            for weekdays and the other one for the Weekends.</span> -->
 
                                         <ul class="ul-normal">
-                                            <li>This page prompts to <strong>“Add working hours“,</strong> in case the
-                                                doctor has not
-                                                added
-                                                any working hour during the initial profile set up.</li>
-                                            <li><strong>“ADD WORKING HOURS“</strong> button enables the doctor to add
-                                                new working hours.
-                                                When a doctor clicks this button a window appears where one can input
-                                                the details of the
-                                                schedule.
-                                                <ul class="ul-normal">
-                                                    <li><strong>Queues :</strong> Enter a title for the working
-                                                        hours here.</li>
-                                                    <li><strong>Location :</strong> Choose a location from the drop-down
-                                                        menu.</li>
-                                                    <li><strong>Service :</strong> All added services offered by the
-                                                        doctor are
-                                                        displayed
-                                                        here. Check the services offered in this working hour from the
-                                                        list of services
-                                                        displayed here.</li>
-                                                    <li><strong>Schedule :</strong> Select the days according to the
-                                                        schedule. A doctor
-                                                        has
-                                                        the option to choose <strong>“Select all days“</strong>, in case
-                                                        the business is open 7 days a week.</li>
-                                                    <li><strong>Start Time/End Time :</strong> Enter the start time and
-                                                        the end time for
-                                                        a
-                                                        particular working hour.</li>
-                                                    <li><strong>Maximum patients served :</strong> Enter the maximum
-                                                        number of
-                                                        patients
-                                                        the business can serve in particular schedule. No more check-ins
-                                                        will be
-                                                        accepted,
-                                                        once the limit is reached. If the limit is not set, then endless
-                                                        check-ins will
-                                                        be
-                                                        accepted between the working hours.</li>
-                                                    <li><strong>patients served at a time :</strong> Here enter the
-                                                        number of patients
-                                                        that can be served at the same time.</li>
-                                                    <li><strong>Online check-ins :</strong> Enable this toggle button to
-                                                        make this
-                                                        particular working hours available for patients to check-in
-                                                        online for the same
-                                                        day.</li>
-                                                    <li><strong>Future check-ins :</strong> Enable this toggle button to
-                                                        make this
-                                                        particular working hours available for patients to check-in
-                                                        online for a future
-                                                        date.</li>
-                                                </ul>
+                                            <li>Go to Jaldee Qmanager and select Queues
                                             </li>
+                                            <li>Click on <strong>Add Queue</strong>
+                                              
+                                            <li> Set the days and also set the Start date and End date of the Queue
+                                            </li>
+                                            <li>Set the Queue Time</li>
+                                            <li>Select the services according to the queue
+                                            </li>
+                                            <li> Give title for the queue
+                                             </li>
+                                             <li>Click on Advanced settings to set the number patients served in the queue and at a time
+                                            </li> 
+                                            <li>Click Save</li>
+                                                </ul>
+                                            <!-- </li>
                                             <li>All added working hours are displayed here.</li>
                                             <li>The status of working hours can be enabled/disabled. The enabled working
                                                 hours are open
@@ -2159,7 +2153,7 @@
                                                 instant queue.
                                             </li>
                                             <li>Now patient check-ins can be accepted for this instant queue.</li>
-                                        </ul>
+                                        </ul> -->
 
 
                                     </div>
@@ -2217,7 +2211,7 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
-                                    <div class="helpcontent">
+                                    <!-- <div class="helpcontent">
                                         Get an immediate overview or a quick reference of check-ins or any related
                                         information at the premise with the feature “Queue Board“ in Jaldee. To
                                         create and display a qboard the doctor has to purchase a Q
@@ -2288,8 +2282,36 @@
                                                 edit or delete the qboards are given in the three dots menu.</li>
                                         </ol>
 
+                                    </div> -->
+                                    <div class="helpcontent">
+                                        <ul class="ul-normal">
+                                            <li>Go to Jaldee Qmanager and select Qboard</li>
+                                            <li>Click on Create Qboard</li>
+                                            <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
+                                            </li>
+                                            <li>Set the Qboard query</li>
+                                            <li>Give name for Query and choose the options for display(service or queue)
+                                            </li>
+                                            <li> Choose <strong>Service’s</strong> and it’s<strong> Queue’s</strong>
+                                            </li>
+                                            <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                            </li>
+                                            <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                            <li>Select the order of Qboard fields</li>
+                                            <li> Click Create
+                                            </li>
+                                            <li>Select the Qboard query in Qboard </li>
+                                            <li>Give name for Qboard
+                                            </li>
+                                            <li>Enter the service room
+                                            </li>
+                                            <li>Choose layout for Qboard display</li>
+                                            <li>Click <strong>Save</strong></li>
+                                        </ul>
+                                        <span><strong>How to edit Qboard?</strong></span>
+                                        <li> To edit the Qboard, click on the three dot menu and select View
+                                        </li>
                                     </div>
-
                                 </mat-expansion-panel>
                             </mat-accordion>
                         </mat-expansion-panel>
@@ -2306,8 +2328,8 @@
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                 <span>
-                                    Manage your working hours, appointment services, schedules and QBoards here.
-                                </span>
+                                    Jaldee appointment helps a service provider to manage the working hours, appointment services, schedules and QBoards.
+                                    </span>
                             </div>
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="showappointment && showappointments">
@@ -2321,18 +2343,14 @@
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                         <section>
-                                            <span>In this section, a doctor can select the Appointments mode with which
-                                                he/she wishes
-                                                to
-                                                Accept Appointments and also book a future date for [customer]'s
-                                                appointment here.
+                                            <span>How to activate Jaldee Appointment?
+
                                             </span>
-                                        </section>
-                                        <section>
+                                        
                                             <ul class="ul-normal">
-                                                <li>To enable Accept Appointments , a doctor has to switch
-                                                    on the
-                                                    "Accept Appointments" mode. Initially, this is set to off mode.</li>
+                                                <li>Go to Jaldee appointment, click on the Appointment manager toggle button</li>
+                                                <li> Provider can give permission to online appointments for Today and Future
+                                                </li>
                                             </ul>
                                         </section>
                                     </div>
@@ -2492,7 +2510,7 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
-                                        <section>
+                                        <!-- <section>
                                             <span>In this section, a doctor can schedule the Appointments and also book
                                                 a future date for [customer]'s appointment here.
                                                 Also schedule the queue and disable the queue.
@@ -2652,8 +2670,26 @@
                                                 </li>
                                                 <li>Now patient check-ins can be accepted for this instant queue.</li>
                                             </ul>
-                                        </section>
+                                        </section> -->
+                                        <section>
+                                            <ul class="ul-normal">
+                                                <li>
+                                                    Go to Jaldee Appointment and select <strong>Schedules</strong> 
+                                                </li>
+                                                <li> Click on <strong>Add Schedule</strong> </li>
+                                                <li>Set the days and also set the Start date and End date of the Schedule</li>
+                                                <li>Set the Schedule Time</li>
+                                                <li>Select the services according to the schedule
+                                                    </li>
+                                                    <li> Give title for the schedule
+                                                        </li>
+                                                        <li>Set the preferred Time slot in minutes</li>
+                                                        <li>Click on Advanced settings to enable the Batch mode
+                                                            </li>
+                                                         <li>   Click <strong>save</strong></li>
 
+                                            </ul>
+                                        </section>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -2667,6 +2703,37 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
+                                            <ul class="ul-normal">
+                                                <li> Go to Jaldee Appointment and select Qboard
+                                                    </li>
+                                                <li>Click on Create Qboard</li>
+                                                <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
+                                                </li>
+                                                <li>Set the Qboard query</li>
+                                                <li>Give name for Query and choose the options for display
+                                                </li>
+                                                <li> Choose <strong>Service’s</strong> and it’s<strong> Schedule’s
+                                                    </strong>
+                                                </li>
+                                                <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                                </li>
+                                                <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                                <li>Select the order of Qboard fields</li>
+                                                <li> Click Create
+                                                </li>
+                                                <li>Select the Qboard query in Qboard </li>
+                                                <li>Give name for Qboard
+                                                </li>
+                                                <li>Enter the service room
+                                                </li>
+                                                <li>Choose layout for Qboard display</li>
+                                                <li>Click <strong>Save</strong></li>
+                                            </ul>
+                                            <span><strong>How to edit Qboard?</strong></span>
+                                            <li> To edit the Qboard, click on the three dot menu and select View
+                                            </li>
+                                        </div>
+                                    <!-- <div class="helpcontent">
                                         Get an immediate overview or a quick reference of check-ins or any related
                                         information at the premise with the feature “QBoard“ in Jaldee. To
                                         create and display a qboard the doctor has to purchase a QBoard
@@ -2737,7 +2804,7 @@
                                                 edit or delete the Qboards are given in the three dots menu.</li>
                                         </ol>
 
-                                    </div>
+                                    </div> -->
                                 </mat-expansion-panel>
                             </mat-accordion>
                         </mat-expansion-panel>
@@ -3242,21 +3309,22 @@
                                     <div class="helpcontent">
 
                                         <section>
-                                            <span>In this section, a doctor can select the payment mode with which
-                                                he/she wishes
-                                                to
-                                                accept/settle payments.
+                                            <span><strong>What is  is JALDEE PAY?
+                                            </strong>  
                                             </span>
+                                            <li>Jaldee pay enables the service provider to accept online payment from the consumers</li>
                                         </section>
                                         <section>
+                                            <span><strong>How to activate 
+                                                    JALDEE PAY?
+                                        </strong>  
+                                        </span>
                                             <ul class="ul-normal">
-                                                <li>To enable online payments using any payment system, a doctor has to
-                                                    switch
-                                                    on the
-                                                    "Jaldee pay" mode. Initially, this is set to off mode.</li>
+                                                <li>Go to jaldee pay, click on the JALDEE PAY toggle button</li>
 
                                             </ul>
                                         </section>
+                                       
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -3266,14 +3334,54 @@
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('payment-settings', 'payments')">PaymentSettings</span>
+                                                (click)="handleScroll('payment-settings', 'payments')">Payment</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
+                                            <section>
+                                                  
+                                                   <span>
+                                                        <strong>Provider can enable the payment mode as “Jaldee Bank” or “My own Bank account”</strong></span>
+                                                        <ul> 
+                                                                <li><strong>Jaldee Bank</strong>- Payments will be directed to the jaldee account and will be fully reimbursed to the Service provider</li>
+                                                                <li><strong>My own Bank account</strong>- Service provider can setup own account(CC/DC/UPI/Netbanking) Paytm or both for online transactions</li>
+                                                            <ol>Paytm <span>This is an effortless mode of online payment commonly used these days. If the provider has a business Paytm account, he/she needs to provide the following details (Login to Paytm to get these production keys):
+                                                                </span>
+                                                                <ul>
+                                                                <li>Mobile Number</li>
+                                                                <li>Merchant Id</li>
+                                                                <li>Merchant Key</li>
+                                                                <li>Website Web</li>
+                                                                <li>Website App</li>
+                                                                <li>Industry Type</li>
+                                                                </ul>
+                                                                </ol>
+                                                                <ol>CC/DC/Net Banking/UPI 
+                                                                        <span>To settle the bill using this mode of payment, provider has to provide the following information:
+                                                                    </span>
+                                                                    <ul>
+                                                                    <li>Account Holder Name
+                                                                        </li>
+                                                                    <li>Bank Account Number</li>
+                                                                    <li>Pan Card Number</li>
+                                                                    <li>Bank Name
+                                                                        </li>
+                                                                    <li>IFSC Code</li>
+                                                                    <li>Name on Pan Card
+                                                                        </li>
+                                                                    <li>Branch Name</li>
+                                                                    <li>Business Filing Status
+                                                                        </li>
+                                                                        <li>Account Type
+                                                                            </li>
+                                                                    </ul>
+                                                                    </ol>
+                                                        </ul>
+                                                  
+                                            </section>
 
-
-                                        <section>
+                                        <!-- <section>
                                             <ul class="ul-normal">
                                                 <li>If a doctor has not entered an email address before, click on the
                                                     link
@@ -3398,7 +3506,7 @@
                                                     support@jaldee.com.
                                                 </li>
                                             </ul>
-                                        </section>
+                                        </section> -->
                                     </div>
 
                                 </mat-expansion-panel>
@@ -3409,11 +3517,30 @@
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('tax-settings', 'payments')">TaxSettings</span>
+                                                (click)="handleScroll('tax-settings', 'payments')">Tax</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
-
                                     <div class="helpcontent">
+                                            <section>
+                                                    <span>Before setting up the taxes, ensure that one is familiar with the tax requirements of one’s business.<br> The following instructions will help the Provider through the tax setup of the business services in Jaldee:
+                                                    </span>
+                                                    <ul class="ul-normal">
+                                                       
+                                                        <li>When the provider clicks on the tax from Jaldee pay , window appears. The provider is required to fill the textbox (Enter the GST number of the business and the tax percentage for the respective sector here)
+                                                        </li>
+                                                        <li>Enter the GST number of the business.
+                                                        </li>
+                                                        <li>Enter the Tax Percentage (5%, 12%, 18%, 28%).
+                                                            </li>
+                                                        <li>Click “UPDATE TAX”
+                                                            </li>
+                                                            <li>This tax will be applied to the services offered, only if the “Tax Applicable" toggle button is enabled in the respective section (i.e. Settings -> QManager ->Services)
+                                                                </li>
+                                                            <li>Jaldee has no role in paying taxes paid by the consumer to the service provider</li>
+                                                    </ul>
+                                                </section>
+                                    </div>
+                                    <!-- <div class="helpcontent">
                                         <span>Before setting up the taxes, ensure that one is familiar with the tax
                                             requirements of
                                             one’s
@@ -3451,7 +3578,7 @@
                                                 to
                                                 remit the taxes to the Government.</li>
                                         </ul>
-                                    </div>
+                                    </div> -->
 
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -3468,7 +3595,7 @@
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                 <span>
-                                    Manage your donation settings here.
+                                    Donation Manager manages the Donations via online.
                                 </span>
                             </div>
                             <mat-accordion>
@@ -3483,17 +3610,12 @@
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                         <section>
-                                            <span>In this section, a doctor can select the Donations mode with which
-                                                he/she wishes
-                                                to
-                                                Accept Donations here.
-                                            </span>
+                                            <span><strong>How to accept donations?</strong> </span>
                                         </section>
                                         <section>
                                             <ul class="ul-normal">
-                                                <li>To enable Accept Donations , a doctor has to switch
-                                                    on the
-                                                    "Accept Donations" mode. Initially, this is set to off mode.</li>
+                                                <li><strong>Go to Donation Manager,Click on the Accept Donations toggle button</strong>
+                                                </li>
                                             </ul>
                                         </section>
                                     </div>
@@ -3509,6 +3631,24 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
+                                            <section>
+                                                    <ul class="ul-normal">
+                                                        <li>Service provider can Add and Manage the Donation related causes </li>
+                                                        <li>Go to Causes,click on <strong>Add Cause</strong></li>
+                                                        <li>Add and describe the cause</li>
+                                                        <li>Set the amount and save</li>
+                                                        <li>Provider can notify the consumer after receiving the donation by Clicking on the<strong> Notify patient when donation is received</strong>
+                                                            toggle button(via Email or App notification)</li>
+                                                      
+                                                    </ul>
+                                                </section>
+                                                <section>
+                                                        <ul class="ul-normal">
+                                                            <span>For Provider Notification</span>
+                                                            <li>Go to Communications and Notifications</li>
+                                                            <li>In Notification(Provider), Click on the<strong> Notify whenever Donation is received</strong> toggle button</li>
+                                                        </ul> 
+                                                </section>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
