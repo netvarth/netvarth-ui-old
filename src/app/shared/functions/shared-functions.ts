@@ -192,6 +192,7 @@ export class SharedFunctions {
   public setLoginData(data, post_data, mod) {
     // localStorage.setItem('ynw-user', JSON.stringify(data));
     this.setitemToGroupStorage('ynw-user', data);
+    this.setitemonLocalStorage('jld', post_data['password']);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 

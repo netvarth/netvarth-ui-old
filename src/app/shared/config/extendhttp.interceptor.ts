@@ -143,7 +143,14 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status === 301) {
+            if (error.status === 401) {
+              const password = this.shared_functions.getitemfromLocalStorage('jld');
+              if (!password) {
+                this.shared_functions.logout();
+              }
+              // this.shared_functions.logout();
+              // return throwError(error);
+            } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
               }
@@ -181,6 +188,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
+              const password = this.shared_functions.getitemfromLocalStorage('jld');
+              if (!password) {
+                this.shared_functions.logout();
+                return EMPTY;
+              }
               // this.shared_functions.logout();
               // return throwError(error);
             } else if (error.status === 301) {
