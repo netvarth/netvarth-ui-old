@@ -7377,7 +7377,11 @@ input.jdn_ip {
   border-top: 1px solid #c4b7b7;
   /* min-height: 100%; */
 }
-
+@media (max-width:767px) {
+  .filterSidebar {
+    margin-top: 100px;
+  }
+}
 .filterTextinput {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -9315,8 +9319,9 @@ owl-carousel .bt3.active {
 }
 
 .checklist, .apptlist {
+  width: 325px !important;
   max-width: 325px !important;
-  min-width: 325px !important;
+  min-width: 290px !important;
   min-height: 500px !important;
   max-height: 500px !important;
 }
