@@ -417,6 +417,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
+            if (!this.businessjson.virtualServices) {
+              const filteredArray = this.servicesjson.filter(service => service.serviceType !== 'virtualService');
+              this.servicesjson = filteredArray;
+            }
             if (this.servicesjson[0] && this.servicesjson[0].hasOwnProperty('departmentName')) {
               this.showDepartments = true;
               break;
@@ -425,6 +429,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'apptServices': {
             this.apptServicesjson = res;
+            if (!this.businessjson.virtualServices) {
+              const filteredArray = this.apptServicesjson.filter(service => service.serviceType !== 'virtualService');
+              this.apptServicesjson = filteredArray;
+            }
             setTimeout(() => {
               // merge two arrays without duplicates
               const ids = new Set(this.apptServicesjson.map(d => d.id));

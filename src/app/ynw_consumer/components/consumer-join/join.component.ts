@@ -350,7 +350,7 @@ export class ConsumerJoinComponent implements OnInit {
     this.step = 2;
   }
   cancelForgotPassword() {
-    this.step = 3;
+    this.step = 1;
   }
   handleSignup() {
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
