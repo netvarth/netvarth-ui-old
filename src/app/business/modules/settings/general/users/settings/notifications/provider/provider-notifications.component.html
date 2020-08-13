@@ -13,14 +13,16 @@
     <div class="row">
       <div class="card w-dta p0 ">
         <mat-accordion *ngIf="waitlistStatus">
-          <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel [expanded]="true">             
             <mat-expansion-panel-header>
-              <mat-panel-title class="block-level">Check-in Notifications</mat-panel-title>
+              <mat-panel-title class="block-level" *ngIf="showToken">Token Notifications</mat-panel-title>
+              <mat-panel-title class="block-level" *ngIf="!showToken">Check-in Notifications</mat-panel-title>
             </mat-expansion-panel-header>
             <div class="rw col-md-12"> 
               <div class="form-group">
                 <div style="display: flex">
-                  <span class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
+                  <span *ngIf="showToken" class="notification" style="font-weight: 600">Notify whenever a token is generated</span>
+                  <span *ngIf="!showToken"class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinNotify($event)"
                     [(ngModel)]="SelchkinNotify">
                   </mat-slide-toggle>
@@ -75,7 +77,8 @@
             <div class="rw col-md-12">
               <div class="form-group">
                 <div style="display: flex">
-                  <span class="notification" style="font-weight: 600"> Notify whenever check-in gets
+                  <span *ngIf="showToken"  class="notification" style="font-weight: 600"> Notify whenever a token gets cancelled</span>
+                  <span *ngIf="!showToken" class="notification" style="font-weight: 600"> Notify whenever check-in gets
                     cancelled</span>
                   <mat-slide-toggle class="example-margin" (change)="selectChekinCanclNotify($event)"
                     [(ngModel)]="SelchkincnclNotify">

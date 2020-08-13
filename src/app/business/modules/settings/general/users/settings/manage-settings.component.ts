@@ -202,13 +202,15 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   schedules_count;
   businessname: any;
   notedialogRef: MatDialogRef<unknown, any>;
+  settings: any = [];
+  showToken = false;
   constructor(
     private router: Router,
     private routerobj: Router,
     private user_datastorage: UserDataStorageService,
     public shared_functions: SharedFunctions,
     private service: QuestionService,
-    private cdref: ChangeDetectorRef, 
+    private cdref: ChangeDetectorRef,
     private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -228,6 +230,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.getScheduleCount();
     this.getServiceCount();
     this.getQueuesCount();
+    this.getProviderSettings();
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
@@ -242,6 +245,14 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
       console.log( JSON.stringify(this.businessProfile_weightageArray));
       this.weightageValue = this.calculateWeightage(result);
     });
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
   }
   ngAfterViewChecked() {
     this.cdref.detectChanges();

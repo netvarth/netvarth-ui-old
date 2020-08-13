@@ -49,6 +49,8 @@ export class CallingModesComponent implements OnInit {
     is_started = false;
     btndisabled = false;
     launch = false;
+    settings: any = [];
+    showToken = false;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -124,7 +126,16 @@ export class CallingModesComponent implements OnInit {
             this.is_web = true;
         }
         this.getMeetingDetails();
+        this.getProviderSettings();
     }
+    getProviderSettings() {
+        this.provider_services.getWaitlistMgr()
+          .subscribe(data => {
+            this.settings = data;
+            this.showToken = this.settings.showTokenId;
+            }, () => {
+          });
+      }
     selectHeadsup() {
         if (this.callingModes === 'WhatsApp' && this.data.qdata.service.virtualServiceType === 'videoService') {
             // this.msg_to_user = 'You will receive a ' + this.callingModes + ' call from ' + this.busnes_name + ' in 30 seconds';

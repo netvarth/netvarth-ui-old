@@ -27,7 +27,10 @@
         <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="mgn-bt-10">
-              <mat-panel-title class="block-level">Check-in Notifications<br>
+                <mat-panel-title class="block-level" *ngIf="showToken">Token Notifications<br>
+                  <span class="form-level-settings">{{mode_of_notify}}</span>
+                </mat-panel-title>
+              <mat-panel-title class="block-level"  *ngIf="!showToken">Check-in Notifications<br>
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
@@ -156,7 +159,11 @@
               <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Add Check-in Notifications
+                      <mat-panel-title class="block-level" *ngIf="showToken"> Add Token Notifications
+                          <br> <span class="form-level-settings">Notify a {{customer_label}} via
+                            SMS/Email/Notifications when a token is generated.</span>
+                        </mat-panel-title>                  
+                    <mat-panel-title class="block-level" *ngIf="!showToken"> Add Check-in Notifications
                       <br> <span class="form-level-settings">Notify a {{customer_label}} via
                         SMS/Email/Notifications when a Check-in happens.</span>
                     </mat-panel-title>

@@ -79,6 +79,8 @@ export class ProviderNotificationUserComponent implements OnInit {
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -100,6 +102,15 @@ export class ProviderNotificationUserComponent implements OnInit {
     });
     this.getNotificationList();
     this.getGlobalSettingsStatus();
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
   }
   getUser() {
     this.provider_services.getUser(this.userId)

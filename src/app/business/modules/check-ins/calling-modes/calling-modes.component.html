@@ -148,7 +148,9 @@
             <div *ngIf="data.type === 'checkin'" class="example-full-width" style="padding-top: 30px;">
                 <div>
                     <div id="meetinInfochekin">
-                        <p>Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+                        <p *ngIf="showToken">Token for : {{consumer_fname}} {{consumer_lname}}</p>
+                        <p *ngIf="!showToken">Checkin for : {{consumer_fname}} {{consumer_lname}}</p>
+
                         <p>Service : {{serv_name}}</p>
                         <p>Date & Time: {{date}}, {{time}}</p>
                         <p>Service Provider: {{serv_provider}}</p>
