@@ -680,7 +680,12 @@
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
-                        No Check-ins Found
+                        <p *ngIf="!showToken">No Check-ins Found</p> 
+                        <p *ngIf="showToken">No tokens issued till now</p> 
+                        <!-- <p> No services have been started till now</p> 
+                        <p>No services have been completed till now</p>
+                        <p>No services have been cancelled till now</p> -->
+
                       </td>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
                         {{no_service_cap}}
