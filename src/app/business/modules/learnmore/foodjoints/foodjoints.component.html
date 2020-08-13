@@ -1623,11 +1623,16 @@
                                  </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>The QManager helps the provider in managing the working hours and ensuring
-                                    the seamless workflow from the point of the order to the completion of service.
-                                </span>
-                            </div>
-                            <mat-accordion>
+                                    <span><strong>What is Jaldee Qmanager?</strong>
+                                    </span>
+                                    <ul class="ul-normal">
+                                        <li>Jaldee Qmanager manages the working hours, wait-time calculation, services, service-time window and waitlist
+                                            </li>
+                                        <li>Provider can give permissions to online check-ins for Today and Future
+                                        </li>
+                                    </ul>
+                                </div>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -1699,7 +1704,7 @@
                                         </ul>
                                     </div>
                                 </mat-expansion-panel>
-                            </mat-accordion>
+                            </mat-accordion> -->
                             <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="showlocations && showcheckinmanager">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -1931,6 +1936,24 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
+                                            <ul class="ul-normal">
+                                                <li>Go to Jaldee Qmanager and select Queues
+                                                </li>
+                                                <li>Click on <strong>Add Queue</strong>
+                                                  
+                                                <li> Set the days and also set the Start date and End date of the Queue
+                                                </li>
+                                                <li>Set the Queue Time</li>
+                                                <li>Select the services according to the queue
+                                                </li>
+                                                <li> Give title for the queue
+                                                 </li>
+                                                 <li>Click on Advanced settings to set the number patients served in the queue and at a time
+                                                </li> 
+                                                <li>Click Save</li>
+                                                    </ul>
+                                            </div>
+                                    <!-- <div class="helpcontent">
                                         <span>Queues simply means the active time of the business. One can add
                                             multiple Working
                                             Hours
@@ -2057,7 +2080,7 @@
                                             </li>
                                             <li>Now customer orders can be accepted for this instant queue.</li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <!-- <mat-accordion>
@@ -2110,76 +2133,34 @@
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
-                                        Get an immediate overview or a quick reference of check-ins or any related
-                                        information at the premise with the feature “QBoard “ in Jaldee. To
-                                        create and display a qboard the provider has to purchase a QBoard addon from license section. Provider can customize the qboards to
-                                        show any information they want by selecting the layout and also qboard
-                                        criterias from the created list. We’ll help you replace the conventional display
-                                        boards with Queue board to display check-in information.
-                                        <ul>
-                                            <li>To create a Queue board, first you have to create a “QBoard
-                                                Criteria “.</li>
-                                            <li>QBoard Querys are created to display the required information
-                                                in Qboard. Once a qboard query is set, it can be
-                                                added to the qboard to display.
+                                            <ul class="ul-normal">
+                                                <li>Go to Jaldee Qmanager and select Qboard</li>
+                                                <li>Click on Create Qboard</li>
+                                                <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
+                                                </li>
+                                                <li>Set the Qboard query</li>
+                                                <li>Give name for Query and choose the options for display(service or queue)
+                                                </li>
+                                                <li> Choose <strong>Service’s</strong> and it’s<strong> Queue’s</strong>
+                                                </li>
+                                                <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                                </li>
+                                                <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                                <li>Select the order of Qboard fields</li>
+                                                <li> Click Create
+                                                </li>
+                                                <li>Select the Qboard query in Qboard </li>
+                                                <li>Give name for Qboard
+                                                </li>
+                                                <li>Enter the service room
+                                                </li>
+                                                <li>Choose layout for Qboard display</li>
+                                                <li>Click <strong>Save</strong></li>
+                                            </ul>
+                                            <span><strong>How to edit Qboard?</strong></span>
+                                            <li> To edit the Qboard, click on the three dot menu and select View
                                             </li>
-                                        </ul>
-                                        <strong><u>How to create a qboard query?</u></strong><br>
-                                        <ol>
-                                            <li>Click <strong>“CREATE A QBOARD“</strong> and to start with
-                                                creating a qboard query, click <strong>“CREATE“</strong>.
-                                            </li>
-                                            <li>Here, enter the name of the qboard query you are about to
-                                                create.
-                                            </li>
-                                            <li>Under category, choose from <strong>Services, Queues,</strong> or
-                                                <strong>Departments</strong>(only when department is enabled)to be
-                                                displayed.</li>
-                                            <li>Then choose from the options listed corresponding to the category
-                                                selected. For example if category chosen is services, the list of
-                                                services added to the provider profile is listed here. Choose one
-                                                service from the list.
-                                            </li>
-                                            <li>And then select the fields to be displayed in qboard. Also
-                                                you can edit the field name from here.
-                                            </li>
-                                            <li>When you have all the information set, click “Save“ and thus a 
-                                                qboard criteria is created.
-                                            </li>
-                                            <li>Once created these can be edited using the pencil icon in the right
-                                                corner.</li>
-                                        </ol>
-                                        <strong><u>How to create a Qboard?
-                                            </u></strong><br>
-                                        <ol>
-                                            <li>To start with click on<strong>“CREATE A QBOARD“</strong> .
-                                            </li>
-                                            <li>Select a layout that you want from the list.</li>
-                                            <li>Give a title for the qboard.</li>
-                                            <li>Lastly, but most importantly select the already added qboard
-                                                criteria you wanted to display in the qboard from the list.
-                                            </li>
-                                            <li>Queue board query can be chosen differently in four different
-                                                layouts. This is given below:
-                                                <ul>
-                                                    <li>If 1 x 1 layout is selected, only one qboard query can
-                                                        be chosen.
-                                                    </li>
-                                                    <li>If 1 x 2 layout is selected two qboard query can be
-                                                        chosen.</li>
-                                                    <li>If 2 x 1 layout is selected two qboard query can be
-                                                        chosen.</li>
-                                                    <li>If 2 x 2 layout is selected four qboard query can be
-                                                        chosen.</li>
-                                                </ul>
-                                            </li>
-                                            <li>Click “Save“ and a new qboard is created.</li>
-                                            <li>From the list of qboards created click the three dots menu
-                                                in the right corner click “Open“ to view the qboard. Options to
-                                                edit or delete the qboards are given in the three dots menu.</li>
-                                        </ol>
-
-                                    </div>
+                                        </div>
 
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -2193,32 +2174,31 @@
                                             Jaldee Appointment
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                    <div class="helpcontent">
-                                    <span>
-                                         Manage your working hours, appointment services, schedules and QBoards here. 
-                                    </span>
+                                <div class="helpcontent">
+                                        <span>
+                                            Jaldee appointment helps a service provider to manage the working hours, appointment services, schedules and QBoards.
+                                            </span>
                                     </div>
-                                <mat-accordion> 
-                                    <mat-expansion-panel [expanded]="showappointment && showappointments">
-                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                            class="accordion">
-                                            <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"
-                                                    (click)="handleScroll('accept-appointments', 'appointmentmanager')">Accept Appointments</span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="showappointment && showappointments">
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent"
+                                                        (click)="handleScroll('accept-appointments', 'appointmentmanager')">Accept
+                                                        Appointments</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
                                             <div class="helpcontent">
                                                 <section>
-                                                    <span>In this section, a provider can select the  Appointments mode with which he/she wishes
-                                                         to
-                                                        Accept Appointments and also book a future date for [customer]'s appointment here.
+                                                    <span>How to activate Jaldee Appointment?
+        
                                                     </span>
-                                                </section>
-                                                <section>
+                                                
                                                     <ul class="ul-normal">
-                                                        <li>To enable Accept Appointments , a provider has to switch
-                                                            on the
-                                                                "Accept Appointments" mode. Initially, this is set to off mode.</li>
+                                                        <li>Go to Jaldee appointment, click on the Appointment manager toggle button</li>
+                                                        <li> Provider can give permission to online appointments for Today and Future
+                                                        </li>
                                                     </ul>
                                                 </section>
                                             </div>
@@ -2378,7 +2358,26 @@
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                  <div class="helpcontent">
-                                                    <section>
+                                                        <section>
+                                                                <ul class="ul-normal">
+                                                                    <li>
+                                                                        Go to Jaldee Appointment and select <strong>Schedules</strong> 
+                                                                    </li>
+                                                                    <li> Click on <strong>Add Schedule</strong> </li>
+                                                                    <li>Set the days and also set the Start date and End date of the Schedule</li>
+                                                                    <li>Set the Schedule Time</li>
+                                                                    <li>Select the services according to the schedule
+                                                                        </li>
+                                                                        <li> Give title for the schedule
+                                                                            </li>
+                                                                            <li>Set the preferred Time slot in minutes</li>
+                                                                            <li>Click on Advanced settings to enable the Batch mode
+                                                                                </li>
+                                                                             <li>   Click <strong>save</strong></li>
+                    
+                                                                </ul>
+                                                            </section>
+                                                    <!-- <section>
                                                             <span>In this section, a provider can schedule the  Appointments and also book a future date for [customer]'s appointment here.
                                                                 Also schedule the queue and disable the queue.
                                                                 A provider can manage the schedules for his/her appointments.
@@ -2512,90 +2511,122 @@
                                                                     </li>
                                                                     <li>Now customer check-ins can be accepted for this instant queue.</li>
                                                                 </ul>
-                                                         </section>
+                                                         </section> -->
                                                 </div>
                                         </mat-expansion-panel>
                                     </mat-accordion> 
-                                    <mat-accordion> 
-                                        <mat-expansion-panel [expanded]="showdisplayboard && showappointments">
-                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                class="accordion">
-                                                <mat-panel-title class="accordion-title">
-                                                    <span class="helpcontent"
+                                    <mat-accordion>
+                                            <mat-expansion-panel [expanded]="showdisplayboard && showappointments">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                    class="accordion">
+                                                    <mat-panel-title class="accordion-title">
+                                                        <span class="helpcontent"
                                                             (click)="handleScroll('q-boards', 'appointmentmanager')">QBoards</span>
-                                                </mat-panel-title>
+                                                    </mat-panel-title>
                                                 </mat-expansion-panel-header>
-                                                <div class="helpcontent"> 
-                                                        Get an immediate overview or a quick reference of check-ins or any related
-                                                        information at the premise with the feature “QBoard“ in Jaldee. To
-                                                        create and display a qboard the provider has to purchase a QBoard
-                                                        addon from license section. Provider can customize the qboards to
-                                                        show any information they want by selecting the layout and also qboard
-                                                        criterias from the created list. We’ll help you replace the conventional display
-                                                        boards with QBoard to display check-in information.
-                                                        <ul>
-                                                            <li>To create a Queue Board, first you have to create a “QBoard
-                                                                Criteria“.</li>
-                                                            <li>Queue Board Querys are created to display the required information
-                                                                in Queue Board. Once a qboard query is set, it can be
-                                                                added to the qboard to display.
+                                                <div class="helpcontent">
+                                                        <ul class="ul-normal">
+                                                            <li> Go to Jaldee Appointment and select Qboard
+                                                                </li>
+                                                            <li>Click on Create Qboard</li>
+                                                            <li>For Qboard creation,provider should buy <strong>Add-ONs</strong> from the license section
                                                             </li>
+                                                            <li>Set the Qboard query</li>
+                                                            <li>Give name for Query and choose the options for display
+                                                            </li>
+                                                            <li> Choose <strong>Service’s</strong> and it’s<strong> Schedule’s
+                                                                </strong>
+                                                            </li>
+                                                            <li>Setup the Waitlist status(provider can select from checked-in, arrived,started,completed or multiple options from this four)
+                                                            </li>
+                                                            <li>Select the Qboard fields to be displayed and can edit the name of fields to be displayed by provider</li>
+                                                            <li>Select the order of Qboard fields</li>
+                                                            <li> Click Create
+                                                            </li>
+                                                            <li>Select the Qboard query in Qboard </li>
+                                                            <li>Give name for Qboard
+                                                            </li>
+                                                            <li>Enter the service room
+                                                            </li>
+                                                            <li>Choose layout for Qboard display</li>
+                                                            <li>Click <strong>Save</strong></li>
                                                         </ul>
-                                                        <strong><u>How to create a qboard query?</u></strong><br>
-                                                        <ol>
-                                                            <li>Click <strong>“CREATE A QBOARD“</strong> and to start with
-                                                                creating a qboard query, click <strong>“CREATE“</strong>.
-                                                            </li>
-                                                            <li>Here, enter the name of the qboard query you are about to
-                                                                create.
-                                                            </li>
-                                                            <li>Under category, choose from <strong>Services, Queues,</strong> or
-                                                                <strong>Departments</strong>(only when department is enabled)to be
-                                                                displayed.</li>
-                                                            <li>Then choose from the options listed corresponding to the category
-                                                                selected. For example if category chosen is services, the list of
-                                                                services added to the provider profile is listed here. Choose one
-                                                                service from the list.
-                                                            </li>
-                                                            <li>And then select the fields to be displayed in qboard. Also
-                                                                you can edit the field name from here.
-                                                            </li>
-                                                            <li>When you have all the information set, click “Save“ and thus a status
-                                                                board criteria is created.
-                                                            </li>
-                                                            <li>Once created these can be edited using the pencil icon in the right
-                                                                corner.</li>
-                                                        </ol>
-                                                        <strong><u>How to create a QBoard?
-                                                            </u></strong><br>
-                                                        <ol>
-                                                            <li>To start with click on<strong>“CREATE A QBOARD“</strong> .
-                                                            </li>
-                                                            <li>Select a layout that you want from the list.</li>
-                                                            <li>Give a title for the qboard.</li>
-                                                            <li>Lastly, but most importantly select the already added qboard
-                                                                criteria you wanted to display in the qboard from the list.
-                                                            </li>
-                                                            <li>Queue board query can be chosen differently in four different
-                                                                layouts. This is given below:
-                                                                <ul>
-                                                                    <li>If 1 x 1 layout is selected, only one qboard query can
-                                                                        be chosen.
-                                                                    </li>
-                                                                    <li>If 1 x 2 layout is selected two qboard query can be
-                                                                        chosen.</li>
-                                                                    <li>If 2 x 1 layout is selected two qboard query can be
-                                                                        chosen.</li>
-                                                                    <li>If 2 x 2 layout is selected four qboard query can be
-                                                                        chosen.</li>
-                                                                </ul>
-                                                            </li>
-                                                            <li>Click “Save“ and a new qboard is created.</li>
-                                                            <li>From the list of qboards created click the three dots menu
-                                                                in the right corner click “Open“ to view the qboard. Options to
-                                                                edit or delete the Qboards are given in the three dots menu.</li>
-                                                        </ol>
-                                                </div>
+                                                        <span><strong>How to edit Qboard?</strong></span>
+                                                        <li> To edit the Qboard, click on the three dot menu and select View
+                                                        </li>
+                                                    </div>
+                                                <!-- <div class="helpcontent">
+                                                    Get an immediate overview or a quick reference of check-ins or any related
+                                                    information at the premise with the feature “QBoard“ in Jaldee. To
+                                                    create and display a qboard the doctor has to purchase a QBoard
+                                                     addon from license section. Doctor can customize the qboards to
+                                                    show any information they want by selecting the layout and also qboard
+                                                    criterias from the created list. We’ll help you replace the conventional display
+                                                    boards with QBoard to display check-in information.
+                                                    <ul>
+                                                        <li>To create a QBoard, first you have to create a “QBoard
+                                                            Criteria“.</li>
+                                                        <li>QBoard Querys are created to display the required information
+                                                            in QBoard. Once a qboard query is set, it can be
+                                                            added to the qboard to display.
+                                                        </li>
+                                                    </ul>
+                                                    <strong><u>How to create a qboard query?</u></strong><br>
+                                                    <ol>
+                                                        <li>Click <strong>“CREATE A QBOARD“</strong> and to start with
+                                                            creating a qboard query, click <strong>“CREATE“</strong>.
+                                                        </li>
+                                                        <li>Here, enter the name of the qboard query you are about to
+                                                            create.
+                                                        </li>
+                                                        <li>Under category, choose from <strong>Services, Queues,</strong> or
+                                                            <strong>Departments</strong>(only when department is enabled)to be
+                                                            displayed.</li>
+                                                        <li>Then choose from the options listed corresponding to the category
+                                                            selected. For example if category chosen is services, the list of
+                                                            services added to the doctor profile is listed here. Choose one service
+                                                            from the list.
+                                                        </li>
+                                                        <li>And then select the fields to be displayed in qboard. Also
+                                                            you can edit the field name from here.
+                                                        </li>
+                                                        <li>When you have all the information set, click “Save“ and thus a status
+                                                            board criteria is created.
+                                                        </li>
+                                                        <li>Once created these can be edited using the pencil icon in the right
+                                                            corner.</li>
+                                                    </ol>
+                                                    <strong><u>How to create a QBoard?
+                                                        </u></strong><br>
+                                                    <ol>
+                                                        <li>To start with click on<strong>“CREATE A QBOARD“</strong> .
+                                                        </li>
+                                                        <li>Select a layout that you want from the list.</li>
+                                                        <li>Give a title for the qboard.</li>
+                                                        <li>Lastly, but most importantly select the already added qboard
+                                                            criteria you wanted to display in the qboard from the list.
+                                                        </li>
+                                                        <li>Queue board query can be chosen differently in four different
+                                                            layouts. This is given below:
+                                                            <ul>
+                                                                <li>If 1 x 1 layout is selected, only one qboard query can
+                                                                    be chosen.
+                                                                </li>
+                                                                <li>If 1 x 2 layout is selected two qboard query can be
+                                                                    chosen.</li>
+                                                                <li>If 2 x 1 layout is selected two qboard query can be
+                                                                    chosen.</li>
+                                                                <li>If 2 x 2 layout is selected four qboard query can be
+                                                                    chosen.</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>Click “Save“ and a new qboard is created.</li>
+                                                        <li>From the list of qboards created click the three dots menu
+                                                            in the right corner click “Open“ to view the qboard. Options to
+                                                            edit or delete the Qboards are given in the three dots menu.</li>
+                                                    </ol>
+            
+                                                </div> -->
                                             </mat-expansion-panel>
                                         </mat-accordion>
                             </mat-expansion-panel>
@@ -3657,59 +3688,44 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                      <mat-accordion  [ngClass]="{'learnmore_active' : showcustomers}">
-                            <mat-expansion-panel [expanded]='showcustomers  '>
-                                <mat-expansion-panel-header class="accordion">
-                                    <mat-panel-title class="accordion-title" (click)="menu('customers')">
-                                        Customers
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
+                        <mat-accordion [ngClass]="{'learnmore_active' : showcustomers}" >
+                                <mat-expansion-panel [expanded]='showcustomers'>
+                                    <mat-expansion-panel-header class="accordion">
+                                        <mat-panel-title class="accordion-title" (click)="menu('customers')">
+                                            Customers
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
                                     <div class="helpcontent">
-                                        <span>
-                                                Manage your Customers  here.
-                                                These settings allows the customers to see their Id's.
-                                        </span>
+                                            <span>
+                                                    <strong>    What is Jaldee Customers?</strong>
+        
+                                                       <li>Jaldee customer is a feature that allows the customers to view their walkin check-ins</li>
+                                                </span>
                                     </div>
-                                    <mat-accordion> 
+                                    <mat-accordion>
                                         <mat-expansion-panel [expanded]="showcustomersid && showcustomers">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent"
-                                                        (click)="handleScroll('custid-settings', 'customers')">Customer Id</span>
+                                                        (click)="handleScroll('custid-settings', 'customers')">How to enable customer ID?
+                                                    </span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                             <div class="helpcontent">
-                                                <section>
-                                                        <span>In this section, a provider can select the  Customers Id format with which he/she wishes
-                                                            to
-                                                            Configure Customers id settings here. 
-                                                        </span>
-                                                </section>
-                                                <section>
-                                                        <ul class="ul-normal">
-                                                            <li>To set up Customers Id , a provider has to select
-                                                                 the
-                                                                " Customers Id" format. </li>
-                                                        </ul>
-                                                </section>
-                                                <section>
-                                                    <span>
-                                                            Customers Id Format contains three format.Choose one of the three customer series options.
-                                                    </span>
-                                                </section>
-                                                <section>
-                                                    <ul class="ul-normal">          
-                                                        <li>Auto</li>
-                                                        <li>Manual</li>
-                                                        <li>Pattern</li>
+                                            <div class="helpcontent">
+                                               <section>
+                                                    <ul class="ul-normal">
+                                                        <li>Go to customers , click on Customer ID </li>
+                                                        <li>Provider can set either in Manual or Auto(once set into manual,it cannot be switched to auto)</li>
+                                                        <li>In auto , provider can set Prefix and suffix for the ID</li>
+                                                        <li>Provider can view ID from Customers tab list</li>
                                                     </ul>
                                                 </section>
-                                             </div>
+                                                </div>
                                         </mat-expansion-panel>
-                                </mat-accordion>
-                            </mat-expansion-panel>
-                         </mat-accordion>
+                                    </mat-accordion>
+                                </mat-expansion-panel>
+                            </mat-accordion>
                          <!-- next -->
                         <mat-accordion  [ngClass]="{'learnmore_active' : showvirtualcallingmodes}">
                             <mat-expansion-panel [expanded]='showvirtualcallingmodes'>
