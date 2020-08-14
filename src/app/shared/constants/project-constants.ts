@@ -255,7 +255,7 @@ export const projectConstantsLocal = {
   TOOLTIP_FEMALE: 'Female',
   VALIDATOR_BLANK_FALSE: /^((?!\s{2,}).)*$/,
   VALIDATOR_BLANK: /^\s*$/,
-  VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+  VALIDATOR_URL: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.\_]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   VALIDATOR_NUMBERONLY: /^\d+$/,
   VALIDATOR_PHONENUMBERONLY: /^[1-9]\d{9}$/,
   VALIDATOR_FLOAT: /^[+-]?([0-9]*[.])?[0-9]+$/,

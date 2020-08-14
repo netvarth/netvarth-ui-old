@@ -1,0 +1,160 @@
+<!-- <section class="pt10">
+    <div class="pad-left-20">
+        <i class="fa fa-angle-left fa-lg left_icn" aria-hidden="true" (click)="redirecToBprofile()"></i><span
+            class="titlespan">Name and About Me</span>
+    </div>
+</section> -->
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="redirecToBprofile()"></i>Name and About Me</h5>
+    </div>
+  </section>
+<section class="aboutme">
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-padding-small">
+            <div class="w-dta ">
+                <div class="row">
+                    <div class="one col-xs-12 col-sm-12 no-padding">
+                        <div class="col-a col-b pl0 col-md-8 col-lg-6 col-sm-12 col-xl-12">
+                            <div class="card p0">
+                                <div class="pubs card w-dta active bprof">
+                                    <div class="cd-t">
+                                        <div class="basic-i">
+                                            <div class="bi-l" *ngIf="blogo">
+                                                <div class="pro-pic" [class.yes]="profimg_exists">
+                                                    <div class="pro-pic-img">
+                                                        <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url"
+                                                            class="crop-img-fit">
+                                                    </div>
+                                                    <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
+                                                    <div class="add">
+                                                        <span (click)="changeProPic()">{{add_cap}}
+                                                            <br /> {{profile_pic_cap}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="change">
+                                                        <span class="change-pic" (click)="changeProPic()">{{change_cap}}
+                                                            <br /> {{pic_cap}}</span>
+                                                        <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <form *ngIf="aboutmeForm" [formGroup]="aboutmeForm" novalidate
+                                            (ngSubmit)="aboutmeForm.valid && onSubmit(aboutmeForm.value)"
+                                            (keyup)="resetApiErrors()" class="ynw-common-form-nm">
+
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <input type="text" matInput class="form-control" id="bname"
+                                                        #bname formControlName="bname" autocomplete="off"
+                                                        placeholder="{{business_name_cap}}">
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(aboutmeForm,'bname')"
+                                                    errorMsg="Please enter the business name">
+                                                </app-field-error-display>
+                                            </div>
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <textarea maxlength="2000" matInput class="form-control"
+                                                        id="bdesc" formControlName="bdesc" row="4"
+                                                        placeholder="A short description about your service (Max 2000 characters)"></textarea>
+                                                </mat-form-field>
+                                                <app-field-error-display
+                                                    [displayError]="fed_service.isFieldValid(aboutmeForm,'bdesc')"
+                                                    errorMsg="Please enter the profile summary">
+                                                </app-field-error-display>
+                                            </div>
+
+                                            <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                                style="display: inline-flex;">
+                                                <button type="button" class="cs-btn bt2"
+                                                    [disabled]="disableButton"
+                                                    (click)="redirecToBprofile()">{{cancel_btn_cap}}</button>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <button type="submit"
+                                                    [disabled]="!aboutmeForm.valid || disableButton"
+                                                    class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="card p0">
+                    <div class="copy locd linkdisplay">
+                        <div class="lbl col-sm-12 col-md-4 col-lg-2">
+                        
+                            <div class="linkpagestyle coupon-outer" *ngIf="blogo">
+                                <div class="prof-pic" [class.yes]="profimg_exists">
+                                    <div>
+                                        <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url"
+                                            class="crop-img-fit">
+                                    </div>
+                                    <div class="add">
+                                        <span (click)="changeProPic()">{{add_cap}}
+                                            <br /> {{profile_pic_cap}}
+                                        </span>
+                                    </div>
+                                    <div class="change">
+                                        <span class="change-pic" (click)="changeProPic()">{{change_cap}}
+                                            <br /> {{pic_cap}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                          
+                            <form *ngIf="aboutmeForm" [formGroup]="aboutmeForm" novalidate
+                                (ngSubmit)="aboutmeForm.valid && onSubmit(aboutmeForm.value)" (keyup)="resetApiErrors()"
+                                class="ynw-common-form-nm">
+
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input type="text" matInput class="form-control" id="bname" #bname
+                                            formControlName="bname" autocomplete="off"
+                                            placeholder="{{business_name_cap}}">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(aboutmeForm,'bname')"
+                                        errorMsg="Please enter the business name">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <textarea maxlength="2000" matInput class="form-control" id="bdesc"
+                                            formControlName="bdesc" row="4"
+                                            placeholder="A short description about your service (Max 2000 characters)"></textarea>
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(aboutmeForm,'bdesc')"
+                                        errorMsg="Please enter the profile summary">
+                                    </app-field-error-display>
+                                </div>
+
+                                <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                    style="display: inline-flex;">
+                                    <button type="button" class="cs-btn bt2" [disabled]="disableButton"
+                                        (click)="redirecToBprofile()">{{cancel_btn_cap}}</button> &nbsp;&nbsp;&nbsp;
+                                    <button type="submit" [disabled]="!aboutmeForm.valid || disableButton"
+                                        class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="grey col-sm-12 col-md-4 col-lg-2">
+
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</section>

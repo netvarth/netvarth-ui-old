@@ -72,6 +72,9 @@ export class ConsumerNotificationUserComponent implements OnInit {
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
+  settings: any = [];
+  showToken = false;
+  api_loading = true;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -95,6 +98,15 @@ export class ConsumerNotificationUserComponent implements OnInit {
     this.getGlobalSettingsStatus();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
   }
   getUser() {
     this.provider_services.getUser(this.userId)
@@ -135,6 +147,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        this.api_loading = false;
       });
   }
 

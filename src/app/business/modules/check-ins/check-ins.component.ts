@@ -247,10 +247,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   allApptStatusSelected = false;
   service_list: any = [];
   allServiceSelected = false;
+  allQSelected = false;
   allGenderSlected = false;
   allAgeSlected = false;
   genderList: any = [];
   filterService: any = [];
+  filterQ: any = [];
   consumr_id: any;
   notedialogRef: any;
   locateCustomerdialogRef;
@@ -587,6 +589,34 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allServiceSelected = true;
       }
     }
+
+    if (type === 'queue') {
+      if (value === 'all') {
+        this.filterQ = [];
+        this.allQSelected = false;
+        if (event.checked) {
+          for (const q of this.queues) {
+            if (this.filterQ.indexOf(q.id) === -1) {
+              this.filterQ.push(q.id);
+            }
+          }
+          this.allQSelected = true;
+        }
+      } else {
+        this.allQSelected = false;
+        const indx = this.filterQ.indexOf(value);
+        if (indx === -1) {
+          this.filterQ.push(value);
+        } else {
+          this.filterQ.splice(indx, 1);
+        }
+      }
+      if (this.filterQ.length === this.queues.length) {
+        this.filter['queue'] = 'all';
+        this.allQSelected = true;
+      }
+    }
+
     this.doSearch();
   }
   getDisplayboardCount() {
@@ -1040,6 +1070,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setApptSelections();
   }
   getTodayWL() {
+    this.loading = true;
     const Mfilter = this.setFilterForApi();
     if (this.shared_functions.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
@@ -1075,15 +1106,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               // this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.loading = false;
             });
+      },
+      () => {
+        this.loading = false;
       });
   }
   getFutureWL() {
     this.resetCheckList();
-    // this.loading = true;
+    this.loading = true;
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
@@ -1124,10 +1159,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               // this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.loading = false;
             });
+      },
+      () => {
+        this.loading = false;
       });
   }
   setFutureCounts(appointments) {
@@ -1135,10 +1174,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = this.getActiveAppointments(appointments, 'cancelled').length;
   }
   getHistoryWL() {
+    this.loading = true;
     let Mfilter = this.setFilterForApi();
-    if (this.selQIds.length !== 0) {
-      Mfilter['queue-eq'] = this.selQIds.toString();
-    }
+    // if (this.selQIds.length !== 0) {
+    //   Mfilter['queue-eq'] = this.selQIds.toString();
+    // }
     const promise = this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
@@ -1153,6 +1193,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             data => {
               // this.new_checkins_list = [];
               this.appt_list = this.check_in_filtered_list = data;
+              this.loading = false;
               if (this.filterapplied === true) {
                 this.noFilter = false;
               } else {
@@ -1162,12 +1203,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               // this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.loading = false;
             });
-      }
-    );
+      },
+      () => {
+        this.loading = false;
+      });
   }
   setApptSelections() {
     this.apptSingleSelection = false;
@@ -1342,9 +1386,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.selected_location && this.selected_location.id) {
         Mfilter['location-eq'] = this.selected_location.id;
       }
-      if (queueid && queueid.length > 0) {
-        Mfilter['queue-eq'] = queueid.toString();
-      }
+      // if (queueid && queueid.length > 0) {
+      //   Mfilter['queue-eq'] = queueid.toString();
+      // }
       no_filter = true;
     }
     if (this.filter.waitlist_status === 'all') {
@@ -1479,6 +1523,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.genderList = [];
     this.filterService = [];
     this.apptStatuses = [];
+    this.filterQ = [];
     this.paymentStatuses = [];
     this.apptModes = [];
     this.allAgeSlected = false;
@@ -1487,6 +1532,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allApptStatusSelected = false;
     this.allPayStatusSelected = false;
     this.allModeSelected = false;
+    this.allQSelected = false;
   }
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -1567,6 +1613,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
+
+      if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
+        api_filter['queue-eq'] = this.filterQ.toString();
+      }
+
       if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }

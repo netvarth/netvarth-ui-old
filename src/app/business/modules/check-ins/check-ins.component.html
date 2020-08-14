@@ -69,7 +69,7 @@
                 </li>
                 <li class="pl5 dropdown messages-menu loc-lst  view-lst queue-menu tok-db"
                   *ngIf="account_type === 'BRANCH'">
-                  <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
+                  <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     style="padding-top: 12px !important;">
                     <span *ngIf="!small_device_display && selectedUser && selectedUser.firstName">
@@ -502,8 +502,8 @@
                         <div>
                           <aside class="filterSidebar" *ngIf="filter_sidebar">
                             <section id="filterContainer" class="sidebar sidebar-bottom">
-                              <div class="filterClosebtn">
-                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                              <div class="filterClosebtn" [class.pd-btm-30]="filterapplied !== true">
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                                   (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                                   [matTooltip]="'Close filter window'"></i>
                                 <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
@@ -532,7 +532,7 @@
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="Status code">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Status code">
                                   </li>
                                 </div>
                                 <!-- <div *ngIf="time_type == 3">
@@ -580,6 +580,24 @@
                                       Female</mat-checkbox>
                                   </li>
                                 </div> -->
+
+                                <div *ngIf="queues.length > 0 && time_type === 3">
+                                  <label class="filterHeaders">Queues</label>
+                                  <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox [checked]="allQSelected"
+                                      (change)="setFilterDataCheckbox('queue', 'all', $event)">
+                                      All</mat-checkbox>
+                                  </li>
+                                  <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                    <mat-checkbox *ngFor="let q of queues"
+                                      [checked]="filterQ.indexOf(q.id) !== -1"
+                                      (change)="setFilterDataCheckbox('queue', q.id, $event)">
+                                      {{q.name}}</mat-checkbox>
+                                  </li>
+                                </div>
+
                                 <div *ngIf="services.length > 0">
                                   <label class="filterHeaders">Services</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -597,7 +615,8 @@
                                   </li>
                                 </div>
                                 <div *ngIf="time_type === 3">
-                                  <label class="filterHeaders">Check-in Status</label>
+                                  <label *ngIf="!showToken" class="filterHeaders">Check-in Status</label>
+                                  <label *ngIf="showToken"  class="filterHeaders">Token status</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -629,7 +648,8 @@
                                   </li>
                                 </div>
                                 <div>
-                                  <label class="filterHeaders">Check-in Mode</label>
+                                  <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
+                                  <label *ngIf="showToken"  class="filterHeaders">Token booking mode</label>
                                   <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                   </li>
                                   <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
@@ -680,7 +700,11 @@
                   <tbody *ngIf="!loading && check_in_filtered_list.length == 0">
                     <tr>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length > 0">
-                        No Check-ins Found
+                          <p *ngIf="!showToken && statusAction === 'new'">No Check-ins Found</p> 
+                          <p *ngIf="showToken && statusAction === 'new' ">No tokens issued till now</p> 
+                          <p *ngIf= "statusAction === 'started'"> No services have been started till now</p> 
+                          <p *ngIf="statusAction === 'completed'">No services have been completed till now</p>
+                          <p *ngIf="(statusAction === 'cancelled')">No services have been cancelled till now</p>
                       </td>
                       <td colspan="5" class="no-appt" *ngIf="activeQs.length === 0">
                         {{no_service_cap}}
@@ -727,7 +751,7 @@
                             <i class="icon-note"></i>
                           </span> -->
                           <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
-                            *ngIf="checkin.waitlistStatus == 'arrived'"></span>
+                            *ngIf="checkin.waitlistStatus == 'arrived' && !checkin.virtualService"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                             <i class="icon-note"></i>
@@ -736,7 +760,7 @@
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="checkin.hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="!checkin.virtualService || (checkin.virtualService && checkin.waitlistStatus !== 'arrived')">
                           <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}
                           </span>

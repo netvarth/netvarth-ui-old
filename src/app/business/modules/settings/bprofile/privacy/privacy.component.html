@@ -1,7 +1,9 @@
-<section>
-    <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
-    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
+
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true" (click)="backPage()"></i>Contact Information</h5>
+    </div>
+  </section>
 <section>
     <div class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-padding-small">
@@ -9,19 +11,19 @@
                 <div class="row">
                     <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
                         <div class="card p0 w-dta active">
-                            <mat-accordion>
+                            <!-- <mat-accordion>
                                 <mat-expansion-panel [expanded]="true">
                                     <mat-expansion-panel-header class="min90">
                                         <mat-panel-title class="block-level">
-                                            Contact Information
+                                            Contact Information -->
                                             <p class="form-level-settings">{{frm_privacy_cap}}
                                                 <!-- <a
                                                     class="learnmore-pointer" id="customer-help"
                                                     (click)="learnmore_clicked('privacy-settings', $event)">Learn
                                                     More</a> -->
                                             </p>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
+                                        <!-- </mat-panel-title>
+                                    </mat-expansion-panel-header> -->
                                     <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams">
                                         </app-innerloading-spinner>
@@ -152,8 +154,8 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
+                                <!-- </mat-expansion-panel>
+                            </mat-accordion> -->
                         </div>
                     </div>
                 </div>

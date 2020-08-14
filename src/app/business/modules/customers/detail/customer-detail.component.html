@@ -55,7 +55,7 @@
                                 </div>
                                 <div *ngIf="customer[0].dob" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
                                     <div><b>DOB</b></div>
-                                    <div>{{customer[0].dob}}</div>
+                                    <div>{{customer[0].dob | date:dateFormat}}</div>
                                 </div>
                                 <div *ngIf="customer[0].address" class="col-md-6 col-xs-12 col-sm-6" class="createcheckin">
                                     <div><b>Address:</b></div>

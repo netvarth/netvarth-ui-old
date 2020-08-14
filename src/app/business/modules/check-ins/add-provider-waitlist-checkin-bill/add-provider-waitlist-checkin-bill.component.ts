@@ -203,6 +203,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   source;
   pos = false;
   emailId: any;
+  settings: any = [];
+  showToken = false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -262,6 +264,51 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
     this.bill_load_complete = 1;
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+    .subscribe(data => {
+      this.settings = data;
+      this.showToken = this.settings.showTokenId;
+      if (this.source) {
+        this.breadcrumbs = [
+          {
+            title: 'Appointments',
+            url: '/provider/appointments'
+          },
+          {
+            title: 'Bill'
+          }
+        ];
+        this.getApptDetails();
+      } else {
+        if (this.showToken) {
+          this.breadcrumbs = [
+            {
+              title: 'Tokens',
+              url: '/provider/check-ins'
+            },
+            {
+              title: 'Bill'
+            }
+          ];
+          this.getCheckinDetails();
+        } else {
+          this.breadcrumbs = [
+            {
+              title: 'Check-ins',
+              url: '/provider/check-ins'
+            },
+            {
+              title: 'Bill'
+            }
+          ];
+          this.getCheckinDetails();
+        }
+      }
+      }, () => {
+    });
   }
 
   getJaldeeActiveCoupons() {

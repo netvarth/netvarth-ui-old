@@ -7,6 +7,7 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-privacy-detail',
@@ -80,6 +81,7 @@ export class PrivacyDetailComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private router: Router,
     public shared_functions: SharedFunctions,
+    private _location: Location
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -334,5 +336,8 @@ export class PrivacyDetailComponent implements OnInit {
       rettxt = this.privacypermissiontxt[txt];
     }
     return rettxt;
+  }
+  backPage() {
+    this._location.back();
   }
 }

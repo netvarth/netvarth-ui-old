@@ -25,36 +25,39 @@
                                     <a class="pointer-cursor">
 
 
-                                        <span class="lnk setings"> Business Profile 
+                                        <span class="lnk setings"> Business Profile
                                         </span>
                                         <p> Profile Strength -
-                                            <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span>
+                                            <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}}</span> &nbsp;&nbsp;
+
+                                          <!-- <button  *ngIf="showIncompleteButton" (click)="redirecTo('bprofile')" type="button" [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button> -->
+
                                         </p>
-                                        <div class="progress" style="height: 10px;">
+                                        <div class="progress" style="height: 10px;" *ngIf="!showIncompleteButton">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" [style.width.%]="weightageValue"
                                                 aria-valuenow="weightageValue" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
 
 
                                         <!-- <div class="progress "  style="height: 15px;">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one" 
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active"  role="progressbar" aria-valuenow="progress_bar_one"
                                                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_one">
-                                           
+
                                             </div>
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two" 
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_two!=0" role="progressbar" aria-valuenow="progress_bar_two"
                                                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_two">
-                                             
+
                                             </div>
-                                            <div *ngIf="progress_bar_three!=0"class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="progress_bar_three" 
+                                            <div *ngIf="progress_bar_three!=0"class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="progress_bar_three"
                                                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_three">
-                                              
+
                                             </div>
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four" 
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated active" *ngIf="progress_bar_four!=0" role="progressbar" aria-valuenow="progress_bar_four"
                                                 aria-valuemin="0" aria-valuemax="100" [style.width.%]="progress_bar_four">
-                                              
+
                                             </div>
-                                        
-                                        
+
+
                                         </div> -->
 
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
@@ -73,10 +76,10 @@
                                             class="req-flds-cap">
                                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> required fields missing</p>
                                         <!-- <p class="settings_info">Enable this to get online visibility.</p> -->
-                                       
+
                                             <p class="settings_info" *ngIf="onlinepresence_status">{{jaldee_online_enabled_msg}}</p>
                                             <p class="settings_info" *ngIf="!onlinepresence_status">{{jaldee_online_disabled_msg}} </p>
-                                            
+
                                         <!-- <p class="sts" [class.active]="search_status">{{search_statusstr}}</p> -->
                                     </a>
                                 </li>
@@ -111,7 +114,7 @@
                                         <span class="lnk setings" style="display: flex;">Jaldee.com Integration
                                         </span>
                                         <p class="settings_info">Manage your account integration with jaldee.com</p>
-                                       
+
                                     </a>
                                 </li>
                                 <!-- <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span
@@ -119,7 +122,7 @@
                                             <p *ngIf="reqFields.specialization" class="req-flds-cap">*required fields
                                                 missing
                                             </p></span>
-                                        <p class="settings_info">Mention your specializations here</p>                                       
+                                        <p class="settings_info">Mention your specializations here</p>
                                     </a></li> -->
                                 <!-- <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span
                                             style="display: flex;" class="lnk setings">Additional
@@ -127,7 +130,7 @@
                                             <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
                                                 class="req-flds-cap">*required fields missing</p></span>
                                         <p class="settings_info">{{frm_addinfo_cap}}</p>
-                                    </a>                                   
+                                    </a>
                                 </li> -->
 
 
@@ -419,7 +422,7 @@
                                         <p class="sts"
                                         [class.active]="waitlist_status">{{waitlist_statusstr}}</p>
                                     </a></li>
-                                <li><a> Future Home Service 
+                                <li><a> Future Home Service
                                         <span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
                                                 (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>

@@ -74,6 +74,7 @@ export class CustomerDetailComponent implements OnInit {
     customerId;
     customer;
     customerName;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,

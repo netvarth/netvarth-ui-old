@@ -11,6 +11,7 @@ import { ProviderBprofileSearchGalleryComponent } from '../../../../../ynw_provi
 import { Router } from '@angular/router';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
+import {Location} from '@angular/common';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -80,7 +81,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog,
-        private data_storage:ProviderDataStorageService
+        private data_storage: ProviderDataStorageService,
+        private _location: Location,
     ) { }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -113,7 +115,6 @@ export class MediaComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
-   
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();
@@ -196,10 +197,6 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.provider_services.getGalleryImages()
             .subscribe(
                 data => {
-                    console.log(data);
-                    console.log(JSON.stringify(data));
-
-                    
                     this.image_list = data;
                 },
                 () => {
@@ -319,5 +316,8 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     editSocialmedia(key) {
         this.handleSocialmedia(key);
+    }
+    redirecToBprofile() {
+        this._location.back();
     }
 }
