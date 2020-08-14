@@ -363,10 +363,12 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   user_accountType;
   aboutmefilled = false;
   locationFilled = false;
-  specializationFilled = false;
-  languagesKnownFilled = false;
-  contactInfoFilled = false;
-  galleryandmediaFilled = false;
+  specializeFilled = false;
+  languageFilled = false;
+  galryFilled = false;
+  mediaFilled = false;
+  contactInfoPhFilled = false;
+  contactInfoMailFilled = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -815,6 +817,11 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       });
   }
   getBusinessProfile() {
+    this.aboutmefilled = false;
+    this.locationFilled = false;
+    this.specializeFilled = false;
+    this.mediaFilled = false;
+    this.languageFilled = false;
     this.bProfile = [];
     this.additionalInfoDomainFields = [];
     this.additionalInfoSubDomainFields = [];
@@ -826,7 +833,24 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.aboutmefilled = true;
           }
-          console.log('businessprofile..' + JSON.stringify(this.bProfile));
+          if (this.bProfile.baseLocation) {
+            this.locationFilled = true;
+          }
+          if (this.bProfile.specialization && this.bProfile.specialization.length !== 0) {
+            this.specializeFilled = true;
+          }
+          if (this.bProfile.languagesSpoken && this.bProfile.languagesSpoken.length !== 0) {
+            this.languageFilled = true;
+          }
+          if (this.bProfile.socialMedia && this.bProfile.socialMedia.length !== 0) {
+            this.mediaFilled = true;
+          }
+          if (this.bProfile.phoneNumbers && this.bProfile.phoneNumbers.length !== 0) {
+            this.contactInfoPhFilled = true;
+          }
+          if (this.bProfile.emails && this.bProfile.emails.length !== 0) {
+            this.contactInfoMailFilled = true;
+          }
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
@@ -982,10 +1006,14 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   }
 
   getGalleryImages() {
+    this.galryFilled = false;
     this.provider_services.getGalleryImages()
       .subscribe(
         data => {
           this.image_list = data;
+          if (this.image_list && this.image_list.length !== 0) {
+            this.galryFilled = true;
+          }
           this.provider_datastorage.updateGalleryWeightageToBusinessProfile(this.image_list);
 
         },
@@ -1556,6 +1584,9 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   gotoAdditionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
   }
+  gotoAboutMe() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
+  }
 
   // specilization
 
@@ -1619,6 +1650,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     });
 
     this.specialdialogRef.afterClosed().subscribe(result => {
+      this.getBusinessProfile();
       if (result) {
         if (result['mod'] === 'reloadlist') {
           // this.getBusinessProfile();
@@ -2131,6 +2163,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       }
     });
     this.langdialogRef.afterClosed().subscribe(result => {
+      this.getBusinessProfile();
       if (result) {
         if (result['mod'] === 'reloadlist') {
           // this.getBusinessProfile();
@@ -2162,10 +2195,4 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     });
   }
 
-  gotoAboutMe() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
-  }
-  gotoGlryMedia() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'gallerymedia']);
-  }
 }

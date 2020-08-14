@@ -567,4 +567,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this._location.back();
     }
   }
+  backPage() {
+    this._location.back();
+  }
 }
