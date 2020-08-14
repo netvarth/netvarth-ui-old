@@ -369,43 +369,50 @@
                     <!-- About me -->
                     <div class="cd-b div-wdth-50">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':aboutmefilled,'div-red-outline':!aboutmefilled }" (click)="gotoAboutMe()">
-                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg" style="color:green" aria-hidden="true"></i>
-                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg" style="color:red" aria-hidden="true"></i>
-                        <span class="fontstyl" (click)="gotoAboutMe()">Name and About Me</span>
+                        <i *ngIf="aboutmefilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                        <i *ngIf="!aboutmefilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
+                        <span class="fontstyl">Name and About Me</span>
                       </div>
                     </div>
 
                     <!-- Location -->
                     <div class="cd-b div-wdth-50" (click)="editLocation()">
                       <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':locationFilled,'div-red-outline':!locationFilled }">
+                        <i *ngIf="locationFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                        <i *ngIf="!locationFilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
                         <span class="fontstyl">Location</span>
                       </div>
                     </div>
 
                     <!-- Specialization -->
                     <div class="cd-b div-wdth-50" (click)="handleSpecialization()">
-                      <div class="div-outline custId-cursor">
+                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':specializeFilled,'div-red-outline':!specializeFilled }">
+                        <i *ngIf="specializeFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                        <i *ngIf="!specializeFilled" class="fa fa-exclamation-circle fa-lg fa-red" aria-hidden="true"></i>
                         <span class="fontstyl">Specializations</span>
                       </div>
                     </div>
 
                     <!-- Languages Known -->
                     <div class="cd-b div-wdth-50" (click)="handleSpokenLanguages()">
-                      <div class="div-outline custId-cursor">
+                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
+                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <span class="fontstyl">Languages Known</span>
                       </div>
                     </div>
 
                     <!-- Gallery Media -->
                     <div class="cd-b div-wdth-50">
-                      <div class="div-outline custId-cursor" (click)="gotoGlryMedia()">
+                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
+                        <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <span class="fontstyl">Gallery and Social Media</span>
                       </div>
                     </div>
 
                     <!-- Contact Information -->
                     <div class="cd-b div-wdth-50">
-                      <div class="div-outline custId-cursor" (click)="gotoPrivacy()">
+                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}" (click)="gotoPrivacy()">
+                        <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
                         <span class="fontstyl">Contact Information</span>
                       </div>
                     </div>

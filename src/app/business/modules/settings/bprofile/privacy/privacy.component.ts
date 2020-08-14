@@ -9,6 +9,7 @@ import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/componen
 import { NavigationExtras } from '@angular/router';
 import { AddProviderBprofilePrivacysettingsComponent } from '../../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
@@ -52,7 +53,8 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private router: Router,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private _location: Location
     ) { }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -216,4 +218,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
           };
             this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add'], navigationExtras);
     }
+    backPage() {
+        this._location.back();
+      }
 }
