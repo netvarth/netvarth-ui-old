@@ -110,8 +110,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
+    this.getLocationBadges();
     if (this.location_id !== 'add') {
-      this.getLocationBadges();
       this.getLocationDetail();
     } else {
       const breadcrumbs = [];
@@ -145,15 +145,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       parkingType: ['']
     });
     if (this.action === 'edit') {
-     if (this.location_data.locationVirtualFields) {
-        for (const curbadge in this.location_data.locationVirtualFields) {
-          if (curbadge) {
-            this.sel_badges.push(curbadge);
-          }
-        }
-     }
 
-    this.checked_sel_badges = true;
       this.updateForm();
     }
   }
@@ -169,9 +161,18 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         locmapurl: this.location_data.googleMapUrl || null
       });
       this.locamForm.setValue({
-        open24hours: this.location_data.open24hours,
-        parkingType: this.location_data.parkingType
+        open24hours: this.location_data.open24hours || null,
+        parkingType: this.location_data.parkingType || null
       });
+      if (this.location_data.locationVirtualFields) {
+        for (const curbadge in this.location_data.locationVirtualFields) {
+          if (curbadge) {
+            this.sel_badges.push(curbadge);
+          }
+        }
+     }
+
+    this.checked_sel_badges = true;
     }
     this.schedule_arr = [];
     // extracting the schedule intervals
@@ -529,20 +530,17 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
               }
             }
 
-            this.provider_services.addProviderLocation(amenties_FormData)
+            this.provider_services.editProviderLocation(amenties_FormData)
               .subscribe(
                 (response) => {
                   this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
                   this.shared_Functionsobj.sendMessage({ 'ttype': 'locationChange' });
                   this.getLocationDetail();
                   this.getLocationBadges();
-                  if (this.params.action === 'addbase') {
-                    this.router.navigate(['provider', 'settings', 'bprofile']);
-                  } else {
-                    this.action = 'view';
-                  }
-                  this.shared_Functionsobj.sendMessage({ 'ttype': 'locationChange' });
                   this.disableButton = false;
+                    this.router.navigate(['provider', 'settings', 'bprofile']);
+
+
                 },
                 error => {
                   this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
