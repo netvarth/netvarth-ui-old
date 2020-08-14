@@ -9,7 +9,7 @@ import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/componen
 import { NavigationExtras } from '@angular/router';
 import { AddProviderBprofilePrivacysettingsComponent } from '../../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
@@ -59,7 +59,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.setPrivacyDetails();
     }
     ngOnDestroy() {
@@ -85,8 +85,8 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->privacy-settings']);   
-      }
+        this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->privacy-settings']);
+    }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -212,13 +212,16 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     }
     handlePrivacysettings(typ?, peditindx?) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { bprofile: this.bProfile,
-            editindx: peditindx,
-            curtype: typ }
-          };
-            this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add'], navigationExtras);
+            queryParams: {
+                bprofile: this.bProfile,
+                editindx: peditindx,
+                curtype: typ
+            }
+        };
+        this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add'], navigationExtras);
     }
     backPage() {
-        this._location.back();
-      }
+        this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+        // this._location.back();
+    }
 }

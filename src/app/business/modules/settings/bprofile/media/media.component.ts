@@ -318,6 +318,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.handleSocialmedia(key);
     }
     redirecToBprofile() {
-        this._location.back();
+        this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+        // this._location.back();
     }
 }
