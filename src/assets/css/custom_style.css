@@ -8740,10 +8740,10 @@ owl-carousel .bt3.active {
   .content .col-md-12 .w-dta .row .div-wdth-50 {
     width: auto !important;
   }
-  .p0 .locd .lbl .prof-pic {
+  /* .p0 .locd .lbl .prof-pic {
     width: 100px !important;
     height: 100px !important;
-  }
+  } */
 }
 
 .appt-in-chip .mat-chip {
@@ -10817,5 +10817,14 @@ a {
     .gmedia .linkdisplay {
       display: grid !important;
     }
+  }
+  .pt10 .pad-left-20 .left_icn {
+    color: rgb(60, 141, 188);
+    cursor: pointer;
+  }
+  .pt10 .pad-left-20 .titlespan {
+    color: rgb(60, 141, 188);
+    font-weight: 500;
+    padding-left: 10px;
   }
    

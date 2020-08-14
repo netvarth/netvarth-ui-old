@@ -12,6 +12,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup.component';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-aboutme',
@@ -52,6 +53,7 @@ export class AboutMeComponent implements OnInit {
         public sharedfunctionObj: SharedFunctions,
         private routerobj: Router,
         private dialog: MatDialog,
+        private _location: Location,
         private provider_datastorageobj: ProviderDataStorageService,
         @Inject(DOCUMENT) public document,
     ) {
@@ -141,9 +143,10 @@ export class AboutMeComponent implements OnInit {
         this.provider_servicesobj.updatePrimaryFields(pdata)
           .subscribe(
             () => {
-              this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
+             // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
+              this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_UPDATED);
               setTimeout(() => {
-              //  this.dialogRef.close('reloadlist');
+                this._location.back();
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
@@ -177,7 +180,8 @@ export class AboutMeComponent implements OnInit {
       }
 
       redirecToBprofile() {
-        this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+       // this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+       this._location.back();
         }
         // get the logo url for the provider
       getProviderLogo() {
