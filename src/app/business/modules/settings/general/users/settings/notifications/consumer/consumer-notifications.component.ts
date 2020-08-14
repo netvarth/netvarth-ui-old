@@ -67,7 +67,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
-  apptPersonsahead; 
+  apptPersonsahead;
   userId: any;
   appointment_status: any;
   waitlistStatus: any;

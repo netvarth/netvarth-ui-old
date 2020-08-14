@@ -124,7 +124,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
-        this.showToken = this.settings.showTokenId; 
+        this.showToken = this.settings.showTokenId;
         }, () => {
       });
   }
