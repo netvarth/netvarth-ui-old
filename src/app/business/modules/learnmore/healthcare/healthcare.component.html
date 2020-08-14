@@ -1817,9 +1817,13 @@
                                                         </li>
                                                         <li>To activate, Go to Jaldee Qmanager and click on Token System
                                                             </li>
-                                                            <span>Select the preferred options from<br>
-                                                            Token Number<br>
-                                                            Waiting time</span>
+                                                            <ul class="ul-normal">
+                                                                    <span><strong>Select the preferred options from</strong> </span>
+                                                                    
+                                                                <li>Token Number</li>
+                                                                <li>Show waiting time</li>
+                                                                <li>Number of persons ahead</li>
+                                                            </ul>
                                                             <li>Patient can see the selected options by doctor</li>
                                                             <li>Doctor can enable Online tokens for Today and Future(Patients can get tokens via Jaldee app,Jaldee.com,Scanning Jaldee doctor QR code and using the link shared with patient)
                                                                 </li>
@@ -4879,11 +4883,19 @@
                         <mat-expansion-panel [expanded]='showinbox'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('inbox', 'inbox')">
-                                    Inbox
+                                    Jaldee Inbox
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <h6>Mailbox</h6>
+                                    <ul class="ul-normal">
+                                        <span><strong>What is Jaldee inbox?</strong></span>
+                                        <li>Jaldee inbox is the mailbox for the Doctor and Patient</li>
+                                        <li>Doctor and Patient can view notes and attachments from this option</li>
+                                        <li>Attachments can be downloaded from inbox</li>
+                                        <li>Doctor can type messages or can send default message for the cancellation of check-ins and appointments</li>
+                                        <li>Doctor will receive cancellation notifications in the inbox
+                                            </li>
+                                    </ul>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
