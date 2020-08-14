@@ -15,7 +15,24 @@
               <div class="card p0">
 
                 <div class="pubs card w-dta bprof">
-                  <div class="ctrl">
+                    <!-- <div class="warning" *ngIf="businessProfile_show==1">
+                        <app-innerloading-spinner spinnerParams="loadingParams">
+                        </app-innerloading-spinner>
+                      </div> -->
+                    <div class="ctrl" *ngIf="showIncompleteButton">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                          <h3 class="bus-prof-head">Business Profile</h3>
+                          <h6 *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
+                              <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
+                            </h6>
+
+                               <div class="text-center">
+                              <button (click)="scroll(basicInfoSection)" type="button" [className]="' btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                            </div>
+                        </div>
+                      </div>
+
+                  <div class="ctrl" *ngIf="!showIncompleteButton">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h3 class="bus-prof-head">Business Profile</h3>
                       <h6 *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">Profile Strength-
@@ -60,7 +77,7 @@
                 <!-- </div> -->
                 <!-- </div> -->
                 <!--TEsting-->
-                <div class="pubs card w-dta bprof" *ngIf="bProfile">
+                <div class="pubs card w-dta bprof"  *ngIf="!showIncompleteButton">
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">Jaldee Online &nbsp;&nbsp;
@@ -257,7 +274,7 @@
 
 
 
-                <div class="pubs card w-dta bprof">
+                <div class="pubs card w-dta bprof" *ngIf="!showIncompleteButton">
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                       <h2 class="mb-0" style="color:black;">List my profile on jaldee.com&nbsp;&nbsp;
@@ -292,7 +309,7 @@
 
 
                 </div>
-                <div class="pubs card w-dta bprof">
+                <div class="pubs card w-dta bprof"  *ngIf="!showIncompleteButton">
                   <div class="ctrl">
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
 

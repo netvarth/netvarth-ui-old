@@ -37,6 +37,7 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 
 export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, AfterContentInit {
 
+  showIncompleteButton = true;
   domain_fields_nonmandatory: any;
   subdomain_fields_nonmandatory: any[];
   logoExist = false;
@@ -169,6 +170,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   custm_id = Messages.CUSTM_ID;
   jaldee_acc_url = Messages.JALDEE_URL;
   progress_loading_url = false;
+  profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
 
   // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
@@ -347,6 +349,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   profile_disabled_msg: string;
   showAddSection = false;
   showAddSection1 = false;
+  businessProfile_show = 1;
 
   // specilization
 
@@ -461,11 +464,13 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.provider_datastorage.getWeightageArray().subscribe(result => {
+     this.businessProfile_show = 1;
       this.businessweightageArray = result;
       console.log(JSON.stringify(this.businessweightageArray));
 
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
+
 
         // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
         //   if(this.mandatoryfieldArray.length!==0){
@@ -479,6 +484,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
         // }
       } else {
         this.weightageValue = 0;
+        this.businessProfile_show = -1;
       }
 
 
@@ -576,6 +582,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
 
     }
@@ -587,6 +594,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.progress_bar_two = weightage - 25;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
       (weightage >= 50 && weightage < 75) {
@@ -597,6 +605,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.progress_bar_two = 25;
       this.progress_bar_three = weightage - 50;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
@@ -607,6 +616,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
     } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
@@ -616,6 +626,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = 25;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     }
@@ -961,6 +972,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
           this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
           this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
+          this.businessProfile_show = -1;
 
         },
         () => {
