@@ -37,6 +37,8 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   def_msg = '';
   rep_date: string;
   rep_time: string;
+  settings: any = [];
+  showToken = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
@@ -48,11 +50,11 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-    if (this.data.appt || this.data.type === 'appt') {
-      this.checkin_label = this.cancel_cap + ' Appointment';
-    } else {
-      this.checkin_label = this.cancel_cap + ' ' + this.sharedfunctionObj.getTerminologyTerm('waitlist');
-    }
+    // if (this.data.appt || this.data.type === 'appt') {
+    //   this.checkin_label = this.cancel_cap + ' Appointment';
+    // } else {
+    //   this.checkin_label = this.cancel_cap + ' ' + this.sharedfunctionObj.getTerminologyTerm('waitlist');
+    // }
   }
 
   ngOnInit() {
@@ -84,7 +86,26 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     }
     this.getDefaultMessages();
     this.createForm();
+    this.getProviderSettings();
   }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        if (this.data.appt || this.data.type === 'appt') {
+          this.checkin_label = this.cancel_cap + ' Appointment';
+        } else {
+          if (this.showToken) {
+            this.checkin_label = 'Are you sure you want to cancel this token?';
+          } else {
+            this.checkin_label = 'Are you sure you want to cancel this check-In?';
+          }
+        }
+        }, () => {
+      });
+  }
+
   createForm() {
     this.amForm = this.fb.group({
       reason: ['', Validators.compose([Validators.required])],

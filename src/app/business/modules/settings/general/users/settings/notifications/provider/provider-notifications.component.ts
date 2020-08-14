@@ -76,6 +76,11 @@ export class ProviderNotificationUserComponent implements OnInit {
   selApptNotify = false;
   selApptCancelNotify = false;
   userId: any;
+  appointment_status: any;
+  waitlistStatus: any;
+  donations_status: any;
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -96,6 +101,16 @@ export class ProviderNotificationUserComponent implements OnInit {
       this.getUser();
     });
     this.getNotificationList();
+    this.getGlobalSettingsStatus();
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
   }
   getUser() {
     this.provider_services.getUser(this.userId)
@@ -120,6 +135,14 @@ export class ProviderNotificationUserComponent implements OnInit {
           title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
         });
         this.breadcrumbs = breadcrumbs;
+      });
+  }
+  getGlobalSettingsStatus() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.appointment_status = data.appointment;
+        this.waitlistStatus = data.waitlist;
+        this.donations_status = data.donationFundRaising;
       });
   }
   getNotificationList() {

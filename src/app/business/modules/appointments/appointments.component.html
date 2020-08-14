@@ -341,7 +341,7 @@
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="Status code">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Status code">
                                   </li>
                                 </div>
                                 <div *ngIf="service_list.length > 0">
@@ -772,7 +772,7 @@
                                 <div class="filterTextinput" *ngIf="time_type != 3">
                                   <li class="filterli">
                                     <input type="text" id="txt_mobile" [(ngModel)]="filter.appointmentEncId"
-                                      (blur)="doSearch()" class="filterTextbox" placeholder="Status code">
+                                      (blur)="doSearch()" (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Status code">
                                   </li>
                                 </div>
                                 <!-- <div *ngIf="time_type == 3">

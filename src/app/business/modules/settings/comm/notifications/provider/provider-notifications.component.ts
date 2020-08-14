@@ -87,11 +87,18 @@ export class ProviderNotificationsComponent implements OnInit {
   SelchkincnclNotify = false;
   selDonatnNotify = false;
   mode_of_notify = '';
+  checkin_label = '';
+  appointment_status: any;
+  waitlistStatus: any;
+  donations_status: any;
+  settings: any = [];
+  showToken = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     public provider_services: ProviderServices) {
     this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {
@@ -99,6 +106,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     const breadcrumbs = [];
@@ -109,6 +117,23 @@ export class ProviderNotificationsComponent implements OnInit {
         title: this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1)
     });
     this.breadcrumbs = breadcrumbs;
+    this.getProviderSettings();
+  }
+  getProviderSettings() {
+    this.provider_services.getWaitlistMgr()
+      .subscribe(data => {
+        this.settings = data;
+        this.showToken = this.settings.showTokenId;
+        }, () => {
+      });
+  }
+  getGlobalSettingsStatus() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+        this.appointment_status = data.appointment;
+        this.waitlistStatus = data.waitlist;
+        this.donations_status = data.donationFundRaising;
+      });
   }
   getNotificationList() {
     this.provider_services.getUserNotificationList(0)
@@ -122,6 +147,7 @@ export class ProviderNotificationsComponent implements OnInit {
         }
       );
   }
+
   performActions(action) {
     if (action === 'learnmore') {
       this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);

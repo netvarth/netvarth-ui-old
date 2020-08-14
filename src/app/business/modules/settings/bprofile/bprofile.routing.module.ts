@@ -5,6 +5,8 @@ import { MediaComponent } from './media/media.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
+import { AboutMeComponent } from './aboutme/aboutme.component';
+import { GalleryMediaComponent } from './gallerymedia/gallerymedia.component';
 
 const routes: Routes = [
     {path: '', component: BProfileComponent },
@@ -13,6 +15,8 @@ const routes: Routes = [
         {path: 'specializations', component: SpecializationsComponent },
         {path: 'languages', component: LanguagesComponent },
         {path: 'additionalinfo', component: AdditionalInfoComponent },
+        {path: 'aboutme', component: AboutMeComponent },
+        {path: 'gallerymedia', component: GalleryMediaComponent }
     ]},
     {
         path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)

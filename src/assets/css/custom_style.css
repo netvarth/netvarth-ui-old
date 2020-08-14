@@ -7377,7 +7377,11 @@ input.jdn_ip {
   border-top: 1px solid #c4b7b7;
   /* min-height: 100%; */
 }
-
+@media (max-width:767px) {
+  .filterSidebar {
+    margin-top: 100px;
+  }
+}
 .filterTextinput {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -8733,6 +8737,13 @@ owl-carousel .bt3.active {
     min-width: 30%!important;
     max-width: 30%!important;
   }
+  .content .col-md-12 .w-dta .row .div-wdth-50 {
+    width: auto !important;
+  }
+  .p0 .locd .lbl .prof-pic {
+    width: 100px !important;
+    height: 100px !important;
+  }
 }
 
 .appt-in-chip .mat-chip {
@@ -9315,11 +9326,13 @@ owl-carousel .bt3.active {
 }
 
 .checklist, .apptlist {
+  width: 325px !important;
   max-width: 325px !important;
-  min-width: 325px !important;
+  min-width: 300px !important;
   min-height: 500px !important;
   max-height: 500px !important;
 }
+
 
 /* .wtmgr .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
   background-color: #29b6f6 !important;
@@ -10708,4 +10721,101 @@ a {
   color: #f2cd61 !important
   }
   
+  .p0 .locd .lbl .prof-pic {
+    width: 180px;
+    height: 180px;
+    /* border-radius: 50%; */
+    background-clip: padding-box;
+    background: rgb(248, 248, 248);
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .p0 .locd .lbl .prof-pic .add {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .p0 .locd .lbl .prof-pic .add span {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(0, 174, 242);
+  }
+  .p0 .locd .lbl .prof-pic .change {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: .75rem;
+    cursor: pointer;
+  }
+  .p0 .locd .lbl .prof-pic .change .change-pic {
+    background: rgba(0, 174, 242, 0.5);
+  }
+  .cd-b .div-outline {
+    border: 2px solid rgb(196, 196, 196);
+    padding: 20px;
+  }
+  .cd-b .div-grn-outline {
+    border: 2px solid rgb(0, 128, 0) !important;
+  }
+  .cd-b .div-outline .fa-lge{
+    color: rgb(0, 128, 0) !important;
+    padding-right: 10px !important;
+  }
+  .cd-b .div-outline .fontstyl {
+    font-weight: 500;
+    font-size: medium;
+  }
+  .content .col-md-12 .w-dta .row .div-wdth-50 {
+    width: 50%;
+  }
+  .pt10 .pad-left-20 .btn-bak {
+    padding-right: 10px;
+    display: -webkit-box;
+    display: flex;
+    border: 2px solid rgb(24, 115, 242);
+    color: rgb(24, 115, 242);
+    border-radius: 30px;
+    background-clip: padding-box;
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid rgb(24, 115, 242) !important;
+    width: fit-content;
+    padding-left: 10px
+  }
+  .aboutme .content .col-md-12 .row .card .copy .grey {
+    background: rgb(250, 250, 250);
+  }
+  .aboutme {
+    display: block;
+  }
+  .gmedia {
+    display: block;
+  }
+  @media screen and (max-width: 415px) {
+    .aboutme .linkdisplay {
+      display: grid !important;
+    }
+    .gmedia .linkdisplay {
+      display: grid !important;
+    }
+  }
    

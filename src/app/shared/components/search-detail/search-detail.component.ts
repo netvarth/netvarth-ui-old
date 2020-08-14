@@ -891,12 +891,24 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 try {
                   if (this.search_data.hits.hit[i].fields.services) {
                     this.search_data.hits.hit[i].fields.serviceList = JSON.parse(this.search_data.hits.hit[i].fields.services);
-                    this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
+                    if (this.search_data.hits.hit[i].fields.virtual_service_status === '0') {
+                      const filteredArray = this.search_data.hits.hit[i].fields.serviceList.filter(service => service.serviceType !== 'virtualService');
+                      this.search_data.hits.hit[i].fields.allServices = filteredArray;
+                    } else {
+                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.serviceList;
+                    }
                   }
                   if (this.search_data.hits.hit[i].fields.appt_services) {
                     this.search_data.hits.hit[i].fields.appointmentServiceList = JSON.parse(this.search_data.hits.hit[i].fields.appt_services);
                     if (this.search_data.hits.hit[i].fields.appointmentServiceList && this.search_data.hits.hit[i].fields.appointmentServiceList.length > 0) {
-                      this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                      if (this.search_data.hits.hit[i].fields.virtual_service_status === '0') {
+                        const filteredArray = this.search_data.hits.hit[i].fields.appointmentServiceList.filter(service => service.serviceType !== 'virtualService');
+                        if (filteredArray.length > 0) {
+                          this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(filteredArray);
+                        }
+                      } else {
+                        this.search_data.hits.hit[i].fields.allServices = this.search_data.hits.hit[i].fields.allServices.concat(this.search_data.hits.hit[i].fields.appointmentServiceList);
+                      }
                     }
                   }
                   if (this.search_data.hits.hit[i].fields.donation_services && this.search_data.hits.hit[i].fields.donation_status === '1') {
