@@ -20,7 +20,6 @@ import { ProPicPopupModule } from './pro-pic-popup/pro-pic-popup.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
 import { AboutMeComponent } from './aboutme/aboutme.component';
-import { GalleryMediaComponent } from './gallerymedia/gallerymedia.component';
 
 @NgModule({
     imports: [
@@ -46,8 +45,7 @@ import { GalleryMediaComponent } from './gallerymedia/gallerymedia.component';
         QRCodeGeneratorComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
-        AboutMeComponent,
-        GalleryMediaComponent
+        AboutMeComponent
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,

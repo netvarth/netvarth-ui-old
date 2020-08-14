@@ -531,7 +531,7 @@
                                     </span>
                                     <span title="{{arrived_upper}}"
                                       class="pull-left icon-arrived checkin_status icon-btn1 mgn-rt-10"
-                                      *ngIf="appt.apptStatus == 'Arrived'"></span>
+                                      *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                                     <span [matTooltip]="cust_note_tooltip"
                                       class="pull-left cnote icon-btn1  pointer-cursor mgn-rt-10"
                                       *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
@@ -981,7 +981,7 @@
                             <i class="icon-note"></i>
                           </span> -->
                           <span title="{{arrived_upper}}" class="pull-left icon-arrived checkin_status mgn-rt-10"
-                            *ngIf="appt.apptStatus == 'Arrived'"></span>
+                            *ngIf="appt.apptStatus == 'Arrived' && !appt.virtualService"></span>
                           <span [matTooltip]="cust_note_tooltip" class="pull-left cnote  pointer-cursor mgn-rt-10"
                             *ngIf="appt.consumerNote" (click)="showConsumerNote(appt)">
                             <i class="icon-note"></i>
@@ -990,7 +990,8 @@
                             class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+                        *ngIf="!appt.virtualService || (appt.virtualService && appt.apptStatus !== 'Arrived')">
                           <span class="" style="font-size: smaller;">
                             {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}
                           </span>
