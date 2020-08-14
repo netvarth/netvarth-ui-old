@@ -3684,10 +3684,10 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                   <mat-accordion [ngClass]="{'learnmore_active' : showpatients}" >
-                        <mat-expansion-panel [expanded]='showpatients'>
+                   <mat-accordion [ngClass]="{'learnmore_active' :showcustomers}" >
+                        <mat-expansion-panel [expanded]='showcustomers'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="menu('patients')">
+                                <mat-panel-title class="accordion-title" (click)="menu('customers')">
                                     Patients
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -3699,12 +3699,12 @@
                                         </span>
                             </div>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="showpatientsid && showpatients">
+                                <mat-expansion-panel [expanded]="showcustomersid && showcustomers">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('custid-settings', 'patients')">How to enable Patient ID?
+                                                (click)="handleScroll('custid-settings', 'customers')">How to enable Patient ID?
                                             </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
@@ -4866,10 +4866,10 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
-                    <mat-accordion  [ngClass]="{'learnmore_active' : showpatient}">
-                        <mat-expansion-panel [expanded]='showpatient'>
+                    <mat-accordion  [ngClass]="{'learnmore_active' :showcustomer}">
+                        <mat-expansion-panel [expanded]='showcustomer'>
                             <mat-expansion-panel-header class="accordion">
-                                <mat-panel-title class="accordion-title" (click)="handleScroll('patient', 'patient')">
+                                <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
                                     Create patient
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
