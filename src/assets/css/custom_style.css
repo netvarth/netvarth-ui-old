@@ -10732,11 +10732,10 @@ a {
   .content.w-manager .card .bi-link:hover .learnmore-pointer {
   color: #f2cd61 !important
   }
-  
+/*   
   .p0 .locd .lbl .prof-pic {
     width: 180px;
     height: 180px;
-    /* border-radius: 50%; */
     background-clip: padding-box;
     background: rgb(248, 248, 248);
     display: flex;
@@ -10796,19 +10795,19 @@ a {
   }
   .p0 .locd .lbl .prof-pic .change .change-pic {
     background: rgba(0, 174, 242, 0.5);
-  }
+  } */
   .cd-b .div-outline {
-    border: 2px solid rgb(196, 196, 196);
-    padding: 20px;
+    border: 1px solid rgb(196, 196, 196);
+    padding: 10px;
   }
   .cd-b .div-grn-outline {
-    border: 2px solid rgb(0, 128, 0) !important;
+    border: 1px solid rgb(0, 128, 0) !important;
   }
   .cd-b .div-red-outline {
-    border: 2px solid rgb(244, 67, 54) !important;
+    border: 1px solid rgb(244, 67, 54) !important;
   }
   .cd-b .div-org-outline {
-    border: 2px solid rgb(247, 108, 41) !important;
+    border: 1px solid rgb(247, 108, 41) !important;
   }
   .cd-b .div-outline .fa-grn{
     color: rgb(0, 128, 0) !important;
@@ -10871,3 +10870,26 @@ a {
   .pd-btm-30 {
      padding-bottom: 30px !important;
   }
+
+.aboutme .bi-l{
+  margin: auto !important;
+}
+.aboutme .content .col-b .card.w-dta.active .cd-b {
+  padding: 5px !important;
+}
+
+.title-gb {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.title-gb i{
+  color: #00aef2 !important;
+  cursor: pointer;
+}
+
+.amenities-form label {
+  font-weight: 500 !important;
+}
+.amenities-form .form-group {
+  margin-bottom: 5px !important;
+}

@@ -26,6 +26,7 @@ import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_prov
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { QRCodeGeneratorComponent } from './qrcodegenerator/qrcodegenerator.component';
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -171,7 +172,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
   jaldee_acc_url = Messages.JALDEE_URL;
   progress_loading_url = false;
   profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
-
+  loading = true;
   // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
@@ -382,6 +383,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
     private shared_services: SharedServices,
     private qservice: QuestionService,
     private galleryService: GalleryService,
+    private _location: Location,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
@@ -997,10 +999,10 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
           this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
           this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
           this.businessProfile_show = -1;
-
+          this.loading = false;
         },
         () => {
-
+          this.loading = false;
         }
       );
   }
@@ -2194,5 +2196,7 @@ export class BProfileComponent implements OnInit, OnDestroy, AfterViewChecked, A
       this.getBusinessProfile();
     });
   }
-
+  redirecToSettings () {
+    this._location.back();
+  }
 }
