@@ -393,30 +393,6 @@
                       </div>
                     </div>
 
-                    <!-- Languages Known -->
-                    <div class="cd-b div-wdth-50" (click)="handleSpokenLanguages()">
-                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
-                        <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <span class="fontstyl">Languages Known</span>
-                      </div>
-                    </div>
-
-                    <!-- Gallery Media -->
-                    <div class="cd-b div-wdth-50">
-                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
-                        <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <span class="fontstyl">Gallery and Social Media</span>
-                      </div>
-                    </div>
-
-                    <!-- Contact Information -->
-                    <div class="cd-b div-wdth-50">
-                      <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}" (click)="gotoPrivacy()">
-                        <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
-                        <span class="fontstyl">Contact Information</span>
-                      </div>
-                    </div>
-
 
 
 
@@ -428,14 +404,15 @@
                       <div *ngFor="let fields of domain_fields">
                         <ng-container *ngIf="fields.mandatory">
                           <div class="cd-b div-wdth-50">
-                            <div class="div-outline custId-cursor">
-                              <span class="fontstyl">{{fields.displayName}}</span>
+                              <div class="div-outline custId-cursor"   (click)="!fields['value'] ? addDynamicField(fields, 'domain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'domain_questions'):false" [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }" >
+                                <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                              <span class="fontstyl">{{fields.displayName}}   </span>
                               <div>
-                                <div class="custom_business">
+                                <!-- <div class="custom_business">
                                   <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'domain_questions')">
                                     <mat-icon>{{add_circle_outline}}</mat-icon>
                                   </button>
-                                </div>
+                                </div> -->
                                 <ng-container [ngSwitch]="fields.dataType">
                                   <ng-container *ngSwitchCase="'TEXT'">
                                     <div class="cont-btn">
@@ -524,9 +501,9 @@
                                   </ng-container>
 
                                   <ng-container *ngSwitchCase="'Gender'">
-                                    <div class="cont-btn">
-                                      <p> {{fields.value | capitalizeFirst}} </p>
-                                      <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                    <div class="cont-btn" (click)="editDynamicField(fields.name, 'domain_questions')">
+                                      <!-- <p> {{fields.value | capitalizeFirst}} </p>
+                                      <span class="editbt" (click)="editDynamicField(fields.name, 'domain_questions')"></span> -->
 
                                     </div>
                                   </ng-container>
@@ -534,7 +511,7 @@
                                   <ng-container *ngSwitchCase="'DataGrid'">
                                     <div class="table-outer">
                                       <table class="table table-striped">
-                                        <thead class="cf">
+                                        <thead class="cf" *ngIf="fields['value']">
                                           <tr>
                                             <th class="cth" *ngFor="let column of fields.Columns">
                                               {{column.displayName}}</th>
@@ -571,7 +548,7 @@
                                           </tr>
                                         </tbody>
                                       </table>
-                                      <span (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
+                                      <span *ngIf="fields['value']" (click)="editGridDynamicField(fields.name,'domain_questions', null)" class="addbt"></span>
                                     </div>
                                   </ng-container>
                                 </ng-container>
@@ -586,15 +563,17 @@
                     <ng-container *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                       <div class="acc-cont" *ngFor="let fields of subdomain_fields">
                         <ng-container *ngIf="fields.mandatory">
-                          <div class="cd-b div-wdth-50">
-                            <div class="div-outline custId-cursor">
-                              <span class="fontstyl">{{fields.displayName}}</span>
+                            <div class="cd-b div-wdth-50">
+                                <div class="div-outline custId-cursor"   (click)="!fields['value'] ? addDynamicField(fields, 'subdomain_questions'):(fields.dataType=='Gender') ?editDynamicField(fields.name, 'subdomain_questions'):false" [ngClass]="{'div-grn-outline':fields['value'],'div-red-outline':!fields['value'] }" >
+                                    <i *ngIf="fields['value']" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                                  <span class="fontstyl">{{fields.displayName}}   </span>
 
-                              <div class="custom_business">
+
+                              <!-- <div class="custom_business">
                                 <button mat-icon-button *ngIf="!fields['value']" (click)="addDynamicField(fields, 'subdomain_questions')">
                                   <mat-icon>{{add_circle_outline}}</mat-icon>
                                 </button>
-                              </div>
+                              </div> -->
 
                               <ng-container [ngSwitch]="fields.dataType">
 
@@ -687,8 +666,8 @@
                                 </ng-container>
 
                                 <ng-container *ngSwitchCase="'Gender'">
-                                  <div class="cont-btn">
-                                    <span style="margin-left:1%" (click)="editDynamicField(fields.name, 'subdomain_questions')">{{fields.value | capitalizeFirst}} </span>
+                                  <div class="cont-btn" (click)="editDynamicField(fields.name, 'subdomain_questions')">
+                                    <!-- <span style="margin-left:1%" (click)="editDynamicField(fields.name, 'subdomain_questions')">{{fields.value | capitalizeFirst}} </span> -->
 
                                   </div>
                                 </ng-container>
@@ -696,7 +675,7 @@
                                 <ng-container *ngSwitchCase="'DataGrid'">
                                   <div class="table-outer">
                                     <table class="table table-striped">
-                                      <thead class="cf">
+                                      <thead class="cf" *ngIf="fields['value']">
                                         <tr>
                                           <th class="cth" *ngFor="let column of fields.Columns">
                                             {{column.displayName}}</th>
@@ -733,7 +712,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <span (click)="editGridDynamicField(fields.name,'subdomain_questions', null)" class="addbt"></span>
+                                    <span *ngIf="fields['value']"(click)="editGridDynamicField(fields.name,'subdomain_questions', null)" class="addbt"></span>
                                   </div>
                                 </ng-container>
                               </ng-container>
@@ -745,6 +724,34 @@
                       </div>
 
                     </ng-container>
+
+                    <!--end mandatory fields -->
+
+                    <!-- Languages Known -->
+                    <div class="cd-b div-wdth-50" (click)="handleSpokenLanguages()">
+                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':languageFilled}">
+                          <i *ngIf="languageFilled" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                          <span class="fontstyl">Languages Known</span>
+                        </div>
+                      </div>
+
+                      <!-- Gallery Media -->
+                      <div class="cd-b div-wdth-50">
+                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(galryFilled && mediaFilled)}" (click)="gotoMedia()">
+                          <i *ngIf="(galryFilled && mediaFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                          <span class="fontstyl">Gallery and Social Media</span>
+                        </div>
+                      </div>
+
+                      <!-- Contact Information -->
+                      <div class="cd-b div-wdth-50">
+                        <div class="div-outline custId-cursor" [ngClass]="{'div-grn-outline':(contactInfoPhFilled && contactInfoMailFilled)}" (click)="gotoPrivacy()">
+                          <i *ngIf="(contactInfoPhFilled && contactInfoMailFilled)" class="fa fa-check-circle fa-lg fa-grn" aria-hidden="true"></i>
+                          <span class="fontstyl">Contact Information</span>
+                        </div>
+                      </div>
+
+
 
                   </mat-expansion-panel>
                 </mat-accordion>

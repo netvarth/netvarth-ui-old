@@ -56,7 +56,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
- 
+
   frm_waitlist_cap = '';
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
   frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
@@ -208,6 +208,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   normal_subdomainfield_show = 1;
   field;
   bprofileLoaded = false;
+  showIncompleteButton = true;
   ngOnInit() {
     // this.provider_datastorage.setWeightageArray([]);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -311,6 +312,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.progress_bar_two = 0;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
 
     }
@@ -322,6 +324,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.progress_bar_two = weightage - 25;
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = true;
       return businessProfileWeightageText;
     } else if
       (weightage >= 50 && weightage < 75) {
@@ -332,6 +335,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.progress_bar_two = 25;
       this.progress_bar_three = weightage - 50;
       this.progress_bar_four = 0;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     } else if (weightage >= 75 && weightage < 100) {
@@ -342,6 +346,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = weightage - 75;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
     } else if (weightage === 100) {
       businessProfileWeightageText = Messages.VERY_GOOD_CAP;
@@ -351,6 +356,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       this.progress_bar_two = 25;
       this.progress_bar_three = 25;
       this.progress_bar_four = 25;
+      this.showIncompleteButton = false;
       return businessProfileWeightageText;
 
     }
