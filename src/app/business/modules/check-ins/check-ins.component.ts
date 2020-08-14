@@ -1070,6 +1070,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setApptSelections();
   }
   getTodayWL() {
+    this.loading = true;
     const Mfilter = this.setFilterForApi();
     if (this.shared_functions.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
@@ -1105,15 +1106,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               // this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.loading = false;
             });
+      },
+      () => {
+        this.loading = false;
       });
   }
   getFutureWL() {
     this.resetCheckList();
-    // this.loading = true;
+    this.loading = true;
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
@@ -1154,10 +1159,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             () => {
               // this.load_waitlist = 1;
+              this.loading = false;
             },
             () => {
               this.loading = false;
             });
+      },
+      () => {
+        this.loading = false;
       });
   }
   setFutureCounts(appointments) {
@@ -1199,8 +1208,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             () => {
               this.loading = false;
             });
-      }
-    );
+      },
+      () => {
+        this.loading = false;
+      });
   }
   setApptSelections() {
     this.apptSingleSelection = false;

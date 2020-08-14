@@ -112,7 +112,7 @@
                           </span>{{people_ahead}} </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.token">
-                        {{token_no}} <span class="token">{{statusInfo.token}} </span>
+                        {{token_no}}:  <span class="token"> {{statusInfo.token}} </span>
                       </div>
                       <div class="lt0 knw-stat-line-h" *ngIf="statusInfo.batchId">
                         Batch: <span class="token">{{statusInfo.batchId}} </span>
@@ -139,7 +139,7 @@
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.waitlistStatus">
                         <div class="done-label">
-                          Status: {{getStatusLabel(statusInfo.waitlistStatus)}}
+                          Status: {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
                         </div>
                       </div>
                       <div class="status-outer knw-stat-line-h glbl-seting-h-div" *ngIf="statusInfo.apptStatus">
